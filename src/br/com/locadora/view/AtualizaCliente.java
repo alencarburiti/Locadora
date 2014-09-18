@@ -177,7 +177,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
 
         jtf_empresa.setDocument(new UnaccentedDocument());
-        jtf_empresa.setText("Hospital São Francisco de Assis");
         jtf_empresa.setName("jtf_empresa"); // NOI18N
         jtf_empresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +196,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         getContentPane().add(jtf_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, -1));
 
         jtf_nome_cliente.setDocument(new UnaccentedDocument());
-        jtf_nome_cliente.setText("Alencar Buriti");
         jtf_nome_cliente.setName("jtf_nome_cliente");
         jtf_nome_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,7 +223,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setText("Nome* ");
+        jLabel3.setText("Nome");
         jLabel3.setName("jLabel3"); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
@@ -233,7 +231,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel2.setName("jLabel2"); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 640, -1, -1));
 
-        jtf_cpf.setText("018.823.491.80");
         jtf_cpf.setName("jtf_cpf"); // NOI18N
         jtf_cpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,16 +240,15 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         getContentPane().add(jtf_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 120, -1));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setText("Empresa*");
+        jLabel10.setText("Empresa");
         jLabel10.setName("jLabel10"); // NOI18N
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel11.setText("Profissão*");
+        jLabel11.setText("Profissão");
         jLabel11.setName("jLabel11"); // NOI18N
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
 
-        jtf_profissao.setText("Analista de Sistemas Senior");
         jtf_profissao.setName("jtf_profissao"); // NOI18N
         jtf_profissao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,7 +261,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel12.setName("jLabel12"); // NOI18N
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, -1, -1));
 
-        jtf_data_nascimento.setText("19/03/1990");
         jtf_data_nascimento.setName("jtf_data_nascimento"); // NOI18N
         getContentPane().add(jtf_data_nascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 110, -1));
 
@@ -273,7 +268,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel13.setName("jLabel13"); // NOI18N
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
-        jtf_endereco.setText("Rua Buriti N 10");
         jtf_endereco.setName("jtf_endereco"); // NOI18N
         jtf_endereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,7 +280,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel14.setName("jLabel14"); // NOI18N
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 60, -1));
 
-        jtf_bairro.setText("José Carrilho");
         jtf_bairro.setName("jtf_bairro"); // NOI18N
         getContentPane().add(jtf_bairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 180, -1));
 
@@ -294,7 +287,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel15.setName("jLabel15"); // NOI18N
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, -1));
 
-        jtf_complemento.setText("QD 55 LT 2/3");
         jtf_complemento.setName("jtf_complemento"); // NOI18N
         getContentPane().add(jtf_complemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 110, -1));
 
@@ -302,7 +294,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel16.setName("jLabel16"); // NOI18N
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
 
-        jtf_email.setText("alencarburiti@gmail.com");
         jtf_email.setName("jtf_email"); // NOI18N
         getContentPane().add(jtf_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 270, -1));
 
@@ -339,7 +330,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel21.setText("Telefone");
         jLabel21.setName("jLabel21"); // NOI18N
 
-        jtf_telefone.setText("(62)8100-0456");
         jtf_telefone.setName("jtf_telefone"); // NOI18N
 
         jb_adicionar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
@@ -427,7 +417,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel22.setText("Dependente");
         jLabel22.setName("jLabel22"); // NOI18N
 
-        jtf_dependente.setText("Erica Pereira Buriti de Barros");
         jtf_dependente.setName("jtf_dependente"); // NOI18N
         jtf_dependente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -518,7 +507,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel20.setName("jLabel20"); // NOI18N
         getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
 
-        jtf_estado.setText("GO");
         jtf_estado.setName("jtf_estado"); // NOI18N
         getContentPane().add(jtf_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 60, -1));
 
@@ -526,7 +514,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel23.setName("jLabel23"); // NOI18N
         getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
-        jtf_cidade.setText("Goianésia");
         jtf_cidade.setName("jtf_cidade"); // NOI18N
         jtf_cidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

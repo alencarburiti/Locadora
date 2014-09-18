@@ -45,7 +45,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="20" y="180" width="1285" height="242"/>
+          <AbsoluteConstraints x="20" y="180" width="940" height="242"/>
         </Constraint>
       </Constraints>
 
@@ -96,7 +96,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="20" y="50" width="-1" height="-1"/>
+          <AbsoluteConstraints x="20" y="50" width="940" height="-1"/>
         </Constraint>
       </Constraints>
 
@@ -109,7 +109,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jl_pesquisar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jtf_pesquisar" pref="1118" max="32767" attributes="0"/>
+                          <Component id="jtf_pesquisar" pref="763" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -215,9 +215,6 @@
     </Container>
     <Component class="javax.swing.JButton" name="jb_novo">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/br/com/medicalpharm/image/novo_registro.gif"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Novo"/>
         <Property name="name" type="java.lang.String" value="jb_novo" noResource="true"/>
       </Properties>
@@ -226,15 +223,12 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="934" y="11" width="-1" height="35"/>
+          <AbsoluteConstraints x="600" y="10" width="-1" height="35"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="jb_alterar">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/br/com/medicalpharm/image/alterar_registro.gif"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Alterar"/>
         <Property name="name" type="java.lang.String" value="jb_alterar" noResource="true"/>
       </Properties>
@@ -243,15 +237,12 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1024" y="11" width="-1" height="35"/>
+          <AbsoluteConstraints x="690" y="10" width="-1" height="35"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="jb_excluir">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/br/com/medicalpharm/image/delete.gif"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Excluir"/>
         <Property name="name" type="java.lang.String" value="jb_excluir" noResource="true"/>
       </Properties>
@@ -260,15 +251,12 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1122" y="11" width="-1" height="35"/>
+          <AbsoluteConstraints x="790" y="10" width="-1" height="35"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="jb_sair">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/br/com/medicalpharm/image/exit.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Sair"/>
         <Property name="name" type="java.lang.String" value="jb_sair" noResource="true"/>
       </Properties>
@@ -277,7 +265,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1218" y="11" width="-1" height="35"/>
+          <AbsoluteConstraints x="880" y="10" width="-1" height="35"/>
         </Constraint>
       </Constraints>
     </Component>

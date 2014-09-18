@@ -28,17 +28,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MenuFornecedor extends javax.swing.JFrame {
 
-    TelaPrincipal janelapai;
+    public TelaPrincipal janelapai;
 
     /** Creates new form Cad_Fornecedor */
     public MenuFornecedor() {
         initComponents();
         listarFornecedor();
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.smoothmetal.SmoothmetalLookAndAndFeel");
-            //UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
-            //UIManager.setLookAndFeel(seta_look);
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro);
@@ -114,7 +110,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jt_pesquisar);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 1285, 242));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 940, 242));
 
         jPanel2.setName("jPanel2"); // NOI18N
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
@@ -164,7 +160,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jl_pesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtf_pesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 1118, Short.MAX_VALUE)
+                        .addComponent(jtf_pesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -192,9 +188,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 940, -1));
 
-        jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/novo_registro.gif"))); // NOI18N
         jb_novo.setText("Novo");
         jb_novo.setName("jb_novo"); // NOI18N
         jb_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -202,9 +197,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jb_novoActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(934, 11, -1, 35));
+        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, -1, 35));
 
-        jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/alterar_registro.gif"))); // NOI18N
         jb_alterar.setText("Alterar");
         jb_alterar.setName("jb_alterar"); // NOI18N
         jb_alterar.addActionListener(new java.awt.event.ActionListener() {
@@ -212,9 +206,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jb_alterarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1024, 11, -1, 35));
+        getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, -1, 35));
 
-        jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/delete.gif"))); // NOI18N
         jb_excluir.setText("Excluir");
         jb_excluir.setName("jb_excluir"); // NOI18N
         jb_excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -222,9 +215,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jb_excluirActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1122, 11, -1, 35));
+        getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, -1, 35));
 
-        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
         jb_sair.setText("Sair");
         jb_sair.setName("jb_sair"); // NOI18N
         jb_sair.addActionListener(new java.awt.event.ActionListener() {
@@ -232,7 +224,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(1218, 11, -1, 35));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, -1, 35));
 
         setSize(new java.awt.Dimension(1344, 482));
         setLocationRelativeTo(null);
@@ -377,7 +369,6 @@ public class MenuFornecedor extends javax.swing.JFrame {
     }
 
     public void listarFornecedor() {
-
         FornecedorDAO forn = new FornecedorDAO();
         fornecedores = forn.listarForncedor("%" + jtf_pesquisar.getText().trim() + "%");
         mostraForncedor(fornecedores);

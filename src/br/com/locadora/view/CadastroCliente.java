@@ -210,7 +210,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setText("Nome* ");
+        jLabel3.setText("Nome");
         jLabel3.setName("jLabel3"); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
@@ -228,7 +228,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
         getContentPane().add(jtf_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 120, -1));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setText("Empresa*");
+        jLabel10.setText("Empresa");
         jLabel10.setName("jLabel10"); // NOI18N
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 

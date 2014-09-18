@@ -161,7 +161,6 @@ public class CadastroFornecedor extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +170,6 @@ public class CadastroFornecedor extends javax.swing.JFrame {
         });
         getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, 35));
 
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Cancelar");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -292,7 +290,7 @@ public class CadastroFornecedor extends javax.swing.JFrame {
         getContentPane().add(tf_endereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 280, -1));
 
         jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel16.setText("Razão Social");
+        jLabel16.setText("Razão Social *");
         jLabel16.setName("jLabel16"); // NOI18N
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
@@ -441,7 +439,7 @@ public class CadastroFornecedor extends javax.swing.JFrame {
         jLabel12.setName("jLabel12"); // NOI18N
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
 
-        setSize(new java.awt.Dimension(862, 427));
+        setSize(new java.awt.Dimension(504, 427));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
