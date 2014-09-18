@@ -51,7 +51,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
     }
     List<FornecedorModel> fornecedores;
     DefaultTableModel tmFornecedor = new DefaultTableModel(null, new String[]{"CÓDIGO", "RAZÃO SOCIAL", "NOME FANTASIA", "ENDEREÇO",
-                "CNPJ", "TELEFONE", "FAX", "CIDADE", "CEP", "ESTADO", "INSCRIÇÃO MUNICIPAL", "INSCRIÇÃO ESTADUAL", "VENDEDOR", "TELEFONE VENDEDOR"});
+                "CNPJ", "TELEFONE", "FAX", "VENDEDOR", "TELEFONE VENDEDOR"});
     ListSelectionModel lsmFornecedor;
     String tipoCadastro;
 
@@ -110,7 +110,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jt_pesquisar);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 940, 242));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 970, 242));
 
         jPanel2.setName("jPanel2"); // NOI18N
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
@@ -123,8 +123,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jl_pesquisar.setText("Parâmetro");
         jl_pesquisar.setName("jl_pesquisar"); // NOI18N
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/ok.png"))); // NOI18N
-        jButton1.setText("Ir");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,7 +159,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jl_pesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtf_pesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+                        .addComponent(jtf_pesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -188,7 +187,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 940, -1));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 970, -1));
 
         jb_novo.setText("Novo");
         jb_novo.setName("jb_novo"); // NOI18N
@@ -197,7 +196,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jb_novoActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, -1, 35));
+        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, 35));
 
         jb_alterar.setText("Alterar");
         jb_alterar.setName("jb_alterar"); // NOI18N
@@ -206,7 +205,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jb_alterarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, -1, 35));
+        getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, -1, 35));
 
         jb_excluir.setText("Excluir");
         jb_excluir.setName("jb_excluir"); // NOI18N
@@ -215,7 +214,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jb_excluirActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, -1, 35));
+        getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, -1, 35));
 
         jb_sair.setText("Sair");
         jb_sair.setName("jb_sair"); // NOI18N
@@ -224,9 +223,9 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, -1, 35));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, -1, 35));
 
-        setSize(new java.awt.Dimension(1344, 482));
+        setSize(new java.awt.Dimension(1023, 482));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -411,13 +410,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 tmFornecedor.setValueAt(fornecedor.get(i).getCNPJ(), i, 4);
                 tmFornecedor.setValueAt(fornecedor.get(i).getTelefone(), i, 5);
                 tmFornecedor.setValueAt(fornecedor.get(i).getFax(), i, 6);
-                tmFornecedor.setValueAt(fornecedor.get(i).getCidade(), i, 7);
-                tmFornecedor.setValueAt(fornecedor.get(i).getCEP(), i, 8);
-                tmFornecedor.setValueAt(fornecedor.get(i).getEstado(), i, 9);
-                tmFornecedor.setValueAt(fornecedor.get(i).getInsc_municipal(), i, 10);
-                tmFornecedor.setValueAt(fornecedor.get(i).getInsc_estadual(), i, 11);
-                tmFornecedor.setValueAt(fornecedor.get(i).getNome_vendedor(), i, 12);
-                tmFornecedor.setValueAt(fornecedor.get(i).getTel_vendedor(), i, 13);
+                tmFornecedor.setValueAt(fornecedor.get(i).getNome_vendedor(), i, 7);
+                tmFornecedor.setValueAt(fornecedor.get(i).getTel_vendedor(), i, 8);
 
             }
         }

@@ -21,6 +21,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     public String permissao;
     public IniciaLogin loginInicia;
     public Atendimento atendimento;
+    public boolean saida = false;
+    public boolean entrada = false;
 
     public TelaPrincipal() {
         initComponents();
@@ -465,7 +467,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 
         // TODO add your handling code here:
     }//GEN-LAST:event_menuitem_entradaActionPerformed
-    boolean saida = false;
 
     private void jmi_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_produtoActionPerformed
         MenuProduto produtoGUI = new MenuProduto();
@@ -474,8 +475,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         produtoGUI.setVisible(true);
         setStatusTela(false);
     }//GEN-LAST:event_jmi_produtoActionPerformed
-
-    boolean entrada = false;
 
     private void jmi_entradaActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entradaActionPerformed1
         if (entrada == false) {
@@ -578,9 +577,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     private void menu_relatórios2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_relatórios2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menu_relatórios2ActionPerformed
-    boolean ajuste = false;
 
-    boolean armazemGUI = false;
     private void jMenuItem9ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed1
         try {
             Runtime.getRuntime().exec("calc");
@@ -623,7 +620,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         MenuObjeto menuObjeto = new MenuObjeto();
         menuObjeto.setTelaPrincipal(this);
         menuObjeto.setVisible(true);
-        setStatusTela(false);
+//        setStatusTela(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**

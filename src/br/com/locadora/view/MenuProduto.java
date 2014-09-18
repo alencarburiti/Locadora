@@ -84,7 +84,6 @@ public class MenuProduto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         tf_pesquisar_produto = new javax.swing.JTextField();
         jb_buscar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jrb_apresentação = new javax.swing.JRadioButton();
         jrb_nome = new javax.swing.JRadioButton();
         jb_novo = new javax.swing.JButton();
@@ -119,10 +118,12 @@ public class MenuProduto extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta"));
         jPanel5.setName("jPanel5"); // NOI18N
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Parâmetro");
         jLabel1.setName("jLabel1"); // NOI18N
+        jPanel5.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 60, -1, -1));
 
         tf_pesquisar_produto.setName("tf_pesquisar_produto"); // NOI18N
         tf_pesquisar_produto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -130,74 +131,30 @@ public class MenuProduto extends javax.swing.JFrame {
                 tf_pesquisar_produtoKeyPressed(evt);
             }
         });
+        jPanel5.add(tf_pesquisar_produto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 53, 375, -1));
 
-        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/ok.png"))); // NOI18N
-        jb_buscar.setText("Ir");
+        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_buscarActionPerformed(evt);
             }
         });
-
-        jButton1.setText("Lote");
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jPanel5.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(471, 54, -1, -1));
 
         buttonGroup2.add(jrb_apresentação);
         jrb_apresentação.setSelected(true);
         jrb_apresentação.setText("Produto/Apresentação");
         jrb_apresentação.setName("jrb_apresentação"); // NOI18N
+        jPanel5.add(jrb_apresentação, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
 
         buttonGroup2.add(jrb_nome);
         jrb_nome.setText("Nome Comercial");
         jrb_nome.setName("jrb_nome"); // NOI18N
+        jPanel5.add(jrb_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 24, -1, -1));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(tf_pesquisar_produto, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_buscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jrb_apresentação)
-                        .addGap(14, 14, 14)
-                        .addComponent(jrb_nome)
-                        .addGap(672, 672, 672)))
-                .addGap(6, 6, 6))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jrb_apresentação)
-                    .addComponent(jrb_nome))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(tf_pesquisar_produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_buscar)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 50, 550, 90));
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 50, 1070, 90));
-
-        jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/novo_registro.gif"))); // NOI18N
         jb_novo.setText("Novo");
         jb_novo.setName("jb_novo"); // NOI18N
         jb_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -205,9 +162,8 @@ public class MenuProduto extends javax.swing.JFrame {
                 jb_novoActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, -1, 35));
+        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, 35));
 
-        jb_alterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/alterar_registro.gif"))); // NOI18N
         jb_alterar1.setText("Alterar");
         jb_alterar1.setName("jb_alterar1"); // NOI18N
         jb_alterar1.addActionListener(new java.awt.event.ActionListener() {
@@ -215,9 +171,8 @@ public class MenuProduto extends javax.swing.JFrame {
                 jb_alterar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_alterar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, -1, 35));
+        getContentPane().add(jb_alterar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, 35));
 
-        jb_excluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/delete.gif"))); // NOI18N
         jb_excluir1.setText("Excluir");
         jb_excluir1.setName("jb_excluir1"); // NOI18N
         jb_excluir1.addActionListener(new java.awt.event.ActionListener() {
@@ -225,9 +180,8 @@ public class MenuProduto extends javax.swing.JFrame {
                 jb_excluir1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_excluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, -1, 35));
+        getContentPane().add(jb_excluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, -1, 35));
 
-        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
         jb_sair.setText("Sair");
         jb_sair.setName("jb_sair"); // NOI18N
         jb_sair.addActionListener(new java.awt.event.ActionListener() {
@@ -235,7 +189,7 @@ public class MenuProduto extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 10, -1, 35));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, -1, 35));
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -254,14 +208,14 @@ public class MenuProduto extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Produto / Apresentação", "Unid", "Nome Comercial", "Grupo", "Sub-Grupo", "Est. Minimo", "Est. Ideal", "Est. Atual", "Ult. Preço", "orca"
+                        "Código", "Produto", "Descrição", "Valor"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, true, false, false, false, false, false
+                        false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -278,16 +232,11 @@ public class MenuProduto extends javax.swing.JFrame {
                 if (jTable1.getColumnModel().getColumnCount() > 0) {
                     jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
                     jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
-                    jTable1.getColumnModel().getColumn(2).setPreferredWidth(20);
-                    jTable1.getColumnModel().getColumn(3).setPreferredWidth(170);
-                    jTable1.getColumnModel().getColumn(4).setPreferredWidth(100);
-                    jTable1.getColumnModel().getColumn(6).setPreferredWidth(30);
-                    jTable1.getColumnModel().getColumn(7).setPreferredWidth(30);
-                    jTable1.getColumnModel().getColumn(8).setPreferredWidth(30);
-                    jTable1.getColumnModel().getColumn(9).setPreferredWidth(30);
+                    jTable1.getColumnModel().getColumn(2).setPreferredWidth(170);
+                    jTable1.getColumnModel().getColumn(3).setPreferredWidth(30);
                 }
 
-                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 1070, 220));
+                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 550, 220));
 
                 getAccessibleContext().setAccessibleParent(this);
 
@@ -395,10 +344,6 @@ public class MenuProduto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tf_pesquisar_produtoKeyPressed
     
-private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    // TODO add your handling code here:
-}//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -413,7 +358,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

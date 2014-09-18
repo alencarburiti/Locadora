@@ -4,7 +4,6 @@
  */
 package br.com.locadora.model.dao;
 
-import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.Conexao;
 import com.mysql.jdbc.PreparedStatement;
@@ -24,16 +23,16 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
     ResultSet rs;
     
 //comando sql para inserir dados na tabela destino
-    private String cadastraUsuario = "INSERT INTO usuario (nomeUsuario, login, senha,tipoUsuário)VALUES(?,?,?,?)";
+    private String cadastraUsuario = "INSERT INTO usuario (NOME_USUARIO, LOGIN, SENHA,TIPO_USUARIO)VALUES(?,?,?,?)";
 //comando sql para consultar pelo nome
-    private String consultaUsuarioNome = "SELECT * FROM usuario WHERE nomeUsuario LIKE ? ORDER BY nomeUsuario";
-    private String consultaUsuarioDescricao = "SELECT * FROM usuario WHERE (nomeUsuario = ?) ORDER BY nomeUsuario";
-    private String consultaUsuarioDescricao1 = "SELECT * FROM usuario WHERE (nomeUsuario = ?) OR (login = ?) ORDER BY nomeUsuario";
-    private String consultaUsuarioCodigo = "SELECT * FROM usuario WHERE idusuario = ? ORDER BY nomeUsuario";
-    private String consultaUsuarioLogin = "SELECT * FROM usuario WHERE login = ?";
+    private String consultaUsuarioNome = "SELECT * FROM USUARIO WHERE NOME_USUARIO LIKE ? ORDER BY NOME_USUARIO";
+    private String consultaUsuarioDescricao = "SELECT * FROM USUARIO WHERE (NOME_USUARIO = ?) ORDER BY NOME_USUARIO";
+    private String consultaUsuarioDescricao1 = "SELECT * FROM USUARIO WHERE (NOME_USUARIO = ?) OR (LOGIN = ?) ORDER BY NOME_USUARIO";
+    private String consultaUsuarioCodigo = "SELECT * FROM USUARIO WHERE CODIGO_USUARIO = ? ORDER BY NOME_USUARIO";
+    private String consultaUsuarioLogin = "SELECT * FROM USUARIO WHERE LOGIN = ?";
 // comando sql para alterar dados da tabela aluno
-    private String alteraUsuario = "UPDATE usuario SET nomeUsuario = ?,login = ?,senha = ?, tipoUsuário=? WHERE idusuario = ?";
-    private String excluiUsuario = "DELETE FROM usuario WHERE idusuario = ?";
+    private String alteraUsuario = "UPDATE usuario SET NOME_USUARIO = ?,LOGIN = ?,SENHA = ?, TIPO_USUARIO=? WHERE CODIGO_USUARIO = ?";
+    private String excluiUsuario = "DELETE FROM USUARIO WHERE CODIGO_USUARIO = ?";
 
 
     public void cadastraUsuario(Usuario usuario) {
@@ -98,11 +97,11 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("idusuario"));
-                usua.setNome_usuário(rs.getString("nomeUsuario"));
-                usua.setLogin(rs.getString("login"));
-                usua.setSenha(rs.getString("senha"));
-                usua.setPermissao(rs.getString("tipoUsuário"));
+                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setLogin(rs.getString("LOGIN"));
+                usua.setSenha(rs.getString("SENHA"));
+                usua.setPermissao(rs.getString("TIPO_USUARIO"));
                 usuario.add(usua);
 
             }
@@ -123,10 +122,10 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("idusuario"));
-                usua.setNome_usuário(rs.getString("nomeUsuario"));
-                usua.setLogin(rs.getString("login"));
-                usua.setSenha(rs.getString("senha"));
+                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setLogin(rs.getString("LOGIN"));
+                usua.setSenha(rs.getString("SENHA"));
                 usuario.add(usua);
 
             }
@@ -147,11 +146,11 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("idusuario"));
-                usua.setNome_usuário(rs.getString("nomeUsuario"));
-                usua.setLogin(rs.getString("login"));
-                usua.setSenha(rs.getString("senha"));
-                usua.setPermissao(rs.getString("tipoUsuário "));
+                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setLogin(rs.getString("LOGIN"));
+                usua.setSenha(rs.getString("SENHA"));
+                usua.setPermissao(rs.getString("TIPO_USUARIO "));
                 usuario.add(usua);
 
             }
@@ -173,11 +172,11 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("idusuario"));
-                usua.setNome_usuário(rs.getString("nomeUsuario"));
-                usua.setLogin(rs.getString("login"));
-                usua.setSenha(rs.getString("senha"));
-                usua.setPermissao(rs.getString("tipoUsuário"));
+                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setLogin(rs.getString("LOGIN"));
+                usua.setSenha(rs.getString("SENHA"));
+                usua.setPermissao(rs.getString("TIPO_USUARIO"));
                 usuario.add(usua);
 
             }
@@ -200,11 +199,11 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("idusuario"));
-                usua.setNome_usuário(rs.getString("nomeUsuario"));
-                usua.setLogin(rs.getString("login"));
-                usua.setSenha(rs.getString("senha"));
-                usua.setPermissao(rs.getString("tipoUsuário"));
+                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setLogin(rs.getString("LOGIN"));
+                usua.setSenha(rs.getString("SENHA"));
+                usua.setPermissao(rs.getString("TIPO_USUARIO"));
                 usuario.add(usua);
 
             }
