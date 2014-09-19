@@ -1142,7 +1142,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-//        enviaDados();
+
 }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
