@@ -1194,7 +1194,6 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 
 private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusLost
     jtf_nome_objeto.requestFocus();
-    // TODO add your handling code here:
 }//GEN-LAST:event_jtf_nome_clienteFocusLost
 
     private void jtf_preco8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco8FocusLost
