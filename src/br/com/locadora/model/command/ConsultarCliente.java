@@ -70,26 +70,37 @@ public class ConsultarCliente implements InterfaceCommand {
             for (int i = 0; i < clientes.size(); i++) {
 
                 Cliente cliente = new Cliente();
+
                 cliente.setCodigo_cliente(clientes.get(i).getCodigo_cliente());
                 cliente.setNome_cliente(clientes.get(i).getNome_cliente());
+                cliente.setNome_empresa_trabalho(clientes.get(i).getNome_empresa_trabalho());
+                cliente.setProfissao(clientes.get(i).getProfissao());
                 cliente.setCpf(clientes.get(i).getCpf());
+                cliente.setData_nascimento(clientes.get(i).getData_nascimento());
+                cliente.setEndereco(clientes.get(i).getEndereco());
+                cliente.setBairro(clientes.get(i).getBairro());
+                cliente.setComplemento(clientes.get(i).getComplemento());
+                cliente.setCidade(clientes.get(i).getCidade());
+                cliente.setEstado(clientes.get(i).getEstado());
                 cliente.setEmail(clientes.get(i).getEmail());
-                if(clientes.get(i).getStatus() == "A"){
+
+                cliente.setStatus(clientes.get(i).getStatus());
+                
+                if (cliente.getStatus().equals("A")) {
                     cliente.setStatus("Ativo");
-                }else{
+                } else {
                     cliente.setStatus("Inativo");
                 }
-                cliente.setStatus(clientes.get(i).getStatus());
+                cliente.setObservacao(clientes.get(i).getObservacao());
 
                 SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-                
+
                 String data_nascimento = out.format(in.parse(clientes.get(i).getData_nascimento().toString()));
-                
+
                 DefaultTableModel row = (DefaultTableModel) MenuCliente.jtbl_cliente.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
                 row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
-                System.out.print(cliente.getEmail());
             }
             MenuCliente.clientes = clientes;
         }
@@ -104,17 +115,16 @@ public class ConsultarCliente implements InterfaceCommand {
 
         } else {
 
-                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-                
-                String data_nascimento = out.format(in.parse(cliente.getData_nascimento().toString()));
-                
-                DefaultTableModel row = (DefaultTableModel) MenuCliente.jtbl_cliente.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
-                row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
-                
+            SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+
+            String data_nascimento = out.format(in.parse(cliente.getData_nascimento().toString()));
+
+            DefaultTableModel row = (DefaultTableModel) MenuCliente.jtbl_cliente.getModel();
+            ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
+            row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
+
         }
     }
 
 }
-

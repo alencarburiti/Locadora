@@ -54,6 +54,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
 			pool.liberarConnection(con);
 		}
 	}
+        
 	@Override
 	public Cliente getCliente_nome(String nome_cliente) throws SQLException {
 		Connection con = pool.getConnection();
@@ -150,6 +151,28 @@ public class ClienteDAO implements InterfaceClienteDAO {
 		return resultado;
 	}
         
+        @Override
+	public List<Cliente> getClientes_codigo(Integer codigo_cliente) throws SQLException{
+		List<Cliente> resultado = new ArrayList<Cliente>();
+		Connection con = pool.getConnection();
+		PreparedStatement ps = null;
+		String sqlSelect = "SELECT * FROM CLIENTE ORDER BY NOME_CLIENTE;";
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement(sqlSelect);
+			rs = ps.executeQuery();
+
+			resultado = getListaCliente(rs);
+
+			rs.close();
+			ps.close();
+		} finally {
+			pool.liberarConnection(con);
+		}
+		return resultado;
+	}
+        
         public List<Cliente> getClientes_nome(String nome_cliente) throws SQLException {
 		List<Cliente> resultado = new ArrayList<Cliente>();
 		Connection con = pool.getConnection();
@@ -180,8 +203,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
 			cliente.setCodigo_cliente(rs.getInt("CODIGO_CLIENTE"));
                         cliente.setNome_cliente(rs.getString("NOME_CLIENTE"));                        
                         cliente.setNome_empresa_trabalho(rs.getString("NOME_EMPRESA_TRABALHO"));
-                        cliente.setProfissao(rs.getString("PROFISSAO"));
-                        cliente.setNome_empresa_trabalho(rs.getString("NOME_EMPRESA_TRABALHO"));
+                        cliente.setProfissao(rs.getString("PROFISSAO"));                        
                         cliente.setCpf(rs.getString("CPF"));
                         cliente.setData_nascimento(rs.getDate("DATA_NASCIMENTO"));
                         cliente.setEndereco(rs.getString("ENDERECO"));

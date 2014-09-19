@@ -6,6 +6,7 @@
 package br.com.locadora.model.bean;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -15,6 +16,7 @@ public class Locacao {
 
     private Integer codigo_locacao;
     private Cliente cliente;
+    private List<ItemLocacao> itemLocacao;
 
     public Integer getCodigo_locacao() {
         return codigo_locacao;
@@ -30,6 +32,14 @@ public class Locacao {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public List<ItemLocacao> getItemLocacao() {
+        return itemLocacao;
+    }
+
+    public void setItemLocacao(List<ItemLocacao> itemLocacao) {
+        this.itemLocacao = itemLocacao;
     }
 
 }

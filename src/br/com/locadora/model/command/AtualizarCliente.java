@@ -6,10 +6,17 @@ import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceDependenteDAO;
 import br.com.locadora.model.dao.InterfaceTelefoneDAO;
+import br.com.locadora.view.AtualizaCliente;
 import br.com.locadora.view.CadastroCliente;
+import br.com.locadora.view.MenuCliente;
+import static br.com.locadora.view.MenuCliente.clientes;
+import static br.com.locadora.view.MenuCliente.jtbl_cliente;
+import static br.com.locadora.view.MenuCliente.jtf_consulta;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 public class AtualizarCliente implements InterfaceCommand {
 
@@ -76,5 +83,6 @@ public class AtualizarCliente implements InterfaceCommand {
         }
         return "OK";
     }
+    
 
 }

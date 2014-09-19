@@ -14,28 +14,24 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 
 public class MenuCliente extends javax.swing.JFrame {
 
-    String permissao;
+    public String permissao;
+    public TelaPrincipal janelapai;
+    private TelaPrincipal_Interface telaPrincipal;//Recebendo tela como parametro para atualização apos pesquisa
+    public static List<Cliente> clientes;
+    public InterfacePool pool;
+    public SiscomController controller;
 
     public MenuCliente() {
         initComponents();
-//        permissao = janelapai.permissao;
-        try {
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
     }
-    TelaPrincipal janelapai;
 
     public void setJanelaPai(TelaPrincipal janelapai) {
         janelapai = janelapai;
@@ -217,7 +213,7 @@ public class MenuCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
-        enviaDados();
+        buscarDados();
 }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
@@ -246,7 +242,7 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        enviaDados();
+        buscarDados();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
@@ -296,33 +292,45 @@ public class MenuCliente extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_cliente;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-    private TelaPrincipal_Interface telaPrincipal;//Recebendo tela como parametro para atualização apos pesquisa
 
-    public InterfacePool pool;
-    public SiscomController controller;
-
-    private void enviaDados() {
+    private void buscarDados() {
         controller = new SiscomController();
         controller.processarRequisicao("consultarCliente");
-
     }
-
-    public static List<Cliente> clientes;
 
     public Cliente tbClienteLinhaSelecionada(JTable tb) {
         Cliente cliente = new Cliente();
-        if (tb.getSelectedRow() != -1) {                        
+        if (tb.getSelectedRow() != -1) {
+       
             cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
-            
+            cliente.setNome_cliente(clientes.get(tb.getSelectedRow()).getNome_cliente());
+            cliente.setNome_empresa_trabalho(clientes.get(tb.getSelectedRow()).getNome_empresa_trabalho());
+            cliente.setProfissao(clientes.get(tb.getSelectedRow()).getProfissao());
+            cliente.setCpf(clientes.get(tb.getSelectedRow()).getCpf());
+            cliente.setData_nascimento(clientes.get(tb.getSelectedRow()).getData_nascimento());
+            cliente.setEndereco(clientes.get(tb.getSelectedRow()).getEndereco());
+            cliente.setBairro(clientes.get(tb.getSelectedRow()).getBairro());
+            cliente.setComplemento(clientes.get(tb.getSelectedRow()).getComplemento());
+            cliente.setCidade(clientes.get(tb.getSelectedRow()).getCidade());
+            cliente.setEstado(clientes.get(tb.getSelectedRow()).getEstado());
+            cliente.setEmail(clientes.get(tb.getSelectedRow()).getEmail());
+
+            if (clientes.get(tb.getSelectedRow()).getStatus().equals("A")) {
+                cliente.setStatus("Ativo");
+            } else {
+                cliente.setStatus("Inativo");
+            }
+            cliente.setStatus(clientes.get(tb.getSelectedRow()).getStatus());
+            cliente.setObservacao(clientes.get(tb.getSelectedRow()).getObservacao());
+
         }
         return cliente;
     }
 
     public void alterar() {
-        
+
         Cliente cliente = tbClienteLinhaSelecionada(jtbl_cliente);
         if (cliente != null) {
-
             AtualizaCliente alteraCliente = new AtualizaCliente(cliente);
             alteraCliente.janelapai = this;
             alteraCliente.setVisible(true);
@@ -337,7 +345,7 @@ public class MenuCliente extends javax.swing.JFrame {
         this.telaPrincipal = telaPrincipal;
     }
 
-    void request() {
+    public void request() {
         jtf_consulta.requestFocus();
     }
 
@@ -357,25 +365,4 @@ public class MenuCliente extends javax.swing.JFrame {
         this.setEnabled(status);
     }
 
-    public Double getPrecoFormato(String preco) {
-        Double precoFormatado = 0.0;
-        try {
-            preco = preco.replace("R", "");
-            preco = preco.replace("$", "");
-            preco = preco.replace(",", ".");
-            preco = preco.replace(" ", "");
-            precoFormatado = Double.parseDouble(preco.trim());
-
-            //this.objFuncionario.setSalario(getSalarioFormat(jTSalario.getText())); pegar valor em double
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");
-        }
-        return precoFormatado;
-    }
-
-    public String setPrecoFormat(String preco) {
-        DecimalFormat dFormat = new DecimalFormat();
-        dFormat.applyPattern("R$ #0.00");
-        return dFormat.format(getPrecoFormato(preco));
-    }
 }

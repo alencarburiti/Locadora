@@ -206,7 +206,6 @@ public class MenuDiaria extends javax.swing.JFrame {
                 });
                 jScrollPane1.setViewportView(jt_pesquisar);
 
-                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/delete.gif"))); // NOI18N
                 jb_excluir.setText("Excluir");
                 jb_excluir.setName("jb_excluir"); // NOI18N
                 jb_excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +214,6 @@ public class MenuDiaria extends javax.swing.JFrame {
                     }
                 });
 
-                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
                 jb_sair.setText("Sair");
                 jb_sair.setName("jb_sair"); // NOI18N
                 jb_sair.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +222,6 @@ public class MenuDiaria extends javax.swing.JFrame {
                     }
                 });
 
-                jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/novo_registro.gif"))); // NOI18N
                 jb_novo.setText("Novo");
                 jb_novo.setName("jb_novo"); // NOI18N
                 jb_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -233,7 +230,6 @@ public class MenuDiaria extends javax.swing.JFrame {
                     }
                 });
 
-                jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar.setText("Alterar");
                 jb_alterar.setName("jb_alterar"); // NOI18N
                 jb_alterar.addActionListener(new java.awt.event.ActionListener() {
@@ -398,9 +394,9 @@ public class MenuDiaria extends javax.swing.JFrame {
     
     private void enviaDados() {        
         controller = new SiscomController();
-        controller.processarRequisicao("consultarCliente");
-        
+        controller.processarRequisicao("consultarCliente");        
     }
+    
     public Diaria tbDiariaLinhaSelecionada(JTable tb) {
         Diaria dest = null;
         if (tb.getSelectedRow() != -1) {

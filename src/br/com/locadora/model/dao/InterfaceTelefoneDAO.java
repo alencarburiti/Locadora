@@ -11,6 +11,7 @@ public interface InterfaceTelefoneDAO {
 	public abstract void salvar(List<Telefone> telefones, Cliente cliente) throws SQLException;
 	public abstract void atualizar(Telefone telefone) throws SQLException;
 	public abstract Telefone getTelefone(Integer codigo) throws SQLException;
+        public abstract List<Telefone> getTelefones(Integer codigo_cliente) throws SQLException;
 	public abstract Telefone getTelefone(String nome) throws SQLException;
 	public abstract List<Telefone> getTelefones() throws SQLException;
 }

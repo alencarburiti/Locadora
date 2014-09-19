@@ -18,6 +18,8 @@ public class ItemLocacao {
     private Date data_devolucao;
     private Date data_locacao;    
     private Locacao locacao;
+    private Double valor_multa;
+    private Integer dias_multa;
 
     public Integer getCodigo_item_locacao() {
         return codigo_item_locacao;
@@ -57,6 +59,22 @@ public class ItemLocacao {
 
     public void setLocacao(Locacao locacao) {
         this.locacao = locacao;
+    }
+
+    public Double getValor_multa() {
+        return valor_multa;
+    }
+
+    public void setValor_multa(Double valor_multa) {
+        this.valor_multa = valor_multa;
+    }
+
+    public Integer getDias_multa() {
+        return dias_multa;
+    }
+
+    public void setDias_multa(Integer dias_multa) {
+        this.dias_multa = dias_multa;
     }
     
     

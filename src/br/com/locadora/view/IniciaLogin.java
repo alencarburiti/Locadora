@@ -1,13 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * Log_login.java
- *
- * Created on 07/04/2011, 21:26:40
- */
 package br.com.locadora.view;
 
 import br.com.locadora.model.dao.UsuarioDAO;
@@ -17,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
@@ -25,26 +15,22 @@ import javax.swing.UIManager;
  */
 public class IniciaLogin extends javax.swing.JFrame {
 
-    /** Creates new form Log_login */
+    /**
+     * Creates new form Log_login
+     */
     public IniciaLogin() {
         initComponents();
 
-
         try {
-//            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.smoothmetal.SmoothmetalLookAndAndFeel");
-            //UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
-            //UIManager.setLookAndFeel(seta_look);
-            SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro);
         }
     }
-    List<Usuario> usuarios;
-    String usuarioNome;
-    Integer codUsuário;
-    String login;
-    String permissao;
+    public List<Usuario> usuarios;
+    public String usuarioNome;
+    public Integer codUsuário;
+    public String login;
+    public String permissao;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -183,19 +169,12 @@ public class IniciaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_logarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        listarUsuário();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
-jpf_senha.addKeyListener(new KeyAdapter() {  
-      public void keyReleased(KeyEvent evt) {  
-        if (evt.getKeyCode() != KeyEvent.VK_HOME) {  
-          String s = jpf_senha.getText();  
-          jpf_senha.setText(s.toUpperCase());  
-        }  
-      }  
-    }); 
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             entrar();
         }
@@ -204,18 +183,9 @@ jpf_senha.addKeyListener(new KeyAdapter() {
     }//GEN-LAST:event_jpf_senhaKeyPressed
 
     private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_loginKeyPressed
-    jtf_login.addKeyListener(new KeyAdapter() {  
-      public void keyReleased(KeyEvent evt) {  
-        if (evt.getKeyCode() != KeyEvent.VK_HOME) {  
-          String s = jtf_login.getText();  
-          jtf_login.setText(s.toUpperCase());  
-        }  
-      }  
-    }); 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jpf_senha.requestFocus();
         }
-
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_loginKeyPressed
 
@@ -286,7 +256,6 @@ jpf_senha.addKeyListener(new KeyAdapter() {
             return true;
         }
 
-
     }
     Usuario usuarioModel;
 
@@ -294,20 +263,12 @@ jpf_senha.addKeyListener(new KeyAdapter() {
         UsuarioDAO usuarioControl = new UsuarioDAO();
         usuarios = usuarioControl.consultarLogin(jtf_login.getText().trim());
 
-//        usuarioModel.setCod_usuario(usuarios.get(1).getCod_usuario());
-//        usuarioModel.setLogin(usuarios.get(1).getLogin());
-//        usuarioModel.setNome_usuário(usuarios.get(1).getNome_usuario());
-//        usuarioModel.setSenha(usuarios.get(1).getSenha());
-//        usuarioModel.setPermissao(usuarios.get(1).getPermissao());
-//
-
         //verifica o login
         if ((usuarios).size() == 0) {
             JOptionPane.showMessageDialog(null, "Login inexistente");
             jtf_login.requestFocus();
             return false;
         }
-
 
         //verifica a senha
         char[] senha = jpf_senha.getPassword();
@@ -333,17 +294,15 @@ jpf_senha.addKeyListener(new KeyAdapter() {
 
         return true;
     }
-    private TelaPrincipal_Interface telaPrincipal;
 
-   
     public void login() {
 
 //        if (usuarios.get(0).getPermissao().equals("usuario")) {
-            TelaPrincipal tela = new TelaPrincipal();
-            tela.setJanelaPai(this);
-            //tela.setUsuario(usuarioModel);
-            tela.show();
-            this.dispose();
+        TelaPrincipal tela = new TelaPrincipal();
+        tela.setJanelaPai(this);
+        //tela.setUsuario(usuarioModel);
+        tela.show();
+        this.dispose();
 //            tela.permissao();
 //        } else {
 //            TelaPrincipal tela = new TelaPrincipal();

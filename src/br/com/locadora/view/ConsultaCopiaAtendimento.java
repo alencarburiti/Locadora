@@ -70,6 +70,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jb_cancelar = new javax.swing.JButton();
         jb_ok = new javax.swing.JButton();
         jb_novo1 = new javax.swing.JButton();
@@ -78,6 +79,9 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         jb_buscar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_copia = new javax.swing.JTable();
+        jrb_ator = new javax.swing.JRadioButton();
+        jrb_titulo = new javax.swing.JRadioButton();
+        jrb_codigo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Consulta Objeto");
@@ -100,7 +104,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, 110, 40));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 110, 40));
 
         jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_ok.setText("OK");
@@ -110,7 +114,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jb_okActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 80, 40));
+        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 80, 40));
 
         jb_novo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo1.setText("Novo");
@@ -120,7 +124,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jb_novo1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 110, 40));
+        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 110, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Objeto"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -188,9 +192,38 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
 
                 jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 760, 210));
 
-                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 810, 300));
+                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 810, 300));
 
-                setSize(new java.awt.Dimension(862, 438));
+                buttonGroup1.add(jrb_ator);
+                jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_ator.setText("Ator");
+                jrb_ator.setName("jrb_ator"); // NOI18N
+                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+
+                buttonGroup1.add(jrb_titulo);
+                jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_titulo.setText("Título");
+                jrb_titulo.setName("jrb_titulo"); // NOI18N
+                jrb_titulo.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_tituloActionPerformed(evt);
+                    }
+                });
+                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
+
+                buttonGroup1.add(jrb_codigo);
+                jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_codigo.setSelected(true);
+                jrb_codigo.setText("Código");
+                jrb_codigo.setName("jrb_codigo"); // NOI18N
+                jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_codigoActionPerformed(evt);
+                    }
+                });
+                getContentPane().add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+                setSize(new java.awt.Dimension(862, 439));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -261,18 +294,44 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
+        if (jrb_codigo.isSelected() == true) {
+            if (jtf_consulta.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Informe um código");
+            } else {
+                try {
+                    listaCopia_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
+                } catch (SQLException ex) {
+                    Logger.getLogger(ConsultaCopiaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
-        try {
-            listaCopia_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaCopiaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        } else if (jrb_titulo.isSelected() == true) {
+            
+            try {
+                listaCopia_titulo(jtf_consulta.getText().trim());
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaCopiaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                listaCopia_ator(jtf_consulta.getText().trim());
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaCopiaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jtbl_copiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_copiaMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_copiaMouseClicked
+
+    private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_tituloActionPerformed
+
+    private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_codigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,12 +346,16 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_novo1;
     private javax.swing.JButton jb_ok;
+    private javax.swing.JRadioButton jrb_ator;
+    private javax.swing.JRadioButton jrb_codigo;
+    private javax.swing.JRadioButton jrb_titulo;
     public static javax.swing.JTable jtbl_copia;
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
@@ -315,7 +378,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
             copiaSelecionada.setLocalizacao(copias.get(tb.getSelectedRow()).getLocalizacao());
             copiaSelecionada.setIdioma(copias.get(tb.getSelectedRow()).getIdioma());
             copiaSelecionada.setLegenda(copias.get(tb.getSelectedRow()).getLegenda());
-            copiaSelecionada.setObjeto(copias.get(tb.getSelectedRow()).getObjeto());                
+            copiaSelecionada.setObjeto(copias.get(tb.getSelectedRow()).getObjeto());
         }
         return copiaSelecionada;
     }
@@ -326,6 +389,22 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         CopiaDAO copiaDAO = new CopiaDAO(pool);
         copias = null;
         copias = copiaDAO.getCopia(codigo_copia);
+        mostraCopia(copias);
+    }
+
+    public void listaCopia_titulo(String titulo) throws SQLException {
+        pool = new Pool();
+        CopiaDAO copiaDAO = new CopiaDAO(pool);
+        copias = null;
+        copias = copiaDAO.getCopia_titulo(titulo);
+        mostraCopia(copias);
+    }
+
+    public void listaCopia_ator(String ator) throws SQLException {
+        pool = new Pool();
+        CopiaDAO copiaDAO = new CopiaDAO(pool);
+        copias = null;
+        copias = copiaDAO.getCopia_ator(ator);
         mostraCopia(copias);
     }
 
@@ -346,7 +425,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         } else {
             for (int i = 0; i < copias.size(); i++) {
                 Copia copia = new Copia();
-                
+
                 copia.setCodigo_copia(copias.get(i).getCodigo_copia());
                 copia.setCodigo_interno(copias.get(i).getCodigo_interno());
                 copia.setLocalizacao(copias.get(i).getLocalizacao());

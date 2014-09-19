@@ -1,12 +1,14 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
-import br.com.locadora.model.dao.ProdutoDAO;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Telefone;
+import br.com.locadora.model.dao.DependenteDAO;
+import br.com.locadora.model.dao.TelefoneDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.UnaccentedDocument;
@@ -21,8 +23,6 @@ import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,9 +32,15 @@ import javax.swing.table.DefaultTableModel;
 public final class AtualizaCliente extends javax.swing.JFrame {
 
     private TelaPrincipal janela;
-    public List<Produto> produtos;
-    public MenuCliente janelaPaim;
+    public MenuCliente janela1;
     private Cliente objetoCliente;
+    Produto produto = new Produto();
+    private TelaPrincipal_Interface telaPrincipal;
+    public MenuCliente janelapai;
+    public ProdutoConsultarGUI janelapai2;
+    private InterfacePool pool = new Pool();
+    public List<Telefone> telefones;
+    public List<Dependente> dependentes;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -43,15 +49,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         initComponents();
         janelapai = null;
         janelapai2 = null;
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.smoothmetal.SmoothmetalLookAndAndFeel");
-            //UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
-            //UIManager.setLookAndFeel(seta_look);
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
     }
 
     public AtualizaCliente(Cliente cliente) {
@@ -60,13 +57,20 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
         jtf_codigo.setText(String.valueOf(cliente.getCodigo_cliente()));
         jtf_nome_cliente.setText(cliente.getNome_cliente());
+        jtf_data_nascimento.setText(String.valueOf(cliente.getData_nascimento()));
+        jtf_cpf.setText(cliente.getCpf());
         jtf_empresa.setText(cliente.getNome_empresa_trabalho());
+        jtf_profissao.setText(cliente.getProfissao());
+        jtf_endereco.setText(cliente.getEndereco());
+        jtf_bairro.setText(cliente.getBairro());
+        jtf_complemento.setText(cliente.getComplemento());
+        jtf_cidade.setText(cliente.getCidade());
+        jtf_estado.setText(cliente.getEstado());
+        jtf_email.setText(cliente.getEmail());
 
+        carregaTelefone(cliente.getCodigo_cliente());
+        carregaDependente(cliente.getCodigo_cliente());
     }
-
-    public MenuCliente janelapai;
-    public ProdutoConsultarGUI janelapai2;
-    //public ProdutoConsultarGUI janelapaim;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,7 +138,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tfa_similar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Cadastrando Cliente");
+        setTitle("Atualizar Cliente");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -738,8 +742,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     public static javax.swing.JTextField jtf_telefone;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
-    Produto produto = new Produto();
-    private TelaPrincipal_Interface telaPrincipal;
 
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
@@ -754,7 +756,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
     }
 
-    public InterfacePool pool;
     public SiscomController controller;
 
     private void enviaDados() {
@@ -790,12 +791,11 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         this.setEnabled(status);
     }
 
-    public void verificaCadastro() {
-        ProdutoDAO prod = new ProdutoDAO();
-        produtos = prod.listarProduto(jtf_nome_cliente.getText().trim());
-        validaCadastro(produtos);
-    }
-
+//    public void verificaCadastro() {
+//        ProdutoDAO prod = new ProdutoDAO();
+//        produtos = prod.listarProduto(jtf_nome_cliente.getText().trim());
+//        validaCadastro(produtos);
+//    }
     public void validaCadastro(List<Produto> produto) {//verifica cadastro existente que retornou de uma lista
 
         if (produto.size() == 0) {
@@ -909,5 +909,91 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um produto");
         }
+    }
+
+    public void carregaTelefone(Integer codigo_cliente) {
+        TelefoneDAO telefoneDAO = new TelefoneDAO(pool);
+        try {
+            telefones = telefoneDAO.getTelefones(codigo_cliente);
+            try {
+                mostrar_telefones(telefones);
+            } catch (ParseException ex) {
+                Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void carregaDependente(Integer codigo_cliente) {
+        DependenteDAO dependenteDAO = new DependenteDAO(pool);
+        try {
+            dependentes = dependenteDAO.getDependentes(codigo_cliente);
+            try {
+                mostrar_dependentes(dependentes);
+            } catch (ParseException ex) {
+                Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void mostrar_telefones(List<Telefone> telefones) throws ParseException {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_telefone.getModel();
+        tableModel.setNumRows(0);
+
+        if (telefones.size() == 0) {
+
+        } else {
+
+            for (int i = 0; i < telefones.size(); i++) {
+
+                Telefone telefone = new Telefone();
+
+                telefone.setCodigo_telefone(telefones.get(i).getCodigo_telefone());
+                telefone.setTelefone(telefones.get(i).getTelefone());
+
+                Cliente cliente = new Cliente();
+                cliente.setCodigo_cliente(telefones.get(i).getCodigo_telefone());
+
+                telefone.setCliente(cliente);
+
+                DefaultTableModel row = (DefaultTableModel) jtbl_telefone.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(telefone, telefone.getTelefone());
+                row.addRow(new Object[]{hashDbGrid});
+            }
+
+        }
+
+    }
+
+    public void mostrar_dependentes(List<Dependente> dependentes) throws ParseException {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_dependente.getModel();
+        tableModel.setNumRows(0);
+
+        if (dependentes.size() == 0) {
+
+        } else {
+
+            for (int i = 0; i < dependentes.size(); i++) {
+
+                Dependente dependente = new Dependente();
+
+                dependente.setCodigo_dependente(dependentes.get(i).getCodigo_dependente());
+                dependente.setNome_dependente(dependentes.get(i).getNome_dependente());
+
+                Cliente cliente = new Cliente();
+                cliente.setCodigo_cliente(dependentes.get(i).getCodigo_dependente());
+
+                dependente.setCliente(cliente);
+
+                DefaultTableModel row = (DefaultTableModel) jtbl_dependente.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
+                row.addRow(new Object[]{hashDbGrid});
+            }
+
+        }
+
     }
 }

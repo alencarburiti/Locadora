@@ -123,22 +123,41 @@ public class TelefoneDAO implements InterfaceTelefoneDAO {
 		}
 		return resultado;
 	}
+        
+        @Override
+	public List<Telefone> getTelefones(Integer codigo_cliente)throws SQLException {
+		List<Telefone> resultado = new ArrayList<Telefone>();
+		Connection con = pool.getConnection();
+		PreparedStatement ps = null;
+		String sqlSelect = "SELECT * FROM TELEFONE WHERE CODIGO_CLIENTE = ? ORDER BY TELEFONE; ";
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement(sqlSelect);
+                        ps.setInt(1, codigo_cliente);
+                        rs = ps.executeQuery();
+
+			resultado = getListaTelefone(rs);
+
+			rs.close();
+			ps.close();
+		} finally {
+			pool.liberarConnection(con);
+		}
+		return resultado;
+	}
 
 	private List<Telefone> getListaTelefone(ResultSet rs) throws SQLException {
 		List<Telefone> resultado = new ArrayList<Telefone>();
 		while (rs.next()) {
 			Telefone telefone = new Telefone();
-//			telefone.setBairro(rs.getString("bairro"));
-			// telefone.setCelular(rs.getString("celular"));
-			// telefone.setCep(rs.getString("cep"));
-			// telefone.setCidade(rs.getString("cidade"));
-			// telefone.setCodigo(rs.getInt("codigo"));
-			// telefone.setRegistro(rs.getString("cpf_cnpj"));
-			// telefone.setEmail(rs.getString("email"));
-			// telefone.setEndereco(rs.getString("endereco"));
-			// telefone.setEstado(rs.getString("estado"));
-			// telefone.setTelefone(rs.getString("telefone"));
-//			telefone.setNome(rs.getString("nome"));
+                        telefone.setTelefone(rs.getString("TELEFONE"));
+                        telefone.setCodigo_telefone(rs.getInt("CODIGO_TELEFONE"));
+                        
+                        Cliente cliente = new Cliente();
+                        cliente.setCodigo_cliente(rs.getInt("CODIGO_CLIENTE"));
+                        
+                        telefone.setCliente(cliente);
 			resultado.add(telefone);
 		}
 		return resultado;

@@ -8,6 +8,7 @@ import br.com.locadora.model.command.CadastrarDiaria;
 import br.com.locadora.model.command.CadastrarLocacao;
 import br.com.locadora.model.command.CadastrarObjeto;
 import br.com.locadora.model.command.ConsultarCliente;
+import br.com.locadora.model.command.ConsultarLocacao;
 import br.com.locadora.model.command.InterfaceCommand;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.CopiaDAO;
@@ -39,7 +40,9 @@ public class SiscomHelper
 //		mapaComandos.put("consultarClienteCad", new ConsultarClienteCad(new ClienteDAO(pool)));
 		
 		
-//		mapaComandos.put("cadastrarLocacao", new CadastrarLocacao(new LocacaoDAO(pool), new ClienteDAO(pool), new CopiaDAO(pool)));
+		mapaComandos.put("consultarLocacao", new ConsultarLocacao(new LocacaoDAO(pool), new ClienteDAO(pool), new CopiaDAO(pool)));
+                mapaComandos.put("cadastrarLocacao", new CadastrarLocacao(new LocacaoDAO(pool), new ClienteDAO(pool), new CopiaDAO(pool)));
+//                mapaComandos.put("consultarDevolucao", new ConsultarDevolucao(new LocacaoDAO(pool)));
                 
                 mapaComandos.put("cadastrarDiaria", new CadastrarDiaria(new DiariaDAO(pool)));
                 mapaComandos.put("cadastrarGenero", new CadastrarDiaria(new DiariaDAO(pool)));

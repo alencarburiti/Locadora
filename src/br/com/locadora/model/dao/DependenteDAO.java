@@ -123,22 +123,41 @@ public class DependenteDAO implements InterfaceDependenteDAO {
 		}
 		return resultado;
 	}
+        
+        public List<Dependente> getDependentes(Integer codigo_cliente) throws SQLException {
+		List<Dependente> resultado = new ArrayList<Dependente>();
+		Connection con = pool.getConnection();
+		PreparedStatement ps = null;
+		String sqlSelect = "SELECT * FROM locadora.DEPENDENTE WHERE CODIGO_CLIENTE = ? ORDER BY NOME_DEPENDENTE;";
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement(sqlSelect);
+                        ps.setInt(1, codigo_cliente);
+			rs = ps.executeQuery();
+
+			resultado = getListaDependente(rs);
+
+			rs.close();
+			ps.close();
+		} finally {
+			pool.liberarConnection(con);
+		}
+		return resultado;
+	}
 
 	private List<Dependente> getListaDependente(ResultSet rs) throws SQLException {
 		List<Dependente> resultado = new ArrayList<Dependente>();
 		while (rs.next()) {
 			Dependente dependente = new Dependente();
-//			dependente.setBairro(rs.getString("bairro"));
-			// dependente.setCelular(rs.getString("celular"));
-			// dependente.setCep(rs.getString("cep"));
-			// dependente.setCidade(rs.getString("cidade"));
-			// dependente.setCodigo(rs.getInt("codigo"));
-			// dependente.setRegistro(rs.getString("cpf_cnpj"));
-			// dependente.setEmail(rs.getString("email"));
-			// dependente.setEndereco(rs.getString("endereco"));
-			// dependente.setEstado(rs.getString("estado"));
-			// dependente.setDependente(rs.getString("dependente"));
-//			dependente.setNome(rs.getString("nome"));
+                        dependente.setCodigo_dependente(rs.getInt("CODIGO_DEPENDENTE"));
+                        dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
+                        
+                        Cliente cliente = new Cliente();
+                        cliente.setCodigo_cliente(rs.getInt("CODIGO_CLIENTE"));
+                        
+                        dependente.setCliente(cliente);
+			
 			resultado.add(dependente);
 		}
 		return resultado;
