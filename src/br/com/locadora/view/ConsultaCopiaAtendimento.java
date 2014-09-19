@@ -46,18 +46,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
 
     public ConsultaCopiaAtendimento() {
         initComponents();
-
-        try {
-//            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.smoothmetal.SmoothmetalLookAndAndFeel");
-            //UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
-            //UIManager.setLookAndFeel(seta_look);
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
-
-        janelapai = null;
+          janelapai = null;
     }
 
     /**

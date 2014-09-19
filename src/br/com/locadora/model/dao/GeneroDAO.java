@@ -55,11 +55,11 @@ public class GeneroDAO implements InterfaceGeneroDAO {
     }
 
     @Override
-    public Genero getGenero(Integer codigo) throws SQLException {
+    public Genero getGenero_codigo(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM DIARIA WHERE CODIGO_DIARIA = ?;";
+        String sqlSelect = "SELECT * FROM GENERO WHERE CODIGO_GENERO = ?;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -79,6 +79,29 @@ public class GeneroDAO implements InterfaceGeneroDAO {
     }
 
     @Override
+    public List<Genero> getGenero_nome(String nome_genero) throws SQLException {
+        List<Genero> resultado = new ArrayList<Genero>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT * FROM GENERO WHERE NOME_GENERO LIKE ? ORDER BY NOME_GENERO;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, "%"+nome_genero+"%");
+            rs = ps.executeQuery();
+
+            resultado = getListaGenero(rs);
+
+            rs.close();
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
+    
     public List<Genero> getGeneros(String nome_genero) throws SQLException {
         List<Genero> resultado = new ArrayList<Genero>();
         Connection con = pool.getConnection();
@@ -88,7 +111,7 @@ public class GeneroDAO implements InterfaceGeneroDAO {
 
         try {
             ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, nome_genero);
+            ps.setString(1, "%"+nome_genero+"%");
             rs = ps.executeQuery();
 
             resultado = getListaGenero(rs);
@@ -139,8 +162,7 @@ public class GeneroDAO implements InterfaceGeneroDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO `locadora`.`DIARIA`(`NOME_DIARIA`,`VALOR`,"
-                + "`VALOR_PROMOCAO`,`DIAS`,`MULTAS`)VALUES(?,?,?,?,?);";
+        String sqlInsert = "INSERT INTO `locadora`.`GENERO`(`NOME_GENERO`)VALUES(?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);

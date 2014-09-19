@@ -55,7 +55,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
     }
 
     @Override
-    public Diaria getDiaria(Integer codigo) throws SQLException {
+    public Diaria getDiaria_codigo(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -79,7 +79,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
     }
 
     @Override
-    public List<Diaria> getDiarias(String nome_diaria) throws SQLException {
+    public List<Diaria> getDiaria_nome(String nome_diaria) throws SQLException {
         List<Diaria> resultado = new ArrayList<Diaria>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -88,7 +88,29 @@ public class DiariaDAO implements InterfaceDiariaDAO {
 
         try {
             ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, nome_diaria);
+            ps.setString(1, "%"+nome_diaria+"%");
+            rs = ps.executeQuery();
+
+            resultado = getListaDiaria(rs);
+
+            rs.close();
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
+        public List<Diaria> getDiarias(String nome_diaria) throws SQLException {
+        List<Diaria> resultado = new ArrayList<Diaria>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT * FROM DIARIA WHERE NOME_DIARIA LIKE ? ORDER BY NOME_DIARIA;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, "%"+nome_diaria+"%");
             rs = ps.executeQuery();
 
             resultado = getListaDiaria(rs);

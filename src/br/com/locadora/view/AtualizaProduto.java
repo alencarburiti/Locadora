@@ -38,11 +38,6 @@ public class AtualizaProduto extends javax.swing.JFrame {
     /** Creates new form ProdutoAlterarGUI */
     public AtualizaProduto() {
         initComponents();
-        try {
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
     }
 
     public AtualizaProduto(Produto produto) {

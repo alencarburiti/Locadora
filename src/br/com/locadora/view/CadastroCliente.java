@@ -42,11 +42,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
         janelapai = null;
         janelapai2 = null;
 
-        try {
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
+     
     }
 
     public MenuCliente janelapai;

@@ -32,8 +32,9 @@ import javax.swing.UIManager;
 public class CadastroGenero extends javax.swing.JFrame {
 
     public MenuGenero janelapai;
-
-    List<Genero> generos;
+    public List<Genero> generos;
+    public InterfacePool pool;
+    public SiscomController controller;
 
     /**
      * Creates new form DestinoCadastroGUI
@@ -41,16 +42,6 @@ public class CadastroGenero extends javax.swing.JFrame {
     public CadastroGenero() {
         initComponents();
         janelapai = null;
-      
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.smoothmetal.SmoothmetalLookAndAndFeel");
-            //UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
-            //UIManager.setLookAndFeel(seta_look);
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -79,7 +70,7 @@ public class CadastroGenero extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +80,7 @@ public class CadastroGenero extends javax.swing.JFrame {
         });
         getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, 35));
 
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Cancelar");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -149,17 +140,9 @@ public class CadastroGenero extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_nome_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_generoKeyPressed
-        jtf_nome_genero.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent evt) {
-                if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                    String s = jtf_nome_genero.getText();
-                    jtf_nome_genero.setText(s.toUpperCase());
-                }
-            }
-        });
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            verificaCadastro();
-            janelapai.listarGenero();
+            
+//            janelapai.listarGenero();
         }
     }//GEN-LAST:event_jtf_nome_generoKeyPressed
 
@@ -199,22 +182,19 @@ public class CadastroGenero extends javax.swing.JFrame {
         setVisible(false);
 
         if (janelapai != null) {
-            janelapai.listarGenero();
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
             janelapai.request();
         }
-       
     }
-    InterfacePool pool;
-    SiscomController controller;
+    
 
     private void enviaDados() {
         if (verificarCampos()) {
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarGenero");
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-            retornaJanelaPai();
+//            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+//            retornaJanelaPai();
         }
     }
 
@@ -236,20 +216,5 @@ public class CadastroGenero extends javax.swing.JFrame {
             return true;
         }
     }
-
-    public void verificaCadastro() {
-//        GeneroDAO genero = new GeneroDAO();
-//        generos = genero.listarGeneroDescricao(jtf_nome_genero.getText().trim());
-//        validaCadastro(generos);
-    }
-
-    public void validaCadastro(List<Genero> generos) {//verifica cadastro existente que retornou de uma lista
-
-        if (generos.size() == 0) {
-//            cadastroGenero();
-        } else {
-            JOptionPane.showMessageDialog(null, "Armazém existente");
-            jtf_nome_genero.requestFocus();
-        }
-    }
+    
 }

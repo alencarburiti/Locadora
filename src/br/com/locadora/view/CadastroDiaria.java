@@ -32,23 +32,13 @@ import javax.swing.UIManager;
 public class CadastroDiaria extends javax.swing.JFrame {
 
     public MenuDiaria janelapai;
-
-    List<Diaria> generos;
+    public List<Diaria> generos;
 
     /** Creates new form DestinoCadastroGUI */
     public CadastroDiaria() {
         initComponents();
         janelapai = null;
-      
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.smoothmetal.SmoothmetalLookAndAndFeel");
-            //UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
-            //UIManager.setLookAndFeel(seta_look);
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
+    
     }
 
     @SuppressWarnings("unchecked")

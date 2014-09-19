@@ -33,16 +33,7 @@ public class ConsultaTipoObjeto extends javax.swing.JFrame {
 
     public ConsultaTipoObjeto() {
         initComponents();
-
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
-
         janelapai = null;
-
     }
     List<TipoObjeto> fornecedores;
 

@@ -504,7 +504,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         MenuGenero menuGenero = new MenuGenero();
         menuGenero.setTelaPrincipal(this);
         menuGenero.setVisible(true);
-        setStatusTela(false);
+//        setStatusTela(false);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void menu_cadastrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_cadastrosActionPerformed

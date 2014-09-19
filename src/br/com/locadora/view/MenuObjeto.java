@@ -13,43 +13,30 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
-import br.com.locadora.util.ItemDbGrid;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 
 public class MenuObjeto extends javax.swing.JFrame {
 
-    String permissao;
+    public String permissao;
+    public InterfacePool pool;
+    public SiscomController controller;
+    private TelaPrincipal_Interface telaPrincipal;//Recebendo tela como parametro para atualização apos pesquisa
+    public List<Cliente> clientes;
 
     public MenuObjeto() {
         initComponents();
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
     }
     TelaPrincipal janelapai;
 
     public void setJanelaPai(TelaPrincipal janelapai) {
-
-        janelapai = janelapai;
+        this.janelapai = janelapai;
         permissao = janelapai.permissao;
-
     }
 
     /**
@@ -69,10 +56,9 @@ public class MenuObjeto extends javax.swing.JFrame {
         jl_pesquisar_destino = new javax.swing.JLabel();
         jb_buscar = new javax.swing.JButton();
         jtf_consulta = new javax.swing.JTextField();
+        jRadioButton1 = new javax.swing.JRadioButton();
         jb_sair = new javax.swing.JButton();
         jb_novo = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_cliente = new javax.swing.JTable();
         jb_alterar = new javax.swing.JButton();
@@ -88,7 +74,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultar Objeto"));
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -119,25 +105,30 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jrb_descricaoActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
+        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
         jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 62, -1, -1));
 
-        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, -1, -1));
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, -1, -1));
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 520, 20));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 640, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 688, 109));
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setText("Código de Barras");
+        jRadioButton1.setName("jRadioButton1"); // NOI18N
+        jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 790, 109));
 
         jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_sair.setText("Sair");
@@ -147,7 +138,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, 33));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, -1));
 
         jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo.setText("Novo");
@@ -158,45 +149,6 @@ public class MenuObjeto extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
-
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Produto", "Lote", "Preço", "Quantidade", "Vencimento"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable1.setName("jTable1"); // NOI18N
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(50);
-        }
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 688, 150));
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -213,14 +165,14 @@ public class MenuObjeto extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Nome", "Data Nascimento", "CPF", "Email", "Status"
+                        "Código", "Descrição Objeto", "Título Original", "Elenco", "Diária"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false
+                        false, false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -236,14 +188,12 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jScrollPane3.setViewportView(jtbl_cliente);
                 if (jtbl_cliente.getColumnModel().getColumnCount() > 0) {
                     jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(20);
-                    jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(100);
-                    jtbl_cliente.getColumnModel().getColumn(2).setPreferredWidth(30);
-                    jtbl_cliente.getColumnModel().getColumn(3).setPreferredWidth(30);
+                    jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(200);
+                    jtbl_cliente.getColumnModel().getColumn(2).setPreferredWidth(200);
                     jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(30);
-                    jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(30);
                 }
 
-                getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 688, 166));
+                getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 790, 166));
 
                 jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar.setText("Alterar");
@@ -265,7 +215,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                 });
                 getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, -1));
 
-                setSize(new java.awt.Dimension(752, 568));
+                setSize(new java.awt.Dimension(859, 399));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -346,9 +296,8 @@ public class MenuObjeto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jb_alterar;
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_excluir;
@@ -361,9 +310,7 @@ public class MenuObjeto extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_cliente;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-    private TelaPrincipal_Interface telaPrincipal;//Recebendo tela como parametro para atualização apos pesquisa
-    
-    List<Cliente> clientes;
+
     public Cliente tbClienteLinhaSelecionada(JTable tb) {
         Cliente cliente = null;
         if (tb.getSelectedRow() != -1) {
@@ -372,7 +319,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         }
         return cliente;
     }
-    
+
     public void alterar() {
 //        Cliente cliente = tbClienteLinhaSelecionada(jtbl_cliente);       
 //        if (cliente != null) {
@@ -395,168 +342,4 @@ public class MenuObjeto extends javax.swing.JFrame {
         jtf_consulta.requestFocus();
     }
 
-    InterfacePool pool;
-    SiscomController controller;
-
-    public void listar_clientes_cpf() {
-        controller = new SiscomController();
-        controller.processarRequisicao("consultarCliente_cpf");
-
-        if (jtf_consulta.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Informe o código para procurar");
-        } else {
-            controller = new SiscomController();
-            controller.processarRequisicao("consultarCliente_cpf");
-        }
-    }
-//
-//    public void listarFornecedor() {
-//        EntradaDAO controlEntrada = new EntradaDAO();
-//        entradas = controlEntrada.listarFornecedor(jtf_consulta.getText().trim() + "%");
-//        mostrarNotas(entradas);
-//    }
-//
-//    public void listarEntradas() {
-//        EntradaDAO controlEntrada = new EntradaDAO();
-//        entradas = controlEntrada.listarDescricao("%" + jtf_consulta.getText().trim() + "%");
-//        mostrarNotas(entradas);
-//
-//    }
-
-//    public void mostrarNotas(List<EntradaModel> entradas) {
-//        DefaultTableModel tableModel = (DefaultTableModel) jtbl_cliente.getModel();
-//        tableModel.setNumRows(0);
-//
-//        if (entradas.size() == 0) {
-//            JOptionPane.showMessageDialog(this, "Nenhuma entrada encontrada");
-//
-//        } else {
-//
-//            for (int i = 0; i < entradas.size(); i++) {
-//                try {
-//                    EntradaModel entrada = new EntradaModel();
-//                    entrada.setIdEntrada(entradas.get(i).getIdEntrada());
-//                    entrada.setLancamento(entradas.get(i).getLancamento());
-//                    Date data;
-//
-//                    SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-//                    SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-//
-//                    String lancamento = out.format(in.parse(entradas.get(i).getLancamento().toString()));
-//                    String emissao = out.format(in.parse(entradas.get(i).getEmissao().toString()));
-//
-//                    entrada.setFornecedor(entradas.get(i).getFornecedor());
-//                    entrada.setNotaFiscal(entradas.get(i).getNotaFiscal());
-//                    entrada.setnSérie(entradas.get(i).getnSérie());
-//                    entrada.setEmissao(entradas.get(i).getEmissao());
-//
-//                    DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
-//                    ItemDbGrid hashDbGrid = new ItemDbGrid(entrada, entrada.getFornecedor().getRazao_social());
-//                    row.addRow(new Object[]{entrada.getIdEntrada(), lancamento, hashDbGrid, entrada.getNotaFiscal(), entrada.getnSérie(), emissao});
-//                } catch (ParseException ex) {
-//                    Logger.getLogger(MenuObjeto.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//
-//            }
-//        }
-//
-//    }
-
-//    public void listarItem() {
-//        EntradaModel entrada = tbNotaSelecionada(jtbl_cliente);
-//        if (entrada != null) {
-//            EntradaDAO controlEntrada = new EntradaDAO();
-//            Integer nota;
-//            nota = entrada.getIdEntrada();
-//            //controlEntrada.listarItens(entrada.getIdEntrada());
-//            entradaItens = controlEntrada.listarItens(nota);
-//            mostrarItens(entradaItens);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Selecione uma nota");
-//            jtf_consulta.requestFocus();
-//        }
-//    }
-//
-//    public EntradaModel tbNotaSelecionada(JTable tb) {
-//        EntradaModel entrada = null;
-//        if (tb.getSelectedRow() != -1) {
-//            entrada = new EntradaModel();
-////            entrada.setIdEntrada(entradas.get(tb.getSelectedRow()).getIdEntrada());
-//
-//        }
-//        return entrada;
-//
-//    }
-
-//    public void mostrarItens(List<EntradaItem> entradaItens) {
-//        ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
-//        jTable1.updateUI();
-//
-//        if (entradaItens.size() == 0) {
-//            JOptionPane.showMessageDialog(this, "Nenhum item encontrado");
-//
-//        } else {
-//
-//            String preço = null;
-//
-//            for (int i = 0; i < entradaItens.size(); i++) {
-//                try {
-//                    //ou i<destino.size() para retornar todos
-//                    EntradaItem entradaItemModel = new EntradaItem();
-//                    entradaItemModel.setProduto(entradaItens.get(i).getProduto());
-//                    entradaItemModel.setLote(entradaItens.get(i).getLote());
-//                    entradaItemModel.setQnt(entradaItens.get(i).getQnt());
-//                    entradaItemModel.setPreco(entradaItens.get(i).getPreco());
-//                    entradaItemModel.setVencimento(entradaItens.get(i).getVencimento());
-//
-//                    preço = String.valueOf(entradaItens.get(i).getPreco());
-//                    preço = setPrecoFormat(preço);
-//
-//                    SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-//                    SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-//
-//                    String vencimento = out.format(in.parse(entradaItens.get(i).getVencimento().toString()));
-//
-//                    DefaultTableModel row = (DefaultTableModel) jTable1.getModel();
-//                    ItemDbGrid hashDbGrid = new ItemDbGrid(entradaItemModel, entradaItemModel.getProduto().getNome_produto());
-//                    row.addRow(new Object[]{hashDbGrid, entradaItemModel.getLote(),
-//                        preço, entradaItemModel.getQnt(), vencimento});
-//                } catch (ParseException ex) {
-//                    Logger.getLogger(MenuObjeto.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//
-//            }
-//            //   JOptionPane.showMessageDialog(null, preço);
-//        }
-//
-//    }
-
-//    public void statusTela(boolean status) {
-//        if (status) {
-//            this.setVisible(status);
-//        }
-//        this.setEnabled(status);
-//    }
-
-    public Double getPrecoFormato(String preco) {
-        Double precoFormatado = 0.0;
-        try {
-            preco = preco.replace("R", "");
-            preco = preco.replace("$", "");
-            preco = preco.replace(",", ".");
-            preco = preco.replace(" ", "");
-            precoFormatado = Double.parseDouble(preco.trim());
-
-            //this.objFuncionario.setSalario(getSalarioFormat(jTSalario.getText())); pegar valor em double
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");
-        }
-        return precoFormatado;
-    }
-
-    public String setPrecoFormat(String preco) {
-        DecimalFormat dFormat = new DecimalFormat();
-        dFormat.applyPattern("R$ #0.00");
-        return dFormat.format(getPrecoFormato(preco));
-    }
 }

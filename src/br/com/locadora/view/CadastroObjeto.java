@@ -45,12 +45,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         janelapai = null;
         janelapai2 = null;
 
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
+       
     }
 
     public CadastroObjeto janelapai;

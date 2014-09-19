@@ -33,9 +33,9 @@ public class ConsultarCliente implements InterfaceCommand {
                 cliente = clienteDAO.getCliente_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
                 mostrar_clientes(cliente);
             } else if (MenuCliente.jrb_nome_cliente.isSelected() == true) {
-                cliente = null;
-                cliente = clienteDAO.getCliente_nome(jtf_consulta.getText().trim());
-                mostrar_clientes(cliente);
+                clientes = null;
+                clientes = clienteDAO.getCliente_nome(jtf_consulta.getText().trim());
+                mostrar_clientes(clientes);
             } else if (MenuCliente.jrb_cpf.isSelected() == true) {
                 cliente = null;
                 cliente = clienteDAO.getCliente_cpf(jtf_consulta.getText().trim());

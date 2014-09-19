@@ -52,7 +52,6 @@ public class MenuCliente extends javax.swing.JFrame {
         jl_pesquisar_destino = new javax.swing.JLabel();
         jb_buscar = new javax.swing.JButton();
         jtf_consulta = new javax.swing.JTextField();
-        jtb_todos = new javax.swing.JRadioButton();
         jrb_codigo_cliente = new javax.swing.JRadioButton();
         jrb_cpf = new javax.swing.JRadioButton();
         jrb_nome_cliente = new javax.swing.JRadioButton();
@@ -73,7 +72,7 @@ public class MenuCliente extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Cliente"));
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -82,7 +81,7 @@ public class MenuCliente extends javax.swing.JFrame {
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
         jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 62, -1, -1));
 
-        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_buscarActionPerformed1(evt);
@@ -93,14 +92,9 @@ public class MenuCliente extends javax.swing.JFrame {
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 520, 20));
 
-        buttonGroup1.add(jtb_todos);
-        jtb_todos.setSelected(true);
-        jtb_todos.setText("Todos");
-        jtb_todos.setName("jtb_todos"); // NOI18N
-        jPanel1.add(jtb_todos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
-
         buttonGroup1.add(jrb_codigo_cliente);
         jrb_codigo_cliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_codigo_cliente.setSelected(true);
         jrb_codigo_cliente.setText("Código Cliente");
         jrb_codigo_cliente.setName("jrb_codigo_cliente"); // NOI18N
         jrb_codigo_cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -108,21 +102,21 @@ public class MenuCliente extends javax.swing.JFrame {
                 jrb_codigo_clienteActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
+        jPanel1.add(jrb_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         buttonGroup1.add(jrb_cpf);
         jrb_cpf.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_cpf.setText("CPF");
         jrb_cpf.setName("jrb_cpf"); // NOI18N
-        jPanel1.add(jrb_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, -1, -1));
+        jPanel1.add(jrb_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, -1));
 
         buttonGroup1.add(jrb_nome_cliente);
         jrb_nome_cliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_nome_cliente.setText("Nome");
         jrb_nome_cliente.setName("jrb_nome_cliente"); // NOI18N
-        jPanel1.add(jrb_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+        jPanel1.add(jrb_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 688, 109));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 670, 109));
 
         jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_sair.setText("Sair");
@@ -132,7 +126,7 @@ public class MenuCliente extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, 33));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, -1));
 
         jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo.setText("Novo");
@@ -186,7 +180,7 @@ public class MenuCliente extends javax.swing.JFrame {
             jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(30);
         }
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 688, 230));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 670, 230));
 
         jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
         jb_alterar.setText("Alterar");
@@ -208,7 +202,7 @@ public class MenuCliente extends javax.swing.JFrame {
         });
         getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, -1));
 
-        setSize(new java.awt.Dimension(742, 454));
+        setSize(new java.awt.Dimension(728, 454));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -288,7 +282,6 @@ public class MenuCliente extends javax.swing.JFrame {
     public static javax.swing.JRadioButton jrb_codigo_cliente;
     public static javax.swing.JRadioButton jrb_cpf;
     public static javax.swing.JRadioButton jrb_nome_cliente;
-    private javax.swing.JRadioButton jtb_todos;
     public static javax.swing.JTable jtbl_cliente;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
