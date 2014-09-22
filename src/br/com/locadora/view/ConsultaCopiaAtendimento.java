@@ -228,7 +228,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
         if (jtbl_copia.getSelectedRow() == 1) {
-            botaoOK(jtbl_copia);
+            botaoOK(jtbl_copia);            
         }
 }//GEN-LAST:event_jb_okActionPerformed
     public void botaoOK(JTable tb) {

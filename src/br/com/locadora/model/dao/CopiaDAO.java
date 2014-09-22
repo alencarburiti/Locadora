@@ -83,6 +83,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    A.CODIGO_OBJETO = B.CODIGO_OBJETO\n"
                 + "        AND C.CODIGO_DIARIA = B.CODIGO_DIARIA\n"
                 + "        AND A.DEL_FLAG = 0\n"
+                + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
                 + "		AND A.CODIGO_INTERNO = ?;";
 
@@ -130,6 +131,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    A.CODIGO_OBJETO = B.CODIGO_OBJETO\n"
                 + "        AND C.CODIGO_DIARIA = B.CODIGO_DIARIA\n"
                 + "        AND A.DEL_FLAG = 0\n"
+                + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
                 + "		AND B.TITULO_ORIGINAL LIKE ?;";
 
@@ -173,6 +175,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    A.CODIGO_OBJETO = B.CODIGO_OBJETO\n"
                 + "        AND C.CODIGO_DIARIA = B.CODIGO_DIARIA\n"
                 + "        AND A.DEL_FLAG = 0\n"
+                + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
                 + "		AND B.ELENCO LIKE ?;";
 

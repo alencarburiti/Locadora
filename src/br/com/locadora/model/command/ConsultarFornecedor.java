@@ -13,13 +13,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class ConsultarDiaria implements InterfaceCommand {
+public class ConsultarFornecedor implements InterfaceCommand {
 
     private final InterfaceDiariaDAO diariaDAO;
     public List<Diaria> diarias;
     public Diaria diaria;
 
-    public ConsultarDiaria(InterfaceDiariaDAO diariaDAO) {
+    public ConsultarFornecedor(InterfaceDiariaDAO diariaDAO) {
         super();
         this.diariaDAO = diariaDAO;
     }
@@ -36,7 +36,7 @@ public class ConsultarDiaria implements InterfaceCommand {
                 mostrar_Diarias(diarias);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultarDiaria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultarFornecedor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return "OK";

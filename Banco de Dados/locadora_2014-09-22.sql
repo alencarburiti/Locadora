@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.20)
 # Database: locadora
-# Generation Time: 2014-09-19 22:25:05 +0000
+# Generation Time: 2014-09-22 20:17:57 +0000
 # ************************************************************
 
 
@@ -91,18 +91,19 @@ CREATE TABLE `COPIA` (
   `PRECO_CUSTO` double DEFAULT NULL,
   `CODIGO_OBJETO` int(11) DEFAULT NULL,
   `DEL_FLAG` int(1) DEFAULT '0',
+  `DEFECT_FLAG` int(1) DEFAULT '0',
   PRIMARY KEY (`CODIGO_COPIA`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 LOCK TABLES `COPIA` WRITE;
 /*!40000 ALTER TABLE `COPIA` DISABLE KEYS */;
 
-INSERT INTO `COPIA` (`CODIGO_COPIA`, `CODIGO_INTERNO`, `LOCALIZACAO`, `IDIOMA`, `LEGENDA`, `DATA_AQUISICAO`, `PRECO_CUSTO`, `CODIGO_OBJETO`, `DEL_FLAG`)
+INSERT INTO `COPIA` (`CODIGO_COPIA`, `CODIGO_INTERNO`, `LOCALIZACAO`, `IDIOMA`, `LEGENDA`, `DATA_AQUISICAO`, `PRECO_CUSTO`, `CODIGO_OBJETO`, `DEL_FLAG`, `DEFECT_FLAG`)
 VALUES
-	(1,1,'1010-1','Chinês','Chinês','2000-03-19',2,NULL,0),
-	(2,1,'1010-1','Chinês','Chinês','2000-03-19',2,NULL,0),
-	(3,1,'1010-1','Chinês','Chinês','2000-03-19',2,6,0),
-	(4,23213,'321','Chinês','Chinês','2000-03-19',0,6,0);
+	(1,1,'1010-1','Chinês','Chinês','2000-03-19',2,NULL,0,0),
+	(2,1,'1010-1','Chinês','Chinês','2000-03-19',2,NULL,0,0),
+	(3,1,'1010-1','Chinês','Chinês','2000-03-19',2,6,0,0),
+	(4,23213,'321','Chinês','Chinês','2000-03-19',0,6,0,1);
 
 /*!40000 ALTER TABLE `COPIA` ENABLE KEYS */;
 UNLOCK TABLES;

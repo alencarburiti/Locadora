@@ -319,22 +319,47 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 
         jMenuItem3.setText("Gerar Código de Barras");
         jMenuItem3.setName("jMenuItem3"); // NOI18N
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu15.add(jMenuItem3);
 
         jMenuItem12.setText("Idioma");
         jMenuItem12.setName("jMenuItem12"); // NOI18N
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu15.add(jMenuItem12);
 
         jMenuItem13.setText("Legenda");
         jMenuItem13.setName("jMenuItem13"); // NOI18N
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu15.add(jMenuItem13);
 
         jMenuItem14.setText("Mídia");
         jMenuItem14.setName("jMenuItem14"); // NOI18N
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu15.add(jMenuItem14);
 
         jMenuItem15.setText("Tipo de Objeto");
         jMenuItem15.setName("jMenuItem15"); // NOI18N
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu15.add(jMenuItem15);
 
         menu_cadastros.add(jMenu15);
@@ -622,6 +647,31 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         menuObjeto.setVisible(true);
 //        setStatusTela(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        JOptionPane.showMessageDialog(null, "Em construção");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        JOptionPane.showMessageDialog(null, "Em construção");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        JOptionPane.showMessageDialog(null, "Em construção");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        JOptionPane.showMessageDialog(null, "Em construção");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        JOptionPane.showMessageDialog(null, "Em construção");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     /**
      * @param args the command line arguments

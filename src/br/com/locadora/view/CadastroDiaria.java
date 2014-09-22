@@ -293,7 +293,6 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }); 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             enviaDados();
-            janelapai.listarDiaria();
         }
     }//GEN-LAST:event_jtf_nome_diariaKeyPressed
 
@@ -387,7 +386,6 @@ public class CadastroDiaria extends javax.swing.JFrame {
         setVisible(false);
 
         if (janelapai != null) {
-            janelapai.listarDiaria();
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
             janelapai.request();
