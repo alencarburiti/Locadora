@@ -22,6 +22,7 @@ public class Copia {
     private Double preco_custo;
     private Objeto objeto; 
     private String status;
+    private String codigo_barras;
 
     public Integer getCodigo_copia() {
         return codigo_copia;
@@ -93,6 +94,14 @@ public class Copia {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCodigo_barras() {
+        return codigo_barras;
+    }
+
+    public void setCodigo_barras(String codigo_barras) {
+        this.codigo_barras = codigo_barras;
     }
 
     

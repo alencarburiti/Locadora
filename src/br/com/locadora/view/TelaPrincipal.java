@@ -21,8 +21,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     public String permissao;
     public IniciaLogin loginInicia;
     public Atendimento atendimento;
-    public boolean saida = false;
-    public boolean entrada = false;
 
     public TelaPrincipal() {
         initComponents();
@@ -529,19 +527,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     }//GEN-LAST:event_jmi_produtoActionPerformed
 
     private void jmi_entradaActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entradaActionPerformed1
-        if (entrada == false) {
-            try {
-                atendimento = new Atendimento();
-            } catch (SQLException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            atendimento.setVisible(true);
-            atendimento.setTelaPrincipal(this);
-            atendimento.setJanelaPai(this);
-            entrada = true;
-        } else {
-            atendimento.setVisible(true);
+        try {
+            atendimento = new Atendimento();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        atendimento.setVisible(true);
+        atendimento.setTelaPrincipal(this);
+        atendimento.setJanelaPai(this);
+        atendimento.setVisible(true);
 
         //    setStatusTela(false);
 

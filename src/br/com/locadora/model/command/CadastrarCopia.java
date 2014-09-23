@@ -37,6 +37,7 @@ public class CadastrarCopia implements InterfaceCommand {
             copia.setIdioma((String) CadastroObjeto.jcb_idioma.getSelectedItem());
             copia.setLegenda((String) CadastroObjeto.jcb_legenda.getSelectedItem());
             copia.setPreco_custo(CadastroObjeto.getPrecoFormato((String) CadastroObjeto.jtf_preco_custo.getText()));
+            copia.setCodigo_barras(CadastroObjeto.jtf_codigo_barras.getText().trim());
             try {
                 copia.setData_aquisicao(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastroObjeto.jtf_data_aquisicao.getText()));
             } catch (ParseException ex) {
@@ -67,7 +68,7 @@ public class CadastrarCopia implements InterfaceCommand {
 
             DefaultTableModel row = (DefaultTableModel) CadastroObjeto.jtbl_copia.getModel();
             ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getLocalizacao());
-            row.addRow(new Object[]{copia.getCodigo_copia(), copia.getCodigo_interno(), hashDbGrid, copia.getIdioma(), copia.getLegenda()});
+            row.addRow(new Object[]{copia.getCodigo_barras(), copia.getCodigo_interno(), hashDbGrid, copia.getIdioma(), copia.getLegenda()});
             
             CadastroObjeto.jtf_codigo_interno.setText("");
             CadastroObjeto.jtf_localizacao.setText("");

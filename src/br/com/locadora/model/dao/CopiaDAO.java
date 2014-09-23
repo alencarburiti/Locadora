@@ -281,7 +281,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 
         String sqlInsert = "INSERT INTO `locadora`.`COPIA`(`CODIGO_INTERNO`,"
                 + "`LOCALIZACAO`,`IDIOMA`,`LEGENDA`,`DATA_AQUISICAO`,"
-                + "`PRECO_CUSTO`,`CODIGO_OBJETO`)VALUES(?,?,?,?,?,?,?);";
+                + "`PRECO_CUSTO`,`CODIGO_OBJETO`,`CODIGO_BARRAS`)VALUES(?,?,?,?,?,?,?,?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -325,6 +325,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         ps.setDate(5, data_aquisicao);
         ps.setDouble(6, copia.getPreco_custo());
         ps.setInt(7, copia.getObjeto().getCodigo_objeto());
+        ps.setString(8, copia.getCodigo_barras());
     }
 
     public List<Copia> getCopias() throws SQLException {
