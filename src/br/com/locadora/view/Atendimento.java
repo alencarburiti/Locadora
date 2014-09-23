@@ -1,12 +1,14 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.Produto;
+import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
@@ -31,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 public class Atendimento extends javax.swing.JFrame implements Atendimento_InterFace {
-    
+
     public DecimalFormat formatoPreco;
     public MaskFormatter formatoData;
     public String permissao;
@@ -45,7 +47,6 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
     public InterfacePool pool;
     public SiscomController controller;
     public TelaPrincipal janelapai;
-    
 
     public Atendimento() throws SQLException {
         initComponents();
@@ -135,7 +136,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         }
         jftf_data_locacao = new JFormattedTextField(formatoData);
         jLabel16 = new javax.swing.JLabel();
-        jtf_codigo_copia2 = new javax.swing.JTextField();
+        jtf_codigo_barras = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -567,8 +568,13 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jLabel16.setName("jLabel16"); // NOI18N
         jp_locacao.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
-        jtf_codigo_copia2.setName("jtf_codigo_copia2"); // NOI18N
-        jp_locacao.add(jtf_codigo_copia2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, -1));
+        jtf_codigo_barras.setName("jtf_codigo_barras"); // NOI18N
+        jtf_codigo_barras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_codigo_barrasKeyPressed(evt);
+            }
+        });
+        jp_locacao.add(jtf_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, -1));
 
         jtp_locacao.addTab("Locação", jp_locacao);
 
@@ -1587,6 +1593,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private void jtf_preco12FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco12FocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_preco12FocusLost
+
+    private void jtf_codigo_barrasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_barrasKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            consulta_codigo_barras(jtf_codigo_barras.getText().trim());
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_codigo_barrasKeyPressed
     public static boolean validaData(String dataString) throws java.text.ParseException {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -1761,10 +1774,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public static javax.swing.JTable jtbl_devolucao;
     public static javax.swing.JTable jtbl_locacao;
     public static javax.swing.JTable jtbl_venda;
+    private javax.swing.JTextField jtf_codigo_barras;
     public static javax.swing.JTextField jtf_codigo_cliente;
     private javax.swing.JTextField jtf_codigo_copia;
     private javax.swing.JTextField jtf_codigo_copia1;
-    private javax.swing.JTextField jtf_codigo_copia2;
     private javax.swing.JTextField jtf_codigo_copia_devolucao;
     private javax.swing.JTextField jtf_codigo_objeto;
     private javax.swing.JTextField jtf_descricao_objeto;
@@ -1872,7 +1885,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
     }
 
-    public boolean verificarItem() {
+    public boolean verificarItemLocacao() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
         if (jtf_codigo_copia.getText().equals("")) {
@@ -1889,7 +1902,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
 
     public void alimentarItens(Copia copia) throws ParseException {
-        if (verificarItem() == true) {
+        if (verificarItemLocacao() == true) {
 
             String valor;
             String valor_promocao;
@@ -1967,5 +1980,23 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     public void setRequestGenero() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void consulta_codigo_barras(String codigo_barras) {
+        try {
+            pool = new Pool();
+            CopiaDAO copiaDAO = new CopiaDAO(pool);
+            copia = null;
+            copia = copiaDAO.getCopia_codigo_barras(codigo_barras);
+            if (copia != null) {
+                carregaCopia(copia);
+            } else {
+                JOptionPane.showMessageDialog(null, "Código de Barra inválido");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Problemas com a consulta");
+            ex.printStackTrace();
+        }
     }
 }

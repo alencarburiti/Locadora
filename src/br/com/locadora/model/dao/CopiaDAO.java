@@ -105,6 +105,53 @@ public class CopiaDAO implements InterfaceCopiaDAO {
     }
     
     
+    public Copia getCopia_codigo_barras(String codigo_barras) throws SQLException {
+        List<Copia> resultado = new ArrayList<Copia>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT \n"
+                + "	A.CODIGO_COPIA, \n"
+                + "    A.CODIGO_INTERNO,\n"
+                + "    A.DEL_FLAG,\n"
+                + "    B.DESCRICAO_OBJETO,\n"
+                + "    B.TIPO_MOVIMENTO,\n"
+                + "    B.TIPO_MIDIA,\n"
+                + "    A.LOCALIZACAO,\n"
+                + "    A.IDIOMA,\n"
+                + "    A.LEGENDA,\n"
+                + "    C.DIAS,\n"
+                + "    C.VALOR,\n"
+                + "    C.VALOR_PROMOCAO\n"
+                + "FROM\n"
+                + "    locadora.COPIA A,\n"
+                + "    locadora.OBJETO B,\n"
+                + "    locadora.DIARIA C\n"
+                + "WHERE\n"
+                + "    A.CODIGO_OBJETO = B.CODIGO_OBJETO\n"
+                + "        AND C.CODIGO_DIARIA = B.CODIGO_DIARIA\n"
+                + "        AND A.DEL_FLAG = 0\n"
+                + "        AND A.DEFECT_FLAG = 0\n"
+                + "        AND TIPO_MOVIMENTO = 'Locação'\n"
+                + "		AND A.CODIGO_BARRAS = ?;";
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, codigo_barras);
+
+            rs = ps.executeQuery();
+
+            resultado = getListaCopia(rs);
+            if (resultado.size() > 0) {
+                return resultado.get(0);
+            }
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return null;
+    }
+    
     public List<Copia> getCopia_titulo(String titulo) throws SQLException {
         List<Copia> resultado = new ArrayList<Copia>();
         Connection con = pool.getConnection();

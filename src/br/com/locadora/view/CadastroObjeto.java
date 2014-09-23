@@ -45,7 +45,6 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         janelapai = null;
         janelapai2 = null;
 
-       
     }
 
     public CadastroObjeto janelapai;
@@ -197,7 +196,6 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         });
         jPanel1.add(jtf_titulo_original, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 340, -1));
 
-        jtf_descricao_objeto.setDocument(new UnaccentedDocument());
         jtf_descricao_objeto.setText("Mulher Infernal");
         jtf_descricao_objeto.setName("jtf_descricao_objeto");
         jtf_descricao_objeto.addActionListener(new java.awt.event.ActionListener() {
@@ -622,45 +620,16 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_descricao_objetoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_objetoKeyPressed
-        jtf_descricao_objeto.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent evt) {
-                if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                    String s = jtf_descricao_objeto.getText();
-                    jtf_descricao_objeto.setText(s.toUpperCase());
-                }
-            }
-        });
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descricao_objetoKeyPressed
     private void jtf_descricao_objetoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descricao_objetoFocusGained
-        jtf_descricao_objeto.setInputVerifier(new InputVerifier() {
 
-            public boolean verify(JComponent input) {
-                if (jtf_descricao_objeto.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Informe o principio ativo do produto");
-                    jtf_descricao_objeto.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descricao_objetoFocusGained
 
     private void jtf_titulo_originalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_titulo_originalFocusGained
-//    jtf_concentração.setInputVerifier(new InputVerifier() {
-//    public boolean verify(JComponent input) {
-//                if(jtf_concentração.getText().equals("")) {
-//                    JOptionPane.showMessageDialog(null, "Informe a concentação do produto");
-//                    jtf_concentração.requestFocus();
-//                    return false;
-//                } else {
-//                    return true;
-//                }
-//            }
-//    });
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jtf_titulo_originalFocusGained
 
     private void jtf_descricao_objetoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_objetoKeyReleased
@@ -672,14 +641,6 @@ private void jtf_titulo_originalActionPerformed(java.awt.event.ActionEvent evt) 
 }//GEN-LAST:event_jtf_titulo_originalActionPerformed
 
 private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_titulo_originalKeyPressed
-    jtf_titulo_original.addKeyListener(new KeyAdapter() {
-        public void keyReleased(KeyEvent evt) {
-            if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                String s = jtf_titulo_original.getText();
-                jtf_titulo_original.setText(s.toUpperCase());
-            }
-        }
-    });
 
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_titulo_originalKeyPressed
@@ -731,11 +692,15 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     }//GEN-LAST:event_jb_eliminar1ActionPerformed
 
     private void jb_adicionar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteActionPerformed
+
         if (jtf_codigo_objeto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Salvar primeiro o Objeto");
         } else {
-            controller = new SiscomController();
-            controller.processarRequisicao("cadastrarCopia");
+            if (verificarCamposCopia() == true) {
+                controller = new SiscomController();
+                controller.processarRequisicao("cadastrarCopia");
+
+            }
         }
     }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
 
@@ -903,6 +868,30 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
         if (jtf_descricao_objeto.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Descrição\n";
+        }
+
+        if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
+            JOptionPane.showMessageDialog(this, msgERRO);
+            jtf_descricao_objeto.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    public boolean verificarCamposCopia() {
+        String msgERRO = "Preencha os campos obrigatórios:\n";
+
+        if (jtf_codigo_interno.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Código Interno\n";
+        }
+        if (jtf_codigo_barras.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Código de Barras\n";
+        }
+
+        if (jtf_localizacao.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Localização\n";
         }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {

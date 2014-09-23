@@ -77,7 +77,7 @@ public class CadastrarCopia implements InterfaceCommand {
             CadastroObjeto.jtf_preco_custo.setText("R$ 0,00");
             CadastroObjeto.jtf_codigo_interno.requestFocus();
 //        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
+//            JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
 //        }
     }
 }

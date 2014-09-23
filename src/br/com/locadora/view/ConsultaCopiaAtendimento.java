@@ -187,7 +187,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_ator.setText("Ator");
                 jrb_ator.setName("jrb_ator"); // NOI18N
-                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
 
                 buttonGroup1.add(jrb_titulo);
                 jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -198,7 +198,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                         jrb_tituloActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
+                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
                 buttonGroup1.add(jrb_codigo);
                 jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -276,10 +276,6 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMaxWidth( 60 );
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMinWidth( 60 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMaxWidth( 60 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMinWidth( 60 );
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
