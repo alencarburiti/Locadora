@@ -43,13 +43,12 @@ public class ConsultarLocacao implements InterfaceCommand {
 
                 Copia copia = new Copia();
                 copia.setCodigo_copia((Integer) Atendimento.jtbl_locacao.getValueAt(i, 0));
-//                itemLocacao.setLocacao(locacao);
-                itemLocacao.setCopia(copia);
-                itemLocacao.setData_locacao(new SimpleDateFormat("dd/MM/yyyy").parse((String) Atendimento.jftf_data_locacao.getText()));
+                
+                itemLocacao.setCopia(copia);                
                 itens.add(itemLocacao);
             }
             mostrar_locacoes(itens);
-//            locacaoDAO.salvarItem(itens);
+
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a gravação: ");
 
@@ -65,7 +64,7 @@ public class ConsultarLocacao implements InterfaceCommand {
     }
 
     public void mostrar_locacoes(List<ItemLocacao> itemLocacoes) throws ParseException {
-        DefaultTableModel tableModel = (DefaultTableModel) Atendimento.jtbl_devolucao.getModel();
+        DefaultTableModel tableModel = (DefaultTableModel) Atendimento.jtbl_locacao_aberto.getModel();
         tableModel.setNumRows(0);
 
         if (itemLocacoes.size() == 0) {
@@ -98,13 +97,17 @@ public class ConsultarLocacao implements InterfaceCommand {
 
                 String data_locacao = out.format(in.parse(itemLocacoes.get(i).getData_locacao().toString()));
 
-                DefaultTableModel row = (DefaultTableModel) Atendimento.jtbl_devolucao.getModel();
+                DefaultTableModel row = (DefaultTableModel) Atendimento.jtbl_locacao_aberto.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
-                row.addRow(new Object[]{itemLocacao.getCodigo_item_locacao(),itemLocacao.getCodigo_item_locacao(), hashDbGrid, "Não", data_locacao, itemLocacao.getValor_multa(), 
+                row.addRow(new Object[]{itemLocacao.getCodigo_item_locacao(), hashDbGrid, "Não", data_locacao, "", itemLocacao.getValor_multa(), 
                     itemLocacao.getValor_multa(), itemLocacao.getDias_multa() });
                 
             }
             Atendimento.itemLocacoes = itemLocacoes;
+            Atendimento.jtbl_locacao_aberto.setFocusable(true);
+            Atendimento.jtbl_locacao_aberto.setVisible(true);
+            Atendimento.jtbl_locacao_aberto.show();
+            
         }
 
     }

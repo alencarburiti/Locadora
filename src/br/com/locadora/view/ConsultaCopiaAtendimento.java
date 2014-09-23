@@ -187,7 +187,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_ator.setText("Ator");
                 jrb_ator.setName("jrb_ator"); // NOI18N
-                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
+                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
                 buttonGroup1.add(jrb_titulo);
                 jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -198,12 +198,12 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                         jrb_tituloActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
 
                 buttonGroup1.add(jrb_codigo);
                 jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_codigo.setSelected(true);
-                jrb_codigo.setText("Código");
+                jrb_codigo.setText("Código Interno");
                 jrb_codigo.setName("jrb_codigo"); // NOI18N
                 jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {

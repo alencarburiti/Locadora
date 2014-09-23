@@ -57,7 +57,6 @@ public class CadastrarLocacao implements InterfaceCommand {
                 copia.setCodigo_copia((Integer) Atendimento.jtbl_locacao.getValueAt(i, 0));
                 itemLocacao.setLocacao(locacao);
                 itemLocacao.setCopia(copia);
-                itemLocacao.setData_locacao(new SimpleDateFormat("dd/MM/yyyy").parse((String) Atendimento.jftf_data_locacao.getText()));
                 itens.add(itemLocacao);
             }
             
@@ -71,8 +70,6 @@ public class CadastrarLocacao implements InterfaceCommand {
             System.out.println("Valor inválido: " + e.getMessage());
 
             e.printStackTrace();
-        } catch (ParseException ex) {
-            Logger.getLogger(CadastrarLocacao.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return "OK";
     }
