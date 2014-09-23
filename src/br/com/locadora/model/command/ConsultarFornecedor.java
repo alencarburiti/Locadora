@@ -29,10 +29,10 @@ public class ConsultarFornecedor implements InterfaceCommand {
         try {
             if (MenuDiaria.jrb_codigo_diaria.isSelected() == true) {
                 diaria = null;
-                diaria = diariaDAO.getDiaria_codigo(Integer.parseInt(MenuDiaria.jtf_pesquisar_diaria.getText().trim()));
+                diaria = diariaDAO.getDiaria_codigo(Integer.parseInt(MenuDiaria.jtf_consulta.getText().trim()));
             } else {
                 diarias = null;
-                diarias = diariaDAO.getDiaria_nome(MenuDiaria.jtf_pesquisar_diaria.getText().trim());
+                diarias = diariaDAO.getDiaria_nome(MenuDiaria.jtf_consulta.getText().trim());
                 mostrar_Diarias(diarias);
             }
         } catch (SQLException ex) {

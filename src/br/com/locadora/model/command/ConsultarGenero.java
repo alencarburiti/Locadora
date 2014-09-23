@@ -26,11 +26,12 @@ public class ConsultarGenero implements InterfaceCommand {
     }
 
     public String execute() {
+        if (MenuGenero.jtf_consulta.getText().equals("")) {
 
             if (MenuGenero.jrb_codigo.isSelected() == true) {
                 genero = null;
                 try {
-                    genero = generoDAO.getGenero_codigo(Integer.parseInt(MenuGenero.jtf_pesquisar_genero.getText().trim()));
+                    genero = generoDAO.getGenero_codigo(Integer.parseInt(MenuGenero.jtf_consulta.getText().trim()));
                 } catch (SQLException ex) {
                     Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -42,7 +43,7 @@ public class ConsultarGenero implements InterfaceCommand {
             } else {
                 generos = null;
                 try {
-                    generos = generoDAO.getGenero_nome(MenuGenero.jtf_pesquisar_genero.getText().trim());
+                    generos = generoDAO.getGenero_nome(MenuGenero.jtf_consulta.getText().trim());
                 } catch (SQLException ex) {
                     Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -52,7 +53,11 @@ public class ConsultarGenero implements InterfaceCommand {
                     Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-     
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Informe um parâmentro");
+        }
+
         return "OK";
     }
 
@@ -67,7 +72,7 @@ public class ConsultarGenero implements InterfaceCommand {
             for (int i = 0; i < generos.size(); i++) {
 
                 genero = new Genero();
-                
+
                 genero.setCodigo_genero(generos.get(i).getCodigo_genero());
                 genero.setNome_genero(generos.get(i).getNome_genero());
 

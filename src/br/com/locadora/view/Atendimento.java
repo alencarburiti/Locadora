@@ -41,7 +41,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
     public ListSelectionModel lsmItem;
     public String permissao;
     public Copia copia;
-    public static List<ItemLocacao> itemLocacaoes;
+    public static List<ItemLocacao> itemLocacoes;
 
     public Atendimento() throws SQLException {
         initComponents();
@@ -62,8 +62,6 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jb_salvar = new javax.swing.JButton();
-        jb_cancelar = new javax.swing.JButton();
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jtp_locacao = new javax.swing.JTabbedPane();
         jp_locacao = new javax.swing.JPanel();
@@ -291,28 +289,6 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         });
         getContentPane().setLayout(null);
 
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
-        jb_salvar.setText("Salvar");
-        jb_salvar.setName("jb_salvar"); // NOI18N
-        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_salvarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jb_salvar);
-        jb_salvar.setBounds(680, 10, 76, 35);
-
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
-        jb_cancelar.setName("jb_cancelar"); // NOI18N
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jb_cancelar);
-        jb_cancelar.setBounds(780, 10, 89, 35);
-
         jDesktopPane2.setName("jDesktopPane2"); // NOI18N
         getContentPane().add(jDesktopPane2);
         jDesktopPane2.setBounds(710, 100, 0, 0);
@@ -339,7 +315,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_valorFocusLost(evt);
             }
         });
-        jp_locacao.add(jtf_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 80, -1));
+        jp_locacao.add(jtf_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 110, -1));
 
         jtf_tipo_midia.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
 
@@ -361,11 +337,11 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_tipo_midiaKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_tipo_midia, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 70, -1));
+        jp_locacao.add(jtf_tipo_midia, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 90, -1));
 
         jtf_diaria.setEditable(false);
         jtf_diaria.setName("jtf_diaria"); // NOI18N
-        jp_locacao.add(jtf_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 70, -1));
+        jp_locacao.add(jtf_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
 
         jb_adicionar_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_locacao.setToolTipText("Incluir");
@@ -375,7 +351,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jb_adicionar_locacaoActionPerformed(evt);
             }
         });
-        jp_locacao.add(jb_adicionar_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 30, 30));
+        jp_locacao.add(jb_adicionar_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 30, 30));
 
         jb_remover_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_remover_locacao.setToolTipText("Excluir");
@@ -385,7 +361,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jb_remover_locacaoActionPerformed(evt);
             }
         });
-        jp_locacao.add(jb_remover_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 30, 30));
+        jp_locacao.add(jb_remover_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 30, 30));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Nome Objeto");
@@ -395,12 +371,12 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("Valor");
         jLabel5.setName("jLabel5"); // NOI18N
-        jp_locacao.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 50, -1));
+        jp_locacao.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 50, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("Tipo Mídia");
         jLabel6.setName("jLabel6"); // NOI18N
-        jp_locacao.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 70, -1));
+        jp_locacao.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 70, -1));
 
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel13.setText("Diária");
@@ -457,7 +433,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_nome_objetoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_nome_objeto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 410, -1));
+        jp_locacao.add(jtf_nome_objeto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 310, -1));
 
         jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel14.setText("Código Cópia");
@@ -465,7 +441,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jp_locacao.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jtf_codigo_copia.setName("jtf_codigo_copia"); // NOI18N
-        jp_locacao.add(jtf_codigo_copia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 80, -1));
+        jp_locacao.add(jtf_codigo_copia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 90, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
@@ -474,12 +450,12 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jButton1ActionPerformed(evt);
             }
         });
-        jp_locacao.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 30, -1));
+        jp_locacao.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 30, -1));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel8.setText("Valor Promocional");
         jLabel8.setName("jLabel8"); // NOI18N
-        jp_locacao.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 110, -1));
+        jp_locacao.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 110, -1));
 
         jtf_valor_promocao.setEditable(false);
         jtf_valor_promocao.setText("R$ 0,00");
@@ -492,7 +468,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_valor_promocaoFocusLost(evt);
             }
         });
-        jp_locacao.add(jtf_valor_promocao, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 80, -1));
+        jp_locacao.add(jtf_valor_promocao, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 110, -1));
 
         jcb_bolsa.setText("Bolsa");
         jcb_bolsa.setName("jcb_bolsa"); // NOI18N
@@ -501,7 +477,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jcb_bolsaActionPerformed(evt);
             }
         });
-        jp_locacao.add(jcb_bolsa, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, -1, -1));
+        jp_locacao.add(jcb_bolsa, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, -1, -1));
 
         jButton7.setText("Finalizar");
         jButton7.setName("jButton7"); // NOI18N
@@ -551,10 +527,10 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel9.setText("Data/Hora da Locação");
         jLabel9.setName("jLabel9"); // NOI18N
-        jp_locacao.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 170, 10));
+        jp_locacao.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 170, 10));
 
         jftf_data_locacao.setName("jftf_data_locacao"); // NOI18N
-        jp_locacao.add(jftf_data_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, 100, -1));
+        jp_locacao.add(jftf_data_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, 130, -1));
 
         jtp_locacao.addTab("Locação", jp_locacao);
 
@@ -581,7 +557,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -595,17 +571,17 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jtbl_devolucao.setName("jtbl_devolucao"); // NOI18N
         jScrollPane3.setViewportView(jtbl_devolucao);
         if (jtbl_devolucao.getColumnModel().getColumnCount() > 0) {
-            jtbl_devolucao.getColumnModel().getColumn(0).setResizable(false);
-            jtbl_devolucao.getColumnModel().getColumn(0).setPreferredWidth(20);
-            jtbl_devolucao.getColumnModel().getColumn(1).setResizable(false);
-            jtbl_devolucao.getColumnModel().getColumn(1).setPreferredWidth(20);
+            jtbl_devolucao.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jtbl_devolucao.getColumnModel().getColumn(1).setPreferredWidth(40);
             jtbl_devolucao.getColumnModel().getColumn(2).setPreferredWidth(150);
             jtbl_devolucao.getColumnModel().getColumn(3).setPreferredWidth(30);
             jtbl_devolucao.getColumnModel().getColumn(4).setPreferredWidth(30);
             jtbl_devolucao.getColumnModel().getColumn(5).setPreferredWidth(30);
+            jtbl_devolucao.getColumnModel().getColumn(6).setPreferredWidth(20);
+            jtbl_devolucao.getColumnModel().getColumn(7).setPreferredWidth(20);
         }
 
-        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 770, 200));
+        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 780, 200));
 
         jtf_nome_objeto_devolucao.setName("jtf_nome_objeto_devolucao"); // NOI18N
         jtf_nome_objeto_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1087,7 +1063,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jtp_locacao.addTab("Reservas", jPanel4);
 
         getContentPane().add(jtp_locacao);
-        jtp_locacao.setBounds(30, 120, 850, 450);
+        jtp_locacao.setBounds(30, 140, 850, 450);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -1098,16 +1074,14 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jLabel1.setName("jLabel1"); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 100, -1));
 
-        jtf_codigo_cliente.setEditable(false);
         jtf_codigo_cliente.setName("jtf_codigo_cliente"); // NOI18N
-        jPanel1.add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 88, -1));
+        jPanel1.add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 130, -1));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setText("Cliente");
         jLabel10.setName("jLabel10"); // NOI18N
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
-        jtf_nome_cliente.setEditable(false);
         jtf_nome_cliente.setName("jtf_nome_cliente"); // NOI18N
         jtf_nome_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -1119,7 +1093,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_nome_clienteKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 450, -1));
+        jPanel1.add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 450, -1));
 
         jb_fornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_fornecedor.setName("jb_fornecedor"); // NOI18N
@@ -1128,10 +1102,10 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jb_fornecedorActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_fornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, 30, -1));
+        jPanel1.add(jb_fornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, 30, -1));
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(30, 20, 620, 90);
+        jPanel1.setBounds(40, 40, 840, 90);
 
         setSize(new java.awt.Dimension(919, 621));
         setLocationRelativeTo(null);
@@ -1140,16 +1114,6 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
     }//GEN-LAST:event_formWindowOpened
-
-    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-
-}//GEN-LAST:event_jb_salvarActionPerformed
-
-    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        ((DefaultTableModel) jtbl_locacao.getModel()).setRowCount(0);
-        jtbl_locacao.updateUI();
-        this.setVisible(false);
-}//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
     }//GEN-LAST:event_formKeyPressed
@@ -1639,12 +1603,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JButton jb_adicionar2;
     private javax.swing.JButton jb_adicionar_locacao;
     private javax.swing.JButton jb_adicionar_locacao1;
-    private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_eliminar2;
     private javax.swing.JButton jb_fornecedor;
     private javax.swing.JButton jb_remover_locacao;
     private javax.swing.JButton jb_remover_locacao1;
-    private javax.swing.JButton jb_salvar;
     private javax.swing.JCheckBox jcb_bolsa;
     public static javax.swing.JFormattedTextField jftf_data_locacao;
     private javax.swing.JFormattedTextField jftf_vencimento2;

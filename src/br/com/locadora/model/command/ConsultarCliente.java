@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ConsultarCliente implements InterfaceCommand {
@@ -28,22 +29,24 @@ public class ConsultarCliente implements InterfaceCommand {
     public String execute() {
 
         try {
-            if (MenuCliente.jrb_codigo_cliente.isSelected() == true) {
-                cliente = null;
-                cliente = clienteDAO.getCliente_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
-                mostrar_clientes(cliente);
-            } else if (MenuCliente.jrb_nome_cliente.isSelected() == true) {
-                clientes = null;
-                clientes = clienteDAO.getCliente_nome(jtf_consulta.getText().trim());
-                mostrar_clientes(clientes);
-            } else if (MenuCliente.jrb_cpf.isSelected() == true) {
-                cliente = null;
-                cliente = clienteDAO.getCliente_cpf(jtf_consulta.getText().trim());
-                mostrar_clientes(cliente);
+            if (!MenuCliente.jtf_consulta.getText().equals("")) {
+                if (MenuCliente.jrb_codigo_cliente.isSelected() == true) {
+                    cliente = null;
+                    cliente = clienteDAO.getCliente_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
+                    mostrar_clientes(cliente);
+                } else if (MenuCliente.jrb_cpf.isSelected() == true) {
+                    cliente = null;
+                    cliente = clienteDAO.getCliente_cpf(jtf_consulta.getText().trim());
+                    mostrar_clientes(cliente);
+                } else {
+                    clientes = null;
+                    clientes = clienteDAO.getCliente_nome(jtf_consulta.getText().trim());
+                    mostrar_clientes(clientes);
+
+                }
             } else {
-                clientes = null;
-                clientes = clienteDAO.getClientes();
-                mostrar_clientes(clientes);
+                JOptionPane.showMessageDialog(null, "Informe um parâmentro");
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a consulta: ");
@@ -85,7 +88,7 @@ public class ConsultarCliente implements InterfaceCommand {
                 cliente.setEmail(clientes.get(i).getEmail());
 
                 cliente.setStatus(clientes.get(i).getStatus());
-                
+
                 if (cliente.getStatus().equals("A")) {
                     cliente.setStatus("Ativo");
                 } else {

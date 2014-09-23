@@ -66,7 +66,7 @@ public class MenuDiaria extends javax.swing.JFrame {
         jrb_descricao = new javax.swing.JRadioButton();
         jl_pesquisar_destino = new javax.swing.JLabel();
         jb_buscar = new javax.swing.JButton();
-        jtf_pesquisar_diaria = new javax.swing.JTextField();
+        jtf_consulta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbl_diaria = new javax.swing.JTable();
         jb_excluir = new javax.swing.JButton();
@@ -118,13 +118,13 @@ public class MenuDiaria extends javax.swing.JFrame {
         });
         jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, -1, -1));
 
-        jtf_pesquisar_diaria.setName("jtf_pesquisar_diaria"); // NOI18N
-        jtf_pesquisar_diaria.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_consulta.setName("jtf_consulta"); // NOI18N
+        jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_pesquisar_diariaKeyPressed(evt);
+                jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_pesquisar_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 57, 520, -1));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 57, 520, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 70, 660, 100));
 
@@ -244,7 +244,7 @@ public class MenuDiaria extends javax.swing.JFrame {
             this.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um armazém");
-            jtf_pesquisar_diaria.requestFocus();
+            jtf_consulta.requestFocus();
         }
     }
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
@@ -272,12 +272,12 @@ public class MenuDiaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
-    private void jtf_pesquisar_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisar_diariaKeyPressed
+    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtbl_diaria.addRowSelectionInterval(0, 0);
         }
 
-    }//GEN-LAST:event_jtf_pesquisar_diariaKeyPressed
+    }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_diariaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -314,7 +314,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     public static javax.swing.JRadioButton jrb_codigo_diaria;
     public static javax.swing.JRadioButton jrb_descricao;
     public static javax.swing.JTable jtbl_diaria;
-    public static javax.swing.JTextField jtf_pesquisar_diaria;
+    public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
@@ -338,7 +338,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     }
 
     public void request() {
-        jtf_pesquisar_diaria.requestFocus();
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }
 

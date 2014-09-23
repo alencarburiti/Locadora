@@ -69,7 +69,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         jtbl_cliente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Consulta Diária");
+        setTitle("Consulta Cliente");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -89,7 +89,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, 110, 40));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 110, 40));
 
         jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_ok.setText("OK");
@@ -99,7 +99,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_okActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 80, 40));
+        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, 80, 40));
 
         jb_novo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo1.setText("Novo");
@@ -109,14 +109,14 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_novo1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 110, 40));
+        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 110, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Cliente"));
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 450, -1));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 640, -1));
 
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
@@ -125,7 +125,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, -1, -1));
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, -1, -1));
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -169,8 +169,15 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                     }
                 });
                 jScrollPane3.setViewportView(jtbl_cliente);
+                if (jtbl_cliente.getColumnModel().getColumnCount() > 0) {
+                    jtbl_cliente.getColumnModel().getColumn(0).setResizable(false);
+                    jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(10);
+                    jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(100);
+                    jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(50);
+                    jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(10);
+                }
 
-                jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 688, 210));
+                jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 710, 210));
 
                 getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 750, 300));
 

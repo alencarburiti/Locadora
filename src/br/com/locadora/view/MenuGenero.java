@@ -67,7 +67,7 @@ public class MenuGenero extends javax.swing.JFrame {
         jrb_descricao = new javax.swing.JRadioButton();
         jl_pesquisar_destino = new javax.swing.JLabel();
         jb_buscar = new javax.swing.JButton();
-        jtf_pesquisar_genero = new javax.swing.JTextField();
+        jtf_consulta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbl_genero = new javax.swing.JTable();
         jb_excluir = new javax.swing.JButton();
@@ -119,13 +119,13 @@ public class MenuGenero extends javax.swing.JFrame {
         });
         jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, -1, -1));
 
-        jtf_pesquisar_genero.setName("jtf_pesquisar_genero"); // NOI18N
-        jtf_pesquisar_genero.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_consulta.setName("jtf_consulta"); // NOI18N
+        jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_pesquisar_generoKeyPressed(evt);
+                jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_pesquisar_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 57, 340, -1));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 57, 340, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 490, 100));
 
@@ -258,7 +258,7 @@ public class MenuGenero extends javax.swing.JFrame {
             this.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um armazém");
-            jtf_pesquisar_genero.requestFocus();
+            jtf_consulta.requestFocus();
         }
     }
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
@@ -286,13 +286,13 @@ public class MenuGenero extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowOpened
 
-    private void jtf_pesquisar_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisar_generoKeyPressed
+    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 //            listarGenero();
             jtbl_genero.addRowSelectionInterval(0, 0);
         }
 
-    }//GEN-LAST:event_jtf_pesquisar_generoKeyPressed
+    }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_generoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -329,7 +329,7 @@ public class MenuGenero extends javax.swing.JFrame {
     public static javax.swing.JRadioButton jrb_codigo;
     public static javax.swing.JRadioButton jrb_descricao;
     public static javax.swing.JTable jtbl_genero;
-    public static javax.swing.JTextField jtf_pesquisar_genero;
+    public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
     private void buscarDados() {
@@ -349,7 +349,7 @@ public class MenuGenero extends javax.swing.JFrame {
     }
 
     public void request() {
-        jtf_pesquisar_genero.requestFocus();
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }
 

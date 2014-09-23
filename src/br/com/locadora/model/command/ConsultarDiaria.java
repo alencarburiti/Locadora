@@ -27,13 +27,18 @@ public class ConsultarDiaria implements InterfaceCommand {
     public String execute() {
 
         try {
-            if (MenuDiaria.jrb_codigo_diaria.isSelected() == true) {
-                diaria = null;
-                diaria = diariaDAO.getDiaria_codigo(Integer.parseInt(MenuDiaria.jtf_pesquisar_diaria.getText().trim()));
+            if (MenuDiaria.jtf_consulta.getText().equals("")) {
+                if (MenuDiaria.jrb_codigo_diaria.isSelected() == true) {
+                    diaria = null;
+                    diaria = diariaDAO.getDiaria_codigo(Integer.parseInt(MenuDiaria.jtf_consulta.getText().trim()));
+                } else {
+                    diarias = null;
+                    diarias = diariaDAO.getDiaria_nome(MenuDiaria.jtf_consulta.getText().trim());
+                    mostrar_Diarias(diarias);
+                }
             } else {
-                diarias = null;
-                diarias = diariaDAO.getDiaria_nome(MenuDiaria.jtf_pesquisar_diaria.getText().trim());
-                mostrar_Diarias(diarias);
+
+                JOptionPane.showMessageDialog(null, "Informe um parâmentro");
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConsultarDiaria.class.getName()).log(Level.SEVERE, null, ex);

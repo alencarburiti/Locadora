@@ -1,18 +1,14 @@
 package br.com.locadora.model.command;
 
-import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
-import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.view.Atendimento;
-import static br.com.locadora.view.Atendimento.itemLocacaoes;
-import br.com.locadora.view.MenuCliente;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ConsultarLocacao implements InterfaceCommand {
@@ -41,8 +36,7 @@ public class ConsultarLocacao implements InterfaceCommand {
         try {
 
             List<ItemLocacao> itens = new ArrayList();
-            JOptionPane.showMessageDialog(null, Atendimento.jtf_codigo_cliente.getText());
-
+            
             itens = locacaoDAO.getLocacao_codigo(Integer.parseInt(Atendimento.jtf_codigo_cliente.getText()));
             for (int i = 0; i < Atendimento.jtbl_locacao.getRowCount(); i++) {
                 ItemLocacao itemLocacao = new ItemLocacao();
@@ -110,7 +104,7 @@ public class ConsultarLocacao implements InterfaceCommand {
                     itemLocacao.getValor_multa(), itemLocacao.getDias_multa() });
                 
             }
-            Atendimento.itemLocacaoes = itemLocacaoes;
+            Atendimento.itemLocacoes = itemLocacoes;
         }
 
     }
