@@ -147,14 +147,14 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Código Interno", "Localização", "Descrição Objeto", "Idioma", "Legenda", "Tipo Mídia", "Status"
+                        "Código", "Código de Barras", "Descrição Objeto", "Idioma", "Legenda", "Tipo Mídia", "Status"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false, false, false
+                        false, false, false, false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -175,8 +175,9 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jScrollPane3.setViewportView(jtbl_copia);
                 if (jtbl_copia.getColumnModel().getColumnCount() > 0) {
                     jtbl_copia.getColumnModel().getColumn(0).setPreferredWidth(20);
-                    jtbl_copia.getColumnModel().getColumn(3).setPreferredWidth(100);
-                    jtbl_copia.getColumnModel().getColumn(7).setPreferredWidth(20);
+                    jtbl_copia.getColumnModel().getColumn(1).setPreferredWidth(100);
+                    jtbl_copia.getColumnModel().getColumn(2).setPreferredWidth(100);
+                    jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(20);
                 }
 
                 jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 760, 210));
@@ -359,8 +360,6 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         if (tb.getSelectedRow() != -1) {
             copiaSelecionada = new Copia();
             copiaSelecionada.setCodigo_copia(copias.get(tb.getSelectedRow()).getCodigo_copia());
-            copiaSelecionada.setCodigo_interno(copias.get(tb.getSelectedRow()).getCodigo_interno());
-            copiaSelecionada.setLocalizacao(copias.get(tb.getSelectedRow()).getLocalizacao());
             copiaSelecionada.setIdioma(copias.get(tb.getSelectedRow()).getIdioma());
             copiaSelecionada.setLegenda(copias.get(tb.getSelectedRow()).getLegenda());
             copiaSelecionada.setObjeto(copias.get(tb.getSelectedRow()).getObjeto());
@@ -412,16 +411,15 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 Copia copia = new Copia();
 
                 copia.setCodigo_copia(copias.get(i).getCodigo_copia());
-                copia.setCodigo_interno(copias.get(i).getCodigo_interno());
-                copia.setLocalizacao(copias.get(i).getLocalizacao());
+                
                 copia.setIdioma(copias.get(i).getIdioma());
                 copia.setLegenda(copias.get(i).getLegenda());
                 copia.setObjeto(copias.get(i).getObjeto());
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
-                row.addRow(new Object[]{copia.getCodigo_copia(), copia.getCodigo_interno(),
-                    copia.getLocalizacao(), hashDbGrid, copia.getIdioma(), copia.getLegenda(),
+                row.addRow(new Object[]{copia.getCodigo_copia(),
+                    hashDbGrid, copia.getIdioma(), copia.getLegenda(),
                     copia.getObjeto().getTipo_midia(), copia.getStatus()});
 
             }

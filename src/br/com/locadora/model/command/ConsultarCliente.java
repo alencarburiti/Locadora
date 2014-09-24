@@ -29,25 +29,30 @@ public class ConsultarCliente implements InterfaceCommand {
     public String execute() {
 
         try {
-            if (!MenuCliente.jtf_consulta.getText().equals("")) {
-                if (MenuCliente.jrb_codigo_cliente.isSelected() == true) {
+
+            if (MenuCliente.jrb_codigo_cliente.isSelected() == true) {
+                if (!MenuCliente.jtf_consulta.getText().equals("")) {
                     cliente = null;
                     cliente = clienteDAO.getCliente_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
                     mostrar_clientes(cliente);
-                } else if (MenuCliente.jrb_cpf.isSelected() == true) {
+                } else {
+                    JOptionPane.showMessageDialog(null, "Informe o código");
+                }
+            } else if (MenuCliente.jrb_cpf.isSelected() == true) {
+                if (!MenuCliente.jtf_consulta.getText().equals("")) {
                     cliente = null;
                     cliente = clienteDAO.getCliente_cpf(jtf_consulta.getText().trim());
                     mostrar_clientes(cliente);
                 } else {
-                    clientes = null;
-                    clientes = clienteDAO.getCliente_nome(jtf_consulta.getText().trim());
-                    mostrar_clientes(clientes);
-
+                    JOptionPane.showMessageDialog(null, "Informe o CPF");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Informe um parâmentro");
+                clientes = null;
+                clientes = clienteDAO.getCliente_nome(jtf_consulta.getText().trim());
+                mostrar_clientes(clientes);
 
             }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a consulta: ");
 

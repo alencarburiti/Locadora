@@ -13,6 +13,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
+import br.com.locadora.model.bean.Objeto;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -28,15 +29,12 @@ public class MenuObjeto extends javax.swing.JFrame {
     public SiscomController controller;
     private TelaPrincipal_Interface telaPrincipal;//Recebendo tela como parametro para atualização apos pesquisa
     public List<Cliente> clientes;
+    public TelaPrincipal janelapai;
+    public static Objeto objeto;
+    public List<Objeto> objetos;
 
     public MenuObjeto() {
         initComponents();
-    }
-    TelaPrincipal janelapai;
-
-    public void setJanelaPai(TelaPrincipal janelapai) {
-        this.janelapai = janelapai;
-        permissao = janelapai.permissao;
     }
 
     /**
@@ -50,17 +48,17 @@ public class MenuObjeto extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jrb_cpf = new javax.swing.JRadioButton();
-        jrb_detalhado = new javax.swing.JRadioButton();
-        jrb_descricao = new javax.swing.JRadioButton();
+        jrb_codigo = new javax.swing.JRadioButton();
+        jrb_ator = new javax.swing.JRadioButton();
+        jrb_titulo = new javax.swing.JRadioButton();
         jl_pesquisar_destino = new javax.swing.JLabel();
         jb_buscar = new javax.swing.JButton();
         jtf_consulta = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jrb_codigo_barras = new javax.swing.JRadioButton();
         jb_sair = new javax.swing.JButton();
         jb_novo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jtbl_cliente = new javax.swing.JTable();
+        jtbl_objeto = new javax.swing.JTable();
         jb_alterar = new javax.swing.JButton();
         jb_excluir = new javax.swing.JButton();
 
@@ -78,34 +76,34 @@ public class MenuObjeto extends javax.swing.JFrame {
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        buttonGroup1.add(jrb_cpf);
-        jrb_cpf.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_cpf.setSelected(true);
-        jrb_cpf.setText("Código");
-        jrb_cpf.setName("jrb_cpf"); // NOI18N
-        jrb_cpf.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jrb_codigo);
+        jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_codigo.setSelected(true);
+        jrb_codigo.setText("Código");
+        jrb_codigo.setName("jrb_codigo"); // NOI18N
+        jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrb_cpfActionPerformed(evt);
+                jrb_codigoActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 27, -1, -1));
+        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 27, -1, -1));
 
-        buttonGroup1.add(jrb_detalhado);
-        jrb_detalhado.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_detalhado.setText("Ator");
-        jrb_detalhado.setName("jrb_detalhado"); // NOI18N
-        jPanel1.add(jrb_detalhado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
+        buttonGroup1.add(jrb_ator);
+        jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_ator.setText("Ator");
+        jrb_ator.setName("jrb_ator"); // NOI18N
+        jPanel1.add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
-        buttonGroup1.add(jrb_descricao);
-        jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_descricao.setText("Título");
-        jrb_descricao.setName("jrb_descricao"); // NOI18N
-        jrb_descricao.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jrb_titulo);
+        jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_titulo.setText("Título");
+        jrb_titulo.setName("jrb_titulo"); // NOI18N
+        jrb_titulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrb_descricaoActionPerformed(evt);
+                jrb_tituloActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
+        jPanel1.add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
@@ -123,10 +121,10 @@ public class MenuObjeto extends javax.swing.JFrame {
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 640, 20));
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Código de Barras");
-        jRadioButton1.setName("jRadioButton1"); // NOI18N
-        jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+        buttonGroup1.add(jrb_codigo_barras);
+        jrb_codigo_barras.setText("Código de Barras");
+        jrb_codigo_barras.setName("jrb_codigo_barras"); // NOI18N
+        jPanel1.add(jrb_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 790, 109));
 
@@ -152,27 +150,27 @@ public class MenuObjeto extends javax.swing.JFrame {
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
-        jtbl_cliente.setUpdateSelectionOnSort(false);
-        jtbl_cliente.setVerifyInputWhenFocusTarget(false);
-        jtbl_cliente.setDefaultEditor(Object.class, null);
-        jtbl_cliente.addMouseListener(new MouseAdapter() {
+        jtbl_objeto.setUpdateSelectionOnSort(false);
+        jtbl_objeto.setVerifyInputWhenFocusTarget(false);
+        jtbl_objeto.setDefaultEditor(Object.class, null);
+        jtbl_objeto.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e){
                 if(e.getClickCount() == 1){
                     //    listarItem();
                 }}});
-                jtbl_cliente.setModel(new javax.swing.table.DefaultTableModel(
+                jtbl_objeto.setModel(new javax.swing.table.DefaultTableModel(
                     new Object [][] {
 
                     },
                     new String [] {
-                        "Código", "Descrição Objeto", "Título Original", "Elenco", "Diária"
+                        "Código", "Descrição Objeto", "Título Original", "Elenco"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false
+                        false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -183,14 +181,14 @@ public class MenuObjeto extends javax.swing.JFrame {
                         return canEdit [columnIndex];
                     }
                 });
-                jtbl_cliente.setName("jtbl_cliente"); // NOI18N
-                jtbl_cliente.getTableHeader().setReorderingAllowed(false);
-                jScrollPane3.setViewportView(jtbl_cliente);
-                if (jtbl_cliente.getColumnModel().getColumnCount() > 0) {
-                    jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(20);
-                    jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(200);
-                    jtbl_cliente.getColumnModel().getColumn(2).setPreferredWidth(200);
-                    jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(30);
+                jtbl_objeto.setName("jtbl_objeto"); // NOI18N
+                jtbl_objeto.getTableHeader().setReorderingAllowed(false);
+                jScrollPane3.setViewportView(jtbl_objeto);
+                if (jtbl_objeto.getColumnModel().getColumnCount() > 0) {
+                    jtbl_objeto.getColumnModel().getColumn(0).setPreferredWidth(10);
+                    jtbl_objeto.getColumnModel().getColumn(1).setPreferredWidth(200);
+                    jtbl_objeto.getColumnModel().getColumn(2).setPreferredWidth(200);
+                    jtbl_objeto.getColumnModel().getColumn(3).setPreferredWidth(100);
                 }
 
                 getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 790, 166));
@@ -253,20 +251,13 @@ public class MenuObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-//        if (jrb_cpf.isSelected()) {
-//            listar_clientes_cpf();
-//        } else if (jrb_descricao.isSelected()) {
-//            listarEntradas();
-//        } else if (jrb_detalhado.isSelected()) {
-//            listarFornecedor();
-//        } else {
-//            listarEntradas();
-//        }
+        controller = new SiscomController();
+        controller.processarRequisicao("consultarObjeto");
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
-    private void jrb_cpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_cpfActionPerformed
+    private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_cpfActionPerformed
+    }//GEN-LAST:event_jrb_codigoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
         alterar();
@@ -278,9 +269,9 @@ public class MenuObjeto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
 
-    private void jrb_descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_descricaoActionPerformed
+    private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_descricaoActionPerformed
+    }//GEN-LAST:event_jrb_tituloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,7 +287,6 @@ public class MenuObjeto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_alterar;
     private javax.swing.JButton jb_buscar;
@@ -304,10 +294,11 @@ public class MenuObjeto extends javax.swing.JFrame {
     private javax.swing.JButton jb_novo;
     private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar_destino;
-    private javax.swing.JRadioButton jrb_cpf;
-    private javax.swing.JRadioButton jrb_descricao;
-    private javax.swing.JRadioButton jrb_detalhado;
-    public static javax.swing.JTable jtbl_cliente;
+    public static javax.swing.JRadioButton jrb_ator;
+    public static javax.swing.JRadioButton jrb_codigo;
+    public static javax.swing.JRadioButton jrb_codigo_barras;
+    public static javax.swing.JRadioButton jrb_titulo;
+    public static javax.swing.JTable jtbl_objeto;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
@@ -340,6 +331,11 @@ public class MenuObjeto extends javax.swing.JFrame {
 
     void request() {
         jtf_consulta.requestFocus();
+    }
+
+    public void setJanelaPai(TelaPrincipal janelapai) {
+        this.janelapai = janelapai;
+        permissao = janelapai.permissao;
     }
 
 }

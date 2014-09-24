@@ -10,6 +10,7 @@ import java.util.List;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Objeto;
 import java.sql.Date;
+import javax.swing.JOptionPane;
 
 public class ObjetoDAO implements InterfaceObjetoDAO {
 
@@ -85,7 +86,21 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM CLIENTE WHERE CODIGO_CLIENTE = ?;";
+        String sqlSelect = "SELECT `OBJETO`.`CODIGO_OBJETO`,\n"
+                + "    `OBJETO`.`DESCRICAO_OBJETO`,\n"
+                + "    `OBJETO`.`TITULO_ORIGINAL`,\n"
+                + "    `OBJETO`.`DESCRICAO_RESUMIDA`,\n"
+                + "    `OBJETO`.`TIPO_MOVIMENTO`,\n"
+                + "    `OBJETO`.`PRODUCAO`,\n"
+                + "    `OBJETO`.`DURACAO`,\n"
+                + "    `OBJETO`.`MIDIA`,\n"
+                + "    `OBJETO`.`TIPO_MIDIA`,\n"
+                + "    `OBJETO`.`CODIGO_DIARIA`,\n"
+                + "    `OBJETO`.`CODIGO_GENERO`,\n"
+                + "    `OBJETO`.`ELENCO`,\n"
+                + "    `OBJETO`.`SINOPSE`\n"
+                + "FROM `locadora`.`OBJETO`\n"
+                + "WHERE CODIGO_OBJETO = ?;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -94,6 +109,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
             rs = ps.executeQuery();
 
             List<Objeto> resultado = getListaObjeto(rs);
+            System.out.print(resultado.size());
             if (resultado.size() > 0) {
                 return resultado.get(0);
             }
@@ -130,21 +146,16 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         List<Objeto> resultado = new ArrayList<Objeto>();
         while (rs.next()) {
             Objeto objeto = new Objeto();
-//			objeto.setCodigo_objeto(rs.getInt("CODIGO_CLIENTE"));
-//                        objeto.setNome_objeto(rs.getString("NOME_CLIENTE"));                        
-//                        objeto.setNome_empresa_trabalho(rs.getString("NOME_EMPRESA_TRABALHO"));
-//                        objeto.setProfissao(rs.getString("PROFISSAO"));
-//                        objeto.setNome_empresa_trabalho(rs.getString("NOME_EMPRESA_TRABALHO"));
-//                        objeto.setCpf(rs.getString("CPF"));
-//                        objeto.setData_nascimento(rs.getDate("DATA_NASCIMENTO"));
-//                        objeto.setEndereco(rs.getString("ENDERECO"));
-//                        objeto.setBairro(rs.getString("BAIRRO"));			 
-//                        objeto.setComplemento(rs.getString("COMPLEMENTO"));
-//                        objeto.setCidade(rs.getString("CIDADE"));
-//			objeto.setEstado(rs.getString("ESTADO"));
-//			objeto.setEmail(rs.getString("EMAIL"));                        
-//			objeto.setStatus(rs.getString("STATUS"));
-//			objeto.setObservacao(rs.getString("OBSERVACAO"));			
+            objeto.setCodigo_objeto(rs.getInt("CODIGO_OBJETO"));
+            objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
+            objeto.setTitulo_original(rs.getString("TITULO_ORIGINAL"));
+            objeto.setDescricao_resumida(rs.getString("DESCRICAO_RESUMIDA"));
+            objeto.setTipo_movimento(rs.getString("TIPO_MOVIMENTO"));
+            objeto.setProducao(rs.getString("PRODUCAO"));
+            objeto.setDuracao(rs.getString("DURACAO"));
+            objeto.setMidia(rs.getString("MIDIA"));
+            objeto.setTipo_midia(rs.getString("TIPO_MIDIA"));
+            objeto.setElenco(rs.getString("ELENCO"));
             resultado.add(objeto);
         }
         return resultado;

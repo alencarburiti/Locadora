@@ -193,8 +193,7 @@ public class CadastroGenero extends javax.swing.JFrame {
         if (verificarCampos()) {
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarGenero");
-//            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-//            retornaJanelaPai();
+            retornaJanelaPai();
         }
     }
 

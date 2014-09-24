@@ -116,20 +116,14 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jb_eliminar1 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jtbl_copia = new javax.swing.JTable();
-        jLabel26 = new javax.swing.JLabel();
-        jtf_codigo_interno = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jcb_idioma = new javax.swing.JComboBox();
         jLabel28 = new javax.swing.JLabel();
         jcb_legenda = new javax.swing.JComboBox();
         jLabel29 = new javax.swing.JLabel();
         jtf_preco_custo = new javax.swing.JTextField();
-        jtf_localizacao = new javax.swing.JTextField();
-        jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jtf_data_aquisicao = new javax.swing.JTextField();
-        jLabel32 = new javax.swing.JLabel();
-        jtf_codigo_barras = new javax.swing.JTextField();
         jb_salvar1 = new javax.swing.JButton();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -458,7 +452,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
                 jb_adicionar_dependenteActionPerformed(evt);
             }
         });
-        jPanel2.add(jb_adicionar_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 30, 30));
+        jPanel2.add(jb_adicionar_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 30, 30));
 
         jb_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_eliminar1.setToolTipText("Excluir");
@@ -468,7 +462,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
                 jb_eliminar1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jb_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 30, 30));
+        jPanel2.add(jb_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, 30, 30));
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
@@ -477,11 +471,11 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
 
             },
             new String [] {
-                "Código Barras", "Código Interno", "Localização", "Idioma", "Legenda"
+                "Código", "Cópia", "Código de Barras", "Idioma", "Legenda", "Preço Custo", "Data Aquisição"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -490,40 +484,40 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         });
         jtbl_copia.setName("jtbl_copia"); // NOI18N
         jScrollPane5.setViewportView(jtbl_copia);
+        if (jtbl_copia.getColumnModel().getColumnCount() > 0) {
+            jtbl_copia.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jtbl_copia.getColumnModel().getColumn(1).setPreferredWidth(20);
+            jtbl_copia.getColumnModel().getColumn(2).setResizable(false);
+            jtbl_copia.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jtbl_copia.getColumnModel().getColumn(3).setPreferredWidth(50);
+            jtbl_copia.getColumnModel().getColumn(4).setPreferredWidth(50);
+            jtbl_copia.getColumnModel().getColumn(5).setResizable(false);
+            jtbl_copia.getColumnModel().getColumn(5).setPreferredWidth(20);
+            jtbl_copia.getColumnModel().getColumn(6).setResizable(false);
+            jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(30);
+        }
 
-        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 650, 150));
-
-        jLabel26.setText("Código Interno");
-        jLabel26.setName("jLabel26"); // NOI18N
-        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
-
-        jtf_codigo_interno.setName("jtf_codigo_interno"); // NOI18N
-        jtf_codigo_interno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_codigo_internoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jtf_codigo_interno, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 52, 140, -1));
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 680, 200));
 
         jLabel27.setText("Idioma");
         jLabel27.setName("jLabel27"); // NOI18N
-        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
+        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jcb_idioma.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chinês", "Espanhol", "Francês", "Inglês", "Italiano", "Japonês", "Polonês", "Português" }));
         jcb_idioma.setName("jcb_idioma"); // NOI18N
-        jPanel2.add(jcb_idioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, -1, -1));
+        jPanel2.add(jcb_idioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 130, -1));
 
         jLabel28.setText("Legenda");
         jLabel28.setName("jLabel28"); // NOI18N
-        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
+        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
 
         jcb_legenda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chinês", "Espanhol", "Francês", "Inglês", "Italiano", "Japonês", "Polonês", "Português", "Não Legendado" }));
         jcb_legenda.setName("jcb_legenda"); // NOI18N
-        jPanel2.add(jcb_legenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
+        jPanel2.add(jcb_legenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
 
         jLabel29.setText("Preço custo");
         jLabel29.setName("jLabel29"); // NOI18N
-        jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 30, -1, -1));
+        jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 80, -1));
 
         jtf_preco_custo.setText("R$ 2,00");
         jtf_preco_custo.setName("jtf_preco_custo"); // NOI18N
@@ -532,24 +526,11 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
                 jtf_preco_custoActionPerformed(evt);
             }
         });
-        jPanel2.add(jtf_preco_custo, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 110, -1));
-
-        jtf_localizacao.setText("1010-1");
-        jtf_localizacao.setName("jtf_localizacao"); // NOI18N
-        jtf_localizacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_localizacaoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jtf_localizacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 240, -1));
-
-        jLabel30.setText("Localização");
-        jLabel30.setName("jLabel30"); // NOI18N
-        jPanel2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
+        jPanel2.add(jtf_preco_custo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 120, -1));
 
         jLabel31.setText("Data Aquisição");
         jLabel31.setName("jLabel31"); // NOI18N
-        jPanel2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 120, -1));
+        jPanel2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 120, -1));
 
         jtf_data_aquisicao.setText("19/03/2000");
         jtf_data_aquisicao.setName("jtf_data_aquisicao"); // NOI18N
@@ -558,23 +539,11 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
                 jtf_data_aquisicaoActionPerformed(evt);
             }
         });
-        jPanel2.add(jtf_data_aquisicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 120, -1));
-
-        jLabel32.setText("Código de Barras");
-        jLabel32.setName("jLabel32"); // NOI18N
-        jPanel2.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
-
-        jtf_codigo_barras.setName("jtf_codigo_barras"); // NOI18N
-        jtf_codigo_barras.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_codigo_barrasActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jtf_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 270, -1));
+        jPanel2.add(jtf_data_aquisicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 140, -1));
 
         jTabbedPane1.addTab("Cópias", jPanel2);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 720, 360));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 740, 360));
 
         jb_salvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar1.setText("Salvar");
@@ -683,10 +652,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_disponivelActionPerformed
 
-    private void jtf_codigo_internoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_codigo_internoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_internoActionPerformed
-
     private void jb_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_eliminar1ActionPerformed
@@ -707,10 +672,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private void jtf_preco_custoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_preco_custoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_preco_custoActionPerformed
-
-    private void jtf_localizacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_localizacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_localizacaoActionPerformed
 
     private void jtf_data_aquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_data_aquisicaoActionPerformed
         // TODO add your handling code here:
@@ -746,10 +707,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_promocaoActionPerformed
 
-    private void jtf_codigo_barrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_codigo_barrasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_barrasActionPerformed
-
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -775,14 +732,11 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -816,9 +770,7 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public static javax.swing.JTextArea jta_sinopse;
     public static javax.swing.JTable jtbl_copia;
     public static javax.swing.JTextField jtf_censura;
-    public static javax.swing.JTextField jtf_codigo_barras;
     public static javax.swing.JTextField jtf_codigo_diaria;
-    public static javax.swing.JTextField jtf_codigo_interno;
     public static javax.swing.JTextField jtf_codigo_objeto;
     public static javax.swing.JTextField jtf_data_aquisicao;
     private javax.swing.JTextField jtf_descricao_diaria;
@@ -827,7 +779,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public static javax.swing.JTextField jtf_descricao_resumida;
     public static javax.swing.JTextField jtf_disponivel;
     public static javax.swing.JTextField jtf_duracao;
-    public static javax.swing.JTextField jtf_localizacao;
     public static javax.swing.JTextField jtf_preco_custo;
     public static javax.swing.JTextField jtf_saldo;
     public static javax.swing.JTextField jtf_titulo_original;
@@ -883,16 +834,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public boolean verificarCamposCopia() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
-        if (jtf_codigo_interno.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Código Interno\n";
-        }
-        if (jtf_codigo_barras.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Código de Barras\n";
-        }
-
-        if (jtf_localizacao.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Localização\n";
-        }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
@@ -933,13 +874,9 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public boolean verificar_campo_copia() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
-        if (jtf_localizacao.getText().equals("")) {
-            msgERRO = msgERRO + " *Localização\n";
-        }
-
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-            jtf_localizacao.requestFocus();
+        
             return false;
         } else {
             return true;
@@ -960,7 +897,7 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
                 cliente.setTelefone(new Telefone((Integer) jtbl_copia.getValueAt(i, 0)));
 
                 String telefone = null;
-                telefone = jtf_localizacao.getText();
+//                telefone = jtf_localizacao.getText();
 
             }
 

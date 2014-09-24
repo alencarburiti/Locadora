@@ -1,7 +1,7 @@
 package br.com.locadora.model.dao;
 
 import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.model.bean.Copia;
+import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Objeto;
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
+public class AcessoUsuarioDAO implements InterfaceUsuarioDAO {
 
     private InterfacePool pool;
 
@@ -21,7 +21,7 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
     }
 
     @Override
-    public void atualizar(Copia copia) throws SQLException {
+    public void atualizar(Usuario usuario) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlAtualizar = " UPDATE DIARIA SET bairro=?, celular=?, cep=?, "
@@ -31,7 +31,7 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
         try {
             ps = con.prepareStatement(sqlAtualizar);
 
-            setPreparedStatement(copia, ps);
+            setPreparedStatement(usuario, ps);
 
             ps.executeUpdate();
             ps.close();
@@ -57,8 +57,8 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
     }
 
     @Override
-    public List<Copia> getCopia(Integer codigo_interno) throws SQLException {
-        List<Copia> resultado = new ArrayList<Copia>();
+    public List<Usuario> getUsuario(Integer codigo_interno) throws SQLException {
+        List<Usuario> resultado = new ArrayList<Usuario>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -92,7 +92,7 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
 
             rs = ps.executeQuery();
 
-            resultado = getListaCopia(rs);
+            resultado = getListaUsuario(rs);
 //            if (resultado.size() > 0) {
 //                return resultado.get(0);
 //            }
@@ -104,8 +104,8 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
     }
 
     @Override
-    public List<Copia> getCopias(String nome_copia) throws SQLException {
-        List<Copia> resultado = new ArrayList<Copia>();
+    public List<Usuario> getUsuarios(String nome_usuario) throws SQLException {
+        List<Usuario> resultado = new ArrayList<Usuario>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT * FROM DIARIA WHERE NOME_DIARIA LIKE ? ORDER BY NOME_DIARIA;";
@@ -113,10 +113,10 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
 
         try {
             ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, nome_copia);
+            ps.setString(1, nome_usuario);
             rs = ps.executeQuery();
 
-            resultado = getListaCopia(rs);
+            resultado = getListaUsuario(rs);
 
             rs.close();
             ps.close();
@@ -126,8 +126,8 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
         return resultado;
     }
 
-    public List<Copia> getTodasCopias() throws SQLException {
-        List<Copia> resultado = new ArrayList<Copia>();
+    public List<Usuario> getTodasUsuarios() throws SQLException {
+        List<Usuario> resultado = new ArrayList<Usuario>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT * FROM DIARIA ORDER BY NOME_DIARIA;";
@@ -137,7 +137,7 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
             ps = con.prepareStatement(sqlSelect);
             rs = ps.executeQuery();
 
-            resultado = getListaCopia(rs);
+            resultado = getListaUsuario(rs);
 
             rs.close();
             ps.close();
@@ -147,43 +147,30 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
         return resultado;
     }
 
-    private List<Copia> getListaCopia(ResultSet rs) throws SQLException {
-        List<Copia> resultado = new ArrayList<Copia>();
+    private List<Usuario> getListaUsuario(ResultSet rs) throws SQLException {
+        List<Usuario> resultado = new ArrayList<Usuario>();
         while (rs.next()) {
-            Copia copia = new Copia();
+            Usuario usuario = new Usuario();
             Diaria diaria = new Diaria();
             Objeto objeto = new Objeto();
-            
+
             diaria.setDias(rs.getInt("DIAS"));
             diaria.setValor(rs.getDouble("VALOR"));
             diaria.setValor_promocao(rs.getDouble("VALOR_PROMOCAO"));
-            
+
             objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
             objeto.setTipo_movimento(rs.getString("TIPO_MOVIMENTO"));
             objeto.setTipo_midia(rs.getString("TIPO_MIDIA"));
-            
+
             objeto.setDiaria(diaria);
-            copia.setObjeto(objeto);
             
-            copia.setCodigo_copia(rs.getInt("CODIGO_COPIA"));
-            copia.setCodigo_interno(rs.getInt("CODIGO_INTERNO"));
-            copia.setIdioma(rs.getString("IDIOMA"));
-            copia.setLegenda(rs.getString("LEGENDA"));
-            copia.setLocalizacao(rs.getString("LOCALIZACAO"));
-            if(rs.getInt("DEL_FLAG")== 0){
-                copia.setStatus("Disponivel");
-            }else{
-                copia.setStatus("Indisponivel");
-            }
-            
-            
-            resultado.add(copia);
+            resultado.add(usuario);
         }
         return resultado;
     }
 
     @Override
-    public void salvar(Copia copia) throws SQLException {
+    public void salvar(Usuario usuario) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
@@ -194,7 +181,7 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
         try {
             ps = con.prepareStatement(sqlInsert);
 
-            setPreparedStatement1(copia, ps);
+            setPreparedStatement1(usuario, ps);
 
             ps.executeUpdate();
             ps.close();
@@ -203,40 +190,18 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
         }
     }
 
-    private void setPreparedStatement(Copia copia, PreparedStatement ps)
+    private void setPreparedStatement(Usuario usuario, PreparedStatement ps)
             throws SQLException {
-        Date data_aquisicao = null;
-        if (copia.getData_aquisicao() != null) {
-            data_aquisicao = new Date(copia.getData_aquisicao().getTime());
-        }
-
-        ps.setInt(1, copia.getCodigo_interno());
-        ps.setString(2, copia.getLocalizacao());
-        ps.setString(3, copia.getIdioma());
-        ps.setString(4, copia.getLegenda());
-        ps.setDate(5, data_aquisicao);
-        ps.setDouble(6, copia.getPreco_custo());
-        ps.setInt(7, copia.getObjeto().getCodigo_objeto());
+       
     }
 
-    private void setPreparedStatement1(Copia copia, PreparedStatement ps)
+    private void setPreparedStatement1(Usuario usuario, PreparedStatement ps)
             throws SQLException {
-        Date data_aquisicao = null;
-        if (copia.getData_aquisicao() != null) {
-            data_aquisicao = new Date(copia.getData_aquisicao().getTime());
-        }
-
-        ps.setInt(1, copia.getCodigo_interno());
-        ps.setString(2, copia.getLocalizacao());
-        ps.setString(3, copia.getIdioma());
-        ps.setString(4, copia.getLegenda());
-        ps.setDate(5, data_aquisicao);
-        ps.setDouble(6, copia.getPreco_custo());
-        ps.setInt(7, copia.getObjeto().getCodigo_objeto());
+        
     }
 
-    public List<Copia> getCopias() throws SQLException {
-        List<Copia> resultado = new ArrayList<Copia>();
+    public List<Usuario> getUsuarios() throws SQLException {
+        List<Usuario> resultado = new ArrayList<Usuario>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT * FROM CLIENTE ORDER BY NOME_CLIENTE;";
@@ -246,7 +211,7 @@ public class AcessoUsuarioDAO implements InterfaceCopiaDAO {
             ps = con.prepareStatement(sqlSelect);
             rs = ps.executeQuery();
 
-            resultado = getListaCopia(rs);
+            resultado = getListaUsuario(rs);
 
             rs.close();
             ps.close();

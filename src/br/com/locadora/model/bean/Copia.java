@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.com.locadora.model.bean;
 
 import java.util.Date;
@@ -13,16 +12,16 @@ import java.util.Date;
  * @author alencarburiti
  */
 public class Copia {
+
     private Integer codigo_copia;
-    private Integer codigo_interno;
-    private String localizacao;
     private String idioma;
     private String legenda;
     private Date data_aquisicao;
     private Double preco_custo;
-    private Objeto objeto; 
+    private Objeto objeto;
     private String status;
     private String codigo_barras;
+    private Integer numero_copia;
 
     public Integer getCodigo_copia() {
         return codigo_copia;
@@ -30,22 +29,6 @@ public class Copia {
 
     public void setCodigo_copia(Integer codigo_copia) {
         this.codigo_copia = codigo_copia;
-    }
-
-    public Integer getCodigo_interno() {
-        return codigo_interno;
-    }
-
-    public void setCodigo_interno(Integer codigo_interno) {
-        this.codigo_interno = codigo_interno;
-    }
-
-    public String getLocalizacao() {
-        return localizacao;
-    }
-
-    public void setLocalizacao(String localizacao) {
-        this.localizacao = localizacao;
     }
 
     public String getIdioma() {
@@ -104,6 +87,12 @@ public class Copia {
         this.codigo_barras = codigo_barras;
     }
 
-    
-    
+    public Integer getNumero_copia() {
+        return numero_copia;
+    }
+
+    public void setNumero_copia(Integer numero_copia) {
+        this.numero_copia = numero_copia;
+    }
+
 }

@@ -332,8 +332,7 @@ private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
                 Genero genero = new Genero();
                 genero.setCodigo_genero(generos.get(i).getCodigo_genero());
                 genero.setNome_genero(generos.get(i).getNome_genero());
-                
-                System.out.print(genero.getNome_genero());
+                                
                 DefaultTableModel row = (DefaultTableModel) jtbl_genero.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(genero, genero.getNome_genero());
                 row.addRow(new Object[]{genero.getCodigo_genero(), hashDbGrid});

@@ -362,8 +362,7 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
                 valor = setPrecoFormat(valor);
                 valor_promocao = setPrecoFormat(valor_promocao);
                 multa = setPrecoFormat(multa);
-                
-                System.out.print(diaria.getNome_diaria());
+                                
                 DefaultTableModel row = (DefaultTableModel) jtbl_diaria.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
                 row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, diaria.getDias(), valor, valor_promocao, multa});

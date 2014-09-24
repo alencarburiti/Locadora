@@ -174,7 +174,11 @@ public class MenuDiaria extends javax.swing.JFrame {
                 jScrollPane1.setViewportView(jtbl_diaria);
                 if (jtbl_diaria.getColumnModel().getColumnCount() > 0) {
                     jtbl_diaria.getColumnModel().getColumn(0).setPreferredWidth(10);
-                    jtbl_diaria.getColumnModel().getColumn(1).setPreferredWidth(100);
+                    jtbl_diaria.getColumnModel().getColumn(1).setPreferredWidth(200);
+                    jtbl_diaria.getColumnModel().getColumn(2).setPreferredWidth(30);
+                    jtbl_diaria.getColumnModel().getColumn(3).setPreferredWidth(30);
+                    jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(20);
+                    jtbl_diaria.getColumnModel().getColumn(5).setPreferredWidth(30);
                 }
 
                 getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 183, 660, 190));

@@ -172,11 +172,11 @@ public class ClienteDAO implements InterfaceClienteDAO {
         return resultado;
     }
 
-    public List<Cliente> getClientes_nome(String nome_cliente) throws SQLException {
+    public List<Cliente> getClientes_nome(String nome_cliente) throws SQLException {        
         List<Cliente> resultado = new ArrayList<Cliente>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM CLIENTE WHERE NOME_CLIENTE LIKE ? ORDER BY NOME_CLIENTE;";
+        String sqlSelect = "SELECT * FROM locadora.CLIENTE WHERE NOME_CLIENTE LIKE ? ORDER BY NOME_CLIENTE;";
         ResultSet rs = null;
 
         try {

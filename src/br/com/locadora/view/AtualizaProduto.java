@@ -271,7 +271,7 @@ public class AtualizaProduto extends javax.swing.JFrame {
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         janelapai.setEnabled(true);
         janelapai.setVisible(true);
-        janelapai.request();
+        
         setVisible(false);
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_cancelarActionPerformed
@@ -279,7 +279,7 @@ public class AtualizaProduto extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         janelapai.setEnabled(true);
         janelapai.setVisible(true);
-        janelapai.request();
+        
         setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -532,9 +532,9 @@ private void jcb_subFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:even
     public void retornaJanelaPai() {
         janelapai.setEnabled(true);
         janelapai.setVisible(true);
-        janelapai.request();
+        
         this.setVisible(false);
-        janelapai.listaProduto();
+        
     }
 
     public void setStatusTela(boolean status) {

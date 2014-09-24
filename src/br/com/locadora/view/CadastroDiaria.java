@@ -87,7 +87,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +97,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
         });
         getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, 35));
 
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Cancelar");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -107,19 +107,8 @@ public class CadastroDiaria extends javax.swing.JFrame {
         });
         getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, 35));
 
-        jtf_nome_diaria.setDocument(new UnaccentedDocument());
         jtf_nome_diaria.setText("Catálogo");
         jtf_nome_diaria.setName("jtf_nome_diaria"); // NOI18N
-        jtf_nome_diaria.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_diariaFocusGained(evt);
-            }
-        });
-        jtf_nome_diaria.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_diariaKeyPressed(evt);
-            }
-        });
         getContentPane().add(jtf_nome_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 280, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -281,36 +270,6 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
-
-    private void jtf_nome_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_diariaKeyPressed
-    jtf_nome_diaria.addKeyListener(new KeyAdapter() {  
-      public void keyReleased(KeyEvent evt) {  
-        if (evt.getKeyCode() != KeyEvent.VK_HOME) {  
-          String s = jtf_nome_diaria.getText();  
-          jtf_nome_diaria.setText(s.toUpperCase());  
-        }  
-      }  
-    }); 
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            enviaDados();
-        }
-    }//GEN-LAST:event_jtf_nome_diariaKeyPressed
-
-    private void jtf_nome_diariaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_diariaFocusGained
-        jtf_nome_diaria.setInputVerifier(new InputVerifier() {
-
-            public boolean verify(JComponent input) {
-                if (jtf_nome_diaria.getText().trim().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Informe a descrição");
-                    jtf_nome_diaria.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_diariaFocusGained
 
     private void jtf_valorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valorFocusGained
         // TODO add your handling code here:

@@ -13,9 +13,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Cliente;
-import br.com.locadora.model.bean.FornecedorModel;
 import br.com.locadora.model.dao.ClienteDAO;
-import br.com.locadora.model.dao.FornecedorDAO;
 import br.com.locadora.util.ItemDbGrid;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -29,8 +27,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,7 +41,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     
     public ConsultaClienteAtendimento() {
         initComponents();
-        janelapai = null;        
+        janelapai = null;              
     }
     
 
@@ -116,6 +112,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
+        jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_consultaKeyPressed(evt);
+            }
+        });
         jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 640, -1));
 
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
@@ -246,23 +247,24 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMaxWidth( 60 );
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMinWidth( 60 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMaxWidth( 60 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMinWidth( 60 );
+        listaCliente(jtf_consulta.getText().trim());
+        jtf_consulta.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        try {
-            listaCliente(jtf_consulta.getText().trim());
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaClienteAtendimento.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        listaCliente(jtf_consulta.getText().trim());            
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jtbl_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_clienteMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_clienteMouseClicked
+
+    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                listaCliente(jtf_consulta.getText().trim());            
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_consultaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -284,7 +286,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     private javax.swing.JButton jb_novo1;
     private javax.swing.JButton jb_ok;
     public static javax.swing.JTable jtbl_cliente;
-    private javax.swing.JTextField jtf_consulta;
+    public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
     //Recebendo tela como parametro para atualização apos pesquisa
@@ -308,11 +310,15 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     }
     private InterfacePool pool;
 
-    public void listaCliente(String consulta) throws SQLException {
-        pool = new Pool();
-        ClienteDAO clienteDAO = new ClienteDAO(pool);
-        clientes = clienteDAO.getClientes_nome("%" + jtf_consulta.getText().trim() + "%");
-        mostraCliente(clientes);
+    public void listaCliente(String consulta) {
+        try {
+            pool = new Pool();
+            ClienteDAO clienteDAO = new ClienteDAO(pool);
+            clientes = clienteDAO.getClientes_nome("%" + jtf_consulta.getText().trim() + "%");
+            mostraCliente(clientes);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaClienteAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void listaTodasClientes() throws SQLException {
@@ -331,7 +337,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
         } else {
             for (int i = 0; i < clientes.size(); i++) {
-
                 Cliente cliente = new Cliente();
                 cliente.setCodigo_cliente(clientes.get(i).getCodigo_cliente());
                 cliente.setNome_cliente(clientes.get(i).getNome_cliente());

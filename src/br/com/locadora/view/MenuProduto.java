@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * Cad_Fornecedor.java
- *
- * Created on 06/04/2011, 16:41:51
- */
 package br.com.locadora.view;
 
 import br.com.locadora.model.dao.ProdutoDAO;
@@ -26,8 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,7 +31,6 @@ public class MenuProduto extends javax.swing.JFrame {
      */
     public MenuProduto() {
         initComponents();
-        listaProduto();
     }
 
     public void setTela(String permissao) {
@@ -54,15 +41,6 @@ public class MenuProduto extends javax.swing.JFrame {
         } else {
         }
     }
-    //   private String consultaGrupo = "SELECT idgrupo,descGrupo FROM grupo";
-    String tipoCadastro;
-    List<Produto> produtos;
-    PreparedStatement pstm;
-    ResultSet rs;
-    //public TelaPrincipal principal;
-    DefaultTableModel tmProduto = new DefaultTableModel(null, new String[]{"Código", "Produto", "Concentração", "Grupo", "Estoque Minimo", "Estoque Ideal",
-        "Unidade"});
-    ListSelectionModel lsmProduto;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,7 +67,7 @@ public class MenuProduto extends javax.swing.JFrame {
         jb_excluir1 = new javax.swing.JButton();
         jb_sair = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtbl_produto = new javax.swing.JTable();
 
         tf_codigo.setName("tf_codigo"); // NOI18N
 
@@ -142,16 +120,16 @@ public class MenuProduto extends javax.swing.JFrame {
 
         buttonGroup2.add(jrb_apresentação);
         jrb_apresentação.setSelected(true);
-        jrb_apresentação.setText("Produto/Apresentação");
+        jrb_apresentação.setText("Código");
         jrb_apresentação.setName("jrb_apresentação"); // NOI18N
         jPanel5.add(jrb_apresentação, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
 
         buttonGroup2.add(jrb_nome);
-        jrb_nome.setText("Nome Comercial");
+        jrb_nome.setText("Descrição");
         jrb_nome.setName("jrb_nome"); // NOI18N
-        jPanel5.add(jrb_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 24, -1, -1));
+        jPanel5.add(jrb_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 50, 550, 90));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 50, 550, 100));
 
         jb_novo.setText("Novo");
         jb_novo.setName("jb_novo"); // NOI18N
@@ -191,102 +169,53 @@ public class MenuProduto extends javax.swing.JFrame {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTable1 = new javax.swing.JTable();
-        jTable1.setUpdateSelectionOnSort(false);
-        jTable1.setVerifyInputWhenFocusTarget(false);
-        jTable1.setDefaultEditor(Object.class, null);
-        jTable1.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e){
-                if(e.getClickCount() == 2){
-                    alterar();
+        jtbl_produto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-                }}});
-                jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
+            },
+            new String [] {
+                "Código", "Produto", "Descrição", "Valor"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-                    },
-                    new String [] {
-                        "Código", "Produto", "Descrição", "Valor"
-                    }
-                ) {
-                    Class[] types = new Class [] {
-                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
-                    };
-                    boolean[] canEdit = new boolean [] {
-                        false, false, false, false
-                    };
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-                    public Class getColumnClass(int columnIndex) {
-                        return types [columnIndex];
-                    }
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtbl_produto.setName("jtbl_produto"); // NOI18N
+        jtbl_produto.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jtbl_produto);
+        if (jtbl_produto.getColumnModel().getColumnCount() > 0) {
+            jtbl_produto.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jtbl_produto.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jtbl_produto.getColumnModel().getColumn(2).setPreferredWidth(170);
+            jtbl_produto.getColumnModel().getColumn(3).setPreferredWidth(30);
+        }
 
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {
-                        return canEdit [columnIndex];
-                    }
-                });
-                jTable1.setName("jTable1"); // NOI18N
-                jTable1.getTableHeader().setReorderingAllowed(false);
-                jScrollPane1.setViewportView(jTable1);
-                if (jTable1.getColumnModel().getColumnCount() > 0) {
-                    jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-                    jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
-                    jTable1.getColumnModel().getColumn(2).setPreferredWidth(170);
-                    jTable1.getColumnModel().getColumn(3).setPreferredWidth(30);
-                }
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 550, 220));
 
-                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 550, 220));
+        getAccessibleContext().setAccessibleParent(this);
 
-                getAccessibleContext().setAccessibleParent(this);
-
-                setSize(new java.awt.Dimension(1134, 496));
-                setLocationRelativeTo(null);
-            }// </editor-fold>//GEN-END:initComponents
+        setSize(new java.awt.Dimension(604, 441));
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        tf_pesquisar_produto.requestFocus();
-//        
-//        jt_pesquisar.getColumnModel().getColumn( 0 ).setMaxWidth( 70 );
-//        jt_pesquisar.getColumnModel().getColumn( 0 ).setMinWidth( 70 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 0 ).setMaxWidth( 70 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 0 ).setMinWidth( 70 );
-//
-//        jt_pesquisar.getColumnModel().getColumn( 1 ).setMaxWidth( 280 );
-//        jt_pesquisar.getColumnModel().getColumn( 1 ).setMinWidth( 280 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 1 ).setMaxWidth( 280 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 1 ).setMinWidth( 280 );
-//
-//        jt_pesquisar.getColumnModel().getColumn( 2 ).setMaxWidth( 150 );
-//        jt_pesquisar.getColumnModel().getColumn( 2 ).setMinWidth( 150 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 2 ).setMaxWidth( 150 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 2 ).setMinWidth( 150 );
-//
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMaxWidth( 100 );
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMinWidth( 100 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMaxWidth( 100 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMinWidth( 100 );
-////
-////        jt_pesquisar.getColumnModel().getColumn( 4 ).setMaxWidth( 100 );
-////        jt_pesquisar.getColumnModel().getColumn( 4 ).setMinWidth( 100 );
-////        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 4 ).setMaxWidth( 100 );
-////        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 4 ).setMinWidth( 100 );
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
-        if (jrb_apresentação.isSelected()) {
-            listaProduto();
-        } else {
-            listarComercial();
-        }
 
-//
-//        if (jrb_codigo.isSelected() == true) {
-//            listaProdutoCodigo();
-//
-//        } else if (jrb_descricao.isSelected() == true) {
-//            listaProdutoDescricao();
-//        } else {
-//
-//        }
     }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
@@ -301,21 +230,10 @@ public class MenuProduto extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_alterar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterar1ActionPerformed
-        alterar();
+
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_alterar1ActionPerformed
-    public void alterar() {
-        Produto prod = tbProdutoLinhaSelecionada(jTable1);
-        if (prod != null) {
-            AtualizaProduto produtoAltera = new AtualizaProduto(prod);
-            produtoAltera.janelapai = this;
-            produtoAltera.setVisible(true);
-            this.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um produto");
-            tf_pesquisar_produto.requestFocus();
-        }
-    }
+
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);
         telaPrincipal.setStatusTela(true);
@@ -328,18 +246,12 @@ public class MenuProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_excluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluir1ActionPerformed
-        excluiProduto();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluir1ActionPerformed
 
     private void tf_pesquisar_produtoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_pesquisar_produtoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (jrb_apresentação.isSelected()) {
-                listaProduto();
-            } else {
-                listarComercial();
-            }
-        }
+
     }//GEN-LAST:event_tf_pesquisar_produtoKeyPressed
 
     /**
@@ -361,7 +273,6 @@ public class MenuProduto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jb_alterar1;
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_excluir1;
@@ -369,6 +280,7 @@ public class MenuProduto extends javax.swing.JFrame {
     private javax.swing.JButton jb_sair;
     private javax.swing.JRadioButton jrb_apresentação;
     private javax.swing.JRadioButton jrb_nome;
+    private javax.swing.JTable jtbl_produto;
     private java.awt.TextField tf_codigo;
     private javax.swing.JTextField tf_pesquisar_produto;
     // End of variables declaration//GEN-END:variables
@@ -377,125 +289,6 @@ public class MenuProduto extends javax.swing.JFrame {
 
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
-    }
-
-    public void listaProduto() {
-        ProdutoDAO prod = new ProdutoDAO();
-        produtos = prod.listarProduto("%" + tf_pesquisar_produto.getText().trim() + "%");
-        mostraProduto(produtos);
-    }
-
-    private void listarComercial() {
-        ProdutoDAO prod = new ProdutoDAO();
-        produtos = prod.listarProdutoComercial("%" + tf_pesquisar_produto.getText().trim() + "%");
-        mostraProduto(produtos);
-    }
-
-//    public void listaProdutoCodigo() {
-//        ProdutoDAO prod = new ProdutoDAO();
-//        produtos = prod.listarProdutoCodigo(tf_pesquisar_produto.getText().trim());
-//        mostraProduto(produtos);
-//    }
-//    public void listaProdutoDescricao() {
-//        ProdutoDAO prod = new ProdutoDAO();
-//        produtos = prod.listarProdutoDescricao1(tf_pesquisar_produto.getText().trim() + "%");
-//        mostraProduto(produtos);
-//    }
-    public void mostraProduto(List<Produto> produtos) {
-        ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
-        jTable1.updateUI();
-        String preço = null;
-        if (produtos.size() == 0) {
-            JOptionPane.showMessageDialog(this, "Nenhum produto encontrado");
-
-        } else {
-            for (int i = 0; i < produtos.size(); i++) {
-                Produto produto = new Produto();
-                produto.setCod_produto(produtos.get(i).getCod_produto());
-                produto.setNome_produto(produtos.get(i).getNome_produto());
-                produto.setConcentraçao(produtos.get(i).getConcentraçao());
-                produto.setEstoque(produtos.get(i).getEstoque());
-                produto.setEstoque_ideal(produtos.get(i).getEstoque_ideal());
-                produto.setEstoque_minimo(produtos.get(i).getEstoque_minimo());
-                produto.setUltimo_preco(produtos.get(i).getUltimo_preco());
-
-                preço = String.valueOf(produtos.get(i).getUltimo_preco());
-                preço = setPrecoFormat(preço);
-
-                DefaultTableModel row = (DefaultTableModel) jTable1.getModel();
-
-                //javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel) tbl.getModel();  
-                //dtm.addRow(new Object[]{" ", " ", " ", " ", " ", " ", " ", " ", " "});  
-                //cada " " para cada coluna da tabela e para um check box vc coloca true ou false (true marcado false marcado), configura o campo como boolean na tabela antes blz  
-                ItemDbGrid hashDbGrid = new ItemDbGrid(produto, produto.getNome_produto());
-                row.addRow(new Object[]{produto.getCod_produto(), hashDbGrid, produto.getConcentraçao(),
-                    produto.getEstoque_minimo(), produto.getEstoque_ideal(), produto.getEstoque(), preço, true});
-            }
-        }
-    }
-    Produto produto = new Produto();
-    ProdutoDAO produtoControl = new ProdutoDAO();
-
-    public Produto tbProdutoLinhaSelecionada(JTable tb) {
-        Produto prod = null;
-        if (tb.getSelectedRow() != -1) {
-            prod = new Produto();
-            prod.setCod_produto(produtos.get(tb.getSelectedRow()).getCod_produto());
-            prod.setConcentraçao(produtos.get(tb.getSelectedRow()).getConcentraçao());
-            prod.setNome_produto(produtos.get(tb.getSelectedRow()).getNome_produto());
-            prod.setEstoque_ideal(produtos.get(tb.getSelectedRow()).getEstoque_ideal());
-            prod.setEstoque_minimo(produtos.get(tb.getSelectedRow()).getEstoque_minimo());
-            prod.setEstoque(produtos.get(tb.getSelectedRow()).getEstoque());
-        }
-        return prod;
-    }
-
-    public void excluiProduto() {
-        removeProduto(jTable1);
-    }
-
-    private Produto removeProduto(JTable tb) {
-        DefaultTableModel row = (DefaultTableModel) jTable1.getModel();
-        if (tb.getSelectedRow() != -1) {
-
-            int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-            if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                ProdutoDAO produtosControl = new ProdutoDAO();
-                produto.setCod_produto(produtos.get(tb.getSelectedRow()).getCod_produto());
-                if (produtosControl.excluirProduto(produto)) {
-                    row.removeRow(tb.getSelectedRow());
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um produto");
-        }
-        return produto;
-    }
-
-    public void request() {
-        tf_pesquisar_produto.requestFocus();
-    }
-
-    public String setPrecoFormat(String preco) {
-        DecimalFormat dFormat = new DecimalFormat();
-        dFormat.applyPattern("R$ #0.00");
-        return dFormat.format(getPrecoFormato(preco));
-    }
-
-    public Double getPrecoFormato(String preco) {
-        Double precoFormatado = 0.0;
-        try {
-            preco = preco.replace("R", "");
-            preco = preco.replace("$", "");
-            preco = preco.replace(",", ".");
-            preco = preco.replace(" ", "");
-            precoFormatado = Double.parseDouble(preco.trim());
-
-            //this.objFuncionario.setSalario(getSalarioFormat(jTSalario.getText())); pegar valor em double
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");
-        }
-        return precoFormatado;
     }
 
 }

@@ -42,7 +42,6 @@ public final class CadastroCliente extends javax.swing.JFrame {
         janelapai = null;
         janelapai2 = null;
 
-     
     }
 
     public MenuCliente janelapai;
@@ -157,7 +156,6 @@ public final class CadastroCliente extends javax.swing.JFrame {
         jLabel6.setName("jLabel6"); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
 
-        jtf_empresa.setDocument(new UnaccentedDocument());
         jtf_empresa.setText("Hospital São Francisco de Assis");
         jtf_empresa.setName("jtf_empresa"); // NOI18N
         jtf_empresa.addActionListener(new java.awt.event.ActionListener() {
@@ -177,27 +175,8 @@ public final class CadastroCliente extends javax.swing.JFrame {
         });
         getContentPane().add(jtf_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, -1));
 
-        jtf_nome_cliente.setDocument(new UnaccentedDocument());
         jtf_nome_cliente.setText("Alencar Buriti");
         jtf_nome_cliente.setName("jtf_nome_cliente");
-        jtf_nome_cliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_nome_clienteActionPerformed(evt);
-            }
-        });
-        jtf_nome_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_clienteFocusGained(evt);
-            }
-        });
-        jtf_nome_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_clienteKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nome_clienteKeyReleased(evt);
-            }
-        });
         getContentPane().add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -554,65 +533,15 @@ public final class CadastroCliente extends javax.swing.JFrame {
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
-    private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
-        jtf_nome_cliente.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent evt) {
-                if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                    String s = jtf_nome_cliente.getText();
-                    jtf_nome_cliente.setText(s.toUpperCase());
-                }
-            }
-        });
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteKeyPressed
-    private void jtf_nome_clienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusGained
-        jtf_nome_cliente.setInputVerifier(new InputVerifier() {
-
-            public boolean verify(JComponent input) {
-                if (jtf_nome_cliente.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Informe o principio ativo do produto");
-                    jtf_nome_cliente.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteFocusGained
-
     private void jtf_empresaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_empresaFocusGained
-//    jtf_concentração.setInputVerifier(new InputVerifier() {
-//    public boolean verify(JComponent input) {
-//                if(jtf_concentração.getText().equals("")) {
-//                    JOptionPane.showMessageDialog(null, "Informe a concentação do produto");
-//                    jtf_concentração.requestFocus();
-//                    return false;
-//                } else {
-//                    return true;
-//                }
-//            }
-//    });
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_empresaFocusGained
 
-    private void jtf_nome_clienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteKeyReleased
+    }//GEN-LAST:event_jtf_empresaFocusGained
 
 private void jtf_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_empresaActionPerformed
 // TODO add your handling code here:
 }//GEN-LAST:event_jtf_empresaActionPerformed
 
 private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_empresaKeyPressed
-    jtf_empresa.addKeyListener(new KeyAdapter() {
-        public void keyReleased(KeyEvent evt) {
-            if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                String s = jtf_empresa.getText();
-                jtf_empresa.setText(s.toUpperCase());
-            }
-        }
-    });
 
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_empresaKeyPressed
@@ -628,10 +557,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jrb_ativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_ativoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_ativoActionPerformed
-
-    private void jtf_nome_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_clienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteActionPerformed
 
     private void jtf_enderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_enderecoActionPerformed
         // TODO add your handling code here:
@@ -737,15 +662,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
-    }
-
-    public void setTela(String permissao) {
-        if (permissao.equals("usuario")) {
-//            jb_novo.setEnabled(false);
-//            jb_alterar1.setEnabled(false);
-//            jb_excluir1.setEnabled(false);
-        } else {
-        }
     }
 
     public InterfacePool pool;

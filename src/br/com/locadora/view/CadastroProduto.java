@@ -128,16 +128,6 @@ public final class CadastroProduto extends javax.swing.JFrame {
                 jtf_descricaoActionPerformed(evt);
             }
         });
-        jtf_descricao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_descricaoFocusGained(evt);
-            }
-        });
-        jtf_descricao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_descricaoKeyPressed(evt);
-            }
-        });
         getContentPane().add(jtf_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 420, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -147,19 +137,6 @@ public final class CadastroProduto extends javax.swing.JFrame {
 
         jtf_produto.setDocument(new UnaccentedDocument());
         jtf_produto.setName("jtf_produto"); // NOI18N
-        jtf_produto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_produtoFocusGained(evt);
-            }
-        });
-        jtf_produto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_produtoKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_produtoKeyReleased(evt);
-            }
-        });
         getContentPane().add(jtf_produto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 420, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -210,10 +187,9 @@ public final class CadastroProduto extends javax.swing.JFrame {
         setVisible(false);
 
         if (janelapai != null) {
-            janelapai.listaProduto();
+
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
-            janelapai.request();
         }
         if (janelapai2 != null) {
             janelapai2.listaProduto("");
@@ -237,69 +213,9 @@ public final class CadastroProduto extends javax.swing.JFrame {
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
-    private void jtf_produtoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_produtoKeyPressed
-    jtf_produto.addKeyListener(new KeyAdapter() {  
-      public void keyReleased(KeyEvent evt) {  
-        if (evt.getKeyCode() != KeyEvent.VK_HOME) {  
-          String s = jtf_produto.getText();  
-          jtf_produto.setText(s.toUpperCase());  
-        }  
-      }  
-    }); 
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_produtoKeyPressed
-
-    private void jtf_produtoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_produtoFocusGained
-        jtf_produto.setInputVerifier(new InputVerifier() {
-
-            public boolean verify(JComponent input) {
-                if (jtf_produto.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Informe o principio ativo do produto");
-                    jtf_produto.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_produtoFocusGained
-
-    private void jtf_descricaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descricaoFocusGained
-//    jtf_concentração.setInputVerifier(new InputVerifier() {
-//    public boolean verify(JComponent input) {
-//                if(jtf_concentração.getText().equals("")) {
-//                    JOptionPane.showMessageDialog(null, "Informe a concentação do produto");
-//                    jtf_concentração.requestFocus();
-//                    return false;
-//                } else {
-//                    return true;
-//                }
-//            }
-//    });
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_descricaoFocusGained
-
-    private void jtf_produtoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_produtoKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_produtoKeyReleased
-
 private void jtf_descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_descricaoActionPerformed
 // TODO add your handling code here:
 }//GEN-LAST:event_jtf_descricaoActionPerformed
-
-private void jtf_descricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricaoKeyPressed
-    jtf_descricao.addKeyListener(new KeyAdapter() {  
-      public void keyReleased(KeyEvent evt) {  
-        if (evt.getKeyCode() != KeyEvent.VK_HOME) {  
-          String s = jtf_descricao.getText();  
-          jtf_descricao.setText(s.toUpperCase());  
-        }  
-      }  
-    }); 
-    
-    // TODO add your handling code here:
-}//GEN-LAST:event_jtf_descricaoKeyPressed
 
     
     public static void main(String args[]) {
