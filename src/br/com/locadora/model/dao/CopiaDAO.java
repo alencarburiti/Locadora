@@ -65,12 +65,10 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         ResultSet rs = null;
         String sqlSelect = "SELECT \n"
                 + "	A.CODIGO_COPIA, \n"
-                + "    A.CODIGO_INTERNO,\n"
                 + "    A.DEL_FLAG,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
-                + "    A.LOCALIZACAO,\n"
                 + "    A.IDIOMA,\n"
                 + "    A.LEGENDA,\n"
                 + "    C.DIAS,\n"
@@ -86,7 +84,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND A.CODIGO_INTERNO = ?;";
+                + "		AND A.CODIGO_COPIA = ?;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -201,13 +199,11 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlSelect = "SELECT \n"
-                + "	A.CODIGO_COPIA, \n"
-                + "    A.CODIGO_INTERNO,\n"
+                + "	A.CODIGO_COPIA, \n"                
                 + "    A.DEL_FLAG,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
-                + "    B.TIPO_MIDIA,\n"
-                + "    A.LOCALIZACAO,\n"
+                + "    B.TIPO_MIDIA,\n"                
                 + "    A.IDIOMA,\n"
                 + "    A.LEGENDA,\n"
                 + "    C.DIAS,\n"
