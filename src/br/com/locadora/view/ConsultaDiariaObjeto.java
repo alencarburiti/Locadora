@@ -13,9 +13,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.bean.FornecedorModel;
 import br.com.locadora.model.dao.DiariaDAO;
-import br.com.locadora.model.dao.FornecedorDAO;
 import br.com.locadora.util.ItemDbGrid;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -27,8 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**

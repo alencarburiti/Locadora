@@ -2,25 +2,16 @@ package br.com.locadora.model.command;
 
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
-import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Locacao;
-import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
-import br.com.locadora.model.dao.InterfaceDependenteDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
-import br.com.locadora.model.dao.InterfaceTelefoneDAO;
 import br.com.locadora.view.Atendimento;
-import br.com.locadora.view.CadastroCliente;
-import br.com.locadora.view.MenuCliente;
+import static br.com.locadora.view.Atendimento.copiasLocacao;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CadastrarLocacao implements InterfaceCommand {
 
@@ -54,7 +45,7 @@ public class CadastrarLocacao implements InterfaceCommand {
                 ItemLocacao itemLocacao = new ItemLocacao();
                 
                 Copia copia = new Copia();
-                copia.setCodigo_copia((Integer) Atendimento.jtbl_locacao.getValueAt(i, 0));
+                copia.setCodigo_copia((Integer) Atendimento.copiasLocacao.get(i).getCodigo_copia());
                 itemLocacao.setLocacao(locacao);
                 itemLocacao.setCopia(copia);
                 itens.add(itemLocacao);

@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,18 +40,21 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
     public String permissao;
     public Cliente cliente;
     public Objeto objeto;
-    public Copia copia;
-    public static List<ItemLocacao> itemLocacoes;
+    public Copia copiaLocacao;
+    public Copia copiaDevolucao;
+    public List<Copia> copias;
+    public static List<Copia> copiasLocacao = new ArrayList<Copia>();
     public List<Produto> produtos;
     public Produto produto;
     private Date data;
     public InterfacePool pool;
     public SiscomController controller;
     public TelaPrincipal janelapai;
-    public ItemLocacao item;
+    public static List<ItemLocacao> itensDevolucao = new ArrayList<ItemLocacao>();
+    public ItemLocacao itemDevolucao;
 
     public Atendimento() throws SQLException {
-        initComponents();        
+        initComponents();
     }
 
     public void setTela(String permissao) {
@@ -77,17 +81,15 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jtf_valor = new javax.swing.JTextField();
         jtf_tipo_midia = new javax.swing.JTextField(new LimitadorTexto(11), "",10);
         jtf_diaria = new javax.swing.JFormattedTextField();
-        jb_adicionar_locacao = new javax.swing.JButton();
-        jb_remover_locacao = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbl_locacao = new javax.swing.JTable();
-        jtf_objeto_locacao = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        jtf_codigo_copia = new javax.swing.JTextField();
+        jtf_nome_objeto_locacao = new javax.swing.JTextField();
+        jl_codigo_locacao = new javax.swing.JLabel();
+        jtf_codigo_consulta_locacao = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jcb_bolsa = new javax.swing.JCheckBox();
         jButton7 = new javax.swing.JButton();
@@ -113,26 +115,22 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         }
         */
         jtf_preco5 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jtf_codigo_barras_locacao = new javax.swing.JTextField();
-        jcb_codigo_barras = new javax.swing.JCheckBox();
+        jcb_codigo_barras_locacao = new javax.swing.JCheckBox();
+        jb_adicionar_locacao = new javax.swing.JButton();
+        jb_remover_locacao = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_devolucao = new javax.swing.JTable();
         jtf_nome_objeto_devolucao = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jtf_codigo_copia_devolucao = new javax.swing.JTextField();
+        jl_codigo_devolucao = new javax.swing.JLabel();
+        jtf_codigo_consulta_devolucao = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        jtf_codigo_barras_devolucao = new javax.swing.JTextField();
-        jb_adicionar_locacao2 = new javax.swing.JButton();
-        jb_remover_locacao2 = new javax.swing.JButton();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        jb_adicionar_devolucao = new javax.swing.JButton();
+        jb_remover_devolucao = new javax.swing.JButton();
         jLabel32 = new javax.swing.JLabel();
         /*try  {          
             Locale BRAZIL = new Locale("pt","BR");  
@@ -155,6 +153,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         }
         */
         jtf_preco12 = new javax.swing.JTextField();
+        jcb_codigo_barras_devolucao = new javax.swing.JCheckBox();
         jp_locacao1 = new javax.swing.JPanel();
         /*try  {          
             Locale BRAZIL = new Locale("pt","BR");  
@@ -268,15 +267,15 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         */
         jtf_preco7 = new javax.swing.JTextField();
         jCheckBox3 = new javax.swing.JCheckBox();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jtbl_locacao_aberto = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtf_codigo_cliente = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jtf_nome_cliente = new javax.swing.JTextField();
         jb_cliente = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -328,7 +327,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_valorFocusLost(evt);
             }
         });
-        jp_locacao.add(jtf_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 100, -1));
+        jp_locacao.add(jtf_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 100, -1));
 
         jtf_tipo_midia.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
 
@@ -350,51 +349,31 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_tipo_midiaKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_tipo_midia, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 40, 90, -1));
+        jp_locacao.add(jtf_tipo_midia, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, 90, -1));
 
         jtf_diaria.setEditable(false);
         jtf_diaria.setName("jtf_diaria"); // NOI18N
-        jp_locacao.add(jtf_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 110, -1));
-
-        jb_adicionar_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
-        jb_adicionar_locacao.setToolTipText("Incluir");
-        jb_adicionar_locacao.setName("jb_adicionar_locacao"); // NOI18N
-        jb_adicionar_locacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_adicionar_locacaoActionPerformed(evt);
-            }
-        });
-        jp_locacao.add(jb_adicionar_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 90, 30, 30));
-
-        jb_remover_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
-        jb_remover_locacao.setToolTipText("Excluir");
-        jb_remover_locacao.setName("jb_remover_locacao"); // NOI18N
-        jb_remover_locacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_remover_locacaoActionPerformed(evt);
-            }
-        });
-        jp_locacao.add(jb_remover_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 30, 30));
+        jp_locacao.add(jtf_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 50, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Nome Objeto");
         jLabel3.setName("jLabel3"); // NOI18N
-        jp_locacao.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 300, -1));
+        jp_locacao.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 300, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("Valor");
         jLabel5.setName("jLabel5"); // NOI18N
-        jp_locacao.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 50, -1));
+        jp_locacao.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 50, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("Tipo Mídia");
         jLabel6.setName("jLabel6"); // NOI18N
-        jp_locacao.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, 70, -1));
+        jp_locacao.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 70, -1));
 
         jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel13.setText("Diária");
         jLabel13.setName("jLabel13"); // NOI18N
-        jp_locacao.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
+        jp_locacao.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -403,14 +382,14 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
 
             },
             new String [] {
-                "Código", "Código de Barras", "Nome Objeto", "Valor", "Diária", "Bolsa"
+                "Código de Barras", "Nome Objeto", "Valor", "Diária", "Bolsa"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -425,34 +404,41 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jScrollPane2.setViewportView(jtbl_locacao);
         if (jtbl_locacao.getColumnModel().getColumnCount() > 0) {
             jtbl_locacao.getColumnModel().getColumn(0).setPreferredWidth(20);
-            jtbl_locacao.getColumnModel().getColumn(2).setPreferredWidth(150);
+            jtbl_locacao.getColumnModel().getColumn(1).setResizable(false);
+            jtbl_locacao.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jtbl_locacao.getColumnModel().getColumn(2).setPreferredWidth(30);
             jtbl_locacao.getColumnModel().getColumn(3).setPreferredWidth(30);
-            jtbl_locacao.getColumnModel().getColumn(4).setPreferredWidth(30);
-            jtbl_locacao.getColumnModel().getColumn(5).setPreferredWidth(20);
+            jtbl_locacao.getColumnModel().getColumn(4).setPreferredWidth(20);
         }
 
-        jp_locacao.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 780, 200));
+        jp_locacao.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 780, 220));
 
-        jtf_objeto_locacao.setName("jtf_objeto_locacao"); // NOI18N
-        jtf_objeto_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_nome_objeto_locacao.setEditable(false);
+        jtf_nome_objeto_locacao.setName("jtf_nome_objeto_locacao"); // NOI18N
+        jtf_nome_objeto_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_objeto_locacaoFocusGained(evt);
+                jtf_nome_objeto_locacaoFocusGained(evt);
             }
         });
-        jtf_objeto_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_nome_objeto_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_objeto_locacaoKeyPressed(evt);
+                jtf_nome_objeto_locacaoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_objeto_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 310, -1));
+        jp_locacao.add(jtf_nome_objeto_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 270, -1));
 
-        jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel14.setText("Código");
-        jLabel14.setName("jLabel14"); // NOI18N
-        jp_locacao.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jl_codigo_locacao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jl_codigo_locacao.setText("Código Cópia");
+        jl_codigo_locacao.setName("jl_codigo_locacao"); // NOI18N
+        jp_locacao.add(jl_codigo_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jtf_codigo_copia.setName("jtf_codigo_copia"); // NOI18N
-        jp_locacao.add(jtf_codigo_copia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, -1));
+        jtf_codigo_consulta_locacao.setName("jtf_codigo_consulta_locacao"); // NOI18N
+        jtf_codigo_consulta_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_codigo_consulta_locacaoKeyPressed(evt);
+            }
+        });
+        jp_locacao.add(jtf_codigo_consulta_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
@@ -461,7 +447,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jButton1ActionPerformed(evt);
             }
         });
-        jp_locacao.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 30, -1));
+        jp_locacao.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 30, 30));
 
         jcb_bolsa.setText("Bolsa");
         jcb_bolsa.setName("jcb_bolsa"); // NOI18N
@@ -470,7 +456,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jcb_bolsaActionPerformed(evt);
             }
         });
-        jp_locacao.add(jcb_bolsa, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, -1, -1));
+        jp_locacao.add(jcb_bolsa, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, -1, -1));
 
         jButton7.setText("Finalizar");
         jButton7.setName("jButton7"); // NOI18N
@@ -517,23 +503,35 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         });
         jp_locacao.add(jtf_preco5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 180, 40));
 
-        jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel16.setText("Código de Barras");
-        jLabel16.setName("jLabel16"); // NOI18N
-        jp_locacao.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-
-        jtf_codigo_barras_locacao.setName("jtf_codigo_barras_locacao"); // NOI18N
-        jtf_codigo_barras_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_codigo_barras_locacaoKeyPressed(evt);
+        jcb_codigo_barras_locacao.setSelected(true);
+        jcb_codigo_barras_locacao.setText("Usar Código de Barras");
+        jcb_codigo_barras_locacao.setName("jcb_codigo_barras_locacao"); // NOI18N
+        jcb_codigo_barras_locacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_codigo_barras_locacaoActionPerformed(evt);
             }
         });
-        jp_locacao.add(jtf_codigo_barras_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, -1));
+        jp_locacao.add(jcb_codigo_barras_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 180, 30));
 
-        jcb_codigo_barras.setSelected(true);
-        jcb_codigo_barras.setText("Código de Barras");
-        jcb_codigo_barras.setName("jcb_codigo_barras"); // NOI18N
-        jp_locacao.add(jcb_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, -1));
+        jb_adicionar_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
+        jb_adicionar_locacao.setToolTipText("Incluir");
+        jb_adicionar_locacao.setName("jb_adicionar_locacao"); // NOI18N
+        jb_adicionar_locacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_adicionar_locacaoActionPerformed(evt);
+            }
+        });
+        jp_locacao.add(jb_adicionar_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 30, 30));
+
+        jb_remover_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_remover_locacao.setToolTipText("Excluir");
+        jb_remover_locacao.setName("jb_remover_locacao"); // NOI18N
+        jb_remover_locacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_remover_locacaoActionPerformed(evt);
+            }
+        });
+        jp_locacao.add(jb_remover_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 40, 30, 30));
 
         jtp_locacao.addTab("Locação", jp_locacao);
 
@@ -544,7 +542,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setText("Nome Objeto");
         jLabel4.setName("jLabel4"); // NOI18N
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 300, -1));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 300, -1));
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -553,14 +551,14 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
 
             },
             new String [] {
-                "Código Interno", "Objeto", "Devolvido", "Data Locação", "Data Devolução", "Valor Locado", "Valor Multa", "Dia Multa"
+                "Código de Barras", "Nome Objeto", "Data Locação", "Data Devolução", "Valor Locado", "Valor Multa", "Dia Multa"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false, false, false
+                false, false, false, true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -575,16 +573,16 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jScrollPane3.setViewportView(jtbl_devolucao);
         if (jtbl_devolucao.getColumnModel().getColumnCount() > 0) {
             jtbl_devolucao.getColumnModel().getColumn(0).setPreferredWidth(40);
-            jtbl_devolucao.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jtbl_devolucao.getColumnModel().getColumn(1).setPreferredWidth(100);
             jtbl_devolucao.getColumnModel().getColumn(2).setPreferredWidth(30);
-            jtbl_devolucao.getColumnModel().getColumn(3).setPreferredWidth(30);
-            jtbl_devolucao.getColumnModel().getColumn(5).setPreferredWidth(30);
+            jtbl_devolucao.getColumnModel().getColumn(4).setPreferredWidth(30);
+            jtbl_devolucao.getColumnModel().getColumn(5).setPreferredWidth(20);
             jtbl_devolucao.getColumnModel().getColumn(6).setPreferredWidth(20);
-            jtbl_devolucao.getColumnModel().getColumn(7).setPreferredWidth(20);
         }
 
-        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 780, 200));
+        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 780, 220));
 
+        jtf_nome_objeto_devolucao.setEditable(false);
         jtf_nome_objeto_devolucao.setName("jtf_nome_objeto_devolucao"); // NOI18N
         jtf_nome_objeto_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -596,16 +594,20 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_nome_objeto_devolucaoKeyPressed(evt);
             }
         });
-        jPanel3.add(jtf_nome_objeto_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 310, -1));
+        jPanel3.add(jtf_nome_objeto_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 270, -1));
 
-        jLabel18.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel18.setText("Código Cópia");
-        jLabel18.setName("jLabel18"); // NOI18N
-        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jl_codigo_devolucao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jl_codigo_devolucao.setText("Código Cópia");
+        jl_codigo_devolucao.setName("jl_codigo_devolucao"); // NOI18N
+        jPanel3.add(jl_codigo_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jtf_codigo_copia_devolucao.setEditable(false);
-        jtf_codigo_copia_devolucao.setName("jtf_codigo_copia_devolucao"); // NOI18N
-        jPanel3.add(jtf_codigo_copia_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, -1));
+        jtf_codigo_consulta_devolucao.setName("jtf_codigo_consulta_devolucao"); // NOI18N
+        jtf_codigo_consulta_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_codigo_consulta_devolucaoKeyPressed(evt);
+            }
+        });
+        jPanel3.add(jtf_codigo_consulta_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, -1));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
@@ -614,7 +616,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 30, -1));
+        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 30, 30));
 
         jButton4.setText("Devolver");
         jButton4.setName("jButton4"); // NOI18N
@@ -623,20 +625,11 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, -1, -1));
+        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, 40));
 
         jButton5.setText("Devolver Todos");
         jButton5.setName("jButton5"); // NOI18N
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, -1, -1));
-
-        jButton6.setText("Locações Abertas");
-        jButton6.setName("jButton6"); // NOI18N
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 80, 150, 40));
+        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, -1, 40));
 
         jButton10.setText("Finalizar");
         jButton10.setName("jButton10"); // NOI18N
@@ -647,52 +640,25 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         });
         jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 340, 130, 50));
 
-        jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel15.setText("Código de Barras");
-        jLabel15.setName("jLabel15"); // NOI18N
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 300, -1));
-
-        jtf_codigo_barras_devolucao.setName("jtf_codigo_barras_devolucao"); // NOI18N
-        jtf_codigo_barras_devolucao.addActionListener(new java.awt.event.ActionListener() {
+        jb_adicionar_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
+        jb_adicionar_devolucao.setToolTipText("Incluir");
+        jb_adicionar_devolucao.setName("jb_adicionar_devolucao"); // NOI18N
+        jb_adicionar_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_codigo_barras_devolucaoActionPerformed(evt);
+                jb_adicionar_devolucaoActionPerformed(evt);
             }
         });
-        jtf_codigo_barras_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_codigo_barras_devolucaoFocusGained(evt);
-            }
-        });
-        jtf_codigo_barras_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_codigo_barras_devolucaoKeyPressed(evt);
-            }
-        });
-        jPanel3.add(jtf_codigo_barras_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, -1));
+        jPanel3.add(jb_adicionar_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 30, 30));
 
-        jb_adicionar_locacao2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
-        jb_adicionar_locacao2.setToolTipText("Incluir");
-        jb_adicionar_locacao2.setName("jb_adicionar_locacao2"); // NOI18N
-        jb_adicionar_locacao2.addActionListener(new java.awt.event.ActionListener() {
+        jb_remover_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_remover_devolucao.setToolTipText("Excluir");
+        jb_remover_devolucao.setName("jb_remover_devolucao"); // NOI18N
+        jb_remover_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_adicionar_locacao2ActionPerformed(evt);
+                jb_remover_devolucaoActionPerformed(evt);
             }
         });
-        jPanel3.add(jb_adicionar_locacao2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 30, 30));
-
-        jb_remover_locacao2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
-        jb_remover_locacao2.setToolTipText("Excluir");
-        jb_remover_locacao2.setName("jb_remover_locacao2"); // NOI18N
-        jb_remover_locacao2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_remover_locacao2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jb_remover_locacao2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, 30, 30));
-
-        jCheckBox2.setText("Código de Barras");
-        jCheckBox2.setName("jCheckBox2"); // NOI18N
-        jPanel3.add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, -1, -1));
+        jPanel3.add(jb_remover_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 30, 30));
 
         jLabel32.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel32.setText("Total");
@@ -729,6 +695,16 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
             }
         });
         jPanel3.add(jtf_preco12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 350, 180, 40));
+
+        jcb_codigo_barras_devolucao.setSelected(true);
+        jcb_codigo_barras_devolucao.setText("Usar Código de Barras");
+        jcb_codigo_barras_devolucao.setName("jcb_codigo_barras_devolucao"); // NOI18N
+        jcb_codigo_barras_devolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_codigo_barras_devolucaoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jcb_codigo_barras_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, 30));
 
         jtp_locacao.addTab("Devolução", jPanel3);
 
@@ -1147,52 +1123,8 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
 
         jtp_locacao.addTab("Reservas", jPanel4);
 
-        jInternalFrame1.setName("jInternalFrame1"); // NOI18N
-        jInternalFrame1.setVisible(true);
-
-        jScrollPane6.setName("jScrollPane6"); // NOI18N
-
-        jtbl_locacao_aberto.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Código Interno", "Objeto", "Devolvido", "Data Locação", "Data Devolução", "Valor Locado", "Valor Multa", "Dia Multa"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jtbl_locacao_aberto.setName("jtbl_locacao_aberto"); // NOI18N
-        jScrollPane6.setViewportView(jtbl_locacao_aberto);
-        if (jtbl_locacao_aberto.getColumnModel().getColumnCount() > 0) {
-            jtbl_locacao_aberto.getColumnModel().getColumn(0).setPreferredWidth(40);
-            jtbl_locacao_aberto.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jtbl_locacao_aberto.getColumnModel().getColumn(2).setPreferredWidth(30);
-            jtbl_locacao_aberto.getColumnModel().getColumn(3).setPreferredWidth(30);
-            jtbl_locacao_aberto.getColumnModel().getColumn(5).setPreferredWidth(30);
-            jtbl_locacao_aberto.getColumnModel().getColumn(6).setPreferredWidth(20);
-            jtbl_locacao_aberto.getColumnModel().getColumn(7).setPreferredWidth(20);
-        }
-
-        jInternalFrame1.getContentPane().add(jScrollPane6, java.awt.BorderLayout.CENTER);
-
-        jtp_locacao.addTab("Em Aberto", jInternalFrame1);
-
         getContentPane().add(jtp_locacao);
-        jtp_locacao.setBounds(30, 140, 850, 450);
+        jtp_locacao.setBounds(0, 90, 850, 450);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -1201,16 +1133,16 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Código ");
         jLabel1.setName("jLabel1"); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 100, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, -1));
 
         jtf_codigo_cliente.setEditable(false);
         jtf_codigo_cliente.setName("jtf_codigo_cliente"); // NOI18N
-        jPanel1.add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 130, -1));
+        jPanel1.add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, -1));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setText("Cliente");
         jLabel10.setName("jLabel10"); // NOI18N
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
 
         jtf_nome_cliente.setName("jtf_nome_cliente"); // NOI18N
         jtf_nome_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1223,7 +1155,7 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jtf_nome_clienteKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 450, -1));
+        jPanel1.add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 320, -1));
 
         jb_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_cliente.setName("jb_cliente"); // NOI18N
@@ -1232,17 +1164,47 @@ public class Atendimento extends javax.swing.JFrame implements Atendimento_Inter
                 jb_clienteActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, 30, -1));
+        jPanel1.add(jb_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 30, -1));
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(40, 40, 840, 90);
+        jPanel1.setBounds(10, 10, 510, 80);
 
-        setSize(new java.awt.Dimension(919, 621));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Atendente"));
+        jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "alencarburiti", "teste\t", "eliesioxavier", "Item 4" }));
+        jComboBox1.setName("jComboBox1"); // NOI18N
+        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 50));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/reload.png"))); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(520, 10, 200, 80);
+
+        setSize(new java.awt.Dimension(853, 564));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if (jcb_codigo_barras_locacao.isSelected() == true) {
+            jl_codigo_locacao.setText("Código de Barras");
+            jtf_codigo_consulta_locacao.requestFocus();
+        } else {
+            jl_codigo_locacao.setText("Código da Cópia");
+            jtf_codigo_consulta_locacao.requestFocus();
+        }
         jtf_nome_cliente.requestFocus();
+
+        if (jcb_codigo_barras_devolucao.isSelected() == true) {
+            jl_codigo_devolucao.setText("Código de Barras");
+            jtf_codigo_consulta_devolucao.requestFocus();
+        } else {
+            jl_codigo_devolucao.setText("Código da Cópia");
+            jtf_codigo_consulta_devolucao.requestFocus();
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -1262,7 +1224,7 @@ private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
     consultaCliente.setTelaAtendimento(this);
     consultaCliente.janelapai = this;
-    consultaCliente.setVisible(true);    
+    consultaCliente.setVisible(true);
     consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
 //    setStatusTela(false);
     // TODO add your handling code here:
@@ -1279,7 +1241,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jtf_nome_clienteKeyPressed
 
 private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusLost
-    jtf_objeto_locacao.requestFocus();
+    jtf_nome_objeto_locacao.requestFocus();
 }//GEN-LAST:event_jtf_nome_clienteFocusLost
 
     private void jtf_preco8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco8FocusLost
@@ -1403,11 +1365,15 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jtf_preco6FocusGained
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        tbDevolverLinhaSelecionada(jtbl_devolucao);        
+        tbDevolverLinhaSelecionada(jtbl_devolucao);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ConsultaCopiaDevolucao copiaDevolucao = new ConsultaCopiaDevolucao();
+        copiaDevolucao.setTelaAtendimento(this);
+        copiaDevolucao.janelapai = this;
+        copiaDevolucao.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1429,30 +1395,30 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jcb_bolsaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ConsultaCopiaAtendimento copiaCliente = new ConsultaCopiaAtendimento();
+        ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
         copiaCliente.setTelaAtendimento(this);
         copiaCliente.janelapai = this;
         copiaCliente.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jtf_objeto_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_objeto_locacaoKeyPressed
-    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                ConsultaCopiaAtendimento copiaCliente = new ConsultaCopiaAtendimento();
-        copiaCliente.setTelaAtendimento(this);
-        copiaCliente.janelapai = this;
-        copiaCliente.setVisible(true);
-    }       
-    }//GEN-LAST:event_jtf_objeto_locacaoKeyPressed
+    private void jtf_nome_objeto_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_locacaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
+            copiaCliente.setTelaAtendimento(this);
+            copiaCliente.janelapai = this;
+            copiaCliente.setVisible(true);
+        }
+    }//GEN-LAST:event_jtf_nome_objeto_locacaoKeyPressed
 
-    private void jtf_objeto_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_objeto_locacaoFocusGained
-    }//GEN-LAST:event_jtf_objeto_locacaoFocusGained
+    private void jtf_nome_objeto_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_locacaoFocusGained
+    }//GEN-LAST:event_jtf_nome_objeto_locacaoFocusGained
 
     private void jb_remover_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_remover_locacaoActionPerformed
         excluirProduto();
     }//GEN-LAST:event_jb_remover_locacaoActionPerformed
 
     private void jb_adicionar_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_locacaoActionPerformed
-        locarAlimentarItens(copia);    
+        adicionarItemLocado(copiaLocacao);
     }//GEN-LAST:event_jb_adicionar_locacaoActionPerformed
 
     private void jtf_tipo_midiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_tipo_midiaKeyPressed
@@ -1506,6 +1472,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jtf_valor2FocusLost
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        enviarDadosDevolucao();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -1530,32 +1497,14 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtp_locacaoFocusGained
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        buscarDadosLocacao();
+    private void jb_adicionar_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_devolucaoActionPerformed
+        adicionarItemDevolvido(itemDevolucao);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_jb_adicionar_devolucaoActionPerformed
 
-    private void jtf_codigo_barras_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_codigo_barras_devolucaoFocusGained
+    private void jb_remover_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_remover_devolucaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_barras_devolucaoFocusGained
-
-    private void jtf_codigo_barras_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_barras_devolucaoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                devolver_consulta_codigo_barras(jtf_codigo_barras_devolucao.getText().trim());
-            } catch (ParseException ex) {
-                Logger.getLogger(Atendimento.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_jtf_codigo_barras_devolucaoKeyPressed
-
-    private void jb_adicionar_locacao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_locacao2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_locacao2ActionPerformed
-
-    private void jb_remover_locacao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_remover_locacao2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_remover_locacao2ActionPerformed
+    }//GEN-LAST:event_jb_remover_devolucaoActionPerformed
 
     private void jtf_preco11FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco11FocusGained
         // TODO add your handling code here:
@@ -1573,15 +1522,49 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_preco12FocusLost
 
-    private void jtf_codigo_barras_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_barras_locacaoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            locar_consulta_codigo_barras(jtf_codigo_barras_locacao.getText().trim());
+    private void jcb_codigo_barras_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_codigo_barras_locacaoActionPerformed
+        if (jcb_codigo_barras_locacao.isSelected() == true) {
+            jl_codigo_locacao.setText("Código de Barras");
+            jtf_codigo_consulta_locacao.requestFocus();
+        } else {
+            jl_codigo_locacao.setText("Código da Cópia");
+            jtf_codigo_consulta_locacao.requestFocus();
         }
-    }//GEN-LAST:event_jtf_codigo_barras_locacaoKeyPressed
-
-    private void jtf_codigo_barras_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_codigo_barras_devolucaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_barras_devolucaoActionPerformed
+    }//GEN-LAST:event_jcb_codigo_barras_locacaoActionPerformed
+
+    private void jtf_codigo_consulta_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_consulta_locacaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jcb_codigo_barras_locacao.isSelected() == true) {
+                locar_consulta_codigo_barras(jtf_codigo_consulta_locacao.getText().trim());
+            } else {
+
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_codigo_consulta_locacaoKeyPressed
+
+    private void jcb_codigo_barras_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_codigo_barras_devolucaoActionPerformed
+        if (jcb_codigo_barras_devolucao.isSelected() == true) {
+            jl_codigo_devolucao.setText("Código de Barras");
+            jtf_codigo_consulta_devolucao.requestFocus();
+        } else {
+            jl_codigo_devolucao.setText("Código da Cópia");
+            jtf_codigo_consulta_devolucao.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_codigo_barras_devolucaoActionPerformed
+
+    private void jtf_codigo_consulta_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_consulta_devolucaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jcb_codigo_barras_devolucao.isSelected() == true) {
+                devolver_consulta_codigo_barras(jtf_codigo_consulta_devolucao.getText().trim());
+            } else {
+
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_codigo_consulta_devolucaoKeyPressed
     public static boolean validaData(String dataString) throws java.text.ParseException {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -1621,6 +1604,27 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             return (false);
         }
         return (true);
+    }
+    public void checarFilmeLocado(){
+        try {
+            pool = new Pool();
+            CopiaDAO copiaDAO = new CopiaDAO(pool);
+            copias = null;
+            Integer quantidade_locado;
+            quantidade_locado = copiaDAO.checarFilme(Integer.parseInt(jtf_codigo_cliente.getText()),jtf_codigo_consulta_locacao.getText());
+            if (quantidade_locado > 0) {
+                carregarCopiaLocacao(copias.get(0));
+            } else {
+                int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                
+                }
+                JOptionPane.showMessageDialog(null, "Código de Barra inválido");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Atendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     private TelaPrincipal_Interface telaPrincipal;
 
@@ -1689,26 +1693,21 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
-    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1729,45 +1728,45 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable3;
     private javax.swing.JButton jb_adicionar2;
+    private javax.swing.JButton jb_adicionar_devolucao;
     private javax.swing.JButton jb_adicionar_locacao;
     private javax.swing.JButton jb_adicionar_locacao1;
-    private javax.swing.JButton jb_adicionar_locacao2;
     private javax.swing.JButton jb_cliente;
     private javax.swing.JButton jb_eliminar2;
+    private javax.swing.JButton jb_remover_devolucao;
     private javax.swing.JButton jb_remover_locacao;
     private javax.swing.JButton jb_remover_locacao1;
-    private javax.swing.JButton jb_remover_locacao2;
     private javax.swing.JCheckBox jcb_bolsa;
-    private javax.swing.JCheckBox jcb_codigo_barras;
+    private javax.swing.JCheckBox jcb_codigo_barras_devolucao;
+    private javax.swing.JCheckBox jcb_codigo_barras_locacao;
     private javax.swing.JFormattedTextField jftf_vencimento2;
+    private javax.swing.JLabel jl_codigo_devolucao;
+    private javax.swing.JLabel jl_codigo_locacao;
     public static javax.swing.JPanel jp_locacao;
     private javax.swing.JPanel jp_locacao1;
     public static javax.swing.JTable jtbl_devolucao;
     public static javax.swing.JTable jtbl_locacao;
-    public static javax.swing.JTable jtbl_locacao_aberto;
     public static javax.swing.JTable jtbl_venda;
-    private javax.swing.JTextField jtf_codigo_barras_devolucao;
-    private javax.swing.JTextField jtf_codigo_barras_locacao;
     public static javax.swing.JTextField jtf_codigo_cliente;
-    private javax.swing.JTextField jtf_codigo_copia;
+    private javax.swing.JTextField jtf_codigo_consulta_devolucao;
+    private javax.swing.JTextField jtf_codigo_consulta_locacao;
     private javax.swing.JTextField jtf_codigo_copia1;
-    private javax.swing.JTextField jtf_codigo_copia_devolucao;
     private javax.swing.JTextField jtf_codigo_objeto;
     private javax.swing.JTextField jtf_descricao_objeto;
     private javax.swing.JFormattedTextField jtf_diaria;
     public static javax.swing.JTextField jtf_nome_cliente;
     private javax.swing.JTextField jtf_nome_objeto1;
     private javax.swing.JTextField jtf_nome_objeto_devolucao;
-    private javax.swing.JTextField jtf_objeto_locacao;
+    public static javax.swing.JTextField jtf_nome_objeto_locacao;
     private javax.swing.JTextField jtf_preco10;
     private javax.swing.JTextField jtf_preco11;
     private javax.swing.JTextField jtf_preco12;
@@ -1790,8 +1789,27 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         if (verificarCampos() == true) {
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarLocacao");
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+//            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
         }
+        DefaultTableModel tb_locacao = (DefaultTableModel) Atendimento.jtbl_locacao.getModel();
+        int rows = tb_locacao.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            tb_locacao.removeRow(i);
+        }
+    }
+
+    private void enviarDadosDevolucao() {
+        if (verificarCampos() == true) {
+            controller = new SiscomController();
+            controller.processarRequisicao("cadastrarDevolucao");
+//            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+        }
+        DefaultTableModel tb_devolucao = (DefaultTableModel) Atendimento.jtbl_devolucao.getModel();
+        int rows = tb_devolucao.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            tb_devolucao.removeRow(i);
+        }
+
     }
 
     public void setJanelaPai(TelaPrincipal janelapai) {
@@ -1801,8 +1819,8 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     public void limparCampos() {
         jtf_codigo_cliente.setText("");
-        jtf_codigo_copia.setText("");
-        jtf_valor.setText("");        
+        jtf_codigo_consulta_locacao.setText("");
+        jtf_valor.setText("");
         jtf_tipo_midia.setText("");
         jtf_diaria.setText("");
     }
@@ -1854,7 +1872,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-            jtf_objeto_locacao.requestFocus();
+            jtf_nome_objeto_locacao.requestFocus();
             return false;
         } else {
             return true;
@@ -1864,50 +1882,74 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public boolean verificarItemLocacao() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
-        if (jtf_codigo_copia.getText().equals("")) {
+        if (jtf_codigo_consulta_locacao.getText().equals("")) {
             msgERRO = msgERRO + " *Cópia\n";
         }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-            jtf_objeto_locacao.requestFocus();
+            jtf_nome_objeto_locacao.requestFocus();
             return false;
         } else {
             return true;
         }
     }
 
-    public void locarAlimentarItens(Copia copia)  {
+    public void adicionarItemLocado(Copia copia) {
         if (verificarItemLocacao() == true) {
 
             String valor;
             valor = String.valueOf(copia.getObjeto().getDiaria().getValor());
             valor = setPrecoFormat(valor);
-            
+
             DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
             ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
-            row.addRow(new Object[]{copia.getCodigo_copia(), copia.getCodigo_barras(),
+            row.addRow(new Object[]{copia.getCodigo_barras(),
                 hashDbGrid, valor, copia.getObjeto().getDiaria().getDias(), copia.getStatus()});
 
-            limparItem();
-            jtf_objeto_locacao.requestFocus();
+            copiasLocacao.add(copia);
+            limparItemLocado();
+            jtf_codigo_consulta_locacao.requestFocus();
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
         }
     }
 
-    public void limparItem() {
+    public void adicionarItemDevolvido(ItemLocacao itemLocacao) {
+
+        try {
+            SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+
+            String data_locacao;
+            data_locacao = out.format(in.parse(itemLocacao.getData_locacao().toString()));
+
+            DefaultTableModel row = (DefaultTableModel) Atendimento.jtbl_devolucao.getModel();
+            ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
+            row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao, "", itemLocacao.getValor_multa(),
+                itemLocacao.getValor_multa(), itemLocacao.getDias_multa()});
+
+            itensDevolucao.add(itemLocacao);
+            limparItemDevolvido();
+        } catch (ParseException ex) {
+            Logger.getLogger(Atendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void limparItemDevolvido() {
+        jtf_nome_objeto_devolucao.setText("");
+        jtf_codigo_consulta_devolucao.setText("");
+        jtf_nome_objeto_devolucao.requestFocus();
+        jtf_codigo_consulta_devolucao.requestFocus();
+    }
+
+    public void limparItemLocado() {
         jtf_valor.setText("R$");
         jtf_tipo_midia.setText("");
         jtf_diaria.setText("");
-        jtf_codigo_copia.setText("");
-        jtf_objeto_locacao.setText("");
-        jtf_codigo_barras_locacao.setText("");
-        if(jcb_codigo_barras.isSelected() == true){
-            jtf_codigo_barras_locacao.requestFocus();
-        }else{
-            jtf_objeto_locacao.requestFocus();
-        }
+        jtf_codigo_consulta_locacao.setText("");
+        jtf_nome_objeto_locacao.setText("");
     }
 
     public void statusTela(boolean status) {
@@ -1917,41 +1959,54 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         this.setEnabled(status);
     }
 
-    public void carregaCopia(Copia copia) {
-        this.copia = copia;
-        jtf_codigo_copia.setText(String.valueOf(copia.getCodigo_copia()));
-        jtf_objeto_locacao.setText(copia.getObjeto().getDescricao_objeto());
-        jtf_diaria.setText(String.valueOf(copia.getObjeto().getDiaria().getDias()));
+    public void carregarCopiaLocacao(Copia copia) {
+        this.copiaLocacao = copia;
+
+        if (jcb_codigo_barras_locacao.isSelected() == true) {
+            jtf_codigo_consulta_locacao.setText(copiaLocacao.getCodigo_barras());
+        } else {
+            jtf_codigo_consulta_locacao.setText(String.valueOf(copiaLocacao.getCodigo_copia()));
+        }
+
+        jtf_nome_objeto_locacao.setText(copiaLocacao.getObjeto().getDescricao_objeto());
+
+        jtf_diaria.setText(String.valueOf(copiaLocacao.getObjeto().getDiaria().getDias()));
 
         String valor;
-        
-        valor = String.valueOf(copia.getObjeto().getDiaria().getValor());
-        
+        valor = String.valueOf(copiaLocacao.getObjeto().getDiaria().getValor());
         valor = setPrecoFormat(valor);
-        
 
         jtf_valor.setText(valor);
+        jtf_tipo_midia.setText(copiaLocacao.getObjeto().getTipo_midia());
         
-        jtf_tipo_midia.setText(copia.getObjeto().getTipo_midia());
+        jb_adicionar_locacao.requestFocus();
+
     }
 
-    public void carregarCopiaDevolucao(ItemLocacao itemLocacao) throws ParseException {
+    public void carregarCopiaDevolucao(ItemLocacao itemDev) {
 
-        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+        this.itemDevolucao = itemDev;
+        if (jcb_codigo_barras_devolucao.isSelected() == true) {
+            jtf_codigo_consulta_devolucao.setText(itemDevolucao.getCopia().getCodigo_barras());
+        } else {
+            jtf_codigo_consulta_devolucao.setText(String.valueOf(itemDevolucao.getCopia().getCodigo_copia()));
+        }
+        jtf_nome_objeto_devolucao.setText(itemDevolucao.getCopia().getObjeto().getDescricao_objeto());
 
-        String data_locacao = out.format(in.parse(itemLocacao.getData_locacao().toString()));
-
-        DefaultTableModel row = (DefaultTableModel) Atendimento.jtbl_devolucao.getModel();
-        ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
-        row.addRow(new Object[]{itemLocacao.getCodigo_item_locacao(), hashDbGrid, "Não", data_locacao, "", itemLocacao.getValor_multa(),
-            itemLocacao.getValor_multa(), itemLocacao.getDias_multa()});
     }
 
     public void carregaCliente(Cliente cliente) {
         this.cliente = cliente;
         jtf_nome_cliente.setText(cliente.getNome_cliente());
         jtf_codigo_cliente.setText(String.valueOf(cliente.getCodigo_cliente()));
+
+        //Limpa tabela depois de selecionar novo cliente
+        DefaultTableModel tb_devolucao = (DefaultTableModel) Atendimento.jtbl_devolucao.getModel();
+        int rows = tb_devolucao.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            tb_devolucao.removeRow(i);
+        }
+        jtf_codigo_consulta_locacao.requestFocus();
     }
 
     public void setStatusTela(boolean status) {
@@ -1971,33 +2026,59 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
 
     public void locar_consulta_codigo_barras(String codigo_barras) {
+        
+        
+        
+            
+            
+        
+        
         try {
             pool = new Pool();
+            Integer quantidade_locado;
+            copias = null;
+            
             CopiaDAO copiaDAO = new CopiaDAO(pool);
-            copia = null;
-            copia = copiaDAO.getCopia_codigo_barras(codigo_barras);
-            if (copia != null) {
-                carregaCopia(copia);
+            
+            quantidade_locado = copiaDAO.checarFilme(Integer.parseInt(jtf_codigo_cliente.getText()),jtf_codigo_consulta_locacao.getText());
+            if (quantidade_locado > 0) {
+                int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente já assistiu " + quantidade_locado+ ". Deseja locar novamente ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                    copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
+                    if (copias.size() > 0) {
+                        carregarCopiaLocacao(copias.get(0));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Código de Barra inválido");
+                    }
+                } else{
+                    
+                }                
             } else {
-                JOptionPane.showMessageDialog(null, "Código de Barra inválido");
+                copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
+                if (copias.size() > 0) {
+                    carregarCopiaLocacao(copias.get(0));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Código de Barra inválido");
+                }                
             }
-
+            
+            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Problemas com a consulta");
-            ex.printStackTrace();
+            Logger.getLogger(Atendimento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void devolver_consulta_codigo_barras(String codigo_barras) throws ParseException {
+    public void devolver_consulta_codigo_barras(String codigo_barras) {
         try {
             pool = new Pool();
             LocacaoDAO locacaoDAO = new LocacaoDAO(pool);
 
-            item = null;
-            item = locacaoDAO.getLocacao_codigo_barras(codigo_barras);
+            itemDevolucao = new ItemLocacao();
+            itemDevolucao = locacaoDAO.getLocacao_codigo_barras(codigo_barras);
 
-            if (item != null) {
-                carregarCopiaDevolucao(item);
+            if (itemDevolucao != null) {
+                carregarCopiaDevolucao(itemDevolucao);
+                jb_adicionar_devolucao.requestFocus();
             } else {
                 JOptionPane.showMessageDialog(null, "Código de Barra inválido");
             }
@@ -2007,19 +2088,19 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             ex.printStackTrace();
         }
     }
-    
+
     public void tbDevolverLinhaSelecionada(JTable tb) {
-        ItemLocacao item_selecionado = null;        
+        ItemLocacao item_selecionado = null;
         if (tb.getSelectedRow() != -1) {
             item_selecionado = new ItemLocacao();
             item_selecionado.setData_devolucao(data);
-            
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
-            Date date = new Date(); 
+
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
             dateFormat.format(date);
-            
+
             DefaultTableModel row = (DefaultTableModel) Atendimento.jtbl_devolucao.getModel();
-            row.setValueAt(dateFormat.format(date), jtbl_devolucao.getSelectedRow(), 4);
-        }        
+            row.setValueAt(dateFormat.format(date), jtbl_devolucao.getSelectedRow(), 3);
+        }
     }
 }

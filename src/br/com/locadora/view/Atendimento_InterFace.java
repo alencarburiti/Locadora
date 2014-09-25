@@ -7,6 +7,7 @@ package br.com.locadora.view;
 
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
+import br.com.locadora.model.bean.ItemLocacao;
 
 /**
  *
@@ -14,7 +15,8 @@ import br.com.locadora.model.bean.Copia;
  */
 public interface Atendimento_InterFace {
     public void carregaCliente(Cliente cliente);
-    public void carregaCopia(Copia copia);
+    public void carregarCopiaLocacao(Copia copia);
+    public void carregarCopiaDevolucao(ItemLocacao itemLocacao);
     public void setStatusTela(boolean status);
     public void setRequestDiaria();
     public void setRequestGenero();

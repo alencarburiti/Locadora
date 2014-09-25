@@ -38,12 +38,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     public Atendimento janelapai;
     public Atendimento_InterFace telaAtendimento;
     public List<Cliente> clientes;
-    
+
     public ConsultaClienteAtendimento() {
         initComponents();
-        janelapai = null;              
+        janelapai = null;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,7 +84,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 110, 40));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, 110, 40));
 
         jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_ok.setText("OK");
@@ -95,7 +94,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_okActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, 80, 40));
+        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, 80, 40));
 
         jb_novo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo1.setText("Novo");
@@ -105,7 +104,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_novo1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 110, 40));
+        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 110, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Cliente"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -117,7 +116,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 640, -1));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 640, -1));
 
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
@@ -126,7 +125,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, -1, -1));
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, -1, -1));
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -169,6 +168,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                         jtbl_clienteMouseClicked(evt);
                     }
                 });
+                jtbl_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        jtbl_clienteKeyPressed(evt);
+                    }
+                });
                 jScrollPane3.setViewportView(jtbl_cliente);
                 if (jtbl_cliente.getColumnModel().getColumnCount() > 0) {
                     jtbl_cliente.getColumnModel().getColumn(0).setResizable(false);
@@ -178,11 +182,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                     jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(10);
                 }
 
-                jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 710, 210));
+                jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 710, 210));
 
-                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 750, 300));
+                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 730, 280));
 
-                setSize(new java.awt.Dimension(836, 438));
+                setSize(new java.awt.Dimension(751, 367));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -195,7 +199,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         }
 
 }//GEN-LAST:event_jb_cancelarActionPerformed
-    
+
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
         if (jtbl_cliente.getSelectedRow() == 1) {
             botaoOK(jtbl_cliente);
@@ -231,7 +235,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
             //telaCadastroObjeto.setStatusTela(false);
         }
 
-        
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -248,11 +251,12 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         listaCliente(jtf_consulta.getText().trim());
-        jtf_consulta.requestFocus();
+        jtbl_cliente.requestFocus();
+        jtbl_cliente.changeSelection(1, 1, false, false);
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        listaCliente(jtf_consulta.getText().trim());            
+        listaCliente(jtf_consulta.getText().trim());
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jtbl_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_clienteMouseClicked
@@ -260,11 +264,17 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_clienteMouseClicked
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
-    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                listaCliente(jtf_consulta.getText().trim());            
-    }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            listaCliente(jtf_consulta.getText().trim());
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_consultaKeyPressed
+
+    private void jtbl_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_clienteKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            botaoOK(jtbl_cliente);
+    }//GEN-LAST:event_jtbl_clienteKeyPressed
+    }
 
     /**
      * @param args the command line arguments
@@ -294,7 +304,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         this.telaAtendimento = telaAtendimento;
     }
 
-    
     public void setCadastro() {
         jb_novo1.setEnabled(false);
     }
@@ -304,7 +313,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         if (tb.getSelectedRow() != -1) {
             cliente = new Cliente();
             cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
-            cliente.setNome_cliente(clientes.get(tb.getSelectedRow()).getNome_cliente());            
+            cliente.setNome_cliente(clientes.get(tb.getSelectedRow()).getNome_cliente());
         }
         return cliente;
     }
@@ -342,27 +351,27 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 cliente.setNome_cliente(clientes.get(i).getNome_cliente());
                 cliente.setCpf(clientes.get(i).getCpf());
                 cliente.setEmail(clientes.get(i).getEmail());
-                if(clientes.get(i).getStatus() == "A"){
+                if (clientes.get(i).getStatus() == "A") {
                     cliente.setStatus("Ativo");
-                }else{
+                } else {
                     cliente.setStatus("Inativo");
                 }
                 cliente.setStatus(clientes.get(i).getStatus());
 
                 SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-                
+
                 String data_nascimento = null;
                 try {
                     data_nascimento = out.format(in.parse(clientes.get(i).getData_nascimento().toString()));
                 } catch (ParseException ex) {
                     Logger.getLogger(ConsultaClienteAtendimento.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
                 row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
-                
+
             }
             jtbl_cliente.setSelectionMode(1);
         }

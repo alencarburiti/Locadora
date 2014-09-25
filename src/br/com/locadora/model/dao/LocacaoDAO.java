@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,6 +119,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         String sqlSelect = "SELECT C.CODIGO_LOCACAO, D.CODIGO_ITEM_LOCACAO, \n"
                 + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
+                + "    B.CODIGO_BARRAS,\n"
+                + "    B.CODIGO_COPIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
                 + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
                 + "    CURRENT_DATE AS DATA_ATUAL,\n"
@@ -152,21 +155,20 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         try {
             ps = con.prepareStatement(sqlSelect);
             ps.setInt(1, codigo_locacao);
-            
 
             rs = ps.executeQuery();
 
             resultado = getListaLocacoes(rs);
-            
+
             ps.close();
         } finally {
             pool.liberarConnection(con);
         }
         return resultado;
     }
-    
+
     public ItemLocacao getLocacao_codigo_barras(String codigo_barras) throws SQLException {
-        
+
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -174,6 +176,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         String sqlSelect = "SELECT C.CODIGO_LOCACAO, D.CODIGO_ITEM_LOCACAO, \n"
                 + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
+                + "    B.CODIGO_BARRAS,\n"
+                + "    B.CODIGO_COPIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
                 + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
                 + "    CURRENT_DATE AS DATA_ATUAL,\n"
@@ -200,7 +204,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND A.CODIGO_DIARIA = F.CODIGO_DIARIA\n"
                 + "        AND D.DEL_FLAG = 0\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
-//                + "		AND E.CODIGO_CLIENTE = ? \n"
+                //                + "		AND E.CODIGO_CLIENTE = ? \n"
                 + "		AND B.CODIGO_BARRAS = ? \n"
                 + "\n"
                 + "\n"
@@ -209,16 +213,15 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         try {
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, codigo_barras);
-            
 
             rs = ps.executeQuery();
 
             resultado = getListaLocacoes(rs);
-            
+
             if (resultado.size() > 0) {
                 return resultado.get(0);
             }
-            
+
             ps.close();
         } finally {
             pool.liberarConnection(con);
@@ -248,7 +251,6 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return resultado;
     }
 
-
     private List<ItemLocacao> getListaLocacoes(ResultSet rs) throws SQLException {
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
         while (rs.next()) {
@@ -258,24 +260,26 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             itemLocacao.setDias_multa(rs.getInt("DIAS_MULTA"));
             itemLocacao.setData_locacao(rs.getDate("DATA_LOCACAO"));
             System.out.print(rs.getInt("DIAS_MULTA"));
-            
+
             Diaria diaria = new Diaria();
             diaria.setDias(rs.getInt("DIARIA"));
-            
-            Objeto objeto = new Objeto();                        
+
+            Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
             objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
-            
+
             Copia copia = new Copia();
             copia.setObjeto(objeto);
-            
+
+            copia.setCodigo_barras(rs.getString("CODIGO_BARRAS"));
+            copia.setCodigo_copia(rs.getInt("CODIGO_COPIA"));
             itemLocacao.setCopia(copia);
-			
+
             resultado.add(itemLocacao);
         }
         return resultado;
     }
-    
+
     private List<Locacao> getListaLocacao(ResultSet rs) throws SQLException {
         List<Locacao> resultado = new ArrayList<Locacao>();
         while (rs.next()) {
@@ -348,8 +352,42 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 }
 
                 ps.setInt(1, itemLocacao.get(i).getCopia().getCodigo_copia());
-                ps.setInt(2, itemLocacao.get(i).getLocacao().getCodigo_locacao());                
+                ps.setInt(2, itemLocacao.get(i).getLocacao().getCodigo_locacao());
                 ps.executeUpdate();
+
+            }
+
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        //return locacao;
+    }
+
+    public void salvarDevolucao(List<ItemLocacao> itemLocacao) throws SQLException {
+        Connection con = pool.getConnection();
+        PreparedStatement ps;
+
+        String sqlInsert = "UPDATE `locadora`.`ITEM_LOCACAO`\n"
+                + "SET\n"
+                + "`DATA_DEVOLUCAO` = ?,\n"
+                + "`DEL_FLAG` = ?\n"
+                + "WHERE `CODIGO_ITEM_LOCACAO` = ?;";
+
+        try {
+            ps = con.prepareStatement(sqlInsert);
+
+            for (int i = 0; i < itemLocacao.size(); i++) {
+
+                java.util.Date date = itemLocacao.get(i).getData_devolucao();
+                Timestamp timestamp = new Timestamp(date.getTime());
+
+                ps.setTimestamp(1, timestamp);
+                ps.setInt(2, 1);
+                ps.setInt(3, itemLocacao.get(i).getCodigo_item_locacao());
+                ps.executeUpdate();
+                
+                System.out.print(ps.getUpdateCount() +"      "+ itemLocacao.get(i).getCodigo_item_locacao() + "   "+ timestamp);
 
             }
 

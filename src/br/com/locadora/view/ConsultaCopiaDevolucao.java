@@ -12,41 +12,38 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
+import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Copia;
-import br.com.locadora.model.bean.FornecedorModel;
+import br.com.locadora.model.bean.Diaria;
+import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.CopiaDAO;
-import br.com.locadora.model.dao.FornecedorDAO;
-import br.com.locadora.util.ItemDbGrid;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ALENCAR
  */
-public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
+public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     public Atendimento janelapai;
     public Atendimento_InterFace telaAtendimento;
     public List<Copia> copias;
     public Copia copia;
+    public InterfacePool pool;
+    public SiscomController controller;
+    public static List<ItemLocacao> itensDevolucao;
 
-    public ConsultaCopiaAtendimento() {
+    public ConsultaCopiaDevolucao() {
         initComponents();
-          janelapai = null;
+        janelapai = null;
     }
 
     /**
@@ -66,11 +63,12 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jtf_consulta = new javax.swing.JTextField();
         jb_buscar = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jtbl_copia = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtbl_locacao_aberto = new javax.swing.JTable();
         jrb_ator = new javax.swing.JRadioButton();
-        jrb_titulo = new javax.swing.JRadioButton();
+        jrb_codigo_barras = new javax.swing.JRadioButton();
         jrb_codigo = new javax.swing.JRadioButton();
+        jrb_titulo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Consulta Objeto");
@@ -93,7 +91,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 110, 40));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 110, 40));
 
         jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_ok.setText("OK");
@@ -103,7 +101,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jb_okActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 80, 40));
+        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 80, 40));
 
         jb_novo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo1.setText("Novo");
@@ -113,14 +111,14 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jb_novo1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 110, 40));
+        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 110, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Objeto"));
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 450, -1));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 450, -1));
 
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
@@ -129,32 +127,32 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, -1, -1));
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
 
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
+        jScrollPane6.setName("jScrollPane6"); // NOI18N
 
-        jtbl_copia.setUpdateSelectionOnSort(false);
-        jtbl_copia.setVerifyInputWhenFocusTarget(false);
-        jtbl_copia.setDefaultEditor(Object.class, null);
-        jtbl_copia.addMouseListener(new MouseAdapter() {
+        jtbl_locacao_aberto.setUpdateSelectionOnSort(false);
+        jtbl_locacao_aberto.setVerifyInputWhenFocusTarget(false);
+        jtbl_locacao_aberto.setDefaultEditor(Object.class, null);
+        jtbl_locacao_aberto.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e){
                 if(e.getClickCount() == 2){
-                    botaoOK(jtbl_copia);
+                    botaoOK(jtbl_locacao_aberto);
 
                 }}});
-                jtbl_copia.setModel(new javax.swing.table.DefaultTableModel(
+                jtbl_locacao_aberto.setModel(new javax.swing.table.DefaultTableModel(
                     new Object [][] {
 
                     },
                     new String [] {
-                        "Código", "Código de Barras", "Descrição Objeto", "Idioma", "Legenda", "Tipo Mídia", "Status"
+                        "Código Barras", "Objeto", "Data Locação", "Valor Locado", "Valor Multa", "Dia Multa"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false, false
+                        true, false, false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -165,30 +163,41 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                         return canEdit [columnIndex];
                     }
                 });
-                jtbl_copia.setName("jtbl_copia"); // NOI18N
-                jtbl_copia.getTableHeader().setReorderingAllowed(false);
-                jtbl_copia.addMouseListener(new java.awt.event.MouseAdapter() {
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        jtbl_copiaMouseClicked(evt);
-                    }
-                });
-                jScrollPane3.setViewportView(jtbl_copia);
-                if (jtbl_copia.getColumnModel().getColumnCount() > 0) {
-                    jtbl_copia.getColumnModel().getColumn(0).setPreferredWidth(20);
-                    jtbl_copia.getColumnModel().getColumn(1).setPreferredWidth(100);
-                    jtbl_copia.getColumnModel().getColumn(2).setPreferredWidth(100);
-                    jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(20);
-                }
+                jtbl_locacao_aberto.setName("jtbl_locacao_aberto"); // NOI18N
+                jScrollPane6.setViewportView(jtbl_locacao_aberto);
 
-                jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 760, 210));
+                jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 770, 210));
 
-                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 810, 300));
+                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 800, 270));
 
                 buttonGroup1.add(jrb_ator);
                 jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_ator.setText("Ator");
                 jrb_ator.setName("jrb_ator"); // NOI18N
-                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
+
+                buttonGroup1.add(jrb_codigo_barras);
+                jrb_codigo_barras.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_codigo_barras.setSelected(true);
+                jrb_codigo_barras.setText("Código de Barras");
+                jrb_codigo_barras.setName("jrb_codigo_barras"); // NOI18N
+                jrb_codigo_barras.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_codigo_barrasActionPerformed(evt);
+                    }
+                });
+                getContentPane().add(jrb_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+                buttonGroup1.add(jrb_codigo);
+                jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_codigo.setText("Código Cópia");
+                jrb_codigo.setName("jrb_codigo"); // NOI18N
+                jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_codigoActionPerformed(evt);
+                    }
+                });
+                getContentPane().add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
 
                 buttonGroup1.add(jrb_titulo);
                 jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -199,21 +208,9 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
                         jrb_tituloActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
+                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
 
-                buttonGroup1.add(jrb_codigo);
-                jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_codigo.setSelected(true);
-                jrb_codigo.setText("Código Interno");
-                jrb_codigo.setName("jrb_codigo"); // NOI18N
-                jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_codigoActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
-                setSize(new java.awt.Dimension(862, 439));
+                setSize(new java.awt.Dimension(820, 377));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -228,27 +225,19 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
-        if (jtbl_copia.getSelectedRow() == 1) {
-            botaoOK(jtbl_copia);            
+        if (jtbl_locacao_aberto.getSelectedRow() == 1) {
+            botaoOK(jtbl_locacao_aberto);
         }
 }//GEN-LAST:event_jb_okActionPerformed
     public void botaoOK(JTable tb) {
         if (tb.getSelectedRow() != -1) {
             setVisible(false);
-            Copia copiaLinha = tbCopiaLinhaSelecionada(jtbl_copia);
-            if ((janelapai != null) && (copiaLinha != null)) {
+            ItemLocacao itemLinha = tbItemLocacaoLinhaSelecionada(jtbl_locacao_aberto);
+            if ((janelapai != null) && (itemLinha != null)) {
                 janelapai.setEnabled(true);
                 janelapai.setVisible(true);
-                telaAtendimento.carregaCopia(copiaLinha);
-//                telaAtendimento.setStatusTela(false);
+                telaAtendimento.carregarCopiaDevolucao(itemLinha);
             }
-
-//        if ((janelapai3 != null) && (copia != null)) {
-//            janelapai3.setEnabled(true);
-//            janelapai3.setVisible(true);
-//            telaAjusteEstoque.carregaFornecedor(copia);
-//            //telaSaidaEstoque.statusTela(true);        
-//        }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Copia");
         }
@@ -258,10 +247,8 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         setVisible(false);
         if ((janelapai != null)) {
             janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
+            janelapai.setVisible(true);           
         }
-
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -277,47 +264,41 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controller = new SiscomController();
+        controller.processarRequisicao("consultarLocacao");
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        if (jrb_codigo.isSelected() == true) {
-            if (jtf_consulta.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Informe um código");
-            } else {
-                try {
+        try {
+            if (jrb_codigo.isSelected() == true) {
+                if (jtf_consulta.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Informe um código");
+                } else {
                     listaCopia_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
-                } catch (SQLException ex) {
-                    Logger.getLogger(ConsultaCopiaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-
-        } else if (jrb_titulo.isSelected() == true) {
-            
-            try {
+            } else if (jrb_titulo.isSelected() == true) {
                 listaCopia_titulo(jtf_consulta.getText().trim());
-            } catch (SQLException ex) {
-                Logger.getLogger(ConsultaCopiaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
+            } else if (jrb_codigo_barras.isSelected() == true) {
+                listaCopia_codigo_barras(jtf_consulta.getText().trim());
+            } else {
                 listaCopia_ator(jtf_consulta.getText().trim());
-            } catch (SQLException ex) {
-                Logger.getLogger(ConsultaCopiaAtendimento.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaCopiaDevolucao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
-    private void jtbl_copiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_copiaMouseClicked
+    private void jrb_codigo_barrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigo_barrasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_copiaMouseClicked
-
-    private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_tituloActionPerformed
+    }//GEN-LAST:event_jrb_codigo_barrasActionPerformed
 
     private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_codigoActionPerformed
+
+    private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_tituloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,7 +307,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new ConsultaCopiaAtendimento().setVisible(true);
+                new ConsultaCopiaDevolucao().setVisible(true);
             }
         });
     }
@@ -334,15 +315,16 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_novo1;
     private javax.swing.JButton jb_ok;
     private javax.swing.JRadioButton jrb_ator;
     private javax.swing.JRadioButton jrb_codigo;
+    private javax.swing.JRadioButton jrb_codigo_barras;
     private javax.swing.JRadioButton jrb_titulo;
-    public static javax.swing.JTable jtbl_copia;
+    public static javax.swing.JTable jtbl_locacao_aberto;
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
@@ -355,25 +337,40 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         jb_novo1.setEnabled(false);
     }
 
-    public Copia tbCopiaLinhaSelecionada(JTable tb) {
-        Copia copiaSelecionada = null;
+    public ItemLocacao tbItemLocacaoLinhaSelecionada(JTable tb) {
+        ItemLocacao itemSelecionada = null;
         if (tb.getSelectedRow() != -1) {
-            copiaSelecionada = new Copia();
-            copiaSelecionada.setCodigo_copia(copias.get(tb.getSelectedRow()).getCodigo_copia());
-            copiaSelecionada.setIdioma(copias.get(tb.getSelectedRow()).getIdioma());
-            copiaSelecionada.setLegenda(copias.get(tb.getSelectedRow()).getLegenda());
-            copiaSelecionada.setObjeto(copias.get(tb.getSelectedRow()).getObjeto());
+            itemSelecionada = new ItemLocacao();
+
+            itemSelecionada.setCodigo_item_locacao(itensDevolucao.get(tb.getSelectedRow()).getCodigo_item_locacao());
+            itemSelecionada.setValor_multa(itensDevolucao.get(tb.getSelectedRow()).getValor_multa());
+            itemSelecionada.setDias_multa(itensDevolucao.get(tb.getSelectedRow()).getDias_multa());
+            itemSelecionada.setData_locacao(itensDevolucao.get(tb.getSelectedRow()).getData_locacao());
+
+            Diaria diaria = new Diaria();
+            diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDiaria().getDias());
+
+            Objeto objeto = new Objeto();
+            objeto.setDiaria(diaria);
+            objeto.setDescricao_objeto(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDescricao_objeto());
+            
+            Copia copia = new Copia();
+            copia.setObjeto(objeto);
+            copia.setCodigo_copia(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_copia());
+            copia.setCodigo_barras(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_barras());
+            
+            itemSelecionada.setCopia(copia);
+            
         }
-        return copiaSelecionada;
+        return itemSelecionada;
     }
-    private InterfacePool pool;
 
     public void listaCopia_codigo(Integer codigo_copia) throws SQLException {
         pool = new Pool();
         CopiaDAO copiaDAO = new CopiaDAO(pool);
         copias = null;
         copias = copiaDAO.getCopia(codigo_copia);
-        mostraCopia(copias);
+//        mostraCopia(copias);
     }
 
     public void listaCopia_titulo(String titulo) throws SQLException {
@@ -381,7 +378,7 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         CopiaDAO copiaDAO = new CopiaDAO(pool);
         copias = null;
         copias = copiaDAO.getCopia_titulo(titulo);
-        mostraCopia(copias);
+//        mostraCopia(copias);
     }
 
     public void listaCopia_ator(String ator) throws SQLException {
@@ -389,7 +386,20 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         CopiaDAO copiaDAO = new CopiaDAO(pool);
         copias = null;
         copias = copiaDAO.getCopia_ator(ator);
-        mostraCopia(copias);
+//        mostraCopia(copias);
+    }
+
+    public void listaCopia_codigo_barras(String codigo_barras) {
+        try {
+            pool = new Pool();
+            CopiaDAO copiaDAO = new CopiaDAO(pool);
+            copias = null;
+            copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
+//            mostraCopia(copias);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Problemas com a consulta");
+            ex.printStackTrace();
+        }
     }
 
     public void listaTodasCopias() throws SQLException {
@@ -397,57 +407,6 @@ public class ConsultaCopiaAtendimento extends javax.swing.JFrame {
         CopiaDAO copiaDAO = new CopiaDAO(pool);
 //        copias = copiaDAO.getTodasCopias();
 //        mostraCopia(copias);
-    }
-
-    public void mostraCopia(List<Copia> copias) {
-        ((DefaultTableModel) jtbl_copia.getModel()).setRowCount(0);
-        jtbl_copia.updateUI();
-
-        if (copias.size() == 0) {
-            JOptionPane.showMessageDialog(this, "Nenhuma copia encontrada");
-
-        } else {
-            for (int i = 0; i < copias.size(); i++) {
-                Copia copia = new Copia();
-
-                copia.setCodigo_copia(copias.get(i).getCodigo_copia());
-                
-                copia.setIdioma(copias.get(i).getIdioma());
-                copia.setLegenda(copias.get(i).getLegenda());
-                copia.setObjeto(copias.get(i).getObjeto());
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
-                row.addRow(new Object[]{copia.getCodigo_copia(),
-                    hashDbGrid, copia.getIdioma(), copia.getLegenda(),
-                    copia.getObjeto().getTipo_midia(), copia.getStatus()});
-
-            }
-        }
-        jtbl_copia.setSelectionMode(1);
-    }
-
-    public String setPrecoFormat(String preco) {
-        DecimalFormat dFormat = new DecimalFormat();
-        dFormat.applyPattern("R$ #0.00");
-        return dFormat.format(getPrecoFormato(preco));
-    }
-
-    public Double getPrecoFormato(String preco) {
-        Double precoFormatado = 0.0;
-        try {
-            preco = preco.replace("R", "");
-            preco = preco.replace("$", "");
-            preco = preco.replace(",", ".");
-            preco = preco.replace(" ", "");
-            precoFormatado = Double.parseDouble(preco.trim());
-
-            //this.objFuncionario.setSalario(getSalarioFormat(jTSalario.getText())); pegar valor em double
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");
-        }
-
-        return precoFormatado;
     }
 
 }
