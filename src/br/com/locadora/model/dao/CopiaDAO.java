@@ -65,6 +65,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         ResultSet rs = null;
         String sqlSelect = "SELECT \n"
                 + "	A.CODIGO_COPIA, \n"
+                + "	A.CODIGO_BARRAS, \n"
                 + "    A.DEL_FLAG,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
