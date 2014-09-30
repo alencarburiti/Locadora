@@ -1658,7 +1658,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             CopiaDAO copiaDAO = new CopiaDAO(pool);
             copias = null;
             Integer quantidade_locado;
-            quantidade_locado = copiaDAO.checarFilme(Integer.parseInt(jtf_codigo_cliente.getText()), jtf_codigo_consulta_locacao.getText());
+            quantidade_locado = copiaDAO.getQuantidadeAssistida(Integer.parseInt(jtf_codigo_cliente.getText()), jtf_codigo_consulta_locacao.getText());
             if (quantidade_locado > 0) {
                 carregarCopiaLocacao(copias.get(0));
             } else {
@@ -2082,7 +2082,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
             CopiaDAO copiaDAO = new CopiaDAO(pool);
 
-            quantidade_locado = copiaDAO.checarFilme(Integer.parseInt(jtf_codigo_cliente.getText()), jtf_codigo_consulta_locacao.getText());
+            quantidade_locado = copiaDAO.getQuantidadeAssistida(Integer.parseInt(jtf_codigo_cliente.getText()), jtf_codigo_consulta_locacao.getText());
             if (quantidade_locado > 0) {
                 int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente já assistiu " + quantidade_locado + ". Deseja locar novamente ?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (selectedOption == JOptionPane.YES_NO_OPTION) {

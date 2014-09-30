@@ -4,10 +4,7 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.UnaccentedDocument;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,14 +12,18 @@ import javax.swing.JOptionPane;
  */
 public final class EntradaCaixa extends javax.swing.JFrame {
 
-    private Atendimento janelapai;
+    public Atendimento janelapaiLocacao;
+    public Atendimento janelapaiDevolucao;
+    public InterfacePool pool;
+    public SiscomController controller;
 
     /**
      * Creates new form ProdutoCadastroGUI
      */
-    public EntradaCaixa() throws SQLException {
+    public EntradaCaixa() {
         initComponents();
-        janelapai = null;
+        janelapaiLocacao = null;
+        janelapaiDevolucao = null;
     }
 
     //public ProdutoConsultarGUI janelapaim;
@@ -39,18 +40,16 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         tfa_similar = new javax.swing.JTextArea();
         jb_cancelar = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
-        jtf_nome_cliente = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_total_locacao = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel1 = new javax.swing.JLabel();
-        jtf_nome_cliente2 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jtf_nome_cliente3 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_valor_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel6 = new javax.swing.JLabel();
-        jtf_nome_cliente4 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_valor_pago = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel7 = new javax.swing.JLabel();
-        jtf_nome_cliente5 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_troco = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel8 = new javax.swing.JLabel();
-        jtf_nome_cliente6 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel9 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
 
@@ -83,7 +82,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, 35));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, -1, 35));
 
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_salvar.setText("Confirmar");
@@ -93,186 +92,155 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                 jb_salvarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, -1, 35));
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, -1, 35));
 
-        jtf_nome_cliente.setDocument(new UnaccentedDocument());
-        jtf_nome_cliente.setEditable(false);
-        jtf_nome_cliente.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jtf_nome_cliente.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_nome_cliente.setText("R$ 0,00");
-        jtf_nome_cliente.setName("jtf_nome_cliente");
-        jtf_nome_cliente.addActionListener(new java.awt.event.ActionListener() {
+        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_total_locacao.setEditable(false);
+        jtf_total_locacao.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_total_locacao.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_total_locacao.setText("R$ 0,00");
+        jtf_total_locacao.setName("jtf_total_locacao");
+        jtf_total_locacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_nome_clienteActionPerformed(evt);
+                jtf_total_locacaoActionPerformed(evt);
             }
         });
-        jtf_nome_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_clienteFocusGained(evt);
+                jtf_total_locacaoFocusGained(evt);
             }
         });
-        jtf_nome_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_total_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_clienteKeyPressed(evt);
+                jtf_total_locacaoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nome_clienteKeyReleased(evt);
+                jtf_total_locacaoKeyReleased(evt);
             }
         });
-        getContentPane().add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 170, -1));
+        getContentPane().add(jtf_total_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 170, -1));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("Total Locação:");
         jLabel1.setName("jLabel1"); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
-        jtf_nome_cliente.setDocument(new UnaccentedDocument());
-        jtf_nome_cliente2.setEditable(false);
-        jtf_nome_cliente2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jtf_nome_cliente2.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_nome_cliente2.setText("R$ 0,00");
-        jtf_nome_cliente2.setName("jtf_nome_cliente2"); // NOI18N
-        jtf_nome_cliente2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_nome_cliente2ActionPerformed(evt);
-            }
-        });
-        jtf_nome_cliente2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_cliente2FocusGained(evt);
-            }
-        });
-        jtf_nome_cliente2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente2KeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente2KeyReleased(evt);
-            }
-        });
-        getContentPane().add(jtf_nome_cliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 170, -1));
-
-        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel4.setText("Débito Anterior:");
-        jLabel4.setName("jLabel4"); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
-
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel5.setText("Valor Desconto:");
         jLabel5.setName("jLabel5"); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
-        jtf_nome_cliente.setDocument(new UnaccentedDocument());
-        jtf_nome_cliente3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jtf_nome_cliente3.setText("R$ 0,00");
-        jtf_nome_cliente3.setName("jtf_nome_cliente3"); // NOI18N
-        jtf_nome_cliente3.addActionListener(new java.awt.event.ActionListener() {
+        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_valor_desconto.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_valor_desconto.setText("R$ 0,00");
+        jtf_valor_desconto.setName("jtf_valor_desconto"); // NOI18N
+        jtf_valor_desconto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_nome_cliente3ActionPerformed(evt);
+                jtf_valor_descontoActionPerformed(evt);
             }
         });
-        jtf_nome_cliente3.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_valor_desconto.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_cliente3FocusGained(evt);
+                jtf_valor_descontoFocusGained(evt);
             }
         });
-        jtf_nome_cliente3.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_valor_desconto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente3KeyPressed(evt);
+                jtf_valor_descontoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente3KeyReleased(evt);
+                jtf_valor_descontoKeyReleased(evt);
             }
         });
-        getContentPane().add(jtf_nome_cliente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 170, -1));
+        getContentPane().add(jtf_valor_desconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 170, -1));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel6.setText("Valor Pago:");
         jLabel6.setName("jLabel6"); // NOI18N
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
 
-        jtf_nome_cliente.setDocument(new UnaccentedDocument());
-        jtf_nome_cliente4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jtf_nome_cliente4.setText("R$ 0,00");
-        jtf_nome_cliente4.setName("jtf_nome_cliente4"); // NOI18N
-        jtf_nome_cliente4.addActionListener(new java.awt.event.ActionListener() {
+        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_valor_pago.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_valor_pago.setText("R$ 0,00");
+        jtf_valor_pago.setName("jtf_valor_pago"); // NOI18N
+        jtf_valor_pago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_nome_cliente4ActionPerformed(evt);
+                jtf_valor_pagoActionPerformed(evt);
             }
         });
-        jtf_nome_cliente4.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_valor_pago.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_cliente4FocusGained(evt);
+                jtf_valor_pagoFocusGained(evt);
             }
         });
-        jtf_nome_cliente4.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_valor_pago.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente4KeyPressed(evt);
+                jtf_valor_pagoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente4KeyReleased(evt);
+                jtf_valor_pagoKeyReleased(evt);
             }
         });
-        getContentPane().add(jtf_nome_cliente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 170, -1));
+        getContentPane().add(jtf_valor_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel7.setText("Troco");
         jLabel7.setName("jLabel7"); // NOI18N
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
-        jtf_nome_cliente.setDocument(new UnaccentedDocument());
-        jtf_nome_cliente5.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jtf_nome_cliente5.setText("R$ 0,00");
-        jtf_nome_cliente5.setName("jtf_nome_cliente5"); // NOI18N
-        jtf_nome_cliente5.addActionListener(new java.awt.event.ActionListener() {
+        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_troco.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_troco.setText("R$ 0,00");
+        jtf_troco.setName("jtf_troco"); // NOI18N
+        jtf_troco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_nome_cliente5ActionPerformed(evt);
+                jtf_trocoActionPerformed(evt);
             }
         });
-        jtf_nome_cliente5.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_troco.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_cliente5FocusGained(evt);
+                jtf_trocoFocusGained(evt);
             }
         });
-        jtf_nome_cliente5.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_troco.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente5KeyPressed(evt);
+                jtf_trocoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente5KeyReleased(evt);
+                jtf_trocoKeyReleased(evt);
             }
         });
-        getContentPane().add(jtf_nome_cliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 170, -1));
+        getContentPane().add(jtf_troco, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 170, -1));
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel8.setText("Débito Atual");
         jLabel8.setName("jLabel8"); // NOI18N
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
-        jtf_nome_cliente.setDocument(new UnaccentedDocument());
-        jtf_nome_cliente6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jtf_nome_cliente6.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_nome_cliente6.setText("R$ 0,00");
-        jtf_nome_cliente6.setName("jtf_nome_cliente6"); // NOI18N
-        jtf_nome_cliente6.addActionListener(new java.awt.event.ActionListener() {
+        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_debito_atual.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_debito_atual.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_debito_atual.setText("R$ 0,00");
+        jtf_debito_atual.setName("jtf_debito_atual"); // NOI18N
+        jtf_debito_atual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_nome_cliente6ActionPerformed(evt);
+                jtf_debito_atualActionPerformed(evt);
             }
         });
-        jtf_nome_cliente6.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_debito_atual.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_cliente6FocusGained(evt);
+                jtf_debito_atualFocusGained(evt);
             }
         });
-        jtf_nome_cliente6.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_debito_atual.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente6KeyPressed(evt);
+                jtf_debito_atualKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_nome_cliente6KeyReleased(evt);
+                jtf_debito_atualKeyReleased(evt);
             }
         });
-        getContentPane().add(jtf_nome_cliente6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 170, -1));
+        getContentPane().add(jtf_debito_atual, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 170, -1));
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel9.setText("Caixa");
@@ -283,7 +251,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         jComboBox1.setName("jComboBox1"); // NOI18N
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 220, 40));
 
-        setSize(new java.awt.Dimension(396, 489));
+        setSize(new java.awt.Dimension(396, 438));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -294,137 +262,142 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     private void retornaJanelaPai() {
         setVisible(false);
 
-        if (janelapai != null) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
+        if (janelapaiLocacao != null) {
+            janelapaiLocacao.setEnabled(true);
+            janelapaiLocacao.setVisible(true);
 //            janelapai.request();
         }
        
     }
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        enviaDados();
+        
+        if (janelapaiLocacao != null) {
+            controller = new SiscomController();
+            controller.processarRequisicao("cadastrarLocacao");
+           
+            DefaultTableModel tb_locacao = (DefaultTableModel) Atendimento.jtbl_locacao.getModel();
+            int rows = tb_locacao.getRowCount();
+            for (int i = rows - 1; i >= 0; i--) {
+                tb_locacao.removeRow(i);
+            }
+        } else if (janelapaiDevolucao != null) {
+            controller = new SiscomController();
+            controller.processarRequisicao("cadastrarDevolucao");
+            
+            DefaultTableModel tb_devolucao = (DefaultTableModel) Atendimento.jtbl_devolucao.getModel();
+            int rows = tb_devolucao.getRowCount();
+            for (int i = rows - 1; i >= 0; i--) {
+                tb_devolucao.removeRow(i);
+            }
+        }
 }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if (janelapaiLocacao != null) {
+            jtf_debito_atual.setText(Atendimento.jtf_credito_total_locacao.getText());
+            jtf_total_locacao.setText(Atendimento.jtf_valor_total_locacao.getText());            
+        } else if (janelapaiDevolucao != null) {
+            jtf_debito_atual.setText(Atendimento.jtf_credito_total_devolucao.getText());
+            jtf_total_locacao.setText(Atendimento.jtf_valor_total_devolucao.getText());            
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
-    private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
+    private void jtf_total_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_total_locacaoKeyPressed
         
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteKeyPressed
-    private void jtf_nome_clienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusGained
+    }//GEN-LAST:event_jtf_total_locacaoKeyPressed
+    private void jtf_total_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_locacaoFocusGained
        
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteFocusGained
+    }//GEN-LAST:event_jtf_total_locacaoFocusGained
 
-    private void jtf_nome_clienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyReleased
+    private void jtf_total_locacaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_total_locacaoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteKeyReleased
+    }//GEN-LAST:event_jtf_total_locacaoKeyReleased
 
-    private void jtf_nome_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_clienteActionPerformed
+    private void jtf_total_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_locacaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteActionPerformed
+    }//GEN-LAST:event_jtf_total_locacaoActionPerformed
 
-    private void jtf_nome_cliente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente2ActionPerformed
+    private void jtf_valor_descontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_descontoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente2ActionPerformed
+    }//GEN-LAST:event_jtf_valor_descontoActionPerformed
 
-    private void jtf_nome_cliente2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente2FocusGained
+    private void jtf_valor_descontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_descontoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente2FocusGained
+    }//GEN-LAST:event_jtf_valor_descontoFocusGained
 
-    private void jtf_nome_cliente2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente2KeyPressed
+    private void jtf_valor_descontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_descontoKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente2KeyPressed
+    }//GEN-LAST:event_jtf_valor_descontoKeyPressed
 
-    private void jtf_nome_cliente2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente2KeyReleased
+    private void jtf_valor_descontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_descontoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente2KeyReleased
+    }//GEN-LAST:event_jtf_valor_descontoKeyReleased
 
-    private void jtf_nome_cliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente3ActionPerformed
+    private void jtf_valor_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_pagoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente3ActionPerformed
+    }//GEN-LAST:event_jtf_valor_pagoActionPerformed
 
-    private void jtf_nome_cliente3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente3FocusGained
+    private void jtf_valor_pagoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_pagoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente3FocusGained
+    }//GEN-LAST:event_jtf_valor_pagoFocusGained
 
-    private void jtf_nome_cliente3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente3KeyPressed
+    private void jtf_valor_pagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_pagoKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente3KeyPressed
+    }//GEN-LAST:event_jtf_valor_pagoKeyPressed
 
-    private void jtf_nome_cliente3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente3KeyReleased
+    private void jtf_valor_pagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_pagoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente3KeyReleased
+    }//GEN-LAST:event_jtf_valor_pagoKeyReleased
 
-    private void jtf_nome_cliente4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente4ActionPerformed
+    private void jtf_trocoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_trocoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente4ActionPerformed
+    }//GEN-LAST:event_jtf_trocoActionPerformed
 
-    private void jtf_nome_cliente4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente4FocusGained
+    private void jtf_trocoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_trocoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente4FocusGained
+    }//GEN-LAST:event_jtf_trocoFocusGained
 
-    private void jtf_nome_cliente4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente4KeyPressed
+    private void jtf_trocoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_trocoKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente4KeyPressed
+    }//GEN-LAST:event_jtf_trocoKeyPressed
 
-    private void jtf_nome_cliente4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente4KeyReleased
+    private void jtf_trocoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_trocoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente4KeyReleased
+    }//GEN-LAST:event_jtf_trocoKeyReleased
 
-    private void jtf_nome_cliente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente5ActionPerformed
+    private void jtf_debito_atualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_atualActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente5ActionPerformed
+    }//GEN-LAST:event_jtf_debito_atualActionPerformed
 
-    private void jtf_nome_cliente5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente5FocusGained
+    private void jtf_debito_atualFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_atualFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente5FocusGained
+    }//GEN-LAST:event_jtf_debito_atualFocusGained
 
-    private void jtf_nome_cliente5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente5KeyPressed
+    private void jtf_debito_atualKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_atualKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente5KeyPressed
+    }//GEN-LAST:event_jtf_debito_atualKeyPressed
 
-    private void jtf_nome_cliente5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente5KeyReleased
+    private void jtf_debito_atualKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_atualKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente5KeyReleased
-
-    private void jtf_nome_cliente6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente6ActionPerformed
-
-    private void jtf_nome_cliente6FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente6FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente6FocusGained
-
-    private void jtf_nome_cliente6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente6KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente6KeyPressed
-
-    private void jtf_nome_cliente6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente6KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_cliente6KeyReleased
+    }//GEN-LAST:event_jtf_debito_atualKeyReleased
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                try {
-                    new EntradaCaixa().setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(EntradaCaixa.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new EntradaCaixa().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -433,12 +406,11 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_salvar;
-    public static javax.swing.JTextField jtf_nome_cliente;
-    public static javax.swing.JTextField jtf_nome_cliente2;
-    public static javax.swing.JTextField jtf_nome_cliente3;
-    public static javax.swing.JTextField jtf_nome_cliente4;
-    public static javax.swing.JTextField jtf_nome_cliente5;
-    public static javax.swing.JTextField jtf_nome_cliente6;
+    public static javax.swing.JTextField jtf_debito_atual;
+    public static javax.swing.JTextField jtf_total_locacao;
+    public static javax.swing.JTextField jtf_troco;
+    public static javax.swing.JTextField jtf_valor_desconto;
+    public static javax.swing.JTextField jtf_valor_pago;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
@@ -453,34 +425,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         }
     }
 
-    public InterfacePool pool;
-    public SiscomController controller;
 
-    private void enviaDados() {
-        if (verificarCampos()) {
-            controller = new SiscomController();
-            controller.processarRequisicao("cadastrarCliente");
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-            retornaJanelaPai();
-        }
-    }
-
-    public boolean verificarCampos() {
-        String msgERRO = "Preencha os campos obrigatórios:\n";
-
-        if (jtf_nome_cliente.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Descrição\n";
-        }
-
-        if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
-            JOptionPane.showMessageDialog(this, msgERRO);
-            jtf_nome_cliente.requestFocus();
-            return false;
-        } else {
-            return true;
-        }
-
-    }
 
     public void setStatusTela(boolean status) {
         if (status) {

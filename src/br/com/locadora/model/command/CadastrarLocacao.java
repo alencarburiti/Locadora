@@ -8,7 +8,9 @@ import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
+import br.com.locadora.util.Moeda;
 import br.com.locadora.view.Atendimento;
+import br.com.locadora.view.EntradaCaixa;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +48,36 @@ public class CadastrarLocacao implements InterfaceCommand {
             locacao = locacaoDAO.salvar(locacao);
             
             List<ItemLocacao> itens = new ArrayList();
+            Double valor_pago;
+            Moeda moeda = new Moeda();
+            valor_pago = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_pago.getText());
             for (int i = 0; i < Atendimento.jtbl_locacao.getRowCount(); i++) {
                 ItemLocacao itemLocacao = new ItemLocacao();
                 
                 Copia copia = new Copia();
                 copia.setCodigo_copia(Atendimento.copiasLocacao.get(i).getCodigo_copia());
+                copia.setStatus("1");
+                
                 itemLocacao.setValor_locado(Atendimento.copiasLocacao.get(i).getObjeto().getDiaria().getValor());
+                if(valor_pago > 0){
+                    if(valor_pago < itemLocacao.getValor_locado()){
+                        itemLocacao.setValor_pago(valor_pago);                        
+                    }else{
+                        itemLocacao.setValor_pago(itemLocacao.getValor_locado());   
+                        valor_pago = valor_pago - itemLocacao.getValor_locado();
+                    }
+                }else{
+                    itemLocacao.setValor_pago(0.00);   
+                }
                 itemLocacao.setLocacao(locacao);
                 itemLocacao.setCopia(copia);
                 itens.add(itemLocacao);
+                
+                copiaDAO.alterarStatusFilme(copia);
             }
             
             locacaoDAO.salvarItem(itens);
+            
             
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a gravação: ");

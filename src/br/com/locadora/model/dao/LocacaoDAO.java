@@ -339,7 +339,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
         
-        String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`CODIGO_COPIA`, `CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`)VALUES( ?, ?, CURRENT_DATE(), ? );";
+        String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`CODIGO_COPIA`, `CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`,"
+                + " `VALOR_PAGO`)VALUES( ?, ?, CURRENT_DATE(), ?, ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -354,6 +355,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 ps.setInt(1, itemLocacao.get(i).getCopia().getCodigo_copia());
                 ps.setInt(2, itemLocacao.get(i).getLocacao().getCodigo_locacao());
                 ps.setDouble(3, itemLocacao.get(i).getValor_locado());
+                ps.setDouble(4, itemLocacao.get(i).getValor_pago());
                 ps.executeUpdate();
 
             }
@@ -388,7 +390,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 ps.setInt(3, itemLocacao.get(i).getCodigo_item_locacao());
                 ps.executeUpdate();
                 
-                System.out.print(ps.getUpdateCount() +"      "+ itemLocacao.get(i).getCodigo_item_locacao() + "   "+ timestamp);
+//                System.out.print(ps.getUpdateCount() +"      "+ itemLocacao.get(i).getCodigo_item_locacao() + "   "+ timestamp);
 
             }
 

@@ -1,5 +1,6 @@
 package br.com.locadora.model.command;
 
+import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,13 +34,19 @@ public class CadastrarDevolucao implements InterfaceCommand {
 
             List<ItemLocacao> itens = new ArrayList();
             ItemLocacao itemDevolve;
+            Copia copia;
             for (int i = 0; i < Atendimento.jtbl_devolucao.getRowCount(); i++) {
                 if(!Atendimento.jtbl_devolucao.getValueAt(i, 3).equals("")){
                     itemDevolve = new ItemLocacao();
+                    copia = new Copia();
+                    copia.setCodigo_copia(Atendimento.itensDevolucao.get(i).getCopia().getCodigo_copia());
+                    copia.setStatus("0");
+                    itemDevolve.setCopia(copia);
                     itemDevolve.setCodigo_item_locacao(Atendimento.itensDevolucao.get(i).getCodigo_item_locacao());
                     itemDevolve.setData_devolucao(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse((String) Atendimento.jtbl_devolucao.getValueAt(i, 3)));
                     itens.add(itemDevolve);
-
+                                        
+                    copiaDAO.alterarStatusFilme(itemDevolve.getCopia());
                     locacaoDAO.salvarDevolucao(itens);                    
                 }
             }

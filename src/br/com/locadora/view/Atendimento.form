@@ -94,15 +94,15 @@
             <Property name="useNullLayout" type="boolean" value="false"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="jtf_valor">
+            <Component class="javax.swing.JTextField" name="jtf_valor_locacao">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-                <Property name="name" type="java.lang.String" value="jtf_valor" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jtf_valor_locacao" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valorFocusGained"/>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valorFocusLost"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_locacaoFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_locacaoFocusLost"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/*try  {          &#xd;&#xa;Locale BRAZIL = new Locale(&quot;pt&quot;,&quot;BR&quot;);  &#xd;&#xa;DecimalFormatSymbols REAL = new DecimalFormatSymbols(BRAZIL);&#xd;&#xa;formatoPreco = new DecimalFormat(&quot;&#xa4; ###,###,##0.00&quot;,REAL);  &#xd;&#xa;}    catch (Exception erro)  &#xd;&#xa;{    &#xd;&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xd;&#xa;}&#xd;&#xa;*/"/>
@@ -396,7 +396,7 @@
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_credito_total_locacaoFocusLost"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/*try  {          &#xd;&#xa;Locale BRAZIL = new Locale(&quot;pt&quot;,&quot;BR&quot;);  &#xd;&#xa;DecimalFormatSymbols REAL = new DecimalFormatSymbols(BRAZIL);&#xd;&#xa;formatoPreco = new DecimalFormat(&quot;&#xa4; ###,###,##0.00&quot;,REAL);  &#xd;&#xa;}    catch (Exception erro)  &#xd;&#xa;{    &#xd;&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xd;&#xa;}&#xd;&#xa;*/"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -404,20 +404,20 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JTextField" name="jtf_preco5">
+            <Component class="javax.swing.JTextField" name="jtf_valor_total_locacao">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="18" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-                <Property name="name" type="java.lang.String" value="jtf_preco5" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jtf_valor_total_locacao" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_preco5FocusGained"/>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_preco5FocusLost"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_total_locacaoFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_total_locacaoFocusLost"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/*try  {          &#xd;&#xa;Locale BRAZIL = new Locale(&quot;pt&quot;,&quot;BR&quot;);  &#xd;&#xa;DecimalFormatSymbols REAL = new DecimalFormatSymbols(BRAZIL);&#xd;&#xa;formatoPreco = new DecimalFormat(&quot;&#xa4; ###,###,##0.00&quot;,REAL);  &#xd;&#xa;}    catch (Exception erro)  &#xd;&#xa;{    &#xd;&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xd;&#xa;}&#xd;&#xa;*/"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -450,6 +450,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_adicionar_locacaoActionPerformed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_adicionar_locacaoKeyPressed"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -667,6 +668,9 @@
                 <Property name="text" type="java.lang.String" value="Devolver Todos"/>
                 <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="660" y="30" width="-1" height="40"/>
@@ -697,6 +701,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_adicionar_devolucaoActionPerformed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_adicionar_devolucaoKeyPressed"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -735,20 +740,20 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JTextField" name="jtf_preco11">
+            <Component class="javax.swing.JTextField" name="jtf_valor_total_devolucao">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="18" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-                <Property name="name" type="java.lang.String" value="jtf_preco11" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jtf_valor_total_devolucao" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_preco11FocusGained"/>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_preco11FocusLost"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_total_devolucaoFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_total_devolucaoFocusLost"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/*try  {          &#xd;&#xa;Locale BRAZIL = new Locale(&quot;pt&quot;,&quot;BR&quot;);  &#xd;&#xa;DecimalFormatSymbols REAL = new DecimalFormatSymbols(BRAZIL);&#xd;&#xa;formatoPreco = new DecimalFormat(&quot;&#xa4; ###,###,##0.00&quot;,REAL);  &#xd;&#xa;}    catch (Exception erro)  &#xd;&#xa;{    &#xd;&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xd;&#xa;}&#xd;&#xa;*/"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -770,20 +775,20 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JTextField" name="jtf_preco12">
+            <Component class="javax.swing.JTextField" name="jtf_credito_total_devolucao">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="18" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-                <Property name="name" type="java.lang.String" value="jtf_preco12" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jtf_credito_total_devolucao" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_preco12FocusGained"/>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_preco12FocusLost"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_credito_total_devolucaoFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_credito_total_devolucaoFocusLost"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/*try  {          &#xd;&#xa;Locale BRAZIL = new Locale(&quot;pt&quot;,&quot;BR&quot;);  &#xd;&#xa;DecimalFormatSymbols REAL = new DecimalFormatSymbols(BRAZIL);&#xd;&#xa;formatoPreco = new DecimalFormat(&quot;&#xa4; ###,###,##0.00&quot;,REAL);  &#xd;&#xa;}    catch (Exception erro)  &#xd;&#xa;{    &#xd;&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xd;&#xa;}&#xd;&#xa;*/"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

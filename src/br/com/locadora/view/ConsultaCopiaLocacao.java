@@ -63,7 +63,6 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         jtbl_copia = new javax.swing.JTable();
         jrb_ator = new javax.swing.JRadioButton();
         jrb_codigo_barras = new javax.swing.JRadioButton();
-        jrb_codigo = new javax.swing.JRadioButton();
         jrb_titulo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -182,7 +181,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_ator.setText("Ator");
                 jrb_ator.setName("jrb_ator"); // NOI18N
-                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
+                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
 
                 buttonGroup1.add(jrb_codigo_barras);
                 jrb_codigo_barras.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -196,17 +195,6 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 });
                 getContentPane().add(jrb_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-                buttonGroup1.add(jrb_codigo);
-                jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_codigo.setText("Código Cópia");
-                jrb_codigo.setName("jrb_codigo"); // NOI18N
-                jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_codigoActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
-
                 buttonGroup1.add(jrb_titulo);
                 jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_titulo.setText("Título");
@@ -216,7 +204,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                         jrb_tituloActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
+                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
 
                 setSize(new java.awt.Dimension(800, 393));
                 setLocationRelativeTo(null);
@@ -287,13 +275,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
         try {
-            if (jrb_codigo.isSelected() == true) {
-                if (jtf_consulta.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Informe um código");
-                } else {
-                    listaCopia_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
-                }
-            } else if (jrb_titulo.isSelected() == true) {
+             if (jrb_titulo.isSelected() == true) {
                 listaCopia_titulo(jtf_consulta.getText().trim());
             } else if (jrb_codigo_barras.isSelected() == true) {
                 listaCopia_codigo_barras(jtf_consulta.getText().trim());
@@ -312,10 +294,6 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     private void jrb_codigo_barrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigo_barrasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_codigo_barrasActionPerformed
-
-    private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_codigoActionPerformed
 
     private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
         // TODO add your handling code here:
@@ -342,7 +320,6 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     private javax.swing.JButton jb_novo1;
     private javax.swing.JButton jb_ok;
     private javax.swing.JRadioButton jrb_ator;
-    private javax.swing.JRadioButton jrb_codigo;
     private javax.swing.JRadioButton jrb_codigo_barras;
     private javax.swing.JRadioButton jrb_titulo;
     public static javax.swing.JTable jtbl_copia;

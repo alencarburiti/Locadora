@@ -17,6 +17,7 @@ public class Locacao {
     private Cliente cliente;
     private Dependente dependente;
     private List<ItemLocacao> itemLocacao;
+    private Double valor_pago;
 
     public Integer getCodigo_locacao() {
         return codigo_locacao;
