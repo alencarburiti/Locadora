@@ -65,10 +65,15 @@ public class CadastrarCliente implements InterfaceCommand {
             
             telefoneDAO.salvar(itens_telefone, cliente);
             
+            Dependente dependente = new Dependente();
             List<Dependente> itens_dependente = new ArrayList();
+            dependente.setNome_dependente(cliente.getNome_cliente());
+            dependente.setTipo_dependente("0");
+            itens_dependente.add(dependente);
             for (int i = 0; i < CadastroCliente.jtbl_dependente.getRowCount(); i++) {
-                Dependente dependente = new Dependente();
+                dependente = new Dependente();
                 dependente.setNome_dependente((String) CadastroCliente.jtbl_dependente.getValueAt(i, 0));
+                dependente.setTipo_dependente("1");
                 itens_dependente.add(dependente);
             }
             

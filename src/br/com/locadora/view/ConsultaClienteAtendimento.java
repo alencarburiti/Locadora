@@ -13,7 +13,9 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Cliente;
+import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.dao.ClienteDAO;
+import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.util.ItemDbGrid;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -38,6 +40,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     public Atendimento janelapai;
     public Atendimento_InterFace telaAtendimento;
     public List<Cliente> clientes;
+    public List<Dependente> dependentes;
 
     public ConsultaClienteAtendimento() {
         initComponents();
@@ -106,7 +109,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         });
         getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 110, 40));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Cliente"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Cliente/Dependente"));
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -143,14 +146,14 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Nome", "Data Nascimento", "CPF", "Email", "Status"
+                        "Código Cliente", "Nome do Cliente/Dependente", "Situação", "Tipo do Cliente", "Código Dependente"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false
+                        false, false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -176,10 +179,10 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jScrollPane3.setViewportView(jtbl_cliente);
                 if (jtbl_cliente.getColumnModel().getColumnCount() > 0) {
                     jtbl_cliente.getColumnModel().getColumn(0).setResizable(false);
-                    jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(10);
-                    jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(100);
-                    jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(50);
-                    jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(10);
+                    jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(20);
+                    jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(150);
+                    jtbl_cliente.getColumnModel().getColumn(3).setPreferredWidth(20);
+                    jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(20);
                 }
 
                 jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 710, 210));
@@ -208,11 +211,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     public void botaoOK(JTable tb) {
         if (tb.getSelectedRow() != -1) {
             setVisible(false);
-            Cliente cliente = tbClienteLinhaSelecionada(jtbl_cliente);
-            if ((janelapai != null) && (cliente != null)) {
+            Dependente dependente = tbClienteDependenteLinhaSelecionada(jtbl_cliente);
+            if ((janelapai != null) && (dependente != null)) {
                 janelapai.setEnabled(true);
                 janelapai.setVisible(true);
-                telaAtendimento.carregaCliente(cliente);
+                telaAtendimento.carregarClienteDependente(dependente);
 //                telaAtendimento.setStatusTela(false);
             }
 
@@ -250,13 +253,13 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        listaCliente(jtf_consulta.getText().trim());
+        listaClienteDependente();
         jtbl_cliente.requestFocus();
         jtbl_cliente.changeSelection(1, 1, false, false);
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        listaCliente(jtf_consulta.getText().trim());
+        listaClienteDependente();
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jtbl_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_clienteMouseClicked
@@ -265,7 +268,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            listaCliente(jtf_consulta.getText().trim());
+            listaClienteDependente();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_consultaKeyPressed
@@ -308,23 +311,31 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         jb_novo1.setEnabled(false);
     }
 
-    public Cliente tbClienteLinhaSelecionada(JTable tb) {
-        Cliente cliente = null;
+    public Dependente tbClienteDependenteLinhaSelecionada(JTable tb) {
+        Dependente dependente = null;
         if (tb.getSelectedRow() != -1) {
-            cliente = new Cliente();
-            cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
-            cliente.setNome_cliente(clientes.get(tb.getSelectedRow()).getNome_cliente());
+            dependente = new Dependente();
+                        
+            dependente.setCodigo_dependente(dependentes.get(tb.getSelectedRow()).getCodigo_dependente());
+            dependente.setNome_dependente(dependentes.get(tb.getSelectedRow()).getNome_dependente());
+            dependente.setDebito(dependentes.get(tb.getSelectedRow()).getDebito());
+            
+            Cliente cliente = new Cliente();
+            cliente.setCodigo_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getCodigo_cliente());
+            
+            dependente.setCliente(cliente);
+
         }
-        return cliente;
+        return dependente;
     }
     private InterfacePool pool;
 
-    public void listaCliente(String consulta) {
+    public void listaClienteDependente() {
         try {
             pool = new Pool();
-            ClienteDAO clienteDAO = new ClienteDAO(pool);
-            clientes = clienteDAO.getClientes_nome("%" + jtf_consulta.getText().trim() + "%");
-            mostraCliente(clientes);
+            DependenteDAO dependenteDAO = new DependenteDAO(pool);
+            dependentes = dependenteDAO.getClienteDependente("%" + jtf_consulta.getText().trim() + "%");
+            mostraClienteDependente(dependentes);
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaClienteAtendimento.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -334,43 +345,23 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         pool = new Pool();
         ClienteDAO clienteDAO = new ClienteDAO(pool);
 //        clientes = clienteDAO.getTodasClientes();
-        mostraCliente(clientes);
+//        mostraClienteDependente(clientes);
     }
 
-    public void mostraCliente(List<Cliente> clientes) {
+    public void mostraClienteDependente(List<Dependente> dependentes) {
         ((DefaultTableModel) jtbl_cliente.getModel()).setRowCount(0);
         jtbl_cliente.updateUI();
 
-        if (clientes.size() == 0) {
+        if (dependentes.size() == 0) {
             JOptionPane.showMessageDialog(this, "Nenhuma cliente encontrada");
 
         } else {
-            for (int i = 0; i < clientes.size(); i++) {
-                Cliente cliente = new Cliente();
-                cliente.setCodigo_cliente(clientes.get(i).getCodigo_cliente());
-                cliente.setNome_cliente(clientes.get(i).getNome_cliente());
-                cliente.setCpf(clientes.get(i).getCpf());
-                cliente.setEmail(clientes.get(i).getEmail());
-                if (clientes.get(i).getStatus() == "A") {
-                    cliente.setStatus("Ativo");
-                } else {
-                    cliente.setStatus("Inativo");
-                }
-                cliente.setStatus(clientes.get(i).getStatus());
-
-                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-
-                String data_nascimento = null;
-                try {
-                    data_nascimento = out.format(in.parse(clientes.get(i).getData_nascimento().toString()));
-                } catch (ParseException ex) {
-                    Logger.getLogger(ConsultaClienteAtendimento.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+            for (int i = 0; i < dependentes.size(); i++) {
+                
                 DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
-                row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
+                ItemDbGrid hashDbGrid = new ItemDbGrid(dependentes.get(i), dependentes.get(i).getNome_dependente());
+                row.addRow(new Object[]{dependentes.get(i).getCliente().getCodigo_cliente(), hashDbGrid, dependentes.get(i).getCliente().getStatus(),
+                    dependentes.get(i).getTipo_dependente(), dependentes.get(i).getCodigo_dependente()});
 
             }
             jtbl_cliente.setSelectionMode(1);

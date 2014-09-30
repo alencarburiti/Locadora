@@ -176,7 +176,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         List<Cliente> resultado = new ArrayList<Cliente>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM locadora.CLIENTE WHERE NOME_CLIENTE LIKE ? ORDER BY NOME_CLIENTE;";
+        String sqlSelect = "SELECT * FROM locadora.DEPENDENTE WHERE NOME_DEPENDENTE LIKE ? ORDER BY NOME_DEPENDENTE;";
         ResultSet rs = null;
 
         try {

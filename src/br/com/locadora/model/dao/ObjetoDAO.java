@@ -1,16 +1,13 @@
 package br.com.locadora.model.dao;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.model.bean.Objeto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.model.bean.Objeto;
-import java.sql.Date;
-import javax.swing.JOptionPane;
 
 public class ObjetoDAO implements InterfaceObjetoDAO {
 
@@ -57,32 +54,86 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
     }
 
     @Override
-    public Objeto getObjeto_nome(String nome_objeto) throws SQLException {
+    public List<Objeto> getObjeto_objeto(String objeto) throws SQLException {
+        List<Objeto> resultado = new ArrayList<Objeto>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM CLIENTE WHERE NOME_CLIENTE LIKE ?";
+        String sqlSelect = "SELECT `OBJETO`.`CODIGO_OBJETO`,\n"
+                + "    `OBJETO`.`DESCRICAO_OBJETO`,\n"
+                + "    `OBJETO`.`TITULO_ORIGINAL`,\n"
+                + "    `OBJETO`.`DESCRICAO_RESUMIDA`,\n"
+                + "    `OBJETO`.`TIPO_MOVIMENTO`,\n"
+                + "    `OBJETO`.`PRODUCAO`,\n"
+                + "    `OBJETO`.`DURACAO`,\n"
+                + "    `OBJETO`.`MIDIA`,\n"
+                + "    `OBJETO`.`TIPO_MIDIA`,\n"
+                + "    `OBJETO`.`CODIGO_DIARIA`,\n"
+                + "    `OBJETO`.`CODIGO_GENERO`,\n"
+                + "    `OBJETO`.`ELENCO`,\n"
+                + "    `OBJETO`.`SINOPSE`\n"
+                + "FROM `locadora`.`OBJETO` WHERE\n"
+                + "DESCRICAO_OBJETO LIKE ? or \n"
+                + "TITULO_ORIGINAL LIKE ? OR\n"
+                + "DESCRICAO_RESUMIDA LIKE ? ;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, "%" + nome_objeto + "%");
+            ps.setString(1, "%" + objeto + "%");
+            ps.setString(2, "%" + objeto + "%");
+            ps.setString(3, "%" + objeto + "%");
 
             rs = ps.executeQuery();
 
-            List<Objeto> resultado = getListaObjeto(rs);
+            resultado = getListaObjeto(rs);
 
-            if (resultado.size() > 0) {
-                return resultado.get(0);
-            }
             ps.close();
         } finally {
             pool.liberarConnection(con);
         }
-        return null;
+        return resultado;
     }
 
     @Override
-    public Objeto getObjeto_codigo(Integer codigo_objeto) throws SQLException {
+    public List<Objeto> getObjeto_ator(String ator) throws SQLException {
+        List<Objeto> resultado = new ArrayList<Objeto>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT `OBJETO`.`CODIGO_OBJETO`,\n"
+                + "    `OBJETO`.`DESCRICAO_OBJETO`,\n"
+                + "    `OBJETO`.`TITULO_ORIGINAL`,\n"
+                + "    `OBJETO`.`DESCRICAO_RESUMIDA`,\n"
+                + "    `OBJETO`.`TIPO_MOVIMENTO`,\n"
+                + "    `OBJETO`.`PRODUCAO`,\n"
+                + "    `OBJETO`.`DURACAO`,\n"
+                + "    `OBJETO`.`MIDIA`,\n"
+                + "    `OBJETO`.`TIPO_MIDIA`,\n"
+                + "    `OBJETO`.`CODIGO_DIARIA`,\n"
+                + "    `OBJETO`.`CODIGO_GENERO`,\n"
+                + "    `OBJETO`.`ELENCO`,\n"
+                + "    `OBJETO`.`SINOPSE`\n"
+                + "FROM `locadora`.`OBJETO` WHERE\n"
+                + "ELENCO LIKE ? ; \n";
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, "%" + ator + "%");
+
+            rs = ps.executeQuery();
+
+            resultado = getListaObjeto(rs);
+
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+
+    @Override
+    public List<Objeto> getObjeto_codigo(Integer codigo_objeto) throws SQLException {
+        List<Objeto> resultado = new ArrayList<Objeto>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -108,16 +159,13 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
 
             rs = ps.executeQuery();
 
-            List<Objeto> resultado = getListaObjeto(rs);
-            System.out.print(resultado.size());
-            if (resultado.size() > 0) {
-                return resultado.get(0);
-            }
+            resultado = getListaObjeto(rs);
+
             ps.close();
         } finally {
             pool.liberarConnection(con);
         }
-        return null;
+        return resultado;
     }
 
     @Override

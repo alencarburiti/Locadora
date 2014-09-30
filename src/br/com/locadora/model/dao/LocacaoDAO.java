@@ -310,7 +310,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO `locadora`.`LOCACAO`(`CODIGO_CLIENTE`)VALUES( ? );";
+        String sqlInsert = "INSERT INTO `locadora`.`LOCACAO`(`CODIGO_CLIENTE`,`CODIGO_DEPENDENTE`)VALUES( ?, ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -338,8 +338,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
     public void salvarItem(List<ItemLocacao> itemLocacao) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps;
-
-        String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`CODIGO_COPIA`, `CODIGO_LOCACAO`, `DATA_LOCACAO`)VALUES( ?, ?, CURRENT_DATE() );";
+        
+        String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`CODIGO_COPIA`, `CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`)VALUES( ?, ?, CURRENT_DATE(), ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -353,6 +353,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
                 ps.setInt(1, itemLocacao.get(i).getCopia().getCodigo_copia());
                 ps.setInt(2, itemLocacao.get(i).getLocacao().getCodigo_locacao());
+                ps.setDouble(3, itemLocacao.get(i).getValor_locado());
                 ps.executeUpdate();
 
             }
@@ -427,6 +428,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             throws SQLException {
 
         ps.setInt(1, locacao.getCliente().getCodigo_cliente());
+        ps.setInt(2, locacao.getDependente().getCodigo_dependente());
 
     }
 

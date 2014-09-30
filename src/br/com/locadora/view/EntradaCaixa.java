@@ -40,8 +40,19 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         jb_cancelar = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
         jtf_nome_cliente = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jtf_nome_cliente2 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jtf_nome_cliente3 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel6 = new javax.swing.JLabel();
+        jtf_nome_cliente4 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel7 = new javax.swing.JLabel();
+        jtf_nome_cliente5 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel8 = new javax.swing.JLabel();
+        jtf_nome_cliente6 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel9 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -51,7 +62,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tfa_similar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Cadastrando Cliente");
+        setTitle("Caixa");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -72,20 +83,23 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, 35));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, 35));
 
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
-        jb_salvar.setText("Salvar");
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+        jb_salvar.setText("Confirmar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_salvarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, 35));
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, -1, 35));
 
         jtf_nome_cliente.setDocument(new UnaccentedDocument());
-        jtf_nome_cliente.setText("Alencar Buriti");
+        jtf_nome_cliente.setEditable(false);
+        jtf_nome_cliente.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_nome_cliente.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_nome_cliente.setText("R$ 0,00");
         jtf_nome_cliente.setName("jtf_nome_cliente");
         jtf_nome_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,18 +119,171 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                 jtf_nome_clienteKeyReleased(evt);
             }
         });
-        getContentPane().add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 280, -1));
+        getContentPane().add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 170, -1));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setText("Nome");
-        jLabel3.setName("jLabel3"); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel1.setText("Total Locação:");
+        jLabel1.setName("jLabel1"); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
-        jLabel2.setText("Observação: Os campos com asteristico na frente são obrigatórios ");
-        jLabel2.setName("jLabel2"); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 640, -1, -1));
+        jtf_nome_cliente.setDocument(new UnaccentedDocument());
+        jtf_nome_cliente2.setEditable(false);
+        jtf_nome_cliente2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_nome_cliente2.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_nome_cliente2.setText("R$ 0,00");
+        jtf_nome_cliente2.setName("jtf_nome_cliente2"); // NOI18N
+        jtf_nome_cliente2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_nome_cliente2ActionPerformed(evt);
+            }
+        });
+        jtf_nome_cliente2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_nome_cliente2FocusGained(evt);
+            }
+        });
+        jtf_nome_cliente2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente2KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente2KeyReleased(evt);
+            }
+        });
+        getContentPane().add(jtf_nome_cliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 170, -1));
 
-        setSize(new java.awt.Dimension(562, 687));
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel4.setText("Débito Anterior:");
+        jLabel4.setName("jLabel4"); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel5.setText("Valor Desconto:");
+        jLabel5.setName("jLabel5"); // NOI18N
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+
+        jtf_nome_cliente.setDocument(new UnaccentedDocument());
+        jtf_nome_cliente3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_nome_cliente3.setText("R$ 0,00");
+        jtf_nome_cliente3.setName("jtf_nome_cliente3"); // NOI18N
+        jtf_nome_cliente3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_nome_cliente3ActionPerformed(evt);
+            }
+        });
+        jtf_nome_cliente3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_nome_cliente3FocusGained(evt);
+            }
+        });
+        jtf_nome_cliente3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente3KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente3KeyReleased(evt);
+            }
+        });
+        getContentPane().add(jtf_nome_cliente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 170, -1));
+
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel6.setText("Valor Pago:");
+        jLabel6.setName("jLabel6"); // NOI18N
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
+
+        jtf_nome_cliente.setDocument(new UnaccentedDocument());
+        jtf_nome_cliente4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_nome_cliente4.setText("R$ 0,00");
+        jtf_nome_cliente4.setName("jtf_nome_cliente4"); // NOI18N
+        jtf_nome_cliente4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_nome_cliente4ActionPerformed(evt);
+            }
+        });
+        jtf_nome_cliente4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_nome_cliente4FocusGained(evt);
+            }
+        });
+        jtf_nome_cliente4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente4KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente4KeyReleased(evt);
+            }
+        });
+        getContentPane().add(jtf_nome_cliente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 170, -1));
+
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel7.setText("Troco");
+        jLabel7.setName("jLabel7"); // NOI18N
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+
+        jtf_nome_cliente.setDocument(new UnaccentedDocument());
+        jtf_nome_cliente5.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_nome_cliente5.setText("R$ 0,00");
+        jtf_nome_cliente5.setName("jtf_nome_cliente5"); // NOI18N
+        jtf_nome_cliente5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_nome_cliente5ActionPerformed(evt);
+            }
+        });
+        jtf_nome_cliente5.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_nome_cliente5FocusGained(evt);
+            }
+        });
+        jtf_nome_cliente5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente5KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente5KeyReleased(evt);
+            }
+        });
+        getContentPane().add(jtf_nome_cliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 170, -1));
+
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel8.setText("Débito Atual");
+        jLabel8.setName("jLabel8"); // NOI18N
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
+
+        jtf_nome_cliente.setDocument(new UnaccentedDocument());
+        jtf_nome_cliente6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jtf_nome_cliente6.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_nome_cliente6.setText("R$ 0,00");
+        jtf_nome_cliente6.setName("jtf_nome_cliente6"); // NOI18N
+        jtf_nome_cliente6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_nome_cliente6ActionPerformed(evt);
+            }
+        });
+        jtf_nome_cliente6.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_nome_cliente6FocusGained(evt);
+            }
+        });
+        jtf_nome_cliente6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente6KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_nome_cliente6KeyReleased(evt);
+            }
+        });
+        getContentPane().add(jtf_nome_cliente6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 170, -1));
+
+        jLabel9.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel9.setText("Caixa");
+        jLabel9.setName("jLabel9"); // NOI18N
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 50));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão de Crédito", "Cartão de Débito" }));
+        jComboBox1.setName("jComboBox1"); // NOI18N
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 220, 40));
+
+        setSize(new java.awt.Dimension(396, 489));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -162,6 +329,86 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nome_clienteActionPerformed
 
+    private void jtf_nome_cliente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente2ActionPerformed
+
+    private void jtf_nome_cliente2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente2FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente2FocusGained
+
+    private void jtf_nome_cliente2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente2KeyPressed
+
+    private void jtf_nome_cliente2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente2KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente2KeyReleased
+
+    private void jtf_nome_cliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente3ActionPerformed
+
+    private void jtf_nome_cliente3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente3FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente3FocusGained
+
+    private void jtf_nome_cliente3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente3KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente3KeyPressed
+
+    private void jtf_nome_cliente3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente3KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente3KeyReleased
+
+    private void jtf_nome_cliente4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente4ActionPerformed
+
+    private void jtf_nome_cliente4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente4FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente4FocusGained
+
+    private void jtf_nome_cliente4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente4KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente4KeyPressed
+
+    private void jtf_nome_cliente4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente4KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente4KeyReleased
+
+    private void jtf_nome_cliente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente5ActionPerformed
+
+    private void jtf_nome_cliente5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente5FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente5FocusGained
+
+    private void jtf_nome_cliente5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente5KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente5KeyPressed
+
+    private void jtf_nome_cliente5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente5KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente5KeyReleased
+
+    private void jtf_nome_cliente6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_cliente6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente6ActionPerformed
+
+    private void jtf_nome_cliente6FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_cliente6FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente6FocusGained
+
+    private void jtf_nome_cliente6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente6KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente6KeyPressed
+
+    private void jtf_nome_cliente6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_cliente6KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_cliente6KeyReleased
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -175,12 +422,23 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_salvar;
     public static javax.swing.JTextField jtf_nome_cliente;
+    public static javax.swing.JTextField jtf_nome_cliente2;
+    public static javax.swing.JTextField jtf_nome_cliente3;
+    public static javax.swing.JTextField jtf_nome_cliente4;
+    public static javax.swing.JTextField jtf_nome_cliente5;
+    public static javax.swing.JTextField jtf_nome_cliente6;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 

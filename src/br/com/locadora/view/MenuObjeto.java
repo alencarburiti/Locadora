@@ -14,6 +14,7 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Objeto;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -31,7 +32,7 @@ public class MenuObjeto extends javax.swing.JFrame {
     public List<Cliente> clientes;
     public TelaPrincipal janelapai;
     public static Objeto objeto;
-    public List<Objeto> objetos;
+    public static List<Objeto> objetos;
 
     public MenuObjeto() {
         initComponents();
@@ -54,7 +55,6 @@ public class MenuObjeto extends javax.swing.JFrame {
         jl_pesquisar_destino = new javax.swing.JLabel();
         jb_buscar = new javax.swing.JButton();
         jtf_consulta = new javax.swing.JTextField();
-        jrb_codigo_barras = new javax.swing.JRadioButton();
         jb_sair = new javax.swing.JButton();
         jb_novo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -66,6 +66,9 @@ public class MenuObjeto extends javax.swing.JFrame {
         setTitle("Gerenciamento de Objetos");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -86,13 +89,13 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jrb_codigoActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 27, -1, -1));
+        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         buttonGroup1.add(jrb_ator);
         jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_ator.setText("Ator");
         jrb_ator.setName("jrb_ator"); // NOI18N
-        jPanel1.add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
+        jPanel1.add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         buttonGroup1.add(jrb_titulo);
         jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -103,12 +106,12 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jrb_tituloActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
+        jPanel1.add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
-        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 62, -1, -1));
+        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -116,17 +119,17 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, -1, -1));
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 30, 30));
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 640, 20));
+        jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_consultaKeyPressed(evt);
+            }
+        });
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 340, 20));
 
-        buttonGroup1.add(jrb_codigo_barras);
-        jrb_codigo_barras.setText("Código de Barras");
-        jrb_codigo_barras.setName("jrb_codigo_barras"); // NOI18N
-        jPanel1.add(jrb_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 790, 109));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 460, 80));
 
         jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_sair.setText("Sair");
@@ -136,7 +139,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, -1));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 30, -1, -1));
 
         jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo.setText("Novo");
@@ -146,7 +149,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jb_novoActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
+        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, -1, -1));
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -191,7 +194,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                     jtbl_objeto.getColumnModel().getColumn(3).setPreferredWidth(100);
                 }
 
-                getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 790, 166));
+                getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 790, 200));
 
                 jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar.setText("Alterar");
@@ -201,7 +204,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                         jb_alterarActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, -1));
+                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, -1));
 
                 jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
                 jb_excluir.setText("Excluir");
@@ -211,9 +214,9 @@ public class MenuObjeto extends javax.swing.JFrame {
                         jb_excluirActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, -1));
+                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, -1, -1));
 
-                setSize(new java.awt.Dimension(859, 399));
+                setSize(new java.awt.Dimension(814, 342));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -251,8 +254,7 @@ public class MenuObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        controller = new SiscomController();
-        controller.processarRequisicao("consultarObjeto");
+        buscarDados();
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
@@ -272,6 +274,18 @@ public class MenuObjeto extends javax.swing.JFrame {
     private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_tituloActionPerformed
+
+    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarDados();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_consultaKeyPressed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -296,7 +310,6 @@ public class MenuObjeto extends javax.swing.JFrame {
     private javax.swing.JLabel jl_pesquisar_destino;
     public static javax.swing.JRadioButton jrb_ator;
     public static javax.swing.JRadioButton jrb_codigo;
-    public static javax.swing.JRadioButton jrb_codigo_barras;
     public static javax.swing.JRadioButton jrb_titulo;
     public static javax.swing.JTable jtbl_objeto;
     public static javax.swing.JTextField jtf_consulta;
@@ -325,6 +338,11 @@ public class MenuObjeto extends javax.swing.JFrame {
 //        }
     }
 
+    private void buscarDados(){
+        controller = new SiscomController();
+        controller.processarRequisicao("consultarObjeto");
+    }
+    
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
     }

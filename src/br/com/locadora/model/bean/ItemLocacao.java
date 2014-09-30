@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.com.locadora.model.bean;
 
 import java.util.Date;
@@ -13,12 +12,15 @@ import java.util.Date;
  * @author alencarburiti
  */
 public class ItemLocacao {
+
     private Integer codigo_item_locacao;
-    private Copia copia;    
+    private Copia copia;
     private Date data_devolucao;
-    private Date data_locacao;    
+    private Date data_locacao;
     private Locacao locacao;
     private Double valor_multa;
+    private Double valor_locado;
+    private Double valor_pago;
     private Integer dias_multa;
 
     public Integer getCodigo_item_locacao() {
@@ -76,8 +78,21 @@ public class ItemLocacao {
     public void setDias_multa(Integer dias_multa) {
         this.dias_multa = dias_multa;
     }
-    
-    
-    
-    
+
+    public Double getValor_locado() {
+        return valor_locado;
+    }
+
+    public void setValor_locado(Double valor_locado) {
+        this.valor_locado = valor_locado;
+    }
+
+    public Double getValor_pago() {
+        return valor_pago;
+    }
+
+    public void setValor_pago(Double valor_pago) {
+        this.valor_pago = valor_pago;
+    }
+
 }

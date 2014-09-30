@@ -95,6 +95,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jmi_entrada5 = new javax.swing.JMenuItem();
         menu_movimentos = new javax.swing.JMenu();
         jmi_entrada = new javax.swing.JMenuItem();
+        jmi_entrada1 = new javax.swing.JMenuItem();
         menu_relatórios = new javax.swing.JMenu();
         menu_relatórios1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -416,6 +417,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         });
         menu_movimentos.add(jmi_entrada);
 
+        jmi_entrada1.setText("Recebimento");
+        jmi_entrada1.setName("jmi_entrada1"); // NOI18N
+        jmi_entrada1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_entrada1ActionPerformed1(evt);
+            }
+        });
+        menu_movimentos.add(jmi_entrada1);
+
         jMB_Cadastro.add(menu_movimentos);
 
         menu_relatórios.setMnemonic('R');
@@ -702,6 +712,10 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         // TODO add your handling code here:
     }//GEN-LAST:event_jmi_entrada4ActionPerformed1
 
+    private void jmi_entrada1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entrada1ActionPerformed1
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmi_entrada1ActionPerformed1
+
     /**
      * @param args the command line arguments
      */
@@ -767,6 +781,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jmi_backup;
     private javax.swing.JMenuItem jmi_cliente;
     private javax.swing.JMenuItem jmi_entrada;
+    private javax.swing.JMenuItem jmi_entrada1;
     private javax.swing.JMenuItem jmi_entrada4;
     private javax.swing.JMenuItem jmi_entrada5;
     private javax.swing.JMenuItem jmi_fornecedor;
