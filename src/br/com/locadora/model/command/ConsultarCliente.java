@@ -54,13 +54,11 @@ public class ConsultarCliente implements InterfaceCommand {
             }
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage() + "Problemas com a consulta: ");
             System.out.println(e.getMessage() + "Problemas com a consulta: ");
-
-            e.printStackTrace();
         } catch (NumberFormatException e) {
             System.out.println("Valor inválido: " + e.getMessage());
-
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Valor inválido: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(ConsultarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,7 +70,7 @@ public class ConsultarCliente implements InterfaceCommand {
         tableModel.setNumRows(0);
 
         if (clientes.size() == 0) {
-
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
         } else {
 
             for (int i = 0; i < clientes.size(); i++) {
@@ -94,7 +92,7 @@ public class ConsultarCliente implements InterfaceCommand {
 
                 cliente.setStatus(clientes.get(i).getStatus());
 
-                if (cliente.getStatus().equals("A")) {
+                if (cliente.getStatus().equals("0")) {
                     cliente.setStatus("Ativo");
                 } else {
                     cliente.setStatus("Inativo");
@@ -120,8 +118,14 @@ public class ConsultarCliente implements InterfaceCommand {
         tableModel.setNumRows(0);
 
         if (cliente == null) {
-
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
         } else {
+
+            if (cliente.getStatus().equals("0")) {
+                cliente.setStatus("Ativo");
+            } else {
+                cliente.setStatus("Inativo");
+            }
 
             SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");

@@ -13,7 +13,9 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,6 +68,9 @@ public class MenuCliente extends javax.swing.JFrame {
         setTitle("Gerenciamento de Clientes");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -90,6 +95,11 @@ public class MenuCliente extends javax.swing.JFrame {
         jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, -1, -1));
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
+        jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_consultaKeyPressed(evt);
+            }
+        });
         jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 520, 20));
 
         buttonGroup1.add(jrb_codigo_cliente);
@@ -258,6 +268,18 @@ public class MenuCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_clienteMouseClicked
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarDados();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_consultaKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -294,7 +316,7 @@ public class MenuCliente extends javax.swing.JFrame {
     public Cliente tbClienteLinhaSelecionada(JTable tb) {
         Cliente cliente = new Cliente();
         if (tb.getSelectedRow() != -1) {
-       
+
             cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
             cliente.setNome_cliente(clientes.get(tb.getSelectedRow()).getNome_cliente());
             cliente.setNome_empresa_trabalho(clientes.get(tb.getSelectedRow()).getNome_empresa_trabalho());
@@ -324,7 +346,12 @@ public class MenuCliente extends javax.swing.JFrame {
 
         Cliente cliente = tbClienteLinhaSelecionada(jtbl_cliente);
         if (cliente != null) {
-            AtualizaCliente alteraCliente = new AtualizaCliente(cliente);
+            AtualizaCliente alteraCliente = null;
+            try {
+                alteraCliente = new AtualizaCliente(cliente);
+            } catch (ParseException ex) {
+                Logger.getLogger(MenuCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
             alteraCliente.janelapai = this;
             alteraCliente.setVisible(true);
             this.setEnabled(false);

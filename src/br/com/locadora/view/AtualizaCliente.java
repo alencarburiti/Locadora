@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,13 +52,20 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         janelapai2 = null;
     }
 
-    public AtualizaCliente(Cliente cliente) {
+    public AtualizaCliente(Cliente cliente) throws ParseException {
         this.objetoCliente = cliente;
         initComponents();
 
-        jtf_codigo.setText(String.valueOf(cliente.getCodigo_cliente()));
+        jtf_codigo_cliente.setText(String.valueOf(cliente.getCodigo_cliente()));
         jtf_nome_cliente.setText(cliente.getNome_cliente());
-        jtf_data_nascimento.setText(String.valueOf(cliente.getData_nascimento()));
+        
+        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+
+        String data_nascimento = out.format(in.parse(cliente.getData_nascimento().toString()));
+
+        
+        jtf_data_nascimento.setText(data_nascimento);
         jtf_cpf.setText(cliente.getCpf());
         jtf_empresa.setText(cliente.getNome_empresa_trabalho());
         jtf_profissao.setText(cliente.getProfissao());
@@ -85,7 +93,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         tfa_similar = new javax.swing.JTextArea();
         jb_cancelar = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
-        jtf_codigo = new javax.swing.JTextField();
+        jtf_codigo_cliente = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jtf_empresa = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jtf_nome_cliente = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
@@ -171,16 +179,15 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         });
         getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, 35));
 
-        jtf_codigo.setEditable(false);
-        jtf_codigo.setName("jtf_codigo"); // NOI18N
-        getContentPane().add(jtf_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 94, -1));
+        jtf_codigo_cliente.setEditable(false);
+        jtf_codigo_cliente.setName("jtf_codigo_cliente"); // NOI18N
+        getContentPane().add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 94, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("CPF");
         jLabel6.setName("jLabel6"); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
 
-        jtf_empresa.setDocument(new UnaccentedDocument());
         jtf_empresa.setName("jtf_empresa"); // NOI18N
         jtf_empresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,7 +206,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         });
         getContentPane().add(jtf_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, -1));
 
-        jtf_nome_cliente.setDocument(new UnaccentedDocument());
         jtf_nome_cliente.setName("jtf_nome_cliente");
         jtf_nome_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -565,14 +571,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
-        jtf_nome_cliente.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent evt) {
-                if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                    String s = jtf_nome_cliente.getText();
-                    jtf_nome_cliente.setText(s.toUpperCase());
-                }
-            }
-        });
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nome_clienteKeyPressed
     private void jtf_nome_clienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusGained
@@ -615,15 +614,6 @@ private void jtf_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_jtf_empresaActionPerformed
 
 private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_empresaKeyPressed
-    jtf_empresa.addKeyListener(new KeyAdapter() {
-        public void keyReleased(KeyEvent evt) {
-            if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                String s = jtf_empresa.getText();
-                jtf_empresa.setText(s.toUpperCase());
-            }
-        }
-    });
-
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_empresaKeyPressed
 
@@ -728,7 +718,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     public static javax.swing.JTable jtbl_telefone;
     public static javax.swing.JTextField jtf_bairro;
     public static javax.swing.JTextField jtf_cidade;
-    public javax.swing.JTextField jtf_codigo;
+    public static javax.swing.JTextField jtf_codigo_cliente;
     public static javax.swing.JTextField jtf_complemento;
     public static javax.swing.JTextField jtf_cpf;
     public static javax.swing.JTextField jtf_data_nascimento;
@@ -761,8 +751,8 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void enviaDados() {
         if (verificarCampos()) {
             controller = new SiscomController();
-            controller.processarRequisicao("cadastrarCliente");
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+            controller.processarRequisicao("atualizarCliente");
+            JOptionPane.showMessageDialog(null, "Atualização efetuada com sucesso");
             retornaJanelaPai();
         }
     }

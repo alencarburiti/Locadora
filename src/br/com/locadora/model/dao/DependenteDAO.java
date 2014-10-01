@@ -180,7 +180,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         List<Dependente> resultado = new ArrayList<Dependente>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM locadora.DEPENDENTE WHERE CODIGO_CLIENTE = ? ORDER BY NOME_DEPENDENTE;";
+        String sqlSelect = "SELECT * FROM locadora.DEPENDENTE WHERE CODIGO_CLIENTE = ? AND TIPO_DEPENDENTE = 1 ORDER BY NOME_DEPENDENTE;";
         ResultSet rs = null;
 
         try {

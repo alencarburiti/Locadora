@@ -23,16 +23,20 @@ public class ClienteDAO implements InterfaceClienteDAO {
     public void atualizar(Cliente cliente) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlAtualizar = " UPDATE cliente SET bairro=?, celular=?, cep=?, "
-                + " cidade=?, cpf_cnpj=?, email=?, endereco=?, estado=?,"
-                + " telefone=?, nome=? WHERE codigo = ? ;";
+        
+
+  
+
+//CallableStatement stm = conn.prepareCall("{CALL SP_UPDATE_CLIENTE_BY_PK(?)}");  
+//stm.setInt(codigo, 1);  
+//stm.execute(); 
 
         try {
-            ps = con.prepareStatement(sqlAtualizar);
-
+            ps = con.prepareCall("{CALL SP_UPDATE_CLIENTE_BY_PK(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            
             setPreparedStatement(cliente, ps);
 
-            ps.executeUpdate();
+            ps.execute();
             ps.close();
         } finally {
             pool.liberarConnection(con);
@@ -211,7 +215,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
             cliente.setCidade(rs.getString("CIDADE"));
             cliente.setEstado(rs.getString("ESTADO"));
             cliente.setEmail(rs.getString("EMAIL"));
-            cliente.setStatus(rs.getString("STATUS"));
+            cliente.setStatus(rs.getString("DEL_FLAG"));
             cliente.setObservacao(rs.getString("OBSERVACAO"));
             resultado.add(cliente);
         }
@@ -258,22 +262,21 @@ public class ClienteDAO implements InterfaceClienteDAO {
         if (cliente.getData_nascimento() != null) {
             data_nascimento = new Date(cliente.getData_nascimento().getTime());
         }
-
-        ps.setString(1, cliente.getNome_cliente());
-        ps.setString(2, cliente.getNome_empresa_trabalho());
-        ps.setString(3, cliente.getProfissao());
-        ps.setString(4, cliente.getCpf());
-        ps.setDate(5, data_nascimento);
+        ps.setInt(1, cliente.getCodigo_cliente());
+        ps.setString(2, cliente.getNome_cliente());
+        ps.setString(3, cliente.getNome_empresa_trabalho());
+        ps.setString(4, cliente.getProfissao());
+        ps.setString(5, cliente.getCpf());
+        ps.setDate(6, data_nascimento);
         ps.setString(7, cliente.getEndereco());
-        ps.setString(9, cliente.getBairro());
-        ps.setString(8, cliente.getComplemento());
+        ps.setString(8, cliente.getBairro());
+        ps.setString(9, cliente.getComplemento());
         ps.setString(10, cliente.getCidade());
-        ps.setString(12, cliente.getEstado());
-        ps.setString(11, cliente.getEmail());
-        ps.setString(13, cliente.getLogin());
-        ps.setString(14, cliente.getSenha());
-        ps.setString(15, cliente.getObservacao());
-        ps.setString(16, cliente.getStatus());
+        ps.setString(11, cliente.getEstado());
+        ps.setString(12, cliente.getEmail());
+        ps.setString(13, cliente.getObservacao());
+        ps.setString(14, cliente.getStatus());
+
     }
 
     private void setPreparedStatement1(Cliente cliente, PreparedStatement ps)

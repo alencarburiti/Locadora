@@ -190,7 +190,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
                 buttonGroup1.add(jrb_codigo);
                 jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_codigo.setText("Código Cópia");
+                jrb_codigo.setText("Código Objeto");
                 jrb_codigo.setName("jrb_codigo"); // NOI18N
                 jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
