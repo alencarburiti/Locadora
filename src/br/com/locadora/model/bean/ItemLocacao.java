@@ -22,6 +22,7 @@ public class ItemLocacao {
     private Double valor_locado;
     private Double valor_pago;
     private Integer dias_multa;
+    private Dependente dependente;
 
     public Integer getCodigo_item_locacao() {
         return codigo_item_locacao;
@@ -93,6 +94,14 @@ public class ItemLocacao {
 
     public void setValor_pago(Double valor_pago) {
         this.valor_pago = valor_pago;
+    }
+
+    public Dependente getDependente() {
+        return dependente;
+    }
+
+    public void setDependente(Dependente dependente) {
+        this.dependente = dependente;
     }
 
 }

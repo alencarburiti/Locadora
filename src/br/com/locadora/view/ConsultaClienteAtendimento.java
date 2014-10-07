@@ -21,9 +21,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,14 +34,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
-    public Atendimento janelapai;
-    public Atendimento_InterFace telaAtendimento;
+    public AtendimentoLocacao janelapaiLocacao;
+    public AtendimentoDevolucao janelapaiDevolucao;
+    public AtendimentoLocacao_InterFace telaAtendimentoLocacao;
+    public AtendimentoDevolucao_InterFace telaAtendimentoDevolucao;
     public List<Cliente> clientes;
     public List<Dependente> dependentes;
 
     public ConsultaClienteAtendimento() {
         initComponents();
-        janelapai = null;
+        janelapaiLocacao = null;
     }
 
     /**
@@ -75,6 +74,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -195,46 +199,44 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         setVisible(false);
-        if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
+        if ((janelapaiLocacao != null)) {
+            janelapaiLocacao.setEnabled(true);
+            janelapaiLocacao.setVisible(true);
             //telaCadastroObjeto.setStatusTela(false);
         }
 
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
+        JOptionPane.showMessageDialog(null, jtbl_cliente.getSelectedRow());
         if (jtbl_cliente.getSelectedRow() == 1) {
             botaoOK(jtbl_cliente);
         }
 }//GEN-LAST:event_jb_okActionPerformed
     public void botaoOK(JTable tb) {
-        if (tb.getSelectedRow() != -1) {
-            setVisible(false);
-            Dependente dependente = tbClienteDependenteLinhaSelecionada(jtbl_cliente);
-            if ((janelapai != null) && (dependente != null)) {
-                janelapai.setEnabled(true);
-                janelapai.setVisible(true);
-                telaAtendimento.carregarClienteDependente(dependente);
-//                telaAtendimento.setStatusTela(false);
-            }
-
-//        if ((janelapai3 != null) && (cliente != null)) {
-//            janelapai3.setEnabled(true);
-//            janelapai3.setVisible(true);
-//            telaAjusteEstoque.carregaFornecedor(cliente);
-//            //telaSaidaEstoque.statusTela(true);        
-//        }
+        Dependente dependente = tbClienteDependenteLinhaSelecionada(jtbl_cliente);
+        if ((janelapaiLocacao != null) && (dependente != null)) {
+            janelapaiLocacao.setEnabled(true);
+            janelapaiLocacao.setVisible(true);
+            telaAtendimentoLocacao.carregarClienteDependente(dependente);
+            telaAtendimentoLocacao.setStatusTela(true);
+        } else if ((janelapaiDevolucao != null) && (dependente != null)) {
+            janelapaiDevolucao.setEnabled(true);
+            janelapaiDevolucao.setVisible(true);
+            telaAtendimentoDevolucao.carregarClienteDependente(dependente);
+            telaAtendimentoDevolucao.setStatusTela(true);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente");
         }
+
     }
+
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-        if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
+        if ((janelapaiLocacao != null)) {
+            janelapaiLocacao.setEnabled(true);
+            janelapaiLocacao.setVisible(true);
             //telaCadastroObjeto.setStatusTela(false);
         }
 
@@ -242,20 +244,13 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_novo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novo1ActionPerformed
-//        CadastroFornecedor forn;
-//
-//        forn = new CadastroFornecedor();
-//        forn.janelapai2 = this;
-//        forn.setVisible(true);
-//        this.setEnabled(false);
-
-        // TODO add your handling code here:
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         listaClienteDependente();
         jtbl_cliente.requestFocus();
-        jtbl_cliente.changeSelection(1, 1, false, false);
+        jtbl_cliente.setSelectionMode(1);
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
@@ -276,8 +271,22 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     private void jtbl_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_clienteKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             botaoOK(jtbl_cliente);
+        }
     }//GEN-LAST:event_jtbl_clienteKeyPressed
-    }
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            if ((janelapaiLocacao != null)) {
+                janelapaiLocacao.setEnabled(true);
+                janelapaiLocacao.setVisible(true);
+                //telaCadastroObjeto.setStatusTela(false);
+            }
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -303,8 +312,12 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //Recebendo tela como parametro para atualização apos pesquisa
-    public void setTelaAtendimento(Atendimento_InterFace telaAtendimento) {
-        this.telaAtendimento = telaAtendimento;
+    public void setTelaAtendimento(AtendimentoLocacao_InterFace telaAtendimentoLocacao) {
+        this.telaAtendimentoLocacao = telaAtendimentoLocacao;
+    }
+    
+    public void setTelaAtendimento(AtendimentoDevolucao_InterFace telaAtendimentoDevolucao) {
+        this.telaAtendimentoDevolucao = telaAtendimentoDevolucao;
     }
 
     public void setCadastro() {
@@ -313,18 +326,18 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
     public Dependente tbClienteDependenteLinhaSelecionada(JTable tb) {
         Dependente dependente = null;
+
         if (tb.getSelectedRow() != -1) {
             dependente = new Dependente();
-                        
+
             dependente.setCodigo_dependente(dependentes.get(tb.getSelectedRow()).getCodigo_dependente());
             dependente.setNome_dependente(dependentes.get(tb.getSelectedRow()).getNome_dependente());
             dependente.setDebito(dependentes.get(tb.getSelectedRow()).getDebito());
-            
+
             Cliente cliente = new Cliente();
             cliente.setCodigo_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getCodigo_cliente());
-            
-            dependente.setCliente(cliente);
 
+            dependente.setCliente(cliente);
         }
         return dependente;
     }
@@ -357,38 +370,15 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
         } else {
             for (int i = 0; i < dependentes.size(); i++) {
-                
+
                 DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(dependentes.get(i), dependentes.get(i).getNome_dependente());
                 row.addRow(new Object[]{dependentes.get(i).getCliente().getCodigo_cliente(), hashDbGrid, dependentes.get(i).getCliente().getStatus(),
                     dependentes.get(i).getTipo_dependente(), dependentes.get(i).getCodigo_dependente()});
-
             }
-            jtbl_cliente.setSelectionMode(1);
+            jtbl_cliente.requestFocus();
+            jtbl_cliente.setRowSelectionInterval(0, 0);
         }
-    }
-
-    public String setPrecoFormat(String preco) {
-        DecimalFormat dFormat = new DecimalFormat();
-        dFormat.applyPattern("R$ #0.00");
-        return dFormat.format(getPrecoFormato(preco));
-    }
-
-    public Double getPrecoFormato(String preco) {
-        Double precoFormatado = 0.0;
-        try {
-            preco = preco.replace("R", "");
-            preco = preco.replace("$", "");
-            preco = preco.replace(",", ".");
-            preco = preco.replace(" ", "");
-            precoFormatado = Double.parseDouble(preco.trim());
-
-            //this.objFuncionario.setSalario(getSalarioFormat(jTSalario.getText())); pegar valor em double
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");
-        }
-
-        return precoFormatado;
     }
 
 }

@@ -2,12 +2,10 @@ package br.com.locadora.model.command;
 
 import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.dao.InterfaceGeneroDAO;
-import br.com.locadora.model.dao.InterfaceGeneroDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.view.MenuGenero;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,38 +24,34 @@ public class ConsultarGenero implements InterfaceCommand {
     }
 
     public String execute() {
-        if (MenuGenero.jtf_consulta.getText().equals("")) {
+        try {
+            if (MenuGenero.jtf_consulta.getText().equals("")) {
 
-            if (MenuGenero.jrb_codigo.isSelected() == true) {
-                genero = null;
-                try {
+                if (MenuGenero.jrb_codigo.isSelected() == true) {
+                    genero = null;
                     genero = generoDAO.getGenero_codigo(Integer.parseInt(MenuGenero.jtf_consulta.getText().trim()));
-                } catch (SQLException ex) {
-                    Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
+
                     mostrar_Genero(genero);
-                } catch (ParseException ex) {
-                    Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
+
+                } else {
+                    generos = null;
+
+                    generos = generoDAO.getGenero_nome(MenuGenero.jtf_consulta.getText().trim());
+
+                    mostrar_Generos(generos);
                 }
             } else {
-                generos = null;
-                try {
-                    generos = generoDAO.getGenero_nome(MenuGenero.jtf_consulta.getText().trim());
-                } catch (SQLException ex) {
-                    Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
-                    mostrar_Generos(generos);
-                } catch (ParseException ex) {
-                    Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+                JOptionPane.showMessageDialog(null, "Informe um parâmentro");
             }
-        } else {
-
-            JOptionPane.showMessageDialog(null, "Informe um parâmentro");
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Informe um parâmentro válido");
         }
-
+        
         return "OK";
     }
 

@@ -23,9 +23,6 @@ public class ClienteDAO implements InterfaceClienteDAO {
     public void atualizar(Cliente cliente) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        
-
-  
 
 //CallableStatement stm = conn.prepareCall("{CALL SP_UPDATE_CLIENTE_BY_PK(?)}");  
 //stm.setInt(codigo, 1);  
@@ -229,7 +226,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
 
         String sqlInsert = "INSERT INTO `locadora`.`CLIENTE`(`NOME_CLIENTE`,`NOME_EMPRESA_TRABALHO`,"
                 + "`PROFISSAO`,`CPF`,`DATA_NASCIMENTO`,`ENDERECO`,`BAIRRO`,`COMPLEMENTO`,"
-                + "`CIDADE`,`ESTADO`,`EMAIL`,`LOGIN`,`SENHA`,`OBSERVACAO`,`STATUS`) VALUES"
+                + "`CIDADE`,`ESTADO`,`EMAIL`,`LOGIN`,`SENHA`,`OBSERVACAO`,`DEL_FLAG`) VALUES"
                 + "( ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? );";
 
         try {
@@ -299,7 +296,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         ps.setString(11, cliente.getEmail());
         ps.setString(12, cliente.getLogin());
         ps.setString(13, cliente.getSenha());
-        ps.setString(14, cliente.getObservacao());
+        ps.setString(14, cliente.getObservacao());        
         ps.setString(15, cliente.getStatus());
     }
 

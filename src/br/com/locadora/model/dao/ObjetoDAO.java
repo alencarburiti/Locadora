@@ -215,7 +215,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         PreparedStatement ps;
 
         String sqlInsert = "INSERT INTO `locadora`.`OBJETO`(`DESCRICAO_OBJETO`,`TITULO_ORIGINAL`,`DESCRICAO_RESUMIDA`,"
-                + "`TIPO_MOVIMENTO`,`PRODUCAO`,`DURACAO`,`MIDIA`,`TIPO_MIDIA`,`CODIGO_DIARIA`,`CODIGO_GENERO`,`ELENCO`,"
+                + "`TIPO_MOVIMENTO`,`PRODUCAO`,`DURACAO`,`MIDIA`,`TIPO_MIDIA`,`DIARIA_CODIGO_DIARIA`,`GENERO_CODIGO_GENERO`,`ELENCO`,"
                 + "`SINOPSE`)VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try {

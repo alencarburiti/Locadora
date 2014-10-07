@@ -101,11 +101,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         setTitle("Gerenciamento de usuários");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -130,26 +130,31 @@ public class MenuUsuario extends javax.swing.JFrame {
 
                 jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
                 jPanel3.setName("jPanel3"); // NOI18N
+                jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
                 buttonGroup1.add(jrb_codigo);
                 jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_codigo.setSelected(true);
                 jrb_codigo.setText("Código");
                 jrb_codigo.setName("jrb_codigo"); // NOI18N
+                jPanel3.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
 
                 buttonGroup1.add(jrb_descricao);
                 jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_descricao.setText("Descrição");
                 jrb_descricao.setName("jrb_descricao"); // NOI18N
+                jPanel3.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 24, -1, -1));
 
                 buttonGroup1.add(jrb_detalhamento);
                 jrb_detalhamento.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_detalhamento.setText("Específica");
                 jrb_detalhamento.setName("jrb_detalhamento"); // NOI18N
+                jPanel3.add(jrb_detalhamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 24, -1, -1));
 
                 jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jLabel1.setText("Parâmetro");
                 jLabel1.setName("jLabel1"); // NOI18N
+                jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 64, -1, -1));
 
                 tf_pesquisar_usuario.setName("tf_pesquisar_usuario"); // NOI18N
                 tf_pesquisar_usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +162,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                         tf_pesquisar_usuarioActionPerformed(evt);
                     }
                 });
+                jPanel3.add(tf_pesquisar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 64, 397, -1));
 
                 jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/ok.png"))); // NOI18N
                 jButton1.setText("Ir");
@@ -171,48 +177,11 @@ public class MenuUsuario extends javax.swing.JFrame {
                         jButton1KeyPressed(evt);
                     }
                 });
-
-                javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-                jPanel3.setLayout(jPanel3Layout);
-                jPanel3Layout.setHorizontalGroup(
-                    jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tf_pesquisar_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jrb_codigo)
-                                .addGap(18, 18, 18)
-                                .addComponent(jrb_descricao)
-                                .addGap(18, 18, 18)
-                                .addComponent(jrb_detalhamento)))
-                        .addContainerGap())
-                );
-                jPanel3Layout.setVerticalGroup(
-                    jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jrb_codigo)
-                            .addComponent(jrb_descricao)
-                            .addComponent(jrb_detalhamento))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tf_pesquisar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                );
+                jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(489, 55, -1, -1));
 
                 getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
-                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
+                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
                 jb_sair.setText("Sair");
                 jb_sair.setName("jb_sair"); // NOI18N
                 jb_sair.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +191,6 @@ public class MenuUsuario extends javax.swing.JFrame {
                 });
                 getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, -1, 35));
 
-                jb_excluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/delete.gif"))); // NOI18N
                 jb_excluir1.setText("Excluir");
                 jb_excluir1.setName("jb_excluir1"); // NOI18N
                 jb_excluir1.addActionListener(new java.awt.event.ActionListener() {
@@ -232,7 +200,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 });
                 getContentPane().add(jb_excluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, 35));
 
-                jb_alterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/alterar_registro.gif"))); // NOI18N
+                jb_alterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar1.setText("Alterar");
                 jb_alterar1.setName("jb_alterar1"); // NOI18N
                 jb_alterar1.addActionListener(new java.awt.event.ActionListener() {
@@ -242,7 +210,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 });
                 getContentPane().add(jb_alterar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 101, 35));
 
-                jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/novo_registro.gif"))); // NOI18N
+                jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
                 jb_novo.setText("Novo");
                 jb_novo.setName("jb_novo"); // NOI18N
                 jb_novo.addActionListener(new java.awt.event.ActionListener() {

@@ -1,23 +1,11 @@
 package br.com.locadora.model.command;
 
 import br.com.locadora.model.bean.Objeto;
-import br.com.locadora.model.bean.Dependente;
-import br.com.locadora.model.bean.Telefone;
-import br.com.locadora.model.dao.InterfaceObjetoDAO;
-import br.com.locadora.model.dao.InterfaceDependenteDAO;
 import br.com.locadora.model.dao.InterfaceDiariaDAO;
 import br.com.locadora.model.dao.InterfaceGeneroDAO;
 import br.com.locadora.model.dao.InterfaceObjetoDAO;
-import br.com.locadora.model.dao.InterfaceTelefoneDAO;
 import br.com.locadora.view.CadastroObjeto;
-import br.com.locadora.view.MenuObjeto;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CadastrarObjeto implements InterfaceCommand {
 
@@ -48,6 +36,8 @@ public class CadastrarObjeto implements InterfaceCommand {
                 objeto.setTipo_midia((String) CadastroObjeto.jcb_tipo_midia.getSelectedItem());
                 objeto.setGenero(CadastroObjeto.getObjetoGenero());
                 objeto.setDiaria(CadastroObjeto.getObjetoDiaria());
+                objeto.setElenco(CadastroObjeto.jta_elenco.getText());
+                objeto.setSinopse(CadastroObjeto.jta_sinopse.getText());
 
                 objeto = objetoDAO.salvar(objeto);
 

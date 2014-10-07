@@ -34,7 +34,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-public class Recebimento extends javax.swing.JFrame implements Atendimento_InterFace {
+public class Recebimento extends javax.swing.JFrame implements AtendimentoLocacao_InterFace {
 
     public DecimalFormat formatoPreco;
     public MaskFormatter formatoData;
@@ -1394,7 +1394,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         ConsultaCopiaDevolucao copiaDevolucao = new ConsultaCopiaDevolucao();
-        copiaDevolucao.setTelaAtendimento(this);
+//        copiaDevolucao.setTelaAtendimento(this);
 //        copiaDevolucao.janelapai = this;
         copiaDevolucao.setVisible(true);
         // TODO add your handling code here:
@@ -1563,7 +1563,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private void jtf_codigo_consulta_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_consulta_locacaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (jcb_codigo_barras_locacao.isSelected() == true) {
-                locar_consulta_codigo_barras(jtf_codigo_consulta_locacao.getText().trim());
+//                locar_consulta_codigo_barras(jtf_codigo_consulta_locacao.getText().trim());
             } else {
 
             }
@@ -1652,27 +1652,27 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         return (true);
     }
 
-    public void checarFilmeLocado() {
-        try {
-            pool = new Pool();
-            CopiaDAO copiaDAO = new CopiaDAO(pool);
-            copias = null;
-            Integer quantidade_locado;
-            quantidade_locado = copiaDAO.getQuantidadeAssistida(Integer.parseInt(jtf_codigo_cliente.getText()), jtf_codigo_consulta_locacao.getText());
-            if (quantidade_locado > 0) {
-                carregarCopiaLocacao(copias.get(0));
-            } else {
-                int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-                if (selectedOption == JOptionPane.YES_NO_OPTION) {
-
-                }
-                JOptionPane.showMessageDialog(null, "Código de Barra inválido");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Recebimento.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+//    public void checarFilmeLocado() {
+//        try {
+//            pool = new Pool();
+//            CopiaDAO copiaDAO = new CopiaDAO(pool);
+//            copias = null;
+//            Integer quantidade_locado;
+//            quantidade_locado = copiaDAO.getQuantidadeAssistida(Integer.parseInt(jtf_codigo_cliente.getText()), jtf_codigo_consulta_locacao.getText());
+//            if (quantidade_locado > 0) {
+//                carregarCopiaLocacao(copias.get(0));
+//            } else {
+//                int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+//                if (selectedOption == JOptionPane.YES_NO_OPTION) {
+//
+//                }
+//                JOptionPane.showMessageDialog(null, "Código de Barra inválido");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Recebimento.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//    }
     private TelaPrincipal_Interface telaPrincipal;
 
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
@@ -2073,60 +2073,51 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void locar_consulta_codigo_barras(String codigo_barras) {
-
-        try {
-            pool = new Pool();
-            Integer quantidade_locado;
-            copias = null;
-
-            CopiaDAO copiaDAO = new CopiaDAO(pool);
-
-            quantidade_locado = copiaDAO.getQuantidadeAssistida(Integer.parseInt(jtf_codigo_cliente.getText()), jtf_codigo_consulta_locacao.getText());
-            if (quantidade_locado > 0) {
-                int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente já assistiu " + quantidade_locado + ". Deseja locar novamente ?", "Atenção", JOptionPane.YES_NO_OPTION);
-                if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                    copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
-                    if (copias.size() > 0) {
-                        carregarCopiaLocacao(copias.get(0));
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Código de Barra inválido");
-                    }
-                } else {
-
-                }
-            } else {
-                copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
-                if (copias.size() > 0) {
-                    carregarCopiaLocacao(copias.get(0));
-                } else {
-                    JOptionPane.showMessageDialog(null, "Código de Barra inválido");
-                }
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Recebimento.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void locar_consulta_codigo_barras(String codigo_barras) {
+//
+//        try {
+//            pool = new Pool();
+//            Integer quantidade_locado;
+//            copias = null;
+//
+//            CopiaDAO copiaDAO = new CopiaDAO(pool);
+//
+//            quantidade_locado = copiaDAO.getQuantidadeAssistida(Integer.parseInt(jtf_codigo_cliente.getText()), jtf_codigo_consulta_locacao.getText());
+//            if (quantidade_locado > 0) {
+//                int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente já assistiu " + quantidade_locado + ". Deseja locar novamente ?", "Atenção", JOptionPane.YES_NO_OPTION);
+//                if (selectedOption == JOptionPane.YES_NO_OPTION) {
+//                    copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
+//                    if (copias.size() > 0) {
+//                        carregarCopiaLocacao(copias.get(0));
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Código de Barra inválido");
+//                    }
+//                } else {
+//
+//                }
+//            } else {
+//                copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
+//                if (copias.size() > 0) {
+//                    carregarCopiaLocacao(copias.get(0));
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "Código de Barra inválido");
+//                }
+//            }
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Recebimento.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     public void devolver_consulta_codigo_barras(String codigo_barras) {
-        try {
-            pool = new Pool();
-            LocacaoDAO locacaoDAO = new LocacaoDAO(pool);
-
-            itemDevolucao = new ItemLocacao();
-            itemDevolucao = locacaoDAO.getLocacao_codigo_barras(codigo_barras);
-
-            if (itemDevolucao != null) {
-                carregarCopiaDevolucao(itemDevolucao);
-                jb_adicionar_devolucao.requestFocus();
-            } else {
-                JOptionPane.showMessageDialog(null, "Código de Barra inválido");
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Problemas com a consulta");
-            ex.printStackTrace();
+        pool = new Pool();
+        LocacaoDAO locacaoDAO = new LocacaoDAO(pool);
+        itemDevolucao = new ItemLocacao();
+        if (itemDevolucao != null) {
+            carregarCopiaDevolucao(itemDevolucao);
+            jb_adicionar_devolucao.requestFocus();
+        } else {
+            JOptionPane.showMessageDialog(null, "Código de Barra inválido");
         }
     }
 

@@ -5,6 +5,8 @@
  */
 package br.com.locadora.model.bean;
 
+import java.util.Date;
+
 /**
  *
  * @author alencarburiti
@@ -16,6 +18,9 @@ public class Dependente {
     private String nome_dependente;
     private String tipo_dependente;
     private String debito;
+    private Date data_nascimento;
+    private String CPF;
+    private boolean Status;
 
     public Integer getCodigo_dependente() {
         return codigo_dependente;
@@ -55,6 +60,30 @@ public class Dependente {
 
     public void setDebito(String debito) {
         this.debito = debito;
+    }
+
+    public boolean getStatus() {
+        return Status;
+    }
+
+    public void setStatus(boolean Status) {
+        this.Status = Status;
+    }
+
+    public Date getData_nascimento() {
+        return data_nascimento;
+    }
+
+    public void setData_nascimento(Date data_nascimento) {
+        this.data_nascimento = data_nascimento;
+    }
+
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
     }
 
 }

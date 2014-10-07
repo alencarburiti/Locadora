@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaTipoObjeto extends javax.swing.JFrame {
 
-    Atendimento janelapai;
+    AtendimentoLocacao janelapai;
 
     public ConsultaTipoObjeto() {
         initComponents();

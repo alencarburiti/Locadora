@@ -43,7 +43,7 @@ public class AtualizarCliente implements InterfaceCommand {
             } catch (ParseException ex) {
                 Logger.getLogger(AtualizarCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            cliente.setCpf(AtualizaCliente.jtf_cpf.getText());
+            cliente.setCpf(AtualizaCliente.jtf_cpf_cliente.getText());
             cliente.setNome_empresa_trabalho(AtualizaCliente.jtf_empresa.getText());
             cliente.setProfissao(AtualizaCliente.jtf_profissao.getText());
             cliente.setEndereco(AtualizaCliente.jtf_endereco.getText());

@@ -11,20 +11,37 @@ import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.TelefoneDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
-import br.com.locadora.util.UnaccentedDocument;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import br.com.locadora.util.ValidaCPF;
+import static br.com.locadora.view.CadastroCliente.jrb_ativo_dependente;
+import static br.com.locadora.view.CadastroCliente.jtbl_dependente;
+import static br.com.locadora.view.CadastroCliente.jtf_bairro;
+import static br.com.locadora.view.CadastroCliente.jtf_cidade;
+import static br.com.locadora.view.CadastroCliente.jtf_cpf_cliente;
+import static br.com.locadora.view.CadastroCliente.jtf_cpf_dependente;
+import static br.com.locadora.view.CadastroCliente.jtf_data_nascimento;
+import static br.com.locadora.view.CadastroCliente.jtf_data_nascimento_dependente;
+import static br.com.locadora.view.CadastroCliente.jtf_dependente;
+import static br.com.locadora.view.CadastroCliente.jtf_empresa;
+import static br.com.locadora.view.CadastroCliente.jtf_endereco;
+import static br.com.locadora.view.CadastroCliente.jtf_estado;
+import static br.com.locadora.view.CadastroCliente.jtf_nome_cliente;
+import static br.com.locadora.view.CadastroCliente.jtf_profissao;
+import static br.com.locadora.view.CadastroCliente.validaData;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -42,7 +59,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private InterfacePool pool = new Pool();
     public List<Telefone> telefones;
     public List<Dependente> dependentes;
-
+    public MaskFormatter formatoData, formatoCPF, formatoTelefone;
     /**
      * Creates new form ProdutoCadastroGUI
      */
@@ -66,7 +83,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
         
         jtf_data_nascimento.setText(data_nascimento);
-        jtf_cpf.setText(cliente.getCpf());
+        jtf_cpf_cliente.setText(cliente.getCpf());
         jtf_empresa.setText(cliente.getNome_empresa_trabalho());
         jtf_profissao.setText(cliente.getProfissao());
         jtf_endereco.setText(cliente.getEndereco());
@@ -93,19 +110,19 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         tfa_similar = new javax.swing.JTextArea();
         jb_cancelar = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
         jtf_codigo_cliente = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jtf_empresa = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jtf_nome_cliente = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jtf_cpf = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jtf_profissao = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jtf_data_nascimento = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jtf_endereco = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -114,29 +131,71 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jtf_complemento = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jtf_email = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
         jrb_ativo = new javax.swing.JRadioButton();
         jrb_inativo = new javax.swing.JRadioButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jta_observacao = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel21 = new javax.swing.JLabel();
-        jtf_telefone = new javax.swing.JTextField();
-        jb_adicionar_telefone = new javax.swing.JButton();
-        jb_eliminar = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jtbl_telefone = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
-        jtf_dependente = new javax.swing.JTextField();
-        jb_adicionar_dependente = new javax.swing.JButton();
-        jb_eliminar1 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jtbl_dependente = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
         jtf_estado = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jtf_cidade = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jta_observacao = new javax.swing.JTextArea();
+        try  {
+            formatoData = new MaskFormatter("##/##/####");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_data_nascimento = new JFormattedTextField(formatoData);
+        try  {
+            formatoCPF = new MaskFormatter("###.###.###-##");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_cpf_cliente = new JFormattedTextField(formatoCPF);
+        jLabel21 = new javax.swing.JLabel();
+        jb_adicionar_telefone = new javax.swing.JButton();
+        jb_eliminar = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtbl_telefone = new javax.swing.JTable();
+        try  {
+            formatoTelefone = new MaskFormatter("(##) ####-####");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_telefone = new JFormattedTextField(formatoTelefone);
+        jPanel2 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jtf_nome_dependente = new javax.swing.JTextField();
+        jb_adicionar_dependente = new javax.swing.JButton();
+        jb_eliminar1 = new javax.swing.JButton();
+        jrb_inativo_dependente = new javax.swing.JRadioButton();
+        jrb_ativo_dependente = new javax.swing.JRadioButton();
+        jLabel4 = new javax.swing.JLabel();
+        try  {
+            formatoData = new MaskFormatter("##/##/####");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_data_nascimento_dependente = new JFormattedTextField(formatoData);
+        try  {
+            formatoCPF = new MaskFormatter("###.###.###-##");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_cpf_dependente = new JFormattedTextField(formatoCPF);
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtbl_dependente = new javax.swing.JTable();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -167,7 +226,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, 35));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, -1, 35));
 
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
@@ -177,16 +236,25 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jb_salvarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, 35));
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 520, -1, 35));
+
+        jLabel2.setText("Observação: Os campos com asteristico na frente são obrigatórios ");
+        jLabel2.setName("jLabel2"); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
+
+        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
+
+        jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtf_codigo_cliente.setEditable(false);
         jtf_codigo_cliente.setName("jtf_codigo_cliente"); // NOI18N
-        getContentPane().add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 94, -1));
+        jPanel3.add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 94, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("CPF");
         jLabel6.setName("jLabel6"); // NOI18N
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
 
         jtf_empresa.setName("jtf_empresa"); // NOI18N
         jtf_empresa.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +272,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jtf_empresaKeyPressed(evt);
             }
         });
-        getContentPane().add(jtf_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, -1));
+        jPanel3.add(jtf_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, -1));
 
         jtf_nome_cliente.setName("jtf_nome_cliente");
         jtf_nome_cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -225,39 +293,27 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jtf_nome_clienteKeyReleased(evt);
             }
         });
-        getContentPane().add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, -1));
+        jPanel3.add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Código Cliente");
         jLabel1.setName("jLabel1"); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Nome");
         jLabel3.setName("jLabel3"); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-
-        jLabel2.setText("Observação: Os campos com asteristico na frente são obrigatórios ");
-        jLabel2.setName("jLabel2"); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 640, -1, -1));
-
-        jtf_cpf.setName("jtf_cpf"); // NOI18N
-        jtf_cpf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_cpfActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jtf_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 120, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setText("Empresa");
         jLabel10.setName("jLabel10"); // NOI18N
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel11.setText("Profissão");
         jLabel11.setName("jLabel11"); // NOI18N
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
+        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
 
         jtf_profissao.setName("jtf_profissao"); // NOI18N
         jtf_profissao.addActionListener(new java.awt.event.ActionListener() {
@@ -265,18 +321,15 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jtf_profissaoActionPerformed(evt);
             }
         });
-        getContentPane().add(jtf_profissao, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 230, -1));
+        jPanel3.add(jtf_profissao, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 230, -1));
 
         jLabel12.setText("Nascimento");
         jLabel12.setName("jLabel12"); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, -1, -1));
-
-        jtf_data_nascimento.setName("jtf_data_nascimento"); // NOI18N
-        getContentPane().add(jtf_data_nascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 110, -1));
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, -1, -1));
 
         jLabel13.setText("Endereço");
         jLabel13.setName("jLabel13"); // NOI18N
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         jtf_endereco.setName("jtf_endereco"); // NOI18N
         jtf_endereco.addActionListener(new java.awt.event.ActionListener() {
@@ -284,32 +337,28 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jtf_enderecoActionPerformed(evt);
             }
         });
-        getContentPane().add(jtf_endereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 220, -1));
+        jPanel3.add(jtf_endereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 220, -1));
 
         jLabel14.setText("Bairro");
         jLabel14.setName("jLabel14"); // NOI18N
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 60, -1));
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 60, -1));
 
         jtf_bairro.setName("jtf_bairro"); // NOI18N
-        getContentPane().add(jtf_bairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 180, -1));
+        jPanel3.add(jtf_bairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 180, -1));
 
         jLabel15.setText("Complemento");
         jLabel15.setName("jLabel15"); // NOI18N
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, -1));
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, -1));
 
         jtf_complemento.setName("jtf_complemento"); // NOI18N
-        getContentPane().add(jtf_complemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 110, -1));
+        jPanel3.add(jtf_complemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 110, -1));
 
         jLabel16.setText("Email");
         jLabel16.setName("jLabel16"); // NOI18N
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
 
         jtf_email.setName("jtf_email"); // NOI18N
-        getContentPane().add(jtf_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 270, -1));
-
-        jLabel17.setText("Observação");
-        jLabel17.setName("jLabel17"); // NOI18N
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 270, -1, -1));
+        jPanel3.add(jtf_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 270, -1));
 
         jrb_ativo.setSelected(true);
         jrb_ativo.setText("Ativo");
@@ -319,11 +368,34 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jrb_ativoActionPerformed(evt);
             }
         });
-        getContentPane().add(jrb_ativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        jPanel3.add(jrb_ativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         jrb_inativo.setText("Inativo");
         jrb_inativo.setName("jrb_inativo"); // NOI18N
-        getContentPane().add(jrb_inativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
+        jPanel3.add(jrb_inativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
+
+        jLabel20.setText("Estado");
+        jLabel20.setName("jLabel20"); // NOI18N
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
+
+        jtf_estado.setName("jtf_estado"); // NOI18N
+        jPanel3.add(jtf_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 60, -1));
+
+        jLabel23.setText("Cidade");
+        jLabel23.setName("jLabel23"); // NOI18N
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+
+        jtf_cidade.setName("jtf_cidade"); // NOI18N
+        jtf_cidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_cidadeActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jtf_cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 180, -1));
+
+        jLabel17.setText("Observação");
+        jLabel17.setName("jLabel17"); // NOI18N
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -332,15 +404,43 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jta_observacao.setName("jta_observacao"); // NOI18N
         jScrollPane2.setViewportView(jta_observacao);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 230, 160));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 230, 150));
 
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.setName("jPanel1"); // NOI18N
+        jtf_data_nascimento.setName("jtf_data_nascimento"); // NOI18N
+        jtf_data_nascimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_data_nascimentoFocusLost(evt);
+            }
+        });
+        jPanel3.add(jtf_data_nascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 110, -1));
 
-        jLabel21.setText("Telefone");
+        jtf_cpf_cliente.setName("jtf_cpf_cliente"); // NOI18N
+        jtf_cpf_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_cpf_clienteActionPerformed(evt);
+            }
+        });
+        jtf_cpf_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_cpf_clienteFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_cpf_clienteFocusLost(evt);
+            }
+        });
+        jtf_cpf_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_cpf_clienteKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_cpf_clienteKeyReleased(evt);
+            }
+        });
+        jPanel3.add(jtf_cpf_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 120, 30));
+
+        jLabel21.setText("Telefone:");
         jLabel21.setName("jLabel21"); // NOI18N
-
-        jtf_telefone.setName("jtf_telefone"); // NOI18N
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
 
         jb_adicionar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_telefone.setToolTipText("Incluir");
@@ -350,6 +450,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jb_adicionar_telefoneActionPerformed(evt);
             }
         });
+        jPanel3.add(jb_adicionar_telefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 290, 30, 30));
 
         jb_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_eliminar.setToolTipText("Excluir");
@@ -359,6 +460,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jb_eliminarActionPerformed(evt);
             }
         });
+        jPanel3.add(jb_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 30, 30));
 
         jScrollPane4.setName("jScrollPane4"); // NOI18N
 
@@ -381,58 +483,49 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jtbl_telefone.setName("jtbl_telefone"); // NOI18N
         jScrollPane4.setViewportView(jtbl_telefone);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addGap(5, 5, 5)
-                        .addComponent(jtf_telefone, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_adicionar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel21))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jtf_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jb_adicionar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
+        jPanel3.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 230, 110));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 270, 180));
+        jtf_telefone.setName("jtf_telefone"); // NOI18N
+        jtf_telefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_telefoneActionPerformed(evt);
+            }
+        });
+        jtf_telefone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_telefoneFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_telefoneFocusLost(evt);
+            }
+        });
+        jtf_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_telefoneKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_telefoneKeyReleased(evt);
+            }
+        });
+        jPanel3.add(jtf_telefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 230, 30));
+
+        jTabbedPane1.addTab("Cliente", jPanel3);
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel22.setText("Dependente");
+        jLabel22.setText("Nome:");
         jLabel22.setName("jLabel22"); // NOI18N
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 14, -1, -1));
 
-        jtf_dependente.setName("jtf_dependente"); // NOI18N
-        jtf_dependente.addActionListener(new java.awt.event.ActionListener() {
+        jtf_nome_dependente.setName("jtf_nome_dependente"); // NOI18N
+        jtf_nome_dependente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_dependenteActionPerformed(evt);
+                jtf_nome_dependenteActionPerformed(evt);
             }
         });
+        jPanel2.add(jtf_nome_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 270, -1));
 
         jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_dependente.setToolTipText("Incluir");
@@ -442,6 +535,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jb_adicionar_dependenteActionPerformed(evt);
             }
         });
+        jPanel2.add(jb_adicionar_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 30, 30));
 
         jb_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_eliminar1.setToolTipText("Excluir");
@@ -451,6 +545,61 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jb_eliminar1ActionPerformed(evt);
             }
         });
+        jPanel2.add(jb_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 30, 30));
+
+        jrb_inativo_dependente.setText("Inativo");
+        jrb_inativo_dependente.setName("jrb_inativo_dependente"); // NOI18N
+        jrb_inativo_dependente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_inativo_dependenteActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jrb_inativo_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, -1));
+
+        jrb_ativo_dependente.setSelected(true);
+        jrb_ativo_dependente.setText("Ativo");
+        jrb_ativo_dependente.setName("jrb_ativo_dependente"); // NOI18N
+        jrb_ativo_dependente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_ativo_dependenteActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jrb_ativo_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, -1, -1));
+
+        jLabel4.setText("Nascimento");
+        jLabel4.setName("jLabel4"); // NOI18N
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+
+        jtf_data_nascimento_dependente.setName("jtf_data_nascimento_dependente"); // NOI18N
+        jPanel2.add(jtf_data_nascimento_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 110, -1));
+
+        jtf_cpf_dependente.setName("jtf_cpf_dependente"); // NOI18N
+        jtf_cpf_dependente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_cpf_dependenteActionPerformed(evt);
+            }
+        });
+        jtf_cpf_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_cpf_dependenteFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_cpf_dependenteFocusLost(evt);
+            }
+        });
+        jtf_cpf_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_cpf_dependenteKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_cpf_dependenteKeyReleased(evt);
+            }
+        });
+        jPanel2.add(jtf_cpf_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 120, 30));
+
+        jLabel5.setText("CPF");
+        jLabel5.setName("jLabel5"); // NOI18N
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, -1, -1));
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
@@ -459,11 +608,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome"
+                "Nome", "Data Nascimento", "CPF", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -473,66 +622,13 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jtbl_dependente.setName("jtbl_dependente"); // NOI18N
         jScrollPane5.setViewportView(jtbl_dependente);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addGap(5, 5, 5)
-                        .addComponent(jtf_dependente))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel22))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jtf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 510, 310));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 510, 170));
+        jTabbedPane1.addTab("Dependentes", jPanel2);
 
-        jLabel20.setText("Estado");
-        jLabel20.setName("jLabel20"); // NOI18N
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, -1));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 580, 500));
 
-        jtf_estado.setName("jtf_estado"); // NOI18N
-        getContentPane().add(jtf_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 60, -1));
-
-        jLabel23.setText("Cidade");
-        jLabel23.setName("jLabel23"); // NOI18N
-        getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
-
-        jtf_cidade.setName("jtf_cidade"); // NOI18N
-        jtf_cidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_cidadeActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jtf_cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 180, -1));
-
-        setSize(new java.awt.Dimension(565, 687));
+        setSize(new java.awt.Dimension(632, 626));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -617,10 +713,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_empresaKeyPressed
 
-    private void jtf_cpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_cpfActionPerformed
-
     private void jtf_profissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_profissaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_profissaoActionPerformed
@@ -641,24 +733,25 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         try {
             alimentarTelefone();
         } catch (ParseException ex) {
-            Logger.getLogger(Atendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AtendimentoLocacao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jb_adicionar_telefoneActionPerformed
 
     private void jb_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminarActionPerformed
-        excluirProduto();
+        removeTelefone(jtbl_telefone);
     }//GEN-LAST:event_jb_eliminarActionPerformed
 
     private void jb_adicionar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteActionPerformed
         try {
             alimentarDependente();
         } catch (ParseException ex) {
-            Logger.getLogger(Atendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AtendimentoLocacao.class.getName()).log(Level.SEVERE, null, ex);
         }
 // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
 
     private void jb_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar1ActionPerformed
+        removeDependente(jtbl_dependente);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_eliminar1ActionPerformed
 
@@ -666,9 +759,100 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_cidadeActionPerformed
 
-    private void jtf_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_dependenteActionPerformed
+    private void jtf_nome_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_dependenteActionPerformed
+    }//GEN-LAST:event_jtf_nome_dependenteActionPerformed
+
+    private void jrb_ativo_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_ativo_dependenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_ativo_dependenteActionPerformed
+
+    private void jrb_inativo_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_inativo_dependenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_inativo_dependenteActionPerformed
+
+    private void jtf_cpf_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteActionPerformed
+
+    }//GEN-LAST:event_jtf_cpf_clienteActionPerformed
+
+    private void jtf_cpf_clienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusGained
+        
+    }//GEN-LAST:event_jtf_cpf_clienteFocusGained
+
+    private void jtf_cpf_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusLost
+//        jtf_cpf_cliente.setFocusLostBehavior(JFormattedTextField.COMMIT);
+
+        ValidaCPF valida = new ValidaCPF();
+        if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
+            jtf_empresa.requestFocus();
+        } else {
+            jtf_cpf_cliente.setForeground(Color.red);            
+        }
+
+    }//GEN-LAST:event_jtf_cpf_clienteFocusLost
+
+    private void jtf_cpf_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteKeyPressed
+
+    }//GEN-LAST:event_jtf_cpf_clienteKeyPressed
+
+    private void jtf_cpf_clienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteKeyReleased
+
+    }//GEN-LAST:event_jtf_cpf_clienteKeyReleased
+
+    private void jtf_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_telefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefoneActionPerformed
+
+    private void jtf_telefoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefoneFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefoneFocusGained
+
+    private void jtf_telefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefoneFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefoneFocusLost
+
+    private void jtf_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefoneKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefoneKeyPressed
+
+    private void jtf_telefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefoneKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefoneKeyReleased
+
+    private void jtf_data_nascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_data_nascimentoFocusLost
+        try {
+            if(!jtf_data_nascimento.getText().equals("  /  /    ")){
+                if (!validaData(jtf_data_nascimento.getText())) {
+                    jtf_data_nascimento.setForeground(Color.red);                    
+                } else {
+                    jtf_cpf_cliente.requestFocus();
+                }                
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_data_nascimentoFocusLost
+
+    private void jtf_cpf_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteActionPerformed
+
+    private void jtf_cpf_dependenteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteFocusGained
+
+    private void jtf_cpf_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteFocusLost
+
+    private void jtf_cpf_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteKeyPressed
+
+    private void jtf_cpf_dependenteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteKeyReleased
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -698,13 +882,16 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jb_adicionar_dependente;
     private javax.swing.JButton jb_adicionar_telefone;
     private javax.swing.JButton jb_cancelar;
@@ -712,7 +899,9 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private javax.swing.JButton jb_eliminar1;
     private javax.swing.JButton jb_salvar;
     public static javax.swing.JRadioButton jrb_ativo;
+    public static javax.swing.JRadioButton jrb_ativo_dependente;
     public static javax.swing.JRadioButton jrb_inativo;
+    public static javax.swing.JRadioButton jrb_inativo_dependente;
     public static javax.swing.JTextArea jta_observacao;
     public static javax.swing.JTable jtbl_dependente;
     public static javax.swing.JTable jtbl_telefone;
@@ -720,16 +909,18 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     public static javax.swing.JTextField jtf_cidade;
     public static javax.swing.JTextField jtf_codigo_cliente;
     public static javax.swing.JTextField jtf_complemento;
-    public static javax.swing.JTextField jtf_cpf;
-    public static javax.swing.JTextField jtf_data_nascimento;
-    public static javax.swing.JTextField jtf_dependente;
+    public static javax.swing.JFormattedTextField jtf_cpf_cliente;
+    public static javax.swing.JFormattedTextField jtf_cpf_dependente;
+    public static javax.swing.JFormattedTextField jtf_data_nascimento;
+    public static javax.swing.JFormattedTextField jtf_data_nascimento_dependente;
     public static javax.swing.JTextField jtf_email;
     public static javax.swing.JTextField jtf_empresa;
     public static javax.swing.JTextField jtf_endereco;
     public static javax.swing.JTextField jtf_estado;
     public static javax.swing.JTextField jtf_nome_cliente;
+    public static javax.swing.JTextField jtf_nome_dependente;
     public static javax.swing.JTextField jtf_profissao;
-    public static javax.swing.JTextField jtf_telefone;
+    public static javax.swing.JFormattedTextField jtf_telefone;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
@@ -761,8 +952,32 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
         if (jtf_nome_cliente.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Descrição\n";
+            msgERRO = msgERRO + " *Nome\n";
+        }        
+        if (jtf_data_nascimento.getForeground().equals(Color.red)) {
+            msgERRO = msgERRO + " *Data de Nascimento\n";
+        } 
+        if (jtf_cpf_cliente.getForeground().equals(Color.red)) {
+            msgERRO = msgERRO + " *CPF\n";
         }
+        if (jtf_empresa.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Empresa\n";
+        }
+        if (jtf_profissao.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Profissão\n";
+        }
+        if (jtf_endereco.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Endereço\n";
+        }
+        if (jtf_bairro.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Bairro\n";
+        }
+        if (jtf_cidade.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Cidade\n";
+        }
+        if (jtf_estado.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Estado\n";
+        }       
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
@@ -800,23 +1015,57 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     Cliente cliente;
 
     public void alimentarDependente() throws ParseException {
-        Dependente dependente = new Dependente();
-        if (verificar_campo_dependente() == true) { //&& (verificaTabela()
-            dependente.setCliente(cliente);
-            dependente.setNome_dependente(jtf_dependente.getText());
+        try {
+            Dependente dependente = new Dependente();
+            if (verificar_campo_dependente() == true) {
+                adicionarDependentes();
+                
+                dependente.setCliente(cliente);
+                dependente.setNome_dependente(jtf_nome_dependente.getText());
+                dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento_dependente.getText()));
+                dependente.setCPF(jtf_cpf_dependente.getText());
+                if (jrb_ativo_dependente.isSelected() == true) {
+                    dependente.setStatus(true);
+                } else {
+                    dependente.setStatus(false);
+                }
 
-            DefaultTableModel row = (DefaultTableModel) jtbl_dependente.getModel();
-            ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
-            row.addRow(new Object[]{dependente.getNome_dependente()});
-            jtf_dependente.setText("");
-            jtf_dependente.requestFocus();
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
+                DefaultTableModel row = (DefaultTableModel) jtbl_dependente.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
+                row.addRow(new Object[]{dependente.getNome_dependente(), jtf_data_nascimento_dependente.getText(), dependente.getCPF(), dependente.getStatus()});
+                jtf_nome_dependente.setText("");
+                jtf_data_nascimento_dependente.setText("");
+                jtf_cpf_dependente.setText("");
+                jtf_nome_dependente.requestFocus();
+                dependentes.add(dependente);
+            } else {
+                JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        Dependente dependente = new Dependente();
+//        if (verificar_campo_dependente() == true) { //&& (verificaTabela()
+//            adicionarDependentes();
+//                    
+//            dependente.setCliente(cliente);
+//            dependente.setNome_dependente(jtf_nome_dependente.getText());
+//
+//            DefaultTableModel row = (DefaultTableModel) jtbl_dependente.getModel();
+//            ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
+//            row.addRow(new Object[]{dependente.getNome_dependente()});
+//            jtf_nome_dependente.setText("");
+//            jtf_nome_dependente.requestFocus();
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
+//        }
     }
 
     public void alimentarTelefone() throws ParseException {
         if (verificar_campo_telefone() == true) { //&& (verificaTabela()
+            
+            adicionarTelefone();
+            
             telefone.setCliente(cliente);
             telefone.setTelefone(jtf_telefone.getText());
 
@@ -849,13 +1098,13 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     public boolean verificar_campo_dependente() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
-        if (jtf_dependente.getText().equals("")) {
+        if (jtf_nome_dependente.getText().equals("")) {
             msgERRO = msgERRO + " *Telefone\n";
         }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-            jtf_dependente.requestFocus();
+            jtf_nome_dependente.requestFocus();
             return false;
         } else {
             return true;
@@ -886,10 +1135,11 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     }
 
     private void excluirProduto() {
-        removeProduto(jtbl_telefone);
+        
+        removeCliente(jtbl_telefone);
     }
 
-    public void removeProduto(JTable tb) {
+    public void removeCliente(JTable tb) {
         DefaultTableModel row = (DefaultTableModel) jtbl_telefone.getModel();
         if (tb.getSelectedRow() != -1) {
             int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
@@ -972,6 +1222,12 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
                 dependente.setCodigo_dependente(dependentes.get(i).getCodigo_dependente());
                 dependente.setNome_dependente(dependentes.get(i).getNome_dependente());
+                dependente.setCPF(dependentes.get(i).getCPF());
+                
+                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                String data_nascimento = out.format(in.parse(dependentes.get(i).getData_nascimento().toString()));
+                
 
                 Cliente cliente = new Cliente();
                 cliente.setCodigo_cliente(dependentes.get(i).getCodigo_dependente());
@@ -980,10 +1236,97 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_dependente.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
-                row.addRow(new Object[]{hashDbGrid});
+                row.addRow(new Object[]{hashDbGrid, data_nascimento, dependente.getCPF()});
             }
 
         }
 
+    }
+    public void removeDependente(JTable tb) {
+        DefaultTableModel row = (DefaultTableModel) tb.getModel();
+        
+                
+        try {
+        if (tb.getSelectedRow() != -1) {
+            int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+            if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                DependenteDAO dependenteDAo = new DependenteDAO(pool);
+                                
+                    if (dependenteDAo.excluir(dependentes.get(tb.getSelectedRow()).getCodigo_dependente())) {
+                        row.removeRow(tb.getSelectedRow());
+                    }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Dependente");
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void removeTelefone(JTable tb) {
+        DefaultTableModel row = (DefaultTableModel) tb.getModel();
+        
+                
+        try {
+        if (tb.getSelectedRow() != -1) {
+            int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+            if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                TelefoneDAO telefoneDAO = new TelefoneDAO(pool);
+                                
+                    if (telefoneDAO.excluir(telefones.get(tb.getSelectedRow()).getCodigo_telefone())) {
+                        row.removeRow(tb.getSelectedRow());
+                    }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Dependente");
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
+    
+    
+    public void adicionarTelefone(){
+        try {
+        List<Telefone> itens_telefone = new ArrayList();
+            
+                Telefone telefone = new Telefone();
+                telefone.setTelefone(jtf_telefone.getText());
+                itens_telefone.add(telefone);
+                
+                Cliente cliente = new Cliente();
+                cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
+            
+            TelefoneDAO telefoneDAO = new TelefoneDAO(pool);
+            telefoneDAO.salvar(itens_telefone, cliente);
+        } catch (SQLException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void adicionarDependentes(){
+        try {
+            Dependente dependente = new Dependente();
+            List<Dependente> itens_dependente = new ArrayList();
+
+            Cliente cliente = new Cliente();
+            cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
+                
+            dependente.setNome_dependente(jtf_nome_dependente.getText());
+            dependente.setTipo_dependente("1");
+            dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse(jtf_data_nascimento_dependente.getText()));
+            dependente.setCPF(jtf_cpf_dependente.getText());            
+            itens_dependente.add(dependente);
+            
+            DependenteDAO dependenteDAO = new DependenteDAO(pool);
+            dependenteDAO.salvar(itens_dependente, cliente);
+                
+        } catch (ParseException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

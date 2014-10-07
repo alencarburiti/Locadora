@@ -37,7 +37,7 @@ public class CadastrarCliente implements InterfaceCommand {
 
             cliente.setNome_cliente(CadastroCliente.jtf_nome_cliente.getText());
             cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastroCliente.jtf_data_nascimento.getText()));
-            cliente.setCpf(CadastroCliente.jtf_cpf.getText());
+            cliente.setCpf(CadastroCliente.jtf_cpf_cliente.getText());
             cliente.setNome_empresa_trabalho(CadastroCliente.jtf_empresa.getText());
             cliente.setProfissao(CadastroCliente.jtf_profissao.getText());
             cliente.setEndereco(CadastroCliente.jtf_endereco.getText());
@@ -48,10 +48,10 @@ public class CadastrarCliente implements InterfaceCommand {
             cliente.setEmail(CadastroCliente.jtf_email.getText());
             cliente.setObservacao(CadastroCliente.jta_observacao.getText());
             if (CadastroCliente.jrb_ativo.isSelected() == true) {            
-                cliente.setStatus("A");
+                cliente.setStatus("0");
             
             }else{
-                cliente.setStatus("I");
+                cliente.setStatus("1");
             }
 
             cliente = clienteDAO.salvar(cliente);
@@ -67,12 +67,14 @@ public class CadastrarCliente implements InterfaceCommand {
             
             Dependente dependente = new Dependente();
             List<Dependente> itens_dependente = new ArrayList();
-            dependente.setNome_dependente(cliente.getNome_cliente());
+            dependente.setNome_dependente(cliente.getNome_cliente());            
             dependente.setTipo_dependente("0");
             itens_dependente.add(dependente);
             for (int i = 0; i < CadastroCliente.jtbl_dependente.getRowCount(); i++) {
                 dependente = new Dependente();
                 dependente.setNome_dependente((String) CadastroCliente.jtbl_dependente.getValueAt(i, 0));
+                dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastroCliente.jtbl_dependente.getValueAt(i, 1)));
+                dependente.setCPF((String) CadastroCliente.jtbl_dependente.getValueAt(i, 2));
                 dependente.setTipo_dependente("1");
                 itens_dependente.add(dependente);
             }

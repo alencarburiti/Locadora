@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InterfaceTelefoneDAO {
 
-	public abstract void excluir(Integer codigo) throws SQLException;
+	public abstract boolean excluir(Integer codigo) throws SQLException;
 	public abstract void salvar(List<Telefone> telefones, Cliente cliente) throws SQLException;
 	public abstract void atualizar(Telefone telefone) throws SQLException;
 	public abstract Telefone getTelefone(Integer codigo) throws SQLException;

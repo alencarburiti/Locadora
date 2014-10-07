@@ -147,7 +147,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -155,11 +155,11 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, 35));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 370, -1, 35));
 
         jLabel2.setText("Observação: Os campos com asteristico na frente são obrigatórios ");
         jLabel2.setName("jLabel2"); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
 
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
@@ -543,7 +543,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
 
         jTabbedPane1.addTab("Cópias", jPanel2);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 740, 360));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 360));
 
         jb_salvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar1.setText("Salvar");
@@ -553,9 +553,9 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
                 jb_salvar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_salvar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, 35));
+        getContentPane().add(jb_salvar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, -1, 35));
 
-        setSize(new java.awt.Dimension(806, 485));
+        setSize(new java.awt.Dimension(768, 439));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

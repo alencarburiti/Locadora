@@ -5,9 +5,6 @@ import br.com.locadora.util.Backup;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.Restaurar;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_Interface {
@@ -20,7 +17,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     public String login;
     public String permissao;
     public IniciaLogin loginInicia;
-    public Atendimento atendimento;
+    public AtendimentoLocacao atendimentoLocacao;
+    public AtendimentoDevolucao atendimentoDevolucao;
 
     public TelaPrincipal() {
         initComponents();
@@ -91,11 +89,12 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         menuitem_sair = new javax.swing.JMenuItem();
         menu_movimentos2 = new javax.swing.JMenu();
+        jmi_entrada1 = new javax.swing.JMenuItem();
         jmi_entrada4 = new javax.swing.JMenuItem();
         jmi_entrada5 = new javax.swing.JMenuItem();
         menu_movimentos = new javax.swing.JMenu();
         jmi_entrada = new javax.swing.JMenuItem();
-        jmi_entrada1 = new javax.swing.JMenuItem();
+        jmi_entrada2 = new javax.swing.JMenuItem();
         menu_relatórios = new javax.swing.JMenu();
         menu_relatórios1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -104,6 +103,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenu16 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
         menu_relatórios2 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
 
@@ -276,12 +277,12 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
             }
         });
         jmi_fornecedor.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jmi_fornecedorAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         menu_cadastros.add(jmi_fornecedor);
@@ -385,6 +386,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         menu_movimentos2.setText("Financeiro");
         menu_movimentos2.setName("menu_movimentos2"); // NOI18N
 
+        jmi_entrada1.setText("Recebimento");
+        jmi_entrada1.setName("jmi_entrada1"); // NOI18N
+        jmi_entrada1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_entrada1ActionPerformed1(evt);
+            }
+        });
+        menu_movimentos2.add(jmi_entrada1);
+
         jmi_entrada4.setText("A Pagar");
         jmi_entrada4.setName("jmi_entrada4"); // NOI18N
         jmi_entrada4.addActionListener(new java.awt.event.ActionListener() {
@@ -409,7 +419,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         menu_movimentos.setText("Movimento");
         menu_movimentos.setName("menu_movimentos"); // NOI18N
 
-        jmi_entrada.setText("Atendimento");
+        jmi_entrada.setText("Locação");
         jmi_entrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmi_entradaActionPerformed1(evt);
@@ -417,14 +427,14 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         });
         menu_movimentos.add(jmi_entrada);
 
-        jmi_entrada1.setText("Recebimento");
-        jmi_entrada1.setName("jmi_entrada1"); // NOI18N
-        jmi_entrada1.addActionListener(new java.awt.event.ActionListener() {
+        jmi_entrada2.setText("Devolução");
+        jmi_entrada2.setName("jmi_entrada2"); // NOI18N
+        jmi_entrada2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_entrada1ActionPerformed1(evt);
+                jmi_entrada2ActionPerformed1(evt);
             }
         });
-        menu_movimentos.add(jmi_entrada1);
+        menu_movimentos.add(jmi_entrada2);
 
         jMB_Cadastro.add(menu_movimentos);
 
@@ -491,6 +501,20 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 
         jMB_Cadastro.add(menu_relatórios1);
 
+        jMenu16.setText("Configurações");
+        jMenu16.setName("jMenu16"); // NOI18N
+
+        jMenuItem6.setText("Acesso");
+        jMenuItem6.setName("jMenuItem6"); // NOI18N
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem6);
+
+        jMB_Cadastro.add(jMenu16);
+
         menu_relatórios2.setMnemonic('R');
         menu_relatórios2.setText("Ajuda");
         menu_relatórios2.setName("menu_relatórios2"); // NOI18N
@@ -518,12 +542,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuitem_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem_entradaActionPerformed
-        try {
-            atendimento = new Atendimento();
-            atendimento.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        
+//            atendimento = new AtendimentoLocacao();
+//            atendimento.setVisible(true);
+//        
 
         // TODO add your handling code here:
     }//GEN-LAST:event_menuitem_entradaActionPerformed
@@ -537,15 +559,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     }//GEN-LAST:event_jmi_produtoActionPerformed
 
     private void jmi_entradaActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entradaActionPerformed1
-        try {
-            atendimento = new Atendimento();
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        atendimento.setVisible(true);
-        atendimento.setTelaPrincipal(this);
-        atendimento.setJanelaPai(this);
-        atendimento.setVisible(true);
+        atendimentoLocacao = new AtendimentoLocacao();
+        atendimentoLocacao.setVisible(true);
+        atendimentoLocacao.setTelaPrincipal(this);
+        atendimentoLocacao.setJanelaPai(this);
+        atendimentoLocacao.setVisible(true);
 
         //    setStatusTela(false);
 
@@ -716,6 +734,22 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         // TODO add your handling code here:
     }//GEN-LAST:event_jmi_entrada1ActionPerformed1
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        MenuUsuario menuUsuario = new MenuUsuario();
+        menuUsuario.setVisible(true);
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jmi_entrada2ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entrada2ActionPerformed1
+        atendimentoDevolucao = new AtendimentoDevolucao();
+        atendimentoDevolucao.setVisible(true);
+        atendimentoDevolucao.setTelaPrincipal(this);
+        atendimentoDevolucao.setJanelaPai(this);
+        atendimentoDevolucao.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmi_entrada2ActionPerformed1
+
     /**
      * @param args the command line arguments
      */
@@ -743,6 +777,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu14;
     private javax.swing.JMenu jMenu15;
+    private javax.swing.JMenu jMenu16;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -769,6 +804,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -782,6 +818,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jmi_cliente;
     private javax.swing.JMenuItem jmi_entrada;
     private javax.swing.JMenuItem jmi_entrada1;
+    private javax.swing.JMenuItem jmi_entrada2;
     private javax.swing.JMenuItem jmi_entrada4;
     private javax.swing.JMenuItem jmi_entrada5;
     private javax.swing.JMenuItem jmi_fornecedor;

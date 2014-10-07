@@ -33,8 +33,9 @@ import javax.swing.JTable;
  */
 public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
-    public Atendimento janelapai;
-    public Atendimento_InterFace telaAtendimento;
+    public AtendimentoLocacao janelapaiLocacao;
+    public AtendimentoDevolucao janelapaiDevolucao;
+    public AtendimentoDevolucao_InterFace telaAtendimentoDevolucao;
     public List<Copia> copias;
     public Copia copia;
     public InterfacePool pool;
@@ -43,7 +44,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     public ConsultaCopiaDevolucao() {
         initComponents();
-        janelapai = null;
+        janelapaiLocacao = null;
     }
 
     /**
@@ -216,9 +217,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         setVisible(false);
-        if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
+        if ((janelapaiLocacao != null)) {
+            janelapaiLocacao.setEnabled(true);
+            janelapaiLocacao.setVisible(true);
             //telaCadastroObjeto.setStatusTela(false);
         }
 
@@ -233,10 +234,10 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         if (tb.getSelectedRow() != -1) {
             setVisible(false);
             ItemLocacao itemLinha = tbItemLocacaoLinhaSelecionada(jtbl_locacao_aberto);
-            if ((janelapai != null) && (itemLinha != null)) {
-                janelapai.setEnabled(true);
-                janelapai.setVisible(true);
-                telaAtendimento.carregarCopiaDevolucao(itemLinha);
+            if ((janelapaiLocacao != null) && (itemLinha != null)) {
+                janelapaiLocacao.setEnabled(true);
+                janelapaiLocacao.setVisible(true);
+                telaAtendimentoDevolucao.carregarCopiaDevolucao(itemLinha);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Copia");
@@ -245,9 +246,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-        if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);           
+        if ((janelapaiDevolucao != null)) {
+            janelapaiDevolucao.setEnabled(true);
+            janelapaiDevolucao.setVisible(true);           
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
@@ -329,8 +330,8 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //Recebendo tela como parametro para atualização apos pesquisa
-    public void setTelaAtendimento(Atendimento_InterFace telaAtendimento) {
-        this.telaAtendimento = telaAtendimento;
+    public void setTelaAtendimento(AtendimentoDevolucao_InterFace telaAtendimentoDevolucao) {
+        this.telaAtendimentoDevolucao = telaAtendimentoDevolucao;
     }
 
     public void setCadastro() {

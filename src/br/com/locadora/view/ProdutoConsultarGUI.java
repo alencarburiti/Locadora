@@ -33,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ProdutoConsultarGUI extends javax.swing.JFrame {
 
-    Atendimento janelapai;
+    AtendimentoLocacao janelapai;
     
     public ProdutoConsultarGUI() {
         initComponents();

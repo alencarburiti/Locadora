@@ -1,7 +1,9 @@
 package br.com.locadora.model.dao;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
+import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Locacao;
@@ -110,8 +112,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
     }
 
     @Override
-    public List<ItemLocacao> getLocacao_codigo(Integer codigo_locacao) throws SQLException {
-        System.out.print(codigo_locacao);
+    public List<ItemLocacao> getLocacao_codigo(Integer codigo_dependente) throws SQLException {
+
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -137,24 +139,33 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    COPIA B,\n"
                 + "    LOCACAO C,\n"
                 + "    ITEM_LOCACAO D,\n"
-                + "    CLIENTE E,\n"
+                + "    DEPENDENTE E,\n"
                 + "    DIARIA F\n"
                 + "WHERE\n"
-                + "    A.CODIGO_OBJETO = B.CODIGO_OBJETO\n"
-                + "        AND C.CODIGO_CLIENTE = E.CODIGO_CLIENTE\n"
-                + "        AND C.CODIGO_LOCACAO = D.CODIGO_LOCACAO\n"
-                + "        AND D.CODIGO_COPIA = B.CODIGO_COPIA\n"
-                + "        AND A.CODIGO_DIARIA = F.CODIGO_DIARIA\n"
+                + "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n"
+                + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
+                + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
+                + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
+                + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
                 + "        AND D.DEL_FLAG = 0\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
-                + "		AND E.CODIGO_CLIENTE = ? \n"
-                + "\n"
-                + "\n"
-                + "";
+                + "     AND E.CODIGO_DEPENDENTE IN  (SELECT \n"
+                + "    CODIGO_DEPENDENTE\n"
+                + "FROM\n"
+                + "    LOCADORA.DEPENDENTE\n"
+                + "WHERE\n"
+                + "    CLIENTE_CODIGO_CLIENTE IN (SELECT \n"
+                + "            CODIGO_CLIENTE\n"
+                + "        FROM\n"
+                + "            LOCADORA.CLIENTE CL,\n"
+                + "            LOCADORA.DEPENDENTE DP\n"
+                + "        WHERE\n"
+                + "            CL.CODIGO_CLIENTE = DP.CLIENTE_CODIGO_CLIENTE\n"
+                + "                AND DP.CODIGO_DEPENDENTE = ?))";
 
         try {
             ps = con.prepareStatement(sqlSelect);
-            ps.setInt(1, codigo_locacao);
+            ps.setInt(1, codigo_dependente);
 
             rs = ps.executeQuery();
 
@@ -167,13 +178,18 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return resultado;
     }
 
-    public ItemLocacao getLocacao_codigo_barras(String codigo_barras) throws SQLException {
+    public ItemLocacao getLocacaoAberta(String codigo_barras) throws SQLException {
 
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT C.CODIGO_LOCACAO, D.CODIGO_ITEM_LOCACAO, \n"
+        String sqlSelect = "SELECT \n"
+                + "    E.NOME_DEPENDENTE,\n"
+                + "    E.CODIGO_DEPENDENTE,\n"
+                + "    E.CLIENTE_CODIGO_CLIENTE,\n"
+                + "    C.CODIGO_LOCACAO,\n"
+                + "    D.CODIGO_ITEM_LOCACAO,\n"
                 + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
@@ -194,25 +210,98 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    COPIA B,\n"
                 + "    LOCACAO C,\n"
                 + "    ITEM_LOCACAO D,\n"
-                + "    CLIENTE E,\n"
+                + "    DEPENDENTE E,\n"
                 + "    DIARIA F\n"
                 + "WHERE\n"
-                + "    A.CODIGO_OBJETO = B.CODIGO_OBJETO\n"
-                + "        AND C.CODIGO_CLIENTE = E.CODIGO_CLIENTE\n"
-                + "        AND C.CODIGO_LOCACAO = D.CODIGO_LOCACAO\n"
-                + "        AND D.CODIGO_COPIA = B.CODIGO_COPIA\n"
-                + "        AND A.CODIGO_DIARIA = F.CODIGO_DIARIA\n"
+                + "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n"
+                + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
+                + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
+                + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
+                + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
                 + "        AND D.DEL_FLAG = 0\n"
+                + "        AND B.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
-                //                + "		AND E.CODIGO_CLIENTE = ? \n"
-                + "		AND B.CODIGO_BARRAS = ? \n"
-                + "\n"
-                + "\n"
-                + "";
+                + "        AND B.CODIGO_BARRAS = ?;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, codigo_barras);
+
+            rs = ps.executeQuery();
+
+            resultado = getListaLocacaoAberta(rs);
+
+            if (resultado.size() > 0) {
+                return resultado.get(0);
+            }
+
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return null;
+    }
+
+    //Consulta no banco de dados a locação aberta passando como parametro o código do dependente e o código de Barras
+    public ItemLocacao getLocacaoAberta(Integer codigo_dependente, String codigo_barras) throws SQLException {
+
+        List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT \n"
+                + "    C.CODIGO_LOCACAO,\n"
+                + "    D.CODIGO_ITEM_LOCACAO,\n"
+                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    F.DIAS AS DIARIA,\n"
+                + "    B.CODIGO_BARRAS,\n"
+                + "    B.CODIGO_COPIA,\n"
+                + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
+                + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
+                + "    CURRENT_DATE AS DATA_ATUAL,\n"
+                + "    (case\n"
+                + "        when ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) IS NULL then 0\n"
+                + "        else ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)\n"
+                + "    end) AS DIAS_MULTA,\n"
+                + "    CASE\n"
+                + "        WHEN ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) IS NULL THEN 0\n"
+                + "        ELSE ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS)\n"
+                + "    END AS VALOR_MULTA\n"
+                + "FROM\n"
+                + "    OBJETO A,\n"
+                + "    COPIA B,\n"
+                + "    LOCACAO C,\n"
+                + "    ITEM_LOCACAO D,\n"
+                + "    DEPENDENTE E,\n"
+                + "    DIARIA F\n"
+                + "WHERE\n"
+                + "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n"
+                + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
+                + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
+                + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
+                + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
+                + "        AND D.DEL_FLAG = 0\n"
+                + "        AND B.DEL_FLAG = 1\n"
+                + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
+                + "        AND B.CODIGO_BARRAS = ?\n"
+                + "        AND E.CODIGO_DEPENDENTE IN (SELECT \n"
+                + "            CODIGO_DEPENDENTE\n"
+                + "        FROM\n"
+                + "            LOCADORA.DEPENDENTE\n"
+                + "        WHERE\n"
+                + "            CLIENTE_CODIGO_CLIENTE IN (SELECT \n"
+                + "                    CODIGO_CLIENTE\n"
+                + "                FROM\n"
+                + "                    LOCADORA.CLIENTE CL,\n"
+                + "                    LOCADORA.DEPENDENTE DP\n"
+                + "                WHERE\n"
+                + "                    CL.CODIGO_CLIENTE = DP.CLIENTE_CODIGO_CLIENTE\n"
+                + "                        AND DP.CODIGO_DEPENDENTE = ?))";
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, codigo_barras);
+            ps.setInt(2, codigo_dependente);
 
             rs = ps.executeQuery();
 
@@ -271,6 +360,9 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             Copia copia = new Copia();
             copia.setObjeto(objeto);
 
+            Dependente dependente = new Dependente();
+            dependente.setCodigo_dependente(Integer.MIN_VALUE);
+
             copia.setCodigo_barras(rs.getString("CODIGO_BARRAS"));
             copia.setCodigo_copia(rs.getInt("CODIGO_COPIA"));
             itemLocacao.setCopia(copia);
@@ -310,7 +402,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO `locadora`.`LOCACAO`(`CODIGO_CLIENTE`,`CODIGO_DEPENDENTE`)VALUES( ?, ? );";
+        String sqlInsert = "INSERT INTO `locadora`.`LOCACAO`(`DEPENDENTE_CODIGO_DEPENDENTE`)VALUES( ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -338,8 +430,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
     public void salvarItem(List<ItemLocacao> itemLocacao) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps;
-        
-        String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`CODIGO_COPIA`, `CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`,"
+
+        String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`COPIA_CODIGO_COPIA`, `LOCACAO_CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`,"
                 + " `VALOR_PAGO`)VALUES( ?, ?, CURRENT_DATE(), ?, ? );";
 
         try {
@@ -389,9 +481,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 ps.setInt(2, 1);
                 ps.setInt(3, itemLocacao.get(i).getCodigo_item_locacao());
                 ps.executeUpdate();
-                
-//                System.out.print(ps.getUpdateCount() +"      "+ itemLocacao.get(i).getCodigo_item_locacao() + "   "+ timestamp);
 
+//                System.out.print(ps.getUpdateCount() +"      "+ itemLocacao.get(i).getCodigo_item_locacao() + "   "+ timestamp);
             }
 
             ps.close();
@@ -429,9 +520,46 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
     private void setPreparedStatement1(Locacao locacao, PreparedStatement ps)
             throws SQLException {
 
-        ps.setInt(1, locacao.getCliente().getCodigo_cliente());
-        ps.setInt(2, locacao.getDependente().getCodigo_dependente());
+        ps.setInt(1, locacao.getDependente().getCodigo_dependente());
 
+    }
+
+    private List<ItemLocacao> getListaLocacaoAberta(ResultSet rs) throws SQLException {
+        List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
+        while (rs.next()) {
+            ItemLocacao itemLocacao = new ItemLocacao();
+            itemLocacao.setCodigo_item_locacao(rs.getInt("CODIGO_ITEM_LOCACAO"));
+            itemLocacao.setValor_multa(rs.getDouble("VALOR_MULTA"));
+            itemLocacao.setDias_multa(rs.getInt("DIAS_MULTA"));
+            itemLocacao.setData_locacao(rs.getDate("DATA_LOCACAO"));
+            System.out.print(rs.getInt("DIAS_MULTA"));
+
+            Diaria diaria = new Diaria();
+            diaria.setDias(rs.getInt("DIARIA"));
+
+            Objeto objeto = new Objeto();
+            objeto.setDiaria(diaria);
+            objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
+
+            Copia copia = new Copia();
+            copia.setObjeto(objeto);
+
+            Dependente dependente = new Dependente();
+            dependente.setCodigo_dependente(rs.getInt("CODIGO_DEPENDENTE"));
+            dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
+
+            Cliente cliente = new Cliente();
+            cliente.setCodigo_cliente(rs.getInt("CLIENTE_CODIGO_CLIENTE"));
+
+            dependente.setCliente(cliente);
+
+            copia.setCodigo_barras(rs.getString("CODIGO_BARRAS"));
+            copia.setCodigo_copia(rs.getInt("CODIGO_COPIA"));
+            itemLocacao.setCopia(copia);
+            itemLocacao.setDependente(dependente);
+            resultado.add(itemLocacao);
+        }
+        return resultado;
     }
 
 }

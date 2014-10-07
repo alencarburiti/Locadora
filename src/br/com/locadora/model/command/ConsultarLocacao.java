@@ -8,7 +8,8 @@ import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
-import br.com.locadora.view.Atendimento;
+import br.com.locadora.view.AtendimentoDevolucao;
+import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.ConsultaCopiaDevolucao;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -39,7 +40,7 @@ public class ConsultarLocacao implements InterfaceCommand {
 
             List<ItemLocacao> itens = new ArrayList();
             
-            itens = locacaoDAO.getLocacao_codigo(Integer.parseInt(Atendimento.jtf_codigo_cliente.getText()));
+            itens = locacaoDAO.getLocacao_codigo(AtendimentoDevolucao.dependente.getCodigo_dependente());
             mostrar_locacoes(itens);
 
         } catch (SQLException e) {

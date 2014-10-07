@@ -104,7 +104,6 @@ public class MenuCliente extends javax.swing.JFrame {
 
         buttonGroup1.add(jrb_codigo_cliente);
         jrb_codigo_cliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_codigo_cliente.setSelected(true);
         jrb_codigo_cliente.setText("Código Cliente");
         jrb_codigo_cliente.setName("jrb_codigo_cliente"); // NOI18N
         jrb_codigo_cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -112,19 +111,20 @@ public class MenuCliente extends javax.swing.JFrame {
                 jrb_codigo_clienteActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel1.add(jrb_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         buttonGroup1.add(jrb_cpf);
         jrb_cpf.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_cpf.setText("CPF");
         jrb_cpf.setName("jrb_cpf"); // NOI18N
-        jPanel1.add(jrb_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, -1));
+        jPanel1.add(jrb_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, -1, -1));
 
         buttonGroup1.add(jrb_nome_cliente);
         jrb_nome_cliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_nome_cliente.setSelected(true);
         jrb_nome_cliente.setText("Nome");
         jrb_nome_cliente.setName("jrb_nome_cliente"); // NOI18N
-        jPanel1.add(jrb_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
+        jPanel1.add(jrb_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 670, 109));
 
@@ -182,12 +182,13 @@ public class MenuCliente extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jtbl_cliente);
         if (jtbl_cliente.getColumnModel().getColumnCount() > 0) {
-            jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(20);
-            jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jtbl_cliente.getColumnModel().getColumn(2).setPreferredWidth(30);
+            jtbl_cliente.getColumnModel().getColumn(0).setResizable(false);
+            jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jtbl_cliente.getColumnModel().getColumn(2).setPreferredWidth(50);
             jtbl_cliente.getColumnModel().getColumn(3).setPreferredWidth(30);
-            jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(30);
-            jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(30);
+            jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(70);
+            jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 670, 230));
@@ -212,7 +213,7 @@ public class MenuCliente extends javax.swing.JFrame {
         });
         getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, -1));
 
-        setSize(new java.awt.Dimension(728, 454));
+        setSize(new java.awt.Dimension(716, 443));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

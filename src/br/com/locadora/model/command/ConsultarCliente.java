@@ -17,27 +17,24 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultarCliente implements InterfaceCommand {
 
     private final InterfaceClienteDAO clienteDAO;
+    private List<Cliente> clientes;
+    private Cliente cliente;
+
 
     public ConsultarCliente(InterfaceClienteDAO clienteDAO) {
         super();
         this.clienteDAO = clienteDAO;
     }
 
-    List<Cliente> clientes;
-    Cliente cliente;
-
+    
     public String execute() {
 
         try {
 
-            if (MenuCliente.jrb_codigo_cliente.isSelected() == true) {
-                if (!MenuCliente.jtf_consulta.getText().equals("")) {
+            if (MenuCliente.jrb_codigo_cliente.isSelected() == true) {                
                     cliente = null;
                     cliente = clienteDAO.getCliente_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
-                    mostrar_clientes(cliente);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Informe o código");
-                }
+                    mostrar_clientes(cliente);                
             } else if (MenuCliente.jrb_cpf.isSelected() == true) {
                 if (!MenuCliente.jtf_consulta.getText().equals("")) {
                     cliente = null;
@@ -54,11 +51,9 @@ public class ConsultarCliente implements InterfaceCommand {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage() + "Problemas com a consulta: ");
-            System.out.println(e.getMessage() + "Problemas com a consulta: ");
-        } catch (NumberFormatException e) {
-            System.out.println("Valor inválido: " + e.getMessage());
-            JOptionPane.showMessageDialog(null, "Valor inválido: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage() + "Problemas com a consulta: ");            
+        } catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(null, "Valor inválido");
         } catch (ParseException ex) {
             Logger.getLogger(ConsultarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,41 +64,35 @@ public class ConsultarCliente implements InterfaceCommand {
         DefaultTableModel tableModel = (DefaultTableModel) MenuCliente.jtbl_cliente.getModel();
         tableModel.setNumRows(0);
 
-        if (clientes.size() == 0) {
+        if (clientes.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
         } else {
 
-            for (int i = 0; i < clientes.size(); i++) {
-
-                Cliente cliente = new Cliente();
-
-                cliente.setCodigo_cliente(clientes.get(i).getCodigo_cliente());
-                cliente.setNome_cliente(clientes.get(i).getNome_cliente());
-                cliente.setNome_empresa_trabalho(clientes.get(i).getNome_empresa_trabalho());
-                cliente.setProfissao(clientes.get(i).getProfissao());
-                cliente.setCpf(clientes.get(i).getCpf());
-                cliente.setData_nascimento(clientes.get(i).getData_nascimento());
-                cliente.setEndereco(clientes.get(i).getEndereco());
-                cliente.setBairro(clientes.get(i).getBairro());
-                cliente.setComplemento(clientes.get(i).getComplemento());
-                cliente.setCidade(clientes.get(i).getCidade());
-                cliente.setEstado(clientes.get(i).getEstado());
-                cliente.setEmail(clientes.get(i).getEmail());
-
-                cliente.setStatus(clientes.get(i).getStatus());
-
+            for (Cliente cliente1 : clientes) {
+                
+                cliente = new Cliente();
+                cliente.setCodigo_cliente(cliente1.getCodigo_cliente());
+                cliente.setNome_cliente(cliente1.getNome_cliente());
+                cliente.setNome_empresa_trabalho(cliente1.getNome_empresa_trabalho());
+                cliente.setProfissao(cliente1.getProfissao());
+                cliente.setCpf(cliente1.getCpf());
+                cliente.setData_nascimento(cliente1.getData_nascimento());
+                cliente.setEndereco(cliente1.getEndereco());
+                cliente.setBairro(cliente1.getBairro());
+                cliente.setComplemento(cliente1.getComplemento());
+                cliente.setCidade(cliente1.getCidade());
+                cliente.setEstado(cliente1.getEstado());
+                cliente.setEmail(cliente1.getEmail());
+                cliente.setStatus(cliente1.getStatus());
                 if (cliente.getStatus().equals("0")) {
                     cliente.setStatus("Ativo");
                 } else {
                     cliente.setStatus("Inativo");
                 }
-                cliente.setObservacao(clientes.get(i).getObservacao());
-
+                cliente.setObservacao(cliente1.getObservacao());
                 SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-
-                String data_nascimento = out.format(in.parse(clientes.get(i).getData_nascimento().toString()));
-
+                String data_nascimento = out.format(in.parse(cliente1.getData_nascimento().toString()));
                 DefaultTableModel row = (DefaultTableModel) MenuCliente.jtbl_cliente.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
                 row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});

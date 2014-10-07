@@ -35,8 +35,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaObjetoLocacao extends javax.swing.JFrame {
 
-    public Atendimento janelapai;
-    public Atendimento_InterFace telaAtendimento;
+    public AtendimentoLocacao janelapai;
+    public AtendimentoLocacao_InterFace telaAtendimento;
     public List<Objeto> objetos;
     
     public ConsultaObjetoLocacao() {
@@ -277,7 +277,7 @@ public class ConsultaObjetoLocacao extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //Recebendo tela como parametro para atualização apos pesquisa
-    public void setTelaAtendimento(Atendimento_InterFace telaAtendimento) {
+    public void setTelaAtendimento(AtendimentoLocacao_InterFace telaAtendimento) {
         this.telaAtendimento = telaAtendimento;
     }
 

@@ -59,8 +59,7 @@ public class Moeda {
             preco = preco.replace(",", ".");
             preco = preco.replace(" ", "");
             precoFormatado = Double.parseDouble(preco.trim());
-
-            //this.objFuncionario.setSalario(getSalarioFormat(jTSalario.getText())); pegar valor em double
+           
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");
         }

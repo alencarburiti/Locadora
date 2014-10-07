@@ -331,6 +331,15 @@
             <Property name="name" type="java.lang.String" value="menu_movimentos2" noResource="true"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_entrada1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Recebimento"/>
+                <Property name="name" type="java.lang.String" value="jmi_entrada1" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_entrada1ActionPerformed1"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_entrada4">
               <Properties>
                 <Property name="text" type="java.lang.String" value="A Pagar"/>
@@ -360,19 +369,19 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_entrada">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Atendimento"/>
+                <Property name="text" type="java.lang.String" value="Loca&#xe7;&#xe3;o"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_entradaActionPerformed1"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmi_entrada1">
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_entrada2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Recebimento"/>
-                <Property name="name" type="java.lang.String" value="jmi_entrada1" noResource="true"/>
+                <Property name="text" type="java.lang.String" value="Devolu&#xe7;&#xe3;o"/>
+                <Property name="name" type="java.lang.String" value="jmi_entrada2" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_entrada1ActionPerformed1"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_entrada2ActionPerformed1"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -442,6 +451,23 @@
               <Properties>
                 <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
               </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu16">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Configura&#xe7;&#xf5;es"/>
+            <Property name="name" type="java.lang.String" value="jMenu16" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Acesso"/>
+                <Property name="name" type="java.lang.String" value="jMenuItem6" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

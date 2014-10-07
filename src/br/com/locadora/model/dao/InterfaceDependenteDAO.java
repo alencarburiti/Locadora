@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InterfaceDependenteDAO {
 
-	public abstract void excluir(Integer codigo) throws SQLException;
+	public abstract boolean excluir(Integer codigo) throws SQLException;
 	public abstract void salvar(List<Dependente> dependentes, Cliente cliente) throws SQLException;
 	public abstract void atualizar(Dependente dependentes) throws SQLException;
 	public abstract Dependente getDependente(Integer codigo) throws SQLException;

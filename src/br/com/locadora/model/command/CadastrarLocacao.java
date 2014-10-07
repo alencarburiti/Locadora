@@ -9,12 +9,11 @@ import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
 import br.com.locadora.util.Moeda;
-import br.com.locadora.view.Atendimento;
+import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixa;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class CadastrarLocacao implements InterfaceCommand {
 
@@ -37,9 +36,9 @@ public class CadastrarLocacao implements InterfaceCommand {
             Dependente dependente = new Dependente();
             Cliente cliente = new Cliente();
             
-            dependente.setCodigo_dependente(Atendimento.dependente.getCodigo_dependente());
+            dependente.setCodigo_dependente(AtendimentoLocacao.dependente.getCodigo_dependente());
             
-            cliente.setCodigo_cliente(Integer.parseInt(Atendimento.jtf_codigo_cliente.getText()));
+            cliente.setCodigo_cliente(Integer.parseInt(AtendimentoLocacao.jtf_codigo_cliente.getText()));
             
             Locacao locacao = new Locacao();
             locacao.setCliente(cliente);            
@@ -51,14 +50,14 @@ public class CadastrarLocacao implements InterfaceCommand {
             Double valor_pago;
             Moeda moeda = new Moeda();
             valor_pago = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_pago.getText());
-            for (int i = 0; i < Atendimento.jtbl_locacao.getRowCount(); i++) {
+            for (int i = 0; i < AtendimentoLocacao.jtbl_locacao.getRowCount(); i++) {
                 ItemLocacao itemLocacao = new ItemLocacao();
                 
                 Copia copia = new Copia();
-                copia.setCodigo_copia(Atendimento.copiasLocacao.get(i).getCodigo_copia());
+                copia.setCodigo_copia(AtendimentoLocacao.copiasLocacao.get(i).getCodigo_copia());
                 copia.setStatus("1");
                 
-                itemLocacao.setValor_locado(Atendimento.copiasLocacao.get(i).getObjeto().getDiaria().getValor());
+                itemLocacao.setValor_locado(AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getValor());
                 if(valor_pago > 0){
                     if(valor_pago < itemLocacao.getValor_locado()){
                         itemLocacao.setValor_pago(valor_pago);                        
