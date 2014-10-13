@@ -10,6 +10,8 @@
  */
 package br.com.locadora.view;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.LimitadorTexto;
@@ -31,6 +33,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
     public MenuUsuario janelapai;
     public List<Usuario> usuarios;
+    public InterfacePool pool;
 
     /** Creates new form UsuarioCadastroGUI */
     public CadastroUsuario() {
@@ -323,7 +326,8 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
 
     private void cadastraUsuario() {
         if (verificarCampos()) {
-            UsuarioDAO usuarioControl = new UsuarioDAO();
+            pool = new Pool();
+            UsuarioDAO usuarioControl = new UsuarioDAO(pool);
             usuario.setNome_usuário(jtf_nome.getText().trim());
             usuario.setLogin(jtf_login.getText().trim());
             usuario.setSenha(jpf_senha.getText().trim());
@@ -365,7 +369,8 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     }
 
     public void verificaCadastro() {
-        UsuarioDAO usu = new UsuarioDAO();
+        pool = new Pool();
+        UsuarioDAO usu = new UsuarioDAO(pool);
         usuarios = usu.listarUsuarioDescrição1(jtf_nome.getText().trim(), jtf_login.getText().trim());
         validaCadastro(usuarios);
     }

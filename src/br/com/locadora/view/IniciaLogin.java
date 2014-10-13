@@ -1,6 +1,8 @@
 
 package br.com.locadora.view;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
 import java.awt.event.KeyAdapter;
@@ -31,6 +33,7 @@ public class IniciaLogin extends javax.swing.JFrame {
     public Integer codUsuário;
     public String login;
     public String permissao;
+    public InterfacePool pool;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -260,7 +263,8 @@ public class IniciaLogin extends javax.swing.JFrame {
     Usuario usuarioModel;
 
     public boolean verificaLogin() {
-        UsuarioDAO usuarioControl = new UsuarioDAO();
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         usuarios = usuarioControl.consultarLogin(jtf_login.getText().trim());
 
         //verifica o login

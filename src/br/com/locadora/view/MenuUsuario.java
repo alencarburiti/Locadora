@@ -10,6 +10,8 @@
  */
 package br.com.locadora.view;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
 import java.awt.event.KeyEvent;
@@ -30,6 +32,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     String tipoCadastro;
     List<Usuario> usuarios;
     public TelaPrincipal janelapai;
+    public InterfacePool pool;
 
     /** Creates new form Cad_Usuário */
     public MenuUsuario() {
@@ -351,7 +354,8 @@ public class MenuUsuario extends javax.swing.JFrame {
     }
 
     public void listarUsuário() {
-        UsuarioDAO usu = new UsuarioDAO();
+        pool = new Pool();
+        UsuarioDAO usu = new UsuarioDAO(pool);
         usuarios = usu.listarUsuario("%" + jtf_pesquisar_usuario.getText().trim() + "%");
         mostraUsuarios(usuarios);
     }
@@ -360,14 +364,17 @@ public class MenuUsuario extends javax.swing.JFrame {
         if (jtf_pesquisar_usuario.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Informe um código");
         } else {
-            UsuarioDAO usu = new UsuarioDAO();
-            usuarios = usu.listarUsuarioCodigo(jtf_pesquisar_usuario.getText().trim());
+            pool = new Pool();
+        UsuarioDAO usu = new UsuarioDAO(pool);
+        usuarios = usu.listarUsuarioCodigo(jtf_pesquisar_usuario.getText().trim());
             mostraUsuarios(usuarios);
         }
     }
 
     public void listarUsuárioDescrição() {
-        UsuarioDAO usu = new UsuarioDAO();
+        pool = new Pool();
+        UsuarioDAO usu = new UsuarioDAO(pool);
+        
         usuarios = usu.listarUsuarioDescrição(jtf_pesquisar_usuario.getText().trim() + "%");
         mostraUsuarios(usuarios);
     }
@@ -420,7 +427,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         if (tb.getSelectedRow() != -1) {
             int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
             if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                UsuarioDAO usuarioControl = new UsuarioDAO();
+                pool = new Pool();
+        
+        
+                UsuarioDAO usuarioControl = new UsuarioDAO(pool);
                 usuario.setCod_usuario(usuarios.get(tb.getSelectedRow()).getCod_usuario());
                 if (usuarioControl.excluiUsuario(usuario)) {
 

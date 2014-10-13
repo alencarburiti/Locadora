@@ -10,6 +10,8 @@
  */
 package br.com.locadora.view;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.LimitadorTexto;
@@ -32,6 +34,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     public MenuUsuario janelapai;
     private Usuario objusuario;
     List<Usuario> usuarios;
+    public InterfacePool pool;
 
     /** Creates new form UsuariosAlterarGUI */
     public AtualizaUsuario() {
@@ -338,7 +341,8 @@ private void tf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
 
     public void alteraUsuario() {
         if (verificarCampos()) {
-            UsuarioDAO usuarioControl = new UsuarioDAO();
+            pool = new Pool();
+            UsuarioDAO usuarioControl = new UsuarioDAO(pool);
             usuario.setCod_usuario(Integer.parseInt(tf_codigo.getText().trim()));
             usuario.setNome_usuário(tf_nome.getText().trim());
             usuario.setLogin(tf_login.getText().trim());
@@ -355,7 +359,8 @@ private void tf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
     }
 
     public void verificaCadastro() {
-        UsuarioDAO usu = new UsuarioDAO();
+        pool = new Pool();
+        UsuarioDAO usu = new UsuarioDAO(pool);
         usuarios = usu.listarUsuarioDescrição1(tf_nome.getText().trim(), tf_login.getText().trim());
         validaCadastro(usuarios);
     }
