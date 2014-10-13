@@ -94,21 +94,21 @@ public class MenuGenero extends javax.swing.JFrame {
 
         buttonGroup1.add(jrb_codigo);
         jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_codigo.setSelected(true);
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
-        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
+        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
 
         buttonGroup1.add(jrb_descricao);
         jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
-        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 24, -1, -1));
+        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
-        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 64, -1, -1));
+        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
@@ -117,7 +117,7 @@ public class MenuGenero extends javax.swing.JFrame {
                 jb_buscarActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, -1, -1));
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, -1, -1));
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -125,9 +125,9 @@ public class MenuGenero extends javax.swing.JFrame {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 57, 340, -1));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 270, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 490, 100));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 490, 120));
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -191,7 +191,7 @@ public class MenuGenero extends javax.swing.JFrame {
                     jtbl_genero.getColumnModel().getColumn(1).setPreferredWidth(300);
                 }
 
-                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 490, 150));
+                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 490, 150));
 
                 jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
                 jb_excluir.setText("Excluir");
@@ -201,7 +201,7 @@ public class MenuGenero extends javax.swing.JFrame {
                         jb_excluirActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
+                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, -1, -1));
 
                 jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
                 jb_sair.setText("Sair");
@@ -211,7 +211,7 @@ public class MenuGenero extends javax.swing.JFrame {
                         jb_sairActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, -1, 33));
+                getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, 33));
 
                 jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
                 jb_novo.setText("Novo");
@@ -221,7 +221,7 @@ public class MenuGenero extends javax.swing.JFrame {
                         jb_novoActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, -1));
+                getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
 
                 jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar.setText("Alterar");
@@ -231,9 +231,9 @@ public class MenuGenero extends javax.swing.JFrame {
                         jb_alterarActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, -1));
+                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
 
-                setSize(new java.awt.Dimension(561, 373));
+                setSize(new java.awt.Dimension(536, 376));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 

@@ -33,7 +33,7 @@ import javax.swing.JTable;
  */
 public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
-    public AtendimentoLocacao janelapaiLocacao;
+//    public AtendimentoLocacao janelapaiLocacao;
     public AtendimentoDevolucao janelapaiDevolucao;
     public AtendimentoDevolucao_InterFace telaAtendimentoDevolucao;
     public List<Copia> copias;
@@ -44,7 +44,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     public ConsultaCopiaDevolucao() {
         initComponents();
-        janelapaiLocacao = null;
+        janelapaiDevolucao = null;
     }
 
     /**
@@ -80,6 +80,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                formWindowDeactivated(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -146,7 +149,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código Barras", "Objeto", "Data Locação", "Valor Locado", "Valor Multa", "Dia Multa"
+                        "Código Barras", "Objeto", "Data Locação", "Data Devolução", "Valor Multa", "Dia atraso"
                     }
                 ) {
                     Class[] types = new Class [] {
@@ -217,9 +220,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         setVisible(false);
-        if ((janelapaiLocacao != null)) {
-            janelapaiLocacao.setEnabled(true);
-            janelapaiLocacao.setVisible(true);
+        if ((janelapaiDevolucao != null)) {
+            janelapaiDevolucao.setEnabled(true);
+            janelapaiDevolucao.setVisible(true);
             //telaCadastroObjeto.setStatusTela(false);
         }
 
@@ -234,10 +237,11 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         if (tb.getSelectedRow() != -1) {
             setVisible(false);
             ItemLocacao itemLinha = tbItemLocacaoLinhaSelecionada(jtbl_locacao_aberto);
-            if ((janelapaiLocacao != null) && (itemLinha != null)) {
-                janelapaiLocacao.setEnabled(true);
-                janelapaiLocacao.setVisible(true);
-                telaAtendimentoDevolucao.carregarCopiaDevolucao(itemLinha);
+            if ((janelapaiDevolucao != null) && (itemLinha != null)) {
+                janelapaiDevolucao.setEnabled(true);
+                janelapaiDevolucao.setVisible(true);
+                janelapaiDevolucao.adicionarItemDevolvido(itemLinha);
+//                telaAtendimentoDevolucao.carregarCopiaDevolucao(itemLinha);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Copia");
@@ -301,6 +305,10 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_tituloActionPerformed
 
+    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowDeactivated
+
     /**
      * @param args the command line arguments
      */
@@ -347,6 +355,8 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
             itemSelecionada.setValor_multa(itensDevolucao.get(tb.getSelectedRow()).getValor_multa());
             itemSelecionada.setDias_multa(itensDevolucao.get(tb.getSelectedRow()).getDias_multa());
             itemSelecionada.setData_locacao(itensDevolucao.get(tb.getSelectedRow()).getData_locacao());
+            itemSelecionada.setValor_locado(itensDevolucao.get(tb.getSelectedRow()).getValor_locado());
+            itemSelecionada.setValor_pago(itensDevolucao.get(tb.getSelectedRow()).getValor_pago());
 
             Diaria diaria = new Diaria();
             diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDiaria().getDias());

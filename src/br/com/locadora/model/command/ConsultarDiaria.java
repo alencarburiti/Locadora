@@ -77,7 +77,7 @@ public class ConsultarDiaria implements InterfaceCommand {
 
                 DefaultTableModel row = (DefaultTableModel) MenuDiaria.jtbl_diaria.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
-                row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, valor, valor_promocao, diaria.getDias(), multa});
+                row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, valor,  diaria.getDias(), multa});
             }
             MenuDiaria.diarias = diarias;
         }

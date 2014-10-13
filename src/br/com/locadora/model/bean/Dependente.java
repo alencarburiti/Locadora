@@ -19,6 +19,8 @@ public class Dependente {
     private String tipo_dependente;
     private String debito;
     private Date data_nascimento;
+    private String telefone;
+    private String parentesco;
     private String CPF;
     private boolean Status;
 
@@ -84,6 +86,22 @@ public class Dependente {
 
     public void setCPF(String CPF) {
         this.CPF = CPF;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getParentesco() {
+        return parentesco;
+    }
+
+    public void setParentesco(String parentesco) {
+        this.parentesco = parentesco;
     }
 
 }

@@ -81,7 +81,6 @@ public class MenuObjeto extends javax.swing.JFrame {
 
         buttonGroup1.add(jrb_codigo);
         jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_codigo.setSelected(true);
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
         jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
@@ -89,16 +88,17 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jrb_codigoActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
 
         buttonGroup1.add(jrb_ator);
         jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_ator.setText("Ator");
         jrb_ator.setName("jrb_ator"); // NOI18N
-        jPanel1.add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        jPanel1.add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
         buttonGroup1.add(jrb_titulo);
         jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_titulo.setSelected(true);
         jrb_titulo.setText("Título");
         jrb_titulo.setName("jrb_titulo"); // NOI18N
         jrb_titulo.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +106,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jrb_tituloActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
+        jPanel1.add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
@@ -119,7 +119,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 30, 30));
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 30, 30));
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -129,7 +129,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         });
         jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 340, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 460, 80));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 790, 80));
 
         jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_sair.setText("Sair");
@@ -139,7 +139,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 30, -1, -1));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
 
         jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo.setText("Novo");
@@ -149,7 +149,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                 jb_novoActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, -1, -1));
+        getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -194,7 +194,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                     jtbl_objeto.getColumnModel().getColumn(3).setPreferredWidth(100);
                 }
 
-                getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 790, 200));
+                getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 790, 200));
 
                 jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar.setText("Alterar");
@@ -204,7 +204,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                         jb_alterarActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, -1));
+                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
 
                 jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
                 jb_excluir.setText("Excluir");
@@ -214,9 +214,9 @@ public class MenuObjeto extends javax.swing.JFrame {
                         jb_excluirActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, -1, -1));
+                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, -1, -1));
 
-                setSize(new java.awt.Dimension(814, 342));
+                setSize(new java.awt.Dimension(839, 410));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -234,15 +234,11 @@ public class MenuObjeto extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        try {
-            CadastroObjeto cadastroObjeto = new CadastroObjeto();
-            cadastroObjeto.janelaPaim = this;
-            cadastroObjeto.setVisible(true);
-            this.setEnabled(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(MenuObjeto.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+        CadastroObjeto cadastroObjeto = new CadastroObjeto();
+        cadastroObjeto.janelaPaim = this;
+        cadastroObjeto.setVisible(true);
+        this.setEnabled(false);
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
@@ -338,11 +334,11 @@ public class MenuObjeto extends javax.swing.JFrame {
 //        }
     }
 
-    private void buscarDados(){
+    private void buscarDados() {
         controller = new SiscomController();
         controller.processarRequisicao("consultarObjeto");
     }
-    
+
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
     }

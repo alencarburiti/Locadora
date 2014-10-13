@@ -5,6 +5,7 @@ import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Locacao;
+import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
@@ -44,6 +45,10 @@ public class CadastrarLocacao implements InterfaceCommand {
             locacao.setCliente(cliente);            
             locacao.setDependente(dependente);
             
+            Usuario usuario = new Usuario();
+            usuario.setCod_usuario(EntradaCaixa.acesso.getUsuario().getCod_usuario());
+            
+            locacao.setUsuario(usuario);
             locacao = locacaoDAO.salvar(locacao);
             
             List<ItemLocacao> itens = new ArrayList();

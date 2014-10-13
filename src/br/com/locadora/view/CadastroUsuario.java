@@ -51,12 +51,10 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jb_salvar = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jrb_adm = new javax.swing.JRadioButton();
         jpf_senha = new javax.swing.JPasswordField(new LimitadorTexto(45), "",10);
         jLabel1 = new javax.swing.JLabel();
         jtf_login = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel5 = new javax.swing.JLabel();
-        jrb_usu = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jtf_nome = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         tf_codigo = new java.awt.TextField();
@@ -74,7 +72,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
@@ -82,9 +80,9 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 jb_salvarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, 35));
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, 35));
 
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Cancelar");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -92,18 +90,12 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, 35));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, 35));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Login");
         jLabel3.setName("jLabel3"); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
-
-        buttonGroup1.add(jrb_adm);
-        jrb_adm.setSelected(true);
-        jrb_adm.setText("Administrador");
-        jrb_adm.setName("jrb_adm"); // NOI18N
-        getContentPane().add(jrb_adm, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         jpf_senha.setName("jpf_senha"); // NOI18N
         jpf_senha.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -119,12 +111,12 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 jpf_senhaKeyPressed(evt);
             }
         });
-        getContentPane().add(jpf_senha, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 120, -1));
+        getContentPane().add(jpf_senha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 140, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Nome");
         jLabel1.setName("jLabel1"); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         jtf_login.setDocument(new UnaccentedDocument());
         jtf_login.setName("jtf_login"); // NOI18N
@@ -141,22 +133,17 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 jtf_loginKeyPressed(evt);
             }
         });
-        getContentPane().add(jtf_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 150, -1));
+        getContentPane().add(jtf_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 180, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("Código");
         jLabel5.setName("jLabel5"); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
-
-        buttonGroup1.add(jrb_usu);
-        jrb_usu.setText("Usuário");
-        jrb_usu.setName("jrb_usu"); // NOI18N
-        getContentPane().add(jrb_usu, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setText("Senha");
         jLabel4.setName("jLabel4"); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, -1, -1));
 
         jtf_nome.setDocument(new UnaccentedDocument());
         jtf_nome.setName("jtf_nome"); // NOI18N
@@ -173,13 +160,13 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 jtf_nomeKeyPressed(evt);
             }
         });
-        getContentPane().add(jtf_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 280, -1));
+        getContentPane().add(jtf_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 320, -1));
 
         tf_codigo.setEditable(false);
         tf_codigo.setName("tf_codigo"); // NOI18N
-        getContentPane().add(tf_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 100, -1));
+        getContentPane().add(tf_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 100, -1));
 
-        setSize(new java.awt.Dimension(341, 241));
+        setSize(new java.awt.Dimension(365, 273));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -328,8 +315,6 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JPasswordField jpf_senha;
-    private javax.swing.JRadioButton jrb_adm;
-    private javax.swing.JRadioButton jrb_usu;
     private javax.swing.JTextField jtf_login;
     private javax.swing.JTextField jtf_nome;
     private java.awt.TextField tf_codigo;
@@ -342,11 +327,6 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
             usuario.setNome_usuário(jtf_nome.getText().trim());
             usuario.setLogin(jtf_login.getText().trim());
             usuario.setSenha(jpf_senha.getText().trim());
-            if (jrb_adm.isSelected()) {
-                usuario.setPermissao("administrador");
-            } else {
-                usuario.setPermissao("usuario");
-            }
             usuarioControl.cadastraUsuario(usuario);
             JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
             retornaJanelaPai();

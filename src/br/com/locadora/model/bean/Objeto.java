@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.com.locadora.model.bean;
 
 /**
@@ -11,6 +10,7 @@ package br.com.locadora.model.bean;
  * @author alencarburiti
  */
 public class Objeto {
+
     private Integer codigo_objeto;
     private String descricao_objeto;
     private String tipo_movimento;
@@ -19,6 +19,7 @@ public class Objeto {
     private String duracao;
     private String descricao_resumida;
     private String midia;
+    private Integer censura;
     private String tipo_midia;
     private Diaria diaria;
     private Genero genero;
@@ -147,6 +148,12 @@ public class Objeto {
         this.sinopse = sinopse;
     }
 
-    
-    
+    public Integer getCensura() {
+        return censura;
+    }
+
+    public void setCensura(Integer censura) {
+        this.censura = censura;
+    }
+
 }

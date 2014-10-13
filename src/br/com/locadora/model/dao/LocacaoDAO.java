@@ -13,9 +13,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class LocacaoDAO implements InterfaceLocacaoDAO {
 
@@ -118,50 +118,63 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT C.CODIGO_LOCACAO, D.CODIGO_ITEM_LOCACAO, \n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
-                + "    F.DIAS AS DIARIA,\n"
-                + "    B.CODIGO_BARRAS,\n"
-                + "    B.CODIGO_COPIA,\n"
-                + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
-                + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
-                + "    CURRENT_DATE AS DATA_ATUAL,\n"
-                + "    (case\n"
-                + "        when ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) IS NULL then 0\n"
-                + "        else ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)\n"
-                + "    end) AS DIAS_MULTA,\n"
-                + "    CASE\n"
-                + "        WHEN ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) IS NULL THEN 0\n"
-                + "        ELSE ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS)\n"
-                + "    END AS VALOR_MULTA\n"
-                + "FROM\n"
-                + "    OBJETO A,\n"
-                + "    COPIA B,\n"
-                + "    LOCACAO C,\n"
-                + "    ITEM_LOCACAO D,\n"
-                + "    DEPENDENTE E,\n"
-                + "    DIARIA F\n"
-                + "WHERE\n"
-                + "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n"
-                + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
-                + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
-                + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
-                + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                + "        AND D.DEL_FLAG = 0\n"
-                + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
-                + "     AND E.CODIGO_DEPENDENTE IN  (SELECT \n"
-                + "    CODIGO_DEPENDENTE\n"
-                + "FROM\n"
-                + "    LOCADORA.DEPENDENTE\n"
-                + "WHERE\n"
-                + "    CLIENTE_CODIGO_CLIENTE IN (SELECT \n"
-                + "            CODIGO_CLIENTE\n"
-                + "        FROM\n"
-                + "            LOCADORA.CLIENTE CL,\n"
-                + "            LOCADORA.DEPENDENTE DP\n"
-                + "        WHERE\n"
-                + "            CL.CODIGO_CLIENTE = DP.CLIENTE_CODIGO_CLIENTE\n"
-                + "                AND DP.CODIGO_DEPENDENTE = ?))";
+        String sqlSelect = "SELECT \n" +
+            "    C.CODIGO_LOCACAO,\n" +
+            "    D.CODIGO_ITEM_LOCACAO,\n" +
+            "    D.VALOR_LOCADO,\n" +
+            "    D.VALOR_PAGO,\n" +
+            "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n" +
+            "    F.DIAS AS DIARIA,\n" +
+            "    B.CODIGO_BARRAS,\n" +
+            "    B.CODIGO_COPIA,\n" +
+            "    F.MULTAS AS VALOR_MULTA_DIA,\n" +
+            "    D.DATA_LOCACAO AS DATA_LOCACAO,\n" +
+            "    ADDDATE(D.DATA_LOCACAO, F.DIAS) AS DATA_DEVOLUCAO,\n" +
+            "    CURRENT_DATE AS DATA_ATUAL,\n" +
+            "    (case\n" +
+            "        when\n" +
+            "            ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) IS NULL\n" +
+            "                OR ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) < 0\n" +
+            "        then\n" +
+            "            0\n" +
+            "        else ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)\n" +
+            "    end) AS DIAS_MULTA,\n" +
+            "    CASE\n" +
+            "        WHEN\n" +
+            "            ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) IS NULL\n" +
+            "                OR (((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) < 0\n" +
+            "        THEN\n" +
+            "            0\n" +
+            "        ELSE ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS)\n" +
+            "    END AS VALOR_MULTA\n" +
+            "FROM\n" +
+            "    OBJETO A,\n" +
+            "    COPIA B,\n" +
+            "    LOCACAO C,\n" +
+            "    ITEM_LOCACAO D,\n" +
+            "    DEPENDENTE E,\n" +
+            "    DIARIA F\n" +
+            "WHERE\n" +
+            "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n" +
+            "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
+            "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
+            "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND D.DEL_FLAG = 0\n" +
+            "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
+            "        AND E.CODIGO_DEPENDENTE IN (SELECT \n" +
+            "            CODIGO_DEPENDENTE\n" +
+            "        FROM\n" +
+            "            LOCADORA.DEPENDENTE\n" +
+            "        WHERE\n" +
+            "            CLIENTE_CODIGO_CLIENTE IN (SELECT \n" +
+            "                    CODIGO_CLIENTE\n" +
+            "                FROM\n" +
+            "                    LOCADORA.CLIENTE CL,\n" +
+            "                    LOCADORA.DEPENDENTE DP\n" +
+            "                WHERE\n" +
+            "                    CL.CODIGO_CLIENTE = DP.CLIENTE_CODIGO_CLIENTE\n" +
+            "                        AND DP.CODIGO_DEPENDENTE = ?));";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -190,6 +203,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    E.CLIENTE_CODIGO_CLIENTE,\n"
                 + "    C.CODIGO_LOCACAO,\n"
                 + "    D.CODIGO_ITEM_LOCACAO,\n"
+                + "    D.VALOR_LOCADO,\n"
+                + "    D.VALOR_PAGO,\n"
                 + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
@@ -198,11 +213,11 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
                 + "    CURRENT_DATE AS DATA_ATUAL,\n"
                 + "    (case\n"
-                + "        when ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) IS NULL then 0\n"
+                + "        when ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) IS NULL OR ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)<0 then 0\n"
                 + "        else ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)\n"
                 + "    end) AS DIAS_MULTA,\n"
                 + "    CASE\n"
-                + "        WHEN ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) IS NULL THEN 0\n"
+                + "        WHEN ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) IS NULL OR ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) < 0 THEN 0\n"
                 + "        ELSE ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS)\n"
                 + "    END AS VALOR_MULTA\n"
                 + "FROM\n"
@@ -251,6 +266,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         ResultSet rs = null;
         String sqlSelect = "SELECT \n"
                 + "    C.CODIGO_LOCACAO,\n"
+                + "    D.VALOR_LOCADO,\n"
+                + "    D.VALOR_PAGO,\n"
                 + "    D.CODIGO_ITEM_LOCACAO,\n"
                 + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
@@ -258,13 +275,14 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    B.CODIGO_COPIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
                 + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
+                + "    ADDDATE(D.DATA_LOCACAO, F.DIAS) AS DATA_DEVOLUCAO,\n"
                 + "    CURRENT_DATE AS DATA_ATUAL,\n"
                 + "    (case\n"
-                + "        when ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) IS NULL then 0\n"
+                + "        when ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) IS NULL OR ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) < 0 then 0\n"
                 + "        else ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)\n"
                 + "    end) AS DIAS_MULTA,\n"
                 + "    CASE\n"
-                + "        WHEN ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) IS NULL THEN 0\n"
+                + "        WHEN ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) IS NULL  OR ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS)<0  THEN 0\n"
                 + "        ELSE ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS)\n"
                 + "    END AS VALOR_MULTA\n"
                 + "FROM\n"
@@ -348,8 +366,10 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             itemLocacao.setValor_multa(rs.getDouble("VALOR_MULTA"));
             itemLocacao.setDias_multa(rs.getInt("DIAS_MULTA"));
             itemLocacao.setData_locacao(rs.getDate("DATA_LOCACAO"));
-            System.out.print(rs.getInt("DIAS_MULTA"));
-
+            itemLocacao.setData_devolucao(rs.getDate("DATA_DEVOLUCAO"));
+            itemLocacao.setValor_locado(rs.getDouble("VALOR_LOCADO"));
+            itemLocacao.setValor_pago(rs.getDouble("VALOR_PAGO"));            
+        
             Diaria diaria = new Diaria();
             diaria.setDias(rs.getInt("DIARIA"));
 
@@ -375,24 +395,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
     private List<Locacao> getListaLocacao(ResultSet rs) throws SQLException {
         List<Locacao> resultado = new ArrayList<Locacao>();
         while (rs.next()) {
-//            ItemLocacao itemLocacao = new ItemLocacao();
-//            itemLocacao.setCodigo_item_locacao(rs.getInt("CODIGO_ITEM_LOCACAO"));
-//            itemLocacao.setValor_multa(rs.getDouble("VALOR_MULTA"));
-//            itemLocacao.setDias_multa(rs.getInt("DIAS_MULTA"));
-//            itemLocacao.setData_locacao(rs.getDate("DATA_LOCACAO"));
-//            
-//            Diaria diaria = new Diaria();
-//            diaria.setDias(rs.getInt("DIARIA"));
-//            
-//            Objeto objeto = new Objeto();                        
-//            objeto.setDiaria(diaria);
-//            
-//            Copia copia = new Copia();
-//            copia.setObjeto(objeto);
-//            
-//            itemLocacao.setCopia(copia);
-//			
-//            resultado.add(itemLocacao);
+
         }
         return resultado;
     }
@@ -402,7 +405,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO `locadora`.`LOCACAO`(`DEPENDENTE_CODIGO_DEPENDENTE`)VALUES( ? );";
+        String sqlInsert = "INSERT INTO `locadora`.`LOCACAO`(`DEPENDENTE_CODIGO_DEPENDENTE`,USUARIO_CODIGO_USUARIO)VALUES( ?,? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -465,7 +468,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
         String sqlInsert = "UPDATE `locadora`.`ITEM_LOCACAO`\n"
                 + "SET\n"
-                + "`DATA_DEVOLUCAO` = ?,\n"
+                + "`DATA_DEVOLUCAO` = CURRENT_DATE() ,\n"
                 + "`DEL_FLAG` = ?\n"
                 + "WHERE `CODIGO_ITEM_LOCACAO` = ?;";
 
@@ -473,16 +476,11 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             ps = con.prepareStatement(sqlInsert);
 
             for (int i = 0; i < itemLocacao.size(); i++) {
-
-                java.util.Date date = itemLocacao.get(i).getData_devolucao();
-                Timestamp timestamp = new Timestamp(date.getTime());
-
-                ps.setTimestamp(1, timestamp);
-                ps.setInt(2, 1);
-                ps.setInt(3, itemLocacao.get(i).getCodigo_item_locacao());
+                
+                ps.setInt(1, 1);
+                ps.setInt(2, itemLocacao.get(i).getCodigo_item_locacao());
                 ps.executeUpdate();
-
-//                System.out.print(ps.getUpdateCount() +"      "+ itemLocacao.get(i).getCodigo_item_locacao() + "   "+ timestamp);
+                
             }
 
             ps.close();
@@ -521,6 +519,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             throws SQLException {
 
         ps.setInt(1, locacao.getDependente().getCodigo_dependente());
+        ps.setInt(2, locacao.getUsuario().getCod_usuario());
 
     }
 
@@ -532,7 +531,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             itemLocacao.setValor_multa(rs.getDouble("VALOR_MULTA"));
             itemLocacao.setDias_multa(rs.getInt("DIAS_MULTA"));
             itemLocacao.setData_locacao(rs.getDate("DATA_LOCACAO"));
-            System.out.print(rs.getInt("DIAS_MULTA"));
+            itemLocacao.setValor_pago(rs.getDouble("VALOR_PAGO"));
+            itemLocacao.setValor_locado(rs.getDouble("VALOR_LOCADO"));
 
             Diaria diaria = new Diaria();
             diaria.setDias(rs.getInt("DIARIA"));

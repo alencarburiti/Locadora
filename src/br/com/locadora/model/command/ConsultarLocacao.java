@@ -8,8 +8,8 @@ import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
+import br.com.locadora.util.Moeda;
 import br.com.locadora.view.AtendimentoDevolucao;
-import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.ConsultaCopiaDevolucao;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -39,7 +39,7 @@ public class ConsultarLocacao implements InterfaceCommand {
         try {
 
             List<ItemLocacao> itens = new ArrayList();
-            
+
             itens = locacaoDAO.getLocacao_codigo(AtendimentoDevolucao.dependente.getCodigo_dependente());
             mostrar_locacoes(itens);
 
@@ -49,7 +49,7 @@ public class ConsultarLocacao implements InterfaceCommand {
             e.printStackTrace();
         } catch (NumberFormatException e) {
             System.out.println("Valor inválido: " + e.getMessage());
-            
+
             JOptionPane.showMessageDialog(null, "Informe o Cliente");
             e.printStackTrace();
         } catch (ParseException ex) {
@@ -74,6 +74,7 @@ public class ConsultarLocacao implements InterfaceCommand {
                 itemLocacao.setValor_multa(itemLocacoes.get(i).getValor_multa());
                 itemLocacao.setDias_multa(itemLocacoes.get(i).getDias_multa());
                 itemLocacao.setData_locacao(itemLocacoes.get(i).getData_locacao());
+                itemLocacao.setData_devolucao(itemLocacoes.get(i).getData_devolucao());
 
                 Diaria diaria = new Diaria();
                 diaria.setDias(itemLocacoes.get(i).getCopia().getObjeto().getDiaria().getDias());
@@ -92,15 +93,18 @@ public class ConsultarLocacao implements InterfaceCommand {
                 SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
 
                 String data_locacao = out.format(in.parse(itemLocacoes.get(i).getData_locacao().toString()));
-
+                String data_devolucao = out.format(in.parse(itemLocacoes.get(i).getData_devolucao().toString()));
+                
+                Moeda moeda = new Moeda();
+                
                 DefaultTableModel row = (DefaultTableModel) ConsultaCopiaDevolucao.jtbl_locacao_aberto.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
-                row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao, itemLocacao.getValor_multa(), 
-                    itemLocacao.getValor_multa(), itemLocacao.getDias_multa() });
-                
+                row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao, data_devolucao,
+                moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
+
             }
             ConsultaCopiaDevolucao.itensDevolucao = itemLocacoes;
-            
+
         }
 
     }

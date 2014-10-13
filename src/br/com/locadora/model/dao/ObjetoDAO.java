@@ -216,7 +216,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
 
         String sqlInsert = "INSERT INTO `locadora`.`OBJETO`(`DESCRICAO_OBJETO`,`TITULO_ORIGINAL`,`DESCRICAO_RESUMIDA`,"
                 + "`TIPO_MOVIMENTO`,`PRODUCAO`,`DURACAO`,`MIDIA`,`TIPO_MIDIA`,`DIARIA_CODIGO_DIARIA`,`GENERO_CODIGO_GENERO`,`ELENCO`,"
-                + "`SINOPSE`)VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
+                + "`SINOPSE`, CENSURA)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -274,6 +274,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         ps.setInt(10, objeto.getGenero().getCodigo_genero());
         ps.setString(11, objeto.getElenco());
         ps.setString(12, objeto.getSinopse());
+        ps.setInt(13, objeto.getCensura());
     }
 
 }

@@ -21,6 +21,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -150,14 +152,14 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código Cliente", "Nome do Cliente/Dependente", "Situação", "Tipo do Cliente", "Código Dependente"
+                        "Código Cliente", "Nome do Cliente/Dependente", "Data Nascimento", "Situação", "Tipo do Cliente", "Código Dependente"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false
+                        false, false, true, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -185,8 +187,8 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                     jtbl_cliente.getColumnModel().getColumn(0).setResizable(false);
                     jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(20);
                     jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(150);
-                    jtbl_cliente.getColumnModel().getColumn(3).setPreferredWidth(20);
                     jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(20);
+                    jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(20);
                 }
 
                 jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 710, 210));
@@ -208,12 +210,12 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
-        JOptionPane.showMessageDialog(null, jtbl_cliente.getSelectedRow());
         if (jtbl_cliente.getSelectedRow() == 1) {
             botaoOK(jtbl_cliente);
         }
 }//GEN-LAST:event_jb_okActionPerformed
     public void botaoOK(JTable tb) {
+        if(tb != null){
         Dependente dependente = tbClienteDependenteLinhaSelecionada(jtbl_cliente);
         if ((janelapaiLocacao != null) && (dependente != null)) {
             janelapaiLocacao.setEnabled(true);
@@ -228,7 +230,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente");
         }
-
+        }
     }
 
 
@@ -247,9 +249,17 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        listaClienteDependente();
-        jtbl_cliente.requestFocus();
-        jtbl_cliente.setSelectionMode(1);
+        if(janelapaiLocacao != null){
+            AtendimentoLocacao.jtf_codigo_cliente.setText("");
+            listaClienteDependente();
+            jtbl_cliente.requestFocus();
+            jtbl_cliente.setSelectionMode(1);            
+        } else if(janelapaiDevolucao != null){
+            AtendimentoDevolucao.jtf_codigo_cliente.setText("");
+            listaClienteDependente();
+            jtbl_cliente.requestFocus();
+            jtbl_cliente.setSelectionMode(1);            
+        }
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -315,7 +325,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     public void setTelaAtendimento(AtendimentoLocacao_InterFace telaAtendimentoLocacao) {
         this.telaAtendimentoLocacao = telaAtendimentoLocacao;
     }
-    
+
     public void setTelaAtendimento(AtendimentoDevolucao_InterFace telaAtendimentoDevolucao) {
         this.telaAtendimentoDevolucao = telaAtendimentoDevolucao;
     }
@@ -333,6 +343,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
             dependente.setCodigo_dependente(dependentes.get(tb.getSelectedRow()).getCodigo_dependente());
             dependente.setNome_dependente(dependentes.get(tb.getSelectedRow()).getNome_dependente());
             dependente.setDebito(dependentes.get(tb.getSelectedRow()).getDebito());
+            dependente.setData_nascimento(dependentes.get(tb.getSelectedRow()).getData_nascimento());
 
             Cliente cliente = new Cliente();
             cliente.setCodigo_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getCodigo_cliente());
@@ -365,16 +376,23 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         ((DefaultTableModel) jtbl_cliente.getModel()).setRowCount(0);
         jtbl_cliente.updateUI();
 
-        if (dependentes.size() == 0) {
-            JOptionPane.showMessageDialog(this, "Nenhuma cliente encontrada");
+        if (dependentes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum Cliente encontrado");
+            jtf_consulta.requestFocus();
 
         } else {
-            for (int i = 0; i < dependentes.size(); i++) {
-
+            for (Dependente dependente : dependentes) {
+                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                String data_nascimento = null;
+                try {
+                    data_nascimento = out.format(in.parse(dependente.getData_nascimento().toString()));
+                }catch (ParseException ex) {
+                    Logger.getLogger(ConsultaClienteAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(dependentes.get(i), dependentes.get(i).getNome_dependente());
-                row.addRow(new Object[]{dependentes.get(i).getCliente().getCodigo_cliente(), hashDbGrid, dependentes.get(i).getCliente().getStatus(),
-                    dependentes.get(i).getTipo_dependente(), dependentes.get(i).getCodigo_dependente()});
+                ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
+                row.addRow(new Object[]{dependente.getCliente().getCodigo_cliente(), hashDbGrid, data_nascimento, dependente.getCliente().getStatus(), dependente.getTipo_dependente(), dependente.getCodigo_dependente()});
             }
             jtbl_cliente.requestFocus();
             jtbl_cliente.setRowSelectionInterval(0, 0);

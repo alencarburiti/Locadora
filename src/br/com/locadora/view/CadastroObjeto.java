@@ -10,19 +10,13 @@ import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.ProdutoDAO;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.UnaccentedDocument;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,11 +34,10 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
     /**
      * Creates new form ProdutoCadastroGUI
      */
-    public CadastroObjeto() throws SQLException {
+    public CadastroObjeto() {
         initComponents();
         janelapai = null;
         janelapai2 = null;
-
     }
 
     public CadastroObjeto janelapai;
@@ -710,12 +703,8 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
-            public void run() {
-                try {
-                    new CadastroObjeto().setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CadastroObjeto.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            public void run() {                
+                new CadastroObjeto().setVisible(true);                
             }
         });
     }
@@ -786,18 +775,9 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public static javax.swing.JTextField jtf_valor_promocao;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
-    Produto produto = new Produto();
-    private TelaPrincipal_Interface telaPrincipal;
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
-
+    
     public void setTela(String permissao) {
         if (permissao.equals("usuario")) {
-//            jb_novo.setEnabled(false);
-//            jb_alterar1.setEnabled(false);
-//            jb_excluir1.setEnabled(false);
         } else {
         }
     }

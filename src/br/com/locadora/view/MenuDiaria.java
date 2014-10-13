@@ -93,21 +93,21 @@ public class MenuDiaria extends javax.swing.JFrame {
 
         buttonGroup1.add(jrb_codigo_diaria);
         jrb_codigo_diaria.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_codigo_diaria.setSelected(true);
         jrb_codigo_diaria.setText("Código");
         jrb_codigo_diaria.setName("jrb_codigo_diaria"); // NOI18N
-        jPanel1.add(jrb_codigo_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
+        jPanel1.add(jrb_codigo_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
 
         buttonGroup1.add(jrb_descricao);
         jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
-        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 24, -1, -1));
+        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
-        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 64, -1, -1));
+        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
@@ -124,7 +124,7 @@ public class MenuDiaria extends javax.swing.JFrame {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 57, 520, -1));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 520, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 70, 660, 100));
 
@@ -135,14 +135,14 @@ public class MenuDiaria extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Descrição", "Valor", "Valor promocional", "Dias", "Multa"
+                "Código", "Descrição", "Valor", "Dias", "Multa"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -176,9 +176,8 @@ public class MenuDiaria extends javax.swing.JFrame {
                     jtbl_diaria.getColumnModel().getColumn(0).setPreferredWidth(10);
                     jtbl_diaria.getColumnModel().getColumn(1).setPreferredWidth(200);
                     jtbl_diaria.getColumnModel().getColumn(2).setPreferredWidth(30);
-                    jtbl_diaria.getColumnModel().getColumn(3).setPreferredWidth(30);
-                    jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(20);
-                    jtbl_diaria.getColumnModel().getColumn(5).setPreferredWidth(30);
+                    jtbl_diaria.getColumnModel().getColumn(3).setPreferredWidth(20);
+                    jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(30);
                 }
 
                 getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 183, 660, 190));

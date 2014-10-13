@@ -105,6 +105,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu16 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         menu_relatórios2 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
 
@@ -504,7 +505,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jMenu16.setText("Configurações");
         jMenu16.setName("jMenu16"); // NOI18N
 
-        jMenuItem6.setText("Acesso");
+        jMenuItem6.setText("Cadastro Usuário");
         jMenuItem6.setName("jMenuItem6"); // NOI18N
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -512,6 +513,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
             }
         });
         jMenu16.add(jMenuItem6);
+
+        jMenuItem7.setText("Acesso");
+        jMenuItem7.setName("jMenuItem7"); // NOI18N
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu16.add(jMenuItem7);
 
         jMB_Cadastro.add(jMenu16);
 
@@ -618,7 +628,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     }//GEN-LAST:event_formWindowOpened
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-
+        Acesso acesso = new Acesso();
+        acesso.setTelaPrincipal(this);
+        acesso.setVisible(true);
+        setStatusTela(false);
+        
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void menu_relatóriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_relatóriosActionPerformed
@@ -805,6 +819,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;

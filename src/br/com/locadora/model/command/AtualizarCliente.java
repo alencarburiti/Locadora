@@ -1,18 +1,13 @@
 package br.com.locadora.model.command;
 
 import br.com.locadora.model.bean.Cliente;
-import br.com.locadora.model.bean.Dependente;
-import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceDependenteDAO;
 import br.com.locadora.model.dao.InterfaceTelefoneDAO;
 import br.com.locadora.view.AtualizaCliente;
-import br.com.locadora.view.CadastroCliente;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,24 +56,7 @@ public class AtualizarCliente implements InterfaceCommand {
             }
 
             clienteDAO.atualizar(cliente);
-            
-//            List<Telefone> itens_telefone = new ArrayList();
-//            for (int i = 0; i < CadastroCliente.jtbl_telefone.getRowCount(); i++) {
-//                Telefone telefone = new Telefone();
-//                telefone.setTelefone((String) CadastroCliente.jtbl_telefone.getValueAt(i, 0));
-//                itens_telefone.add(telefone);
-//            }
-//            
-//            telefoneDAO.salvar(itens_telefone, cliente);
-//            
-//            List<Dependente> itens_dependente = new ArrayList();
-//            for (int i = 0; i < CadastroCliente.jtbl_dependente.getRowCount(); i++) {
-//                Dependente dependente = new Dependente();
-//                dependente.setNome_dependente((String) CadastroCliente.jtbl_dependente.getValueAt(i, 0));
-//                itens_dependente.add(dependente);
-//            }
-//            
-//            dependenteDAO.salvar(itens_dependente, cliente);
+
             
 
         } catch (SQLException e) {

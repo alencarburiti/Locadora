@@ -240,18 +240,20 @@
                 rs.absolute(1);
 
     //            rs.next();
-                acesso = new Acesso();
-                usuario = new Usuario();
+                
+                    acesso = new Acesso();
+                    usuario = new Usuario();
 
-                usuario.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
-                usuario.setLogin(rs.getString("LOGIN"));
-                usuario.setSenha(rs.getString("SENHA"));
+                    usuario.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
+                    usuario.setLogin(rs.getString("LOGIN"));
+                    usuario.setSenha(rs.getString("SENHA"));
 
-                acesso.setUsuario(usuario);
+                    acesso.setUsuario(usuario);
 
-                acesso.setLer(rs.getInt("LER"));
-                acesso.setEscrever(rs.getInt("ESCREVER"));
-                acesso.setDeletar(rs.getInt("DELETAR"));
+                    acesso.setLer(rs.getInt("LER"));
+                    acesso.setEscrever(rs.getInt("ESCREVER"));
+                    acesso.setDeletar(rs.getInt("DELETAR"));                    
+                
 
                 pstm.close();
                 rs.close();

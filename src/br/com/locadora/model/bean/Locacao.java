@@ -18,6 +18,7 @@ public class Locacao {
     private Dependente dependente;
     private List<ItemLocacao> itemLocacao;
     private Double valor_pago;
+    private Usuario usuario;
 
     public Integer getCodigo_locacao() {
         return codigo_locacao;
@@ -49,6 +50,22 @@ public class Locacao {
 
     public void setDependente(Dependente dependente) {
         this.dependente = dependente;
+    }
+
+    public Double getValor_pago() {
+        return valor_pago;
+    }
+
+    public void setValor_pago(Double valor_pago) {
+        this.valor_pago = valor_pago;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

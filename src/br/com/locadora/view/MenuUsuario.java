@@ -19,8 +19,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -72,8 +70,8 @@ public class MenuUsuario extends javax.swing.JFrame {
         jrb_descricao = new javax.swing.JRadioButton();
         jrb_detalhamento = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        tf_pesquisar_usuario = new java.awt.TextField();
         jButton1 = new javax.swing.JButton();
+        jtf_pesquisar_usuario = new javax.swing.JTextField();
         jb_sair = new javax.swing.JButton();
         jb_excluir1 = new javax.swing.JButton();
         jb_alterar1 = new javax.swing.JButton();
@@ -126,7 +124,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                 jt_pesquisar.getTableHeader().setReorderingAllowed(false);
                 jScrollPane2.setViewportView(jt_pesquisar);
 
-                getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 568, 144));
+                getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 184, 530, 180));
 
                 jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
                 jPanel3.setName("jPanel3"); // NOI18N
@@ -134,38 +132,29 @@ public class MenuUsuario extends javax.swing.JFrame {
 
                 buttonGroup1.add(jrb_codigo);
                 jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_codigo.setSelected(true);
                 jrb_codigo.setText("Código");
                 jrb_codigo.setName("jrb_codigo"); // NOI18N
-                jPanel3.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
+                jPanel3.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
 
                 buttonGroup1.add(jrb_descricao);
                 jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_descricao.setText("Descrição");
+                jrb_descricao.setSelected(true);
+                jrb_descricao.setText("Nome");
                 jrb_descricao.setName("jrb_descricao"); // NOI18N
-                jPanel3.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 24, -1, -1));
+                jPanel3.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
                 buttonGroup1.add(jrb_detalhamento);
                 jrb_detalhamento.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_detalhamento.setText("Específica");
+                jrb_detalhamento.setText("Login");
                 jrb_detalhamento.setName("jrb_detalhamento"); // NOI18N
-                jPanel3.add(jrb_detalhamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 24, -1, -1));
+                jPanel3.add(jrb_detalhamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
                 jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jLabel1.setText("Parâmetro");
                 jLabel1.setName("jLabel1"); // NOI18N
-                jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 64, -1, -1));
+                jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
-                tf_pesquisar_usuario.setName("tf_pesquisar_usuario"); // NOI18N
-                tf_pesquisar_usuario.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        tf_pesquisar_usuarioActionPerformed(evt);
-                    }
-                });
-                jPanel3.add(tf_pesquisar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 64, 397, -1));
-
-                jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/ok.png"))); // NOI18N
-                jButton1.setText("Ir");
+                jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
                 jButton1.setName("jButton1"); // NOI18N
                 jButton1.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,9 +166,12 @@ public class MenuUsuario extends javax.swing.JFrame {
                         jButton1KeyPressed(evt);
                     }
                 });
-                jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(489, 55, -1, -1));
+                jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, -1, -1));
 
-                getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+                jtf_pesquisar_usuario.setName("jtf_pesquisar_usuario"); // NOI18N
+                jPanel3.add(jtf_pesquisar_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 280, -1));
+
+                getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 530, 110));
 
                 jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
                 jb_sair.setText("Sair");
@@ -189,7 +181,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                         jb_sairActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, -1, 35));
+                getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, -1, 35));
 
                 jb_excluir1.setText("Excluir");
                 jb_excluir1.setName("jb_excluir1"); // NOI18N
@@ -198,7 +190,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                         jb_excluir1ActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_excluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, 35));
+                getContentPane().add(jb_excluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, -1, 35));
 
                 jb_alterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar1.setText("Alterar");
@@ -208,7 +200,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                         jb_alterar1ActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_alterar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 101, 35));
+                getContentPane().add(jb_alterar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 101, 35));
 
                 jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
                 jb_novo.setText("Novo");
@@ -218,15 +210,15 @@ public class MenuUsuario extends javax.swing.JFrame {
                         jb_novoActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, 35));
+                getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, 35));
 
-                setSize(new java.awt.Dimension(630, 373));
+                setSize(new java.awt.Dimension(581, 404));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-        tf_pesquisar_usuario.requestFocus();
+        jtf_pesquisar_usuario.requestFocus();
         // TODO add your handling code here:
 
         jt_pesquisar.getColumnModel().getColumn(0).setMaxWidth(70);
@@ -241,10 +233,6 @@ public class MenuUsuario extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_formWindowOpened
-
-    private void tf_pesquisar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_pesquisar_usuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_pesquisar_usuarioActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
 
@@ -347,8 +335,8 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JRadioButton jrb_descricao;
     private javax.swing.JRadioButton jrb_detalhamento;
     private javax.swing.JTable jt_pesquisar;
+    private javax.swing.JTextField jtf_pesquisar_usuario;
     private java.awt.PopupMenu popupMenu1;
-    private java.awt.TextField tf_pesquisar_usuario;
     // End of variables declaration//GEN-END:variables
     private TelaPrincipal_Interface telaPrincipal;
     //Recebendo tela como parametro para atualização apos pesquisa
@@ -359,28 +347,28 @@ public class MenuUsuario extends javax.swing.JFrame {
     Usuario usuario = new Usuario();
 
     public void request() {
-        tf_pesquisar_usuario.requestFocus();
+        jtf_pesquisar_usuario.requestFocus();
     }
 
     public void listarUsuário() {
         UsuarioDAO usu = new UsuarioDAO();
-        usuarios = usu.listarUsuario("%" + tf_pesquisar_usuario.getText().trim() + "%");
+        usuarios = usu.listarUsuario("%" + jtf_pesquisar_usuario.getText().trim() + "%");
         mostraUsuarios(usuarios);
     }
 
     public void listarUsuárioCodigo() {
-        if (tf_pesquisar_usuario.getText().equals("")) {
+        if (jtf_pesquisar_usuario.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Informe um código");
         } else {
             UsuarioDAO usu = new UsuarioDAO();
-            usuarios = usu.listarUsuarioCodigo(tf_pesquisar_usuario.getText().trim());
+            usuarios = usu.listarUsuarioCodigo(jtf_pesquisar_usuario.getText().trim());
             mostraUsuarios(usuarios);
         }
     }
 
     public void listarUsuárioDescrição() {
         UsuarioDAO usu = new UsuarioDAO();
-        usuarios = usu.listarUsuarioDescrição(tf_pesquisar_usuario.getText().trim() + "%");
+        usuarios = usu.listarUsuarioDescrição(jtf_pesquisar_usuario.getText().trim() + "%");
         mostraUsuarios(usuarios);
     }
 

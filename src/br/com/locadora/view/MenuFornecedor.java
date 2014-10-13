@@ -105,7 +105,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jt_pesquisar);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 970, 242));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 202, 970, 220));
 
         jPanel2.setName("jPanel2"); // NOI18N
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
@@ -127,32 +127,33 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(922, 59, -1, -1));
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, -1, -1));
 
         buttonGroup1.add(jrb_codigo);
         jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_codigo.setSelected(true);
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
-        jPanel3.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
+        jPanel3.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
 
         buttonGroup1.add(jrb_descricao);
         jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
-        jPanel3.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 24, -1, -1));
+        jPanel3.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         buttonGroup1.add(jrb_detalhamento);
         jrb_detalhamento.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_detalhamento.setText("Específica");
         jrb_detalhamento.setName("jrb_detalhamento"); // NOI18N
-        jPanel3.add(jrb_detalhamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 24, -1, -1));
+        jPanel3.add(jrb_detalhamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
 
         jtf_pesquisar.setName("jtf_pesquisar"); // NOI18N
-        jPanel3.add(jtf_pesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 59, 832, -1));
+        jPanel3.add(jtf_pesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 380, -1));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 970, 100));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 970, 130));
 
+        jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo.setText("Novo");
         jb_novo.setName("jb_novo"); // NOI18N
         jb_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -162,6 +163,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         });
         getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, 35));
 
+        jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
         jb_alterar.setText("Alterar");
         jb_alterar.setName("jb_alterar"); // NOI18N
         jb_alterar.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +173,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         });
         getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, -1, 35));
 
+        jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
         jb_excluir.setText("Excluir");
         jb_excluir.setName("jb_excluir"); // NOI18N
         jb_excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -180,6 +183,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         });
         getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, -1, 35));
 
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_sair.setText("Sair");
         jb_sair.setName("jb_sair"); // NOI18N
         jb_sair.addActionListener(new java.awt.event.ActionListener() {

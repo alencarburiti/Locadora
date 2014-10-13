@@ -6,10 +6,7 @@ import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
 import br.com.locadora.view.AtendimentoDevolucao;
-import br.com.locadora.view.AtendimentoLocacao;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,8 +39,7 @@ public class CadastrarDevolucao implements InterfaceCommand {
                 copia.setCodigo_copia(AtendimentoDevolucao.itensDevolucao.get(i).getCopia().getCodigo_copia());
                 copia.setStatus("0");
                 itemDevolve.setCopia(copia);
-                itemDevolve.setCodigo_item_locacao(AtendimentoDevolucao.itensDevolucao.get(i).getCodigo_item_locacao());
-                itemDevolve.setData_devolucao(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse((String) AtendimentoDevolucao.jtbl_devolucao.getValueAt(i, 3)));
+                itemDevolve.setCodigo_item_locacao(AtendimentoDevolucao.itensDevolucao.get(i).getCodigo_item_locacao());                
                 itens.add(itemDevolve);
 
                 copiaDAO.alterarStatusFilme(itemDevolve.getCopia());
@@ -56,9 +52,7 @@ public class CadastrarDevolucao implements InterfaceCommand {
             e.printStackTrace();
         } catch (SQLException ex) {
             Logger.getLogger(CadastrarDevolucao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(CadastrarDevolucao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         return "OK";
     }
 

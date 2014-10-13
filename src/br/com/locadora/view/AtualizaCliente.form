@@ -715,7 +715,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="270" y="80" width="30" height="30"/>
+                  <AbsoluteConstraints x="460" y="80" width="30" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -732,7 +732,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="310" y="80" width="30" height="30"/>
+                  <AbsoluteConstraints x="500" y="80" width="30" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -749,7 +749,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="380" y="30" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="450" y="30" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -767,18 +767,18 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="310" y="30" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="450" y="10" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nascimento"/>
+                <Property name="text" type="java.lang.String" value="Nascimento*"/>
                 <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="20" y="60" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="300" y="10" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -793,7 +793,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="20" y="80" width="110" height="-1"/>
+                  <AbsoluteConstraints x="300" y="30" width="110" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -816,7 +816,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="140" y="80" width="120" height="30"/>
+                  <AbsoluteConstraints x="330" y="80" width="120" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -827,7 +827,91 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="140" y="60" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="330" y="60" width="-1" height="-1"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel24">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Parentesco*"/>
+                <Property name="name" type="java.lang.String" value="jLabel24" noResource="true"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="200" y="60" width="-1" height="-1"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jcb_parentesco">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="25">
+                    <StringItem index="0" value="Esposa"/>
+                    <StringItem index="1" value="Esposo"/>
+                    <StringItem index="2" value="Filho"/>
+                    <StringItem index="3" value="Filha"/>
+                    <StringItem index="4" value="Neta"/>
+                    <StringItem index="5" value="Neto"/>
+                    <StringItem index="6" value="Pai"/>
+                    <StringItem index="7" value="M&#xe3;e"/>
+                    <StringItem index="8" value="Sobrinho"/>
+                    <StringItem index="9" value="Sobrinha"/>
+                    <StringItem index="10" value="Av&#xf4;"/>
+                    <StringItem index="11" value="Av&#xf3;"/>
+                    <StringItem index="12" value="Tio"/>
+                    <StringItem index="13" value="Tia"/>
+                    <StringItem index="14" value="Namorada"/>
+                    <StringItem index="15" value="Namorado"/>
+                    <StringItem index="16" value="Noiva"/>
+                    <StringItem index="17" value="Noivo"/>
+                    <StringItem index="18" value="Cunhado"/>
+                    <StringItem index="19" value="Cunhada"/>
+                    <StringItem index="20" value="Primo"/>
+                    <StringItem index="21" value="Prima"/>
+                    <StringItem index="22" value="Amigo"/>
+                    <StringItem index="23" value="Amiga"/>
+                    <StringItem index="24" value="Outro"/>
+                  </StringArray>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jcb_parentesco" noResource="true"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="200" y="80" width="-1" height="30"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="javax.swing.JFormattedTextField" name="jtf_telefone_dependente">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jtf_telefone_dependente" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_telefone_dependenteActionPerformed"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_telefone_dependenteFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_telefone_dependenteFocusLost"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_telefone_dependenteKeyPressed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_telefone_dependenteKeyReleased"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoTelefone)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try  {      &#xa;formatoTelefone = new MaskFormatter(&quot;(##) ####-####&quot;);  &#xa;} &#xa;    catch (Exception erro)  &#xa;{    &#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xa;}"/>
+                <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="FornecedorCadastroGUI_jftf_cnpj"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="20" y="80" width="170" height="30"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel25">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Telefone*"/>
+                <Property name="name" type="java.lang.String" value="jLabel25" noResource="true"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="20" y="60" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -849,9 +933,11 @@
                 <Component class="javax.swing.JTable" name="jtbl_dependente">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="0">
+                      <Table columnCount="6" rowCount="0">
                         <Column editable="true" title="Nome" type="java.lang.String"/>
                         <Column editable="true" title="Data Nascimento" type="java.lang.String"/>
+                        <Column editable="true" title="Telefone" type="java.lang.String"/>
+                        <Column editable="true" title="Parentesco" type="java.lang.String"/>
                         <Column editable="true" title="CPF" type="java.lang.String"/>
                         <Column editable="true" title="Status" type="java.lang.Boolean"/>
                       </Table>

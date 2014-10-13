@@ -96,6 +96,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         String sqlSelect = "SELECT \n" +
             "    B.CLIENTE_CODIGO_CLIENTE,\n" +
             "    B.NOME_DEPENDENTE,\n" +
+            "    B.DATA_NASCIMENTO,\n" +
             "    B.TIPO_DEPENDENTE,\n" +
             "    (CASE\n" +
             "        WHEN (TIPO_DEPENDENTE = 0) THEN 'Cliente'\n" +
@@ -273,6 +274,8 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
             dependente.setTipo_dependente(rs.getString("TIPO_DEPENDENTE"));
             dependente.setData_nascimento(rs.getDate("DATA_NASCIMENTO"));
+            dependente.setParentesco(rs.getString("PARENTESCO"));
+            dependente.setTelefone(rs.getString("TELEFONE"));
 
             Cliente cliente = new Cliente();
             cliente.setCodigo_cliente(rs.getInt("CLIENTE_CODIGO_CLIENTE"));
@@ -290,6 +293,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             Dependente dependente = new Dependente();
             dependente.setCodigo_dependente(rs.getInt("CODIGO_DEPENDENTE"));
             dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
+            dependente.setData_nascimento(rs.getDate("DATA_NASCIMENTO"));
             if (rs.getInt("TIPO_DEPENDENTE") == 0) {
                 dependente.setTipo_dependente("Cliente");
 
@@ -319,8 +323,9 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO LOCADORA.DEPENDENTE (NOME_DEPENDENTE, CLIENTE_CODIGO_CLIENTE, TIPO_DEPENDENTE, DATA_NASCIMENTO, CPF) VALUES"
-                + "( ? ,?, ?, ?, ? );";
+        String sqlInsert = "INSERT INTO LOCADORA.DEPENDENTE (NOME_DEPENDENTE, CLIENTE_CODIGO_CLIENTE, TIPO_DEPENDENTE, "
+                + "DATA_NASCIMENTO, CPF, TELEFONE, PARENTESCO) VALUES"
+                + "( ? ,?, ?, ?, ?, ?, ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -334,6 +339,8 @@ public class DependenteDAO implements InterfaceDependenteDAO {
                 ps.setInt(3, Integer.parseInt(dependentes.get(i).getTipo_dependente()));
                 ps.setDate(4, data_nascimento);
                 ps.setString(5, dependentes.get(i).getCPF());
+                ps.setString(6, dependentes.get(i).getTelefone());
+                ps.setString(7, dependentes.get(i).getParentesco());
                 ps.executeUpdate();
             }
             ps.close();

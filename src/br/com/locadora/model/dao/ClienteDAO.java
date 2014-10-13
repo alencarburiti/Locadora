@@ -10,6 +10,8 @@ import java.util.List;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Cliente;
 import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClienteDAO implements InterfaceClienteDAO {
 
@@ -23,11 +25,6 @@ public class ClienteDAO implements InterfaceClienteDAO {
     public void atualizar(Cliente cliente) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-
-//CallableStatement stm = conn.prepareCall("{CALL SP_UPDATE_CLIENTE_BY_PK(?)}");  
-//stm.setInt(codigo, 1);  
-//stm.execute(); 
-
         try {
             ps = con.prepareCall("{CALL SP_UPDATE_CLIENTE_BY_PK(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             
@@ -81,7 +78,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
     }
 
     @Override
-    public Cliente getCliente_cpf(String cpf) throws SQLException {
+    public Cliente getCliente_cpf(String cpf) {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -99,6 +96,36 @@ public class ClienteDAO implements InterfaceClienteDAO {
                 return resultado.get(0);
             }
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return null;
+    }
+    
+    
+    public Cliente getCliente_cpf(String cpf, Integer codigo_cliente) {
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT * FROM CLIENTE WHERE CPF = ? AND CODIGO_CLIENTE = ? ORDER BY NOME_CLIENTE";
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, cpf);
+            ps.setInt(2, codigo_cliente);
+
+            rs = ps.executeQuery();
+
+            List<Cliente> resultado = getListaCliente(rs);
+
+            if (resultado.size() > 0) {
+                return resultado.get(0);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }

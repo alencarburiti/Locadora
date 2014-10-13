@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class TelefoneDAO implements InterfaceTelefoneDAO {
@@ -131,12 +133,12 @@ public class TelefoneDAO implements InterfaceTelefoneDAO {
     }
 
     @Override
-    public List<Telefone> getTelefones(Integer codigo_cliente) throws SQLException {
+    public List<Telefone> getTelefones(Integer codigo_cliente) {
         List<Telefone> resultado = new ArrayList<Telefone>();
         Connection con = pool.getConnection();
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         String sqlSelect = "SELECT * FROM TELEFONE WHERE CLIENTE_CODIGO_CLIENTE = ? ORDER BY TELEFONE; ";
-        ResultSet rs = null;
+        ResultSet rs;
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -147,6 +149,8 @@ public class TelefoneDAO implements InterfaceTelefoneDAO {
 
             rs.close();
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelefoneDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }

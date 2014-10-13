@@ -28,7 +28,6 @@ public class CadastrarCliente implements InterfaceCommand {
         this.dependenteDAO = dependenteDAO;
     }
 
-    
     public String execute() {
 
         try {
@@ -47,40 +46,42 @@ public class CadastrarCliente implements InterfaceCommand {
             cliente.setEstado(CadastroCliente.jtf_estado.getText());
             cliente.setEmail(CadastroCliente.jtf_email.getText());
             cliente.setObservacao(CadastroCliente.jta_observacao.getText());
-            if (CadastroCliente.jrb_ativo.isSelected() == true) {            
+            if (CadastroCliente.jrb_ativo.isSelected() == true) {
                 cliente.setStatus("0");
-            
-            }else{
+
+            } else {
                 cliente.setStatus("1");
             }
 
             cliente = clienteDAO.salvar(cliente);
-            
+
             List<Telefone> itens_telefone = new ArrayList();
             for (int i = 0; i < CadastroCliente.jtbl_telefone.getRowCount(); i++) {
                 Telefone telefone = new Telefone();
                 telefone.setTelefone((String) CadastroCliente.jtbl_telefone.getValueAt(i, 0));
                 itens_telefone.add(telefone);
             }
-            
+
             telefoneDAO.salvar(itens_telefone, cliente);
-            
+
             Dependente dependente = new Dependente();
             List<Dependente> itens_dependente = new ArrayList();
-            dependente.setNome_dependente(cliente.getNome_cliente());            
+            dependente.setNome_dependente(cliente.getNome_cliente());
+            dependente.setData_nascimento(cliente.getData_nascimento());
             dependente.setTipo_dependente("0");
             itens_dependente.add(dependente);
             for (int i = 0; i < CadastroCliente.jtbl_dependente.getRowCount(); i++) {
                 dependente = new Dependente();
                 dependente.setNome_dependente((String) CadastroCliente.jtbl_dependente.getValueAt(i, 0));
                 dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastroCliente.jtbl_dependente.getValueAt(i, 1)));
-                dependente.setCPF((String) CadastroCliente.jtbl_dependente.getValueAt(i, 2));
+                dependente.setTelefone((String) CadastroCliente.jtbl_dependente.getValueAt(i, 2));
+                dependente.setParentesco((String) CadastroCliente.jtbl_dependente.getValueAt(i, 3));
+                dependente.setCPF((String) CadastroCliente.jtbl_dependente.getValueAt(i, 4));
                 dependente.setTipo_dependente("1");
                 itens_dependente.add(dependente);
             }
-            
+
             dependenteDAO.salvar(itens_dependente, cliente);
-            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a gravação: ");

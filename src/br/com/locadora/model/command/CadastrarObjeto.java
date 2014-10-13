@@ -38,6 +38,7 @@ public class CadastrarObjeto implements InterfaceCommand {
                 objeto.setDiaria(CadastroObjeto.getObjetoDiaria());
                 objeto.setElenco(CadastroObjeto.jta_elenco.getText());
                 objeto.setSinopse(CadastroObjeto.jta_sinopse.getText());
+                objeto.setCensura(Integer.parseInt(CadastroObjeto.jtf_censura.getText()));
 
                 objeto = objetoDAO.salvar(objeto);
 

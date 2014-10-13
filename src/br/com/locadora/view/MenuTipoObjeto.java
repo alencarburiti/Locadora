@@ -78,44 +78,51 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
         setTitle("Gerenciamento de Tipos de Gênero");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
         jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonGroup1.add(jrb_codigo);
         jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_codigo.setSelected(true);
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
+        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 24, -1, -1));
 
         buttonGroup1.add(jrb_detalhado);
         jrb_detalhado.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_detalhado.setText("Específica");
         jrb_detalhado.setName("jrb_detalhado"); // NOI18N
+        jPanel1.add(jrb_detalhado, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 24, -1, -1));
 
         buttonGroup1.add(jrb_descricao);
         jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
+        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
+        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 64, -1, -1));
 
-        jb_buscar.setText("Ir");
+        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_buscarActionPerformed(evt);
             }
         });
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, -1, -1));
 
         jtf_pesquisar_genero.setName("jtf_pesquisar_genero"); // NOI18N
         jtf_pesquisar_genero.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -123,43 +130,9 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                 jtf_pesquisar_generoKeyPressed(evt);
             }
         });
+        jPanel1.add(jtf_pesquisar_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 378, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jrb_codigo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jrb_descricao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jrb_detalhado))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jl_pesquisar_destino)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtf_pesquisar_genero, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jb_buscar)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jrb_codigo)
-                    .addComponent(jrb_descricao)
-                    .addComponent(jrb_detalhado))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jl_pesquisar_destino)
-                    .addComponent(jtf_pesquisar_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_buscar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 70, 560, 120));
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -195,7 +168,9 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                 });
                 jScrollPane1.setViewportView(jt_pesquisar);
 
-                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/delete.gif"))); // NOI18N
+                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 561, 125));
+
+                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
                 jb_excluir.setText("Excluir");
                 jb_excluir.setName("jb_excluir"); // NOI18N
                 jb_excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -203,8 +178,9 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                         jb_excluirActionPerformed(evt);
                     }
                 });
+                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, -1, -1));
 
-                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
+                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
                 jb_sair.setText("Sair");
                 jb_sair.setName("jb_sair"); // NOI18N
                 jb_sair.addActionListener(new java.awt.event.ActionListener() {
@@ -212,8 +188,9 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                         jb_sairActionPerformed(evt);
                     }
                 });
+                getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, 33));
 
-                jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/novo_registro.gif"))); // NOI18N
+                jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
                 jb_novo.setText("Novo");
                 jb_novo.setName("jb_novo"); // NOI18N
                 jb_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -221,8 +198,9 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                         jb_novoActionPerformed(evt);
                     }
                 });
+                getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
 
-                jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/alterar_registro.gif"))); // NOI18N
+                jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar.setText("Alterar");
                 jb_alterar.setName("jb_alterar"); // NOI18N
                 jb_alterar.addActionListener(new java.awt.event.ActionListener() {
@@ -230,42 +208,7 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                         jb_alterarActionPerformed(evt);
                     }
                 });
-
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                getContentPane().setLayout(layout);
-                layout.setHorizontalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(188, 188, 188)
-                                .addComponent(jb_novo)
-                                .addGap(5, 5, 5)
-                                .addComponent(jb_alterar)
-                                .addGap(5, 5, 5)
-                                .addComponent(jb_excluir)
-                                .addGap(5, 5, 5)
-                                .addComponent(jb_sair)))
-                        .addContainerGap(27, Short.MAX_VALUE))
-                );
-                layout.setVerticalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jb_novo)
-                            .addComponent(jb_alterar)
-                            .addComponent(jb_excluir)
-                            .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(29, Short.MAX_VALUE))
-                );
+                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, -1));
 
                 setSize(new java.awt.Dimension(616, 374));
                 setLocationRelativeTo(null);

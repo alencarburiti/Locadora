@@ -84,7 +84,7 @@ public class MenuCliente extends javax.swing.JFrame {
         jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
-        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 62, -1, -1));
+        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +92,7 @@ public class MenuCliente extends javax.swing.JFrame {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, -1, -1));
+        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, -1, -1));
 
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -100,7 +100,7 @@ public class MenuCliente extends javax.swing.JFrame {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 520, 20));
+        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 300, 30));
 
         buttonGroup1.add(jrb_codigo_cliente);
         jrb_codigo_cliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -111,22 +111,22 @@ public class MenuCliente extends javax.swing.JFrame {
                 jrb_codigo_clienteActionPerformed(evt);
             }
         });
-        jPanel1.add(jrb_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+        jPanel1.add(jrb_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
 
         buttonGroup1.add(jrb_cpf);
         jrb_cpf.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_cpf.setText("CPF");
         jrb_cpf.setName("jrb_cpf"); // NOI18N
-        jPanel1.add(jrb_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, -1, -1));
+        jPanel1.add(jrb_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
         buttonGroup1.add(jrb_nome_cliente);
         jrb_nome_cliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_nome_cliente.setSelected(true);
         jrb_nome_cliente.setText("Nome");
         jrb_nome_cliente.setName("jrb_nome_cliente"); // NOI18N
-        jPanel1.add(jrb_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel1.add(jrb_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 670, 109));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 670, 120));
 
         jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_sair.setText("Sair");
@@ -191,7 +191,7 @@ public class MenuCliente extends javax.swing.JFrame {
             jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 670, 230));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 670, 210));
 
         jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
         jb_alterar.setText("Alterar");
@@ -222,14 +222,9 @@ public class MenuCliente extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        try {
-            CadastroCliente cadastro_cliente = new CadastroCliente();
-            cadastro_cliente.janelaPaim = this;
-            cadastro_cliente.setVisible(true);
-//            this.setEnabled(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(MenuCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        CadastroCliente cadastro_cliente = new CadastroCliente();
+        cadastro_cliente.janelaPaim = this;
+        cadastro_cliente.setVisible(true);
 
 }//GEN-LAST:event_jb_novoActionPerformed
 
@@ -309,7 +304,7 @@ public class MenuCliente extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
-    private void buscarDados() {
+    public void buscarDados() {
         controller = new SiscomController();
         controller.processarRequisicao("consultarCliente");
     }
