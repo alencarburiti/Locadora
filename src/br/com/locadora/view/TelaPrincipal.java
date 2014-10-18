@@ -11,7 +11,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 
     public IniciaLogin janelaPai;
     public IniciaLogin janelaLogin;
-    public Usuario usuario;
+    public static Usuario usuario;
     public String usuarioNome;
     public Integer codUsuario;
     public String login;
@@ -21,13 +21,9 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     public AtendimentoDevolucao atendimentoDevolucao;
 
     public TelaPrincipal() {
+
         initComponents();
-        Data mostraData = new Data();
-        mostraData.le_data();
-        jlabel_data.setText("Data: " + mostraData.dia + "/" + mostraData.mes + "/" + mostraData.ano);
-        mostraData.le_hora();
-        jlabel_hora.setText("Hora: " + mostraData.hora);
-//        timer1.start();        
+
     }
 
     /**
@@ -64,10 +60,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jMenuItem2 = new javax.swing.JMenuItem();
         label_data = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
-        jlabel_data = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jlabel_hora = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jlabel_usuario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -206,24 +198,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        jlabel_data.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jlabel_data.setText("Data:");
-        jlabel_data.setName("jlabel_data"); // NOI18N
-        jToolBar1.add(jlabel_data);
-
-        jLabel2.setText("                               ");
-        jLabel2.setName("jLabel2"); // NOI18N
-        jToolBar1.add(jLabel2);
-
-        jlabel_hora.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jlabel_hora.setText("Hora:");
-        jlabel_hora.setName("jlabel_hora"); // NOI18N
-        jToolBar1.add(jlabel_hora);
-
-        jLabel1.setText("                               ");
-        jLabel1.setName("jLabel1"); // NOI18N
-        jToolBar1.add(jLabel1);
-
         jlabel_usuario.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jlabel_usuario.setText("Usuário: ");
         jlabel_usuario.setName("jlabel_usuario"); // NOI18N
@@ -238,7 +212,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jLabel3.setName("jLabel3"); // NOI18N
         jToolBar1.add(jLabel3);
 
-        getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 660, 1340, 25));
+        getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1340, 25));
 
         jMB_Cadastro.setName("jMB_Cadastro"); // NOI18N
 
@@ -547,17 +521,12 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 
         setJMenuBar(jMB_Cadastro);
 
-        setSize(new java.awt.Dimension(1233, 745));
+        setSize(new java.awt.Dimension(1268, 745));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuitem_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuitem_entradaActionPerformed
-//        
-//            atendimento = new AtendimentoLocacao();
-//            atendimento.setVisible(true);
-//        
 
-        // TODO add your handling code here:
     }//GEN-LAST:event_menuitem_entradaActionPerformed
 
     private void jmi_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_produtoActionPerformed
@@ -574,8 +543,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         atendimentoLocacao.setTelaPrincipal(this);
         atendimentoLocacao.setJanelaPai(this);
         atendimentoLocacao.setVisible(true);
+        setStatusTela(false);
 
-        //    setStatusTela(false);
 
     }//GEN-LAST:event_jmi_entradaActionPerformed1
 
@@ -588,7 +557,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         MenuGenero menuGenero = new MenuGenero();
         menuGenero.setTelaPrincipal(this);
         menuGenero.setVisible(true);
-//        setStatusTela(false);
+        setStatusTela(false);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void menu_cadastrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_cadastrosActionPerformed
@@ -604,7 +573,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         MenuFornecedor fornecedorMenu = new MenuFornecedor();
         fornecedorMenu.setTelaPrincipal(this);
         fornecedorMenu.setVisible(true);
-//        setStatusTela(false);
+        setStatusTela(false);
     }//GEN-LAST:event_jmi_fornecedorActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -617,9 +586,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     }//GEN-LAST:event_jmi_fornecedorAncestorAdded
 
     private void timer1OnTime(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timer1OnTime
-        Data mostraData = new Data();
-        mostraData.le_hora();
-        jlabel_hora.setText("Hora: " + mostraData.hora);
+
 
     }//GEN-LAST:event_timer1OnTime
 
@@ -632,15 +599,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         acesso.setTelaPrincipal(this);
         acesso.setVisible(true);
         setStatusTela(false);
-        
+
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void menu_relatóriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_relatóriosActionPerformed
-//        RelatórioVencidosGUI relatorioVencidos = new RelatórioVencidosGUI();
-//        relatorioVencidos.setTelaPrincipal(this);
-//        relatorioVencidos.janelapai = this;
-//        relatorioVencidos.setVisible(true);
-//        setStatusTela(false);
         // TODO add your handling code here:
 }//GEN-LAST:event_menu_relatóriosActionPerformed
 
@@ -694,25 +656,28 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         cliente_principal = new MenuCliente();
         cliente_principal.setTelaPrincipal(this);
         cliente_principal.setVisible(true);
-//        setStatusTela(false);
+        setStatusTela(false);
     }//GEN-LAST:event_jmi_clienteActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         MenuDiaria menuDiaria = new MenuDiaria();
         menuDiaria.setTelaPrincipal(this);
         menuDiaria.setVisible(true);
-//        setStatusTela(false);
+        setStatusTela(false);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         MenuObjeto menuObjeto = new MenuObjeto();
         menuObjeto.setTelaPrincipal(this);
         menuObjeto.setVisible(true);
-//        setStatusTela(false);
+        setStatusTela(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        JOptionPane.showMessageDialog(null, "Em construção");
+        MenuIdioma menuIdioma = new MenuIdioma();
+        menuIdioma.setTelaPrincipal(this);
+        menuIdioma.setVisible(true);
+        setStatusTela(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
@@ -751,7 +716,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         MenuUsuario menuUsuario = new MenuUsuario();
         menuUsuario.setVisible(true);
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
@@ -779,8 +744,6 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame jFrame1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMB_Cadastro;
@@ -826,8 +789,6 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel jlabel_data;
-    private javax.swing.JLabel jlabel_hora;
     private javax.swing.JLabel jlabel_usuario;
     private javax.swing.JMenuItem jmi_backup;
     private javax.swing.JMenuItem jmi_cliente;
@@ -849,14 +810,6 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem menuitem_sair;
     // End of variables declaration//GEN-END:variables
 
-    public void setDesabilitaTela() {
-        this.setVisible(false);
-        this.setEnabled(false);
-    }
-
-    public void setHabilitaTela(boolean status) {
-    }
-
     public void setStatusTela(boolean status) {
         if (status) {
             this.setVisible(status);
@@ -865,45 +818,12 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }
 
     public void carregaUsuario(Usuario usuario) {
-        this.usuario = usuario;
-        jlabel_usuario.setText("Usuário: " + usuario.getNome_usuario());
+        if (usuario != null) {
+            TelaPrincipal.usuario = usuario;
+            jlabel_usuario.setText("Usuário: " + usuario.getNome_usuario());
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuário não foi carregado com sucesso");
+        }
     }
 
-//    public void permissao() {
-//
-//        jmi_usuarios.setEnabled(false);
-//        jb_usuario.setEnabled(false);
-//        jb_ajuste.setEnabled(false);
-//        jb_entrada.setEnabled(false);
-//        jb_saida.setEnabled(false);
-//        jb_usuario.setEnabled(false);
-//        jButton10.setEnabled(false);
-//        jButton12.setEnabled(false);
-//        jButton14.setEnabled(false);
-//        jmi_backup.setEnabled(false);
-//        jmi_recover.setEnabled(false);
-//        jmi_entrada.setEnabled(false);
-//        jmi_saida.setEnabled(false);
-//        jmi_ajuste.setEnabled(false);
-//        jmi_destino.setEnabled(false);
-//        jmi_fornecedor.setEnabled(false);
-//        jmi_grupo.setEnabled(false);
-//        jmi_unidade.setEnabled(false);
-//    }
-    public void setJanelaPai(IniciaLogin janelaPai) {
-        jlabel_usuario.setText("Usuário: " + janelaPai.usuarioNome);
-        this.janelaPai = janelaPai;
-        usuarioNome = janelaPai.usuarioNome;
-        codUsuario = janelaPai.codUsuário;
-        login = janelaPai.login;
-        permissao = janelaPai.permissao;
-    }
-
-    public void setUsuario() {
-        usuario.setCod_usuario(codUsuario);
-        usuario.setNome_usuário(usuarioNome);
-        usuario.setPermissao(permissao);
-        usuario.setLogin(login);
-        JOptionPane.showMessageDialog(null, usuario.getCod_usuario() + usuario.getNome_usuario() + usuario.getPermissao());
-    }
 }

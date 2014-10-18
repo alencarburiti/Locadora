@@ -56,31 +56,33 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     }
 
     public AtualizaCliente(Cliente cliente) throws ParseException {
-        objetoCliente = new Cliente();
-        this.objetoCliente = cliente;
-        initComponents();
+        if (cliente != null) {
+            objetoCliente = new Cliente();
+            this.objetoCliente = cliente;
+            initComponents();
 
-        jtf_codigo_cliente.setText(String.valueOf(objetoCliente.getCodigo_cliente()));
-        jtf_nome_cliente.setText(objetoCliente.getNome_cliente());
+            jtf_codigo_cliente.setText(String.valueOf(objetoCliente.getCodigo_cliente()));
+            jtf_nome_cliente.setText(objetoCliente.getNome_cliente());
 
-        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
 
-        String data_nascimento = out.format(in.parse(objetoCliente.getData_nascimento().toString()));
+            String data_nascimento = out.format(in.parse(objetoCliente.getData_nascimento().toString()));
 
-        jtf_data_nascimento.setText(data_nascimento);
-        jtf_cpf_cliente.setText(objetoCliente.getCpf());
-        jtf_empresa.setText(objetoCliente.getNome_empresa_trabalho());
-        jtf_profissao.setText(objetoCliente.getProfissao());
-        jtf_endereco.setText(objetoCliente.getEndereco());
-        jtf_bairro.setText(objetoCliente.getBairro());
-        jtf_complemento.setText(objetoCliente.getComplemento());
-        jtf_cidade.setText(objetoCliente.getCidade());
-        jtf_estado.setText(objetoCliente.getEstado());
-        jtf_email.setText(objetoCliente.getEmail());
+            jtf_data_nascimento.setText(data_nascimento);
+            jtf_cpf_cliente.setText(objetoCliente.getCpf());
+            jtf_empresa.setText(objetoCliente.getNome_empresa_trabalho());
+            jtf_profissao.setText(objetoCliente.getProfissao());
+            jtf_endereco.setText(objetoCliente.getEndereco());
+            jtf_bairro.setText(objetoCliente.getBairro());
+            jtf_complemento.setText(objetoCliente.getComplemento());
+            jtf_cidade.setText(objetoCliente.getCidade());
+            jtf_estado.setText(objetoCliente.getEstado());
+            jtf_email.setText(objetoCliente.getEmail());
 
-        carregaTelefone(objetoCliente.getCodigo_cliente());
-        carregaDependente(objetoCliente.getCodigo_cliente());
+            carregaTelefone(objetoCliente.getCodigo_cliente());
+            carregaDependente(objetoCliente.getCodigo_cliente());
+        }
     }
 
     /**

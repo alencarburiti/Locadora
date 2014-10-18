@@ -7,17 +7,11 @@ import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Telefone;
-import br.com.locadora.model.dao.ProdutoDAO;
 import br.com.locadora.util.LimitadorTexto;
+import br.com.locadora.util.Moeda;
 import br.com.locadora.util.UnaccentedDocument;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,9 +19,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class CadastroObjeto extends javax.swing.JFrame implements CadastroObjeto_InterFace {
 
-    private TelaPrincipal janela;
     public List<Produto> produtos;
-    public MenuObjeto janelaPaim;
+    public MenuObjeto janelapai;
     public static Diaria diaria;
     public static Genero genero;
 
@@ -37,11 +30,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
     public CadastroObjeto() {
         initComponents();
         janelapai = null;
-        janelapai2 = null;
     }
-
-    public CadastroObjeto janelapai;
-    public ProdutoConsultarGUI janelapai2;
 
     //public ProdutoConsultarGUI janelapaim;
     /**
@@ -76,14 +65,10 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jtf_descricao_genero = new javax.swing.JTextField();
         jb_genero = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jtf_saldo = new javax.swing.JTextField();
-        jLabel25 = new javax.swing.JLabel();
-        jtf_disponivel = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         jcb_producao = new javax.swing.JComboBox();
         jLabel35 = new javax.swing.JLabel();
-        jtf_codigo_diaria = new javax.swing.JTextField();
+        jtf_diaria_dias = new javax.swing.JTextField();
         jtf_descricao_diaria = new javax.swing.JTextField();
         jb_diaria = new javax.swing.JButton();
         jtf_valor = new javax.swing.JTextField();
@@ -97,6 +82,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jcb_tipo = new javax.swing.JComboBox();
+        jLabel40 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -152,7 +138,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
 
         jLabel2.setText("Observação: Os campos com asteristico na frente são obrigatórios ");
         jLabel2.setName("jLabel2"); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
 
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
@@ -164,7 +150,6 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jPanel1.add(jtf_codigo_objeto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 94, -1));
 
         jtf_titulo_original.setDocument(new UnaccentedDocument());
-        jtf_titulo_original.setText("Evil Woman");
         jtf_titulo_original.setName("jtf_titulo_original"); // NOI18N
         jtf_titulo_original.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,7 +168,6 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         });
         jPanel1.add(jtf_titulo_original, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 340, -1));
 
-        jtf_descricao_objeto.setText("Mulher Infernal");
         jtf_descricao_objeto.setName("jtf_descricao_objeto");
         jtf_descricao_objeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +208,6 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jLabel13.setName("jLabel13"); // NOI18N
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
-        jtf_descricao_resumida.setText("Mulher Infernal");
         jtf_descricao_resumida.setName("jtf_descricao_resumida"); // NOI18N
         jtf_descricao_resumida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,19 +216,17 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         });
         jPanel1.add(jtf_descricao_resumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 340, -1));
 
-        jLabel14.setText("Duração");
+        jLabel14.setText("Duração*");
         jLabel14.setName("jLabel14"); // NOI18N
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 60, -1));
 
-        jtf_duracao.setText("90min");
         jtf_duracao.setName("jtf_duracao"); // NOI18N
         jPanel1.add(jtf_duracao, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 90, -1));
 
-        jLabel15.setText("Censura");
+        jLabel15.setText("Censura*");
         jLabel15.setName("jLabel15"); // NOI18N
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, -1, -1));
 
-        jtf_censura.setText("14");
         jtf_censura.setName("jtf_censura"); // NOI18N
         jPanel1.add(jtf_censura, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 200, 70, -1));
 
@@ -274,34 +255,6 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jLabel24.setName("jLabel24"); // NOI18N
         jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, -1, -1));
 
-        jLabel21.setText("Saldo");
-        jLabel21.setName("jLabel21"); // NOI18N
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, -1, -1));
-
-        jtf_saldo.setEditable(false);
-        jtf_saldo.setText("0");
-        jtf_saldo.setName("jtf_saldo"); // NOI18N
-        jtf_saldo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_saldoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jtf_saldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 80, -1));
-
-        jLabel25.setText("Disponivel");
-        jLabel25.setName("jLabel25"); // NOI18N
-        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
-
-        jtf_disponivel.setEditable(false);
-        jtf_disponivel.setText("0");
-        jtf_disponivel.setName("jtf_disponivel"); // NOI18N
-        jtf_disponivel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_disponivelActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jtf_disponivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 80, -1));
-
         jLabel34.setText("Mídia");
         jLabel34.setName("jLabel34"); // NOI18N
         jPanel1.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, -1, 20));
@@ -314,18 +267,18 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jLabel35.setName("jLabel35"); // NOI18N
         jPanel1.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
 
-        jtf_codigo_diaria.setEditable(false);
-        jtf_codigo_diaria.setName("jtf_codigo_diaria"); // NOI18N
-        jtf_codigo_diaria.addActionListener(new java.awt.event.ActionListener() {
+        jtf_diaria_dias.setEditable(false);
+        jtf_diaria_dias.setName("jtf_diaria_dias"); // NOI18N
+        jtf_diaria_dias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_codigo_diariaActionPerformed(evt);
+                jtf_diaria_diasActionPerformed(evt);
             }
         });
-        jPanel1.add(jtf_codigo_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 90, -1));
+        jPanel1.add(jtf_diaria_dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 80, -1));
 
         jtf_descricao_diaria.setEditable(false);
         jtf_descricao_diaria.setName("jtf_descricao_diaria"); // NOI18N
-        jPanel1.add(jtf_descricao_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 130, -1));
+        jPanel1.add(jtf_descricao_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 130, -1));
 
         jb_diaria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_diaria.setName("jb_diaria"); // NOI18N
@@ -334,7 +287,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
                 jb_diariaActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 30, 30));
+        jPanel1.add(jb_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 30, 30));
 
         jtf_valor.setEditable(false);
         jtf_valor.setText("R$ 0,00");
@@ -360,9 +313,9 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jLabel36.setName("jLabel36"); // NOI18N
         jPanel1.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, -1, -1));
 
-        jLabel37.setText("Valor");
+        jLabel37.setText("Dias");
         jLabel37.setName("jLabel37"); // NOI18N
-        jPanel1.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, -1, -1));
+        jPanel1.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, -1, -1));
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setSelected(true);
@@ -392,13 +345,17 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         jLabel38.setName("jLabel38"); // NOI18N
         jPanel1.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, -1, 20));
 
-        jLabel39.setText("Tipo ");
+        jLabel39.setText("Tipo*");
         jLabel39.setName("jLabel39"); // NOI18N
         jPanel1.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, -1, 20));
 
         jcb_tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Locação", "Venda", " " }));
         jcb_tipo.setName("jcb_tipo"); // NOI18N
         jPanel1.add(jcb_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, 120, 30));
+
+        jLabel40.setText("Valor");
+        jLabel40.setName("jLabel40"); // NOI18N
+        jPanel1.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, -1, -1));
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
 
@@ -560,15 +517,8 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         setVisible(false);
 
         if (janelapai != null) {
-//            janelapai.listaProduto();
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
-//            janelapai.request();
-        }
-        if (janelapai2 != null) {
-            janelapai2.listaProduto("");
-            janelapai2.setEnabled(true);
-            janelapai2.setVisible(true);
         }
 
     }
@@ -627,23 +577,11 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
         ConsultaGeneroObjeto consultaGenero = new ConsultaGeneroObjeto();
         consultaGenero.setTelaCadastroObjeto(this);
         consultaGenero.janelapai = this;
-        try {
-            consultaGenero.listaTodasGeneros();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroObjeto.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        consultaGenero.listaTodasGeneros();        
         consultaGenero.setVisible(true);
-        //    setStatusTela(false);
+        setStatusTela(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_generoActionPerformed
-
-    private void jtf_saldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_saldoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_saldoActionPerformed
-
-    private void jtf_disponivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_disponivelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_disponivelActionPerformed
 
     private void jb_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar1ActionPerformed
         // TODO add your handling code here:
@@ -675,19 +613,16 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvar1ActionPerformed
 
-    private void jtf_codigo_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_codigo_diariaActionPerformed
+    private void jtf_diaria_diasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_diaria_diasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_diariaActionPerformed
+    }//GEN-LAST:event_jtf_diaria_diasActionPerformed
 
     private void jb_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_diariaActionPerformed
         ConsultaDiariaObjeto consulta = new ConsultaDiariaObjeto();
         consulta.setTelaCadastroObjeto(this);
-        consulta.janelapai = this;
-        try {
-            consulta.listaTodasDiarias();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroObjeto.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        consulta.janelapai = this;        
+        consulta.listaTodasDiarias();
+        
         consulta.setVisible(true);
         //    setStatusTela(false);
     }//GEN-LAST:event_jb_diariaActionPerformed
@@ -703,8 +638,8 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
-            public void run() {                
-                new CadastroObjeto().setVisible(true);                
+            public void run() {
+                new CadastroObjeto().setVisible(true);
             }
         });
     }
@@ -717,10 +652,8 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -733,6 +666,7 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -759,23 +693,21 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public static javax.swing.JTextArea jta_sinopse;
     public static javax.swing.JTable jtbl_copia;
     public static javax.swing.JTextField jtf_censura;
-    public static javax.swing.JTextField jtf_codigo_diaria;
     public static javax.swing.JTextField jtf_codigo_objeto;
     public static javax.swing.JTextField jtf_data_aquisicao;
     private javax.swing.JTextField jtf_descricao_diaria;
     public static javax.swing.JTextField jtf_descricao_genero;
     public static javax.swing.JTextField jtf_descricao_objeto;
     public static javax.swing.JTextField jtf_descricao_resumida;
-    public static javax.swing.JTextField jtf_disponivel;
+    public static javax.swing.JTextField jtf_diaria_dias;
     public static javax.swing.JTextField jtf_duracao;
     public static javax.swing.JTextField jtf_preco_custo;
-    public static javax.swing.JTextField jtf_saldo;
     public static javax.swing.JTextField jtf_titulo_original;
     public static javax.swing.JTextField jtf_valor;
     public static javax.swing.JTextField jtf_valor_promocao;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
-    
+
     public void setTela(String permissao) {
         if (permissao.equals("usuario")) {
         } else {
@@ -790,7 +722,7 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarObjeto");
             JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-//            retornaJanelaPai();
+
         }
     }
 
@@ -799,6 +731,26 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
         if (jtf_descricao_objeto.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Descrição\n";
+        }
+
+        if (jtf_titulo_original.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Título Original\n";
+        }
+
+        if (jtf_duracao.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Duração\n";
+        }
+
+        if (jtf_diaria_dias.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Diária\n";
+        }
+
+        if (jtf_descricao_genero.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Gênero\n";
+        }
+
+        if (jtf_censura.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Censura\n";
         }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
@@ -813,7 +765,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
     public boolean verificarCamposCopia() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
-
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
@@ -832,31 +783,12 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
         this.setEnabled(status);
     }
 
-    public void verificaCadastro() {
-        ProdutoDAO prod = new ProdutoDAO();
-        produtos = prod.listarProduto(jtf_descricao_objeto.getText().trim());
-        validaCadastro(produtos);
-    }
-
-    public void validaCadastro(List<Produto> produto) {//verifica cadastro existente que retornou de uma lista
-
-        if (produto.size() == 0) {
-            //cadastraProduto();
-        } else {
-            JOptionPane.showMessageDialog(null, "Produto existente");
-            jtf_descricao_objeto.requestFocus();
-        }
-    }
-
-    Telefone telefone = new Telefone();
-    Cliente cliente;
-
     public boolean verificar_campo_copia() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-        
+
             return false;
         } else {
             return true;
@@ -886,75 +818,47 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
         return tabela;
     }
 
-    private void excluirDiaria() {
-        removerDiaria(jtbl_copia);
-    }
-
-    public void removerDiaria(JTable tb) {
-        DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
-        if (tb.getSelectedRow() != -1) {
-            int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-            if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                row.removeRow(tb.getSelectedRow());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um produto");
-        }
-    }
-
     public void carregaDiaria(Diaria diaria) {
-        this.diaria = diaria;
-        jtf_codigo_diaria.setText(String.valueOf(diaria.getDias()));
-        jtf_descricao_diaria.setText(diaria.getNome_diaria());
-        String valor = null;
-        String valor_promocao = null;
-        String multa = null;
+        if (diaria != null) {
+            this.diaria = diaria;
+            jtf_diaria_dias.setText(String.valueOf(diaria.getDias()));
+            jtf_descricao_diaria.setText(diaria.getNome_diaria());
+            String valor = null;
+            String valor_promocao = null;
+            String multa = null;
 
-        valor = String.valueOf(diaria.getValor());
-        valor_promocao = String.valueOf(diaria.getValor_promocao());
-        multa = String.valueOf(diaria.getMultas());
+            valor = String.valueOf(diaria.getValor());
+            valor_promocao = String.valueOf(diaria.getValor_promocao());
+            multa = String.valueOf(diaria.getMultas());
 
-        valor = setPrecoFormat(valor);
-        valor_promocao = setPrecoFormat(valor_promocao);
-        multa = setPrecoFormat(multa);
+            Moeda moeda = new Moeda();
+            valor = moeda.setPrecoFormat(valor);
+            valor_promocao = moeda.setPrecoFormat(valor_promocao);
+            multa = moeda.setPrecoFormat(multa);
 
-        jtf_valor.setText(valor);
-        jtf_valor_promocao.setText(valor_promocao);
+            jtf_valor.setText(valor);
+            jtf_valor_promocao.setText(valor_promocao);
+        } else {
+            JOptionPane.showMessageDialog(null, "Objeto diária nulo");
+        }
     }
 
     public void carregaGenero(Genero genero) {
-        this.genero = genero;
-        jtf_descricao_genero.setText(genero.getNome_genero());
+        if (genero != null) {
+            this.genero = genero;
+            jtf_descricao_genero.setText(genero.getNome_genero());
+        } else {
+            JOptionPane.showMessageDialog(null, "Objeto gênero nulo");
+        }
+
     }
 
     public void setRequestDiaria() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     public void setRequestGenero() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    public String setPrecoFormat(String preco) {
-        DecimalFormat dFormat = new DecimalFormat();
-        dFormat.applyPattern("R$ #0.00");
-        return dFormat.format(getPrecoFormato(preco));
-    }
-
-    public static Double getPrecoFormato(String preco) {
-        Double precoFormatado = 0.0;
-        try {
-            preco = preco.replace("R", "");
-            preco = preco.replace("$", "");
-            preco = preco.replace(",", ".");
-            preco = preco.replace(" ", "");
-            precoFormatado = Double.parseDouble(preco.trim());
-
-            //this.objFuncionario.setSalario(getSalarioFormat(jTSalario.getText())); pegar valor em double
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");
-        }
-        return precoFormatado;
     }
 
     public static Diaria getObjetoDiaria() {

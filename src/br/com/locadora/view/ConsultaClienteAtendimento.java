@@ -218,18 +218,15 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         if(tb != null){
         Dependente dependente = tbClienteDependenteLinhaSelecionada(jtbl_cliente);
         if ((janelapaiLocacao != null) && (dependente != null)) {
-            janelapaiLocacao.setEnabled(true);
-            janelapaiLocacao.setVisible(true);
-            telaAtendimentoLocacao.carregarClienteDependente(dependente);
-            telaAtendimentoLocacao.setStatusTela(true);
+            janelapaiLocacao.carregarClienteDependente(dependente);
+            janelapaiLocacao.setStatusTela(true);
         } else if ((janelapaiDevolucao != null) && (dependente != null)) {
-            janelapaiDevolucao.setEnabled(true);
-            janelapaiDevolucao.setVisible(true);
-            telaAtendimentoDevolucao.carregarClienteDependente(dependente);
-            telaAtendimentoDevolucao.setStatusTela(true);
+            janelapaiDevolucao.carregarClienteDependente(dependente);
+            janelapaiDevolucao.setStatusTela(true);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente");
         }
+            setVisible(false);
         }
     }
 

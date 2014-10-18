@@ -1271,8 +1271,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             } else {
                 JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
             }
-        } catch (NumberFormatException e) {
-            Logger.getLogger(AtendimentoLocacao.class.getName()).log(Level.SEVERE, null, e);
+        } catch (NumberFormatException e) {           
             JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
         }
 
@@ -1296,7 +1295,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     public void consultarClienteAtendimento() {
         ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
-        consultaCliente.setTelaAtendimento(this);;
         consultaCliente.janelapaiLocacao = this;
         consultaCliente.setVisible(true);
         consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
@@ -1619,9 +1617,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
     }
 
-    public void setStatusTela(boolean status) {
+    public void setStatusTela(boolean status) {        
+
         if (status) {
-            this.setVisible(status);
+            this.setVisible(status);           
         }
         this.setEnabled(status);
 
@@ -1723,7 +1722,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
                 if (copiaDAO.getObjeto_existente(codigo_objeto) == true) {
 
-                    copias = copiaDAO.getCopia_codigo_objeto(codigo_objeto);
+                    copias = copiaDAO.getCopia_codigo_objeto(codigo_objeto, 0, "Locação");
 
                     if (copias.size() > 0) {
 //                        if (checkCensura(copias.get(0).getObjeto().getCensura(), dependente.getData_nascimento()) == true) {

@@ -13,8 +13,7 @@ import br.com.locadora.model.bean.Usuario;
  * @author ALENCAR
  */
 public interface TelaPrincipal_Interface {
-    public void setStatusTela(boolean status);
-    public void setDesabilitaTela();
+    public void setStatusTela(boolean status);   
     public void carregaUsuario(Usuario usuario);
 
 }

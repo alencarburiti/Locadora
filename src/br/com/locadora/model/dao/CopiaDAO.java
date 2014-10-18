@@ -12,7 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CopiaDAO implements InterfaceCopiaDAO {
 
@@ -120,6 +121,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "	A.CODIGO_COPIA, \n"
                 + "	A.CODIGO_BARRAS, \n"
                 + "    A.DEL_FLAG,\n"
+                + "    A.PRECO_CUSTO,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
@@ -156,10 +158,9 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return resultado;
     }
-    
-    
+
     public boolean getCopia_existente(String codigo_barras) throws SQLException {
-        
+
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -172,9 +173,9 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             rs = ps.executeQuery();
             Integer quantidade_existente;
             rs.next();
-            
+
             quantidade_existente = rs.getInt("COUNT");
-            
+
             if (quantidade_existente > 0) {
                 return true;
             }
@@ -184,9 +185,9 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return false;
     }
-    
+
     public boolean getObjeto_existente(Integer codigo_objeto) throws SQLException {
-        
+
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -199,9 +200,9 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             rs = ps.executeQuery();
             Integer quantidade_existente;
             rs.next();
-            
+
             quantidade_existente = rs.getInt("COUNT");
-            
+
             if (quantidade_existente > 0) {
                 return true;
             }
@@ -219,9 +220,10 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         ResultSet rs = null;
         String sqlSelect = "SELECT \n"
                 + "	A.CODIGO_COPIA, \n"
-                + "	A.OBJETO_CODIGO_OBJETO, \n"                
+                + "	A.OBJETO_CODIGO_OBJETO, \n"
                 + "    A.CODIGO_BARRAS,\n"
                 + "    A.NUMERO_COPIA,\n"
+                + "    A.PRECO_CUSTO,\n"
                 + "    A.DEL_FLAG,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.CODIGO_OBJETO,\n"
@@ -262,16 +264,17 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 
     }
 
-    public List<Copia> getCopia_codigo_objeto(Integer codigo_objeto) throws SQLException {
+    public List<Copia> getCopia_codigo_objeto(Integer codigo_objeto, Integer del_flag, String tipo_movimento) throws SQLException {
         List<Copia> resultado = new ArrayList<Copia>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT \n"
-                + "	A.CODIGO_COPIA, \n"                
+        String sqlSelect_del_flag = "SELECT \n"
+                + "	A.CODIGO_COPIA, \n"
                 + "	A.OBJETO_CODIGO_OBJETO, \n"
                 + "    A.CODIGO_BARRAS,\n"
                 + "    A.NUMERO_COPIA,\n"
+                + "    A.PRECO_CUSTO,\n"
                 + "    A.DEL_FLAG,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.CODIGO_OBJETO,\n"
@@ -292,12 +295,45 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n"
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
-                + "        AND TIPO_MOVIMENTO = 'Locação'\n"
+                + "        AND TIPO_MOVIMENTO LIKE ?\n"
+                + "		AND B.CODIGO_OBJETO = ? ORDER BY CODIGO_COPIA;";
+
+        String sqlSelect = "SELECT \n"
+                + "	A.CODIGO_COPIA, \n"
+                + "	A.OBJETO_CODIGO_OBJETO, \n"
+                + "    A.CODIGO_BARRAS,\n"
+                + "    A.NUMERO_COPIA,\n"
+                + "    A.PRECO_CUSTO,\n"
+                + "    A.DEL_FLAG,\n"
+                + "    B.DESCRICAO_OBJETO,\n"
+                + "    B.CODIGO_OBJETO,\n"
+                + "    B.TIPO_MOVIMENTO,\n"
+                + "    B.TIPO_MIDIA,\n"
+                + "    B.CENSURA,\n"
+                + "    A.IDIOMA,\n"
+                + "    A.LEGENDA,\n"
+                + "    C.DIAS,\n"
+                + "    C.VALOR,\n"
+                + "    C.VALOR_PROMOCAO\n"
+                + "FROM\n"
+                + "    locadora.COPIA A,\n"
+                + "    locadora.OBJETO B,\n"
+                + "    locadora.DIARIA C\n"
+                + "WHERE\n"
+                + "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
+                + "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n"
+                + "        AND A.DEFECT_FLAG = 0\n"
+                + "        AND TIPO_MOVIMENTO LIKE ?\n"
                 + "		AND B.CODIGO_OBJETO = ? ORDER BY CODIGO_COPIA;";
 
         try {
-            ps = con.prepareStatement(sqlSelect);
-            ps.setInt(1, codigo_objeto);
+            if (del_flag == 0) {
+                ps = con.prepareStatement(sqlSelect_del_flag);
+            } else {
+                ps = con.prepareStatement(sqlSelect);
+            }
+            ps.setString(1, "%" + tipo_movimento);
+            ps.setInt(2, codigo_objeto);
 
             rs = ps.executeQuery();
 
@@ -306,9 +342,12 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 //            }
             ps.close();
             return resultado;
+        } catch (SQLException ex) {
+            Logger.getLogger(CopiaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
+        return null;
 
     }
 
@@ -322,6 +361,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "	A.OBJETO_CODIGO_OBJETO, \n"
                 + "	A.CODIGO_BARRAS, \n"
                 + "    A.DEL_FLAG,\n"
+                + "    A.PRECO_CUSTO,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
@@ -366,6 +406,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "	A.CODIGO_BARRAS, \n"
                 + "	A.OBJETO_CODIGO_OBJETO, \n"
                 + "    A.DEL_FLAG,\n"
+                + "    A.PRECO_CUSTO,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
@@ -426,27 +467,27 @@ public class CopiaDAO implements InterfaceCopiaDAO {
     public String getQuantidadeAssistida(Integer codigo_cliente, String codigo_barras) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT \n" +
-            "    COUNT(C.LOCACAO_CODIGO_LOCACAO) AS COUNT,\n" +
-            "    MAX(DATE_FORMAT(C.DATA_LOCACAO, '%d/%m/%Y')) AS ULTIMA_DATA_LOCACAO\n" +
-            "FROM\n" +
-            "    locadora.COPIA A,\n" +
-            "    locadora.LOCACAO B,\n" +
-            "    locadora.ITEM_LOCACAO C,\n" +
-            "    locadora.DEPENDENTE D,\n" +
-            "    LOCADORA.OBJETO E\n" +
-            "WHERE\n" +
-            "    B.CODIGO_LOCACAO = C.LOCACAO_CODIGO_LOCACAO\n" +
-            "        AND B.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
-            "        AND A.CODIGO_COPIA = C.COPIA_CODIGO_COPIA\n" +
-            "        AND A.OBJETO_CODIGO_OBJETO = E.CODIGO_OBJETO\n" +
-            "        AND E.CODIGO_OBJETO = (SELECT \n" +
-            "            OBJETO_CODIGO_OBJETO\n" +
-            "        FROM\n" +
-            "            LOCADORA.COPIA\n" +
-            "        WHERE\n" +
-            "            CODIGO_BARRAS = ?)		\n" +
-            "        AND D.CODIGO_DEPENDENTE = ?;";
+        String sqlSelect = "SELECT \n"
+                + "    COUNT(C.LOCACAO_CODIGO_LOCACAO) AS COUNT,\n"
+                + "    MAX(DATE_FORMAT(C.DATA_LOCACAO, '%d/%m/%Y')) AS ULTIMA_DATA_LOCACAO\n"
+                + "FROM\n"
+                + "    locadora.COPIA A,\n"
+                + "    locadora.LOCACAO B,\n"
+                + "    locadora.ITEM_LOCACAO C,\n"
+                + "    locadora.DEPENDENTE D,\n"
+                + "    LOCADORA.OBJETO E\n"
+                + "WHERE\n"
+                + "    B.CODIGO_LOCACAO = C.LOCACAO_CODIGO_LOCACAO\n"
+                + "        AND B.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n"
+                + "        AND A.CODIGO_COPIA = C.COPIA_CODIGO_COPIA\n"
+                + "        AND A.OBJETO_CODIGO_OBJETO = E.CODIGO_OBJETO\n"
+                + "        AND E.CODIGO_OBJETO = (SELECT \n"
+                + "            OBJETO_CODIGO_OBJETO\n"
+                + "        FROM\n"
+                + "            LOCADORA.COPIA\n"
+                + "        WHERE\n"
+                + "            CODIGO_BARRAS = ?)		\n"
+                + "        AND D.CODIGO_DEPENDENTE = ?;";
         ResultSet rs = null;
 
         try {
@@ -463,15 +504,15 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 
             rs.close();
             ps.close();
-            if(quantidade_locado>=1){                 
-                return "Cliente já assistiu " + quantidade_locado + ", última vez foi no dia "+ultima_data_locado + ". Deseja locar novamente ?";    
-            } else{
+            if (quantidade_locado >= 1) {
+                return "Cliente já assistiu " + quantidade_locado + ", última vez foi no dia " + ultima_data_locado + ". Deseja locar novamente ?";
+            } else {
                 return "";
             }
         } finally {
             pool.liberarConnection(con);
         }
-        
+
     }
 
     public List<Copia> getTodasCopias() throws SQLException {
@@ -511,12 +552,14 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             objeto.setTipo_midia(rs.getString("TIPO_MIDIA"));
             objeto.setCodigo_objeto(rs.getInt("OBJETO_CODIGO_OBJETO"));
             objeto.setCensura(rs.getInt("CENSURA"));
+
             objeto.setDiaria(diaria);
             copia.setObjeto(objeto);
 
             copia.setCodigo_copia(rs.getInt("CODIGO_COPIA"));
             copia.setCodigo_barras(rs.getString("CODIGO_BARRAS"));
-            
+            copia.setPreco_custo(rs.getDouble("PRECO_CUSTO"));
+
             copia.setIdioma(rs.getString("IDIOMA"));
             copia.setLegenda(rs.getString("LEGENDA"));
 

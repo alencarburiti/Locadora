@@ -28,7 +28,7 @@ public class ImprimiCupom {
     public void escreverTXTLocacao(List<Copia> copias, Dependente dependente) {
         //ESCREVER TXT    
         try {
-            File arquivo = new File("teste.txt");
+            File arquivo = new File("/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/Imprimir/comprovanteLocacao.txt");
             if (arquivo.exists()) {
                 //se existir
                 FileWriter arquivoTxt = new FileWriter(arquivo, true);
@@ -90,7 +90,7 @@ public class ImprimiCupom {
     public void imprimirArquivo() {
         // imprime arquivo 
         try {
-            java.io.InputStream is = new FileInputStream("teste.txt");
+            java.io.InputStream is = new FileInputStream("/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/Imprimir/comprovanteLocacao.txt");
             Scanner sc = new Scanner(is);
             FileOutputStream fs = new FileOutputStream("LPT1:");
             PrintStream ps = new PrintStream(fs);

@@ -10,12 +10,18 @@
  */
 package br.com.locadora.view;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Genero;
+import br.com.locadora.model.dao.GeneroDAO;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -26,13 +32,14 @@ import javax.swing.table.DefaultTableModel;
  * @author ALENCAR
  */
 public class MenuGenero extends javax.swing.JFrame {
-
+    
     public String tipoCadastro;
     public TelaPrincipal janelapai;
     public static List<Genero> generos;
     private TelaPrincipal_Interface telaPrincipal;
     public SiscomController controller;
     public Genero genero;
+    public InterfacePool pool;
 
     /**
      * Creates new form DestinoGUI
@@ -238,10 +245,11 @@ public class MenuGenero extends javax.swing.JFrame {
             }// </editor-fold>//GEN-END:initComponents
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        CadastroGenero des = new CadastroGenero();
-        des.janelapai = this;
-        des.setVisible(true);
-//        this.setEnabled(false);
+        CadastroGenero cadastroGenero = new CadastroGenero();
+        cadastroGenero.janelapai = this;
+        cadastroGenero.setVisible(true);
+        setStatusTela(false);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_novoActionPerformed
 
@@ -249,20 +257,9 @@ public class MenuGenero extends javax.swing.JFrame {
         alterar();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_alterarActionPerformed
-    public void alterar() {
-        Genero desti = tbDestinoLinhaSelecionada(jtbl_genero);
-        if (desti != null) {
-            AtualizaGenero generoAltera = new AtualizaGenero(desti);
-            generoAltera.janelapai = this;
-            generoAltera.setVisible(true);
-            this.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um armazém");
-            jtf_consulta.requestFocus();
-        }
-    }
+    
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
-        excluiDestino();
+        removeGenero(jtbl_genero);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
 
@@ -296,13 +293,13 @@ public class MenuGenero extends javax.swing.JFrame {
 
     private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_generoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Genero desti = tbDestinoLinhaSelecionada(jtbl_genero);
-            if (desti != null) {
-                AtualizaGenero generoAltera = new AtualizaGenero(desti);
+            Genero generoTb = tbGeneroLinhaSelecionada(jtbl_genero);
+            if (generoTb != null) {
+                AtualizaGenero generoAltera = new AtualizaGenero(generoTb);
                 generoAltera.janelapai = this;
                 generoAltera.setVisible(true);
             }
-
+            
         }
     }//GEN-LAST:event_jtbl_generoKeyPressed
     /**
@@ -310,7 +307,7 @@ public class MenuGenero extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
-
+            
             public void run() {
                 new MenuGenero().setVisible(true);
             }
@@ -332,48 +329,71 @@ public class MenuGenero extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
-    private void buscarDados() {
+    public void buscarDados() {
         controller = new SiscomController();
         controller.processarRequisicao("consultarGenero");
     }
-
-    public Genero tbDestinoLinhaSelecionada(JTable tb) {
+    
+    public Genero tbGeneroLinhaSelecionada(JTable tb) {
         Genero dest = null;
-        if (tb.getSelectedRow() != -1) {
+        if (tb != null && tb.getSelectedRow() != -1) {
             dest = new Genero();
             dest.setCodigo_genero(generos.get(tb.getSelectedRow()).getCodigo_genero());
             dest.setNome_genero(generos.get(tb.getSelectedRow()).getNome_genero());
-
+            
         }
         return dest;
     }
-
+    
     public void request() {
         jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }
-
+    
     public Genero removeGenero(JTable tb) {
-        if (tb.getSelectedRow() != -1) {
-            int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-//            if (selectedOption == JOptionPane.YES_NO_OPTION) {
-//                GeneroDAO generoControl = new GeneroDAO();
-//                genero.setCodigo_genero(generos.get(tb.getSelectedRow()).getCodigo_genero());
-//                if (generoControl.excluiDestino(genero)) {
-//                    tmDestino.removeRow(tb.getSelectedRow());
-//                }
-//            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um armazém");
+        try {
+            if (tb != null && tb.getSelectedRow() != -1) {
+                int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                    pool = new Pool();
+                    GeneroDAO generoControl = new GeneroDAO(pool);
+                    
+                    generoControl.excluir(generos.get(tb.getSelectedRow()).getCodigo_genero());
+                    tmDestino.removeRow(tb.getSelectedRow());
+                    
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um Gênero");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Gênero não pode ser excluido.");
         }
         return genero;
     }
-
-    public void excluiDestino() {
-        removeGenero(jtbl_genero);
-    }
-
+    
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
+    }
+    
+    public void setStatusTela(boolean status) {        
+        
+        if (status) {
+            this.setVisible(status);            
+        }
+        this.setEnabled(status);
+        
+    }
+
+    public void alterar() {
+        Genero desti = tbGeneroLinhaSelecionada(jtbl_genero);
+        if (desti != null) {
+            AtualizaGenero generoAltera = new AtualizaGenero(desti);
+            generoAltera.janelapai = this;
+            generoAltera.setVisible(true);
+            setStatusTela(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um armazém");
+            jtf_consulta.requestFocus();
+        }
     }
 }

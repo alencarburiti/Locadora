@@ -441,7 +441,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
             jtf_valor_debito_anterior.setText(AtendimentoLocacao.jtf_debito_total_locacao.getText());
             Moeda moeda = new Moeda();
             Double total_a_pagar;
-            total_a_pagar = moeda.getPrecoFormato(AtendimentoLocacao.jtf_valor_total_locacao.getText())+moeda.getPrecoFormato(AtendimentoLocacao.jtf_debito_total_locacao.getText());
+            total_a_pagar = (moeda.getPrecoFormato(AtendimentoLocacao.jtf_valor_total_locacao.getText())-moeda.getPrecoFormato(AtendimentoLocacao.jtf_debito_total_locacao.getText()))*(-1);
             
             jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(String.valueOf(total_a_pagar)));
         } 

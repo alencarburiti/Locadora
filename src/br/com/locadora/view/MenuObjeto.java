@@ -12,15 +12,15 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
-import br.com.locadora.model.bean.Cliente;
+import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.bean.Objeto;
+import static br.com.locadora.view.MenuObjeto.jtf_consulta;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class MenuObjeto extends javax.swing.JFrame {
@@ -29,10 +29,9 @@ public class MenuObjeto extends javax.swing.JFrame {
     public InterfacePool pool;
     public SiscomController controller;
     private TelaPrincipal_Interface telaPrincipal;//Recebendo tela como parametro para atualização apos pesquisa
-    public List<Cliente> clientes;
+    public static List<Objeto> objetos = new ArrayList<Objeto>();
     public TelaPrincipal janelapai;
     public static Objeto objeto;
-    public static List<Objeto> objetos;
 
     public MenuObjeto() {
         initComponents();
@@ -222,30 +221,22 @@ public class MenuObjeto extends javax.swing.JFrame {
 
     private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
 
-//        if (jrb_cpf.isSelected() == true) {
-//            listar_clientes_cpf();
-//        } else if (jrb_descricao.isSelected() == true) {
-//            listarEntradas();
-//        } else if (jrb_detalhado.isSelected() == true) {
-//            listarFornecedor();
-//        } else {
-//            listarEntradas();
-//        }
 }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-
         CadastroObjeto cadastroObjeto = new CadastroObjeto();
-        cadastroObjeto.janelaPaim = this;
+        cadastroObjeto.janelapai = this;
         cadastroObjeto.setVisible(true);
         this.setEnabled(false);
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);
+        janelapai.setEnabled(true);
 }//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        janelapai.setEnabled(true);
         setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
@@ -258,7 +249,17 @@ public class MenuObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jrb_codigoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
-        alterar();
+        objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
+        if (objeto != null) {
+            AtualizaObjeto alteraObjeto = new AtualizaObjeto(objeto);
+
+            alteraObjeto.janelapai = this;
+            alteraObjeto.setVisible(true);
+            this.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um objeto");
+            jtf_consulta.requestFocus();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_alterarActionPerformed
 
@@ -311,30 +312,30 @@ public class MenuObjeto extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
-    public Cliente tbClienteLinhaSelecionada(JTable tb) {
-        Cliente cliente = null;
-        if (tb.getSelectedRow() != -1) {
-            cliente = new Cliente();
-            cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
+    public Objeto tbObjetoLinhaSelecionada(JTable tb) {
+        objeto = new Objeto();
+        if (tb != null && tb.getSelectedRow() != -1) {
+            objeto.setCodigo_objeto(objetos.get(tb.getSelectedRow()).getCodigo_objeto());
+            objeto.setDescricao_objeto(objetos.get(tb.getSelectedRow()).getDescricao_objeto());
+            objeto.setTitulo_original(objetos.get(tb.getSelectedRow()).getTitulo_original());
+            objeto.setDescricao_resumida(objetos.get(tb.getSelectedRow()).getDescricao_resumida());
+            objeto.setTipo_movimento(objetos.get(tb.getSelectedRow()).getTipo_movimento());
+            objeto.setProducao(objetos.get(tb.getSelectedRow()).getProducao());
+            objeto.setDuracao(objetos.get(tb.getSelectedRow()).getDuracao());
+            objeto.setMidia(objetos.get(tb.getSelectedRow()).getMidia());
+            objeto.setTipo_midia(objetos.get(tb.getSelectedRow()).getTipo_midia());
+
+            objeto.setDiaria(objetos.get(tb.getSelectedRow()).getDiaria());
+            objeto.setGenero(objetos.get(tb.getSelectedRow()).getGenero());
+
+            objeto.setElenco(objetos.get(tb.getSelectedRow()).getElenco());
+            objeto.setSinopse(objetos.get(tb.getSelectedRow()).getSinopse());
+            objeto.setCensura(objetos.get(tb.getSelectedRow()).getCensura());
         }
-        return cliente;
+        return objeto;
     }
 
-    public void alterar() {
-//        Cliente cliente = tbClienteLinhaSelecionada(jtbl_cliente);       
-//        if (cliente != null) {
-//            
-//            GrupoAlterarGUI grupoAltera = new GrupoAlterarGUI(grup, sub);
-//            grupoAltera.janelapai = this;
-//            grupoAltera.setVisible(true);
-//            this.setEnabled(false);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Selecione um grupo e um sub-grupo");
-//            jtf_consulta.requestFocus();
-//        }
-    }
-
-    private void buscarDados() {
+    public void buscarDados() {
         controller = new SiscomController();
         controller.processarRequisicao("consultarObjeto");
     }
@@ -348,8 +349,9 @@ public class MenuObjeto extends javax.swing.JFrame {
     }
 
     public void setJanelaPai(TelaPrincipal janelapai) {
-        this.janelapai = janelapai;
-        permissao = janelapai.permissao;
+        if (janelapai != null) {
+            this.janelapai = janelapai;
+        }
     }
 
 }

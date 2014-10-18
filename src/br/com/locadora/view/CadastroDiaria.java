@@ -12,18 +12,11 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
-import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.UnaccentedDocument;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.List;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
@@ -34,11 +27,13 @@ public class CadastroDiaria extends javax.swing.JFrame {
     public MenuDiaria janelapai;
     public List<Diaria> generos;
 
-    /** Creates new form DestinoCadastroGUI */
+    /**
+     * Creates new form DestinoCadastroGUI
+     */
     public CadastroDiaria() {
         initComponents();
         janelapai = null;
-    
+
     }
 
     @SuppressWarnings("unchecked")
@@ -340,7 +335,6 @@ public class CadastroDiaria extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_valor_promocao;
     // End of variables declaration//GEN-END:variables
 
-
     private void retornaJanelaPai() {
         setVisible(false);
 
@@ -352,8 +346,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     }
 
-    InterfacePool pool;   
+    InterfacePool pool;
     SiscomController controller;
+
     private void enviaDados() {
         if (verificarCampos()) {
             controller = new SiscomController();
@@ -382,19 +377,4 @@ public class CadastroDiaria extends javax.swing.JFrame {
         }
     }
 
-//    public boolean verificaCadastroExistente() {
-//        DiariaDAO diaria = new DiariaDAO();
-//        generos = diaria.listarDiariaDescricao(jtf_nome_diaria.getText().trim());
-//        validaCadastro(generos);
-//    }
-//
-//    public void validaCadastro(List<Diaria> diarias) {//verifica cadastro existente que retornou de uma lista
-//
-//        if (diarias.size() == 0) {
-//            enviaDados();
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Armazém existente");
-//            jtf_nome_diaria.requestFocus();
-//        }
-//    }
 }

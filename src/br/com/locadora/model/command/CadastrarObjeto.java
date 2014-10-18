@@ -43,15 +43,6 @@ public class CadastrarObjeto implements InterfaceCommand {
                 objeto = objetoDAO.salvar(objeto);
 
                 CadastroObjeto.jtf_codigo_objeto.setText(String.valueOf(objeto.getCodigo_objeto()));
-//            List<Telefone> itens_telefone = new ArrayList();
-//            for (int i = 0; i < CadastroObjeto.jtbl_telefone.getRowCount(); i++) {
-//                Telefone telefone = new Telefone();
-//                telefone.setTelefone((String) CadastroObjeto.jtbl_telefone.getValueAt(i, 0));
-//                itens_telefone.add(telefone);
-//            }
-//            
-//            telefoneDAO.salvar(itens_telefone, objeto);
-//            
 
             } else {
                 

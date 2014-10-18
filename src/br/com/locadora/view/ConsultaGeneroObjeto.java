@@ -19,14 +19,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,11 +32,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaGeneroObjeto extends javax.swing.JFrame {
 
-    CadastroObjeto janelapai;
+    public CadastroObjeto janelapai;
+    public AtualizaObjeto janelapai2;
 
     public ConsultaGeneroObjeto() {
         initComponents();
         janelapai = null;
+        janelapai2 = null;
     }
     List<Genero> generos;
 
@@ -200,17 +199,12 @@ public class ConsultaGeneroObjeto extends javax.swing.JFrame {
         if ((janelapai != null) && (genero != null)) {
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
-            telaCadastroObjeto.carregaGenero(genero);
-            //telaCadastroObjeto.setStatusTela(false);
+            telaCadastroObjeto.carregaGenero(genero);            
+        }else if ((janelapai2 != null) && (genero != null)) {
+            janelapai2.setEnabled(true);
+            janelapai2.setVisible(true);
+            janelapai2.carregaGenero(genero);            
         }
-
-
-//        if ((janelapai3 != null) && (genero != null)) {
-//            janelapai3.setEnabled(true);
-//            janelapai3.setVisible(true);
-//            telaAjusteEstoque.carregaFornecedor(genero);
-//            //telaSaidaEstoque.statusTela(true);        
-//        }
 
     } else {
            JOptionPane.showMessageDialog(null, "Selecione um fornecedor");
@@ -222,36 +216,29 @@ public class ConsultaGeneroObjeto extends javax.swing.JFrame {
         if ((janelapai != null)) {
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
+            janelapai.setStatusTela(false);
+        }
+        else if ((janelapai2 != null)) {
+            janelapai2.setEnabled(true);
+            janelapai2.setVisible(true);
+            janelapai2.setStatusTela(false);
         }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_novo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novo1ActionPerformed
-//        CadastroFornecedor forn;
-//
-//        forn = new CadastroFornecedor();
-//        forn.janelapai2 = this;
-//        forn.setVisible(true);
-//        this.setEnabled(false);
-
 
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMaxWidth( 60 );
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMinWidth( 60 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMaxWidth( 60 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMinWidth( 60 );
+        
     }//GEN-LAST:event_formWindowOpened
 
 private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_generoKeyPressed
     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//        if(jTable1.getSelectedRow()== 1){                           
         botaoOK(jtbl_genero);
-        //01  }
     }
     // TODO add your handling code here:
 }//GEN-LAST:event_jtbl_generoKeyPressed
@@ -313,7 +300,7 @@ private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         mostraGenero(generos);
     }
     
-    public void listaTodasGeneros() throws SQLException {
+    public void listaTodasGeneros() {
         pool = new Pool();
         GeneroDAO generoDAO = new GeneroDAO(pool);
         generos = generoDAO.getTodasGeneros();

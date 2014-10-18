@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Genero;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GeneroDAO implements InterfaceGeneroDAO {
 
@@ -22,16 +25,12 @@ public class GeneroDAO implements InterfaceGeneroDAO {
     public void atualizar(Genero genero) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlAtualizar = " UPDATE DIARIA SET bairro=?, celular=?, cep=?, "
-                + " cidade=?, cpf_cnpj=?, email=?, endereco=?, estado=?,"
-                + " telefone=?, nome=? WHERE codigo = ? ;";
-
         try {
-            ps = con.prepareStatement(sqlAtualizar);
-
+            ps = con.prepareCall("{CALL SP_UPDATE_GENERO_BY_PK(?,?)}");
+            
             setPreparedStatement(genero, ps);
 
-            ps.executeUpdate();
+            ps.execute();
             ps.close();
         } finally {
             pool.liberarConnection(con);
@@ -42,7 +41,7 @@ public class GeneroDAO implements InterfaceGeneroDAO {
     public void excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlExcluir = "DELETE FROM DIARIA WHERE CODIGO_DIARIA = ?;";
+        String sqlExcluir = "DELETE FROM GENERO WHERE CODIGO_GENERO = ?;";
 
         try {
             ps = con.prepareStatement(sqlExcluir);
@@ -124,7 +123,7 @@ public class GeneroDAO implements InterfaceGeneroDAO {
         return resultado;
     }
 
-    public List<Genero> getTodasGeneros() throws SQLException {
+    public List<Genero> getTodasGeneros() {
         List<Genero> resultado = new ArrayList<Genero>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -139,6 +138,8 @@ public class GeneroDAO implements InterfaceGeneroDAO {
 
             rs.close();
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(GeneroDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -178,7 +179,8 @@ public class GeneroDAO implements InterfaceGeneroDAO {
 
     private void setPreparedStatement(Genero genero, PreparedStatement ps)
             throws SQLException {
-        ps.setString(1, genero.getNome_genero());
+        ps.setInt(1, genero.getCodigo_genero());
+        ps.setString(2, genero.getNome_genero());
      
     }
 

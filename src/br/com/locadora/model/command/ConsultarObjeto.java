@@ -5,10 +5,8 @@ import br.com.locadora.model.dao.InterfaceDiariaDAO;
 import br.com.locadora.model.dao.InterfaceGeneroDAO;
 import br.com.locadora.model.dao.InterfaceObjetoDAO;
 import br.com.locadora.util.ItemDbGrid;
-import br.com.locadora.view.MenuDiaria;
 import br.com.locadora.view.MenuObjeto;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +34,7 @@ public class ConsultarObjeto implements InterfaceCommand {
                 if (!MenuObjeto.jtf_consulta.getText().equals("")) {
                     objetos = null;
                     objetos = objetoDAO.getObjeto_codigo(Integer.parseInt(MenuObjeto.jtf_consulta.getText().trim()));
-                    System.out.print(objetos.get(0).getCodigo_objeto());
+                    
                     mostrar_Objeto(objetos);
                 } else {
                     JOptionPane.showMessageDialog(null, "Informe um parâmentro");

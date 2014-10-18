@@ -9,6 +9,8 @@ import java.util.List;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Diaria;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DiariaDAO implements InterfaceDiariaDAO {
 
@@ -123,7 +125,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
         return resultado;
     }
 
-    public List<Diaria> getTodasDiarias() throws SQLException {
+    public List<Diaria> getTodasDiarias() {
         List<Diaria> resultado = new ArrayList<Diaria>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -138,6 +140,8 @@ public class DiariaDAO implements InterfaceDiariaDAO {
 
             rs.close();
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DiariaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }

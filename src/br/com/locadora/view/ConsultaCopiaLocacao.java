@@ -151,14 +151,14 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Código de Barras", "Descrição Objeto", "Idioma", "Legenda", "Tipo Mídia", "Status"
+                        "Código", "Código de Barras", "Descrição Objeto", "Idioma", "Legenda", "Tipo Mídia", "Livre", "Data Prevista", "Situação"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false, false
+                        false, false, false, false, false, false, false, true, true
                     };
 
                     public Class getColumnClass(int columnIndex) {

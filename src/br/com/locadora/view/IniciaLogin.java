@@ -1,15 +1,12 @@
-
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -17,23 +14,21 @@ import javax.swing.SwingUtilities;
  */
 public class IniciaLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Log_login
-     */
-    public IniciaLogin() {
-        initComponents();
-
-        try {
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro);
-        }
-    }
     public List<Usuario> usuarios;
     public String usuarioNome;
     public Integer codUsuário;
     public String login;
     public String permissao;
     public InterfacePool pool;
+        
+    /**
+     * Creates new form Log_login
+     */
+    public IniciaLogin() {
+
+        initComponents();
+        
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -200,12 +195,7 @@ public class IniciaLogin extends javax.swing.JFrame {
         limparCampos();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_limparActionPerformed
-    public void limparCampos() {
-        jtf_login.setText("");
-        jpf_senha.setText("");
-        jtf_login.requestFocus();
-    }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -234,7 +224,10 @@ public class IniciaLogin extends javax.swing.JFrame {
 
         if (validaLogin()) {
             if (verificaLogin()) {
-                login();
+                TelaPrincipal tela = new TelaPrincipal();                
+                tela.carregaUsuario(usuarios.get(0));
+                tela.show();
+                this.dispose();
             } else {
                 jpf_senha.requestFocus();
                 jpf_senha.setText("");
@@ -248,7 +241,7 @@ public class IniciaLogin extends javax.swing.JFrame {
         if (jtf_login.getText().equals("")) {
             msgERRO = msgERRO + " *Login\n";
         }
-        if (jpf_senha.getPassword().equals("")) {
+        if (jpf_senha.getText().equals("")) {
             msgERRO = msgERRO + " *Senha\n";
         }
 
@@ -260,7 +253,6 @@ public class IniciaLogin extends javax.swing.JFrame {
         }
 
     }
-    Usuario usuarioModel;
 
     public boolean verificaLogin() {
         pool = new Pool();
@@ -268,7 +260,7 @@ public class IniciaLogin extends javax.swing.JFrame {
         usuarios = usuarioControl.consultarLogin(jtf_login.getText().trim());
 
         //verifica o login
-        if ((usuarios).size() == 0) {
+        if ((usuarios).isEmpty()) {
             JOptionPane.showMessageDialog(null, "Login inexistente");
             jtf_login.requestFocus();
             return false;
@@ -291,31 +283,13 @@ public class IniciaLogin extends javax.swing.JFrame {
             }
         }
 
-        usuarioNome = (usuarios.get(0).getNome_usuario());
-        codUsuário = (usuarios.get(0).getCod_usuario());
-        login = (usuarios.get(0).getLogin());
-        permissao = (usuarios.get(0).getPermissao());
-
         return true;
     }
-
-    public void login() {
-
-//        if (usuarios.get(0).getPermissao().equals("usuario")) {
-        TelaPrincipal tela = new TelaPrincipal();
-        tela.setJanelaPai(this);
-        //tela.setUsuario(usuarioModel);
-        tela.show();
-        this.dispose();
-//            tela.permissao();
-//        } else {
-//            TelaPrincipal tela = new TelaPrincipal();
-//            tela.setJanelaPai(this);
-//            //tela.setUsuario(usuarioModel);
-//            tela.show();
-//            this.dispose();
-//
-//        }
-
+    
+    public boolean limparCampos() {
+        jtf_login.setText("");
+        jpf_senha.setText("");
+        jtf_login.requestFocus();
+        return true;
     }
 }

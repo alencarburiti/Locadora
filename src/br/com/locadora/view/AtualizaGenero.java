@@ -10,7 +10,7 @@
  */
 package br.com.locadora.view;
 
-import br.com.locadora.model.dao.GeneroDAO;
+import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Genero;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -20,8 +20,6 @@ import br.com.locadora.util.UnaccentedDocument;
 import java.awt.event.KeyAdapter;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
@@ -31,19 +29,22 @@ public class AtualizaGenero extends javax.swing.JFrame {
 
     private Genero objdestino;
     public MenuGenero janelapai;
+    public SiscomController controller;
 
-    /** Creates new form DestinoCadastroGUI */
+    /**
+     * Creates new form DestinoCadastroGUI
+     */
     public AtualizaGenero() {
         initComponents();
 
     }
 
-    public AtualizaGenero(Genero destino) {
-        this.objdestino = destino;
+    public AtualizaGenero(Genero genero) {
+        this.objdestino = genero;
         initComponents();
 
-//        jtf_codigo.setText(String.valueOf(destino.getCod_destino()));
-//        jtf_descricao.setText(destino.getDesc_destino());
+        jtf_codigo.setText(String.valueOf(objdestino.getCodigo_genero()));
+        jtf_nome_genero.setText(objdestino.getNome_genero());
     }
 
     @SuppressWarnings("unchecked")
@@ -53,9 +54,9 @@ public class AtualizaGenero extends javax.swing.JFrame {
         jb_salvar = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
         jtf_codigo = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jtf_descricao = new javax.swing.JTextField (new LimitadorTexto(45), "",10);
+        jtf_nome_genero = new javax.swing.JTextField (new LimitadorTexto(45), "",10);
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alterando Armazém");
@@ -72,7 +73,7 @@ public class AtualizaGenero extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,9 +81,9 @@ public class AtualizaGenero extends javax.swing.JFrame {
                 jb_salvarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, 35));
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, 35));
 
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Cancelar");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -90,89 +91,69 @@ public class AtualizaGenero extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, 35));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, 35));
 
         jtf_codigo.setEditable(false);
         jtf_codigo.setName("jtf_codigo"); // NOI18N
         getContentPane().add(jtf_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 90, -1));
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setText("Descrição");
-        jLabel3.setName("jLabel3"); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Código");
         jLabel2.setName("jLabel2"); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jtf_descricao.setDocument(new UnaccentedDocument());
-        jtf_descricao.setName("jtf_descricao"); // NOI18N
-        jtf_descricao.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_nome_genero.setName("jtf_nome_genero"); // NOI18N
+        jtf_nome_genero.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_descricaoFocusGained(evt);
+                jtf_nome_generoFocusGained(evt);
             }
         });
-        jtf_descricao.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_nome_genero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_descricaoKeyPressed(evt);
+                jtf_nome_generoKeyPressed(evt);
             }
         });
-        getContentPane().add(jtf_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 370, -1));
+        getContentPane().add(jtf_nome_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 370, -1));
 
-        setSize(new java.awt.Dimension(434, 177));
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setText("Nome Gênero*");
+        jLabel3.setName("jLabel3"); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        setSize(new java.awt.Dimension(413, 171));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        alteraDestino();
-//        janelapai.listarDestino();
+        enviaDados();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jtf_descricao.requestFocus();
+        jtf_nome_genero.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        retornaJanelaPai();
+        janelapai.setStatusTela(true);
+        setVisible(false);
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        retornaJanelaPai();
+        janelapai.setStatusTela(true);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
-    private void jtf_descricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricaoKeyPressed
-    jtf_descricao.addKeyListener(new KeyAdapter() {  
-      public void keyReleased(KeyEvent evt) {  
-        if (evt.getKeyCode() != KeyEvent.VK_HOME) {  
-          String s = jtf_descricao.getText();  
-          jtf_descricao.setText(s.toUpperCase());  
-        }  
-      }  
-    }); 
+    private void jtf_nome_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_generoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            alteraDestino();
-//            janelapai.listarDestino();
+            enviaDados();
         }
-    }//GEN-LAST:event_jtf_descricaoKeyPressed
+    }//GEN-LAST:event_jtf_nome_generoKeyPressed
 
-    private void jtf_descricaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descricaoFocusGained
-        jtf_descricao.setInputVerifier(new InputVerifier() {
+    private void jtf_nome_generoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_generoFocusGained
 
-            public boolean verify(JComponent input) {
-                if (jtf_descricao.getText().trim().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Informe a descrição");
-                    jtf_descricao.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_descricaoFocusGained
+    }//GEN-LAST:event_jtf_nome_generoFocusGained
 
     /**
      * @param args the command line arguments
@@ -190,29 +171,28 @@ public class AtualizaGenero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_salvar;
-    private javax.swing.JTextField jtf_codigo;
-    private javax.swing.JTextField jtf_descricao;
+    public static javax.swing.JTextField jtf_codigo;
+    public static javax.swing.JTextField jtf_nome_genero;
     // End of variables declaration//GEN-END:variables
-    Genero destino = new Genero();
 
     public void alimentaCampos(List<MenuGenero> destinos) {
     }
 
-    private void alteraDestino() {
+    private void enviaDados() {
         if (verificarCampos()) {
-//            GeneroDAO destinoControl = new GeneroDAO();
-//            destino.setCod_destino(Integer.parseInt(jtf_codigo.getText().trim()));
-//            destino.setDesc_destino(jtf_descricao.getText().trim());
-//            destinoControl.alteraDestino(destino);
-            JOptionPane.showMessageDialog(null, "Alteração efetuada com sucesso");
-            retornaJanelaPai();
+            controller = new SiscomController();
+            controller.processarRequisicao("atualizarGenero");
+            JOptionPane.showMessageDialog(null, "Atualização efetuada com sucesso");
+            janelapai.buscarDados();
+            janelapai.setStatusTela(true);
+            setVisible(false);
         }
     }
 
     public boolean verificarCampos() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
-        if (jtf_descricao.getText().trim().equals("")) {
+        if (jtf_nome_genero.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Descrição\n";
         }
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
@@ -224,11 +204,4 @@ public class AtualizaGenero extends javax.swing.JFrame {
 
     }
 
-    public void retornaJanelaPai() {
-        setVisible(false);
-//        janelapai.listarDestino();
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
-        janelapai.request();
-    }
 }

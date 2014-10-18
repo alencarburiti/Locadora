@@ -26,6 +26,7 @@ public class CadastrarCopia implements InterfaceCommand {
 
         try {
 
+            Moeda moeda = new Moeda();
             Copia copia = new Copia();
             Objeto objeto = new Objeto();
             objeto.setCodigo_objeto(Integer.parseInt(CadastroObjeto.jtf_codigo_objeto.getText()));
@@ -33,7 +34,7 @@ public class CadastrarCopia implements InterfaceCommand {
 
             copia.setIdioma((String) CadastroObjeto.jcb_idioma.getSelectedItem());
             copia.setLegenda((String) CadastroObjeto.jcb_legenda.getSelectedItem());
-            copia.setPreco_custo(CadastroObjeto.getPrecoFormato((String) CadastroObjeto.jtf_preco_custo.getText()));
+            copia.setPreco_custo(moeda.getPrecoFormato((String) CadastroObjeto.jtf_preco_custo.getText()));
 
             try {
                 copia.setData_aquisicao(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastroObjeto.jtf_data_aquisicao.getText()));
@@ -60,7 +61,6 @@ public class CadastrarCopia implements InterfaceCommand {
 
     public void alimentarCopia(Copia copia) throws ParseException {
 
-//          if (verificar_campo_copia() == true) { //&& (verificaTabela()
         String preco_custo = null;
         preco_custo = String.valueOf(copia.getPreco_custo());
         Moeda moeda = new Moeda();
@@ -74,8 +74,5 @@ public class CadastrarCopia implements InterfaceCommand {
         CadastroObjeto.jcb_legenda.setSelectedIndex(0);
         CadastroObjeto.jtf_preco_custo.setText("R$ 0,00");
 
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
-//        }
     }
 }

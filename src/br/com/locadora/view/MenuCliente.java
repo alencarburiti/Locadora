@@ -14,7 +14,6 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,8 +35,9 @@ public class MenuCliente extends javax.swing.JFrame {
     }
 
     public void setJanelaPai(TelaPrincipal janelapai) {
-        janelapai = janelapai;
-        permissao = janelapai.permissao;
+        if (janelapai != null) {
+            this.janelapai = janelapai;
+        }
     }
 
     /**
@@ -230,14 +230,12 @@ public class MenuCliente extends javax.swing.JFrame {
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);
-        janelapai.setVisible(true);
-        janelapai.setEnabled(true);
-      //  telaPrincipal.setStatusTela(true);
+        telaPrincipal.setStatusTela(true);
 }//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-//        telaPrincipal.setStatusTela(true);
+        telaPrincipal.setStatusTela(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -311,7 +309,7 @@ public class MenuCliente extends javax.swing.JFrame {
 
     public Cliente tbClienteLinhaSelecionada(JTable tb) {
         Cliente cliente = new Cliente();
-        if (tb.getSelectedRow() != -1) {
+        if (tb != null && tb.getSelectedRow() != -1 ) {
 
             cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
             cliente.setNome_cliente(clientes.get(tb.getSelectedRow()).getNome_cliente());
@@ -361,15 +359,13 @@ public class MenuCliente extends javax.swing.JFrame {
         this.telaPrincipal = telaPrincipal;
     }
 
-    public void request() {
-        jtf_consulta.requestFocus();
-    }
-
     public Cliente tbClienteSelecionado(JTable tb) {
         Cliente cliente = null;
-        if (tb.getSelectedRow() != -1) {
-            cliente = new Cliente();
-            cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
+        if (tb != null) {
+            if (tb.getSelectedRow() != -1) {
+                cliente = new Cliente();
+                cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
+            }
         }
         return cliente;
     }

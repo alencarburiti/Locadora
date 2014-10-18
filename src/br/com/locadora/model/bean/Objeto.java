@@ -27,6 +27,7 @@ public class Objeto {
     private Integer disponivel;
     private String elenco;
     private String sinopse;
+    private String status;
 
     public Integer getCodigo_objeto() {
         return codigo_objeto;
@@ -154,6 +155,14 @@ public class Objeto {
 
     public void setCensura(Integer censura) {
         this.censura = censura;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

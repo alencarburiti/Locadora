@@ -2,6 +2,8 @@ package br.com.locadora.model.helper;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.command.AtualizarCliente;
+import br.com.locadora.model.command.AtualizarGenero;
+import br.com.locadora.model.command.AtualizarObjeto;
 import br.com.locadora.model.command.CadastrarCliente;
 import br.com.locadora.model.command.CadastrarCopia;
 import br.com.locadora.model.command.CadastrarDevolucao;
@@ -42,6 +44,7 @@ public class SiscomHelper
                 
                 mapaComandos.put("consultarGenero", new ConsultarGenero(new GeneroDAO(pool)));
 		mapaComandos.put("cadastrarGenero", new CadastrarGenero(new GeneroDAO(pool)));
+                mapaComandos.put("atualizarGenero", new AtualizarGenero(new GeneroDAO(pool)));
                 
 		mapaComandos.put("consultarLocacao", new ConsultarLocacao(new LocacaoDAO(pool), new ClienteDAO(pool), new CopiaDAO(pool)));
                 mapaComandos.put("cadastrarLocacao", new CadastrarLocacao(new LocacaoDAO(pool), new ClienteDAO(pool), new CopiaDAO(pool)));
@@ -55,6 +58,7 @@ public class SiscomHelper
                 mapaComandos.put("cadastrarObjeto", new CadastrarObjeto(new ObjetoDAO(pool), new GeneroDAO(pool), new DiariaDAO(pool)));
                 mapaComandos.put("consultarObjeto", new ConsultarObjeto(new ObjetoDAO(pool), new GeneroDAO(pool), new DiariaDAO(pool)));
                 mapaComandos.put("cadastrarCopia", new CadastrarCopia(new CopiaDAO(pool)));
+                mapaComandos.put("atualizarObjeto", new AtualizarObjeto(new ObjetoDAO(pool)));
                                 
                 
 //		mapaComandos.put("editarUsuario", new EditarUsuario(new UsuarioDAO(pool)));
