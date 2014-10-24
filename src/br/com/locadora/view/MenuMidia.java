@@ -227,9 +227,7 @@ public class MenuMidia extends javax.swing.JFrame {
             }// </editor-fold>//GEN-END:initComponents
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        CadastroDiaria des = new CadastroDiaria();
-        des.janelapai = this;
-        des.setVisible(true);
+        
 //        this.setEnabled(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_novoActionPerformed
@@ -242,7 +240,7 @@ public class MenuMidia extends javax.swing.JFrame {
         Diaria desti = tbDiariaLinhaSelecionada(jtbl_diaria);
         if (desti != null) {
             AtualizaDiaria diariaAltera = new AtualizaDiaria(desti);
-            diariaAltera.janelapai = this;
+//            diariaAltera.janelapai = this;
             diariaAltera.setVisible(true);
             this.setEnabled(false);
         } else {
@@ -287,7 +285,7 @@ public class MenuMidia extends javax.swing.JFrame {
             Diaria desti = tbDiariaLinhaSelecionada(jtbl_diaria);
             if (desti != null) {
                 AtualizaDiaria diariaAltera = new AtualizaDiaria(desti);
-                diariaAltera.janelapai = this;
+//                diariaAltera.janelapai = this;
                 diariaAltera.setVisible(true);
             }
 

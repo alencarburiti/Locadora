@@ -11,14 +11,22 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Diaria;
+import br.com.locadora.model.bean.Idioma;
+import br.com.locadora.model.bean.Legenda;
+import br.com.locadora.model.dao.LegendaDAO;
+import br.com.locadora.util.ItemDbGrid;
+import static br.com.locadora.view.MenuIdioma.jtbl_idioma;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,11 +36,11 @@ public class MenuLegenda extends javax.swing.JFrame {
 
     public String tipoCadastro;
     public TelaPrincipal janelapai;
-    public static List<Diaria> diarias;
+    public List<Legenda> legendas;
     private TelaPrincipal_Interface telaPrincipal;
     public InterfacePool pool;
     public SiscomController controller;
-    public Diaria diaria;
+    
 
     /**
      * Creates new form DiariaGUI
@@ -57,7 +65,7 @@ public class MenuLegenda extends javax.swing.JFrame {
         jb_buscar = new javax.swing.JButton();
         jtf_consulta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtbl_diaria = new javax.swing.JTable();
+        jtbl_legenda = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento de Diárias");
@@ -102,7 +110,7 @@ public class MenuLegenda extends javax.swing.JFrame {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jtbl_diaria.setModel(new javax.swing.table.DefaultTableModel(
+        jtbl_legenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -125,20 +133,20 @@ public class MenuLegenda extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtbl_diaria.setDoubleBuffered(true);
-        jtbl_diaria.setDragEnabled(true);
-        jtbl_diaria.setName("jtbl_diaria"); // NOI18N
-        jtbl_diaria.getTableHeader().setReorderingAllowed(false);
-        jtbl_diaria.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtbl_legenda.setDoubleBuffered(true);
+        jtbl_legenda.setDragEnabled(true);
+        jtbl_legenda.setName("jtbl_legenda"); // NOI18N
+        jtbl_legenda.getTableHeader().setReorderingAllowed(false);
+        jtbl_legenda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtbl_diariaKeyPressed(evt);
+                jtbl_legendaKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jtbl_diaria);
-        if (jtbl_diaria.getColumnModel().getColumnCount() > 0) {
-            jtbl_diaria.getColumnModel().getColumn(0).setResizable(false);
-            jtbl_diaria.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jtbl_diaria.getColumnModel().getColumn(1).setPreferredWidth(200);
+        jScrollPane1.setViewportView(jtbl_legenda);
+        if (jtbl_legenda.getColumnModel().getColumnCount() > 0) {
+            jtbl_legenda.getColumnModel().getColumn(0).setResizable(false);
+            jtbl_legenda.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jtbl_legenda.getColumnModel().getColumn(1).setPreferredWidth(200);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 300, 180));
@@ -149,7 +157,7 @@ public class MenuLegenda extends javax.swing.JFrame {
    
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -158,18 +166,18 @@ public class MenuLegenda extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
-        enviaDados();
+        consultarLegenda();
     }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtbl_diaria.addRowSelectionInterval(0, 0);
+            jtbl_legenda.addRowSelectionInterval(0, 0);
         }
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
-    private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_diariaKeyPressed
+    private void jtbl_legendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_legendaKeyPressed
 
-    }//GEN-LAST:event_jtbl_diariaKeyPressed
+    }//GEN-LAST:event_jtbl_legendaKeyPressed
     /**
      * @param args the command line arguments
      */
@@ -187,7 +195,7 @@ public class MenuLegenda extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JButton jb_buscar;
     private javax.swing.JLabel jl_pesquisar_destino;
-    public static javax.swing.JTable jtbl_diaria;
+    public static javax.swing.JTable jtbl_legenda;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
@@ -197,18 +205,7 @@ public class MenuLegenda extends javax.swing.JFrame {
 
     private void enviaDados() {
         controller = new SiscomController();
-        controller.processarRequisicao("consultarDiaria");
-    }
-
-    public Diaria tbDiariaLinhaSelecionada(JTable tb) {
-        Diaria dest = null;
-        if (tb.getSelectedRow() != -1) {
-            dest = new Diaria();
-            dest.setCodigo_diaria(diarias.get(tb.getSelectedRow()).getCodigo_diaria());
-            dest.setNome_diaria(diarias.get(tb.getSelectedRow()).getNome_diaria());
-
-        }
-        return dest;
+        controller.processarRequisicao("consultarLegenda");
     }
 
     public void request() {
@@ -216,24 +213,34 @@ public class MenuLegenda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    public Diaria removeDiaria(JTable tb) {
-//        if (tb.getSelectedRow() != -1) {
-//            int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-//            if (selectedOption == JOptionPane.YES_NO_OPTION) {
-//                DiariaDAO diariaControl = new DiariaDAO();
-//                diaria.setCodigo_diaria(diarias.get(tb.getSelectedRow()).getCodigo_diaria());
-//                if (diariaControl.excluirDiaria(diaria)) {
-//                    tmDiaria.removeRow(tb.getSelectedRow());
-//                }
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Selecione um armazém");
-//        }
-        return diaria;
+    public void consultarLegenda(){
+        try {        
+            pool = new Pool();
+            LegendaDAO legendaDAO = new LegendaDAO(pool);
+            legendas = null;
+            legendas = legendaDAO.getLegenda_nome(jtf_consulta.getText().trim());
+            mostrarLegendas(legendas);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuIdioma.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+    public void mostrarLegendas(List<Legenda> legendas) {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_legenda.getModel();
+        tableModel.setNumRows(0);
 
-    public void excluiDiaria() {
-        removeDiaria(jtbl_diaria);
+        if (legendas.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Nenhuma legenda encontrada");
+
+        } else {
+            for (int i = 0; i < legendas.size(); i++) {
+                
+                DefaultTableModel row = (DefaultTableModel) jtbl_legenda.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(legendas.get(i), legendas.get(i).getNome_legenda());
+                row.addRow(new Object[]{legendas.get(i).getCodigo_legenda(), hashDbGrid});
+            }            
+        }
     }
-
+    
+    
 }

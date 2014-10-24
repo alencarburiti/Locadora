@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class CopiaDAO implements InterfaceCopiaDAO {
 
@@ -51,7 +52,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 
         try {
             ps = con.prepareStatement(sqlAtualizar);
-
+            
             ps.setString(1, copia.getStatus());
             ps.setInt(2, copia.getCodigo_copia());
 

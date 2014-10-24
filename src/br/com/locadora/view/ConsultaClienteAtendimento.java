@@ -38,6 +38,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
     public AtendimentoLocacao janelapaiLocacao;
     public AtendimentoDevolucao janelapaiDevolucao;
+    public Recebimento janelapaiRecebimento;
     public AtendimentoLocacao_InterFace telaAtendimentoLocacao;
     public AtendimentoDevolucao_InterFace telaAtendimentoDevolucao;
     public List<Cliente> clientes;
@@ -46,6 +47,8 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     public ConsultaClienteAtendimento() {
         initComponents();
         janelapaiLocacao = null;
+        janelapaiDevolucao = null;
+        janelapaiRecebimento = null;
     }
 
     /**
@@ -202,9 +205,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         setVisible(false);
         if ((janelapaiLocacao != null)) {
-            janelapaiLocacao.setEnabled(true);
-            janelapaiLocacao.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
+            janelapaiLocacao.setStatusTela(true);
+        } else if ((janelapaiDevolucao != null)) {
+            janelapaiDevolucao.setStatusTela(true);
+        } else if ((janelapaiRecebimento != null)) {
+            janelapaiRecebimento.setStatusTela(true);
         }
 
 }//GEN-LAST:event_jb_cancelarActionPerformed
@@ -215,17 +220,20 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         }
 }//GEN-LAST:event_jb_okActionPerformed
     public void botaoOK(JTable tb) {
-        if(tb != null){
-        Dependente dependente = tbClienteDependenteLinhaSelecionada(jtbl_cliente);
-        if ((janelapaiLocacao != null) && (dependente != null)) {
-            janelapaiLocacao.carregarClienteDependente(dependente);
-            janelapaiLocacao.setStatusTela(true);
-        } else if ((janelapaiDevolucao != null) && (dependente != null)) {
-            janelapaiDevolucao.carregarClienteDependente(dependente);
-            janelapaiDevolucao.setStatusTela(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um Cliente");
-        }
+        if (tb != null) {
+            Dependente dependente = tbClienteDependenteLinhaSelecionada(jtbl_cliente);
+            if ((janelapaiLocacao != null) && (dependente != null)) {
+                janelapaiLocacao.carregarClienteDependente(dependente);
+                janelapaiLocacao.setStatusTela(true);
+            } else if ((janelapaiDevolucao != null) && (dependente != null)) {
+                janelapaiDevolucao.carregarClienteDependente(dependente);
+                janelapaiDevolucao.setStatusTela(true);
+            } else if ((janelapaiRecebimento != null) && (dependente != null)) {
+                janelapaiRecebimento.carregarClienteDependente(dependente);
+                janelapaiRecebimento.setStatusTela(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um Cliente");
+            }
             setVisible(false);
         }
     }
@@ -234,9 +242,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
         if ((janelapaiLocacao != null)) {
-            janelapaiLocacao.setEnabled(true);
-            janelapaiLocacao.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
+            janelapaiLocacao.setStatusTela(true);         
+        }else if ((janelapaiDevolucao != null)) {
+            janelapaiDevolucao.setStatusTela(true);         
+        }else if ((janelapaiRecebimento != null)) {
+            janelapaiRecebimento.setStatusTela(true);         
         }
 
         // TODO add your handling code here:
@@ -246,16 +256,21 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        if(janelapaiLocacao != null){
+        if (janelapaiLocacao != null) {
             AtendimentoLocacao.jtf_codigo_cliente.setText("");
             listaClienteDependente();
             jtbl_cliente.requestFocus();
-            jtbl_cliente.setSelectionMode(1);            
-        } else if(janelapaiDevolucao != null){
+            jtbl_cliente.setSelectionMode(1);
+        } else if (janelapaiDevolucao != null) {
             AtendimentoDevolucao.jtf_codigo_cliente.setText("");
             listaClienteDependente();
             jtbl_cliente.requestFocus();
-            jtbl_cliente.setSelectionMode(1);            
+            jtbl_cliente.setSelectionMode(1);
+        } else if (janelapaiRecebimento != null) {
+            Recebimento.jtf_codigo_cliente.setText("");
+            listaClienteDependente();
+            jtbl_cliente.requestFocus();
+            jtbl_cliente.setSelectionMode(1);
         }
 
     }//GEN-LAST:event_formWindowOpened
@@ -384,7 +399,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 String data_nascimento = null;
                 try {
                     data_nascimento = out.format(in.parse(dependente.getData_nascimento().toString()));
-                }catch (ParseException ex) {
+                } catch (ParseException ex) {
                     Logger.getLogger(ConsultaClienteAtendimento.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();

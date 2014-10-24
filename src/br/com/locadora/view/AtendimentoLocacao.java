@@ -6,18 +6,18 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.dao.CopiaDAO;
+import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
-import static br.com.locadora.view.AtendimentoDevolucao.jtf_codigo_cliente;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,6 +53,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame implements Atendiment
     public SiscomController controller;
     public TelaPrincipal janelapai;
     public Moeda moeda;
+    public Lancamento lancamento;
 
     public AtendimentoLocacao() {
         initComponents();
@@ -227,7 +228,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame implements Atendiment
         jDesktopPane1.setLayout(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atendimento");
+        setTitle("Atendimento Locação");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -993,6 +994,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame implements Atendiment
         ((DefaultTableModel) jtbl_locacao.getModel()).setRowCount(0);
         jtbl_locacao.updateUI();
         this.setVisible(false);
+        janelapai.setStatusTela(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -1302,38 +1304,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     }
 
-//    public void checarFilmeLocado(Integer codigo_cliente, String codigo_consulta_locacao) {
-//        try {
-//            pool = new Pool();
-//            CopiaDAO copiaDAO = new CopiaDAO(pool);
-//            copias = null;
-//            String quantidade_locado;
-//            
-//            quantidade_locado = copiaDAO.getQuantidadeAssistida(codigo_cliente, codigo_consulta_locacao);
-//            if (quantidade_locado.equals(objeto)) {
-//                carregarCopiaLocacao(copias.get(0));
-//            } else {
-//                int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-//                if (selectedOption == JOptionPane.YES_NO_OPTION) {
-//
-//                }
-//                JOptionPane.showMessageDialog(null, "Código de Barra inválido");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AtendimentoLocacao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//    }
+
     private TelaPrincipal_Interface telaPrincipal;
 
     public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
         this.telaPrincipal = telaPrincipal;
     }
 
-//    private void buscarDadosLocacao() {
-//        controller = new SiscomController();
-//        controller.processarRequisicao("consultarLocacao");
-//    }
     /**
      * @param args the command line arguments
      */
@@ -1509,8 +1486,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
             ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
             row.addRow(new Object[]{copia.getCodigo_barras(),
-                hashDbGrid, valor, copia.getObjeto().getDiaria().getDias(), copia.getStatus()});
-
+                hashDbGrid, valor, copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura()});
+          
+            
             adicionarValorTotal(valor);
             copiasLocacao.add(copia);
             limparItemLocado();
@@ -1520,6 +1498,8 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
     }
 
+    
+    
     public void adicionarValorTotal(String valor) {
         moeda = new Moeda();
         Double valor_total;
@@ -1594,14 +1574,25 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             AtendimentoLocacao.dependente = dependente;
             jtf_debito_total_locacao.setText("R$ 0,00");
 
-//            if (jtf_codigo_cliente.getText().equals("")) {
             jtf_nome_cliente.setText(dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
             Moeda moeda = new Moeda();
 
-            String debito;
-            debito = moeda.setPrecoFormat(dependente.getDebito());
-            jtf_debito_total_locacao.setText(debito);
+            Double debito;
+            pool = new Pool();
+            DependenteDAO dependenteDAO = new DependenteDAO(pool);
+            
+            lancamento = new Lancamento();
+            lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
+            if(lancamento.getSaldo() < 0){
+                lancamento.setSaldo(lancamento.getSaldo()*(-1));
+                jtf_debito_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_debito_total_locacao.setCaretColor(Color.black);
+            }else{                
+                jtf_debito_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_debito_total_locacao.setCaretColor(Color.red);
+            }
+
 
             jtf_codigo_consulta_locacao.requestFocus();
 
@@ -1613,7 +1604,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             }
 
             jtf_valor_total_locacao.setText("R$ 0,00");
-//            }
+
         }
     }
 
@@ -1725,32 +1716,14 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                     copias = copiaDAO.getCopia_codigo_objeto(codigo_objeto, 0, "Locação");
 
                     if (copias.size() > 0) {
-//                        if (checkCensura(copias.get(0).getObjeto().getCensura(), dependente.getData_nascimento()) == true) {
                         String codigo_barras = verificaTabelaObjeto(copias);
 
                         if (!codigo_barras.equals("")) {
                             locar_consulta_codigo_barras(codigo_barras);
-//                                String assistido_anteriormente;
-//                                assistido_anteriormente = copiaDAO.getQuantidadeAssistida(dependente.getCodigo_dependente(), copias.get(0).getCodigo_barras());
-//                                if (!"".equals(assistido_anteriormente)) {
-//                                    int selectedOption = JOptionPane.showConfirmDialog(this, assistido_anteriormente, "Atenção", JOptionPane.YES_NO_OPTION);
-//                                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
-//                                        adicionarItemLocado(copias.get(0));
-//                                        jtf_codigo_consulta_locacao.requestFocus();
-//                                    } else {
-//                                        limparItemLocado();
-//                                    }
-//                                } else {
-//                                    adicionarItemLocado(copias.get(0));
-//                                    jtf_codigo_consulta_locacao.requestFocus();
-//                                }
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Cópia Indisponível");
                         }
-//                        } else {
-//                            JOptionPane.showMessageDialog(null, "Filme inapropriado para este Cliente");
-//                        }
                     } else {
                         JOptionPane.showMessageDialog(null, "Cópia indisponivel no momento");
                     }

@@ -5,6 +5,7 @@
  */
 package br.com.locadora.model.bean;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -16,6 +17,7 @@ public class ItemLocacao {
     private Integer codigo_item_locacao;
     private Copia copia;
     private Date data_devolucao;
+    private Date data_prevista;
     private Date data_locacao;
     private Locacao locacao;
     private Double valor_multa;
@@ -103,5 +105,14 @@ public class ItemLocacao {
     public void setDependente(Dependente dependente) {
         this.dependente = dependente;
     }
+
+    public Date getData_prevista() {
+        return data_prevista;
+    }
+
+    public void setData_prevista(Date data_prevista) {
+        this.data_prevista = data_prevista;
+    }
+
 
 }

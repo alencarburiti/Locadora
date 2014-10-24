@@ -3,18 +3,30 @@ package br.com.locadora.model.command;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Locacao;
+import br.com.locadora.model.bean.Objeto;
+import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
+import br.com.locadora.util.ConvData;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixa;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class CadastrarLocacao implements InterfaceCommand {
 
@@ -49,16 +61,76 @@ public class CadastrarLocacao implements InterfaceCommand {
             usuario.setCod_usuario(EntradaCaixa.acesso.getUsuario().getCod_usuario());
             
             locacao.setUsuario(usuario);
+            
+            Double valor_pago;
+            Double troco;
+            Double valor_desconto;
+            Moeda moeda = new Moeda();
+            
+            valor_pago = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_pago.getText());
+            valor_desconto = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_desconto.getText()); 
+            troco = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_troco.getText());
+            
+            valor_pago = valor_pago - troco;
+            Lancamento lancamento = new Lancamento();
+            lancamento.setUsuario(usuario);
+            lancamento.setDependente(dependente);
+            TipoServico tipoServico = new TipoServico();
+            
+                    
+            //Envia a gravação da locação e envia o lancamento de caixa
             locacao = locacaoDAO.salvar(locacao);
+            lancamento.setLocacao(locacao);
+            
+            
+            //Lançamento de crédito e de débito
+            if(valor_pago > 0 ){
+                //Lançamento de débito primeiro
+                tipoServico.setCodigo_tipo_servico(1);
+                lancamento.setValor(moeda.getPrecoFormato(EntradaCaixa.jtf_valor_total_locacao.getText()));  
+                
+                lancamento.setTipoServico(tipoServico);
+                locacaoDAO.salvarLancamento(lancamento);
+                //Lançamento de crédito
+                tipoServico.setCodigo_tipo_servico(6);
+                lancamento.setValor(valor_pago);
+                
+                lancamento.setTipoServico(tipoServico);
+                locacaoDAO.salvarLancamento(lancamento);
+                
+                
+            }else {
+                tipoServico.setCodigo_tipo_servico(1);
+                lancamento.setValor(moeda.getPrecoFormato(EntradaCaixa.jtf_valor_total_locacao.getText()));  
+                
+                lancamento.setTipoServico(tipoServico);
+                locacaoDAO.salvarLancamento(lancamento);            
+            }
+            
+            if(valor_desconto > 0 ){
+                //Lançamento de crédito como desconto
+                tipoServico.setCodigo_tipo_servico(3);
+                lancamento.setValor(valor_desconto);
+                
+                lancamento.setTipoServico(tipoServico);
+                locacaoDAO.salvarLancamento(lancamento);
+            }
             
             List<ItemLocacao> itens = new ArrayList();
-            Double valor_pago;
-            Moeda moeda = new Moeda();
-            valor_pago = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_pago.getText());
+            
             for (int i = 0; i < AtendimentoLocacao.jtbl_locacao.getRowCount(); i++) {
                 ItemLocacao itemLocacao = new ItemLocacao();
+                Objeto objeto = new Objeto();
+                objeto.setCodigo_objeto(AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getCodigo_objeto());
+                objeto.setDescricao_objeto(AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDescricao_objeto());
                 
+                Diaria diaria = new Diaria();
+                diaria.setValor(AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getValor());
+                
+                objeto.setDiaria(diaria);
+                                
                 Copia copia = new Copia();
+                copia.setObjeto(objeto);
                 copia.setCodigo_copia(AtendimentoLocacao.copiasLocacao.get(i).getCodigo_copia());
                 copia.setStatus("1");
                 
@@ -75,10 +147,19 @@ public class CadastrarLocacao implements InterfaceCommand {
                 }
                 itemLocacao.setLocacao(locacao);
                 itemLocacao.setCopia(copia);
+                
+
+                //Inserir a lógica da promoção de objetos e para cada um sera gravada  a data prevista de devolucao no banco e somar
+                //conforme quantidade e regra de negócio
+                Date data = new Date();          
+                data.setDate(data.getDate() + AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getDias());                         
+                
+                itemLocacao.setData_prevista(data);
                 itens.add(itemLocacao);
                 
                 copiaDAO.alterarStatusFilme(copia);
             }
+            EntradaCaixa.itens = itens;
             
             locacaoDAO.salvarItem(itens);
             

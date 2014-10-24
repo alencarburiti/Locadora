@@ -2,7 +2,6 @@ package br.com.locadora.view;
 
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.Backup;
-import br.com.locadora.util.Data;
 import br.com.locadora.util.Restaurar;
 import java.io.IOException;
 import javax.swing.*;
@@ -19,6 +18,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     public IniciaLogin loginInicia;
     public AtendimentoLocacao atendimentoLocacao;
     public AtendimentoDevolucao atendimentoDevolucao;
+    public Recebimento recebimento;
 
     public TelaPrincipal() {
 
@@ -87,6 +87,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         menu_movimentos = new javax.swing.JMenu();
         jmi_entrada = new javax.swing.JMenuItem();
         jmi_entrada2 = new javax.swing.JMenuItem();
+        jMenu17 = new javax.swing.JMenu();
         menu_relatórios = new javax.swing.JMenu();
         menu_relatórios1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -413,6 +414,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 
         jMB_Cadastro.add(menu_movimentos);
 
+        jMenu17.setText("Consultas");
+        jMenu17.setName("jMenu17"); // NOI18N
+        jMB_Cadastro.add(jMenu17);
+
         menu_relatórios.setMnemonic('R');
         menu_relatórios.setText("Relatório");
         menu_relatórios.setName("menu_relatórios"); // NOI18N
@@ -682,7 +687,10 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        JOptionPane.showMessageDialog(null, "Em construção");
+        MenuLegenda menuLegenda = new MenuLegenda();
+        menuLegenda.janelapai = this;
+        menuLegenda.setVisible(true);
+        setStatusTela(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
@@ -710,6 +718,10 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }//GEN-LAST:event_jmi_entrada4ActionPerformed1
 
     private void jmi_entrada1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entrada1ActionPerformed1
+        recebimento = new Recebimento();
+        recebimento.setStatusTela(true);
+        setStatusTela(false);
+        recebimento.janelapai = this;
         // TODO add your handling code here:
     }//GEN-LAST:event_jmi_entrada1ActionPerformed1
 
@@ -755,6 +767,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenu jMenu14;
     private javax.swing.JMenu jMenu15;
     private javax.swing.JMenu jMenu16;
+    private javax.swing.JMenu jMenu17;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;

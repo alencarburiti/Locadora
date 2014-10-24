@@ -10,6 +10,13 @@ import br.com.locadora.util.ImprimiCupom;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.UnaccentedDocument;
+import static br.com.locadora.view.EntradaCaixa.jtf_valor_debito_anterior;
+import static br.com.locadora.view.EntradaCaixa.jtf_valor_desconto;
+import static br.com.locadora.view.EntradaCaixa.jtf_debito_atual;
+import static br.com.locadora.view.EntradaCaixa.jtf_valor_pago;
+import static br.com.locadora.view.EntradaCaixa.jtf_valor_total_locacao;
+import static br.com.locadora.view.EntradaCaixa.jtf_valor_troco;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -57,20 +64,18 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jpf_senha = new javax.swing.JPasswordField();
         jb_logar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jtf_total_locacao = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_debito_devolucao = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jtf_valor_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel6 = new javax.swing.JLabel();
         jtf_valor_pago = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel7 = new javax.swing.JLabel();
         jtf_troco = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel10 = new javax.swing.JLabel();
-        jtf_debito_atual1 = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel11 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
-        jtf_total_multa = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_debito_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtf_total_a_pagar = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
@@ -170,34 +175,34 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jPanel2.setName("jPanel2"); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jtf_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_total_locacao.setEditable(false);
-        jtf_total_locacao.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_total_locacao.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_total_locacao.setText("R$ 0,00");
-        jtf_total_locacao.setName("jtf_total_locacao");
-        jtf_total_locacao.addActionListener(new java.awt.event.ActionListener() {
+        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
+        jtf_debito_devolucao.setEditable(false);
+        jtf_debito_devolucao.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_debito_devolucao.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_debito_devolucao.setText("R$ 0,00");
+        jtf_debito_devolucao.setName("jtf_debito_devolucao");
+        jtf_debito_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_total_locacaoActionPerformed(evt);
+                jtf_debito_devolucaoActionPerformed(evt);
             }
         });
-        jtf_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_debito_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_total_locacaoFocusGained(evt);
+                jtf_debito_devolucaoFocusGained(evt);
             }
         });
-        jtf_total_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_debito_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_total_locacaoKeyPressed(evt);
+                jtf_debito_devolucaoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_total_locacaoKeyReleased(evt);
+                jtf_debito_devolucaoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_total_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 170, -1));
+        jPanel2.add(jtf_debito_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 170, -1));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel1.setText("Total Locação:");
+        jLabel1.setText("Total de Débito Devolução:");
         jLabel1.setName("jLabel1"); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
@@ -206,40 +211,40 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jLabel5.setName("jLabel5"); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
-        jtf_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_valor_desconto.setEditable(false);
-        jtf_valor_desconto.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_valor_desconto.setText("R$ 0,00");
-        jtf_valor_desconto.setName("jtf_valor_desconto"); // NOI18N
-        jtf_valor_desconto.addActionListener(new java.awt.event.ActionListener() {
+        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
+        jtf_desconto.setEditable(false);
+        jtf_desconto.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_desconto.setText("R$ 0,00");
+        jtf_desconto.setName("jtf_desconto"); // NOI18N
+        jtf_desconto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_valor_descontoActionPerformed(evt);
+                jtf_descontoActionPerformed(evt);
             }
         });
-        jtf_valor_desconto.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_desconto.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_descontoFocusGained(evt);
+                jtf_descontoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_valor_descontoFocusLost(evt);
+                jtf_descontoFocusLost(evt);
             }
         });
-        jtf_valor_desconto.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_desconto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_valor_descontoKeyPressed(evt);
+                jtf_descontoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_valor_descontoKeyReleased(evt);
+                jtf_descontoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_valor_desconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 170, -1));
+        jPanel2.add(jtf_desconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 170, -1));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel6.setText("Valor Pago:");
         jLabel6.setName("jLabel6"); // NOI18N
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
-        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
         jtf_valor_pago.setEditable(false);
         jtf_valor_pago.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_valor_pago.setText("R$ 0,00");
@@ -265,14 +270,14 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_valor_pagoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_valor_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 170, -1));
+        jPanel2.add(jtf_valor_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel7.setText("Troco");
         jLabel7.setName("jLabel7"); // NOI18N
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
-        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
         jtf_troco.setEditable(false);
         jtf_troco.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_troco.setText("R$ 0,00");
@@ -295,9 +300,9 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_trocoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_troco, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 170, -1));
+        jPanel2.add(jtf_troco, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, 170, -1));
 
-        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
         jtf_debito_atual.setEditable(false);
         jtf_debito_atual.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_debito_atual.setForeground(new java.awt.Color(204, 0, 0));
@@ -321,76 +326,45 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_debito_atualKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_debito_atual, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 170, -1));
-
-        jLabel10.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel10.setText("Crédito Atual");
-        jLabel10.setName("jLabel10"); // NOI18N
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
-
-        jtf_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_debito_atual1.setEditable(false);
-        jtf_debito_atual1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_debito_atual1.setForeground(new java.awt.Color(51, 0, 255));
-        jtf_debito_atual1.setText("R$ 0,00");
-        jtf_debito_atual1.setName("jtf_debito_atual1"); // NOI18N
-        jtf_debito_atual1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_debito_atual1ActionPerformed(evt);
-            }
-        });
-        jtf_debito_atual1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_atual1FocusGained(evt);
-            }
-        });
-        jtf_debito_atual1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_debito_atual1KeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_debito_atual1KeyReleased(evt);
-            }
-        });
-        jPanel2.add(jtf_debito_atual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 170, -1));
+        jPanel2.add(jtf_debito_atual, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 170, -1));
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel11.setText("Débito Atual");
         jLabel11.setName("jLabel11"); // NOI18N
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, -1, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão de Crédito", "Cartão de Débito", "Video Card" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 170, 40));
 
-        jtf_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_total_multa.setEditable(false);
-        jtf_total_multa.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_total_multa.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_total_multa.setText("R$ 0,00");
-        jtf_total_multa.setName("jtf_total_multa"); // NOI18N
-        jtf_total_multa.addActionListener(new java.awt.event.ActionListener() {
+        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
+        jtf_debito_anterior.setEditable(false);
+        jtf_debito_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_debito_anterior.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_debito_anterior.setText("R$ 0,00");
+        jtf_debito_anterior.setName("jtf_debito_anterior"); // NOI18N
+        jtf_debito_anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_total_multaActionPerformed(evt);
+                jtf_debito_anteriorActionPerformed(evt);
             }
         });
-        jtf_total_multa.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_debito_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_total_multaFocusGained(evt);
+                jtf_debito_anteriorFocusGained(evt);
             }
         });
-        jtf_total_multa.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_debito_anterior.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_total_multaKeyPressed(evt);
+                jtf_debito_anteriorKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_total_multaKeyReleased(evt);
+                jtf_debito_anteriorKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_total_multa, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 170, -1));
+        jPanel2.add(jtf_debito_anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 170, -1));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel2.setText("Multa:");
+        jLabel2.setText("Débito Anterior Total:");
         jLabel2.setName("jLabel2"); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
@@ -399,7 +373,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jLabel3.setName("jLabel3"); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
-        jtf_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
         jtf_total_a_pagar.setEditable(false);
         jtf_total_a_pagar.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_total_a_pagar.setForeground(new java.awt.Color(204, 0, 0));
@@ -423,9 +397,9 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_total_a_pagarKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_total_a_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 170, -1));
+        jPanel2.add(jtf_total_a_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 170, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 360, 410));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 410, 410));
 
         jb_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar1.setText("Fechar");
@@ -443,9 +417,9 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_imprimirActionPerformed
-        ImprimiCupom imprimir = new ImprimiCupom();
-        imprimir.escreverTXTLocacao(AtendimentoLocacao.copiasLocacao, AtendimentoDevolucao.dependente);
-        imprimir.imprimirArquivo();
+//        ImprimiCupom imprimir = new ImprimiCupom();
+//        imprimir.escreverTXTLocacao(AtendimentoLocacao.copiasLocacao, AtendimentoDevolucao.dependente);
+//        imprimir.imprimirArquivo();
 
 }//GEN-LAST:event_jb_imprimirActionPerformed
     private void retornaJanelaPai() {
@@ -465,16 +439,12 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jpf_senha.requestFocus();
-        if (janelapaiLocacao != null) {
-            action = "ENTRADA_CAIXA_LOCACAO";
-            jtf_debito_atual.setText(AtendimentoLocacao.jtf_debito_total_locacao.getText());
-            jtf_total_locacao.setText(AtendimentoLocacao.jtf_valor_total_locacao.getText());
-        } else if (janelapaiDevolucao != null) {
+        if (janelapaiDevolucao != null) {
             action = "ENTRADA_CAIXA_DEVOLUCAO";
-            jtf_total_locacao.setText(AtendimentoDevolucao.jtf_valor_a_pagar.getText());
-            jtf_total_multa.setText(AtendimentoDevolucao.jtf_valor_multa.getText());
+            jtf_debito_devolucao.setText(AtendimentoDevolucao.jtf_valor_multa.getText());
+            jtf_debito_anterior.setText(AtendimentoDevolucao.jtf_debito_total_devolucao.getText());
             jtf_total_a_pagar.setText(AtendimentoDevolucao.jtf_valor_total.getText());
-            jtf_debito_atual.setText(AtendimentoDevolucao.jtf_debito_total_devolucao.getText());
+//            jtf_debito_atual.setText(AtendimentoDevolucao.jtf_debito_total_devolucao.getText());
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -482,38 +452,38 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
-    private void jtf_total_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_total_locacaoKeyPressed
+    private void jtf_debito_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoKeyPressed
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_total_locacaoKeyPressed
-    private void jtf_total_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_locacaoFocusGained
+    }//GEN-LAST:event_jtf_debito_devolucaoKeyPressed
+    private void jtf_debito_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoFocusGained
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_total_locacaoFocusGained
+    }//GEN-LAST:event_jtf_debito_devolucaoFocusGained
 
-    private void jtf_total_locacaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_total_locacaoKeyReleased
+    private void jtf_debito_devolucaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_total_locacaoKeyReleased
+    }//GEN-LAST:event_jtf_debito_devolucaoKeyReleased
 
-    private void jtf_total_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_locacaoActionPerformed
+    private void jtf_debito_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_total_locacaoActionPerformed
+    }//GEN-LAST:event_jtf_debito_devolucaoActionPerformed
 
-    private void jtf_valor_descontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_descontoActionPerformed
+    private void jtf_descontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_descontoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_descontoActionPerformed
+    }//GEN-LAST:event_jtf_descontoActionPerformed
 
-    private void jtf_valor_descontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_descontoFocusGained
+    private void jtf_descontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_descontoFocusGained
+    }//GEN-LAST:event_jtf_descontoFocusGained
 
-    private void jtf_valor_descontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_descontoKeyPressed
+    private void jtf_descontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descontoKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_descontoKeyPressed
+    }//GEN-LAST:event_jtf_descontoKeyPressed
 
-    private void jtf_valor_descontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_descontoKeyReleased
+    private void jtf_descontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descontoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_descontoKeyReleased
+    }//GEN-LAST:event_jtf_descontoKeyReleased
 
     private void jtf_valor_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_pagoActionPerformed
         // TODO add your handling code here:
@@ -563,44 +533,41 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_debito_atualKeyReleased
 
-    private void jtf_debito_atual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_atual1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_atual1ActionPerformed
-
-    private void jtf_debito_atual1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_atual1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_atual1FocusGained
-
-    private void jtf_debito_atual1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_atual1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_atual1KeyPressed
-
-    private void jtf_debito_atual1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_atual1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_atual1KeyReleased
-
     private void jtf_valor_pagoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_pagoFocusLost
         Moeda moeda = new Moeda();
+        if(jtf_desconto.getText().equals("")){
+            jtf_desconto.setText("R$ 0,00");
+        }        
+        jtf_desconto.setText(moeda.setPrecoFormat(String.valueOf(jtf_desconto.getText())));
 
+        Double total_devolucao;        
+        Double debito_anterior;
+        Double valor_pago;        
         Double troco;
         Double desconto;
-        Double total_locacao;
-        Double valor_pago;
-        Double debito_atual;
-
-        total_locacao = moeda.getPrecoFormato(jtf_total_a_pagar.getText());
-        desconto = moeda.getPrecoFormato(jtf_valor_desconto.getText());
-        valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
-        debito_atual = moeda.getPrecoFormato(jtf_debito_atual.getText());
-
-        troco = valor_pago - (total_locacao - desconto);
+        
+        total_devolucao = moeda.getPrecoFormato(jtf_debito_devolucao.getText());
+        debito_anterior = moeda.getPrecoFormato(jtf_debito_anterior.getText());
+        desconto = moeda.getPrecoFormato(jtf_desconto.getText());
+        valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());        
+        
+        troco = valor_pago - ((total_devolucao+debito_anterior) - desconto);
+                
+        jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
         if (troco > 0) {
             jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
+            jtf_debito_atual.setText("R$ 0,00");
+            jtf_debito_atual.setCaretColor(Color.black);
+        } else if (troco < 0){
+            jtf_troco.setText("R$ 0,00");
+            troco = troco *(-1);
+            jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
+            jtf_debito_atual.setCaretColor(Color.red);
         } else {
             jtf_troco.setText("R$ 0,00");
+            jtf_debito_atual.setText("R$ 0,00");
+            jtf_debito_atual.setCaretColor(Color.black);
         }
-
-        jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_pagoFocusLost
@@ -622,11 +589,43 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         entrar();
     }//GEN-LAST:event_jb_logarActionPerformed
 
-    private void jtf_valor_descontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_descontoFocusLost
+    private void jtf_descontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusLost
         Moeda moeda = new Moeda();
-        jtf_valor_desconto.setText(moeda.setPrecoFormat(String.valueOf(jtf_valor_desconto.getText())));
+        if(jtf_desconto.getText().equals("")){
+            jtf_desconto.setText("R$ 0,00");
+        }        
+        jtf_desconto.setText(moeda.setPrecoFormat(String.valueOf(jtf_desconto.getText())));
+
+        Double total_devolucao;        
+        Double debito_anterior;
+        Double valor_pago;        
+        Double troco;
+        Double desconto;
+        
+        total_devolucao = moeda.getPrecoFormato(jtf_debito_devolucao.getText());
+        debito_anterior = moeda.getPrecoFormato(jtf_debito_anterior.getText());
+        desconto = moeda.getPrecoFormato(jtf_desconto.getText());
+        valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());        
+        
+        troco = valor_pago - ((total_devolucao+debito_anterior) - desconto);
+                
+        if (troco > 0) {
+            jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
+            jtf_debito_atual.setText("R$ 0,00");
+            jtf_debito_atual.setCaretColor(Color.black);
+        } else if (troco < 0){
+            jtf_troco.setText("R$ 0,00");
+            troco = troco *(-1);
+            jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
+            jtf_debito_atual.setCaretColor(Color.red);
+        } else {
+            jtf_troco.setText("R$ 0,00");
+            jtf_debito_atual.setText("R$ 0,00");
+            jtf_debito_atual.setCaretColor(Color.black);
+        }
+        jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_descontoFocusLost
+    }//GEN-LAST:event_jtf_descontoFocusLost
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
@@ -639,21 +638,21 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1ActionPerformed
 
-    private void jtf_total_multaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_multaActionPerformed
+    private void jtf_debito_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_total_multaActionPerformed
+    }//GEN-LAST:event_jtf_debito_anteriorActionPerformed
 
-    private void jtf_total_multaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_multaFocusGained
+    private void jtf_debito_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_total_multaFocusGained
+    }//GEN-LAST:event_jtf_debito_anteriorFocusGained
 
-    private void jtf_total_multaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_total_multaKeyPressed
+    private void jtf_debito_anteriorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_total_multaKeyPressed
+    }//GEN-LAST:event_jtf_debito_anteriorKeyPressed
 
-    private void jtf_total_multaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_total_multaKeyReleased
+    private void jtf_debito_anteriorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_total_multaKeyReleased
+    }//GEN-LAST:event_jtf_debito_anteriorKeyReleased
 
     private void jtf_total_a_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarActionPerformed
         // TODO add your handling code here:
@@ -682,7 +681,6 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -697,14 +695,13 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     private javax.swing.JButton jb_logar;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JPasswordField jpf_senha;
+    public static javax.swing.JTextField jtf_debito_anterior;
     public static javax.swing.JTextField jtf_debito_atual;
-    public static javax.swing.JTextField jtf_debito_atual1;
+    public static javax.swing.JTextField jtf_debito_devolucao;
+    public static javax.swing.JTextField jtf_desconto;
     private javax.swing.JTextField jtf_login;
     public static javax.swing.JTextField jtf_total_a_pagar;
-    public static javax.swing.JTextField jtf_total_locacao;
-    public static javax.swing.JTextField jtf_total_multa;
     public static javax.swing.JTextField jtf_troco;
-    public static javax.swing.JTextField jtf_valor_desconto;
     public static javax.swing.JTextField jtf_valor_pago;
     private java.awt.Label label1;
     private java.awt.Label label2;
@@ -734,11 +731,11 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_login.setText(acesso.getUsuario().getLogin());
                 if (acesso.getEscrever() == 0) {
 
-                    jtf_valor_desconto.setEditable(true);
+                    jtf_desconto.setEditable(true);
                     jtf_valor_pago.setEditable(true);
-                    jtf_valor_desconto.requestFocus();
+                    jtf_desconto.requestFocus();
                 } else {
-                    jtf_valor_desconto.setText("R$ 0,00");
+                    jtf_desconto.setText("R$ 0,00");
                     jtf_valor_pago.setEditable(true);
                     jtf_valor_pago.requestFocus();
                 }

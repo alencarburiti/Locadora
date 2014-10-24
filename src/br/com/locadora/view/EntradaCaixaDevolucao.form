@@ -196,7 +196,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="50" y="110" width="360" height="410"/>
+          <AbsoluteConstraints x="50" y="110" width="410" height="410"/>
         </Constraint>
       </Constraints>
 
@@ -204,7 +204,7 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jtf_total_locacao">
+        <Component class="javax.swing.JTextField" name="jtf_debito_devolucao">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -215,23 +215,23 @@
             </Property>
             <Property name="text" type="java.lang.String" value="R$ 0,00"/>
             <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;jtf_total_locacao&quot;" type="code"/>
+              <Connection code="&quot;jtf_debito_devolucao&quot;" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_total_locacaoActionPerformed"/>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_total_locacaoFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_total_locacaoKeyPressed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_total_locacaoKeyReleased"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_debito_devolucaoActionPerformed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_debito_devolucaoFocusGained"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_debito_devolucaoKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_debito_devolucaoKeyReleased"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_total_locacao.setDocument(new UnaccentedDocument());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_debito_devolucao.setDocument(new UnaccentedDocument());"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="20" width="170" height="-1"/>
+              <AbsoluteConstraints x="220" y="20" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -240,7 +240,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Total Loca&#xe7;&#xe3;o:"/>
+            <Property name="text" type="java.lang.String" value="Total de D&#xe9;bito Devolu&#xe7;&#xe3;o:"/>
             <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -263,30 +263,30 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JTextField" name="jtf_valor_desconto">
+        <Component class="javax.swing.JTextField" name="jtf_desconto">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-            <Property name="name" type="java.lang.String" value="jtf_valor_desconto" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jtf_desconto" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_valor_descontoActionPerformed"/>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_descontoFocusGained"/>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_descontoFocusLost"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_valor_descontoKeyPressed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_valor_descontoKeyReleased"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_descontoActionPerformed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_descontoFocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_descontoFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_descontoKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_descontoKeyReleased"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_total_locacao.setDocument(new UnaccentedDocument());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_debito_devolucao.setDocument(new UnaccentedDocument());"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="140" width="170" height="-1"/>
+              <AbsoluteConstraints x="220" y="140" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -322,12 +322,12 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_total_locacao.setDocument(new UnaccentedDocument());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_debito_devolucao.setDocument(new UnaccentedDocument());"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="180" width="170" height="-1"/>
+              <AbsoluteConstraints x="220" y="180" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -362,12 +362,12 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_total_locacao.setDocument(new UnaccentedDocument());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_debito_devolucao.setDocument(new UnaccentedDocument());"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="220" width="170" height="-1"/>
+              <AbsoluteConstraints x="220" y="220" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -391,55 +391,12 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_total_locacao.setDocument(new UnaccentedDocument());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_debito_devolucao.setDocument(new UnaccentedDocument());"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="300" width="170" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel10">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Lucida Grande" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Cr&#xe9;dito Atual"/>
-            <Property name="name" type="java.lang.String" value="jLabel10" noResource="true"/>
-          </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="30" y="270" width="-1" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jtf_debito_atual1">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Lucida Grande" size="14" style="0"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="0" red="33" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-            <Property name="name" type="java.lang.String" value="jtf_debito_atual1" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_debito_atual1ActionPerformed"/>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_debito_atual1FocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_debito_atual1KeyPressed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_debito_atual1KeyReleased"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_total_locacao.setDocument(new UnaccentedDocument());"/>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-          </AuxValues>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="260" width="170" height="-1"/>
+              <AbsoluteConstraints x="220" y="260" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -453,7 +410,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="30" y="310" width="-1" height="-1"/>
+              <AbsoluteConstraints x="30" y="270" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -475,7 +432,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JTextField" name="jtf_total_multa">
+        <Component class="javax.swing.JTextField" name="jtf_debito_anterior">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -485,22 +442,22 @@
               <Color blue="0" green="0" red="cc" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-            <Property name="name" type="java.lang.String" value="jtf_total_multa" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jtf_debito_anterior" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_total_multaActionPerformed"/>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_total_multaFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_total_multaKeyPressed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_total_multaKeyReleased"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtf_debito_anteriorActionPerformed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_debito_anteriorFocusGained"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_debito_anteriorKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_debito_anteriorKeyReleased"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_total_locacao.setDocument(new UnaccentedDocument());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_debito_devolucao.setDocument(new UnaccentedDocument());"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="60" width="170" height="-1"/>
+              <AbsoluteConstraints x="220" y="60" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -509,7 +466,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Multa:"/>
+            <Property name="text" type="java.lang.String" value="D&#xe9;bito Anterior Total:"/>
             <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -552,12 +509,12 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_total_locacao.setDocument(new UnaccentedDocument());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_debito_devolucao.setDocument(new UnaccentedDocument());"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="100" width="170" height="-1"/>
+              <AbsoluteConstraints x="220" y="100" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

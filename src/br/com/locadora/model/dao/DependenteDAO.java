@@ -3,6 +3,7 @@ package br.com.locadora.model.dao;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.Lancamento;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -153,41 +154,66 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         return resultado;
     }
     
-    public String getClienteDependente(Integer codigo_cliente) {
-        List<Dependente> resultado = new ArrayList<Dependente>();
+    public Lancamento getClienteDependente(Integer codigo_cliente) {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
         String devedor = null;
         String sqlSelect = "SELECT \n" +
             "    (CASE\n" +
-            "        WHEN SUM(VALOR_PAGO - VALOR_LOCADO) IS NULL THEN 0\n" +
-            "        ELSE SUM(VALOR_PAGO - VALOR_LOCADO)\n" +
-            "    END) AS DEVEDOR\n" +
+            "        WHEN (DEBITO.VALOR - CREDITO.VALOR) IS NULL THEN 0\n" +
+            "        ELSE (DEBITO.VALOR - CREDITO.VALOR)\n" +
+            "    END) AS SALDO,\n" +
+            "    SUM(DEBITO.VALOR) AS DEBITO,\n" +
+            "    SUM(CREDITO.VALOR) AS CREDITO\n" +
             "FROM\n" +
-            "    LOCADORA.LOCACAO LC,\n" +
-            "    LOCADORA.ITEM_LOCACAO IL,\n" +
-            "    LOCADORA.DEPENDENTE DP\n" +
-            "WHERE\n" +
-            "    LC.CODIGO_LOCACAO = IL.LOCACAO_CODIGO_LOCACAO\n" +
-            "        AND LC.DEPENDENTE_CODIGO_DEPENDENTE = DP.CODIGO_DEPENDENTE\n" +
-            "        AND DP.CODIGO_DEPENDENTE IN (SELECT \n" +
-            "            CODIGO_DEPENDENTE\n" +
-            "        FROM\n" +
-            "            LOCADORA.DEPENDENTE\n" +
-            "        WHERE\n" +
-            "            CLIENTE_CODIGO_CLIENTE = ?);";            
+            "    (SELECT \n" +
+            "        (CASE\n" +
+            "                WHEN SUM(VALOR) IS NULL THEN 0\n" +
+            "                ELSE SUM(VALOR)\n" +
+            "            END) AS VALOR\n" +
+            "    FROM\n" +
+            "        LOCADORA.LANCAMENTO A, LOCADORA.TIPO_SERVICO B\n" +
+            "    WHERE\n" +
+            "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
+            "            AND A.DEPENDENTE_CODIGO_DEPENDENTE IN (SELECT \n" +
+            "                CODIGO_DEPENDENTE\n" +
+            "            FROM\n" +
+            "                LOCADORA.DEPENDENTE\n" +
+            "            WHERE\n" +
+            "                CLIENTE_CODIGO_CLIENTE = ?\n" +
+            "                    AND tipo_servico_codigo_tipo_servico IN (1 , 2, 5))) AS DEBITO,\n" +
+            "    (SELECT \n" +
+            "        (CASE\n" +
+            "                WHEN SUM(VALOR) IS NULL THEN 0\n" +
+            "                ELSE SUM(VALOR)\n" +
+            "            END) AS VALOR\n" +
+            "    FROM\n" +
+            "        LOCADORA.LANCAMENTO A, LOCADORA.TIPO_SERVICO B\n" +
+            "    WHERE\n" +
+            "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
+            "            AND A.DEPENDENTE_CODIGO_DEPENDENTE IN (SELECT \n" +
+            "                CODIGO_DEPENDENTE\n" +
+            "            FROM\n" +
+            "                LOCADORA.DEPENDENTE\n" +
+            "            WHERE\n" +
+            "                CLIENTE_CODIGO_CLIENTE = ?\n" +
+            "                    AND tipo_servico_codigo_tipo_servico IN (3 , 4, 6, 7, 8))) AS CREDITO;";            
 
         try {
             ps = con.prepareStatement(sqlSelect);
             ps.setInt(1, codigo_cliente);
+            ps.setInt(2, codigo_cliente);
 
             rs = ps.executeQuery();
-            rs.next();
+            resultado = getLancamentosSaldos(rs);
+            if (resultado.size() > 0) {
+                return resultado.get(0);
+            }  
             
-            devedor = rs.getString("DEVEDOR");
+//            devedor = rs.getString("DEVEDOR");
             
-            resultado = getListaClienteDependente(rs);
 
             ps.close();
         } catch (SQLException ex) {
@@ -195,7 +221,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         } finally {
             pool.liberarConnection(con);
         }
-        return devedor;
+        return null;
     }
 
     @Override
@@ -314,6 +340,19 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             dependente.setCliente(cliente);
 
             resultado.add(dependente);
+        }
+        return resultado;
+    }
+    
+    private List<Lancamento> getLancamentosSaldos(ResultSet rs) throws SQLException {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        while (rs.next()) {
+            Lancamento lancamento = new Lancamento();
+            lancamento.setSaldo(rs.getDouble("SALDO"));
+            lancamento.setDebito(rs.getDouble("DEBITO"));
+            lancamento.setCredito(rs.getDouble("CREDITO"));
+
+            resultado.add(lancamento);
         }
         return resultado;
     }

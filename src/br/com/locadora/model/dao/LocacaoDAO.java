@@ -6,6 +6,7 @@ import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.Objeto;
 import java.sql.Connection;
@@ -15,7 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class LocacaoDAO implements InterfaceLocacaoDAO {
 
@@ -406,6 +406,10 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         PreparedStatement ps;
 
         String sqlInsert = "INSERT INTO `locadora`.`LOCACAO`(`DEPENDENTE_CODIGO_DEPENDENTE`,USUARIO_CODIGO_USUARIO)VALUES( ?,? );";
+        
+        String sqlLancamento = "INSERT INTO `locadora`.`lancamento`(`valor`,`dependente_CODIGO_DEPENDENTE`,\n" +
+            "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,`locacao_CODIGO_LOCACAO`)\n" +
+            "VALUES(?,?,?,?,?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -422,12 +426,36 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             res.next();
             codigo_max = res.getInt("MAX(CODIGO_LOCACAO)");
             locacao.setCodigo_locacao(codigo_max);
-
+            
             ps.close();
         } finally {
             pool.liberarConnection(con);
         }
         return locacao;
+    }
+    
+    
+    public void salvarLancamento(Lancamento lancamento) throws SQLException {
+        Connection con = pool.getConnection();
+        PreparedStatement ps;
+
+        String sqlLancamento = "INSERT INTO `locadora`.`lancamento`(`valor`,`dependente_CODIGO_DEPENDENTE`,\n" +
+            "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,`locacao_CODIGO_LOCACAO`,data_lancamento)\n" +
+            "VALUES(?,?,?,?,?,CURRENT_DATE());";
+
+        try {
+            
+            ps = con.prepareStatement(sqlLancamento);
+
+            setPreparedStatementLancamento(lancamento, ps);
+
+            ps.executeUpdate();
+
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        
     }
 
     public void salvarItem(List<ItemLocacao> itemLocacao) throws SQLException {
@@ -520,6 +548,17 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
         ps.setInt(1, locacao.getDependente().getCodigo_dependente());
         ps.setInt(2, locacao.getUsuario().getCod_usuario());
+
+    }
+    
+    private void setPreparedStatementLancamento(Lancamento lancamento, PreparedStatement ps)
+            throws SQLException {
+
+        ps.setDouble(1, lancamento.getValor());
+        ps.setInt(2, lancamento.getDependente().getCodigo_dependente());
+        ps.setInt(3, lancamento.getTipoServico().getCodigo_tipo_servico());
+        ps.setInt(4, lancamento.getUsuario().getCod_usuario());
+        ps.setInt(5, lancamento.getLocacao().getCodigo_locacao());
 
     }
 

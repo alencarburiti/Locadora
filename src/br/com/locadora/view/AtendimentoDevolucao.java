@@ -7,18 +7,14 @@ import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
-import static br.com.locadora.view.AtendimentoLocacao.jtbl_locacao;
-import static br.com.locadora.view.AtendimentoLocacao.jtf_codigo_cliente;
 import static br.com.locadora.view.AtendimentoLocacao.jtf_debito_total_locacao;
-import static br.com.locadora.view.AtendimentoLocacao.jtf_nome_cliente;
-import static br.com.locadora.view.AtendimentoLocacao.jtf_valor_total_locacao;
-import static br.com.locadora.view.Recebimento.jtf_nome_objeto_locacao;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -56,9 +52,10 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
     public InterfacePool pool;
     public SiscomController controller;
     public TelaPrincipal janelapai;
-    public static List<ItemLocacao> itensDevolucao = new ArrayList<ItemLocacao>();
+    public static List<ItemLocacao> itensDevolucao;
     public ItemLocacao itemDevolucao;
     public Moeda moeda;
+    public Lancamento lancamento;
 
     public AtendimentoDevolucao() {
         initComponents();
@@ -88,8 +85,6 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
         jLabel33 = new javax.swing.JLabel();
         jtf_debito_total_devolucao = new javax.swing.JTextField();
         jcb_codigo_barras_devolucao = new javax.swing.JCheckBox();
-        jLabel34 = new javax.swing.JLabel();
-        jtf_valor_a_pagar = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
         jtf_valor_multa = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
@@ -155,14 +150,14 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
 
             },
             new String [] {
-                "Código de Barras", "Nome Objeto", "Data Locação", "Á Pagar", "Valor Multa", "Dia Atraso"
+                "Código de Barras", "Nome Objeto", "Data Locação", "Valor Multa", "Dia Atraso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -179,8 +174,8 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
             jtbl_devolucao.getColumnModel().getColumn(0).setPreferredWidth(40);
             jtbl_devolucao.getColumnModel().getColumn(1).setPreferredWidth(100);
             jtbl_devolucao.getColumnModel().getColumn(2).setPreferredWidth(30);
+            jtbl_devolucao.getColumnModel().getColumn(3).setPreferredWidth(20);
             jtbl_devolucao.getColumnModel().getColumn(4).setPreferredWidth(20);
-            jtbl_devolucao.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
         jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 780, 220));
@@ -229,7 +224,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
         jLabel32.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel32.setText("Total");
         jLabel32.setName("jLabel32"); // NOI18N
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 390, 60, 30));
+        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 360, 60, 30));
 
         jtf_valor_total.setEditable(false);
         jtf_valor_total.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -243,7 +238,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
                 jtf_valor_totalFocusLost(evt);
             }
         });
-        jPanel3.add(jtf_valor_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 390, 130, 30));
+        jPanel3.add(jtf_valor_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, 130, 30));
 
         jLabel33.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel33.setText("Débito Total");
@@ -274,29 +269,10 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
         });
         jPanel3.add(jcb_codigo_barras_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, 30));
 
-        jLabel34.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel34.setText("Á Pagar");
-        jLabel34.setName("jLabel34"); // NOI18N
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 90, 30));
-
-        jtf_valor_a_pagar.setEditable(false);
-        jtf_valor_a_pagar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_valor_a_pagar.setText("R$ 0,00");
-        jtf_valor_a_pagar.setName("jtf_valor_a_pagar"); // NOI18N
-        jtf_valor_a_pagar.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_a_pagarFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_valor_a_pagarFocusLost(evt);
-            }
-        });
-        jPanel3.add(jtf_valor_a_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 330, 130, 30));
-
         jLabel35.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel35.setText("Multa");
         jLabel35.setName("jLabel35"); // NOI18N
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 360, 90, 30));
+        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 90, 30));
 
         jtf_valor_multa.setEditable(false);
         jtf_valor_multa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -310,7 +286,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
                 jtf_valor_multaFocusLost(evt);
             }
         });
-        jPanel3.add(jtf_valor_multa, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, 130, 30));
+        jPanel3.add(jtf_valor_multa, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 330, 130, 30));
 
         jButton11.setText("Finalizar");
         jButton11.setName("jButton11"); // NOI18N
@@ -541,14 +517,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void jtf_valor_a_pagarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_a_pagarFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_a_pagarFocusGained
-
-    private void jtf_valor_a_pagarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_a_pagarFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_a_pagarFocusLost
-
     private void jtf_valor_multaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_multaFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_multaFocusGained
@@ -665,7 +633,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -681,7 +648,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public static javax.swing.JTextField jtf_debito_total_devolucao;
     public static javax.swing.JTextField jtf_nome_cliente;
     private javax.swing.JTextField jtf_nome_objeto_devolucao;
-    public static javax.swing.JTextField jtf_valor_a_pagar;
     public static javax.swing.JTextField jtf_valor_multa;
     public static javax.swing.JTextField jtf_valor_total;
     private javax.swing.JTabbedPane jtp_locacao;
@@ -746,24 +712,17 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                     Moeda moeda = new Moeda();
                     String data_locacao;
                     data_locacao = out.format(in.parse(itemLocacao.getData_locacao().toString()));
-
-                    Double devedor;
-                    Double valor_locado;
-                    Double valor_pago;
-                    Double multa;
                     
-                    valor_locado = itemLocacao.getValor_locado();
-                    valor_pago = itemLocacao.getValor_pago();
+                    Double multa;
                     multa = itemLocacao.getValor_multa();
-                    devedor = valor_locado - valor_pago;
-                    adicionarAPagar(devedor);
+                    
+                    
                     adicionarMulta(multa);
-                    adicionarValorTotal(devedor+multa);
+                    adicionarValorTotal();
                     
                     DefaultTableModel row = (DefaultTableModel) AtendimentoDevolucao.jtbl_devolucao.getModel();
                     ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
-                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao,
-                        moeda.setPrecoFormat(String.valueOf(devedor)),
+                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao,                        
                     moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
 
                     itensDevolucao.add(itemLocacao);
@@ -822,13 +781,24 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
             Moeda moeda = new Moeda();
 
-            String debito;
+            Double debito;
             pool = new Pool();
             DependenteDAO dependenteDAO = new DependenteDAO(pool);
             
-            debito = dependenteDAO.getClienteDependente(Integer.parseInt(jtf_codigo_cliente.getText()));
-            debito = moeda.setPrecoFormat(debito);
-            jtf_debito_total_devolucao.setText(debito);
+            
+            lancamento = new Lancamento();
+            lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
+            if(lancamento.getSaldo() < 0){
+                lancamento.setSaldo(lancamento.getSaldo()*(-1));
+                jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_debito_total_devolucao.setCaretColor(Color.black);
+            }else{                
+                jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_debito_total_devolucao.setCaretColor(Color.red);
+            }
+            
+            
+            
 
             jtf_codigo_consulta_devolucao.requestFocus();
 
@@ -840,7 +810,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             }
 
             jtf_valor_total.setText("R$ 0,00");
-
+            itensDevolucao = new ArrayList<ItemLocacao>();
         }
     }
 
@@ -916,31 +886,20 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         return tabela;
     }
     
-    public void adicionarValorTotal(Double valor) {
+    public void adicionarValorTotal() {
         moeda = new Moeda();
         Double valor_total;
         Double valor_adicionar;
-        valor_adicionar = valor;
+        valor_adicionar = moeda.getPrecoFormato(jtf_valor_multa.getText());
+        
 
-        valor_total = moeda.getPrecoFormato(jtf_valor_total.getText());
+        valor_total = moeda.getPrecoFormato(jtf_debito_total_devolucao.getText());
 
         valor_total = valor_total + valor_adicionar;
 
         jtf_valor_total.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
     }
-    
-    public void adicionarAPagar(Double valor) {
-        moeda = new Moeda();
-        Double valor_total;
-        Double valor_adicionar;
-        valor_adicionar = valor;
 
-        valor_total = moeda.getPrecoFormato(jtf_valor_a_pagar.getText());
-
-        valor_total = valor_total + valor_adicionar;
-
-        jtf_valor_a_pagar.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
-    }
     public void adicionarMulta(Double valor) {
         moeda = new Moeda();
         Double valor_total;
