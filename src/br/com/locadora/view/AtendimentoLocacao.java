@@ -34,7 +34,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-public class AtendimentoLocacao extends javax.swing.JFrame implements AtendimentoLocacao_InterFace {
+public class AtendimentoLocacao extends javax.swing.JFrame {
 
     public DecimalFormat formatoPreco;
     public MaskFormatter formatoData;
@@ -897,7 +897,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame implements Atendiment
         jtp_locacao.addTab("Reservas", jPanel4);
 
         getContentPane().add(jtp_locacao);
-        jtp_locacao.setBounds(0, 90, 850, 450);
+        jtp_locacao.setBounds(10, 100, 850, 450);
 
         jDesktopPane2.setName("jDesktopPane2"); // NOI18N
         getContentPane().add(jDesktopPane2);
@@ -949,7 +949,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame implements Atendiment
         jPanel1.add(jb_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 30, -1));
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 10, 500, 80);
+        jPanel1.setBounds(20, 20, 500, 80);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Atendente"));
         jPanel2.setName("jPanel2"); // NOI18N
@@ -964,9 +964,9 @@ public class AtendimentoLocacao extends javax.swing.JFrame implements Atendiment
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(590, 10, 200, 80);
+        jPanel2.setBounds(600, 20, 200, 80);
 
-        setSize(new java.awt.Dimension(867, 564));
+        setSize(new java.awt.Dimension(880, 573));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1141,18 +1141,18 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             JOptionPane.showMessageDialog(null, "Informe primeiro um cliente");
         } else {
             ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
-            copiaCliente.setTelaAtendimento(this);
-            copiaCliente.janelapai = this;
+            copiaCliente.janelapai = this;           
             copiaCliente.setVisible(true);
+            setStatusTela(false);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jtf_nome_objeto_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_locacaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
-            copiaCliente.setTelaAtendimento(this);
-            copiaCliente.janelapai = this;
+            copiaCliente.janelapai = this;           
             copiaCliente.setVisible(true);
+            setStatusTela(false);
         }
     }//GEN-LAST:event_jtf_nome_objeto_locacaoKeyPressed
 
@@ -1263,10 +1263,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                         locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
                     }
                 } else if (evt.getKeyCode() == KeyEvent.VK_F6) {
-                    ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
-                    copiaCliente.setTelaAtendimento(this);
+                    ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();                    
                     copiaCliente.janelapai = this;
                     copiaCliente.setVisible(true);
+                    setStatusTela(false);
                 } else if (evt.getKeyCode() == KeyEvent.VK_F10) {
                     enviarDadosLocacao();
                 }

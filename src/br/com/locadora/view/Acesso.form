@@ -105,13 +105,16 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTree" name="jTree1">
+        <Component class="javax.swing.JTree" name="jt_acesso">
           <Properties>
             <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
-              <TreeModel code="Acesos&#xa; Cadastros&#xa;  Cliente&#xa;  Produto&#xa;  Fornecedor&#xa;  Locadora&#xa;   Objeto&#xa;   G&#xea;nero&#xa;   Di&#xe1;ria&#xa;   Idioma&#xa;   Legenda&#xa; Financeiro&#xa; Movimento&#xa;  Loca&#xe7;&#xe3;o&#xa;  Devolu&#xe7;&#xe3;o"/>
+              <TreeModel code=""/>
             </Property>
-            <Property name="name" type="java.lang.String" value="jTree1" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jt_acesso" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTree()"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

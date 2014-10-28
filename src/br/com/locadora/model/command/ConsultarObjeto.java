@@ -5,6 +5,7 @@ import br.com.locadora.model.dao.InterfaceDiariaDAO;
 import br.com.locadora.model.dao.InterfaceGeneroDAO;
 import br.com.locadora.model.dao.InterfaceObjetoDAO;
 import br.com.locadora.util.ItemDbGrid;
+import br.com.locadora.view.AtualizaObjeto;
 import br.com.locadora.view.MenuObjeto;
 import java.sql.SQLException;
 import java.util.List;
@@ -58,12 +59,15 @@ public class ConsultarObjeto implements InterfaceCommand {
     public void mostrar_Objeto(List<Objeto> objetos) {
         DefaultTableModel tableModel = (DefaultTableModel) MenuObjeto.jtbl_objeto.getModel();
         tableModel.setNumRows(0);
-
+        
         if (objetos.size() > 0) {
             for (Objeto objeto1 : objetos) {
                 DefaultTableModel row = (DefaultTableModel) MenuObjeto.jtbl_objeto.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(objeto1, objeto1.getDescricao_objeto());
                 row.addRow(new Object[]{objeto1.getCodigo_objeto(), hashDbGrid, objeto1.getTitulo_original(), objeto1.getElenco()});
+                
+                System.out.println("0 - Diária alterar código: "+objeto1.getDiaria().getCodigo_diaria());
+                System.out.println("0 - Diária alterar descrição: "+objeto1.getDiaria().getNome_diaria());
             }
             MenuObjeto.objetos = objetos;
         } else {

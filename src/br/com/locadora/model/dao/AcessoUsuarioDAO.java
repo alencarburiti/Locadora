@@ -5,7 +5,6 @@ import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Objeto;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

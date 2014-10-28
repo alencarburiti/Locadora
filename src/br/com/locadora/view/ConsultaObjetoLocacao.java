@@ -14,20 +14,15 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.ObjetoDAO;
-import br.com.locadora.util.ItemDbGrid;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -35,8 +30,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaObjetoLocacao extends javax.swing.JFrame {
 
-    public AtendimentoLocacao janelapai;
-    public AtendimentoLocacao_InterFace telaAtendimento;
+    public AtendimentoLocacao janelapai;    
     public List<Objeto> objetos;
     
     public ConsultaObjetoLocacao() {
@@ -275,12 +269,6 @@ public class ConsultaObjetoLocacao extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_objeto;
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-
-    //Recebendo tela como parametro para atualização apos pesquisa
-    public void setTelaAtendimento(AtendimentoLocacao_InterFace telaAtendimento) {
-        this.telaAtendimento = telaAtendimento;
-    }
-
     
     public void setCadastro() {
         jb_novo1.setEnabled(false);

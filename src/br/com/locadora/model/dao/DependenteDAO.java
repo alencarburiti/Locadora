@@ -207,6 +207,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             ps.setInt(2, codigo_cliente);
 
             rs = ps.executeQuery();
+            
             resultado = getLancamentosSaldos(rs);
             if (resultado.size() > 0) {
                 return resultado.get(0);

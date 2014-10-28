@@ -13,20 +13,13 @@ import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
-import br.com.locadora.util.ConvData;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixa;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class CadastrarLocacao implements InterfaceCommand {
 
@@ -68,8 +61,8 @@ public class CadastrarLocacao implements InterfaceCommand {
             Moeda moeda = new Moeda();
             
             valor_pago = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_pago.getText());
-            valor_desconto = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_desconto.getText()); 
-            troco = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_troco.getText());
+            valor_desconto = moeda.getPrecoFormato(EntradaCaixa.jtf_desconto.getText()); 
+            troco = moeda.getPrecoFormato(EntradaCaixa.jtf_troco.getText());
             
             valor_pago = valor_pago - troco;
             Lancamento lancamento = new Lancamento();

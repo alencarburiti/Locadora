@@ -20,7 +20,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -189,9 +188,9 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         setVisible(false);
         if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
+            janelapai.setStatusTela(true);
+        } else if ((janelapai2 != null)) {
+            janelapai2.setStatusTela(true);
         }
 
 }//GEN-LAST:event_jb_cancelarActionPerformed
@@ -205,12 +204,10 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
             setVisible(false);
             Diaria diaria = tbDiariaLinhaSelecionada(jtbl_diaria);
             if ((janelapai != null) && (diaria != null)) {
-                janelapai.setEnabled(true);
-                janelapai.setVisible(true);
-                telaCadastroObjeto.carregaDiaria(diaria);
+                janelapai.setStatusTela(true);
+                janelapai.carregaDiaria(diaria);
             } else if ((janelapai2 != null) && (diaria != null)) {
-                janelapai2.setEnabled(true);
-                janelapai2.setVisible(true);
+                janelapai2.setStatusTela(true);
                 janelapai2.carregaDiaria(diaria);
             }
 
@@ -242,17 +239,12 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMaxWidth( 60 );
-//        jt_pesquisar.getColumnModel().getColumn( 3 ).setMinWidth( 60 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMaxWidth( 60 );
-//        jt_pesquisar.getTableHeader().getColumnModel().getColumn( 3 ).setMinWidth( 60 );
+
     }//GEN-LAST:event_formWindowOpened
 
 private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_diariaKeyPressed
     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//        if(jTable1.getSelectedRow()== 1){                           
         botaoOK(jtbl_diaria);
-        //01  }
     }
     // TODO add your handling code here:
 }//GEN-LAST:event_jtbl_diariaKeyPressed

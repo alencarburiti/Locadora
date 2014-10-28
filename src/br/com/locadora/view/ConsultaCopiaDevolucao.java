@@ -34,8 +34,7 @@ import javax.swing.JTable;
 public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
 //    public AtendimentoLocacao janelapaiLocacao;
-    public AtendimentoDevolucao janelapaiDevolucao;
-    public AtendimentoDevolucao_InterFace telaAtendimentoDevolucao;
+    public AtendimentoDevolucao janelapaiDevolucao;    
     public List<Copia> copias;
     public Copia copia;
     public InterfacePool pool;
@@ -336,11 +335,6 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_locacao_aberto;
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-
-    //Recebendo tela como parametro para atualização apos pesquisa
-    public void setTelaAtendimento(AtendimentoDevolucao_InterFace telaAtendimentoDevolucao) {
-        this.telaAtendimentoDevolucao = telaAtendimentoDevolucao;
-    }
 
     public void setCadastro() {
         jb_novo1.setEnabled(false);

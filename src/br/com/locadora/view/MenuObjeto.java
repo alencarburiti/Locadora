@@ -231,13 +231,17 @@ public class MenuObjeto extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        setVisible(false);
-        janelapai.setEnabled(true);
+        if(janelapai!= null){
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
 }//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setEnabled(true);
-        setVisible(false);
+            setVisible(false);
+        if(janelapai!= null){
+            janelapai.setStatusTela(true);
+        }
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
@@ -250,6 +254,8 @@ public class MenuObjeto extends javax.swing.JFrame {
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
         objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
+        System.out.println("2 - Diária alterar código: "+objeto.getDiaria().getCodigo_diaria());
+        System.out.println("2 - Diária alterar descrição: "+objeto.getDiaria().getNome_diaria());
         if (objeto != null) {
             AtualizaObjeto alteraObjeto = new AtualizaObjeto(objeto);
 
@@ -324,13 +330,13 @@ public class MenuObjeto extends javax.swing.JFrame {
             objeto.setDuracao(objetos.get(tb.getSelectedRow()).getDuracao());
             objeto.setMidia(objetos.get(tb.getSelectedRow()).getMidia());
             objeto.setTipo_midia(objetos.get(tb.getSelectedRow()).getTipo_midia());
-
             objeto.setDiaria(objetos.get(tb.getSelectedRow()).getDiaria());
             objeto.setGenero(objetos.get(tb.getSelectedRow()).getGenero());
-
             objeto.setElenco(objetos.get(tb.getSelectedRow()).getElenco());
             objeto.setSinopse(objetos.get(tb.getSelectedRow()).getSinopse());
             objeto.setCensura(objetos.get(tb.getSelectedRow()).getCensura());
+            System.out.println("1 - Diária alterar código: "+objetos.get(tb.getSelectedRow()).getDiaria().getCodigo_diaria());
+            System.out.println("1 - Diária alterar descrição: "+objetos.get(tb.getSelectedRow()).getDiaria().getNome_diaria());
         }
         return objeto;
     }

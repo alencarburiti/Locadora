@@ -33,8 +33,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
-    public AtendimentoLocacao janelapai;
-    public AtendimentoLocacao_InterFace telaAtendimento;
+    public AtendimentoLocacao janelapai;   
     public List<Copia> copias;
     public Copia copia;
 
@@ -246,10 +245,8 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
             setVisible(false);
             Copia copiaLinha = tbCopiaLinhaSelecionada(jtbl_copia);
             if ((janelapai != null) && (copiaLinha != null)) {
-                janelapai.setEnabled(true);
-                janelapai.setVisible(true);
-                telaAtendimento.carregarCopiaLocacao(copiaLinha);
-//                telaAtendimento.setStatusTela(false);
+                janelapai.setStatusTela(true);
+                janelapai.carregarCopiaLocacao(copiaLinha);
             }
 
         } else {
@@ -260,9 +257,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
         if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
+            janelapai.setStatusTela(true);
         }
 
         // TODO add your handling code here:
@@ -363,12 +358,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_copia;
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-
-    //Recebendo tela como parametro para atualização apos pesquisa
-    public void setTelaAtendimento(AtendimentoLocacao_InterFace telaAtendimento) {
-        this.telaAtendimento = telaAtendimento;
-    }
-
+    
     public void setCadastro() {
         jb_novo1.setEnabled(false);
     }

@@ -205,7 +205,9 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.CODIGO_ITEM_LOCACAO,\n"
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.VALOR_PAGO,\n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    D.DATA_PREVISTA,\n"
+                + "    A.DESCRICAO_OBJETO,\n"
+                + "    A.CODIGO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
@@ -268,8 +270,10 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    C.CODIGO_LOCACAO,\n"
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.VALOR_PAGO,\n"
+                + "    D.DATA_PREVISTA,\n"
                 + "    D.CODIGO_ITEM_LOCACAO,\n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    A.DESCRICAO_OBJETO,\n"
+                + "    A.CODIGO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
@@ -463,7 +467,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         PreparedStatement ps;
 
         String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`COPIA_CODIGO_COPIA`, `LOCACAO_CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`,"
-                + " `VALOR_PAGO`)VALUES( ?, ?, CURRENT_DATE(), ?, ? );";
+                + " `VALOR_PAGO`, DATA_PREVISTA)VALUES( ?, ?, CURRENT_DATE(), ?, ?, ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -474,11 +478,17 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 if (itemLocacao.get(i).getData_locacao() != null) {
                     data_locacao = new Date(itemLocacao.get(i).getData_locacao().getTime());
                 }
+                
+                Date data_prevista = null;
+                if (itemLocacao.get(i).getData_prevista() != null) {
+                    data_prevista = new Date(itemLocacao.get(i).getData_prevista().getTime());
+                }
 
                 ps.setInt(1, itemLocacao.get(i).getCopia().getCodigo_copia());
                 ps.setInt(2, itemLocacao.get(i).getLocacao().getCodigo_locacao());
                 ps.setDouble(3, itemLocacao.get(i).getValor_locado());
                 ps.setDouble(4, itemLocacao.get(i).getValor_pago());
+                ps.setDate(5, data_prevista);
                 ps.executeUpdate();
 
             }
@@ -521,26 +531,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
     private void setPreparedStatement(Locacao locacao, PreparedStatement ps)
             throws SQLException {
 
-//            Date data_nascimento = null;
-//            if (locacao.getData_nascimento() != null) {
-//                data_nascimento = new Date(locacao.getData_nascimento().getTime());
-//            }
-//            
-//		ps.setString(1, locacao.getNome_locacao());
-//		ps.setString(2, locacao.getNome_empresa_trabalho());
-//		ps.setString(3, locacao.getProfissao());
-//		ps.setString(4, locacao.getCpf());
-//                ps.setDate(5, data_nascimento);
-//		ps.setString(7, locacao.getEndereco());
-//		ps.setString(9, locacao.getBairro());
-//                ps.setString(8, locacao.getComplemento());
-//		ps.setString(10, locacao.getCidade());
-//		ps.setString(12, locacao.getEstado());
-//		ps.setString(11, locacao.getEmail());
-//                ps.setString(13, locacao.getLogin());
-//		ps.setString(14, locacao.getSenha());
-//		ps.setString(15, locacao.getObservacao());
-//		ps.setString(16, locacao.getStatus());
+
     }
 
     private void setPreparedStatement1(Locacao locacao, PreparedStatement ps)
@@ -572,6 +563,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             itemLocacao.setData_locacao(rs.getDate("DATA_LOCACAO"));
             itemLocacao.setValor_pago(rs.getDouble("VALOR_PAGO"));
             itemLocacao.setValor_locado(rs.getDouble("VALOR_LOCADO"));
+            itemLocacao.setData_prevista(rs.getDate("DATA_PREVISTA"));
 
             Diaria diaria = new Diaria();
             diaria.setDias(rs.getInt("DIARIA"));
@@ -579,6 +571,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
             objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
+            objeto.setCodigo_objeto(rs.getInt("CODIGO_OBJETO"));
 
             Copia copia = new Copia();
             copia.setObjeto(objeto);

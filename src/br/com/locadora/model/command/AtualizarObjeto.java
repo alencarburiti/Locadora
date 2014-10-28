@@ -3,6 +3,7 @@ package br.com.locadora.model.command;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.InterfaceObjetoDAO;
 import br.com.locadora.view.AtualizaObjeto;
+import static br.com.locadora.view.AtualizaObjeto.diaria;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -33,10 +34,11 @@ public class AtualizarObjeto implements InterfaceCommand {
                 objeto.setMidia((String) AtualizaObjeto.jcb_midia.getSelectedItem());
                 objeto.setTipo_midia((String) AtualizaObjeto.jcb_tipo_midia.getSelectedItem());
                 objeto.setGenero(AtualizaObjeto.getObjetoGenero());
-//                JOptionPane.showMessageDialog(null, AtualizaObjeto.getObjetoGenero().getCodigo_genero());
-                JOptionPane.showMessageDialog(null, AtualizaObjeto.getObjetoDiaria().getCodigo_diaria());
+                
+                System.out.println("5 - Diária alterar código: "+AtualizaObjeto.getObjetoDiaria().getCodigo_diaria());
+                System.out.println("5 - Diária alterar descrição: "+AtualizaObjeto.getObjetoDiaria().getNome_diaria());
                       
-                objeto.setDiaria(AtualizaObjeto.getObjetoDiaria());
+                objeto.setDiaria(AtualizaObjeto.diaria);
                 objeto.setElenco(AtualizaObjeto.jta_elenco.getText());
                 objeto.setSinopse(AtualizaObjeto.jta_sinopse.getText());
                 objeto.setCensura(Integer.parseInt(AtualizaObjeto.jtf_censura.getText()));

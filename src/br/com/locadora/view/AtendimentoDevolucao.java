@@ -14,7 +14,6 @@ import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
-import static br.com.locadora.view.AtendimentoLocacao.jtf_debito_total_locacao;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -34,7 +33,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-public class AtendimentoDevolucao extends javax.swing.JFrame implements AtendimentoDevolucao_InterFace {
+public class AtendimentoDevolucao extends javax.swing.JFrame  {
 
     public DecimalFormat formatoPreco;
     public MaskFormatter formatoData;
@@ -103,7 +102,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
         jDesktopPane1.setLayout(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atendimento");
+        setTitle("Atendimento Devolução");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -309,7 +308,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
         jtp_locacao.addTab("Devolução", jPanel3);
 
         getContentPane().add(jtp_locacao);
-        jtp_locacao.setBounds(0, 90, 850, 480);
+        jtp_locacao.setBounds(10, 100, 850, 480);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -352,7 +351,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
         jPanel1.add(jb_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 30, -1));
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 10, 500, 80);
+        jPanel1.setBounds(20, 20, 500, 80);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Atendente"));
         jPanel2.setName("jPanel2"); // NOI18N
@@ -367,7 +366,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(610, 10, 200, 80);
+        jPanel2.setBounds(620, 20, 200, 80);
 
         setSize(new java.awt.Dimension(871, 608));
         setLocationRelativeTo(null);
@@ -400,23 +399,21 @@ public class AtendimentoDevolucao extends javax.swing.JFrame implements Atendime
 
 private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_clienteActionPerformed
     ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
-    consultaCliente.setTelaAtendimento(this);
     consultaCliente.janelapaiDevolucao = this;
     consultaCliente.setVisible(true);
     jtf_codigo_cliente.setText("");
-//    consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
-//    setStatusTela(false);
+    setStatusTela(false);
     // TODO add your handling code here:
 }//GEN-LAST:event_jb_clienteActionPerformed
 
 private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
         ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
-        consultaCliente.setTelaAtendimento(this);;
         consultaCliente.janelapaiDevolucao = this;
         consultaCliente.setVisible(true);
         jtf_codigo_cliente.setText("");
         consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
+        setStatusTela(false);
     }
 }//GEN-LAST:event_jtf_nome_clienteKeyPressed
 
@@ -426,9 +423,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         ConsultaCopiaDevolucao copiaDevolucao = new ConsultaCopiaDevolucao();
-        copiaDevolucao.setTelaAtendimento(this);
         copiaDevolucao.janelapaiDevolucao = this;
         copiaDevolucao.setVisible(true);
+        setStatusTela(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

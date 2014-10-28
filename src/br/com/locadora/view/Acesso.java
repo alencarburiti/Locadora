@@ -1,7 +1,18 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.InterfaceAcesso;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 
 /**
  *
@@ -36,7 +47,7 @@ public final class Acesso extends javax.swing.JFrame {
         jb_cancelar = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        jt_acesso = new javax.swing.JTree();
         jPanel3 = new javax.swing.JPanel();
         label1 = new java.awt.Label();
         jComboBox1 = new javax.swing.JComboBox();
@@ -85,38 +96,10 @@ public final class Acesso extends javax.swing.JFrame {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Acesos");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Cadastros");
-        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Cliente");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Produto");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Fornecedor");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Locadora");
-        javax.swing.tree.DefaultMutableTreeNode treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Objeto");
-        treeNode3.add(treeNode4);
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Gênero");
-        treeNode3.add(treeNode4);
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Diária");
-        treeNode3.add(treeNode4);
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Idioma");
-        treeNode3.add(treeNode4);
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Legenda");
-        treeNode3.add(treeNode4);
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Financeiro");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Movimento");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Locação");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Devolução");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jTree1.setName("jTree1"); // NOI18N
-        jScrollPane2.setViewportView(jTree1);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        jt_acesso.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jt_acesso.setName("jt_acesso"); // NOI18N
+        jScrollPane2.setViewportView(jt_acesso);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 460, 360));
 
@@ -163,7 +146,8 @@ public final class Acesso extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        DefaultMutableTreeNode cadastro = (DefaultMutableTreeNode) jt_acesso.getModel();
+        preencheTree(cadastro,1);
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -184,9 +168,9 @@ public final class Acesso extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree1;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_salvar;
+    private javax.swing.JTree jt_acesso;
     private java.awt.Label label1;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
@@ -207,5 +191,58 @@ public final class Acesso extends javax.swing.JFrame {
         }
         this.setEnabled(status);
     }
+    
+    
+    
+    
+//    private String root = "Acessos";
+    public void preencheTree(DefaultMutableTreeNode node, int pai) {
+        pool = new Pool();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        
+        DefaultMutableTreeNode aux;
+        ResultSet r1 = null;
+        ResultSet r2 = null;
+        InterfaceAcesso inf;
+    
+        DefaultTreeModel root = (DefaultTreeModel) jt_acesso.getModel();
+        root.getRoot();
+
+        try {
+            String sql1 = "select * from interface where codigo_pai = " + pai +  " order by descricao";
+                    
+            ps = con.prepareStatement(sql1);
+            
+            r1 = ps.executeQuery();
+            
+            while (r1.next()) {
+                 
+//                if(node == null){
+//                    aux = new DefaultMutableTreeNode(new InterfaceAcesso(r1.getString("descricao"), r1.getInt("codigo_interface"), r1.getString("tipo"))   );
+//                    root.add(aux);            
+//                }else
+//                {
+                    aux = new DefaultMutableTreeNode(new InterfaceAcesso(r1.getString("descricao"), r1.getInt("codigo_interface"), r1.getString("tipo"))   );
+                    node.add(aux);        
+//                }
+                
+                String sql2 = "select count(*) as filhos from interface where int_codigopai =  " +r1.getInt("codigo_interface");   
+                
+                ps = con.prepareStatement(sql2);
+                r2 = ps.executeQuery();
+                if(r2.first()){
+                   
+                   if(r2.getInt("filhos") > 0){
+                       preencheTree(aux, r1.getInt("codigo_interface"));
+                   }                   
+                }                
+            }          
+        } catch (Exception e) {
+            System.err.print(e.getMessage());
+        }
+    }   
+    
+    
 
 }

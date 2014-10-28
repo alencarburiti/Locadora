@@ -39,8 +39,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     public AtendimentoLocacao janelapaiLocacao;
     public AtendimentoDevolucao janelapaiDevolucao;
     public Recebimento janelapaiRecebimento;
-    public AtendimentoLocacao_InterFace telaAtendimentoLocacao;
-    public AtendimentoDevolucao_InterFace telaAtendimentoDevolucao;
     public List<Cliente> clientes;
     public List<Dependente> dependentes;
 
@@ -332,15 +330,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_cliente;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-
-    //Recebendo tela como parametro para atualização apos pesquisa
-    public void setTelaAtendimento(AtendimentoLocacao_InterFace telaAtendimentoLocacao) {
-        this.telaAtendimentoLocacao = telaAtendimentoLocacao;
-    }
-
-    public void setTelaAtendimento(AtendimentoDevolucao_InterFace telaAtendimentoDevolucao) {
-        this.telaAtendimentoDevolucao = telaAtendimentoDevolucao;
-    }
 
     public void setCadastro() {
         jb_novo1.setEnabled(false);

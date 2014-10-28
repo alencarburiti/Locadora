@@ -2,20 +2,17 @@ package br.com.locadora.model.dao;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Cliente;
-import br.com.locadora.model.bean.Copia;
-import br.com.locadora.model.bean.Dependente;
-import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Lancamento;
-import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LancamentoDAO implements InterfaceLancamentoDAO {
 
@@ -157,7 +154,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
     }
 
     @Override
-    public Lancamento salvar(Lancamento lancamento) throws SQLException {
+    public Lancamento salvar(Lancamento lancamento) {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
@@ -184,6 +181,8 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             lancamento.setCodigo_lancamento(codigo_max);
             
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -191,13 +190,13 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
     }
     
     
-    public void salvarLancamento(Lancamento lancamento) throws SQLException {
+    public void salvarLancamento(Lancamento lancamento){
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
         String sqlLancamento = "INSERT INTO `locadora`.`lancamento`(`valor`,`dependente_CODIGO_DEPENDENTE`,\n" +
-            "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,`lancamento_CODIGO_LOCACAO`,data_lancamento)\n" +
-            "VALUES(?,?,?,?,?,CURRENT_DATE());";
+            "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,data_lancamento)\n" +
+            "VALUES(?,?,?,?,CURRENT_DATE());";
 
         try {
             
@@ -208,6 +207,8 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             ps.executeUpdate();
 
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -239,7 +240,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
         ps.setInt(2, lancamento.getDependente().getCodigo_dependente());
         ps.setInt(3, lancamento.getTipoServico().getCodigo_tipo_servico());
         ps.setInt(4, lancamento.getUsuario().getCod_usuario());
-        ps.setInt(5, lancamento.getCodigo_lancamento());
+//        ps.setInt(5, lancamento.getCodigo_lancamento());
 
     }
 

@@ -14,6 +14,7 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.UnaccentedDocument;
 import static br.com.locadora.view.AtualizaCliente.jtbl_telefone;
+import static br.com.locadora.view.MenuObjeto.objeto;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -61,13 +62,12 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             jtf_descricao_resumida.setText(objeto.getDescricao_resumida());
             jcb_midia.setSelectedItem(objeto.getMidia());
             jcb_tipo_midia.setSelectedItem(objeto.getTipo_midia());
-//            jtf_descricao_diaria.setText(objeto.getDiaria().getNome_diaria());
-//            jtf_descricao_genero.setText(objeto.getGenero().getNome_genero());
             jtf_censura.setText(String.valueOf(objeto.getCensura()));
-
             jta_elenco.setText(objeto.getElenco());
             jta_sinopse.setText(objeto.getSinopse());
 
+            System.out.println("3 - Diária alterar código: "+objeto.getDiaria().getCodigo_diaria());
+            System.out.println("3 - Diária alterar descrição: "+objeto.getDiaria().getNome_diaria());
             carregaDiaria(objeto.getDiaria());
             carregaGenero(objeto.getGenero());
             carregaCopia(objeto.getCodigo_objeto());
@@ -537,8 +537,8 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         retornaJanelaPai();
-
 }//GEN-LAST:event_jb_cancelarActionPerformed
+    
     private void retornaJanelaPai() {
         setVisible(false);
 
@@ -849,12 +849,15 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         }
     }
 
-    public void carregaDiaria(Diaria diaria) {
-        if (diaria != null) {
-            JOptionPane.showMessageDialog(null, diaria.getCodigo_diaria());
-            AtualizaObjeto.diaria = new Diaria();
-            AtualizaObjeto.diaria = diaria;
-            JOptionPane.showMessageDialog(null, AtualizaObjeto.diaria.getCodigo_diaria());
+    public void carregaDiaria(Diaria objdiaria) {
+        if (objdiaria != null) {
+            
+            diaria = new Diaria();
+            AtualizaObjeto.diaria = objdiaria;
+            
+            System.out.println("4 - Diária alterar código: "+diaria.getCodigo_diaria());
+            System.out.println("4 - Diária alterar descrição: "+diaria.getNome_diaria());
+            
             jtf_diaria_dias.setText(String.valueOf(diaria.getDias()));
             jtf_descricao_diaria.setText(diaria.getNome_diaria());
             String valor;

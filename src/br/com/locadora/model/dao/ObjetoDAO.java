@@ -1,7 +1,6 @@
 package br.com.locadora.model.dao;
 
 import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.bean.Objeto;
@@ -67,16 +66,12 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
                 + "WHERE\n"
                 + "    A.DIARIA_CODIGO_DIARIA = B.CODIGO_DIARIA\n"
                 + "        AND A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
-                + "        AND A.DESCRICAO_OBJETO LIKE ?\n"
-                + "        or TITULO_ORIGINAL LIKE ?\n"
-                + "        OR DESCRICAO_RESUMIDA LIKE ?\n"
+                + "        AND A.DESCRICAO_OBJETO LIKE ?\n"                
                 + "GROUP BY A.CODIGO_OBJETO , A.DESCRICAO_OBJETO;";
         
         try {
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, "%" + objeto + "%");
-            ps.setString(2, "%" + objeto + "%");
-            ps.setString(3, "%" + objeto + "%");
             
             rs = ps.executeQuery();
             
@@ -259,6 +254,8 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         ps.setInt(13, objeto.getGenero().getCodigo_genero());
         ps.setInt(14, objeto.getDiaria().getCodigo_diaria());
         ps.setInt(15, Integer.parseInt(objeto.getStatus()));
+        System.out.println("6 - Diária alterar código: "+objeto.getDiaria().getCodigo_diaria());
+        System.out.println("6 - Diária alterar descrição: "+objeto.getDiaria().getNome_diaria());
     }
     
     private void setPreparedStatement1(Objeto objeto, PreparedStatement ps)

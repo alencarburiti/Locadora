@@ -13,15 +13,21 @@
 Cliente: Eliesio Junior
 ===========================================
 Cód    Descrição            Prev   Valor
-00035  Todos Em Pânico      25/10  R$ 3,00
+00035  Todos Em Pânico      28/10  R$ 3,00
 ===========================================
-Débito Anterior (-):        R$ 9,00
+Débito Anterior (-):        R$ 24,00
 Valor Locação (-):          R$ 3,00
-Valor Desconto (+):         R$ 1,00
-SubTotal (=):               R$ 11,00
-Valor Pago (+):             R$ 200,00
-Troco (-):                  R$ 189,00
+Valor Desconto (+):         R$ 0,00
+SubTotal (=):               R$ 27,00
+Valor Pago (+):             R$ 0,00
+Troco (-):                  R$ 0,00
 ===========================================
+Termo de Responsabilidade: Estou ciente que
+os DVD’s que foram por mim alugados, ou com
+minha autorização, deverão ser devolvidos no
+mesmo estado de conservação, e que qualquer 
+dano ou perda, eu me comprometo a pagar o 
+valor da Nota Fiscal do Filme. 
 De acordo:                                 
                                            
 ___________________________________________

@@ -4,6 +4,7 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.util.ArquivoConfiguracao;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -224,6 +225,9 @@ public class IniciaLogin extends javax.swing.JFrame {
 
         if (validaLogin()) {
             if (verificaLogin()) {
+                ArquivoConfiguracao conf = new ArquivoConfiguracao();
+                conf.writePropertie("login", usuarios.get(0).getLogin());
+                conf.writePropertie("codigo_usuario", String.valueOf(usuarios.get(0).getCod_usuario()));
                 TelaPrincipal tela = new TelaPrincipal();                
                 tela.carregaUsuario(usuarios.get(0));
                 tela.show();

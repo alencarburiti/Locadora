@@ -15,9 +15,11 @@ import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.view.AtendimentoDevolucao;
+import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -108,12 +110,19 @@ public class CadastrarDevolucao implements InterfaceCommand {
                 copia.setStatus("0");
                 itemDevolve.setCopia(copia);
                 itemDevolve.setCodigo_item_locacao(AtendimentoDevolucao.itensDevolucao.get(i).getCodigo_item_locacao());                
+                
+                Date data = new Date();          
+                data.setDate(data.getDate());                         
+                
+                AtendimentoDevolucao.itensDevolucao.get(i).setData_devolucao(data);                        
+                
                 itens.add(itemDevolve);
 
                 copiaDAO.alterarStatusFilme(itemDevolve.getCopia());
                 locacaoDAO.salvarDevolucao(itens);
 
             }
+                EntradaCaixaDevolucao.itens = AtendimentoDevolucao.itensDevolucao;
         } catch (NumberFormatException e) {
             System.out.println("Valor inválido: " + e.getMessage());
 

@@ -197,12 +197,10 @@ public class ConsultaGeneroObjeto extends javax.swing.JFrame {
         setVisible(false);
         Genero genero = tbGeneroLinhaSelecionada(jtbl_genero);
         if ((janelapai != null) && (genero != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            telaCadastroObjeto.carregaGenero(genero);            
+            janelapai.setStatusTela(true);            
+            janelapai.carregaGenero(genero);            
         }else if ((janelapai2 != null) && (genero != null)) {
-            janelapai2.setEnabled(true);
-            janelapai2.setVisible(true);
+            janelapai2.setStatusTela(true);
             janelapai2.carregaGenero(genero);            
         }
 

@@ -174,22 +174,21 @@
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jtf_valor_locacao">
+        <Component class="javax.swing.JTextField" name="jtf_valor_lancamento">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-            <Property name="name" type="java.lang.String" value="jtf_valor_locacao" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jtf_valor_lancamento" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_locacaoFocusGained"/>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_locacaoFocusLost"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_lancamentoFocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_lancamentoFocusLost"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/*try  {          &#xd;&#xa;Locale BRAZIL = new Locale(&quot;pt&quot;,&quot;BR&quot;);  &#xd;&#xa;DecimalFormatSymbols REAL = new DecimalFormatSymbols(BRAZIL);&#xd;&#xa;formatoPreco = new DecimalFormat(&quot;&#xa4; ###,###,##0.00&quot;,REAL);  &#xd;&#xa;}    catch (Exception erro)  &#xd;&#xa;{    &#xd;&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xd;&#xa;}&#xd;&#xa;*/"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="300" y="40" width="100" height="-1"/>
+              <AbsoluteConstraints x="410" y="40" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -203,7 +202,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="20" width="120" height="-1"/>
+              <AbsoluteConstraints x="280" y="20" width="120" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -217,7 +216,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="300" y="20" width="50" height="-1"/>
+              <AbsoluteConstraints x="410" y="20" width="50" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -293,24 +292,6 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="jtf_nome_objeto_locacao">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="jtf_nome_objeto_locacao" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_nome_objeto_locacaoFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_nome_objeto_locacaoKeyPressed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-          </AuxValues>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="40" width="140" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Component class="javax.swing.JLabel" name="jl_codigo_locacao">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -322,20 +303,6 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="20" y="20" width="-1" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jtf_codigo_consulta_locacao">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="jtf_codigo_consulta_locacao" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_codigo_consulta_locacaoFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_codigo_consulta_locacaoKeyPressed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="20" y="40" width="120" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -358,7 +325,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="D&#xe9;bito Total:"/>
+            <Property name="text" type="java.lang.String" value="Total D&#xe9;bito:"/>
             <Property name="name" type="java.lang.String" value="jLabel28" noResource="true"/>
           </Properties>
           <Constraints>
@@ -425,7 +392,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="410" y="40" width="30" height="30"/>
+              <AbsoluteConstraints x="520" y="40" width="30" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -442,7 +409,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="450" y="40" width="30" height="30"/>
+              <AbsoluteConstraints x="560" y="40" width="30" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -479,6 +446,37 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="490" y="330" width="70" height="30"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jcb_tipo_servico">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="jcb_tipo_servico" noResource="true"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="20" y="40" width="250" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jtf_data_lancamento">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jtf_data_lancamento" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_data_lancamentoFocusLost"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoData);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try  {      &#xa;formatoData = new MaskFormatter(&quot;##/##/####&quot;);  &#xa;} &#xa;    catch (Exception erro)  &#xa;{    &#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="280" y="40" width="110" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
