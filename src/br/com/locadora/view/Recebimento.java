@@ -3,8 +3,8 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
-import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.TipoServico;
@@ -15,9 +15,7 @@ import br.com.locadora.model.dao.TipoServicoDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
-import static br.com.locadora.view.AtendimentoLocacao.jtbl_locacao;
 import static br.com.locadora.view.AtendimentoLocacao.jtf_nome_objeto_locacao;
-import static br.com.locadora.view.CadastroCliente.jtf_data_nascimento_dependente;
 import static br.com.locadora.view.CadastroCliente.validaData;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -53,6 +51,7 @@ public class Recebimento extends javax.swing.JFrame {
     public List<Lancamento> lancamentos;
     public Lancamento lancamento;
     public TipoServico tipoServico;
+    AcessoUsuario acesso;
 
     public Recebimento() {
         initComponents();
@@ -633,7 +632,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             ArquivoConfiguracao conf = new ArquivoConfiguracao();
 
             Usuario usuario = new Usuario();
-            usuario.setCod_usuario(Integer.parseInt(conf.readPropertie("codigo_usuario")));
+            usuario.setCodigo_usuario(Integer.parseInt(conf.readPropertie("codigo_usuario")));
 
             lancamento.setUsuario(usuario);
             lancamentoDAO.salvarLancamento(lancamento);

@@ -99,9 +99,9 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             "    D.LOGIN\n" +
             "FROM\n" +
             "    locadora.lancamento A,\n" +
-            "    LOCADORA.DEPENDENTE B,\n" +
-            "    LOCADORA.tipo_servico C,\n" +
-            "    LOCADORA.USUARIO D\n" +
+            "    DEPENDENTE B,\n" +
+            "    tipo_servico C,\n" +
+            "    USUARIO D\n" +
             "WHERE\n" +
             "    A.dependente_CODIGO_DEPENDENTE = B.CODIGO_DEPENDENTE\n" +
             "        AND A.tipo_servico_codigo_tipo_servico = C.codigo_tipo_servico\n" +
@@ -109,7 +109,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             "        AND B.CODIGO_DEPENDENTE IN (SELECT \n" +
             "            CODIGO_DEPENDENTE\n" +
             "        FROM\n" +
-            "            LOCADORA.DEPENDENTE\n" +
+            "            DEPENDENTE\n" +
             "        WHERE\n" +
             "            CLIENTE_CODIGO_CLIENTE = ?)\n" +
             "ORDER BY A.CODIGO_LANCAMENTO DESC;";
@@ -124,6 +124,38 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
 
             rs.close();
             ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
+    public List<Lancamento> getLancamentoCaixa() {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT \n" +
+            "    A.data_lancamento, caixa_codigo_caixa, SUM(VALOR) AS VALOR\n" +
+            "FROM\n" +
+            "    LANCAMENTO A,\n" +
+            "    TIPO_SERVICO B\n" +
+            "WHERE\n" +
+            "    A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
+            "        AND B.TIPO = 'C'\n" +
+            "GROUP BY A.DATA_LANCAMENTO , caixa_codigo_caixa\n" +
+            "ORDER BY DATA_LANCAMENTO DESC;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);            
+            rs = ps.executeQuery();
+
+            resultado = getListaLancamentoCaixa(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -148,6 +180,19 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             Usuario usuario = new Usuario();
             usuario.setLogin(rs.getString("LOGIN"));
             lancamento.setUsuario(usuario);
+            resultado.add(lancamento);
+        }
+        return resultado;
+    }
+    
+    private List<Lancamento> getListaLancamentoCaixa(ResultSet rs) throws SQLException {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        while (rs.next()) {
+            Lancamento lancamento = new Lancamento();
+            lancamento.setData_lancamento(rs.getDate("DATA_LANCAMENTO"));
+            lancamento.setCaixa(rs.getInt("CAIXA_CODIGO_CAIXA"));
+            lancamento.setValor(rs.getDouble("VALOR"));
+                        
             resultado.add(lancamento);
         }
         return resultado;
@@ -221,7 +266,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             throws SQLException {
 
         ps.setInt(1, lancamento.getDependente().getCodigo_dependente());
-        ps.setInt(2, lancamento.getUsuario().getCod_usuario());
+        ps.setInt(2, lancamento.getUsuario().getCodigo_usuario());
 
     }
     
@@ -229,7 +274,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             throws SQLException {
 
         ps.setInt(1, lancamento.getDependente().getCodigo_dependente());
-        ps.setInt(2, lancamento.getUsuario().getCod_usuario());
+        ps.setInt(2, lancamento.getUsuario().getCodigo_usuario());
 
     }
     
@@ -239,7 +284,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
         ps.setDouble(1, lancamento.getValor());
         ps.setInt(2, lancamento.getDependente().getCodigo_dependente());
         ps.setInt(3, lancamento.getTipoServico().getCodigo_tipo_servico());
-        ps.setInt(4, lancamento.getUsuario().getCod_usuario());
+        ps.setInt(4, lancamento.getUsuario().getCodigo_usuario());
 //        ps.setInt(5, lancamento.getCodigo_lancamento());
 
     }

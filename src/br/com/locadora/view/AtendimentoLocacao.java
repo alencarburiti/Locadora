@@ -3,6 +3,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
@@ -18,7 +19,6 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,18 +48,15 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     public static List<Copia> copiasLocacao = new ArrayList<Copia>();
     public List<Produto> produtos;
     public Produto produto;
-    private Date data;
     public InterfacePool pool;
     public SiscomController controller;
     public TelaPrincipal janelapai;
     public Moeda moeda;
     public Lancamento lancamento;
+    public static AcessoUsuario acesso = new AcessoUsuario();
 
     public AtendimentoLocacao() {
         initComponents();
-    }
-
-    public void setTela(String permissao) {
 
     }
 
@@ -971,12 +968,26 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+        System.out.println("Escrever: " + acesso.getEscrever());
+        if (acesso.getEscrever() == 1) {
+            jtf_codigo_cliente.setEnabled(false);
+            jtf_codigo_consulta_locacao.setEnabled(false);
+            jtf_codigo_copia1.setEnabled(false);
+            jtf_codigo_objeto.setEnabled(false);
+            jtf_debito_total_locacao.setEnabled(false);
+            jtf_descricao_objeto.setEnabled(false);
+            jtf_diaria.setEnabled(false);
+            jtf_nome_cliente.setEnabled(false);
+            jtf_nome_objeto1.setEnabled(false);
+            jtf_nome_objeto_locacao.setEnabled(false);
+            jtf_preco10.setEnabled(false);
+        }
+
         if (jcb_codigo_barras_locacao.isSelected() == true) {
             jl_codigo_locacao.setText("Código de Barras");
-//            jtf_codigo_consulta_locacao.requestFocus();
         } else {
             jl_codigo_locacao.setText("Código dó Objeto");
-//            jtf_codigo_consulta_locacao.requestFocus();
         }
         jtf_nome_cliente.requestFocus();
     }//GEN-LAST:event_formWindowOpened
@@ -1141,7 +1152,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             JOptionPane.showMessageDialog(null, "Informe primeiro um cliente");
         } else {
             ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
-            copiaCliente.janelapai = this;           
+            copiaCliente.janelapai = this;
             copiaCliente.setVisible(true);
             setStatusTela(false);
         }
@@ -1150,7 +1161,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private void jtf_nome_objeto_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_locacaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
-            copiaCliente.janelapai = this;           
+            copiaCliente.janelapai = this;
             copiaCliente.setVisible(true);
             setStatusTela(false);
         }
@@ -1251,10 +1262,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jcb_codigo_barras_locacaoActionPerformed
 
     private void jtf_codigo_consulta_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_consulta_locacaoKeyPressed
-        
+
         try {
-            
-                    
+
             if (!jtf_codigo_cliente.getText().equals("")) {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (jcb_codigo_barras_locacao.isSelected() == true) {
@@ -1263,7 +1273,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                         locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
                     }
                 } else if (evt.getKeyCode() == KeyEvent.VK_F6) {
-                    ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();                    
+                    ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
                     copiaCliente.janelapai = this;
                     copiaCliente.setVisible(true);
                     setStatusTela(false);
@@ -1273,7 +1283,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             } else {
                 JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
             }
-        } catch (NumberFormatException e) {           
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
         }
 
@@ -1303,7 +1313,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         setStatusTela(false);
 
     }
-
 
     private TelaPrincipal_Interface telaPrincipal;
 
@@ -1487,8 +1496,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
             row.addRow(new Object[]{copia.getCodigo_barras(),
                 hashDbGrid, valor, copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura()});
-          
-            
+
             adicionarValorTotal(valor);
             copiasLocacao.add(copia);
             limparItemLocado();
@@ -1498,8 +1506,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
     }
 
-    
-    
     public void adicionarValorTotal(String valor) {
         moeda = new Moeda();
         Double valor_total;
@@ -1581,18 +1587,17 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             Double debito;
             pool = new Pool();
             DependenteDAO dependenteDAO = new DependenteDAO(pool);
-            
+
             lancamento = new Lancamento();
             lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
-            if(lancamento.getSaldo() < 0){
-                lancamento.setSaldo(lancamento.getSaldo()*(-1));
+            if (lancamento.getSaldo() < 0) {
+                lancamento.setSaldo(lancamento.getSaldo() * (-1));
                 jtf_debito_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_debito_total_locacao.setCaretColor(Color.black);
-            }else{                
+            } else {
                 jtf_debito_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_debito_total_locacao.setCaretColor(Color.red);
             }
-
 
             jtf_codigo_consulta_locacao.requestFocus();
 
@@ -1608,10 +1613,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
     }
 
-    public void setStatusTela(boolean status) {        
+    public void setStatusTela(boolean status) {
 
         if (status) {
-            this.setVisible(status);           
+            this.setVisible(status);
         }
         this.setEnabled(status);
 
@@ -1770,7 +1775,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             int linhas = jtbl_locacao.getRowCount();
 
             for (int i = 0; i < linhas; i++) {
-//                JOptionPane.showMessageDialog(null, "Linhas:" + i + " Size: "+ copias.size());                
+                System.out.println("Linhas:" + i + " Size: "+ copias.size());                
                 for (int x = 0; x < copias.size();) {
 
                     Copia copiaVerificarTabela = new Copia();
@@ -1779,18 +1784,18 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
                     tabela = copiaVerificarTabela.getCodigo_barras().equals(copias.get(x).getCodigo_barras());
 
-//                    JOptionPane.showMessageDialog(null, copias.get(x).getCodigo_barras() + " " + tabela + " Posição: " + x);
+                    System.out.println(copias.get(x).getCodigo_barras() + " " + tabela + " Posição: " + x);
                     if (tabela == false) {
                         codigo_barras = copias.get(x).getCodigo_barras();
                         break;
                     } else {
-//                        JOptionPane.showMessageDialog(null, "Passou pela posição: "+ x);
+                        System.out.println( "Passou pela posição: "+ x);
                         copias.remove(x);
                         x = 0;
                         continue;
                     }
                 }
-//                    JOptionPane.showMessageDialog(null, "Linhas:" + i + " Size: "+ copias.size());
+                    System.out.println("Linhas:" + i + " Size: "+ copias.size());
             }
 
         }

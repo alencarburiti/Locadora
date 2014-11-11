@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
+import javax.swing.JOptionPane;
 
 public class Pool implements InterfacePool {
 
@@ -43,7 +44,7 @@ public class Pool implements InterfacePool {
 			}
 		} catch (SQLException e) {
 			System.out.println("Problemas com o pool!");
-			e.printStackTrace();
+                        JOptionPane.showConfirmDialog(null,"Verificar conexão com Banco de Dados");			
 		}
 		return con;
 	}

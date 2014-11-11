@@ -3,7 +3,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
-import br.com.locadora.model.bean.Acesso;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.UsuarioDAO;
@@ -778,12 +778,12 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     }
     
     public List<Usuario> usuarios;
-    public static Acesso acesso;
+    public static AcessoUsuario acesso;
     
     public boolean verificaLogin() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), action);
+        acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), getClass().getName());
 
         //verifica a senha
         char[] senha = jpf_senha.getPassword();

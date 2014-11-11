@@ -13,6 +13,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Idioma;
 import br.com.locadora.model.dao.IdiomaDAO;
 import br.com.locadora.util.ItemDbGrid;
@@ -37,6 +38,7 @@ public class MenuIdioma extends javax.swing.JFrame {
     public SiscomController controller;
     public Idioma idioma;
     public List<Idioma> idiomas;
+    AcessoUsuario acesso;
 
     /**
      * Creates new form DiariaGUI
@@ -158,7 +160,7 @@ public class MenuIdioma extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

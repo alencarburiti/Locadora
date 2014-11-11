@@ -165,13 +165,13 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "        AND E.CODIGO_DEPENDENTE IN (SELECT \n" +
             "            CODIGO_DEPENDENTE\n" +
             "        FROM\n" +
-            "            LOCADORA.DEPENDENTE\n" +
+            "            DEPENDENTE\n" +
             "        WHERE\n" +
             "            CLIENTE_CODIGO_CLIENTE IN (SELECT \n" +
             "                    CODIGO_CLIENTE\n" +
             "                FROM\n" +
-            "                    LOCADORA.CLIENTE CL,\n" +
-            "                    LOCADORA.DEPENDENTE DP\n" +
+            "                    CLIENTE CL,\n" +
+            "                    DEPENDENTE DP\n" +
             "                WHERE\n" +
             "                    CL.CODIGO_CLIENTE = DP.CLIENTE_CODIGO_CLIENTE\n" +
             "                        AND DP.CODIGO_DEPENDENTE = ?));";
@@ -309,13 +309,13 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND E.CODIGO_DEPENDENTE IN (SELECT \n"
                 + "            CODIGO_DEPENDENTE\n"
                 + "        FROM\n"
-                + "            LOCADORA.DEPENDENTE\n"
+                + "            DEPENDENTE\n"
                 + "        WHERE\n"
                 + "            CLIENTE_CODIGO_CLIENTE IN (SELECT \n"
                 + "                    CODIGO_CLIENTE\n"
                 + "                FROM\n"
-                + "                    LOCADORA.CLIENTE CL,\n"
-                + "                    LOCADORA.DEPENDENTE DP\n"
+                + "                    CLIENTE CL,\n"
+                + "                    DEPENDENTE DP\n"
                 + "                WHERE\n"
                 + "                    CL.CODIGO_CLIENTE = DP.CLIENTE_CODIGO_CLIENTE\n"
                 + "                        AND DP.CODIGO_DEPENDENTE = ?))";
@@ -538,7 +538,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             throws SQLException {
 
         ps.setInt(1, locacao.getDependente().getCodigo_dependente());
-        ps.setInt(2, locacao.getUsuario().getCod_usuario());
+        ps.setInt(2, locacao.getUsuario().getCodigo_usuario());
 
     }
     
@@ -548,7 +548,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         ps.setDouble(1, lancamento.getValor());
         ps.setInt(2, lancamento.getDependente().getCodigo_dependente());
         ps.setInt(3, lancamento.getTipoServico().getCodigo_tipo_servico());
-        ps.setInt(4, lancamento.getUsuario().getCod_usuario());
+        ps.setInt(4, lancamento.getUsuario().getCodigo_usuario());
         ps.setInt(5, lancamento.getLocacao().getCodigo_locacao());
 
     }

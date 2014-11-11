@@ -10,11 +10,11 @@ package br.com.locadora.model.bean;
  */
 public class Usuario {
 
-    public Usuario(Integer cod_usuário, String nome_usuario) {
-        this.cod_usuário = cod_usuário;
+    public Usuario(Integer codigo_usuario, String nome_usuario) {
+        this.codigo_usuario = codigo_usuario;
         this.nome_usuario = nome_usuario;
     }
-    private Integer cod_usuário;
+    private Integer codigo_usuario;
     private String nome_usuario;
     private String login;
     private String senha;
@@ -23,11 +23,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public void setCod_usuario(Integer cod_usuário) {
-        this.cod_usuário = cod_usuário;
+    public void setCodigo_usuario(Integer codigo_usuario) {
+        this.codigo_usuario = codigo_usuario;
     }
 
-    public void setNome_usuário(String nome_usuario) {
+    public void setNome_usuario(String nome_usuario) {
         this.nome_usuario = nome_usuario;
     }
 
@@ -40,8 +40,8 @@ public class Usuario {
 
     }
 
-    public Integer getCod_usuario() {
-        return cod_usuário;
+    public Integer getCodigo_usuario() {
+        return codigo_usuario;
     }
 
     public String getNome_usuario() {

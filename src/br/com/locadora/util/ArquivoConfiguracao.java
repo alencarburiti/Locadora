@@ -32,7 +32,7 @@ public class ArquivoConfiguracao {
 
             valor_property = props.getProperty(propertie);
 
-            System.out.println("Property: " + propertie + " Valor: "+ valor_property);
+            System.out.println("Property: " + propertie + " - Valor: "+ valor_property);
             reader.close();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();

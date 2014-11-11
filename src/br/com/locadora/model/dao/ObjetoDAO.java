@@ -39,7 +39,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
     public void excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlExcluir = "DELETE FROM objeto WHERE codigo = ?;";
+        String sqlExcluir = "DELETE FROM OBJETO WHERE CODIGO_OBJETO = ?;";
         
         try {
             ps = con.prepareStatement(sqlExcluir);
@@ -60,9 +60,9 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         String sqlSelect = "SELECT \n"
                 + "    *\n"
                 + "FROM\n"
-                + "    LOCADORA.OBJETO A,\n"
-                + "    LOCADORA.DIARIA B,\n"
-                + "    LOCADORA.GENERO C\n"
+                + "    OBJETO A,\n"
+                + "    DIARIA B,\n"
+                + "    GENERO C\n"
                 + "WHERE\n"
                 + "    A.DIARIA_CODIGO_DIARIA = B.CODIGO_DIARIA\n"
                 + "        AND A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
@@ -93,9 +93,9 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         String sqlSelect = "SELECT \n"
                 + "    *\n"
                 + "FROM\n"
-                + "    LOCADORA.OBJETO A,\n"
-                + "    LOCADORA.DIARIA B,\n"
-                + "    LOCADORA.GENERO C\n"
+                + "    OBJETO A,\n"
+                + "    DIARIA B,\n"
+                + "    GENERO C\n"
                 + "WHERE\n"
                 + "    A.DIARIA_CODIGO_DIARIA = B.CODIGO_DIARIA\n"
                 + "        AND A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
@@ -125,9 +125,9 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         String sqlSelect = "SELECT \n"
                 + "    *\n"
                 + "FROM\n"
-                + "    LOCADORA.OBJETO A,\n"
-                + "    LOCADORA.DIARIA B,\n"
-                + "    LOCADORA.GENERO C\n"
+                + "    OBJETO A,\n"
+                + "    DIARIA B,\n"
+                + "    GENERO C\n"
                 + "WHERE\n"
                 + "    A.DIARIA_CODIGO_DIARIA = B.CODIGO_DIARIA\n"
                 + "        AND A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"

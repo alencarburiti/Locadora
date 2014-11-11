@@ -1,8 +1,13 @@
 package br.com.locadora.view;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Backup;
 import br.com.locadora.util.Restaurar;
+import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
 import java.io.IOException;
 import javax.swing.*;
 
@@ -10,15 +15,29 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 
     public IniciaLogin janelaPai;
     public IniciaLogin janelaLogin;
+
     public static Usuario usuario;
+
     public String usuarioNome;
     public Integer codUsuario;
     public String login;
-    public String permissao;
+
     public IniciaLogin loginInicia;
     public AtendimentoLocacao atendimentoLocacao;
     public AtendimentoDevolucao atendimentoDevolucao;
+    public MenuCliente clienteInterface;
+    public MenuDiaria menuDiaria;
+    public MenuLegenda menuLegenda;
+    public MenuProduto menuProduto;
+    public MenuIdioma menuIdioma;
+    public MenuObjeto menuObjeto;
+    public MenuUsuario menuUsuario;
+    public MenuFornecedor menuFornecedor;
+    public MenuGenero menuGenero;
     public Recebimento recebimento;
+
+    public AcessoInterface acessoInterface;
+    public InterfacePool pool;
 
     public TelaPrincipal() {
 
@@ -70,13 +89,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jmi_fornecedor = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenu15 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        jmi_objeto = new javax.swing.JMenuItem();
+        jmi_genero = new javax.swing.JMenuItem();
+        jmi_diaria = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        jmi_idioma = new javax.swing.JMenuItem();
+        jmi_legenda = new javax.swing.JMenuItem();
+        jmi_midia = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         menuitem_sair = new javax.swing.JMenuItem();
@@ -85,10 +104,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jmi_entrada4 = new javax.swing.JMenuItem();
         jmi_entrada5 = new javax.swing.JMenuItem();
         menu_movimentos = new javax.swing.JMenu();
-        jmi_entrada = new javax.swing.JMenuItem();
-        jmi_entrada2 = new javax.swing.JMenuItem();
+        jmi_atendimento_locacao = new javax.swing.JMenuItem();
+        jmi_atendimento_devolucao = new javax.swing.JMenuItem();
         jMenu17 = new javax.swing.JMenu();
         menu_relatórios = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
         menu_relatórios1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jmi_backup = new javax.swing.JMenuItem();
@@ -96,10 +116,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenu16 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jm_caixa = new javax.swing.JMenu();
+        jm_usuario = new javax.swing.JMenuItem();
+        jm_acesso = new javax.swing.JMenuItem();
+        jm_conf_impressora = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
         menu_relatórios2 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
 
@@ -254,12 +275,12 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
             }
         });
         jmi_fornecedor.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jmi_fornecedorAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         menu_cadastros.add(jmi_fornecedor);
@@ -270,32 +291,32 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jMenu15.setText("Locadora");
         jMenu15.setName("jMenu15"); // NOI18N
 
-        jMenuItem4.setText("Objeto");
-        jMenuItem4.setName("jMenuItem4"); // NOI18N
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jmi_objeto.setText("Objeto");
+        jmi_objeto.setName("jmi_objeto"); // NOI18N
+        jmi_objeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jmi_objetoActionPerformed(evt);
             }
         });
-        jMenu15.add(jMenuItem4);
+        jMenu15.add(jmi_objeto);
 
-        jMenuItem5.setText("Gênero");
-        jMenuItem5.setName("jMenuItem5"); // NOI18N
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jmi_genero.setText("Gênero");
+        jmi_genero.setName("jmi_genero"); // NOI18N
+        jmi_genero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jmi_generoActionPerformed(evt);
             }
         });
-        jMenu15.add(jMenuItem5);
+        jMenu15.add(jmi_genero);
 
-        jMenuItem11.setText("Diária");
-        jMenuItem11.setName("jMenuItem11"); // NOI18N
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        jmi_diaria.setText("Diária");
+        jmi_diaria.setName("jmi_diaria"); // NOI18N
+        jmi_diaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                jmi_diariaActionPerformed(evt);
             }
         });
-        jMenu15.add(jMenuItem11);
+        jMenu15.add(jmi_diaria);
 
         jMenuItem3.setText("Gerar Código de Barras");
         jMenuItem3.setName("jMenuItem3"); // NOI18N
@@ -306,32 +327,32 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         });
         jMenu15.add(jMenuItem3);
 
-        jMenuItem12.setText("Idioma");
-        jMenuItem12.setName("jMenuItem12"); // NOI18N
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        jmi_idioma.setText("Idioma");
+        jmi_idioma.setName("jmi_idioma"); // NOI18N
+        jmi_idioma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                jmi_idiomaActionPerformed(evt);
             }
         });
-        jMenu15.add(jMenuItem12);
+        jMenu15.add(jmi_idioma);
 
-        jMenuItem13.setText("Legenda");
-        jMenuItem13.setName("jMenuItem13"); // NOI18N
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        jmi_legenda.setText("Legenda");
+        jmi_legenda.setName("jmi_legenda"); // NOI18N
+        jmi_legenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                jmi_legendaActionPerformed(evt);
             }
         });
-        jMenu15.add(jMenuItem13);
+        jMenu15.add(jmi_legenda);
 
-        jMenuItem14.setText("Mídia");
-        jMenuItem14.setName("jMenuItem14"); // NOI18N
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+        jmi_midia.setText("Mídia");
+        jmi_midia.setName("jmi_midia"); // NOI18N
+        jmi_midia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
+                jmi_midiaActionPerformed(evt);
             }
         });
-        jMenu15.add(jMenuItem14);
+        jMenu15.add(jmi_midia);
 
         jMenuItem15.setText("Tipo de Objeto");
         jMenuItem15.setName("jMenuItem15"); // NOI18N
@@ -396,22 +417,22 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         menu_movimentos.setText("Movimento");
         menu_movimentos.setName("menu_movimentos"); // NOI18N
 
-        jmi_entrada.setText("Locação");
-        jmi_entrada.addActionListener(new java.awt.event.ActionListener() {
+        jmi_atendimento_locacao.setText("Locação");
+        jmi_atendimento_locacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_entradaActionPerformed1(evt);
+                jmi_atendimento_locacaoActionPerformed1(evt);
             }
         });
-        menu_movimentos.add(jmi_entrada);
+        menu_movimentos.add(jmi_atendimento_locacao);
 
-        jmi_entrada2.setText("Devolução");
-        jmi_entrada2.setName("jmi_entrada2"); // NOI18N
-        jmi_entrada2.addActionListener(new java.awt.event.ActionListener() {
+        jmi_atendimento_devolucao.setText("Devolução");
+        jmi_atendimento_devolucao.setName("jmi_atendimento_devolucao"); // NOI18N
+        jmi_atendimento_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_entrada2ActionPerformed1(evt);
+                jmi_atendimento_devolucaoActionPerformed1(evt);
             }
         });
-        menu_movimentos.add(jmi_entrada2);
+        menu_movimentos.add(jmi_atendimento_devolucao);
 
         jMB_Cadastro.add(menu_movimentos);
 
@@ -427,6 +448,16 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
                 menu_relatóriosActionPerformed(evt);
             }
         });
+
+        jMenuItem16.setText("Caixa");
+        jMenuItem16.setName("jMenuItem16"); // NOI18N
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        menu_relatórios.add(jMenuItem16);
+
         jMB_Cadastro.add(menu_relatórios);
 
         menu_relatórios1.setMnemonic('R');
@@ -482,37 +513,46 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 
         jMB_Cadastro.add(menu_relatórios1);
 
-        jMenu16.setText("Configurações");
-        jMenu16.setName("jMenu16"); // NOI18N
+        jm_caixa.setText("Configurações");
+        jm_caixa.setName("jm_caixa"); // NOI18N
 
-        jMenuItem6.setText("Cadastro Usuário");
-        jMenuItem6.setName("jMenuItem6"); // NOI18N
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jm_usuario.setText("Usuário");
+        jm_usuario.setName("jm_usuario"); // NOI18N
+        jm_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jm_usuarioActionPerformed(evt);
             }
         });
-        jMenu16.add(jMenuItem6);
+        jm_caixa.add(jm_usuario);
 
-        jMenuItem7.setText("Acesso");
-        jMenuItem7.setName("jMenuItem7"); // NOI18N
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        jm_acesso.setText("Acessos");
+        jm_acesso.setName("jm_acesso"); // NOI18N
+        jm_acesso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                jm_acessoActionPerformed(evt);
             }
         });
-        jMenu16.add(jMenuItem7);
+        jm_caixa.add(jm_acesso);
 
-        jMenuItem8.setText("Configurar Impressora");
-        jMenuItem8.setName("jMenuItem8"); // NOI18N
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        jm_conf_impressora.setText("Configurar Impressora");
+        jm_conf_impressora.setName("jm_conf_impressora"); // NOI18N
+        jm_conf_impressora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                jm_conf_impressoraActionPerformed(evt);
             }
         });
-        jMenu16.add(jMenuItem8);
+        jm_caixa.add(jm_conf_impressora);
 
-        jMB_Cadastro.add(jMenu16);
+        jMenuItem17.setText("Caixa");
+        jMenuItem17.setName("jMenuItem17"); // NOI18N
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jm_caixa.add(jMenuItem17);
+
+        jMB_Cadastro.add(jm_caixa);
 
         menu_relatórios2.setMnemonic('R');
         menu_relatórios2.setText("Ajuda");
@@ -545,35 +585,75 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
     }//GEN-LAST:event_menuitem_entradaActionPerformed
 
     private void jmi_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_produtoActionPerformed
-        MenuProduto produtoGUI = new MenuProduto();
-        produtoGUI.setTelaPrincipal(this);
-        produtoGUI.setTela(permissao);
-        produtoGUI.setVisible(true);
-        setStatusTela(false);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                menuProduto = new MenuProduto();
+                menuProduto.janelapai = this;
+                menuProduto.setVisible(true);
+                setStatusTela(false);
+                atendimentoLocacao.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+
+        }
+
+
     }//GEN-LAST:event_jmi_produtoActionPerformed
 
-    private void jmi_entradaActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entradaActionPerformed1
-        atendimentoLocacao = new AtendimentoLocacao();
-        atendimentoLocacao.setVisible(true);
-        atendimentoLocacao.setTelaPrincipal(this);
-        atendimentoLocacao.setJanelaPai(this);
-        atendimentoLocacao.setVisible(true);
-        setStatusTela(false);
+    private void jmi_atendimento_locacaoActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_atendimento_locacaoActionPerformed1
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
 
+        try {
+            if (acesso.getEscrever() == 0) {
+                atendimentoLocacao = new AtendimentoLocacao();
+                atendimentoLocacao.acesso = acesso;
+                atendimentoLocacao.setVisible(true);
+                atendimentoLocacao.janelapai = this;
+                setStatusTela(false);
+                System.out.println("Nome da classe: " + getClass().getName());
+                System.out.println("Login: " + acesso.getUsuario().getLogin());
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
 
-    }//GEN-LAST:event_jmi_entradaActionPerformed1
+        }
+
+    }//GEN-LAST:event_jmi_atendimento_locacaoActionPerformed1
 
     private void menu_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sairActionPerformed
         System.exit(0);
         // TODO add your handling code here:
     }//GEN-LAST:event_menu_sairActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        MenuGenero menuGenero = new MenuGenero();
-        menuGenero.setTelaPrincipal(this);
-        menuGenero.setVisible(true);
-        setStatusTela(false);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void jmi_generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_generoActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
+
+        try {
+            if (acesso.getEscrever() == 0) {
+                menuGenero = new MenuGenero();
+                menuGenero.janelapai = this;
+                menuGenero.setVisible(true);
+                setStatusTela(false);
+                menuGenero.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+
+        }
+
+
+    }//GEN-LAST:event_jmi_generoActionPerformed
 
     private void menu_cadastrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_cadastrosActionPerformed
         // TODO add your handling code here:
@@ -585,10 +665,23 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
 }//GEN-LAST:event_menuitem_sairActionPerformed
 
     private void jmi_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_fornecedorActionPerformed
-        MenuFornecedor fornecedorMenu = new MenuFornecedor();
-        fornecedorMenu.setTelaPrincipal(this);
-        fornecedorMenu.setVisible(true);
-        setStatusTela(false);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                menuFornecedor = new MenuFornecedor();
+                menuFornecedor.janelapai = this;
+                menuFornecedor.setVisible(true);
+                setStatusTela(false);
+                menuFornecedor.acesso = acesso;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+
+
     }//GEN-LAST:event_jmi_fornecedorActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -609,13 +702,24 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        Acesso acesso = new Acesso();
-        acesso.setTelaPrincipal(this);
-        acesso.setVisible(true);
-        setStatusTela(false);
+    private void jm_acessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_acessoActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AcessoInterface");
+        try {
+            if (acesso.getSuper_usuario() == 0) {
+                acessoInterface = new AcessoInterface();
+                acessoInterface.janelapai = this;
+                acessoInterface.setVisible(true);
+                setStatusTela(false);
+                acessoInterface.acesso = acesso;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
 
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_jm_acessoActionPerformed
 
     private void menu_relatóriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_relatóriosActionPerformed
         // TODO add your handling code here:
@@ -667,52 +771,113 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_jmi_recoverActionPerformed
 
     private void jmi_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_clienteActionPerformed
-        MenuCliente cliente_principal;
-        cliente_principal = new MenuCliente();
-        cliente_principal.setTelaPrincipal(this);
-        cliente_principal.setVisible(true);
-        setStatusTela(false);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
+
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                clienteInterface = new MenuCliente();
+                clienteInterface.janelapai = this;
+                clienteInterface.setVisible(true);
+                setStatusTela(false);
+                clienteInterface.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
     }//GEN-LAST:event_jmi_clienteActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        MenuDiaria menuDiaria = new MenuDiaria();
-        menuDiaria.setTelaPrincipal(this);
-        menuDiaria.setVisible(true);
-        setStatusTela(false);
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    private void jmi_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_diariaActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        MenuObjeto menuObjeto = new MenuObjeto();
-        menuObjeto.janelapai = this;
-        menuObjeto.setVisible(true);
-        setStatusTela(false);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                menuDiaria = new MenuDiaria();
+                menuDiaria.janelapai = this;
+                menuDiaria.setVisible(true);
+                setStatusTela(false);
+                menuDiaria.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        MenuIdioma menuIdioma = new MenuIdioma();
-        menuIdioma.setTelaPrincipal(this);
-        menuIdioma.setVisible(true);
-        setStatusTela(false);
+    }//GEN-LAST:event_jmi_diariaActionPerformed
+
+    private void jmi_objetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_objetoActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
+
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                menuObjeto = new MenuObjeto();
+                menuObjeto.janelapai = this;
+                menuObjeto.setVisible(true);
+                setStatusTela(false);
+                menuObjeto.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+    }//GEN-LAST:event_jmi_objetoActionPerformed
+
+    private void jmi_idiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_idiomaActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuIdioma");
+
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                menuIdioma = new MenuIdioma();
+                menuIdioma.setTelaPrincipal(this);
+                menuIdioma.setVisible(true);
+                setStatusTela(false);
+                menuIdioma.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_jmi_idiomaActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        MenuLegenda menuLegenda = new MenuLegenda();
-        menuLegenda.janelapai = this;
-        menuLegenda.setVisible(true);
-        setStatusTela(false);
+    private void jmi_legendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_legendaActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuLegenda");
+
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                menuLegenda = new MenuLegenda();
+                menuLegenda.janelapai = this;
+                menuLegenda.setVisible(true);
+                setStatusTela(false);
+                menuLegenda.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+    }//GEN-LAST:event_jmi_legendaActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         JOptionPane.showMessageDialog(null, "Em construção");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+    private void jmi_midiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_midiaActionPerformed
         JOptionPane.showMessageDialog(null, "Em construção");
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }//GEN-LAST:event_jmi_midiaActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         JOptionPane.showMessageDialog(null, "Em construção");
@@ -728,37 +893,91 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }//GEN-LAST:event_jmi_entrada4ActionPerformed1
 
     private void jmi_entrada1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entrada1ActionPerformed1
-        recebimento = new Recebimento();
-        recebimento.setStatusTela(true);
-        setStatusTela(false);
-        recebimento.janelapai = this;
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.Recebimento");
+
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                recebimento = new Recebimento();
+                recebimento.janelapai = this;
+                recebimento.setVisible(true);
+                setStatusTela(false);
+                recebimento.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jmi_entrada1ActionPerformed1
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        MenuUsuario menuUsuario = new MenuUsuario();
-        menuUsuario.setVisible(true);
+    private void jm_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_usuarioActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuUsuario");
+
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                menuUsuario = new MenuUsuario();
+                menuUsuario.janelapai = this;
+                menuUsuario.setVisible(true);
+                setStatusTela(false);
+                menuUsuario.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_jm_usuarioActionPerformed
 
-    private void jmi_entrada2ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entrada2ActionPerformed1
-        atendimentoDevolucao = new AtendimentoDevolucao();
-        atendimentoDevolucao.setVisible(true);
-        atendimentoDevolucao.setTelaPrincipal(this);
-        atendimentoDevolucao.setJanelaPai(this);
-        
+    private void jmi_atendimento_devolucaoActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_atendimento_devolucaoActionPerformed1
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoDevolucao");
+
+        try {
+            if (acesso.getEscrever() == 0) {
+                atendimentoDevolucao = new AtendimentoDevolucao();
+                atendimentoDevolucao.janelapai = this;
+                atendimentoDevolucao.setVisible(true);
+                setStatusTela(false);
+                atendimentoDevolucao.acesso = acesso;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jmi_entrada2ActionPerformed1
+    }//GEN-LAST:event_jmi_atendimento_devolucaoActionPerformed1
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void jm_conf_impressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_conf_impressoraActionPerformed
         ConfiguraImpressora conf = new ConfiguraImpressora();
         conf.setVisible(true);
-        conf.janelapai = this;  
+        conf.janelapai = this;
         setStatusTela(false);
-        
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_jm_conf_impressoraActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        ControleCaixa control = new ControleCaixa();
+        control.janelapai = this;
+        control.setVisible(true);
+        setStatusTela(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        Caixa caixa = new Caixa();
+        caixa.setVisible(true);
+        setStatusTela(false);
+
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -785,7 +1004,6 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenu jMenu13;
     private javax.swing.JMenu jMenu14;
     private javax.swing.JMenu jMenu15;
-    private javax.swing.JMenu jMenu16;
     private javax.swing.JMenu jMenu17;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -804,18 +1022,11 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuBar jMenuBar7;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -823,14 +1034,24 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel jlabel_usuario;
+    private javax.swing.JMenuItem jm_acesso;
+    private javax.swing.JMenu jm_caixa;
+    private javax.swing.JMenuItem jm_conf_impressora;
+    private javax.swing.JMenuItem jm_usuario;
+    private javax.swing.JMenuItem jmi_atendimento_devolucao;
+    private javax.swing.JMenuItem jmi_atendimento_locacao;
     private javax.swing.JMenuItem jmi_backup;
     private javax.swing.JMenuItem jmi_cliente;
-    private javax.swing.JMenuItem jmi_entrada;
+    private javax.swing.JMenuItem jmi_diaria;
     private javax.swing.JMenuItem jmi_entrada1;
-    private javax.swing.JMenuItem jmi_entrada2;
     private javax.swing.JMenuItem jmi_entrada4;
     private javax.swing.JMenuItem jmi_entrada5;
     private javax.swing.JMenuItem jmi_fornecedor;
+    private javax.swing.JMenuItem jmi_genero;
+    private javax.swing.JMenuItem jmi_idioma;
+    private javax.swing.JMenuItem jmi_legenda;
+    private javax.swing.JMenuItem jmi_midia;
+    private javax.swing.JMenuItem jmi_objeto;
     private javax.swing.JMenuItem jmi_produto;
     private javax.swing.JMenuItem jmi_recover;
     private javax.swing.JLabel label_data;

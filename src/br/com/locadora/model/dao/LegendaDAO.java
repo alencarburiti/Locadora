@@ -79,7 +79,7 @@ public class LegendaDAO implements InterfaceLegendaDAO {
         List<Legenda> resultado = new ArrayList<Legenda>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM LOCADORA.LEGENDA WHERE NOME_LEGENDA LIKE ? ORDER BY NOME_LEGENDA;";
+        String sqlSelect = "SELECT * FROM LEGENDA WHERE NOME_LEGENDA LIKE ? ORDER BY NOME_LEGENDA;";
         ResultSet rs = null;
 
         try {

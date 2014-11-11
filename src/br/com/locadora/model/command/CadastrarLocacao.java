@@ -13,6 +13,7 @@ import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixa;
@@ -51,7 +52,7 @@ public class CadastrarLocacao implements InterfaceCommand {
             locacao.setDependente(dependente);
             
             Usuario usuario = new Usuario();
-            usuario.setCod_usuario(EntradaCaixa.acesso.getUsuario().getCod_usuario());
+            usuario.setCodigo_usuario(EntradaCaixa.acesso.getUsuario().getCodigo_usuario());
             
             locacao.setUsuario(usuario);
             
@@ -70,10 +71,12 @@ public class CadastrarLocacao implements InterfaceCommand {
             lancamento.setDependente(dependente);
             TipoServico tipoServico = new TipoServico();
             
-                    
+            ArquivoConfiguracao conf = new ArquivoConfiguracao();
+            
             //Envia a gravação da locação e envia o lancamento de caixa
             locacao = locacaoDAO.salvar(locacao);
             lancamento.setLocacao(locacao);
+            lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
             
             
             //Lançamento de crédito e de débito

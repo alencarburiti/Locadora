@@ -12,6 +12,7 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.UnaccentedDocument;
@@ -26,6 +27,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     public MenuDiaria janelapai;
     public List<Diaria> generos;
+    AcessoUsuario acesso;
 
     /**
      * Creates new form DestinoCadastroGUI
@@ -259,11 +261,13 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        retornaJanelaPai();
+        janelapai.setStatusTela(true);
+        setVisible(false);
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        retornaJanelaPai();
+        janelapai.setStatusTela(true);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_valorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valorFocusGained

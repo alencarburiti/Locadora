@@ -22,8 +22,6 @@ import java.util.List;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
@@ -46,7 +44,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         this.objusuario = usu;
         initComponents();
 
-        tf_codigo.setText(String.valueOf(usu.getCod_usuario()));
+        tf_codigo.setText(String.valueOf(usu.getCodigo_usuario()));
         tf_nome.setText(usu.getNome_usuario());
         tf_login.setText(usu.getLogin());
         jpf_senha.setText(usu.getSenha());
@@ -343,8 +341,8 @@ private void tf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
         if (verificarCampos()) {
             pool = new Pool();
             UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-            usuario.setCod_usuario(Integer.parseInt(tf_codigo.getText().trim()));
-            usuario.setNome_usuário(tf_nome.getText().trim());
+            usuario.setCodigo_usuario(Integer.parseInt(tf_codigo.getText().trim()));
+            usuario.setNome_usuario(tf_nome.getText().trim());
             usuario.setLogin(tf_login.getText().trim());
             usuario.setSenha(jpf_senha.getText().trim());
             if (jrm_adm.isSelected()) {

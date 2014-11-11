@@ -14,10 +14,9 @@ public class InterfaceAcesso {
     private String descricao;
     private Integer codigo_interface;
     private String tipo;
-
-    public InterfaceAcesso(String string, int aInt, String string0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    private String nome_classe;
+    private Integer del_flag;
+    private Integer codigo_pai;
 
     public String getDescricao() {
         return descricao;
@@ -41,6 +40,30 @@ public class InterfaceAcesso {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getNome_classe() {
+        return nome_classe;
+    }
+
+    public void setNome_classe(String nome_classe) {
+        this.nome_classe = nome_classe;
+    }
+
+    public Integer getDel_flag() {
+        return del_flag;
+    }
+
+    public void setDel_flag(Integer del_flag) {
+        this.del_flag = del_flag;
+    }
+
+    public Integer getCodigo_pai() {
+        return codigo_pai;
+    }
+
+    public void setCodigo_pai(Integer codigo_pai) {
+        this.codigo_pai = codigo_pai;
     }
 
 }

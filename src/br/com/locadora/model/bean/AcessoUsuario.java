@@ -9,14 +9,16 @@ package br.com.locadora.model.bean;
  *
  * @author alencarburiti
  */
-public class Acesso {
+public class AcessoUsuario {
 
     private Integer codigo_acesso;
     private String action;
     private Integer ler;
     private Integer escrever;
     private Integer deletar;
+    private Integer super_usuario;
     private Usuario usuario;
+    private InterfaceAcesso interfaceAcesso;
 
     public Integer getCodigo_acesso() {
         return codigo_acesso;
@@ -64,6 +66,22 @@ public class Acesso {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Integer getSuper_usuario() {
+        return super_usuario;
+    }
+
+    public void setSuper_usuario(Integer super_usuario) {
+        this.super_usuario = super_usuario;
+    }
+
+    public InterfaceAcesso getInterfaceAcesso() {
+        return interfaceAcesso;
+    }
+
+    public void setInterfaceAcesso(InterfaceAcesso interfaceAcesso) {
+        this.interfaceAcesso = interfaceAcesso;
     }
 
 }

@@ -165,7 +165,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT COUNT(CODIGO_COPIA) AS COUNT FROM LOCADORA.COPIA WHERE CODIGO_BARRAS = ? AND DEFECT_FLAG = 0;";
+        String sqlSelect = "SELECT COUNT(CODIGO_COPIA) AS COUNT FROM COPIA WHERE CODIGO_BARRAS = ? AND DEFECT_FLAG = 0;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -192,7 +192,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT COUNT(CODIGO_OBJETO) AS COUNT FROM LOCADORA.OBJETO WHERE CODIGO_OBJETO = ? AND DEL_FLAG = 0;";
+        String sqlSelect = "SELECT COUNT(CODIGO_OBJETO) AS COUNT FROM OBJETO WHERE CODIGO_OBJETO = ? AND DEL_FLAG = 0;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -476,7 +476,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    locadora.LOCACAO B,\n"
                 + "    locadora.ITEM_LOCACAO C,\n"
                 + "    locadora.DEPENDENTE D,\n"
-                + "    LOCADORA.OBJETO E\n"
+                + "    OBJETO E\n"
                 + "WHERE\n"
                 + "    B.CODIGO_LOCACAO = C.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND B.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n"
@@ -485,7 +485,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND E.CODIGO_OBJETO = (SELECT \n"
                 + "            OBJETO_CODIGO_OBJETO\n"
                 + "        FROM\n"
-                + "            LOCADORA.COPIA\n"
+                + "            COPIA\n"
                 + "        WHERE\n"
                 + "            CODIGO_BARRAS = ?)		\n"
                 + "        AND D.CODIGO_DEPENDENTE = ?;";

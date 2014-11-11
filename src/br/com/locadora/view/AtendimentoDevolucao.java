@@ -3,6 +3,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
@@ -33,7 +34,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-public class AtendimentoDevolucao extends javax.swing.JFrame  {
+public class AtendimentoDevolucao extends javax.swing.JFrame {
 
     public DecimalFormat formatoPreco;
     public MaskFormatter formatoData;
@@ -47,7 +48,6 @@ public class AtendimentoDevolucao extends javax.swing.JFrame  {
     public static List<Copia> copiasLocacao = new ArrayList<Copia>();
     public List<Produto> produtos;
     public Produto produto;
-    private Date data;
     public InterfacePool pool;
     public SiscomController controller;
     public TelaPrincipal janelapai;
@@ -55,13 +55,10 @@ public class AtendimentoDevolucao extends javax.swing.JFrame  {
     public ItemLocacao itemDevolucao;
     public Moeda moeda;
     public Lancamento lancamento;
+    AcessoUsuario acesso;
 
     public AtendimentoDevolucao() {
         initComponents();
-    }
-
-    public void setTela(String permissao) {
-
     }
 
     @SuppressWarnings("unchecked")
@@ -391,10 +388,9 @@ public class AtendimentoDevolucao extends javax.swing.JFrame  {
     }//GEN-LAST:event_formKeyReleased
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-//        ((DefaultTableModel) jtbl_locacao.getModel()).setRowCount(0);
-//        jtbl_locacao.updateUI();
-        this.setVisible(false);
-        // TODO add your handling code here:
+        janelapai.setStatusTela(true);
+        setVisible(false);
+
     }//GEN-LAST:event_formWindowClosed
 
 private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_clienteActionPerformed
@@ -490,14 +486,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
             if (jcb_codigo_barras_devolucao.isSelected() == true) {
                 consultarCopiaLocada(jtf_codigo_consulta_devolucao.getText().trim());
-            } else {
-//                    devolver_consulta_codigo_barras(jtf_codigo_consulta_devolucao.getText().trim());
-            }
-
-            if (jcb_codigo_barras_devolucao.isSelected() == true) {
-
-            } else {
-//                    devolver_consulta_codigo_barras(jtf_codigo_consulta_devolucao.getText().trim());
             }
 
         }
@@ -561,12 +549,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             }
         }
         return (true);
-    }
-
-    private TelaPrincipal_Interface telaPrincipal;
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
     }
 
     public boolean validaDataVencimento(String dataString) throws ParseException {
@@ -659,14 +641,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
     }
 
-    public void setJanelaPai(TelaPrincipal janelapai) {
-        if (janelapai != null) {
-            this.janelapai = janelapai;
-        } else {
-            JOptionPane.showMessageDialog(null, "Janela pai sem referência");
-        }
-    }
-
     public void removeObjeto(JTable tb) {
         if (tb != null) {
             DefaultTableModel row = (DefaultTableModel) jtbl_devolucao.getModel();
@@ -705,22 +679,21 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 try {
                     SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                     SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-                    
+
                     Moeda moeda = new Moeda();
                     String data_locacao;
                     data_locacao = out.format(in.parse(itemLocacao.getData_locacao().toString()));
-                    
+
                     Double multa;
                     multa = itemLocacao.getValor_multa();
-                    
-                    
+
                     adicionarMulta(multa);
                     adicionarValorTotal();
-                    
+
                     DefaultTableModel row = (DefaultTableModel) AtendimentoDevolucao.jtbl_devolucao.getModel();
                     ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
-                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao,                        
-                    moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
+                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao,
+                        moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
 
                     itensDevolucao.add(itemLocacao);
                     limparItemDevolvido();
@@ -741,7 +714,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         jtf_codigo_consulta_devolucao.requestFocus();
     }
 
-    public void statusTela(boolean status) {
+    public void setStatusTela(boolean status) {
         if (status) {
             this.setVisible(status);
         }
@@ -781,21 +754,17 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             Double debito;
             pool = new Pool();
             DependenteDAO dependenteDAO = new DependenteDAO(pool);
-            
-            
+
             lancamento = new Lancamento();
             lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
-            if(lancamento.getSaldo() < 0){
-                lancamento.setSaldo(lancamento.getSaldo()*(-1));
+            if (lancamento.getSaldo() < 0) {
+                lancamento.setSaldo(lancamento.getSaldo() * (-1));
                 jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_debito_total_devolucao.setCaretColor(Color.black);
-            }else{                
+            } else {
                 jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_debito_total_devolucao.setCaretColor(Color.red);
             }
-            
-            
-            
 
             jtf_codigo_consulta_devolucao.requestFocus();
 
@@ -809,14 +778,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             jtf_valor_total.setText("R$ 0,00");
             itensDevolucao = new ArrayList<ItemLocacao>();
         }
-    }
-
-    public void setStatusTela(boolean status) {
-        if (status) {
-            this.setVisible(status);
-        }
-        this.setEnabled(status);
-
     }
 
     public void consultarCopiaLocada(String codigo_barras) {
@@ -853,7 +814,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
 
     public void devolver_consulta_codigo_objeto(String codigo_barras) {
-        if (!codigo_barras.equals("")) {            
+        if (!codigo_barras.equals("")) {
             itemDevolucao = new ItemLocacao();
             if (itemDevolucao != null) {
                 carregarCopiaDevolucao(itemDevolucao);
@@ -882,13 +843,12 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
         return tabela;
     }
-    
+
     public void adicionarValorTotal() {
         moeda = new Moeda();
         Double valor_total;
         Double valor_adicionar;
         valor_adicionar = moeda.getPrecoFormato(jtf_valor_multa.getText());
-        
 
         valor_total = moeda.getPrecoFormato(jtf_debito_total_devolucao.getText());
 

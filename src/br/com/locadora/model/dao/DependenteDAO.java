@@ -4,6 +4,7 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Lancamento;
+import br.com.locadora.util.ArquivoConfiguracao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -47,7 +48,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
     public boolean excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlExcluir = "DELETE FROM LOCADORA.DEPENDENTE WHERE CODIGO_DEPENDENTE = ?;";
+        String sqlExcluir = "DELETE FROM DEPENDENTE WHERE CODIGO_DEPENDENTE = ?;";
 
         try {
             ps = con.prepareStatement(sqlExcluir);
@@ -111,28 +112,28 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             "                    ELSE SUM(VALOR_PAGO - VALOR_LOCADO)\n" +
             "                END) AS DEVEDOR\n" +
             "        FROM\n" +
-            "            LOCADORA.LOCACAO LC,\n" +
-            "            LOCADORA.ITEM_LOCACAO IL,\n" +
-            "            LOCADORA.DEPENDENTE DP\n" +
+            "            LOCACAO LC,\n" +
+            "            ITEM_LOCACAO IL,\n" +
+            "            DEPENDENTE DP\n" +
             "        WHERE\n" +
             "            LC.CODIGO_LOCACAO = IL.LOCACAO_CODIGO_LOCACAO\n" +
             "                AND LC.DEPENDENTE_CODIGO_DEPENDENTE = DP.CODIGO_DEPENDENTE\n" +
             "                AND DP.CODIGO_DEPENDENTE IN (SELECT \n" +
             "                    CODIGO_DEPENDENTE\n" +
             "                FROM\n" +
-            "                    LOCADORA.DEPENDENTE\n" +
+            "                    DEPENDENTE\n" +
             "                WHERE\n" +
             "                    CLIENTE_CODIGO_CLIENTE IN (SELECT \n" +
             "                            B.CLIENTE_CODIGO_CLIENTE\n" +
             "                        FROM\n" +
-            "                            LOCADORA.CLIENTE A,\n" +
-            "                            LOCADORA.DEPENDENTE B\n" +
+            "                            CLIENTE A,\n" +
+            "                            DEPENDENTE B\n" +
             "                        WHERE\n" +
             "                            A.CODIGO_CLIENTE = B.CLIENTE_CODIGO_CLIENTE\n" +
             "                                AND B.NOME_DEPENDENTE LIKE ?))) AS DEVEDOR\n" +
             "FROM\n" +
-            "    LOCADORA.CLIENTE A,\n" +
-            "    LOCADORA.DEPENDENTE B\n" +
+            "    CLIENTE A,\n" +
+            "    DEPENDENTE B\n" +
             "WHERE\n" +
             "    A.CODIGO_CLIENTE = B.CLIENTE_CODIGO_CLIENTE\n" +
             "        AND B.NOME_DEPENDENTE LIKE ?;\n" +
@@ -174,13 +175,13 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             "                ELSE SUM(VALOR)\n" +
             "            END) AS VALOR\n" +
             "    FROM\n" +
-            "        LOCADORA.LANCAMENTO A, LOCADORA.TIPO_SERVICO B\n" +
+            "        LANCAMENTO A, TIPO_SERVICO B\n" +
             "    WHERE\n" +
             "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
             "            AND A.DEPENDENTE_CODIGO_DEPENDENTE IN (SELECT \n" +
             "                CODIGO_DEPENDENTE\n" +
             "            FROM\n" +
-            "                LOCADORA.DEPENDENTE\n" +
+            "                DEPENDENTE\n" +
             "            WHERE\n" +
             "                CLIENTE_CODIGO_CLIENTE = ?\n" +
             "                    AND tipo_servico_codigo_tipo_servico IN (1 , 2, 5))) AS DEBITO,\n" +
@@ -190,13 +191,13 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             "                ELSE SUM(VALOR)\n" +
             "            END) AS VALOR\n" +
             "    FROM\n" +
-            "        LOCADORA.LANCAMENTO A, LOCADORA.TIPO_SERVICO B\n" +
+            "        LANCAMENTO A, TIPO_SERVICO B\n" +
             "    WHERE\n" +
             "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
             "            AND A.DEPENDENTE_CODIGO_DEPENDENTE IN (SELECT \n" +
             "                CODIGO_DEPENDENTE\n" +
             "            FROM\n" +
-            "                LOCADORA.DEPENDENTE\n" +
+            "                DEPENDENTE\n" +
             "            WHERE\n" +
             "                CLIENTE_CODIGO_CLIENTE = ?\n" +
             "                    AND tipo_servico_codigo_tipo_servico IN (3 , 4, 6, 7, 8))) AS CREDITO;";            
@@ -363,9 +364,9 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO LOCADORA.DEPENDENTE (NOME_DEPENDENTE, CLIENTE_CODIGO_CLIENTE, TIPO_DEPENDENTE, "
-                + "DATA_NASCIMENTO, CPF, TELEFONE, PARENTESCO) VALUES"
-                + "( ? ,?, ?, ?, ?, ?, ? );";
+        String sqlInsert = "INSERT INTO DEPENDENTE (NOME_DEPENDENTE, CLIENTE_CODIGO_CLIENTE, TIPO_DEPENDENTE, "
+                + "DATA_NASCIMENTO, CPF, TELEFONE, PARENTESCO, USUARIO_CODIGO_USUARIO) VALUES"
+                + "( ? ,?, ?, ?, ?, ?, ? , ?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -381,6 +382,10 @@ public class DependenteDAO implements InterfaceDependenteDAO {
                 ps.setString(5, dependentes.get(i).getCPF());
                 ps.setString(6, dependentes.get(i).getTelefone());
                 ps.setString(7, dependentes.get(i).getParentesco());
+                
+                ArquivoConfiguracao conf = new ArquivoConfiguracao();
+                
+                ps.setInt(8, Integer.parseInt(conf.readPropertie("codigo_usuario")));
                 ps.executeUpdate();
             }
             ps.close();

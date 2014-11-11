@@ -13,19 +13,16 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
-import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.bean.Idioma;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Legenda;
 import br.com.locadora.model.dao.LegendaDAO;
 import br.com.locadora.util.ItemDbGrid;
-import static br.com.locadora.view.MenuIdioma.jtbl_idioma;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,6 +37,7 @@ public class MenuLegenda extends javax.swing.JFrame {
     private TelaPrincipal_Interface telaPrincipal;
     public InterfacePool pool;
     public SiscomController controller;
+    AcessoUsuario acesso;
     
 
     /**

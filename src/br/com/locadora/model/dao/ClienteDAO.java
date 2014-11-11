@@ -41,7 +41,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
     public void excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlExcluir = "DELETE FROM cliente WHERE codigo = ?;";
+        String sqlExcluir = "DELETE FROM CLIENTE WHERE CODIGO_CLIENTE = ?;";
 
         try {
             ps = con.prepareStatement(sqlExcluir);

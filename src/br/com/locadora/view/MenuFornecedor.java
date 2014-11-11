@@ -10,8 +10,14 @@
  */
 package br.com.locadora.view;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.dao.FornecedorDAO;
 import br.com.locadora.model.bean.FornecedorModel;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
+import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -22,6 +28,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
  *
  * @author Alencar
@@ -29,7 +36,9 @@ import javax.swing.table.DefaultTableModel;
 public class MenuFornecedor extends javax.swing.JFrame {
 
     public TelaPrincipal janelapai;
-
+    public static AcessoUsuario acesso = new AcessoUsuario();
+    public InterfacePool pool;
+    
     /** Creates new form Cad_Fornecedor */
     public MenuFornecedor() {
         initComponents();
@@ -256,14 +265,34 @@ public class MenuFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        CadastroFornecedor forn = new CadastroFornecedor();
-        forn.setVisible(true);
-        forn.janelapai = this;
-        this.setEnabled(false);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
+        try {
+            if (acesso.getEscrever() == 0) {
+            CadastroFornecedor cadastroFornecedor = new CadastroFornecedor();
+            cadastroFornecedor.janelapai = this;
+            cadastroFornecedor.setVisible(true);
+            setStatusTela(false);
+            cadastroFornecedor.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+        
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
-        FornecedorModel forn = tbFornecedorLinhaSelecionada(jt_pesquisar);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                FornecedorModel forn = tbFornecedorLinhaSelecionada(jt_pesquisar);
         if (forn != null) {
             AtualizaFornecedor fornecedorAltera = new AtualizaFornecedor(forn);
             fornecedorAltera.janelapai = this;
@@ -274,12 +303,19 @@ public class MenuFornecedor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um fornecedor");
             jtf_pesquisar.requestFocus();
         }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+
+        
+        
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_alterarActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        this.setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        setVisible(false);
+        janelapai.setStatusTela(true);
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_sairActionPerformed
 
@@ -289,8 +325,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_excluirActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        this.setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        setVisible(false);
+        janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
     /**
@@ -321,12 +357,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
     private javax.swing.JTable jt_pesquisar;
     private javax.swing.JTextField jtf_pesquisar;
     // End of variables declaration//GEN-END:variables
-    private TelaPrincipal_Interface telaPrincipal;
-    //Recebendo tela como parametro para atualização apos pesquisa
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
+    
 
     public void request() {
         jtf_pesquisar.requestFocus();
@@ -430,5 +461,11 @@ public class MenuFornecedor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um destino");
         }
         return fornecedor;
+    }
+    public void setStatusTela(boolean status) {
+        if (status) {
+            this.setVisible(status);
+        }
+        this.setEnabled(status);
     }
 }

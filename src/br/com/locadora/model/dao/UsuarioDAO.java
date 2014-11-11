@@ -5,7 +5,7 @@
 package br.com.locadora.model.dao;
 
 import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.model.bean.Acesso;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.Conexao;
 import java.sql.PreparedStatement;
@@ -56,6 +56,8 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             pstm.setString(3, usuario.getSenha());
             pstm.setString(4, usuario.getPermissao());
             pstm.executeUpdate();
+            
+            
             conexao.desconecta();
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Não foi possivel gravar");
@@ -72,7 +74,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             pstm.setString(2, usuario.getLogin());
             pstm.setString(3, usuario.getSenha());
             pstm.setString(4, usuario.getPermissao());
-            pstm.setInt(5, usuario.getCod_usuario());
+            pstm.setInt(5, usuario.getCodigo_usuario());
             pstm.executeUpdate();
             conexao.desconecta();
         } catch (Exception erro) {
@@ -81,12 +83,12 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         }
     }
 
-    public boolean excluiUsuario(Usuario usuario) {
+    public boolean excluiUsuario(Usuario usuario)  throws SQLException{
         try {
 
             Conexao conexao = new Conexao();
             pstm = (PreparedStatement) conexao.conecta().prepareStatement(excluiUsuario);
-            pstm.setInt(1, usuario.getCod_usuario());
+            pstm.setInt(1, usuario.getCodigo_usuario());
             pstm.executeUpdate();
             conexao.desconecta();
             return true;
@@ -97,29 +99,51 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         }
     }
 
-    public List<Usuario> listarUsuario(String nome_usuario) {
-        List<Usuario> usuario = new ArrayList();
-        try {
-            Conexao conexao = new Conexao();
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(consultaUsuarioNome);
-            pstm.setString(1, nome_usuario);
-            rs = pstm.executeQuery();
-            Usuario usua;
-            while (rs.next()) {
-                usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
-                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
-                usua.setLogin(rs.getString("LOGIN"));
-                usua.setSenha(rs.getString("SENHA"));
-                usua.setPermissao(rs.getString("TIPO_USUARIO"));
-                usuario.add(usua);
+    public List<Usuario> getUsuarios(String nome_usuario) {
+        List<Usuario> resultado = new ArrayList<Usuario>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT * FROM USUARIO WHERE NOME_USUARIO = ?;";
+        ResultSet rs = null;
 
-            }
-            conexao.desconecta();
-        } catch (Exception e) {
-            e.printStackTrace();
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, nome_usuario);
+            rs = ps.executeQuery();
+
+            resultado = getListaUsuario(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
         }
-        return usuario;
+        return resultado;
+    }
+        
+    public List<Usuario> getUsuarios() {
+        List<Usuario> resultado = new ArrayList<Usuario>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT * FROM USUARIO WHERE DEL_FLAG = 0;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            rs = ps.executeQuery();
+
+            resultado = getListaUsuario(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
     }
 
     public List<Usuario> listarUsuarioCodigo(String cod_usuário) {
@@ -132,8 +156,8 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
-                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
                 usua.setSenha(rs.getString("SENHA"));
                 usuario.add(usua);
@@ -156,8 +180,8 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
-                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
                 usua.setSenha(rs.getString("SENHA"));
                 usua.setPermissao(rs.getString("TIPO_USUARIO "));
@@ -182,8 +206,8 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
-                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
                 usua.setSenha(rs.getString("SENHA"));
                 usua.setPermissao(rs.getString("TIPO_USUARIO"));
@@ -204,18 +228,17 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         ResultSet rs = null;
 
         try {
-            
-            
+
             ps = con.prepareStatement(consultaUsuarioLogin);
-            
+
             ps.setString(1, login);
             rs = ps.executeQuery();
             //rs.absolute(1);
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
-                usua.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
-                usua.setNome_usuário(rs.getString("NOME_USUARIO"));
+                usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
                 usua.setSenha(rs.getString("SENHA"));
                 usua.setPermissao(rs.getString("TIPO_USUARIO"));
@@ -226,16 +249,16 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             pool.liberarConnection(con);
-        
-        } 
+
+        }
         return usuario;
     }
 
-    public Acesso verificarPermissao(String senha, String action) {
+    public AcessoUsuario verificarPermissao(String senha, String nome_classe) {
 
-        Acesso acesso = null;
+        AcessoUsuario acesso = null;
         Usuario usuario = null;
         try {
             Conexao conexao = new Conexao();
@@ -243,24 +266,26 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             String sqlSelect = "SELECT \n"
                     + "    A.CODIGO_USUARIO, A.LOGIN, A.SENHA, B.LER, B.ESCREVER, B.DELETAR\n"
                     + "FROM\n"
-                    + "    LOCADORA.USUARIO A,\n"
-                    + "    LOCADORA.ACESSO B\n"
+                    + "    USUARIO A,\n"
+                    + "    ACESSO B,\n"
+                    + "    INTERFACE C\n"
                     + "WHERE\n"
                     + "    A.CODIGO_USUARIO = B.USUARIO_CODIGO_USUARIO\n"
-                    + "        AND B.ACTION = ? \n"
+                    + "    C.CODIGO_INTERFACE = B.INTERFACE_CODIGO_INTERFACE\n"
+                    + "        AND C.NOME_CLASSE = ? \n"
                     + "        AND A.SENHA = ? ;";
 
             pstm = (PreparedStatement) conexao.conecta().prepareStatement(sqlSelect);
-            pstm.setString(1, action);
+            pstm.setString(1, nome_classe);
             pstm.setString(2, senha);
             rs = pstm.executeQuery();
             rs.absolute(1);
 
-    //            rs.next();
-            acesso = new Acesso();
+            //            rs.next();
+            acesso = new AcessoUsuario();
             usuario = new Usuario();
 
-            usuario.setCod_usuario(rs.getInt("CODIGO_USUARIO"));
+            usuario.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
             usuario.setLogin(rs.getString("LOGIN"));
             usuario.setSenha(rs.getString("SENHA"));
 
@@ -279,7 +304,105 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         }
         return acesso;
     }
+    
+    public AcessoUsuario permissaoInterface(String login, String nome_classe) {
 
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        AcessoUsuario acesso = new AcessoUsuario();
+        Usuario usuario = new Usuario();
+            
+            
+        String sqlSelect = "SELECT \n"
+                + "    * \n"
+                + "FROM\n"
+                + "    USUARIO A,\n"
+                + "    ACESSO B,\n"
+                + "    INTERFACE C\n"
+                + "WHERE\n"
+                + "    A.CODIGO_USUARIO = B.USUARIO_CODIGO_USUARIO\n"
+                + "    AND C.CODIGO_INTERFACE = B.INTERFACE_CODIGO_INTERFACE\n"
+                + "        AND C.NOME_CLASSE = ? \n"
+                + "        AND A.LOGIN = ? ;";
+
+        try {
+
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, nome_classe);
+            ps.setString(2, login);
+            rs = ps.executeQuery();            
+            
+            while(rs.next()){
+                System.out.println("=======Início Permissão=========");
+                System.out.println("Nome da Classe:"+nome_classe);
+                System.out.println("Código do Usuário: "+rs.getInt("CODIGO_USUARIO"));
+                System.out.println("Senha: "+rs.getString("SENHA"));
+                System.out.println("Login: "+rs.getString("LOGIN"));
+                
+                System.out.println("LER: "+rs.getInt("LER"));
+                System.out.println("ESCREVER: "+rs.getInt("ESCREVER"));
+                System.out.println("DELETAR: "+rs.getInt("DELETAR"));
+                System.out.println("SUPER: "+rs.getInt("SUPER_USUARIO"));
+                System.out.println("==========Fim Permissão==========");
+                
+                usuario.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
+                usuario.setLogin(rs.getString("LOGIN"));
+                usuario.setSenha(rs.getString("SENHA"));
+
+                acesso.setUsuario(usuario);
+
+                acesso.setLer(rs.getInt("LER"));
+                acesso.setEscrever(rs.getInt("ESCREVER"));
+                acesso.setDeletar(rs.getInt("DELETAR"));   
+                acesso.setSuper_usuario(rs.getInt("SUPER_USUARIO"));
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        } finally {
+            pool.liberarConnection(con);
+
+        }
+        return acesso;
+    }
+
+    public void salvarCaixa(String ip, String name, Integer numero_caixa) {
+
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        AcessoUsuario acesso = new AcessoUsuario();
+        Usuario usuario = new Usuario();
+            
+            
+        String sqlInsert = "INSERT INTO `locadora`.`CAIXA`(`IP`,`NAME`,`NUMERO`)VALUES(?,?,?);";
+
+        try {
+
+            ps = con.prepareStatement(sqlInsert);
+            ps.setString(1, ip);
+            ps.setString(2, name);
+            ps.setInt(3, numero_caixa);
+            
+            ps.executeUpdate();            
+            
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        } finally {
+            pool.liberarConnection(con);
+
+        }
+
+    }
+    
     public void excluir(Integer codigo) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -296,11 +419,16 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<Usuario> getUsuarios(String usuario) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public List<Usuario> getUsuarios() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    private List<Usuario> getListaUsuario(ResultSet rs) throws SQLException {
+        List<Usuario> resultado = new ArrayList<Usuario>();
+        while (rs.next()) {
+            Usuario usuario = new Usuario();
+            usuario.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
+            usuario.setNome_usuario(rs.getString("NOME_USUARIO"));
+            usuario.setLogin(rs.getString("LOGIN"));
+            resultado.add(usuario);
+        }
+        return resultado;
     }
 }

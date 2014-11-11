@@ -10,6 +10,7 @@
  */
 package br.com.locadora.view;
 
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.dao.FornecedorDAO;
 import br.com.locadora.model.bean.FornecedorModel;
 import br.com.locadora.util.LimitadorTexto;
@@ -23,8 +24,6 @@ import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -36,6 +35,7 @@ public class CadastroFornecedor extends javax.swing.JFrame {
     public MenuFornecedor janelapai;
     ConsultaDiariaObjeto janelapai2;
     MaskFormatter formatoCNPJ, formatoCEP, formatoTelefone, formatoInscricao, telefoneVendedor;
+    AcessoUsuario acesso;
 
     /**
      * Creates new form FornecedorCadastroGUI
@@ -438,18 +438,10 @@ public class CadastroFornecedor extends javax.swing.JFrame {
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
         verificaCadastro();
 }//GEN-LAST:event_jb_salvarActionPerformed
-    private void retornaJanelaPai() {
-        setVisible(false);
-
-        if (janelapai != null) {
-            janelapai.listarFornecedor();
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-//           janelapai.request();
-        }
-    }
+    
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        retornaJanelaPai();
+        janelapai.setStatusTela(true);
+        setVisible(false);
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
@@ -459,7 +451,8 @@ public class CadastroFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        retornaJanelaPai();
+        janelapai.setStatusTela(true);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
     private void tf_razaoSocialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_razaoSocialKeyPressed
@@ -891,7 +884,8 @@ public class CadastroFornecedor extends javax.swing.JFrame {
             fornecedor.setNome_vendedor(tf_nomeVendedor.getText().trim());
             fornecedor.setTel_vendedor(jftf_tel_vendedor.getText().trim());
             controlFornecedor.cadastraFornecedor(fornecedor);
-            retornaJanelaPai();
+            janelapai.setStatusTela(true);
+            setVisible(false);
         }
     }
     List<FornecedorModel> fornecedores;

@@ -3,6 +3,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Telefone;
@@ -38,12 +39,13 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
     public List<Cliente> clientes;
     public List<Dependente> dependentes = new ArrayList<Dependente>();
-    public MenuCliente janelaPaim;
+//    public MenuCliente janelaPaim;
     public Telefone telefone = new Telefone();
     public Cliente cliente;
     public MenuCliente janelapai;
     public DecimalFormat formatoPreco;
     public MaskFormatter formatoData, formatoCPF, formatoTelefone;
+    AcessoUsuario acesso;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -128,21 +130,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
         jta_observacao = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
-        jtf_nome_dependente = new javax.swing.JTextField();
-        jb_adicionar_dependente = new javax.swing.JButton();
-        jb_eliminar1 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jtbl_dependente = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        try  {
-            formatoCPF = new MaskFormatter("###.###.###-##");
-        }
-        catch (Exception erro)
-        {
-            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
-        }
-        jtf_cpf_dependente = new JFormattedTextField(formatoCPF);
+        jLabel4 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jtf_nome_dependente = new javax.swing.JTextField();
         try  {
             formatoData = new MaskFormatter("##/##/####");
         }
@@ -151,7 +143,6 @@ public final class CadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Não foi possivel setar");
         }
         jtf_data_nascimento_dependente = new JFormattedTextField(formatoData);
-        jLabel24 = new javax.swing.JLabel();
         try  {
             formatoTelefone = new MaskFormatter("(##) ####-####");
         }
@@ -160,10 +151,21 @@ public final class CadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Não foi possivel setar");
         }
         jtf_telefone_dependente = new JFormattedTextField(formatoTelefone);
+        jcb_parentesco = new javax.swing.JComboBox();
+        try  {
+            formatoCPF = new MaskFormatter("###.###.###-##");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_cpf_dependente = new JFormattedTextField(formatoCPF);
+        jb_adicionar_dependente = new javax.swing.JButton();
+        jb_eliminar1 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtbl_dependente = new javax.swing.JTable();
         jrb_ativo_dependente = new javax.swing.JRadioButton();
         jrb_inativo_dependente = new javax.swing.JRadioButton();
-        jcb_parentesco = new javax.swing.JComboBox();
-        jLabel25 = new javax.swing.JLabel();
         jb_salvar = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
 
@@ -448,7 +450,23 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jLabel22.setText("Nome:");
         jLabel22.setName("jLabel22"); // NOI18N
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 14, -1, -1));
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+
+        jLabel5.setText("CPF");
+        jLabel5.setName("jLabel5"); // NOI18N
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, -1, -1));
+
+        jLabel4.setText("Nascimento*");
+        jLabel4.setName("jLabel4"); // NOI18N
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+
+        jLabel24.setText("Parentesco*");
+        jLabel24.setName("jLabel24"); // NOI18N
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
+
+        jLabel25.setText("Telefone*");
+        jLabel25.setName("jLabel25"); // NOI18N
+        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         jtf_nome_dependente.setName("jtf_nome_dependente"); // NOI18N
         jtf_nome_dependente.addActionListener(new java.awt.event.ActionListener() {
@@ -461,7 +479,67 @@ public final class CadastroCliente extends javax.swing.JFrame {
                 jtf_nome_dependenteFocusLost(evt);
             }
         });
-        jPanel2.add(jtf_nome_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 270, -1));
+        jPanel2.add(jtf_nome_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 270, -1));
+
+        jtf_data_nascimento_dependente.setName("jtf_data_nascimento_dependente"); // NOI18N
+        jtf_data_nascimento_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_data_nascimento_dependenteFocusLost(evt);
+            }
+        });
+        jPanel2.add(jtf_data_nascimento_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 110, -1));
+
+        jtf_telefone_dependente.setName("jtf_telefone_dependente"); // NOI18N
+        jtf_telefone_dependente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_telefone_dependenteActionPerformed(evt);
+            }
+        });
+        jtf_telefone_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_telefone_dependenteFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_telefone_dependenteFocusLost(evt);
+            }
+        });
+        jtf_telefone_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_telefone_dependenteKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_telefone_dependenteKeyReleased(evt);
+            }
+        });
+        jPanel2.add(jtf_telefone_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 170, 30));
+
+        jcb_parentesco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Esposa", "Esposo", "Filho", "Filha", "Neta", "Neto", "Pai", "Mãe", "Sobrinho", "Sobrinha", "Avô", "Avó", "Tio", "Tia", "Namorada", "Namorado", "Noiva", "Noivo", "Cunhado", "Cunhada", "Primo", "Prima", "Amigo", "Amiga", "Outro" }));
+        jcb_parentesco.setName("jcb_parentesco"); // NOI18N
+        jPanel2.add(jcb_parentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, -1, 30));
+
+        jtf_cpf_dependente.setName("jtf_cpf_dependente"); // NOI18N
+        jtf_cpf_dependente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_cpf_dependenteActionPerformed(evt);
+            }
+        });
+        jtf_cpf_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_cpf_dependenteFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_cpf_dependenteFocusLost(evt);
+            }
+        });
+        jtf_cpf_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_cpf_dependenteKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_cpf_dependenteKeyReleased(evt);
+            }
+        });
+        jPanel2.add(jtf_cpf_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, 120, 30));
 
         jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_dependente.setToolTipText("Incluir");
@@ -476,7 +554,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                 jb_adicionar_dependenteFocusGained(evt);
             }
         });
-        jPanel2.add(jb_adicionar_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 30, 30));
+        jPanel2.add(jb_adicionar_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 30, 30));
 
         jb_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_eliminar1.setToolTipText("Excluir");
@@ -486,7 +564,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                 jb_eliminar1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jb_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 30, 30));
+        jPanel2.add(jb_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, 30, 30));
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
@@ -516,75 +594,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
             jtbl_dependente.getColumnModel().getColumn(5).setPreferredWidth(30);
         }
 
-        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 510, 310));
-
-        jLabel4.setText("Nascimento*");
-        jLabel4.setName("jLabel4"); // NOI18N
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
-
-        jLabel5.setText("CPF");
-        jLabel5.setName("jLabel5"); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
-
-        jtf_cpf_dependente.setName("jtf_cpf_dependente"); // NOI18N
-        jtf_cpf_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_cpf_dependenteActionPerformed(evt);
-            }
-        });
-        jtf_cpf_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_cpf_dependenteFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_cpf_dependenteFocusLost(evt);
-            }
-        });
-        jtf_cpf_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_cpf_dependenteKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_cpf_dependenteKeyReleased(evt);
-            }
-        });
-        jPanel2.add(jtf_cpf_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 120, 30));
-
-        jtf_data_nascimento_dependente.setName("jtf_data_nascimento_dependente"); // NOI18N
-        jtf_data_nascimento_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_data_nascimento_dependenteFocusLost(evt);
-            }
-        });
-        jPanel2.add(jtf_data_nascimento_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 110, -1));
-
-        jLabel24.setText("Parentesco*");
-        jLabel24.setName("jLabel24"); // NOI18N
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
-
-        jtf_telefone_dependente.setName("jtf_telefone_dependente"); // NOI18N
-        jtf_telefone_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_telefone_dependenteActionPerformed(evt);
-            }
-        });
-        jtf_telefone_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_telefone_dependenteFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_telefone_dependenteFocusLost(evt);
-            }
-        });
-        jtf_telefone_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_telefone_dependenteKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_telefone_dependenteKeyReleased(evt);
-            }
-        });
-        jPanel2.add(jtf_telefone_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 170, 30));
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 510, 280));
 
         buttonGroup1.add(jrb_ativo_dependente);
         jrb_ativo_dependente.setSelected(true);
@@ -595,7 +605,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                 jrb_ativo_dependenteActionPerformed(evt);
             }
         });
-        jPanel2.add(jrb_ativo_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, -1));
+        jPanel2.add(jrb_ativo_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         buttonGroup1.add(jrb_inativo_dependente);
         jrb_inativo_dependente.setText("Inativo");
@@ -605,15 +615,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                 jrb_inativo_dependenteActionPerformed(evt);
             }
         });
-        jPanel2.add(jrb_inativo_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, -1, -1));
-
-        jcb_parentesco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Esposa", "Esposo", "Filho", "Filha", "Neta", "Neto", "Pai", "Mãe", "Sobrinho", "Sobrinha", "Avô", "Avó", "Tio", "Tia", "Namorada", "Namorado", "Noiva", "Noivo", "Cunhado", "Cunhada", "Primo", "Prima", "Amigo", "Amiga", "Outro" }));
-        jcb_parentesco.setName("jcb_parentesco"); // NOI18N
-        jPanel2.add(jcb_parentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, 30));
-
-        jLabel25.setText("Telefone*");
-        jLabel25.setName("jLabel25"); // NOI18N
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+        jPanel2.add(jrb_inativo_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
 
         jTabbedPane1.addTab("Dependentes", jPanel2);
 
@@ -645,16 +647,10 @@ public final class CadastroCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        retornaJanelaPai();
-
-}//GEN-LAST:event_jb_cancelarActionPerformed
-    private void retornaJanelaPai() {
+        janelapai.setStatusTela(true);
         setVisible(false);
-        if (janelapai != null) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-        }
-    }
+}//GEN-LAST:event_jb_cancelarActionPerformed
+    
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
         enviaDados();
 }//GEN-LAST:event_jb_salvarActionPerformed
@@ -665,7 +661,8 @@ public final class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        retornaJanelaPai();
+        janelapai.setStatusTela(true);
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_empresaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_empresaFocusGained
@@ -1054,7 +1051,8 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarCliente");
             JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-            retornaJanelaPai();
+            janelapai.setStatusTela(true);
+            setVisible(false);
         }
     }
 

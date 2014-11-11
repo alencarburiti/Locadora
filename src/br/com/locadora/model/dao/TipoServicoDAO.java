@@ -62,9 +62,9 @@ public class TipoServicoDAO implements InterfaceTipoServicoDAO {
         String sqlSelect = "SELECT \n"
                 + "    *\n"
                 + "FROM\n"
-                + "    LOCADORA.OBJETO A,\n"
-                + "    LOCADORA.DIARIA B,\n"
-                + "    LOCADORA.GENERO C\n"
+                + "    OBJETO A,\n"
+                + "    DIARIA B,\n"
+                + "    GENERO C\n"
                 + "WHERE\n"
                 + "    A.DIARIA_CODIGO_DIARIA = B.CODIGO_DIARIA\n"
                 + "        AND A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
@@ -90,7 +90,7 @@ public class TipoServicoDAO implements InterfaceTipoServicoDAO {
         List<TipoServico> resultado = new ArrayList<TipoServico>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM LOCADORA.TIPO_SERVICO;";
+        String sqlSelect = "SELECT * FROM TIPO_SERVICO;";
         ResultSet rs = null;
         
         try {

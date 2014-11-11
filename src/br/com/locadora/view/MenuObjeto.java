@@ -11,17 +11,28 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
-import br.com.locadora.model.bean.Genero;
+import br.com.locadora.model.bean.AcessoUsuario;
+import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Objeto;
+import br.com.locadora.model.dao.ClienteDAO;
+import br.com.locadora.model.dao.ObjetoDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
+import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
+import static br.com.locadora.view.MenuCliente.clientes;
+import static br.com.locadora.view.MenuCliente.jtbl_cliente;
 import static br.com.locadora.view.MenuObjeto.jtf_consulta;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class MenuObjeto extends javax.swing.JFrame {
 
@@ -32,6 +43,7 @@ public class MenuObjeto extends javax.swing.JFrame {
     public static List<Objeto> objetos = new ArrayList<Objeto>();
     public TelaPrincipal janelapai;
     public static Objeto objeto;
+    public AcessoUsuario acesso;
 
     public MenuObjeto() {
         initComponents();
@@ -224,22 +236,36 @@ public class MenuObjeto extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        CadastroObjeto cadastroObjeto = new CadastroObjeto();
-        cadastroObjeto.janelapai = this;
-        cadastroObjeto.setVisible(true);
-        this.setEnabled(false);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
+        try {
+            if (acesso.getEscrever() == 0) {
+                CadastroObjeto cadastroObjeto = new CadastroObjeto();
+                cadastroObjeto.janelapai = this;
+                cadastroObjeto.setVisible(true);
+                setStatusTela(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+
+
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        if(janelapai!= null){
+        if (janelapai != null) {
             setVisible(false);
             janelapai.setStatusTela(true);
         }
 }//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-            setVisible(false);
-        if(janelapai!= null){
+        setVisible(false);
+        if (janelapai != null) {
             janelapai.setStatusTela(true);
         }
     }//GEN-LAST:event_formWindowClosed
@@ -253,24 +279,37 @@ public class MenuObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jrb_codigoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
-        objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
-        System.out.println("2 - Diária alterar código: "+objeto.getDiaria().getCodigo_diaria());
-        System.out.println("2 - Diária alterar descrição: "+objeto.getDiaria().getNome_diaria());
-        if (objeto != null) {
-            AtualizaObjeto alteraObjeto = new AtualizaObjeto(objeto);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
 
-            alteraObjeto.janelapai = this;
-            alteraObjeto.setVisible(true);
-            this.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um objeto");
-            jtf_consulta.requestFocus();
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+                objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
+                System.out.println("2 - Diária alterar código: " + objeto.getDiaria().getCodigo_diaria());
+                System.out.println("2 - Diária alterar descrição: " + objeto.getDiaria().getNome_diaria());
+                if (objeto != null) {
+                    AtualizaObjeto alteraObjeto = new AtualizaObjeto(objeto);
+
+                    alteraObjeto.janelapai = this;
+                    alteraObjeto.setVisible(true);
+                    this.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um objeto");
+                    jtf_consulta.requestFocus();
+                }
+
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_alterarActionPerformed
 
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
-//        excluiGrupo();
+        excluirObjeto();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
 
@@ -335,8 +374,8 @@ public class MenuObjeto extends javax.swing.JFrame {
             objeto.setElenco(objetos.get(tb.getSelectedRow()).getElenco());
             objeto.setSinopse(objetos.get(tb.getSelectedRow()).getSinopse());
             objeto.setCensura(objetos.get(tb.getSelectedRow()).getCensura());
-            System.out.println("1 - Diária alterar código: "+objetos.get(tb.getSelectedRow()).getDiaria().getCodigo_diaria());
-            System.out.println("1 - Diária alterar descrição: "+objetos.get(tb.getSelectedRow()).getDiaria().getNome_diaria());
+            System.out.println("1 - Diária alterar código: " + objetos.get(tb.getSelectedRow()).getDiaria().getCodigo_diaria());
+            System.out.println("1 - Diária alterar descrição: " + objetos.get(tb.getSelectedRow()).getDiaria().getNome_diaria());
         }
         return objeto;
     }
@@ -346,18 +385,48 @@ public class MenuObjeto extends javax.swing.JFrame {
         controller.processarRequisicao("consultarObjeto");
     }
 
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
+    public void setStatusTela(boolean status) {
+
+        if (status) {
+            this.setVisible(status);
+        }
+        this.setEnabled(status);
+
     }
 
-    void request() {
-        jtf_consulta.requestFocus();
-    }
+    private void excluirObjeto() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
 
-    public void setJanelaPai(TelaPrincipal janelapai) {
-        if (janelapai != null) {
-            this.janelapai = janelapai;
+        try {
+            if (acesso.getDeletar() == 0) {
+                DefaultTableModel row = (DefaultTableModel) jtbl_objeto.getModel();
+                if (jtbl_objeto.getSelectedRow() != -1) {
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                        pool = new Pool();
+                        ObjetoDAO objetoDAO = new ObjetoDAO(pool);
+                        objeto = new Objeto();
+                        objeto.setCodigo_objeto(objetos.get(jtbl_objeto.getSelectedRow()).getCodigo_objeto());
+
+                        try {
+                            objetoDAO.excluir(objeto.getCodigo_objeto());
+                            row.removeRow(jtbl_objeto.getSelectedRow());
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
+                        }
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um objeto");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
-
 }

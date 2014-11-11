@@ -328,7 +328,7 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         if (verificarCampos()) {
             pool = new Pool();
             UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-            usuario.setNome_usuário(jtf_nome.getText().trim());
+            usuario.setNome_usuario(jtf_nome.getText().trim());
             usuario.setLogin(jtf_login.getText().trim());
             usuario.setSenha(jpf_senha.getText().trim());
             usuarioControl.cadastraUsuario(usuario);

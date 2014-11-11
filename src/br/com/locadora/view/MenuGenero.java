@@ -13,8 +13,16 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
+import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Genero;
+import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.GeneroDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
+import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
+import static br.com.locadora.view.MenuCliente.clientes;
+import static br.com.locadora.view.MenuCliente.jtbl_cliente;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,7 +40,7 @@ import javax.swing.table.DefaultTableModel;
  * @author ALENCAR
  */
 public class MenuGenero extends javax.swing.JFrame {
-    
+
     public String tipoCadastro;
     public TelaPrincipal janelapai;
     public static List<Genero> generos;
@@ -40,6 +48,7 @@ public class MenuGenero extends javax.swing.JFrame {
     public SiscomController controller;
     public Genero genero;
     public InterfacePool pool;
+    public AcessoUsuario acesso;
 
     /**
      * Creates new form DestinoGUI
@@ -245,27 +254,37 @@ public class MenuGenero extends javax.swing.JFrame {
             }// </editor-fold>//GEN-END:initComponents
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        CadastroGenero cadastroGenero = new CadastroGenero();
-        cadastroGenero.janelapai = this;
-        cadastroGenero.setVisible(true);
-        setStatusTela(false);
-
-        // TODO add your handling code here:
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuGenero");
+        try {
+            if (acesso.getEscrever() == 0) {
+                CadastroGenero cadastroGenero = new CadastroGenero();
+                cadastroGenero.janelapai = this;
+                cadastroGenero.setVisible(true);
+                setStatusTela(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
     }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
         alterar();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_alterarActionPerformed
-    
+
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
-        removeGenero(jtbl_genero);
+        excluirGenero();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairActionPerformed
 
@@ -276,7 +295,7 @@ public class MenuGenero extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -299,7 +318,7 @@ public class MenuGenero extends javax.swing.JFrame {
                 generoAltera.janelapai = this;
                 generoAltera.setVisible(true);
             }
-            
+
         }
     }//GEN-LAST:event_jtbl_generoKeyPressed
     /**
@@ -307,7 +326,7 @@ public class MenuGenero extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
-            
+
             public void run() {
                 new MenuGenero().setVisible(true);
             }
@@ -333,67 +352,93 @@ public class MenuGenero extends javax.swing.JFrame {
         controller = new SiscomController();
         controller.processarRequisicao("consultarGenero");
     }
-    
+
     public Genero tbGeneroLinhaSelecionada(JTable tb) {
         Genero dest = null;
         if (tb != null && tb.getSelectedRow() != -1) {
             dest = new Genero();
             dest.setCodigo_genero(generos.get(tb.getSelectedRow()).getCodigo_genero());
             dest.setNome_genero(generos.get(tb.getSelectedRow()).getNome_genero());
-            
+
         }
         return dest;
     }
-    
+
     public void request() {
         jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }
-    
-    public Genero removeGenero(JTable tb) {
-        try {
-            if (tb != null && tb.getSelectedRow() != -1) {
-                int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-                if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                    pool = new Pool();
-                    GeneroDAO generoControl = new GeneroDAO(pool);
-                    
-                    generoControl.excluir(generos.get(tb.getSelectedRow()).getCodigo_genero());
-                    tmDestino.removeRow(tb.getSelectedRow());
-                    
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecione um Gênero");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Gênero não pode ser excluido.");
-        }
-        return genero;
-    }
-    
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
-    
-    public void setStatusTela(boolean status) {        
-        
+
+    public void setStatusTela(boolean status) {
+
         if (status) {
-            this.setVisible(status);            
+            this.setVisible(status);
         }
         this.setEnabled(status);
-        
+
     }
 
     public void alterar() {
-        Genero desti = tbGeneroLinhaSelecionada(jtbl_genero);
-        if (desti != null) {
-            AtualizaGenero generoAltera = new AtualizaGenero(desti);
-            generoAltera.janelapai = this;
-            generoAltera.setVisible(true);
-            setStatusTela(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um armazém");
-            jtf_consulta.requestFocus();
+
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
+
+        try {
+            if (acesso.getEscrever() == 0) {
+                Genero gen = tbGeneroLinhaSelecionada(jtbl_genero);
+                if (gen != null) {
+                    AtualizaGenero generoAltera = new AtualizaGenero(gen);
+                    generoAltera.janelapai = this;
+                    generoAltera.setVisible(true);
+                    setStatusTela(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um armazém");
+                    jtf_consulta.requestFocus();
+                }
+
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+
+        }
+
+    }
+
+    private void excluirGenero() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
+
+        try {
+            if (acesso.getDeletar() == 0) {
+                DefaultTableModel row = (DefaultTableModel) jtbl_genero.getModel();
+                if (jtbl_genero.getSelectedRow() != -1) {
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                        pool = new Pool();
+                        GeneroDAO generoDAO = new GeneroDAO(pool);
+                        genero = new Genero();
+                        genero.setCodigo_genero(generos.get(jtbl_genero.getSelectedRow()).getCodigo_genero());
+
+                        try {
+                            generoDAO.excluir(genero.getCodigo_genero());
+                            row.removeRow(jtbl_genero.getSelectedRow());
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
+                        }
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um Gênero");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
 }

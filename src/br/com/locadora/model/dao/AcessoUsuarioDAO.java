@@ -1,45 +1,47 @@
 package br.com.locadora.model.dao;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Usuario;
-import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.bean.Objeto;
+import br.com.locadora.model.bean.InterfaceAcesso;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class AcessoUsuarioDAO implements InterfaceUsuarioDAO {
+public class AcessoUsuarioDAO {
 
     private InterfacePool pool;
 
     public AcessoUsuarioDAO(InterfacePool pool) {
         this.pool = pool;
     }
-
-    @Override
-    public void atualizar(Usuario usuario) throws SQLException {
+    
+    public void atualizar(AcessoUsuario acessoUsuario) {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlAtualizar = " UPDATE DIARIA SET bairro=?, celular=?, cep=?, "
-                + " cidade=?, cpf_cnpj=?, email=?, endereco=?, estado=?,"
-                + " telefone=?, nome=? WHERE codigo = ? ;";
+        String sqlAtualizar = " UPDATE `locadora`.`acesso` SET `LER` = ?,`ESCREVER` = ?,`DELETAR` = ?, `SUPER_USUARIO` = ? \n" +        
+        "WHERE `CODIGO_ACESSO` = ?";
 
         try {
             ps = con.prepareStatement(sqlAtualizar);
 
-            setPreparedStatement(usuario, ps);
+            setPreparedStatement(acessoUsuario, ps);
 
             ps.executeUpdate();
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AcessoUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
     }
 
-    @Override
+    
     public void excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -55,7 +57,7 @@ public class AcessoUsuarioDAO implements InterfaceUsuarioDAO {
         }
     }
 
-    @Override
+    
     public List<Usuario> getUsuario(Integer codigo_interno) throws SQLException {
         List<Usuario> resultado = new ArrayList<Usuario>();
         Connection con = pool.getConnection();
@@ -91,7 +93,7 @@ public class AcessoUsuarioDAO implements InterfaceUsuarioDAO {
 
             rs = ps.executeQuery();
 
-            resultado = getListaUsuario(rs);
+//            resultado = getListaUsuario(rs);
 //            if (resultado.size() > 0) {
 //                return resultado.get(0);
 //            }
@@ -101,29 +103,58 @@ public class AcessoUsuarioDAO implements InterfaceUsuarioDAO {
         }
         return resultado;
     }
-
-    @Override
-    public List<Usuario> getUsuarios(String nome_usuario) throws SQLException {
-        List<Usuario> resultado = new ArrayList<Usuario>();
+       
+    public List<InterfaceAcesso> getPermissoes() {
+        List<InterfaceAcesso> resultado = new ArrayList<InterfaceAcesso>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM DIARIA WHERE NOME_DIARIA LIKE ? ORDER BY NOME_DIARIA;";
         ResultSet rs = null;
+        String sqlSelect = "SELECT * FROM INTERFACE WHERE DEL_FLAG = 0";
 
         try {
-            ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, nome_usuario);
+            ps = con.prepareStatement(sqlSelect);            
+
             rs = ps.executeQuery();
 
-            resultado = getListaUsuario(rs);
-
-            rs.close();
+            resultado = getListaPermissao(rs);
+//            if (resultado.size() > 0) {
+//                return resultado.get(0);
+//            }
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AcessoUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
         return resultado;
     }
+
+    
+    public List<AcessoUsuario> getPermissaoUsuario(Usuario usuario) {
+        List<AcessoUsuario> resultado = new ArrayList<AcessoUsuario>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT * FROM ACESSO A, INTERFACE B WHERE A.INTERFACE_CODIGO_INTERFACE = B.CODIGO_INTERFACE "
+                + "AND  USUARIO_CODIGO_USUARIO = ?;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setInt(1, usuario.getCodigo_usuario());
+            rs = ps.executeQuery();
+
+            resultado = getListaPermissaoUsuario(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AcessoUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
 
     public List<Usuario> getTodasUsuarios() throws SQLException {
         List<Usuario> resultado = new ArrayList<Usuario>();
@@ -136,7 +167,7 @@ public class AcessoUsuarioDAO implements InterfaceUsuarioDAO {
             ps = con.prepareStatement(sqlSelect);
             rs = ps.executeQuery();
 
-            resultado = getListaUsuario(rs);
+//            resultado = getListaUsuario(rs);
 
             rs.close();
             ps.close();
@@ -146,56 +177,83 @@ public class AcessoUsuarioDAO implements InterfaceUsuarioDAO {
         return resultado;
     }
 
-    private List<Usuario> getListaUsuario(ResultSet rs) throws SQLException {
-        List<Usuario> resultado = new ArrayList<Usuario>();
+    private List<AcessoUsuario> getListaPermissaoUsuario(ResultSet rs) throws SQLException {
+        List<AcessoUsuario> resultado = new ArrayList<AcessoUsuario>();
         while (rs.next()) {
-            Usuario usuario = new Usuario();
-            Diaria diaria = new Diaria();
-            Objeto objeto = new Objeto();
-
-            diaria.setDias(rs.getInt("DIAS"));
-            diaria.setValor(rs.getDouble("VALOR"));
-            diaria.setValor_promocao(rs.getDouble("VALOR_PROMOCAO"));
-
-            objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
-            objeto.setTipo_movimento(rs.getString("TIPO_MOVIMENTO"));
-            objeto.setTipo_midia(rs.getString("TIPO_MIDIA"));
-
-            objeto.setDiaria(diaria);
+            AcessoUsuario acessoUsuario = new AcessoUsuario();
+            acessoUsuario.setCodigo_acesso(rs.getInt("CODIGO_ACESSO"));
+            acessoUsuario.setLer(rs.getInt("LER"));
+            acessoUsuario.setEscrever(rs.getInt("ESCREVER"));
+            acessoUsuario.setDeletar(rs.getInt("DELETAR"));
+            acessoUsuario.setSuper_usuario(rs.getInt("SUPER_USUARIO"));
             
-            resultado.add(usuario);
+            InterfaceAcesso inter = new InterfaceAcesso();
+            inter.setDescricao(rs.getString("DESCRICAO"));
+            inter.setCodigo_interface(rs.getInt("CODIGO_INTERFACE"));
+            acessoUsuario.setInterfaceAcesso(inter);
+            
+            resultado.add(acessoUsuario);
+        }
+        return resultado;
+    }
+    
+    private List<InterfaceAcesso> getListaPermissao(ResultSet rs) throws SQLException {
+        List<InterfaceAcesso> resultado = new ArrayList<InterfaceAcesso>();
+        while (rs.next()) {
+            InterfaceAcesso interfaceAcesso = new InterfaceAcesso();
+            interfaceAcesso.setCodigo_interface(rs.getInt("CODIGO_INTERFACE"));
+            interfaceAcesso.setDescricao(rs.getString("DESCRICAO"));
+            interfaceAcesso.setNome_classe(rs.getString("NOME_CLASSE"));
+            interfaceAcesso.setTipo(rs.getString("TIPO"));
+            interfaceAcesso.setDel_flag(rs.getInt("DEL_FLAG"));
+            
+            resultado.add(interfaceAcesso);
         }
         return resultado;
     }
 
-    @Override
-    public void salvar(Usuario usuario) throws SQLException {
+    
+    public void salvar(AcessoUsuario acessoUsuario)  {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO `locadora`.`COPIA`(`CODIGO_INTERNO`,"
-                + "`LOCALIZACAO`,`IDIOMA`,`LEGENDA`,`DATA_AQUISICAO`,"
-                + "`PRECO_CUSTO`,`CODIGO_OBJETO`)VALUES(?,?,?,?,?,?,?);";
+        String sqlInsert = "INSERT INTO `locadora`.`acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`,\n" +
+            "`USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(?,?,?,?,?,?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
 
-            setPreparedStatement1(usuario, ps);
+            setPreparedStatement1(acessoUsuario, ps);
 
             ps.executeUpdate();
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AcessoUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
     }
 
-    private void setPreparedStatement(Usuario usuario, PreparedStatement ps)
+    private void setPreparedStatement(AcessoUsuario acessoUsuario, PreparedStatement ps)
             throws SQLException {
-       
+        
+        ps.setInt(1, acessoUsuario.getLer());
+        ps.setInt(2, acessoUsuario.getEscrever());
+        ps.setInt(3, acessoUsuario.getDeletar());
+        ps.setInt(4, acessoUsuario.getSuper_usuario());
+        ps.setInt(5, acessoUsuario.getCodigo_acesso());
+        
     }
 
-    private void setPreparedStatement1(Usuario usuario, PreparedStatement ps)
+    private void setPreparedStatement1(AcessoUsuario acessoUsuario, PreparedStatement ps)
             throws SQLException {
+        
+        ps.setInt(1, acessoUsuario.getLer());
+        ps.setInt(2, acessoUsuario.getEscrever());
+        ps.setInt(3, acessoUsuario.getDeletar());
+        ps.setInt(4, acessoUsuario.getSuper_usuario());
+        ps.setInt(5, acessoUsuario.getUsuario().getCodigo_usuario());
+        ps.setInt(6, acessoUsuario.getInterfaceAcesso().getCodigo_interface());
         
     }
 
@@ -210,7 +268,7 @@ public class AcessoUsuarioDAO implements InterfaceUsuarioDAO {
             ps = con.prepareStatement(sqlSelect);
             rs = ps.executeQuery();
 
-            resultado = getListaUsuario(rs);
+//            resultado = getListaUsuario(rs);
 
             rs.close();
             ps.close();

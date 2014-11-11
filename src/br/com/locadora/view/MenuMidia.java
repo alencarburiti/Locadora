@@ -255,7 +255,7 @@ public class MenuMidia extends javax.swing.JFrame {
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairActionPerformed
 
@@ -265,7 +265,7 @@ public class MenuMidia extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

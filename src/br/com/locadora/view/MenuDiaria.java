@@ -11,14 +11,26 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
+import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Diaria;
+import br.com.locadora.model.dao.ClienteDAO;
+import br.com.locadora.model.dao.DiariaDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
+import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
+import static br.com.locadora.view.MenuCliente.clientes;
+import static br.com.locadora.view.MenuCliente.jtbl_cliente;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,6 +45,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     public InterfacePool pool;
     public SiscomController controller;
     public Diaria diaria;
+    public AcessoUsuario acesso;
 
     /**
      * Creates new form DiariaGUI
@@ -227,11 +240,23 @@ public class MenuDiaria extends javax.swing.JFrame {
             }// </editor-fold>//GEN-END:initComponents
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        CadastroDiaria des = new CadastroDiaria();
-        des.janelapai = this;
-        des.setVisible(true);
-//        this.setEnabled(false);
-        // TODO add your handling code here:
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
+        try {
+            if (acesso.getEscrever() == 0) {
+                CadastroDiaria cadastroDiaria = new CadastroDiaria();
+                cadastroDiaria.janelapai = this;
+                cadastroDiaria.setVisible(true);
+                setStatusTela(false);
+                cadastroDiaria.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
     }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
@@ -239,25 +264,39 @@ public class MenuDiaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_alterarActionPerformed
     public void alterar() {
-        Diaria desti = tbDiariaLinhaSelecionada(jtbl_diaria);
-        if (desti != null) {
-            AtualizaDiaria diariaAltera = new AtualizaDiaria(desti);
-            diariaAltera.janelapai = this;
-            diariaAltera.setVisible(true);
-            this.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um armazém");
-            jtf_consulta.requestFocus();
+
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
+
+        try {
+            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+
+                Diaria desti = tbDiariaLinhaSelecionada(jtbl_diaria);
+                if (desti != null) {
+                    AtualizaDiaria diariaAltera = new AtualizaDiaria(desti);
+                    diariaAltera.janelapai = this;
+                    diariaAltera.setVisible(true);
+                    this.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um armazém");
+                    jtf_consulta.requestFocus();
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
+
     }
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
-        excluiDiaria();
+        excluirDiaria();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairActionPerformed
 
@@ -267,11 +306,11 @@ public class MenuDiaria extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       
+
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
@@ -320,10 +359,6 @@ public class MenuDiaria extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
-
     private void enviaDados() {
         controller = new SiscomController();
         controller.processarRequisicao("consultarDiaria");
@@ -345,24 +380,47 @@ public class MenuDiaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    public Diaria removeDiaria(JTable tb) {
-//        if (tb.getSelectedRow() != -1) {
-//            int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-//            if (selectedOption == JOptionPane.YES_NO_OPTION) {
-//                DiariaDAO diariaControl = new DiariaDAO();
-//                diaria.setCodigo_diaria(diarias.get(tb.getSelectedRow()).getCodigo_diaria());
-//                if (diariaControl.excluirDiaria(diaria)) {
-//                    tmDiaria.removeRow(tb.getSelectedRow());
-//                }
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Selecione um armazém");
-//        }
-        return diaria;
+    
+    private void excluirDiaria() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
+
+        try {
+            if (acesso.getDeletar() == 0) {
+                DefaultTableModel row = (DefaultTableModel) jtbl_diaria.getModel();
+                if (jtbl_diaria.getSelectedRow() != -1) {
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                        pool = new Pool();
+                        DiariaDAO diariaDAO = new DiariaDAO(pool);
+                        diaria = new Diaria();
+                        diaria.setCodigo_diaria(diarias.get(jtbl_diaria.getSelectedRow()).getCodigo_diaria());
+
+                        try {
+                            diariaDAO.excluir(diaria.getCodigo_diaria());
+                            row.removeRow(jtbl_diaria.getSelectedRow());
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
+                        }
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma diária");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
     }
 
-    public void excluiDiaria() {
-        removeDiaria(jtbl_diaria);
+    public void setStatusTela(boolean status) {
+        if (status) {
+            this.setVisible(status);
+        }
+        this.setEnabled(status);
     }
-
 }

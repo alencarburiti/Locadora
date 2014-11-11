@@ -23,6 +23,7 @@ public class Lancamento {
     private Double credito;
     private Double debito;
     private Double saldo;
+    private Integer caixa;
 
     public Integer getCodigo_lancamento() {
         return codigo_lancamento;
@@ -102,6 +103,14 @@ public class Lancamento {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
+    }
+
+    public Integer getCaixa() {
+        return caixa;
+    }
+
+    public void setCaixa(Integer caixa) {
+        this.caixa = caixa;
     }
 
 }

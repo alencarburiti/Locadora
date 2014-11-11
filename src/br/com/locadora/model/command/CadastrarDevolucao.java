@@ -13,9 +13,9 @@ import br.com.locadora.model.dao.DevolucaoDAO;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceCopiaDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.view.AtendimentoDevolucao;
-import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class CadastrarDevolucao implements InterfaceCommand {
             locacao.setDependente(dependente);
             
             Usuario usuario = new Usuario();
-            usuario.setCod_usuario(EntradaCaixaDevolucao.acesso.getUsuario().getCod_usuario());
+            usuario.setCodigo_usuario(EntradaCaixaDevolucao.acesso.getUsuario().getCodigo_usuario());
             
             locacao.setUsuario(usuario);
             
@@ -68,7 +68,10 @@ public class CadastrarDevolucao implements InterfaceCommand {
             troco = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_troco.getText());
             
             valor_pago = valor_pago - troco;
+            
+            ArquivoConfiguracao conf = new ArquivoConfiguracao();
             Lancamento lancamento = new Lancamento();
+            lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
             lancamento.setUsuario(usuario);
             lancamento.setDependente(dependente);
             TipoServico tipoServico = new TipoServico();

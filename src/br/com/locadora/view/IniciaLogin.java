@@ -227,7 +227,7 @@ public class IniciaLogin extends javax.swing.JFrame {
             if (verificaLogin()) {
                 ArquivoConfiguracao conf = new ArquivoConfiguracao();
                 conf.writePropertie("login", usuarios.get(0).getLogin());
-                conf.writePropertie("codigo_usuario", String.valueOf(usuarios.get(0).getCod_usuario()));
+                conf.writePropertie("codigo_usuario", String.valueOf(usuarios.get(0).getCodigo_usuario()));
                 TelaPrincipal tela = new TelaPrincipal();                
                 tela.carregaUsuario(usuarios.get(0));
                 tela.show();

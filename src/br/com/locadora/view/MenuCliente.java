@@ -11,15 +11,22 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
+import br.com.locadora.model.dao.ClienteDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
+import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
 import java.awt.event.KeyEvent;
-import java.text.ParseException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class MenuCliente extends javax.swing.JFrame {
 
@@ -29,15 +36,11 @@ public class MenuCliente extends javax.swing.JFrame {
     public static List<Cliente> clientes;
     public InterfacePool pool;
     public SiscomController controller;
+    public AcessoUsuario acesso;
+    public Cliente cliente;
 
     public MenuCliente() {
         initComponents();
-    }
-
-    public void setJanelaPai(TelaPrincipal janelapai) {
-        if (janelapai != null) {
-            this.janelapai = janelapai;
-        }
     }
 
     /**
@@ -222,20 +225,33 @@ public class MenuCliente extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
-        CadastroCliente cadastro_cliente = new CadastroCliente();
-        cadastro_cliente.janelaPaim = this;
-        cadastro_cliente.setVisible(true);
-
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
+        try {
+            if (acesso.getEscrever() == 0) {
+                CadastroCliente cadastroCliente = new CadastroCliente();
+                cadastroCliente.janelapai = this;
+                cadastroCliente.setVisible(true);
+                setStatusTela(false);
+                cadastroCliente.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
 }//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
-        telaPrincipal.setStatusTela(true);
+        janelapai.setStatusTela(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -254,7 +270,7 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_alterarActionPerformed
 
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
-//        excluiGrupo();
+        excluirCliente();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
 
@@ -309,7 +325,7 @@ public class MenuCliente extends javax.swing.JFrame {
 
     public Cliente tbClienteLinhaSelecionada(JTable tb) {
         Cliente cliente = new Cliente();
-        if (tb != null && tb.getSelectedRow() != -1 ) {
+        if (tb != null && tb.getSelectedRow() != -1) {
 
             cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
             cliente.setNome_cliente(clientes.get(tb.getSelectedRow()).getNome_cliente());
@@ -337,21 +353,27 @@ public class MenuCliente extends javax.swing.JFrame {
     }
 
     public void alterar() {
-
-        Cliente cliente = tbClienteLinhaSelecionada(jtbl_cliente);
-        if (cliente != null) {
-            AtualizaCliente alteraCliente = null;
-            try {
-                alteraCliente = new AtualizaCliente(cliente);
-            } catch (ParseException ex) {
-                Logger.getLogger(MenuCliente.class.getName()).log(Level.SEVERE, null, ex);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
+        try {
+            if (acesso.getEscrever() == 0) {
+                Cliente cliente = tbClienteLinhaSelecionada(jtbl_cliente);
+                if (cliente != null) {
+                    AtualizaCliente alteraCliente = new AtualizaCliente(cliente);
+                    alteraCliente.janelapai = this;
+                    alteraCliente.setVisible(true);
+                    setStatusTela(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um cliente");
+                    jtf_consulta.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
-            alteraCliente.janelapai = this;
-            alteraCliente.setVisible(true);
-            this.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um cliente");
-            jtf_consulta.requestFocus();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
 
@@ -370,11 +392,47 @@ public class MenuCliente extends javax.swing.JFrame {
         return cliente;
     }
 
-    public void statusTela(boolean status) {
+    public void setStatusTela(boolean status) {
         if (status) {
             this.setVisible(status);
         }
         this.setEnabled(status);
+    }
+
+    private void excluirCliente() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
+
+        try {
+            if (acesso.getDeletar() == 0) {
+                DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
+                if (jtbl_cliente.getSelectedRow() != -1) {
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                        pool = new Pool();
+                        ClienteDAO clienteDAO = new ClienteDAO(pool);
+                        cliente = new Cliente();
+                        cliente.setCodigo_cliente(clientes.get(jtbl_cliente.getSelectedRow()).getCodigo_cliente());
+
+                        try {
+                            clienteDAO.excluir(cliente.getCodigo_cliente());
+                            row.removeRow(jtbl_cliente.getSelectedRow());
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
+                        }
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um cliente");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
     }
 
 }

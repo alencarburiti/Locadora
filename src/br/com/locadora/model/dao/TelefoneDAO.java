@@ -45,7 +45,7 @@ public class TelefoneDAO implements InterfaceTelefoneDAO {
     public boolean excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlExcluir = "DELETE FROM LOCADORA.TELEFONE WHERE CODIGO_TELEFONE = ?;";
+        String sqlExcluir = "DELETE FROM TELEFONE WHERE CODIGO_TELEFONE = ?;";
 
         try {
             ps = con.prepareStatement(sqlExcluir);
@@ -178,7 +178,7 @@ public class TelefoneDAO implements InterfaceTelefoneDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO LOCADORA.TELEFONE (TELEFONE, CLIENTE_CODIGO_CLIENTE) VALUES"
+        String sqlInsert = "INSERT INTO TELEFONE (TELEFONE, CLIENTE_CODIGO_CLIENTE) VALUES"
                 + "( ? ,? );";
 
         try {
