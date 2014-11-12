@@ -404,7 +404,7 @@ public class MenuDiaria extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuDiaria");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
 
         try {
             if (acesso.getEscrever() == 0) {

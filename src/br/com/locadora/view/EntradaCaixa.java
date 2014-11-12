@@ -784,7 +784,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     public boolean verificaLogin() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), "br.com.Locadora.view.EntradaCaixa");
+        acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), "br.com.locadora.view.EntradaCaixa");
 
         //verifica a senha
         char[] senha = jpf_senha.getPassword();
