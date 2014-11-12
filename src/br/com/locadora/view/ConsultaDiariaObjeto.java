@@ -62,7 +62,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
         jtf_consulta = new javax.swing.JTextField();
         jb_buscar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Diária");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -194,7 +194,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
         }
 
 }//GEN-LAST:event_jb_cancelarActionPerformed
-    private CadastroObjeto_InterFace telaCadastroObjeto;
+    
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
         botaoOK(jtbl_diaria);
@@ -280,10 +280,6 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
-    //Recebendo tela como parametro para atualização apos pesquisa
-    public void setTelaCadastroObjeto(CadastroObjeto_InterFace telaCadastroObjeto) {
-        this.telaCadastroObjeto = telaCadastroObjeto;
-    }
 
     public void setCadastro() {
         jb_novo1.setEnabled(false);

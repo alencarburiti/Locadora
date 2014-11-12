@@ -208,7 +208,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         tfa_similar.setName("tfa_similar"); // NOI18N
         jScrollPane1.setViewportView(tfa_similar);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Atualizar Cliente");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

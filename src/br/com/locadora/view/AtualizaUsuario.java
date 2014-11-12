@@ -78,7 +78,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         tf_login = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alterando Usuário");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

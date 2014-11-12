@@ -404,7 +404,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem16">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Caixa"/>
+                <Property name="text" type="java.lang.String" value="Fluxo de Caixa"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem16" noResource="true"/>
               </Properties>
               <Events>
@@ -450,25 +450,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_recoverActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
-              <Properties>
-                <Property name="name" type="java.lang.String" value="jSeparator3" noResource="true"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Trocar de usu&#xe1;rio"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
-              <Properties>
-                <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
-              </Properties>
-            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jm_caixa">
@@ -479,7 +460,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jm_usuario">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Usu&#xe1;rio"/>
+                <Property name="text" type="java.lang.String" value="Cadastro Usu&#xe1;rio"/>
                 <Property name="name" type="java.lang.String" value="jm_usuario" noResource="true"/>
               </Properties>
               <Events>
@@ -488,7 +469,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jm_acesso">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Acessos"/>
+                <Property name="text" type="java.lang.String" value="Controle de Acessos"/>
                 <Property name="name" type="java.lang.String" value="jm_acesso" noResource="true"/>
               </Properties>
               <Events>
@@ -506,11 +487,20 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem17">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Caixa"/>
+                <Property name="text" type="java.lang.String" value="Configura&#xe7;&#xe3;o de Caixa"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem17" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem17ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Trocar de usu&#xe1;rio"/>
+                <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

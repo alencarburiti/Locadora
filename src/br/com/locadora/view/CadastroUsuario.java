@@ -62,7 +62,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jtf_nome = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jTextField1 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrando Usuário");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

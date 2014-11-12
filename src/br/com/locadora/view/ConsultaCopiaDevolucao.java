@@ -70,7 +70,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         jrb_codigo = new javax.swing.JRadioButton();
         jrb_titulo = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Objeto");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

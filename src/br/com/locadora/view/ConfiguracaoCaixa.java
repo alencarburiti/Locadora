@@ -21,7 +21,7 @@ import br.com.locadora.util.LocalHost;
  *
  * @author ALENCAR
  */
-public class Caixa extends javax.swing.JFrame {
+public class ConfiguracaoCaixa extends javax.swing.JFrame {
 
     public TelaPrincipal janelapai;
     public InterfacePool pool;
@@ -30,7 +30,7 @@ public class Caixa extends javax.swing.JFrame {
     /**
      * Creates new form DiariaGUI
      */
-    public Caixa() {
+    public ConfiguracaoCaixa() {
         initComponents();
 
     }
@@ -73,7 +73,7 @@ public class Caixa extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, -1, 40));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, 40));
 
         jb_aplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_aplicar.setText("Aplicar");
@@ -83,7 +83,7 @@ public class Caixa extends javax.swing.JFrame {
                 jb_aplicarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_aplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, 40));
+        getContentPane().add(jb_aplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Caixa"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -138,7 +138,7 @@ public class Caixa extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new Caixa().setVisible(true);
+                new ConfiguracaoCaixa().setVisible(true);
             }
         });
     }

@@ -12,7 +12,6 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
-import br.com.locadora.model.dao.GeneroDAO;
 import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
@@ -24,8 +23,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -351,12 +348,6 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
     private javax.swing.JTable jt_pesquisar;
     private javax.swing.JTextField jtf_pesquisar_genero;
     // End of variables declaration//GEN-END:variables
-    private TelaPrincipal_Interface telaPrincipal;
-    //Recebendo tela como parametro para atualização apos pesquisa
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
 
     public Genero tbDestinoLinhaSelecionada(JTable tb) {
         Genero dest = null;

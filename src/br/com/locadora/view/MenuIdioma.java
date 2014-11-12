@@ -33,7 +33,6 @@ public class MenuIdioma extends javax.swing.JFrame {
 
     public String tipoCadastro;
     public TelaPrincipal janelapai;    
-    private TelaPrincipal_Interface telaPrincipal;
     public InterfacePool pool;
     public SiscomController controller;
     public Idioma idioma;
@@ -198,10 +197,6 @@ public class MenuIdioma extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_idioma;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
 
     public void consultaIdioma(){
         try {        

@@ -492,11 +492,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     }
 
-    private TelaPrincipal_Interface telaPrincipal;
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
 
     /**
      * @param args the command line arguments

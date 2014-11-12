@@ -29,7 +29,6 @@ public class MenuMidia extends javax.swing.JFrame {
     public String tipoCadastro;
     public TelaPrincipal janelapai;
     public static List<Diaria> diarias;
-    private TelaPrincipal_Interface telaPrincipal;
     public InterfacePool pool;
     public SiscomController controller;
     public Diaria diaria;
@@ -240,7 +239,6 @@ public class MenuMidia extends javax.swing.JFrame {
         Diaria desti = tbDiariaLinhaSelecionada(jtbl_diaria);
         if (desti != null) {
             AtualizaDiaria diariaAltera = new AtualizaDiaria(desti);
-//            diariaAltera.janelapai = this;
             diariaAltera.setVisible(true);
             this.setEnabled(false);
         } else {
@@ -317,10 +315,6 @@ public class MenuMidia extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_diaria;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
 
     private void enviaDados() {
         controller = new SiscomController();

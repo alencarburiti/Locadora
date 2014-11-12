@@ -68,7 +68,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_cliente = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Cliente");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

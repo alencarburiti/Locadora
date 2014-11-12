@@ -32,7 +32,6 @@ public class MenuCliente extends javax.swing.JFrame {
 
     public String permissao;
     public TelaPrincipal janelapai;
-    private TelaPrincipal_Interface telaPrincipal;//Recebendo tela como parametro para atualização apos pesquisa
     public static List<Cliente> clientes;
     public InterfacePool pool;
     public SiscomController controller;
@@ -324,7 +323,8 @@ public class MenuCliente extends javax.swing.JFrame {
     }
 
     public Cliente tbClienteLinhaSelecionada(JTable tb) {
-        Cliente cliente = new Cliente();
+
+        cliente = new Cliente();
         if (tb != null && tb.getSelectedRow() != -1) {
 
             cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
@@ -348,6 +348,8 @@ public class MenuCliente extends javax.swing.JFrame {
             cliente.setStatus(clientes.get(tb.getSelectedRow()).getStatus());
             cliente.setObservacao(clientes.get(tb.getSelectedRow()).getObservacao());
 
+        } else {
+            cliente = null;
         }
         return cliente;
     }
@@ -356,10 +358,12 @@ public class MenuCliente extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuCliente");
         try {
+            System.out.println("Escrever: " + acesso.getEscrever());
             if (acesso.getEscrever() == 0) {
-                Cliente cliente = tbClienteLinhaSelecionada(jtbl_cliente);
+
+                cliente = tbClienteLinhaSelecionada(jtbl_cliente);
                 if (cliente != null) {
                     AtualizaCliente alteraCliente = new AtualizaCliente(cliente);
                     alteraCliente.janelapai = this;
@@ -368,17 +372,15 @@ public class MenuCliente extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um cliente");
                     jtf_consulta.requestFocus();
+                    System.out.println("Objeto: " + (cliente == null));
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
-    }
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
     }
 
     public Cliente tbClienteSelecionado(JTable tb) {

@@ -14,22 +14,15 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
-import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Genero;
-import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.GeneroDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
-import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
-import static br.com.locadora.view.MenuCliente.clientes;
-import static br.com.locadora.view.MenuCliente.jtbl_cliente;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -43,8 +36,7 @@ public class MenuGenero extends javax.swing.JFrame {
 
     public String tipoCadastro;
     public TelaPrincipal janelapai;
-    public static List<Genero> generos;
-    private TelaPrincipal_Interface telaPrincipal;
+    public static List<Genero> generos;    
     public SiscomController controller;
     public Genero genero;
     public InterfacePool pool;
@@ -354,14 +346,16 @@ public class MenuGenero extends javax.swing.JFrame {
     }
 
     public Genero tbGeneroLinhaSelecionada(JTable tb) {
-        Genero dest = null;
+        
         if (tb != null && tb.getSelectedRow() != -1) {
-            dest = new Genero();
-            dest.setCodigo_genero(generos.get(tb.getSelectedRow()).getCodigo_genero());
-            dest.setNome_genero(generos.get(tb.getSelectedRow()).getNome_genero());
+            genero = new Genero();
+            genero.setCodigo_genero(generos.get(tb.getSelectedRow()).getCodigo_genero());
+            genero.setNome_genero(generos.get(tb.getSelectedRow()).getNome_genero());
 
+        } else {
+            genero = null;
         }
-        return dest;
+        return genero;
     }
 
     public void request() {
@@ -387,17 +381,19 @@ public class MenuGenero extends javax.swing.JFrame {
 
         try {
             if (acesso.getEscrever() == 0) {
-                Genero gen = tbGeneroLinhaSelecionada(jtbl_genero);
-                if (gen != null) {
-                    AtualizaGenero generoAltera = new AtualizaGenero(gen);
+                genero = tbGeneroLinhaSelecionada(jtbl_genero);
+                if (genero != null) {
+                    AtualizaGenero generoAltera = new AtualizaGenero(genero);
                     generoAltera.janelapai = this;
                     generoAltera.setVisible(true);
                     setStatusTela(false);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um armazém");
+                    JOptionPane.showMessageDialog(null, "Selecione um Gênero");
                     jtf_consulta.requestFocus();
                 }
 
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");

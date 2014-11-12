@@ -85,6 +85,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jtf_valor_multa = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
+        jb_cancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtf_codigo_cliente = new javax.swing.JTextField();
@@ -284,6 +285,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         });
         jPanel3.add(jtf_valor_multa, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 330, 130, 30));
 
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jButton11.setText("Finalizar");
         jButton11.setName("jButton11"); // NOI18N
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -293,6 +295,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         });
         jPanel3.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 110, 50));
 
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
         jButton10.setText("Limpar");
         jButton10.setName("jButton10"); // NOI18N
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -301,6 +304,17 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 350, 100, 50));
+
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+        jb_cancelar.setText("Sair");
+        jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
+        jb_cancelar.setName("jb_cancelar"); // NOI18N
+        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_cancelarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, 90, 50));
 
         jtp_locacao.addTab("Devolução", jPanel3);
 
@@ -509,6 +523,11 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private void jtf_valor_multaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_multaFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_multaFocusLost
+
+    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
+        setVisible(false);
+        janelapai.setStatusTela(true);
+    }//GEN-LAST:event_jb_cancelarActionPerformed
     public static boolean validaData(String dataString) throws java.text.ParseException {
         if (!dataString.equals("")) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -618,6 +637,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_cliente;
     private javax.swing.JCheckBox jcb_codigo_barras_devolucao;
     private javax.swing.JLabel jl_codigo_devolucao;
@@ -637,6 +657,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             EntradaCaixaDevolucao entradaCaixaDevolucao;
             entradaCaixaDevolucao = new EntradaCaixaDevolucao();
             entradaCaixaDevolucao.setVisible(true);
+            setStatusTela(false);
             entradaCaixaDevolucao.janelapaiDevolucao = this;
         }
     }

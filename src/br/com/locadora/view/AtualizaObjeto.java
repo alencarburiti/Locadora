@@ -14,7 +14,6 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.UnaccentedDocument;
 import static br.com.locadora.view.AtualizaCliente.jtbl_telefone;
-import static br.com.locadora.view.MenuObjeto.objeto;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -152,8 +151,8 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         tfa_similar.setName("tfa_similar"); // NOI18N
         jScrollPane1.setViewportView(tfa_similar);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Atualizar Cliente");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Atualizar Objeto");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {

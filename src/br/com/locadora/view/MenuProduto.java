@@ -1,22 +1,8 @@
 package br.com.locadora.view;
 
-import br.com.locadora.model.dao.ProdutoDAO;
-import br.com.locadora.model.bean.Produto;
-import br.com.locadora.util.ItemDbGrid;
-import com.mysql.jdbc.PreparedStatement;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -284,11 +270,6 @@ public class MenuProduto extends javax.swing.JFrame {
     private java.awt.TextField tf_codigo;
     private javax.swing.JTextField tf_pesquisar_produto;
     // End of variables declaration//GEN-END:variables
-    private TelaPrincipal_Interface telaPrincipal;
-    //Recebendo tela como parametro para atualização apos pesquisa
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
+    
 
 }

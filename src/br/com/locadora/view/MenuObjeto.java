@@ -14,15 +14,10 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
-import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Objeto;
-import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.ObjetoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
-import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
-import static br.com.locadora.view.MenuCliente.clientes;
-import static br.com.locadora.view.MenuCliente.jtbl_cliente;
 import static br.com.locadora.view.MenuObjeto.jtf_consulta;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -39,7 +34,7 @@ public class MenuObjeto extends javax.swing.JFrame {
     public String permissao;
     public InterfacePool pool;
     public SiscomController controller;
-    private TelaPrincipal_Interface telaPrincipal;//Recebendo tela como parametro para atualização apos pesquisa
+   
     public static List<Objeto> objetos = new ArrayList<Objeto>();
     public TelaPrincipal janelapai;
     public static Objeto objeto;
@@ -282,13 +277,11 @@ public class MenuObjeto extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuObjeto");
 
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == 0) {
                 objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
-                System.out.println("2 - Diária alterar código: " + objeto.getDiaria().getCodigo_diaria());
-                System.out.println("2 - Diária alterar descrição: " + objeto.getDiaria().getNome_diaria());
                 if (objeto != null) {
                     AtualizaObjeto alteraObjeto = new AtualizaObjeto(objeto);
 
@@ -300,8 +293,11 @@ public class MenuObjeto extends javax.swing.JFrame {
                     jtf_consulta.requestFocus();
                 }
 
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
 
@@ -358,8 +354,8 @@ public class MenuObjeto extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public Objeto tbObjetoLinhaSelecionada(JTable tb) {
-        objeto = new Objeto();
         if (tb != null && tb.getSelectedRow() != -1) {
+            objeto = new Objeto();
             objeto.setCodigo_objeto(objetos.get(tb.getSelectedRow()).getCodigo_objeto());
             objeto.setDescricao_objeto(objetos.get(tb.getSelectedRow()).getDescricao_objeto());
             objeto.setTitulo_original(objetos.get(tb.getSelectedRow()).getTitulo_original());
@@ -376,6 +372,8 @@ public class MenuObjeto extends javax.swing.JFrame {
             objeto.setCensura(objetos.get(tb.getSelectedRow()).getCensura());
             System.out.println("1 - Diária alterar código: " + objetos.get(tb.getSelectedRow()).getDiaria().getCodigo_diaria());
             System.out.println("1 - Diária alterar descrição: " + objetos.get(tb.getSelectedRow()).getDiaria().getNome_diaria());
+        } else {
+            objeto = null;
         }
         return objeto;
     }

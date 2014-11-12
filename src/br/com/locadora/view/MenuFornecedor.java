@@ -363,9 +363,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jtf_pesquisar.requestFocus();
     }
 
-    private void alteraDestino() {
-    }
-
+    
     public void listarFornecedor() {
         FornecedorDAO forn = new FornecedorDAO();
         fornecedores = forn.listarForncedor("%" + jtf_pesquisar.getText().trim() + "%");
@@ -418,27 +416,27 @@ public class MenuFornecedor extends javax.swing.JFrame {
     }
 
     public FornecedorModel tbFornecedorLinhaSelecionada(JTable tb) {
-        FornecedorModel forn = null;
+        
         if (tb.getSelectedRow() != -1) {
-            forn = new FornecedorModel();
-            forn.setCod_fornecedor(fornecedores.get(tb.getSelectedRow()).getCod_fornecedor());
-            forn.setRazao_social(fornecedores.get(tb.getSelectedRow()).getRazao_social());
-            forn.setNome_fantasia(fornecedores.get(tb.getSelectedRow()).getNome_fantasia());
-            forn.setEndereço(fornecedores.get(tb.getSelectedRow()).getEndereço());
-            forn.setCNPJ(fornecedores.get(tb.getSelectedRow()).getCNPJ());
-            forn.setTelefone(fornecedores.get(tb.getSelectedRow()).getTelefone());
-            forn.setFax(fornecedores.get(tb.getSelectedRow()).getFax());
-            forn.setCidade(fornecedores.get(tb.getSelectedRow()).getCidade());
-            forn.setCEP(fornecedores.get(tb.getSelectedRow()).getCEP());
-            forn.setEstado(fornecedores.get(tb.getSelectedRow()).getEstado());
-            forn.setInsc_municipal(fornecedores.get(tb.getSelectedRow()).getInsc_municipal());
-            forn.setInsc_estadual(fornecedores.get(tb.getSelectedRow()).getInsc_estadual());
-            forn.setNome_vendedor(fornecedores.get(tb.getSelectedRow()).getNome_vendedor());
-            forn.setTel_vendedor(fornecedores.get(tb.getSelectedRow()).getTel_vendedor());
-
-
+            fornecedor = new FornecedorModel();
+            fornecedor.setCod_fornecedor(fornecedores.get(tb.getSelectedRow()).getCod_fornecedor());
+            fornecedor.setRazao_social(fornecedores.get(tb.getSelectedRow()).getRazao_social());
+            fornecedor.setNome_fantasia(fornecedores.get(tb.getSelectedRow()).getNome_fantasia());
+            fornecedor.setEndereço(fornecedores.get(tb.getSelectedRow()).getEndereço());
+            fornecedor.setCNPJ(fornecedores.get(tb.getSelectedRow()).getCNPJ());
+            fornecedor.setTelefone(fornecedores.get(tb.getSelectedRow()).getTelefone());
+            fornecedor.setFax(fornecedores.get(tb.getSelectedRow()).getFax());
+            fornecedor.setCidade(fornecedores.get(tb.getSelectedRow()).getCidade());
+            fornecedor.setCEP(fornecedores.get(tb.getSelectedRow()).getCEP());
+            fornecedor.setEstado(fornecedores.get(tb.getSelectedRow()).getEstado());
+            fornecedor.setInsc_municipal(fornecedores.get(tb.getSelectedRow()).getInsc_municipal());
+            fornecedor.setInsc_estadual(fornecedores.get(tb.getSelectedRow()).getInsc_estadual());
+            fornecedor.setNome_vendedor(fornecedores.get(tb.getSelectedRow()).getNome_vendedor());
+            fornecedor.setTel_vendedor(fornecedores.get(tb.getSelectedRow()).getTel_vendedor());
+        } else {
+            fornecedor = null;
         }
-        return forn;
+        return fornecedor;
     }
 
     private void excluiFornecedor() {

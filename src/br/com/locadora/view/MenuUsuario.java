@@ -13,14 +13,9 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
-import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
-import br.com.locadora.model.dao.ObjetoDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
-import static br.com.locadora.view.MenuObjeto.jtbl_objeto;
-import static br.com.locadora.view.MenuObjeto.objeto;
-import static br.com.locadora.view.MenuObjeto.objetos;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -364,12 +359,6 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField jtf_pesquisar_usuario;
     private java.awt.PopupMenu popupMenu1;
     // End of variables declaration//GEN-END:variables
-    private TelaPrincipal_Interface telaPrincipal;
-    //Recebendo tela como parametro para atualização apos pesquisa
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
     Usuario usuario = new Usuario();
 
     public void request() {

@@ -26,7 +26,6 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
 
     public String tipoCadastro;
     public TelaPrincipal janelapai;    
-    private TelaPrincipal_Interface telaPrincipal;
     public InterfacePool pool;
     public SiscomController controller;
 
@@ -144,9 +143,6 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
     private javax.swing.JComboBox jcb_impressoras;
     // End of variables declaration//GEN-END:variables
 
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
     public void mostraImpressoras() {
 
         ArquivoConfiguracao conf = new ArquivoConfiguracao();

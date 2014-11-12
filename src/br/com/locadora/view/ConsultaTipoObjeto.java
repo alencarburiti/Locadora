@@ -55,7 +55,7 @@ public class ConsultaTipoObjeto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Fornecedor");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

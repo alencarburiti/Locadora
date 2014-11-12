@@ -11,7 +11,7 @@ import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
 import java.io.IOException;
 import javax.swing.*;
 
-public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_Interface {
+public class TelaPrincipal extends javax.swing.JFrame {
 
     public IniciaLogin janelaPai;
     public IniciaLogin janelaLogin;
@@ -113,14 +113,12 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         jMenuItem9 = new javax.swing.JMenuItem();
         jmi_backup = new javax.swing.JMenuItem();
         jmi_recover = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jm_caixa = new javax.swing.JMenu();
         jm_usuario = new javax.swing.JMenuItem();
         jm_acesso = new javax.swing.JMenuItem();
         jm_conf_impressora = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menu_relatórios2 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
 
@@ -275,12 +273,12 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
             }
         });
         jmi_fornecedor.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jmi_fornecedorAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         menu_cadastros.add(jmi_fornecedor);
@@ -449,7 +447,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
             }
         });
 
-        jMenuItem16.setText("Caixa");
+        jMenuItem16.setText("Fluxo de Caixa");
         jMenuItem16.setName("jMenuItem16"); // NOI18N
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -496,27 +494,12 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         });
         menu_relatórios1.add(jmi_recover);
 
-        jSeparator3.setName("jSeparator3"); // NOI18N
-        menu_relatórios1.add(jSeparator3);
-
-        jMenuItem1.setText("Trocar de usuário");
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menu_relatórios1.add(jMenuItem1);
-
-        jSeparator1.setName("jSeparator1"); // NOI18N
-        menu_relatórios1.add(jSeparator1);
-
         jMB_Cadastro.add(menu_relatórios1);
 
         jm_caixa.setText("Configurações");
         jm_caixa.setName("jm_caixa"); // NOI18N
 
-        jm_usuario.setText("Usuário");
+        jm_usuario.setText("Cadastro Usuário");
         jm_usuario.setName("jm_usuario"); // NOI18N
         jm_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -525,7 +508,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         });
         jm_caixa.add(jm_usuario);
 
-        jm_acesso.setText("Acessos");
+        jm_acesso.setText("Controle de Acessos");
         jm_acesso.setName("jm_acesso"); // NOI18N
         jm_acesso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -543,7 +526,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
         });
         jm_caixa.add(jm_conf_impressora);
 
-        jMenuItem17.setText("Caixa");
+        jMenuItem17.setText("Configuração de Caixa");
         jMenuItem17.setName("jMenuItem17"); // NOI18N
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -551,6 +534,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
             }
         });
         jm_caixa.add(jMenuItem17);
+
+        jMenuItem1.setText("Trocar de usuário");
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jm_caixa.add(jMenuItem1);
 
         jMB_Cadastro.add(jm_caixa);
 
@@ -617,7 +609,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements TelaPrincipal_I
                 atendimentoLocacao.acesso = acesso;
                 atendimentoLocacao.setVisible(true);
                 atendimentoLocacao.janelapai = this;
-                setStatusTela(false);
+//                setStatusTela(false);
                 System.out.println("Nome da classe: " + getClass().getName());
                 System.out.println("Login: " + acesso.getUsuario().getLogin());
             }
@@ -837,7 +829,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         try {
             if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
                 menuIdioma = new MenuIdioma();
-                menuIdioma.setTelaPrincipal(this);
+                menuIdioma.janelapai = this;
                 menuIdioma.setVisible(true);
                 setStatusTela(false);
                 menuIdioma.acesso = acesso;
@@ -945,7 +937,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                 atendimentoDevolucao = new AtendimentoDevolucao();
                 atendimentoDevolucao.janelapai = this;
                 atendimentoDevolucao.setVisible(true);
-                setStatusTela(false);
+//                setStatusTela(false);
                 atendimentoDevolucao.acesso = acesso;
             }
         } catch (Exception ex) {
@@ -973,7 +965,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        Caixa caixa = new Caixa();
+        ConfiguracaoCaixa caixa = new ConfiguracaoCaixa();
         caixa.setVisible(true);
         setStatusTela(false);
 
@@ -1028,9 +1020,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel jlabel_usuario;

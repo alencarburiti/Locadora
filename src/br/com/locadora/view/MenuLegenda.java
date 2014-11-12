@@ -34,7 +34,6 @@ public class MenuLegenda extends javax.swing.JFrame {
     public String tipoCadastro;
     public TelaPrincipal janelapai;
     public List<Legenda> legendas;
-    private TelaPrincipal_Interface telaPrincipal;
     public InterfacePool pool;
     public SiscomController controller;
     AcessoUsuario acesso;
@@ -196,10 +195,6 @@ public class MenuLegenda extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_legenda;
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-
-    public void setTelaPrincipal(TelaPrincipal_Interface telaPrincipal) {
-        this.telaPrincipal = telaPrincipal;
-    }
 
     private void enviaDados() {
         controller = new SiscomController();

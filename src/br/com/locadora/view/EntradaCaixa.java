@@ -85,7 +85,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         tfa_similar.setName("tfa_similar"); // NOI18N
         jScrollPane1.setViewportView(tfa_similar);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Caixa");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -645,6 +645,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
 
     private void jb_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelar1ActionPerformed
         setVisible(false);
+        janelapaiLocacao.setStatusTela(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1ActionPerformed
 
@@ -783,7 +784,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     public boolean verificaLogin() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), getClass().getName());
+        acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), "br.com.Locadora.view.EntradaCaixa");
 
         //verifica a senha
         char[] senha = jpf_senha.getPassword();

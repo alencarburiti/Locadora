@@ -69,9 +69,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
         jCheckBox2.setText("jCheckBox2");
         jCheckBox2.setName("jCheckBox2"); // NOI18N
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Cadastrando Diárias");
-        setBackground(new java.awt.Color(255, 102, 102));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrando Diária");
+        setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author ALENCAR
  */
-public final class CadastroObjeto extends javax.swing.JFrame implements CadastroObjeto_InterFace {
+public final class CadastroObjeto extends javax.swing.JFrame {
 
     public List<Produto> produtos;
     public MenuObjeto janelapai;
@@ -112,7 +112,7 @@ public final class CadastroObjeto extends javax.swing.JFrame implements Cadastro
         tfa_similar.setName("tfa_similar"); // NOI18N
         jScrollPane1.setViewportView(tfa_similar);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrando Objetos");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -575,7 +575,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
     private void jb_generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_generoActionPerformed
         ConsultaGeneroObjeto consultaGenero = new ConsultaGeneroObjeto();
-        consultaGenero.setTelaCadastroObjeto(this);
         consultaGenero.janelapai = this;
         consultaGenero.listaTodasGeneros();        
         consultaGenero.setVisible(true);
@@ -619,7 +618,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
     private void jb_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_diariaActionPerformed
         ConsultaDiariaObjeto consulta = new ConsultaDiariaObjeto();
-        consulta.setTelaCadastroObjeto(this);
         consulta.janelapai = this;        
         consulta.listaTodasDiarias();
         

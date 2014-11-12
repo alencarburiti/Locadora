@@ -271,7 +271,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
                     + "    INTERFACE C\n"
                     + "WHERE\n"
                     + "    A.CODIGO_USUARIO = B.USUARIO_CODIGO_USUARIO\n"
-                    + "    C.CODIGO_INTERFACE = B.INTERFACE_CODIGO_INTERFACE\n"
+                    + "    AND C.CODIGO_INTERFACE = B.INTERFACE_CODIGO_INTERFACE\n"
                     + "        AND C.NOME_CLASSE = ? \n"
                     + "        AND A.SENHA = ? ;";
 

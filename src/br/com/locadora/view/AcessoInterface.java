@@ -71,7 +71,7 @@ public final class AcessoInterface extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tfa_similar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Caixa");
+        setTitle("Controle de Acessos");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -84,7 +84,7 @@ public final class AcessoInterface extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -217,10 +217,8 @@ public final class AcessoInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        if (janelapai != null) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
-        }
+        setVisible(false);
+        janelapai.setStatusTela(true);
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
@@ -233,10 +231,8 @@ public final class AcessoInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        if (janelapai != null) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
-        }
+        setVisible(false);
+        janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void jcb_escreverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_escreverActionPerformed

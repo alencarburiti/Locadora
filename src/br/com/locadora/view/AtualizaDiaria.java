@@ -12,7 +12,6 @@ package br.com.locadora.view;
 
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Genero;
-import br.com.locadora.model.dao.GeneroDAO;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.UnaccentedDocument;
 import java.awt.event.KeyAdapter;
@@ -21,8 +20,6 @@ import java.util.List;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
@@ -30,7 +27,7 @@ import javax.swing.UIManager;
  */
 public class AtualizaDiaria extends javax.swing.JFrame {
 
-    private Diaria objdiaria;
+    private Diaria diaria;
     public MenuDiaria janelapai;
 
     /** Creates new form DestinoCadastroGUI */
@@ -38,12 +35,12 @@ public class AtualizaDiaria extends javax.swing.JFrame {
         initComponents();
     }
 
-    public AtualizaDiaria(Diaria diaria) {
-        this.objdiaria = diaria;
+    public AtualizaDiaria(Diaria diaria) {        
+        this.diaria = diaria;
         initComponents();
-
-//        jtf_codigo.setText(String.valueOf(destino.getCod_destino()));
-//        jtf_descricao.setText(destino.getDesc_destino());
+        System.out.println("Código Diária: "+ this.diaria.getCodigo_diaria());
+        jtf_codigo.setText(String.valueOf(this.diaria.getCodigo_diaria()));
+        jtf_descricao.setText(this.diaria.getNome_diaria());
     }
 
     @SuppressWarnings("unchecked")
@@ -58,8 +55,8 @@ public class AtualizaDiaria extends javax.swing.JFrame {
         jtf_descricao = new javax.swing.JTextField (new LimitadorTexto(45), "",10);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Alterando Armazém");
-        setBackground(new java.awt.Color(255, 102, 102));
+        setTitle("Alterando Diária");
+        setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -72,7 +69,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +79,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
         });
         getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, 35));
 
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Cancelar");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {

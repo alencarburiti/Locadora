@@ -41,7 +41,6 @@ public class MenuDiaria extends javax.swing.JFrame {
     public String tipoCadastro;
     public TelaPrincipal janelapai;
     public static List<Diaria> diarias;
-    private TelaPrincipal_Interface telaPrincipal;
     public InterfacePool pool;
     public SiscomController controller;
     public Diaria diaria;
@@ -263,32 +262,7 @@ public class MenuDiaria extends javax.swing.JFrame {
         alterar();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_alterarActionPerformed
-    public void alterar() {
-
-        pool = new Pool();
-        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
-
-        try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
-
-                Diaria desti = tbDiariaLinhaSelecionada(jtbl_diaria);
-                if (desti != null) {
-                    AtualizaDiaria diariaAltera = new AtualizaDiaria(desti);
-                    diariaAltera.janelapai = this;
-                    diariaAltera.setVisible(true);
-                    this.setEnabled(false);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um armazém");
-                    jtf_consulta.requestFocus();
-                }
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-        }
-
-    }
+    
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
         excluirDiaria();
         // TODO add your handling code here:
@@ -365,14 +339,16 @@ public class MenuDiaria extends javax.swing.JFrame {
     }
 
     public Diaria tbDiariaLinhaSelecionada(JTable tb) {
-        Diaria dest = null;
+        
         if (tb.getSelectedRow() != -1) {
-            dest = new Diaria();
-            dest.setCodigo_diaria(diarias.get(tb.getSelectedRow()).getCodigo_diaria());
-            dest.setNome_diaria(diarias.get(tb.getSelectedRow()).getNome_diaria());
+            diaria = new Diaria();
+            diaria.setCodigo_diaria(diarias.get(tb.getSelectedRow()).getCodigo_diaria());
+            diaria.setNome_diaria(diarias.get(tb.getSelectedRow()).getNome_diaria());
 
+        } else {
+            diaria = null;
         }
-        return dest;
+        return diaria;
     }
 
     public void request() {
@@ -422,5 +398,35 @@ public class MenuDiaria extends javax.swing.JFrame {
             this.setVisible(status);
         }
         this.setEnabled(status);
+    }
+    public void alterar() {
+
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuDiaria");
+
+        try {
+            if (acesso.getEscrever() == 0) {
+
+                diaria = tbDiariaLinhaSelecionada(jtbl_diaria);
+                System.out.println("Objeto: "+ (diaria==null));
+                if (diaria != null) {
+                    AtualizaDiaria diariaAltera = new AtualizaDiaria(diaria);
+                    diariaAltera.janelapai = this;
+                    diariaAltera.setVisible(true);
+                    this.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma Diária");
+                    jtf_consulta.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+
     }
 }
