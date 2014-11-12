@@ -73,7 +73,7 @@ public class ConfiguracaoCaixa extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, 40));
+        getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, -1, 40));
 
         jb_aplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_aplicar.setText("Aplicar");
@@ -83,7 +83,7 @@ public class ConfiguracaoCaixa extends javax.swing.JFrame {
                 jb_aplicarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_aplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, 40));
+        getContentPane().add(jb_aplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Caixa"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -97,9 +97,9 @@ public class ConfiguracaoCaixa extends javax.swing.JFrame {
         jLabel1.setName("jLabel1"); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 80, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 210, 120));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 210, 120));
 
-        setSize(new java.awt.Dimension(262, 246));
+        setSize(new java.awt.Dimension(269, 246));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
