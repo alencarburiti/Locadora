@@ -11,6 +11,7 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Diaria;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class DiariaDAO implements InterfaceDiariaDAO {
 
@@ -21,12 +22,11 @@ public class DiariaDAO implements InterfaceDiariaDAO {
     }
 
     @Override
-    public void atualizar(Diaria diaria) throws SQLException {
+    public void atualizar(Diaria diaria) {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlAtualizar = " UPDATE DIARIA SET bairro=?, celular=?, cep=?, "
-                + " cidade=?, cpf_cnpj=?, email=?, endereco=?, estado=?,"
-                + " telefone=?, nome=? WHERE codigo = ? ;";
+        String sqlAtualizar = "UPDATE `locadora`.`DIARIA` SET `NOME_DIARIA` = ?, `VALOR` = ?,\n" +
+            " `DIAS` = ?, `MULTAS` = ? WHERE `CODIGO_DIARIA` = ?;";
 
         try {
             ps = con.prepareStatement(sqlAtualizar);
@@ -35,6 +35,9 @@ public class DiariaDAO implements InterfaceDiariaDAO {
 
             ps.executeUpdate();
             ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Problema ao atualizar");
+            ex.printStackTrace();
         } finally {
             pool.liberarConnection(con);
         }
@@ -187,10 +190,11 @@ public class DiariaDAO implements InterfaceDiariaDAO {
     private void setPreparedStatement(Diaria diaria, PreparedStatement ps)
             throws SQLException {
         ps.setString(1, diaria.getNome_diaria());
-        ps.setDouble(2, diaria.getValor());
-        ps.setDouble(3, diaria.getValor_promocao());
-        ps.setInt(4, diaria.getDias());
-        ps.setDouble(5, diaria.getMultas());
+        ps.setDouble(2, diaria.getValor());        
+        ps.setInt(3, diaria.getDias());
+        ps.setDouble(4, diaria.getMultas());
+        ps.setInt(5, diaria.getCodigo_diaria());
+        
     }
 
     private void setPreparedStatement1(Diaria diaria, PreparedStatement ps)

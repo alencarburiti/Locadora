@@ -12,8 +12,12 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
+import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.dao.DiariaDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
 import java.awt.event.KeyEvent;
@@ -37,6 +41,11 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
     public AtualizaObjeto janelapai2;
     public List<Diaria> diarias;
     public Moeda moeda;
+
+    public InterfacePool pool;
+    public SiscomController controller;
+    public AcessoUsuario acesso;
+
     public ConsultaDiariaObjeto() {
         initComponents();
         janelapai = null;
@@ -168,6 +177,11 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
                 jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 600, 200));
 
                 jtf_consulta.setName("jtf_consulta"); // NOI18N
+                jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        jtf_consultaKeyPressed(evt);
+                    }
+                });
                 jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 450, -1));
 
                 jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
@@ -194,7 +208,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
         }
 
 }//GEN-LAST:event_jb_cancelarActionPerformed
-    
+
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
         botaoOK(jtbl_diaria);
@@ -212,7 +226,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um fornecedor");
+            JOptionPane.showMessageDialog(null, "Selecione uma Diária");
         }
     }
 
@@ -221,31 +235,60 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
         if ((janelapai != null)) {
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
+            janelapai.setStatusTela(true);
+        }
+        if ((janelapai2 != null)) {
+            janelapai2.setEnabled(true);
+            janelapai2.setVisible(true);
+            janelapai2.setStatusTela(true);
         }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_novo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novo1ActionPerformed
-        CadastroFornecedor forn;
-
-        forn = new CadastroFornecedor();
-        forn.janelapai2 = this;
-        forn.setVisible(true);
-        this.setEnabled(false);
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
+        try {
+            if (acesso.getEscrever() == 0) {
+                CadastroDiaria cadastroDiaria = new CadastroDiaria();
+                cadastroDiaria.janelapaiConsulta = this;
+                cadastroDiaria.setVisible(true);
+                setStatusTela(false);
+                cadastroDiaria.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
 
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        jtbl_diaria.requestFocus();
+        jtbl_diaria.setSelectionMode(1);
     }//GEN-LAST:event_formWindowOpened
 
 private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_diariaKeyPressed
     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
         botaoOK(jtbl_diaria);
     }
+    if (evt.getKeyCode() == KeyEvent.VK_F5) {
+        jtf_consulta.requestFocus();
+    }
+    if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        setVisible(false);
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
+        } else if (janelapai2 != null) {
+            janelapai2.setStatusTela(true);
+        }
+    }
+
     // TODO add your handling code here:
 }//GEN-LAST:event_jtbl_diariaKeyPressed
 
@@ -256,6 +299,17 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             Logger.getLogger(ConsultaDiariaObjeto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jb_buscarActionPerformed1
+
+    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            try {
+                listaDiaria(jtf_consulta.getText().trim());
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaDiariaObjeto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_consultaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -280,7 +334,6 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
-
     public void setCadastro() {
         jb_novo1.setEnabled(false);
     }
@@ -298,7 +351,6 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
         return diaria;
     }
-    private InterfacePool pool;
 
     public void listaDiaria(String consulta) throws SQLException {
         pool = new Pool();
@@ -344,8 +396,15 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
                 ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
                 row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, diaria.getDias(), valor, valor_promocao, multa});
             }
+            jtbl_diaria.requestFocus();
             jtbl_diaria.setSelectionMode(1);
         }
     }
 
+    public void setStatusTela(boolean status) {
+        if (status) {
+            this.setVisible(status);
+        }
+        this.setEnabled(status);
+    }
 }

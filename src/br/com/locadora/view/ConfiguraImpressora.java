@@ -26,6 +26,8 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
 
     public String tipoCadastro;
     public TelaPrincipal janelapai;    
+    public EntradaCaixa janelapaiCaixaLocacao;
+    public EntradaCaixaDevolucao janelapaiCaixaDevolucao;
     public InterfacePool pool;
     public SiscomController controller;
 

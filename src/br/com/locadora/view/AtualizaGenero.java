@@ -81,6 +81,11 @@ public class AtualizaGenero extends javax.swing.JFrame {
                 jb_salvarActionPerformed(evt);
             }
         });
+        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_salvarKeyPressed(evt);
+            }
+        });
         getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, 35));
 
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
@@ -89,6 +94,11 @@ public class AtualizaGenero extends javax.swing.JFrame {
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_cancelarActionPerformed(evt);
+            }
+        });
+        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelarKeyPressed(evt);
             }
         });
         getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, 35));
@@ -146,14 +156,32 @@ public class AtualizaGenero extends javax.swing.JFrame {
 
     private void jtf_nome_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_generoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            enviaDados();
+            jb_salvar.requestFocus();
         }
+        acionarAtalho(evt);
     }//GEN-LAST:event_jtf_nome_generoKeyPressed
 
     private void jtf_nome_generoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_generoFocusGained
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nome_generoFocusGained
+
+    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            enviaDados();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            janelapai.setStatusTela(true);
+            setVisible(false);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -204,4 +232,13 @@ public class AtualizaGenero extends javax.swing.JFrame {
 
     }
 
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            enviaDados();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+    }
 }

@@ -104,7 +104,8 @@ public class ConsultarLocacao implements InterfaceCommand {
 
             }
             ConsultaCopiaDevolucao.itensDevolucao = itemLocacoes;
-
+            ConsultaCopiaDevolucao.jtbl_locacao_aberto.requestFocus();
+            ConsultaCopiaDevolucao.jtbl_locacao_aberto.setSelectionMode(1);
         }
 
     }

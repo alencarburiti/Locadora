@@ -33,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.html.HTML;
 
 public class AtendimentoLocacao extends javax.swing.JFrame {
 
@@ -290,6 +291,11 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
+        jButton7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton7KeyPressed(evt);
+            }
+        });
         jp_locacao.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 340, 110, 50));
 
         jLabel27.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -494,9 +500,11 @@ private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_jb_clienteActionPerformed
 
 private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
+    acionarAtalho(evt);
     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
         consultarClienteAtendimento();
     }
+    
 }//GEN-LAST:event_jtf_nome_clienteKeyPressed
 
 private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusLost
@@ -526,6 +534,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jtf_codigo_cliente.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Informe primeiro um cliente");
+            jtf_nome_cliente.requestFocus();
         } else {
             ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
             copiaCliente.janelapai = this;
@@ -614,26 +623,26 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jcb_codigo_barras_locacaoActionPerformed
 
     private void jtf_codigo_consulta_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_consulta_locacaoKeyPressed
-
         try {
 
             if (!jtf_codigo_cliente.getText().equals("")) {
+                acionarAtalho(evt);
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (jcb_codigo_barras_locacao.isSelected() == true) {
                         locar_consulta_codigo_barras(jtf_codigo_consulta_locacao.getText().trim());
                     } else {
                         locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
                     }
-                } else if (evt.getKeyCode() == KeyEvent.VK_F6) {
+                } 
+                if (evt.getKeyCode() == KeyEvent.VK_F5) {
                     ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
                     copiaCliente.janelapai = this;
                     copiaCliente.setVisible(true);
                     setStatusTela(false);
-                } else if (evt.getKeyCode() == KeyEvent.VK_F10) {
-                    enviarDadosLocacao();
-                }
+                }                 
             } else {
                 JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
+                jtf_codigo_cliente.requestFocus();
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
@@ -654,6 +663,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jb_adicionar_locacaoKeyPressed
 
     private void jb_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_clienteKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_clienteKeyPressed
 
@@ -661,6 +671,11 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         setVisible(false);
         janelapai.setStatusTela(true);
     }//GEN-LAST:event_jb_cancelarActionPerformed
+
+    private void jButton7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton7KeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7KeyPressed
 
     public void consultarClienteAtendimento() {
         ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
@@ -722,11 +737,15 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void enviarDadosLocacao() {
         if (verificarCampos() == true) {
-            EntradaCaixa entradaCaixa;
-            entradaCaixa = new EntradaCaixa();
-            entradaCaixa.setVisible(true);
-            setStatusTela(false);
-            entradaCaixa.janelapaiLocacao = this;
+            if(jtbl_locacao.getRowCount() > 0){
+                EntradaCaixa entradaCaixa;
+                entradaCaixa = new EntradaCaixa();
+                entradaCaixa.setVisible(true);
+                setStatusTela(false);
+                entradaCaixa.janelapaiLocacao = this;                
+            } else{
+                JOptionPane.showMessageDialog(null, "Insina um objeto no mínimo");
+            }
         }
     }
 
@@ -770,7 +789,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-            jtf_nome_objeto_locacao.requestFocus();
+            jtf_nome_cliente.requestFocus();
             return false;
         } else {
             return true;
@@ -891,6 +910,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             jtf_debito_total_locacao.setText("R$ 0,00");
 
             jtf_nome_cliente.setText(dependente.getNome_dependente());
+            setTitle("Atendimento Locação - "+ dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
             Moeda moeda = new Moeda();
 
@@ -1112,5 +1132,15 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
         return codigo_barras;
     }
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            enviarDadosLocacao();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+
+        }
+    }
 }

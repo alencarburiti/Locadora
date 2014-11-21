@@ -1,17 +1,36 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
+import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Telefone;
+import br.com.locadora.model.dao.CopiaDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.Data;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.UnaccentedDocument;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -23,6 +42,9 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     public MenuObjeto janelapai;
     public static Diaria diaria;
     public static Genero genero;
+    public AcessoUsuario acesso;
+    public Copia copia;
+    public MaskFormatter formatoData, formatoCPF, formatoTelefone;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -47,7 +69,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jb_cancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jtp_menu = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jtf_codigo_objeto = new javax.swing.JTextField();
         jtf_titulo_original = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
@@ -83,15 +105,15 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jLabel39 = new javax.swing.JLabel();
         jcb_tipo = new javax.swing.JComboBox();
         jLabel40 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jp_cinema = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jta_elenco = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jta_sinopse = new javax.swing.JTextArea();
-        jPanel2 = new javax.swing.JPanel();
-        jb_adicionar_dependente = new javax.swing.JButton();
+        jp_copias = new javax.swing.JPanel();
+        jb_adicionar_copia = new javax.swing.JButton();
         jb_eliminar1 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jtbl_copia = new javax.swing.JTable();
@@ -102,8 +124,15 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jtf_preco_custo = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
-        jtf_data_aquisicao = new javax.swing.JTextField();
-        jb_salvar1 = new javax.swing.JButton();
+        try  {
+            formatoData = new MaskFormatter("##/##/####");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_data_aquisicao = new JFormattedTextField(formatoData);
+        jb_salvar = new javax.swing.JButton();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -140,7 +169,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jLabel2.setName("jLabel2"); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
 
-        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
+        jtp_menu.setName("jtp_menu"); // NOI18N
 
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -214,6 +243,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jtf_descricao_resumidaActionPerformed(evt);
             }
         });
+        jtf_descricao_resumida.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_descricao_resumidaKeyPressed(evt);
+            }
+        });
         jPanel1.add(jtf_descricao_resumida, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 340, -1));
 
         jLabel14.setText("Duração*");
@@ -221,19 +255,35 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 60, -1));
 
         jtf_duracao.setName("jtf_duracao"); // NOI18N
+        jtf_duracao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_duracaoKeyPressed(evt);
+            }
+        });
         jPanel1.add(jtf_duracao, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 90, -1));
 
         jLabel15.setText("Censura*");
         jLabel15.setName("jLabel15"); // NOI18N
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, -1, -1));
 
+        jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
+            public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
+                jtf_censura.setText(jtf_censura.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
+            }
+        });
         jtf_censura.setName("jtf_censura"); // NOI18N
+        jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_censuraKeyPressed(evt);
+            }
+        });
         jPanel1.add(jtf_censura, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 200, 70, -1));
 
         jLabel23.setText("Gênero");
         jLabel23.setName("jLabel23"); // NOI18N
         jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
 
+        jtf_descricao_genero.setEditable(false);
         jtf_descricao_genero.setName("jtf_descricao_genero"); // NOI18N
         jtf_descricao_genero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,6 +299,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jb_generoActionPerformed(evt);
             }
         });
+        jb_genero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_generoKeyPressed(evt);
+            }
+        });
         jPanel1.add(jb_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 30, 30));
 
         jLabel24.setText("Produção");
@@ -261,6 +316,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
 
         jcb_producao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Americana", "Espanhola", "Francesa", "Italiana", "Japonesa", "Nacional" }));
         jcb_producao.setName("jcb_producao"); // NOI18N
+        jcb_producao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_producaoKeyPressed(evt);
+            }
+        });
         jPanel1.add(jcb_producao, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 120, 30));
 
         jLabel35.setText("Diária");
@@ -285,6 +345,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jb_diaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_diariaActionPerformed(evt);
+            }
+        });
+        jb_diaria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_diariaKeyPressed(evt);
             }
         });
         jPanel1.add(jb_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 30, 30));
@@ -333,12 +398,22 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jRadioButton2.setName("jRadioButton2"); // NOI18N
         jPanel1.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, -1, -1));
 
-        jcb_midia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu Ray", "CD", "DVD", "Playstation", "VHs", "Xbox", " " }));
+        jcb_midia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu Ray", "CD", "DVD", "Playstation", "VHs", "Xbox" }));
         jcb_midia.setName("jcb_midia"); // NOI18N
+        jcb_midia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_midiaKeyPressed(evt);
+            }
+        });
         jPanel1.add(jcb_midia, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 120, 30));
 
         jcb_tipo_midia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Filme", "Seriado", "Game", "Livro" }));
         jcb_tipo_midia.setName("jcb_tipo_midia"); // NOI18N
+        jcb_tipo_midia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_tipo_midiaKeyPressed(evt);
+            }
+        });
         jPanel1.add(jcb_tipo_midia, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, 100, 30));
 
         jLabel38.setText("Tipo de Mídia");
@@ -349,60 +424,80 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jLabel39.setName("jLabel39"); // NOI18N
         jPanel1.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, -1, 20));
 
-        jcb_tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Locação", "Venda", " " }));
+        jcb_tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Locação", "Venda" }));
         jcb_tipo.setName("jcb_tipo"); // NOI18N
+        jcb_tipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_tipoKeyPressed(evt);
+            }
+        });
         jPanel1.add(jcb_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, 120, 30));
 
         jLabel40.setText("Valor");
         jLabel40.setName("jLabel40"); // NOI18N
         jPanel1.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, -1, -1));
 
-        jTabbedPane1.addTab("Cadastro", jPanel1);
+        jtp_menu.addTab("Cadastro", jPanel1);
 
-        jPanel3.setName("jPanel3"); // NOI18N
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jp_cinema.setName("jp_cinema"); // NOI18N
+        jp_cinema.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel17.setText("Sinopse");
         jLabel17.setName("jLabel17"); // NOI18N
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        jp_cinema.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         jta_elenco.setColumns(20);
         jta_elenco.setRows(5);
         jta_elenco.setName("jta_elenco"); // NOI18N
+        jta_elenco.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jta_elencoKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jta_elenco);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 550, 90));
+        jp_cinema.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 550, 90));
 
         jLabel4.setText("Elenco");
         jLabel4.setName("jLabel4"); // NOI18N
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        jp_cinema.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
         jta_sinopse.setColumns(20);
         jta_sinopse.setRows(5);
         jta_sinopse.setName("jta_sinopse"); // NOI18N
-        jScrollPane3.setViewportView(jta_sinopse);
-
-        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 550, 100));
-
-        jTabbedPane1.addTab("Cinema", jPanel3);
-
-        jPanel2.setToolTipText("");
-        jPanel2.setName("jPanel2"); // NOI18N
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
-        jb_adicionar_dependente.setToolTipText("Incluir");
-        jb_adicionar_dependente.setName("jb_adicionar_dependente"); // NOI18N
-        jb_adicionar_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_adicionar_dependenteActionPerformed(evt);
+        jta_sinopse.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jta_sinopseKeyPressed(evt);
             }
         });
-        jPanel2.add(jb_adicionar_dependente, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 30, 30));
+        jScrollPane3.setViewportView(jta_sinopse);
+
+        jp_cinema.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 550, 100));
+
+        jtp_menu.addTab("Cinema", jp_cinema);
+
+        jp_copias.setToolTipText("");
+        jp_copias.setName("jp_copias"); // NOI18N
+        jp_copias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jb_adicionar_copia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
+        jb_adicionar_copia.setToolTipText("Incluir");
+        jb_adicionar_copia.setName("jb_adicionar_copia"); // NOI18N
+        jb_adicionar_copia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_adicionar_copiaActionPerformed(evt);
+            }
+        });
+        jb_adicionar_copia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_adicionar_copiaKeyPressed(evt);
+            }
+        });
+        jp_copias.add(jb_adicionar_copia, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 30, 30));
 
         jb_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_eliminar1.setToolTipText("Excluir");
@@ -412,7 +507,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jb_eliminar1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jb_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, 30, 30));
+        jp_copias.add(jb_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, 30, 30));
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
@@ -427,85 +522,118 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true, false, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jtbl_copia.setName("jtbl_copia"); // NOI18N
+        jtbl_copia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_copiaKeyPressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(jtbl_copia);
         if (jtbl_copia.getColumnModel().getColumnCount() > 0) {
             jtbl_copia.getColumnModel().getColumn(0).setPreferredWidth(10);
             jtbl_copia.getColumnModel().getColumn(1).setPreferredWidth(20);
-            jtbl_copia.getColumnModel().getColumn(2).setResizable(false);
             jtbl_copia.getColumnModel().getColumn(2).setPreferredWidth(100);
             jtbl_copia.getColumnModel().getColumn(3).setPreferredWidth(50);
             jtbl_copia.getColumnModel().getColumn(4).setPreferredWidth(50);
-            jtbl_copia.getColumnModel().getColumn(5).setResizable(false);
             jtbl_copia.getColumnModel().getColumn(5).setPreferredWidth(20);
-            jtbl_copia.getColumnModel().getColumn(6).setResizable(false);
             jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(30);
         }
 
-        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 680, 200));
+        jp_copias.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 680, 200));
 
         jLabel27.setText("Idioma");
         jLabel27.setName("jLabel27"); // NOI18N
-        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jp_copias.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jcb_idioma.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chinês", "Espanhol", "Francês", "Inglês", "Italiano", "Japonês", "Polonês", "Português" }));
         jcb_idioma.setName("jcb_idioma"); // NOI18N
-        jPanel2.add(jcb_idioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 130, -1));
+        jcb_idioma.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_idiomaKeyPressed(evt);
+            }
+        });
+        jp_copias.add(jcb_idioma, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 130, -1));
 
         jLabel28.setText("Legenda");
         jLabel28.setName("jLabel28"); // NOI18N
-        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
+        jp_copias.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
 
         jcb_legenda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chinês", "Espanhol", "Francês", "Inglês", "Italiano", "Japonês", "Polonês", "Português", "Não Legendado" }));
         jcb_legenda.setName("jcb_legenda"); // NOI18N
-        jPanel2.add(jcb_legenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
+        jcb_legenda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_legendaKeyPressed(evt);
+            }
+        });
+        jp_copias.add(jcb_legenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
 
         jLabel29.setText("Preço custo");
         jLabel29.setName("jLabel29"); // NOI18N
-        jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 80, -1));
+        jp_copias.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 80, -1));
 
-        jtf_preco_custo.setText("R$ 2,00");
+        jtf_preco_custo.setText("R$ 0,00");
         jtf_preco_custo.setName("jtf_preco_custo"); // NOI18N
         jtf_preco_custo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtf_preco_custoActionPerformed(evt);
             }
         });
-        jPanel2.add(jtf_preco_custo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 120, -1));
+        jtf_preco_custo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_preco_custoKeyPressed(evt);
+            }
+        });
+        jp_copias.add(jtf_preco_custo, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 120, -1));
 
         jLabel31.setText("Data Aquisição");
         jLabel31.setName("jLabel31"); // NOI18N
-        jPanel2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 120, -1));
+        jp_copias.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 120, -1));
 
-        jtf_data_aquisicao.setText("19/03/2000");
         jtf_data_aquisicao.setName("jtf_data_aquisicao"); // NOI18N
-        jtf_data_aquisicao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_data_aquisicaoActionPerformed(evt);
+        jtf_data_aquisicao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_data_aquisicaoFocusLost(evt);
             }
         });
-        jPanel2.add(jtf_data_aquisicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 140, -1));
-
-        jTabbedPane1.addTab("Cópias", jPanel2);
-
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 360));
-
-        jb_salvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
-        jb_salvar1.setText("Salvar");
-        jb_salvar1.setName("jb_salvar1"); // NOI18N
-        jb_salvar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_salvar1ActionPerformed(evt);
+        jtf_data_aquisicao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_data_aquisicaoKeyPressed(evt);
             }
         });
-        getContentPane().add(jb_salvar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, -1, 35));
+        jp_copias.add(jtf_data_aquisicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 130, 30));
 
-        setSize(new java.awt.Dimension(768, 439));
+        jtp_menu.addTab("Cópias", jp_copias);
+
+        getContentPane().add(jtp_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 360));
+
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setText("Salvar");
+        jb_salvar.setName("jb_salvar"); // NOI18N
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
+            }
+        });
+        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_salvarKeyPressed(evt);
+            }
+        });
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, -1, 35));
+
+        setSize(new java.awt.Dimension(775, 439));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -532,7 +660,10 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_descricao_objetoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_objetoKeyPressed
-
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jcb_tipo.requestFocus();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descricao_objetoKeyPressed
     private void jtf_descricao_objetoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descricao_objetoFocusGained
@@ -553,7 +684,10 @@ private void jtf_titulo_originalActionPerformed(java.awt.event.ActionEvent evt) 
 }//GEN-LAST:event_jtf_titulo_originalActionPerformed
 
 private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_titulo_originalKeyPressed
-
+    acionarAtalho(evt);
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        jcb_producao.requestFocus();
+    }
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_titulo_originalKeyPressed
 
@@ -576,17 +710,18 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private void jb_generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_generoActionPerformed
         ConsultaGeneroObjeto consultaGenero = new ConsultaGeneroObjeto();
         consultaGenero.janelapai = this;
-        consultaGenero.listaTodasGeneros();        
+        consultaGenero.listaTodasGeneros();
         consultaGenero.setVisible(true);
         setStatusTela(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_generoActionPerformed
 
     private void jb_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar1ActionPerformed
+        excluirCopia();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_eliminar1ActionPerformed
 
-    private void jb_adicionar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteActionPerformed
+    private void jb_adicionar_copiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaActionPerformed
 
         if (jtf_codigo_objeto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Salvar primeiro o Objeto");
@@ -594,23 +729,21 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
             if (verificarCamposCopia() == true) {
                 controller = new SiscomController();
                 controller.processarRequisicao("cadastrarCopia");
-
+                jtf_preco_custo.setText("R$ 0,00");
+                jtf_data_aquisicao.setText("");
+                jcb_idioma.requestFocus();
             }
         }
-    }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
+    }//GEN-LAST:event_jb_adicionar_copiaActionPerformed
 
     private void jtf_preco_custoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_preco_custoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_preco_custoActionPerformed
 
-    private void jtf_data_aquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_data_aquisicaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_data_aquisicaoActionPerformed
-
-    private void jb_salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvar1ActionPerformed
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
         enviaDados();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvar1ActionPerformed
+    }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void jtf_diaria_diasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_diaria_diasActionPerformed
         // TODO add your handling code here:
@@ -618,11 +751,11 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
     private void jb_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_diariaActionPerformed
         ConsultaDiariaObjeto consulta = new ConsultaDiariaObjeto();
-        consulta.janelapai = this;        
+        consulta.janelapai = this;
         consulta.listaTodasDiarias();
-        
         consulta.setVisible(true);
-        //    setStatusTela(false);
+        setStatusTela(false);
+
     }//GEN-LAST:event_jb_diariaActionPerformed
 
     private void jtf_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valorActionPerformed
@@ -632,6 +765,201 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private void jtf_valor_promocaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_promocaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_promocaoActionPerformed
+
+    private void jcb_tipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_tipoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_titulo_original.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_tipoKeyPressed
+
+    private void jcb_producaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_producaoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_duracao.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_producaoKeyPressed
+
+    private void jtf_duracaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_duracaoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_descricao_resumida.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_duracaoKeyPressed
+
+    private void jtf_descricao_resumidaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_resumidaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jcb_midia.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_descricao_resumidaKeyPressed
+
+    private void jcb_midiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_midiaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jcb_tipo_midia.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_midiaKeyPressed
+
+    private void jcb_tipo_midiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_tipo_midiaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_diaria.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_tipo_midiaKeyPressed
+
+    private void jtf_censuraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_censuraKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_genero.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_censuraKeyPressed
+
+    private void jta_elencoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jta_elencoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jta_sinopse.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jta_elencoKeyPressed
+
+    private void jta_sinopseKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jta_sinopseKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_salvar.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jta_sinopseKeyPressed
+
+    private void jcb_idiomaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_idiomaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jcb_legenda.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_idiomaKeyPressed
+
+    private void jcb_legendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_legendaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_data_aquisicao.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_legendaKeyPressed
+
+    private void jtf_preco_custoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_preco_custoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_adicionar_copia.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_preco_custoKeyPressed
+
+    private void jb_adicionar_copiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            if (jtf_codigo_objeto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Salvar primeiro o Objeto");
+            } else {
+                if (verificarCamposCopia() == true) {
+                    controller = new SiscomController();
+                    controller.processarRequisicao("cadastrarCopia");
+                    jtf_data_aquisicao.setText("");
+                    jtf_preco_custo.setText("R$ 0,00");
+                    jcb_idioma.requestFocus();
+                }
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_copiaKeyPressed
+
+    private void jb_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_diariaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ConsultaDiariaObjeto consulta = new ConsultaDiariaObjeto();
+            consulta.janelapai = this;
+            consulta.listaTodasDiarias();
+
+            consulta.setVisible(true);
+            setStatusTela(false);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_diariaKeyPressed
+
+    private void jb_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_generoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            ConsultaGeneroObjeto consultaGenero = new ConsultaGeneroObjeto();
+            consultaGenero.janelapai = this;
+            consultaGenero.listaTodasGeneros();
+            consultaGenero.setVisible(true);
+            setStatusTela(false);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_generoKeyPressed
+
+    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            enviaDados();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void jtf_data_aquisicaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_data_aquisicaoFocusLost
+        try {
+            Data data = new Data();
+            int idade;
+
+            if (jtf_data_aquisicao.getText().trim().length() < 10) {
+                jtf_data_aquisicao.setForeground(Color.red);
+                jtf_data_aquisicao.requestFocus();
+            } else if (jtf_data_aquisicao.getText().equals("  /  /    ")) {
+                jtf_data_aquisicao.setForeground(Color.red);
+                jtf_data_aquisicao.requestFocus();
+            } else {
+                if (validaData(jtf_data_aquisicao.getText())) {
+
+                    jtf_data_aquisicao.setForeground(Color.black);
+
+                } else {
+                    jtf_data_aquisicao.setForeground(Color.red);
+                    jtf_data_aquisicao.requestFocus();
+                }
+
+            }
+        } catch (ParseException ex) {
+            jtf_data_aquisicao.setForeground(Color.red);
+            jtf_data_aquisicao.requestFocus();
+        } catch (NumberFormatException ex) {
+            jtf_data_aquisicao.setText("  /  /    ");
+            jtf_data_aquisicao.setForeground(Color.red);
+            jtf_data_aquisicao.requestFocus();
+        }
+    }//GEN-LAST:event_jtf_data_aquisicaoFocusLost
+
+    private void jtf_data_aquisicaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_aquisicaoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_preco_custo.requestFocus();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_data_aquisicaoKeyPressed
+
+    private void jtbl_copiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_copiaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            excluirCopia();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_copiaKeyPressed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -666,33 +994,32 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JButton jb_adicionar_dependente;
+    private javax.swing.JButton jb_adicionar_copia;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_diaria;
     private javax.swing.JButton jb_eliminar1;
     private javax.swing.JButton jb_genero;
-    private javax.swing.JButton jb_salvar1;
+    private javax.swing.JButton jb_salvar;
     public static javax.swing.JComboBox jcb_idioma;
     public static javax.swing.JComboBox jcb_legenda;
     public static javax.swing.JComboBox jcb_midia;
     public static javax.swing.JComboBox jcb_producao;
     public static javax.swing.JComboBox jcb_tipo;
     public static javax.swing.JComboBox jcb_tipo_midia;
+    private javax.swing.JPanel jp_cinema;
+    private javax.swing.JPanel jp_copias;
     public static javax.swing.JTextArea jta_elenco;
     public static javax.swing.JTextArea jta_sinopse;
     public static javax.swing.JTable jtbl_copia;
     public static javax.swing.JTextField jtf_censura;
     public static javax.swing.JTextField jtf_codigo_objeto;
-    public static javax.swing.JTextField jtf_data_aquisicao;
+    public static javax.swing.JFormattedTextField jtf_data_aquisicao;
     private javax.swing.JTextField jtf_descricao_diaria;
     public static javax.swing.JTextField jtf_descricao_genero;
     public static javax.swing.JTextField jtf_descricao_objeto;
@@ -703,6 +1030,7 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public static javax.swing.JTextField jtf_titulo_original;
     public static javax.swing.JTextField jtf_valor;
     public static javax.swing.JTextField jtf_valor_promocao;
+    private javax.swing.JTabbedPane jtp_menu;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
@@ -720,6 +1048,9 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarObjeto");
             JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+
+            jtp_menu.setSelectedIndex(2);
+            jcb_idioma.requestFocus();
 
         }
     }
@@ -745,6 +1076,10 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
         if (jtf_descricao_genero.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Gênero\n";
+        }
+
+        if (jtf_censura.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Censura\n";
         }
 
         if (jtf_censura.getText().trim().equals("")) {
@@ -836,6 +1171,8 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
             jtf_valor.setText(valor);
             jtf_valor_promocao.setText(valor_promocao);
+
+            jtf_censura.requestFocus();
         } else {
             JOptionPane.showMessageDialog(null, "Objeto diária nulo");
         }
@@ -845,6 +1182,10 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
         if (genero != null) {
             this.genero = genero;
             jtf_descricao_genero.setText(genero.getNome_genero());
+
+            jtp_menu.setSelectedIndex(1);
+            jta_elenco.requestFocus();
+
         } else {
             JOptionPane.showMessageDialog(null, "Objeto gênero nulo");
         }
@@ -865,5 +1206,99 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
 
     public static Genero getObjetoGenero() {
         return genero;
+    }
+
+    private void excluirCopia() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
+
+        try {
+            if (acesso.getDeletar() == 0) {
+                DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
+                if (jtbl_copia.getSelectedRow() != -1) {
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                        pool = new Pool();
+                        CopiaDAO copiaDAO = new CopiaDAO(pool);
+                        copia = new Copia();
+                        copia.setCodigo_copia((Integer) jtbl_copia.getValueAt(jtbl_copia.getSelectedRow(), 0));
+
+                        try {
+                            copiaDAO.excluir(copia.getCodigo_copia());
+                            row.removeRow(jtbl_copia.getSelectedRow());
+                            jtbl_copia.requestFocus();
+                            jtbl_copia.setSelectionMode(1);
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
+                        }
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma cópia");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+    }
+
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            enviaDados();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+    }
+
+    public static boolean validaData(String dataString) throws java.text.ParseException {
+
+        if (!dataString.equals("")) {
+
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            Calendar cal = new GregorianCalendar();
+            Date dataDigitada = new Date(df.parse(dataString).getTime());
+            Date dataAtual = new Date(System.currentTimeMillis());
+
+            // gerando o calendar
+            cal.setTime(df.parse(dataString));
+
+            // separando os dados da string para comparacao e validacao
+            String[] data = dataString.split("/");
+            String dia = data[0];
+            String mes = data[1];
+            String ano = data[2];
+
+            // testando se hah discrepancia entre a data que foi
+            // inserida no caledar e a data que foi passada como
+            // string. se houver diferenca, a data passada era
+            // invalida
+            if ((new Integer(dia)).intValue() != (new Integer(cal.get(Calendar.DAY_OF_MONTH))).intValue()) {
+                // dia nao casou
+                return (false);
+            }
+            if ((new Integer(mes)).intValue() != (new Integer(cal.get(Calendar.MONTH) + 1)).intValue()) {
+                // mes nao casou
+
+                return (false);
+            }
+            if ((new Integer(ano)).intValue() != (new Integer(cal.get(Calendar.YEAR))).intValue()) {
+                // ano nao casou
+
+                return (false);
+            }
+            if (dataDigitada.after(dataAtual)) {
+                // data maior que atual
+                return (false);
+            }
+            return (true);
+        }
+        return false;
     }
 }

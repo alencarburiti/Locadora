@@ -98,6 +98,10 @@ public class ConsultarCliente implements InterfaceCommand {
                 row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
             }
             MenuCliente.clientes = clientes;
+            
+            
+            MenuCliente.jtbl_cliente.requestFocus();
+            MenuCliente.jtbl_cliente.setSelectionMode(1);
         }
 
     }
@@ -125,6 +129,8 @@ public class ConsultarCliente implements InterfaceCommand {
             ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
             row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
 
+            MenuCliente.jtbl_cliente.requestFocus();
+            MenuCliente.jtbl_cliente.setSelectionMode(1);
         }
     }
 

@@ -3,9 +3,7 @@ package br.com.locadora.model.command;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.InterfaceObjetoDAO;
 import br.com.locadora.view.AtualizaObjeto;
-import static br.com.locadora.view.AtualizaObjeto.diaria;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 public class AtualizarObjeto implements InterfaceCommand {
 

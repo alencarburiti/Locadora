@@ -18,12 +18,9 @@ import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
-import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -77,6 +74,11 @@ public class MenuCliente extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Cliente"));
@@ -92,6 +94,11 @@ public class MenuCliente extends javax.swing.JFrame {
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_buscarActionPerformed1(evt);
+            }
+        });
+        jb_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_buscarKeyPressed(evt);
             }
         });
         jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, -1, -1));
@@ -119,6 +126,11 @@ public class MenuCliente extends javax.swing.JFrame {
         jrb_cpf.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_cpf.setText("CPF");
         jrb_cpf.setName("jrb_cpf"); // NOI18N
+        jrb_cpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_cpfActionPerformed(evt);
+            }
+        });
         jPanel1.add(jrb_cpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
         buttonGroup1.add(jrb_nome_cliente);
@@ -126,6 +138,11 @@ public class MenuCliente extends javax.swing.JFrame {
         jrb_nome_cliente.setSelected(true);
         jrb_nome_cliente.setText("Nome");
         jrb_nome_cliente.setName("jrb_nome_cliente"); // NOI18N
+        jrb_nome_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_nome_clienteActionPerformed(evt);
+            }
+        });
         jPanel1.add(jrb_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 670, 120));
@@ -138,6 +155,11 @@ public class MenuCliente extends javax.swing.JFrame {
                 jb_sairActionPerformed(evt);
             }
         });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
+            }
+        });
         getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, -1));
 
         jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
@@ -146,6 +168,11 @@ public class MenuCliente extends javax.swing.JFrame {
         jb_novo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_novoActionPerformed(evt);
+            }
+        });
+        jb_novo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_novoKeyPressed(evt);
             }
         });
         getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
@@ -182,6 +209,11 @@ public class MenuCliente extends javax.swing.JFrame {
                 jtbl_clienteMouseClicked(evt);
             }
         });
+        jtbl_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_clienteKeyPressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtbl_cliente);
         if (jtbl_cliente.getColumnModel().getColumnCount() > 0) {
             jtbl_cliente.getColumnModel().getColumn(0).setResizable(false);
@@ -203,6 +235,11 @@ public class MenuCliente extends javax.swing.JFrame {
                 jb_alterarActionPerformed(evt);
             }
         });
+        jb_alterar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_alterarKeyPressed(evt);
+            }
+        });
         getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, -1));
 
         jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
@@ -211,6 +248,11 @@ public class MenuCliente extends javax.swing.JFrame {
         jb_excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_excluirActionPerformed(evt);
+            }
+        });
+        jb_excluir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_excluirKeyPressed(evt);
             }
         });
         getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, -1));
@@ -260,6 +302,7 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jrb_codigo_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigo_clienteActionPerformed
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_codigo_clienteActionPerformed
 
@@ -286,8 +329,60 @@ public class MenuCliente extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             buscarDados();
         }
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_consultaKeyPressed
+
+    private void jrb_nome_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_nome_clienteActionPerformed
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_nome_clienteActionPerformed
+
+    private void jrb_cpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_cpfActionPerformed
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_cpfActionPerformed
+
+    private void jtbl_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_clienteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            alterar();
+        }        
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            excluirCliente();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_clienteKeyPressed
+
+    private void jb_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_buscarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_buscarKeyPressed
+
+    private void jb_novoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_novoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_novoKeyPressed
+
+    private void jb_alterarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_alterarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_alterarKeyPressed
+
+    private void jb_excluirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_excluirKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_excluirKeyPressed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -436,5 +531,17 @@ public class MenuCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
+   public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            excluirCliente();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
+        }
+    }
 }

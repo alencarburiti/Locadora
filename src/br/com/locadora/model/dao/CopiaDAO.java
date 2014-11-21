@@ -67,7 +67,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
     public void excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlExcluir = "DELETE FROM DIARIA WHERE CODIGO_DIARIA = ?;";
+        String sqlExcluir = "DELETE FROM COPIA WHERE CODIGO_COPIA = ?;";
 
         try {
             ps = con.prepareStatement(sqlExcluir);
@@ -159,6 +159,8 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return resultado;
     }
+    
+    
 
     public boolean getCopia_existente(String codigo_barras) throws SQLException {
 
@@ -264,6 +266,8 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
 
     }
+    
+    
 
     public List<Copia> getCopia_codigo_objeto(Integer codigo_objeto, Integer del_flag, String tipo_movimento) throws SQLException {
         List<Copia> resultado = new ArrayList<Copia>();
@@ -277,6 +281,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    A.NUMERO_COPIA,\n"
                 + "    A.PRECO_CUSTO,\n"
                 + "    A.DEL_FLAG,\n"
+                + "    A.DATA_AQUISICAO,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.CODIGO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
@@ -306,13 +311,14 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    A.NUMERO_COPIA,\n"
                 + "    A.PRECO_CUSTO,\n"
                 + "    A.DEL_FLAG,\n"
+                + "    A.IDIOMA,\n"
+                + "    A.LEGENDA,\n"
+                + "    A.DATA_AQUISICAO,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.CODIGO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
                 + "    B.CENSURA,\n"
-                + "    A.IDIOMA,\n"
-                + "    A.LEGENDA,\n"
                 + "    C.DIAS,\n"
                 + "    C.VALOR,\n"
                 + "    C.VALOR_PROMOCAO\n"
@@ -366,6 +372,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
+                + "    B.CENSURA,\n"                
                 + "    A.IDIOMA,\n"
                 + "    A.LEGENDA,\n"
                 + "    C.DIAS,\n"
@@ -396,6 +403,8 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return resultado;
     }
+    
+    
 
     public List<Copia> getCopia_ator(String ator) throws SQLException {
         List<Copia> resultado = new ArrayList<Copia>();
@@ -441,6 +450,8 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return resultado;
     }
+    
+    
 
     @Override
     public List<Copia> getCopias(String nome_copia) throws SQLException {
@@ -563,6 +574,8 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 
             copia.setIdioma(rs.getString("IDIOMA"));
             copia.setLegenda(rs.getString("LEGENDA"));
+            copia.setData_aquisicao(rs.getDate("DATA_AQUISICAO"));
+            copia.setNumero_copia(rs.getInt("NUMERO_COPIA"));
 
             if (rs.getInt("DEL_FLAG") == 0) {
                 copia.setStatus("Disponivel");

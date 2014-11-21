@@ -7,14 +7,17 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Printer;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.UnaccentedDocument;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.print.PrintException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,9 +26,8 @@ import javax.swing.table.DefaultTableModel;
  * @author ALENCAR
  */
 public final class EntradaCaixa extends javax.swing.JFrame {
-    
+
     public AtendimentoLocacao janelapaiLocacao;
-    public AtendimentoDevolucao janelapaiDevolucao;
     public InterfacePool pool;
     public SiscomController controller;
     public String action;
@@ -37,7 +39,6 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     public EntradaCaixa() {
         initComponents();
         janelapaiLocacao = null;
-        janelapaiDevolucao = null;
     }
 
     //public ProdutoConsultarGUI janelapaim;
@@ -65,8 +66,6 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jtf_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel6 = new javax.swing.JLabel();
-        jtf_valor_pago = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel7 = new javax.swing.JLabel();
         jtf_troco = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jComboBox1 = new javax.swing.JComboBox();
@@ -76,6 +75,8 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         jtf_valor_total_a_pagar = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel8 = new javax.swing.JLabel();
         jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel6 = new javax.swing.JLabel();
+        jtf_valor_pago = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jb_cancelar1 = new javax.swing.JButton();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -95,6 +96,14 @@ public final class EntradaCaixa extends javax.swing.JFrame {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
         });
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -113,14 +122,25 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                 jb_imprimirActionPerformed(evt);
             }
         });
+        jb_imprimir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_imprimirKeyPressed(evt);
+            }
+        });
         getContentPane().add(jb_imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, -1, 35));
 
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_salvar.setText("Finalizar");
+        jb_salvar.setEnabled(false);
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_salvarActionPerformed(evt);
+            }
+        });
+        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_salvarKeyPressed(evt);
             }
         });
         getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, -1, 35));
@@ -149,6 +169,11 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         jPanel1.add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         jpf_senha.setName("jpf_senha"); // NOI18N
+        jpf_senha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpf_senhaActionPerformed(evt);
+            }
+        });
         jpf_senha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jpf_senhaKeyPressed(evt);
@@ -162,6 +187,11 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         jb_logar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_logarActionPerformed(evt);
+            }
+        });
+        jb_logar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_logarKeyPressed(evt);
             }
         });
         jPanel1.add(jb_logar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, 81, 40));
@@ -206,12 +236,13 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel5.setText("Valor Desconto:");
         jLabel5.setName("jLabel5"); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
         jtf_desconto.setEditable(false);
         jtf_desconto.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_desconto.setText("R$ 0,00");
+        jtf_desconto.setEnabled(false);
         jtf_desconto.setName("jtf_desconto"); // NOI18N
         jtf_desconto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,40 +265,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                 jtf_descontoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_desconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 170, -1));
-
-        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel6.setText("Valor Pago:");
-        jLabel6.setName("jLabel6"); // NOI18N
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, -1, -1));
-
-        jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_valor_pago.setEditable(false);
-        jtf_valor_pago.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_valor_pago.setText("R$ 0,00");
-        jtf_valor_pago.setName("jtf_valor_pago"); // NOI18N
-        jtf_valor_pago.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_valor_pagoActionPerformed(evt);
-            }
-        });
-        jtf_valor_pago.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_pagoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_valor_pagoFocusLost(evt);
-            }
-        });
-        jtf_valor_pago.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_valor_pagoKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_valor_pagoKeyReleased(evt);
-            }
-        });
-        jPanel2.add(jtf_valor_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 170, -1));
+        jPanel2.add(jtf_desconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel7.setText("Troco:");
@@ -299,9 +297,13 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         });
         jPanel2.add(jtf_troco, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 170, -1));
 
-        jComboBox1.setEditable(true);
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão de Crédito", "Cartão de Débito", "Video Card" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
+        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox1KeyPressed(evt);
+            }
+        });
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 170, 40));
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
@@ -399,6 +401,40 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         });
         jPanel2.add(jtf_debito_atual, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 170, -1));
 
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel6.setText("Valor Pago:");
+        jLabel6.setName("jLabel6"); // NOI18N
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
+
+        jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_valor_pago.setEditable(false);
+        jtf_valor_pago.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_valor_pago.setText("R$ 0,00");
+        jtf_valor_pago.setEnabled(false);
+        jtf_valor_pago.setName("jtf_valor_pago"); // NOI18N
+        jtf_valor_pago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_valor_pagoActionPerformed(evt);
+            }
+        });
+        jtf_valor_pago.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_valor_pagoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_valor_pagoFocusLost(evt);
+            }
+        });
+        jtf_valor_pago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_valor_pagoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_valor_pagoKeyReleased(evt);
+            }
+        });
+        jPanel2.add(jtf_valor_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 170, -1));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 360, 370));
 
         jb_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
@@ -410,35 +446,25 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                 jb_cancelar1ActionPerformed(evt);
             }
         });
+        jb_cancelar1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelar1KeyPressed(evt);
+            }
+        });
         getContentPane().add(jb_cancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 490, -1, 35));
 
-        setSize(new java.awt.Dimension(472, 560));
+        setSize(new java.awt.Dimension(480, 560));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_imprimirActionPerformed
-        Printer imprimir = new Printer();
-        imprimir.comprovanteLocacao(itens, AtendimentoLocacao.dependente);
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
-        imprimir.imprimirArquivo(nome_arquivo);
-        jtf_valor_pago.setEditable(false);
-        jtf_desconto.setEditable(false);
+        imprimir();
 
 }//GEN-LAST:event_jb_imprimirActionPerformed
-    private void retornaJanelaPai() {
-        setVisible(false);
-        
-        if (janelapaiLocacao != null) {
-            janelapaiLocacao.setEnabled(true);
-            janelapaiLocacao.setVisible(true);
-//            janelapai.request();
-        }
-        
-    }
+
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        itens = new ArrayList<ItemLocacao>();
         finalizarCaixa();
-        
+
 }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -449,13 +475,20 @@ public final class EntradaCaixa extends javax.swing.JFrame {
             jtf_debito_anterior.setText(AtendimentoLocacao.jtf_debito_total_locacao.getText());
             Moeda moeda = new Moeda();
             Double total_a_pagar;
-            total_a_pagar = (moeda.getPrecoFormato(AtendimentoLocacao.jtf_valor_total_locacao.getText()) + moeda.getPrecoFormato(AtendimentoLocacao.jtf_debito_total_locacao.getText()));            
+            total_a_pagar = (moeda.getPrecoFormato(AtendimentoLocacao.jtf_valor_total_locacao.getText()) + moeda.getPrecoFormato(AtendimentoLocacao.jtf_debito_total_locacao.getText()));
             jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(String.valueOf(total_a_pagar)));
-        }        
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        retornaJanelaPai();
+        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+        File arquivo = new File(nome_arquivo);
+        arquivo.deleteOnExit();
+        arquivo.delete();
+
+        setVisible(false);
+        janelapaiLocacao.setStatusTela(true);
+        janelapaiLocacao.jtf_nome_cliente.requestFocus();
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_valor_total_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_total_locacaoKeyPressed
@@ -485,6 +518,10 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descontoFocusGained
 
     private void jtf_descontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descontoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_salvar.requestFocus();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descontoKeyPressed
 
@@ -502,6 +539,16 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_valor_pagoFocusGained
 
     private void jtf_valor_pagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_pagoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            System.out.println("Campo jtf_desconto == " + jtf_desconto.isEditable());
+            if (jtf_desconto.isEditable() == true) {
+                jtf_desconto.requestFocus();
+            } else {
+                jb_salvar.requestFocus();
+            }
+        }
+        acionarAtalho(evt);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_pagoKeyPressed
 
@@ -518,6 +565,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_trocoFocusGained
 
     private void jtf_trocoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_trocoKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_trocoKeyPressed
 
@@ -542,31 +590,31 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_debito_anteriorKeyReleased
 
     private void jtf_valor_pagoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_pagoFocusLost
-        
+
         if (!jtf_valor_pago.getText().equals("")) {
-            
+
             Moeda moeda = new Moeda();
-            
+
             Double troco;
             Double desconto;
-            Double total_locacao;            
+            Double total_locacao;
             Double valor_pago;
             Double debito_atual;
             Double valor_final;
-            
+
             total_locacao = moeda.getPrecoFormato(jtf_valor_total_locacao.getText());
             desconto = moeda.getPrecoFormato(jtf_desconto.getText());
             valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
             debito_atual = moeda.getPrecoFormato(jtf_debito_anterior.getText());
-            
+
             troco = valor_pago - ((total_locacao + debito_atual) - desconto);
-            
+
             if (troco > 0) {
                 jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
                 jtf_debito_atual.setCaretColor(Color.black);
                 jtf_debito_atual.setText("R$ 0,00");
             } else if (troco < 0) {
-                jtf_troco.setText("R$ 0,00");                
+                jtf_troco.setText("R$ 0,00");
                 jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
                 jtf_debito_atual.setCaretColor(Color.red);
             } else {
@@ -586,6 +634,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jpf_senha.requestFocus();
         }
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_loginKeyPressed
 
@@ -593,6 +642,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             entrar();
         }
+        acionarAtalho(evt);
     }//GEN-LAST:event_jpf_senhaKeyPressed
 
     private void jb_logarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_logarActionPerformed
@@ -603,22 +653,22 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         Moeda moeda = new Moeda();
         if (jtf_desconto.getText().equals("")) {
             jtf_desconto.setText("R$ 0,00");
-        }        
+        }
         jtf_desconto.setText(moeda.setPrecoFormat(String.valueOf(jtf_desconto.getText())));
-        
+
         Double troco;
         Double desconto;
-        Double total_locacao;        
+        Double total_locacao;
         Double valor_pago;
         Double debito_anterior;
-        
+
         total_locacao = moeda.getPrecoFormato(jtf_valor_total_locacao.getText());
         desconto = moeda.getPrecoFormato(jtf_desconto.getText());
         valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
         debito_anterior = moeda.getPrecoFormato(jtf_debito_anterior.getText());
-        
+
         troco = valor_pago - ((total_locacao + debito_anterior) - desconto);
-        
+
         if (troco > 0) {
             jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
             jtf_debito_atual.setCaretColor(Color.black);
@@ -637,16 +687,20 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descontoFocusLost
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            finalizarCaixa();
-        }
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
     private void jb_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelar1ActionPerformed
+        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+        File arquivo = new File(nome_arquivo);
+        arquivo.deleteOnExit();
+        arquivo.delete();
+
         setVisible(false);
         janelapaiLocacao.setStatusTela(true);
-        // TODO add your handling code here:
+        janelapaiLocacao.jtf_nome_cliente.requestFocus();
+// TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1ActionPerformed
 
     private void jtf_valor_total_a_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_total_a_pagarActionPerformed
@@ -678,16 +732,62 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_debito_atualFocusLost
 
     private void jtf_debito_atualKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_atualKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_debito_atualKeyPressed
 
     private void jtf_debito_atualKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_atualKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_debito_atualKeyReleased
-    
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
+
+    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            finalizarCaixa();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void jb_logarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_logarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_logarKeyPressed
+
+    private void jb_imprimirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_imprimirKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            imprimir();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_imprimirKeyPressed
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formFocusGained
+
+    private void jb_cancelar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelar1KeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelar1KeyPressed
+
+    private void jpf_senhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpf_senhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jpf_senhaActionPerformed
+
+    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1KeyPressed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
-            
+
             public void run() {
                 new EntradaCaixa().setVisible(true);
             }
@@ -731,103 +831,188 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         } else {
         }
     }
-    
+
     public void setStatusTela(boolean status) {
         if (status) {
             this.setVisible(status);
         }
         this.setEnabled(status);
     }
-    
+
     private void entrar() {
-        
+
         if (validaLogin()) {
             if (verificaLogin()) {
                 jtf_login.setText(acesso.getUsuario().getLogin());
+                jb_salvar.setEnabled(true);
                 if (acesso.getEscrever() == 0) {
-                    
-                    jtf_desconto.setEditable(true);
                     jtf_valor_pago.setEditable(true);
-                    jtf_desconto.requestFocus();
+                    jtf_valor_pago.setEnabled(true);
+                    jtf_desconto.setEditable(true);
+                    jtf_desconto.setEnabled(true);
+                    jtf_valor_pago.requestFocus();
                 } else {
                     jtf_desconto.setText("R$ 0,00");
+                    jtf_desconto.setEditable(false);
+                    jtf_desconto.setEnabled(false);
                     jtf_valor_pago.setEditable(true);
+                    jtf_valor_pago.setEnabled(true);
                     jtf_valor_pago.requestFocus();
                 }
                 ///Faz alguma coisa interessante
             } else {
                 jpf_senha.requestFocus();
                 jpf_senha.setText("");
+                jtf_login.setText("");
+                jtf_desconto.setText("R$ 0,00");
+                jtf_valor_pago.setText("R$ 0,00");
+                jtf_desconto.setEditable(false);
+                jtf_desconto.setEnabled(false);
+                jtf_valor_pago.setEditable(false);
+                jtf_valor_pago.setEnabled(false);
+                jb_salvar.setEnabled(false);
             }
         }
+
     }
-    
+
     private boolean validaLogin() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
-        
+
         if (jpf_senha.getPassword().equals("")) {
             msgERRO = msgERRO + " *Senha\n";
         }
-        
+
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
             return false;
         } else {
             return true;
         }
-        
+
     }
-    
+
     public List<Usuario> usuarios;
     public static AcessoUsuario acesso;
-    
+
     public boolean verificaLogin() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), "br.com.locadora.view.EntradaCaixa");
+        try {
+            //verifica a senha
+            char[] senha = jpf_senha.getPassword();
+            char[] senhaDoBanco = acesso.getUsuario().getSenha().toCharArray();
 
-        //verifica a senha
-        char[] senha = jpf_senha.getPassword();
-        char[] senhaDoBanco = acesso.getUsuario().getSenha().toCharArray();
-
-        // verifica o tamanho da senha
-        if (senha.length != senhaDoBanco.length) {
-            JOptionPane.showMessageDialog(null, "Senha incorreta");
-            return false; // se for diferente, retorna falso
-        } else {
-            for (int i = 0; i < senha.length; i++) {
-                if (senha[i] != senhaDoBanco[i]) {
-                    JOptionPane.showMessageDialog(null, "Senha incorreta");
-                    return false; // se for diferente, retorna falso
+            // verifica o tamanho da senha
+            if (senha.length != senhaDoBanco.length) {
+                JOptionPane.showMessageDialog(null, "Senha incorreta");
+                return false; // se for diferente, retorna falso
+            } else {
+                for (int i = 0; i < senha.length; i++) {
+                    if (senha[i] != senhaDoBanco[i]) {
+                        JOptionPane.showMessageDialog(null, "Senha incorreta");
+                        return false; // se for diferente, retorna falso
+                    }
                 }
             }
+
+            return true;
+
+        } catch (Exception e) {
+            System.out.println("Senha incorreta na Entrada de Caixa");
+            return false;
         }
-        
-        return true;
+
+//        return true;
     }
 
     public void finalizarCaixa() {
-        if (janelapaiLocacao != null) {
-            
-            controller = new SiscomController();
-            controller.processarRequisicao("cadastrarLocacao");
-            
-            jb_salvar.setEnabled(false);
-            jb_imprimir.setEnabled(true);
-            
-            DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
-            int rows = tb_locacao.getRowCount();
-            for (int i = rows - 1; i >= 0; i--) {
-                tb_locacao.removeRow(i);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+
+        //Envia a gravação da locação e envia o lancamento de caixa
+        if (!conf.readPropertie("caixa").equals("")) {
+            if (jb_logar.isEnabled() == true) {
+                if (validaLogin()) {
+                    if (verificaLogin()) {
+                        if (janelapaiLocacao != null) {
+
+                            itens = new ArrayList<ItemLocacao>();
+                            controller = new SiscomController();
+                            controller.processarRequisicao("cadastrarLocacao");
+
+                            jpf_senha.setEnabled(false);
+                            jb_logar.setEnabled(false);
+                            jtf_valor_pago.setEnabled(false);
+                            jtf_desconto.setEnabled(false);
+                            jb_salvar.setEnabled(false);
+                            jb_imprimir.setEnabled(true);
+                            jb_imprimir.requestFocus();
+
+                            DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
+                            int rows = tb_locacao.getRowCount();
+                            for (int i = rows - 1; i >= 0; i--) {
+                                tb_locacao.removeRow(i);
+                            }
+                            AtendimentoLocacao.jtf_codigo_cliente.setText("");
+                            AtendimentoLocacao.jtf_nome_cliente.setText("");
+
+                            AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
+                            AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
+
+                        }
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Atendimento finalizado");
             }
-            AtendimentoLocacao.jtf_codigo_cliente.setText("");
-            AtendimentoLocacao.jtf_nome_cliente.setText("");
-            
-            AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
-            AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
-            
-        }        
-        
+        } else {
+            JOptionPane.showMessageDialog(null, "Caixa padrão não definido. Favor verificar");
+        }
     }
-    
+
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            finalizarCaixa();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+            String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+            File arquivo = new File(nome_arquivo);
+            arquivo.deleteOnExit();
+            arquivo.delete();
+
+            setVisible(false);
+            janelapaiLocacao.setStatusTela(true);
+            janelapaiLocacao.jtf_nome_cliente.requestFocus();
+
+        }
+    }
+
+    public void imprimir() {
+        try {
+            //Pegar usuario logado na tela do caixa
+            Usuario usuario = acesso.getUsuario();
+            Printer imprimir = new Printer();
+            imprimir.comprovanteLocacao(itens, AtendimentoLocacao.dependente, usuario);
+            String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+            if (imprimir.imprimirArquivo(nome_arquivo)) {
+                //Desabilita para não haver mais alteração
+                jtf_valor_pago.setEditable(false);
+                jtf_desconto.setEditable(false);
+
+                setVisible(false);
+                janelapaiLocacao.setStatusTela(true);
+                janelapaiLocacao.jtf_nome_cliente.requestFocus();
+
+                File arquivo = new File(nome_arquivo);
+                arquivo.deleteOnExit();
+                arquivo.delete();
+            }
+
+        } catch (PrintException e) {
+            JOptionPane.showMessageDialog(null, "Problema encontrado com impressora padrão.");
+        }
+    }
 }

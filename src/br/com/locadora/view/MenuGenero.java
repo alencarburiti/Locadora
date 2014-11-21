@@ -52,14 +52,6 @@ public class MenuGenero extends javax.swing.JFrame {
     DefaultTableModel tmDestino = new DefaultTableModel(null, new String[]{"Código", "Descrição"});
     ListSelectionModel lsmDestino;
 
-//    public void setTela(String permissao) {
-//        if (permissao.equals("usuario")) {
-//            jb_novo.setEnabled(false);
-//            jb_alterar.setEnabled(false);
-//            jb_excluir.setEnabled(false);
-//        } else {
-//        }
-//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -291,26 +283,27 @@ public class MenuGenero extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        jtf_consulta.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            listarGenero();
-            jtbl_genero.addRowSelectionInterval(0, 0);
+            buscarDados();
         }
+        acionarAtalho(evt);
 
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_generoKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Genero generoTb = tbGeneroLinhaSelecionada(jtbl_genero);
-            if (generoTb != null) {
-                AtualizaGenero generoAltera = new AtualizaGenero(generoTb);
-                generoAltera.janelapai = this;
-                generoAltera.setVisible(true);
-            }
-
+            alterar();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            excluirGenero();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
         }
     }//GEN-LAST:event_jtbl_generoKeyPressed
     /**
@@ -435,6 +428,13 @@ public class MenuGenero extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+    }
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
         }
     }
 }

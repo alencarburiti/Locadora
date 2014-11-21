@@ -16,6 +16,7 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.UnaccentedDocument;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -26,6 +27,7 @@ import javax.swing.JOptionPane;
 public class CadastroDiaria extends javax.swing.JFrame {
 
     public MenuDiaria janelapai;
+    public ConsultaDiariaObjeto janelapaiConsulta;
     public List<Diaria> generos;
     AcessoUsuario acesso;
 
@@ -106,6 +108,11 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
         jtf_nome_diaria.setText("Catálogo");
         jtf_nome_diaria.setName("jtf_nome_diaria"); // NOI18N
+        jtf_nome_diaria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_diariaKeyPressed(evt);
+            }
+        });
         getContentPane().add(jtf_nome_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 280, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -167,89 +174,92 @@ public class CadastroDiaria extends javax.swing.JFrame {
         jLabel6.setName("jLabel6"); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
 
-        jtf_nome_diaria.setDocument(new UnaccentedDocument());
-        jtf_dias.setText("1");
-        jtf_dias.setName("jtf_dias"); // NOI18N
-        jtf_dias.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_diasFocusGained(evt);
-            }
-        });
-        jtf_dias.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_diasKeyPressed(evt);
-            }
-        });
-        getContentPane().add(jtf_dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, 90, -1));
+        jtf_dias.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
+            public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
+                jtf_dias.setText(jtf_dias.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
+            }   });
+            jtf_dias.setText("1");
+            jtf_dias.setName("jtf_dias"); // NOI18N
+            jtf_dias.addFocusListener(new java.awt.event.FocusAdapter() {
+                public void focusGained(java.awt.event.FocusEvent evt) {
+                    jtf_diasFocusGained(evt);
+                }
+            });
+            jtf_dias.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyPressed(java.awt.event.KeyEvent evt) {
+                    jtf_diasKeyPressed(evt);
+                }
+            });
+            getContentPane().add(jtf_dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, 90, -1));
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel7.setText("Multas");
-        jLabel7.setName("jLabel7"); // NOI18N
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, -1, -1));
+            jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+            jLabel7.setText("Multas");
+            jLabel7.setName("jLabel7"); // NOI18N
+            getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, -1, -1));
 
-        jtf_nome_diaria.setDocument(new UnaccentedDocument());
-        jtf_multa.setText("R$ 0,50");
-        jtf_multa.setName("jtf_multa"); // NOI18N
-        jtf_multa.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_multaFocusGained(evt);
-            }
-        });
-        jtf_multa.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_multaKeyPressed(evt);
-            }
-        });
-        getContentPane().add(jtf_multa, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 90, -1));
+            jtf_nome_diaria.setDocument(new UnaccentedDocument());
+            jtf_multa.setText("R$ 0,50");
+            jtf_multa.setName("jtf_multa"); // NOI18N
+            jtf_multa.addFocusListener(new java.awt.event.FocusAdapter() {
+                public void focusGained(java.awt.event.FocusEvent evt) {
+                    jtf_multaFocusGained(evt);
+                }
+            });
+            jtf_multa.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyPressed(java.awt.event.KeyEvent evt) {
+                    jtf_multaKeyPressed(evt);
+                }
+            });
+            getContentPane().add(jtf_multa, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 90, -1));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias de Promoção"));
-        jPanel1.setName("jPanel1"); // NOI18N
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias de Promoção"));
+            jPanel1.setName("jPanel1"); // NOI18N
 
-        jCheckBox1.setSelected(true);
-        jCheckBox1.setText("Domingo");
-        jCheckBox1.setName("jCheckBox1"); // NOI18N
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jCheckBox1);
+            jCheckBox1.setSelected(true);
+            jCheckBox1.setText("Domingo");
+            jCheckBox1.setName("jCheckBox1"); // NOI18N
+            jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jCheckBox1ActionPerformed(evt);
+                }
+            });
+            jPanel1.add(jCheckBox1);
 
-        jCheckBox3.setSelected(true);
-        jCheckBox3.setText("Segunda");
-        jCheckBox3.setName("jCheckBox3"); // NOI18N
-        jPanel1.add(jCheckBox3);
+            jCheckBox3.setSelected(true);
+            jCheckBox3.setText("Segunda");
+            jCheckBox3.setName("jCheckBox3"); // NOI18N
+            jPanel1.add(jCheckBox3);
 
-        jCheckBox4.setSelected(true);
-        jCheckBox4.setText("Terça");
-        jCheckBox4.setName("jCheckBox4"); // NOI18N
-        jPanel1.add(jCheckBox4);
+            jCheckBox4.setSelected(true);
+            jCheckBox4.setText("Terça");
+            jCheckBox4.setName("jCheckBox4"); // NOI18N
+            jPanel1.add(jCheckBox4);
 
-        jCheckBox5.setSelected(true);
-        jCheckBox5.setText("Quarta");
-        jCheckBox5.setName("jCheckBox5"); // NOI18N
-        jPanel1.add(jCheckBox5);
+            jCheckBox5.setSelected(true);
+            jCheckBox5.setText("Quarta");
+            jCheckBox5.setName("jCheckBox5"); // NOI18N
+            jPanel1.add(jCheckBox5);
 
-        jCheckBox6.setSelected(true);
-        jCheckBox6.setText("Quinta");
-        jCheckBox6.setName("jCheckBox6"); // NOI18N
-        jPanel1.add(jCheckBox6);
+            jCheckBox6.setSelected(true);
+            jCheckBox6.setText("Quinta");
+            jCheckBox6.setName("jCheckBox6"); // NOI18N
+            jPanel1.add(jCheckBox6);
 
-        jCheckBox7.setSelected(true);
-        jCheckBox7.setText("Sexta");
-        jCheckBox7.setName("jCheckBox7"); // NOI18N
-        jPanel1.add(jCheckBox7);
+            jCheckBox7.setSelected(true);
+            jCheckBox7.setText("Sexta");
+            jCheckBox7.setName("jCheckBox7"); // NOI18N
+            jPanel1.add(jCheckBox7);
 
-        jCheckBox8.setSelected(true);
-        jCheckBox8.setText("Sábado");
-        jCheckBox8.setName("jCheckBox8"); // NOI18N
-        jPanel1.add(jCheckBox8);
+            jCheckBox8.setSelected(true);
+            jCheckBox8.setText("Sábado");
+            jCheckBox8.setName("jCheckBox8"); // NOI18N
+            jPanel1.add(jCheckBox8);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 380, 90));
+            getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 380, 90));
 
-        setSize(new java.awt.Dimension(429, 334));
-        setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+            setSize(new java.awt.Dimension(429, 334));
+            setLocationRelativeTo(null);
+        }// </editor-fold>//GEN-END:initComponents
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
         enviaDados();
@@ -275,6 +285,10 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_valorFocusGained
 
     private void jtf_valorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valorKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_valor_promocao.requestFocus();
+        }
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valorKeyPressed
 
@@ -283,6 +297,10 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_valor_promocaoFocusGained
 
     private void jtf_valor_promocaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_promocaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_dias.requestFocus();
+        }
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_promocaoKeyPressed
 
@@ -291,6 +309,10 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_diasFocusGained
 
     private void jtf_diasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_diasKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_multa.requestFocus();
+        }
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_diasKeyPressed
 
@@ -299,12 +321,24 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_multaFocusGained
 
     private void jtf_multaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_multaKeyPressed
-        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_salvar.requestFocus();
+        }
+        acionarAtalho(evt);
+// TODO add your handling code here:
     }//GEN-LAST:event_jtf_multaKeyPressed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jtf_nome_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_diariaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_valor.requestFocus();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_diariaKeyPressed
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -347,6 +381,11 @@ public class CadastroDiaria extends javax.swing.JFrame {
             janelapai.setVisible(true);
             janelapai.request();
         }
+        if (janelapaiConsulta != null) {
+            janelapaiConsulta.setEnabled(true);
+            janelapaiConsulta.setVisible(true);
+
+        }
 
     }
 
@@ -378,6 +417,16 @@ public class CadastroDiaria extends javax.swing.JFrame {
             return false;
         } else {
             return true;
+        }
+    }
+
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            enviaDados();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
         }
     }
 

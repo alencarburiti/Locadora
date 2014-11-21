@@ -12,10 +12,13 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DependenteDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -41,6 +44,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     public Recebimento janelapaiRecebimento;
     public List<Cliente> clientes;
     public List<Dependente> dependentes;
+    public AcessoUsuario acesso;
 
     public ConsultaClienteAtendimento() {
         initComponents();
@@ -67,6 +71,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         jb_buscar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_cliente = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Cliente");
@@ -94,7 +99,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, 110, 40));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 110, 40));
 
         jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_ok.setText("OK");
@@ -104,7 +109,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_okActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, 80, 40));
+        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, 80, 40));
 
         jb_novo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
         jb_novo1.setText("Novo");
@@ -114,7 +119,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jb_novo1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 110, 40));
+        getContentPane().add(jb_novo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 110, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Cliente/Dependente"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -160,7 +165,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                         java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, true, false, false, false
+                        false, false, false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -194,9 +199,13 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
                 jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 710, 210));
 
-                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 730, 280));
+                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 730, 280));
 
-                setSize(new java.awt.Dimension(751, 367));
+                jLabel1.setText("F5 - Nova pesquisa: F10 - Finalizar: Esc - Sair:");
+                jLabel1.setName("jLabel1"); // NOI18N
+                getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
+
+                setSize(new java.awt.Dimension(775, 408));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -240,17 +249,34 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
         if ((janelapaiLocacao != null)) {
-            janelapaiLocacao.setStatusTela(true);         
-        }else if ((janelapaiDevolucao != null)) {
-            janelapaiDevolucao.setStatusTela(true);         
-        }else if ((janelapaiRecebimento != null)) {
-            janelapaiRecebimento.setStatusTela(true);         
+            janelapaiLocacao.setStatusTela(true);
+        } else if ((janelapaiDevolucao != null)) {
+            janelapaiDevolucao.setStatusTela(true);
+        } else if ((janelapaiRecebimento != null)) {
+            janelapaiRecebimento.setStatusTela(true);
         }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_novo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novo1ActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
+        try {
+            if (acesso.getEscrever() == 0) {
+                CadastroCliente cadastroCliente = new CadastroCliente();
+                cadastroCliente.janelapai2 = this;
+                cadastroCliente.setVisible(true);
+                setStatusTela(false);
+                cadastroCliente.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
 }//GEN-LAST:event_jb_novo1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -292,10 +318,19 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             botaoOK(jtbl_cliente);
         }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
+        }
     }//GEN-LAST:event_jtbl_clienteKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            botaoOK(jtbl_cliente);
+        }
+        
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
             if ((janelapaiLocacao != null)) {
@@ -321,6 +356,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_buscar;
@@ -400,4 +436,10 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         }
     }
 
+    public void setStatusTela(boolean status) {
+        if (status) {
+            this.setVisible(status);
+        }
+        this.setEnabled(status);
+    }
 }

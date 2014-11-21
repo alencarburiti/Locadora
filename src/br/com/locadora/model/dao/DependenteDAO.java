@@ -304,7 +304,12 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             dependente.setData_nascimento(rs.getDate("DATA_NASCIMENTO"));
             dependente.setParentesco(rs.getString("PARENTESCO"));
             dependente.setTelefone(rs.getString("TELEFONE"));
-
+            dependente.setCPF(rs.getString("CPF"));
+            if(rs.getInt("DEL_FLAG")==0){
+                dependente.setStatus(true);                
+            } else {
+                dependente.setStatus(false);                
+            }
             Cliente cliente = new Cliente();
             cliente.setCodigo_cliente(rs.getInt("CLIENTE_CODIGO_CLIENTE"));
 

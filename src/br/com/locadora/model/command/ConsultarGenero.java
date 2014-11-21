@@ -25,25 +25,21 @@ public class ConsultarGenero implements InterfaceCommand {
 
     public String execute() {
         try {
-            if (MenuGenero.jtf_consulta.getText().equals("")) {
+            if (MenuGenero.jrb_codigo.isSelected() == true) {
+                genero = null;
+                genero = generoDAO.getGenero_codigo(Integer.parseInt(MenuGenero.jtf_consulta.getText().trim()));
 
-                if (MenuGenero.jrb_codigo.isSelected() == true) {
-                    genero = null;
-                    genero = generoDAO.getGenero_codigo(Integer.parseInt(MenuGenero.jtf_consulta.getText().trim()));
+                mostrar_Genero(genero);
 
-                    mostrar_Genero(genero);
+            } else if (MenuGenero.jrb_descricao.isSelected() == true) {
 
-                } else {
-                    generos = null;
+                generos = null;
 
-                    generos = generoDAO.getGenero_nome(MenuGenero.jtf_consulta.getText().trim());
+                generos = generoDAO.getGenero_nome(MenuGenero.jtf_consulta.getText().trim());
 
-                    mostrar_Generos(generos);
-                }
-            } else {
-
-                JOptionPane.showMessageDialog(null, "Informe um parâmentro");
+                mostrar_Generos(generos);
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -51,7 +47,7 @@ public class ConsultarGenero implements InterfaceCommand {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Informe um parâmentro válido");
         }
-        
+
         return "OK";
     }
 
@@ -75,6 +71,9 @@ public class ConsultarGenero implements InterfaceCommand {
                 row.addRow(new Object[]{genero.getCodigo_genero(), hashDbGrid});
             }
             MenuGenero.generos = generos;
+
+            MenuGenero.jtbl_genero.requestFocus();
+            MenuGenero.jtbl_genero.setSelectionMode(1);
         }
 
     }
@@ -90,7 +89,8 @@ public class ConsultarGenero implements InterfaceCommand {
             DefaultTableModel row = (DefaultTableModel) MenuGenero.jtbl_genero.getModel();
             ItemDbGrid hashDbGrid = new ItemDbGrid(genero, genero.getNome_genero());
             row.addRow(new Object[]{genero.getCodigo_genero(), hashDbGrid});
-
+            MenuGenero.jtbl_genero.requestFocus();
+            MenuGenero.jtbl_genero.setSelectionMode(1);
         }
     }
 

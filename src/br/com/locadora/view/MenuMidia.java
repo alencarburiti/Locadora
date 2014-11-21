@@ -279,15 +279,14 @@ public class MenuMidia extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_diariaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Diaria desti = tbDiariaLinhaSelecionada(jtbl_diaria);
-            if (desti != null) {
-                AtualizaDiaria diariaAltera = new AtualizaDiaria(desti);
-//                diariaAltera.janelapai = this;
-                diariaAltera.setVisible(true);
-            }
-
+            alterar();
         }
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            
+        }
+        
     }//GEN-LAST:event_jtbl_diariaKeyPressed
     /**
      * @param args the command line arguments
@@ -356,5 +355,14 @@ public class MenuMidia extends javax.swing.JFrame {
     public void excluiDiaria() {
         removeDiaria(jtbl_diaria);
     }
+public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
+        }
+    }
 }

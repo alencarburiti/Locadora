@@ -2,17 +2,12 @@ package br.com.locadora.model.command;
 
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Devolucao;
-import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.model.dao.InterfaceLocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.view.MenuCliente;
-import static br.com.locadora.view.MenuCliente.jtf_consulta;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class ConsultarDevolucao implements InterfaceCommand {

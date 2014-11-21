@@ -77,9 +77,12 @@ public class ConsultarDiaria implements InterfaceCommand {
 
                 DefaultTableModel row = (DefaultTableModel) MenuDiaria.jtbl_diaria.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
-                row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, valor,  diaria.getDias(), multa});
+                row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, valor, diaria.getDias(), multa});
             }
             MenuDiaria.diarias = diarias;
+
+            MenuDiaria.jtbl_diaria.requestFocus();
+            MenuDiaria.jtbl_diaria.setSelectionMode(1);
         }
     }
 
@@ -107,8 +110,12 @@ public class ConsultarDiaria implements InterfaceCommand {
             DefaultTableModel row = (DefaultTableModel) MenuDiaria.jtbl_diaria.getModel();
             ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
             row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, diaria.getDias(), valor, valor_promocao, multa});
+            diarias.add(diaria);
         }
         MenuDiaria.diarias = diarias;
+
+        MenuDiaria.jtbl_diaria.requestFocus();
+        MenuDiaria.jtbl_diaria.setSelectionMode(1);
     }
 
 }

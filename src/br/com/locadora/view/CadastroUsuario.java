@@ -59,7 +59,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jtf_login = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jtf_nome = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jtf_nome = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -121,7 +121,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jLabel1.setName("jLabel1"); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
-        jtf_login.setDocument(new UnaccentedDocument());
         jtf_login.setName("jtf_login"); // NOI18N
         jtf_login.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -148,7 +147,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jLabel4.setName("jLabel4"); // NOI18N
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, -1));
 
-        jtf_nome.setDocument(new UnaccentedDocument());
         jtf_nome.setName("jtf_nome"); // NOI18N
         jtf_nome.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -198,14 +196,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
-        jpf_senha.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent evt) {
-                if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                    String s = jpf_senha.getText();
-                    jpf_senha.setText(s.toUpperCase());
-                }
-            }
-        });
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             verificaCadastro();
             janelapai.listarUsuário();
@@ -274,26 +264,12 @@ public class CadastroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jpf_senhaFocusGained
 
 private void jtf_nomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nomeKeyPressed
-    jtf_nome.addKeyListener(new KeyAdapter() {
-        public void keyReleased(KeyEvent evt) {
-            if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                String s = jtf_nome.getText();
-                jtf_nome.setText(s.toUpperCase());
-            }
-        }
-    });
+
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_nomeKeyPressed
 
 private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_loginKeyPressed
-    jtf_login.addKeyListener(new KeyAdapter() {
-        public void keyReleased(KeyEvent evt) {
-            if (evt.getKeyCode() != KeyEvent.VK_HOME) {
-                String s = jtf_login.getText();
-                jtf_login.setText(s.toUpperCase());
-            }
-        }
-    });
+
 
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_loginKeyPressed

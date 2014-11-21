@@ -16,6 +16,7 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.ItemDbGrid;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,7 +24,6 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,11 +32,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MenuUsuario extends javax.swing.JFrame {
 
-    String tipoCadastro;
-    List<Usuario> usuarios;
+    public String tipoCadastro;
+    public List<Usuario> usuarios;
     public TelaPrincipal janelapai;
     public InterfacePool pool;
-    AcessoUsuario acesso;
+    public AcessoUsuario acesso;
 
     /**
      * Creates new form Cad_Usuário
@@ -45,8 +45,6 @@ public class MenuUsuario extends javax.swing.JFrame {
         initComponents();
         listarUsuário();
     }
-    DefaultTableModel tmUsuario = new DefaultTableModel(null, new String[]{"Código", "Nome", "Login", "Permissão"});
-    ListSelectionModel lsmUsuario;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,21 +61,10 @@ public class MenuUsuario extends javax.swing.JFrame {
         popupMenu1 = new java.awt.PopupMenu();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbl_usuario = new javax.swing.JTable();
-        jtbl_usuario.setModel(tmUsuario);
-        jtbl_usuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lsmUsuario = jtbl_usuario.getSelectionModel();
-        /*
-        lsmUsuario.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e){
-                if (! e.getValueIsAdjusting()){
-                    tbUsuarioLinhaSelecionada(jtbl_usuario);
-                }
-            }
-        });*/
         jPanel3 = new javax.swing.JPanel();
         jrb_codigo = new javax.swing.JRadioButton();
-        jrb_descricao = new javax.swing.JRadioButton();
-        jrb_detalhamento = new javax.swing.JRadioButton();
+        jrb_nome = new javax.swing.JRadioButton();
+        jrb_login = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jtf_pesquisar_usuario = new javax.swing.JTextField();
@@ -119,7 +106,29 @@ public class MenuUsuario extends javax.swing.JFrame {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jtbl_usuario.setModel(tmUsuario);
+        jtbl_usuario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome Usuário", "Login"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jtbl_usuario.setUpdateSelectionOnSort(false);
 
         jtbl_usuario.setVerifyInputWhenFocusTarget(false);
@@ -132,6 +141,14 @@ public class MenuUsuario extends javax.swing.JFrame {
                 jtbl_usuario.setName("jtbl_usuario"); // NOI18N
                 jtbl_usuario.getTableHeader().setReorderingAllowed(false);
                 jScrollPane2.setViewportView(jtbl_usuario);
+                if (jtbl_usuario.getColumnModel().getColumnCount() > 0) {
+                    jtbl_usuario.getColumnModel().getColumn(0).setResizable(false);
+                    jtbl_usuario.getColumnModel().getColumn(0).setPreferredWidth(10);
+                    jtbl_usuario.getColumnModel().getColumn(1).setResizable(false);
+                    jtbl_usuario.getColumnModel().getColumn(1).setPreferredWidth(130);
+                    jtbl_usuario.getColumnModel().getColumn(2).setResizable(false);
+                    jtbl_usuario.getColumnModel().getColumn(2).setPreferredWidth(50);
+                }
 
                 getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 184, 530, 180));
 
@@ -145,18 +162,18 @@ public class MenuUsuario extends javax.swing.JFrame {
                 jrb_codigo.setName("jrb_codigo"); // NOI18N
                 jPanel3.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
 
-                buttonGroup1.add(jrb_descricao);
-                jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_descricao.setSelected(true);
-                jrb_descricao.setText("Nome");
-                jrb_descricao.setName("jrb_descricao"); // NOI18N
-                jPanel3.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+                buttonGroup1.add(jrb_nome);
+                jrb_nome.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_nome.setSelected(true);
+                jrb_nome.setText("Nome");
+                jrb_nome.setName("jrb_nome"); // NOI18N
+                jPanel3.add(jrb_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-                buttonGroup1.add(jrb_detalhamento);
-                jrb_detalhamento.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_detalhamento.setText("Login");
-                jrb_detalhamento.setName("jrb_detalhamento"); // NOI18N
-                jPanel3.add(jrb_detalhamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
+                buttonGroup1.add(jrb_login);
+                jrb_login.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_login.setText("Login");
+                jrb_login.setName("jrb_login"); // NOI18N
+                jPanel3.add(jrb_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
                 jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jLabel1.setText("Parâmetro");
@@ -230,18 +247,6 @@ public class MenuUsuario extends javax.swing.JFrame {
 
         jtf_pesquisar_usuario.requestFocus();
         // TODO add your handling code here:
-
-        jtbl_usuario.getColumnModel().getColumn(0).setMaxWidth(70);
-        jtbl_usuario.getColumnModel().getColumn(0).setMinWidth(70);
-        jtbl_usuario.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(70);
-        jtbl_usuario.getTableHeader().getColumnModel().getColumn(0).setMinWidth(70);
-
-        jtbl_usuario.getColumnModel().getColumn(1).setMaxWidth(350);
-        jtbl_usuario.getColumnModel().getColumn(1).setMinWidth(350);
-        jtbl_usuario.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(350);
-        jtbl_usuario.getTableHeader().getColumnModel().getColumn(1).setMinWidth(350);
-
-
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
@@ -291,9 +296,9 @@ public class MenuUsuario extends javax.swing.JFrame {
         if (jrb_codigo.isSelected() == true) {
             listarUsuárioCodigo();
 
-        } else if (jrb_descricao.isSelected() == true) {
+        } else if (jrb_nome.isSelected() == true) {
             listarUsuárioDescrição();
-        } else if (jrb_detalhamento.isSelected() == true) {
+        } else if (jrb_login.isSelected() == true) {
             listarUsuário();
         } else {
             listarUsuário();
@@ -316,9 +321,9 @@ public class MenuUsuario extends javax.swing.JFrame {
             if (jrb_codigo.isSelected() == true) {
                 listarUsuárioCodigo();
 
-            } else if (jrb_descricao.isSelected() == true) {
+            } else if (jrb_nome.isSelected() == true) {
                 listarUsuárioDescrição();
-            } else if (jrb_detalhamento.isSelected() == true) {
+            } else if (jrb_login.isSelected() == true) {
                 listarUsuário();
             } else {
                 listarUsuário();
@@ -353,8 +358,8 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jb_novo;
     private javax.swing.JButton jb_sair;
     private javax.swing.JRadioButton jrb_codigo;
-    private javax.swing.JRadioButton jrb_descricao;
-    private javax.swing.JRadioButton jrb_detalhamento;
+    private javax.swing.JRadioButton jrb_login;
+    private javax.swing.JRadioButton jrb_nome;
     private javax.swing.JTable jtbl_usuario;
     private javax.swing.JTextField jtf_pesquisar_usuario;
     private java.awt.PopupMenu popupMenu1;
@@ -392,25 +397,20 @@ public class MenuUsuario extends javax.swing.JFrame {
     }
 
     public void mostraUsuarios(List<Usuario> usuarios) {
-        while (tmUsuario.getRowCount() > 0) {
-            tmUsuario.removeRow(0);
+        while (jtbl_usuario.getRowCount() > 0) {
+            jtbl_usuario.remove(0);
         }
 
         if (usuarios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhum usuário encontrado");
 
         } else {
-
-            String[] campos = new String[]{null, null};
+            
             for (int i = 0; i < usuarios.size(); i++) {
 
-                tmUsuario.addRow(campos);
-
-                tmUsuario.setValueAt(usuarios.get(i).getCodigo_usuario(), i, 0);
-                tmUsuario.setValueAt(usuarios.get(i).getNome_usuario(), i, 1);
-                tmUsuario.setValueAt(usuarios.get(i).getLogin(), i, 2);
-                tmUsuario.setValueAt(usuarios.get(i).getPermissao(), i, 3);
-
+                DefaultTableModel row = (DefaultTableModel) jtbl_usuario.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(usuarios.get(i), usuarios.get(i).getNome_usuario());
+                row.addRow(new Object[]{usuarios.get(i).getCodigo_usuario(), hashDbGrid, usuarios.get(i).getLogin()});
             }
         }
 

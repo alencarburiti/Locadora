@@ -37,8 +37,8 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
     private String cadastraUsuario = "INSERT INTO usuario (NOME_USUARIO, LOGIN, SENHA,TIPO_USUARIO)VALUES(?,?,?,?)";
     //comando sql para consultar pelo nome
     private String consultaUsuarioNome = "SELECT * FROM USUARIO WHERE NOME_USUARIO LIKE ? ORDER BY NOME_USUARIO";
-    private String consultaUsuarioDescricao = "SELECT * FROM USUARIO WHERE (NOME_USUARIO = ?) ORDER BY NOME_USUARIO";
-    private String consultaUsuarioDescricao1 = "SELECT * FROM USUARIO WHERE (NOME_USUARIO = ?) OR (LOGIN = ?) ORDER BY NOME_USUARIO";
+    private String consultaUsuarioDescricao = "SELECT * FROM USUARIO WHERE (NOME_USUARIO LIKE ?) ORDER BY NOME_USUARIO";
+    private String consultaUsuarioDescricao1 = "SELECT * FROM USUARIO WHERE (LOGIN LIKE ?) ORDER BY NOME_USUARIO";
     private String consultaUsuarioCodigo = "SELECT * FROM USUARIO WHERE CODIGO_USUARIO = ? ORDER BY NOME_USUARIO";
     private String consultaUsuarioLogin = "SELECT * FROM USUARIO WHERE LOGIN = ?";
     // comando sql para alterar dados da tabela aluno
@@ -103,7 +103,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         List<Usuario> resultado = new ArrayList<Usuario>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM USUARIO WHERE NOME_USUARIO = ?;";
+        String sqlSelect = "SELECT * FROM USUARIO WHERE NOME_USUARIO LIKE ?;";
         ResultSet rs = null;
 
         try {
@@ -248,7 +248,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } finally {
             pool.liberarConnection(con);
 
@@ -264,7 +264,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Conexao conexao = new Conexao();
 
             String sqlSelect = "SELECT \n"
-                    + "    A.CODIGO_USUARIO, A.LOGIN, A.SENHA, B.LER, B.ESCREVER, B.DELETAR\n"
+                    + "    A.CODIGO_USUARIO, A.NOME_USUARIO, A.LOGIN, A.SENHA, B.LER, B.ESCREVER, B.DELETAR\n"
                     + "FROM\n"
                     + "    USUARIO A,\n"
                     + "    ACESSO B,\n"
@@ -286,6 +286,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             usuario = new Usuario();
 
             usuario.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
+            usuario.setNome_usuario(rs.getString("NOME_USUARIO"));
             usuario.setLogin(rs.getString("LOGIN"));
             usuario.setSenha(rs.getString("SENHA"));
 
@@ -300,7 +301,9 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             conexao.desconecta();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Senha incorreta");
+                    
         }
         return acesso;
     }

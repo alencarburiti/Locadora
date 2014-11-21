@@ -262,7 +262,7 @@ public class MenuDiaria extends javax.swing.JFrame {
         alterar();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_alterarActionPerformed
-    
+
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
         excluirDiaria();
         // TODO add your handling code here:
@@ -284,26 +284,29 @@ public class MenuDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtbl_diaria.addRowSelectionInterval(0, 0);
+            enviaDados();
         }
+        acionarAtalho(evt);
+
 
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_diariaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Diaria desti = tbDiariaLinhaSelecionada(jtbl_diaria);
-            if (desti != null) {
-                AtualizaDiaria diariaAltera = new AtualizaDiaria(desti);
-                diariaAltera.janelapai = this;
-                diariaAltera.setVisible(true);
-            }
-
+            alterar();
+        }        
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            excluirDiaria();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
         }
     }//GEN-LAST:event_jtbl_diariaKeyPressed
     /**
@@ -333,18 +336,20 @@ public class MenuDiaria extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
-    private void enviaDados() {
+    public void enviaDados() {
         controller = new SiscomController();
         controller.processarRequisicao("consultarDiaria");
     }
 
     public Diaria tbDiariaLinhaSelecionada(JTable tb) {
-        
+
         if (tb.getSelectedRow() != -1) {
             diaria = new Diaria();
             diaria.setCodigo_diaria(diarias.get(tb.getSelectedRow()).getCodigo_diaria());
             diaria.setNome_diaria(diarias.get(tb.getSelectedRow()).getNome_diaria());
-
+            diaria.setDias(diarias.get(tb.getSelectedRow()).getDias());
+            diaria.setValor(diarias.get(tb.getSelectedRow()).getValor());
+            diaria.setMultas(diarias.get(tb.getSelectedRow()).getMultas());
         } else {
             diaria = null;
         }
@@ -356,7 +361,6 @@ public class MenuDiaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    
     private void excluirDiaria() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
@@ -399,6 +403,7 @@ public class MenuDiaria extends javax.swing.JFrame {
         }
         this.setEnabled(status);
     }
+
     public void alterar() {
 
         pool = new Pool();
@@ -410,7 +415,7 @@ public class MenuDiaria extends javax.swing.JFrame {
             if (acesso.getEscrever() == 0) {
 
                 diaria = tbDiariaLinhaSelecionada(jtbl_diaria);
-                System.out.println("Objeto: "+ (diaria==null));
+                System.out.println("Objeto: " + (diaria == null));
                 if (diaria != null) {
                     AtualizaDiaria diariaAltera = new AtualizaDiaria(diaria);
                     diariaAltera.janelapai = this;
@@ -428,5 +433,13 @@ public class MenuDiaria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
 
+    }
+
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
     }
 }

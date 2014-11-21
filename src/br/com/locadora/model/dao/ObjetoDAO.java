@@ -184,6 +184,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
             objeto.setMidia(rs.getString("MIDIA"));
             objeto.setTipo_midia(rs.getString("TIPO_MIDIA"));
             objeto.setElenco(rs.getString("ELENCO"));
+            objeto.setSinopse(rs.getString("SINOPSE"));
             objeto.setCensura(rs.getInt("CENSURA"));
             
             Diaria diaria = new Diaria();

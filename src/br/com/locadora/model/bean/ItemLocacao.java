@@ -5,7 +5,6 @@
  */
 package br.com.locadora.model.bean;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**

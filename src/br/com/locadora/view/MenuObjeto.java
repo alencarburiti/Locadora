@@ -34,7 +34,7 @@ public class MenuObjeto extends javax.swing.JFrame {
     public String permissao;
     public InterfacePool pool;
     public SiscomController controller;
-   
+
     public static List<Objeto> objetos = new ArrayList<Objeto>();
     public TelaPrincipal janelapai;
     public static Objeto objeto;
@@ -100,6 +100,11 @@ public class MenuObjeto extends javax.swing.JFrame {
         jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jrb_ator.setText("Ator");
         jrb_ator.setName("jrb_ator"); // NOI18N
+        jrb_ator.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_atorActionPerformed(evt);
+            }
+        });
         jPanel1.add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
         buttonGroup1.add(jrb_titulo);
@@ -192,6 +197,11 @@ public class MenuObjeto extends javax.swing.JFrame {
                 });
                 jtbl_objeto.setName("jtbl_objeto"); // NOI18N
                 jtbl_objeto.getTableHeader().setReorderingAllowed(false);
+                jtbl_objeto.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        jtbl_objetoKeyPressed(evt);
+                    }
+                });
                 jScrollPane3.setViewportView(jtbl_objeto);
                 if (jtbl_objeto.getColumnModel().getColumnCount() > 0) {
                     jtbl_objeto.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -270,36 +280,12 @@ public class MenuObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_codigoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
-        pool = new Pool();
-        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
-
-        try {
-            if (acesso.getEscrever() == 0) {
-                objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
-                if (objeto != null) {
-                    AtualizaObjeto alteraObjeto = new AtualizaObjeto(objeto);
-
-                    alteraObjeto.janelapai = this;
-                    alteraObjeto.setVisible(true);
-                    this.setEnabled(false);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um objeto");
-                    jtf_consulta.requestFocus();
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-        }
+        alterar();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_alterarActionPerformed
@@ -310,6 +296,7 @@ public class MenuObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_excluirActionPerformed
 
     private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_tituloActionPerformed
 
@@ -317,6 +304,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             buscarDados();
         }
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
@@ -324,6 +312,22 @@ public class MenuObjeto extends javax.swing.JFrame {
         jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
+
+    private void jrb_atorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_atorActionPerformed
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_atorActionPerformed
+
+    private void jtbl_objetoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_objetoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            alterar();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            excluirObjeto();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_objetoKeyPressed
 
     /**
      * @param args the command line arguments
@@ -424,6 +428,46 @@ public class MenuObjeto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+    }
+
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
+        }
+    }
+
+    private void alterar() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
+
+        try {
+            if (acesso.getEscrever() == 0) {
+                objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
+                if (objeto != null) {
+                    AtualizaObjeto alteraObjeto = new AtualizaObjeto(objeto);
+
+                    alteraObjeto.janelapai = this;
+                    alteraObjeto.setVisible(true);
+                    this.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um objeto");
+                    jtf_consulta.requestFocus();
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }

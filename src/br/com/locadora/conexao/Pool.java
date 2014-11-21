@@ -44,7 +44,7 @@ public class Pool implements InterfacePool {
 			}
 		} catch (SQLException e) {
 			System.out.println("Problemas com o pool!");
-                        JOptionPane.showConfirmDialog(null,"Verificar conexão com Banco de Dados");			
+                        JOptionPane.showMessageDialog(null,"Verificar conexão com Banco de Dados");			
 		}
 		return con;
 	}

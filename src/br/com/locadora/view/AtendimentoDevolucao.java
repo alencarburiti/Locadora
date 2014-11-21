@@ -75,7 +75,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jtf_nome_objeto_devolucao = new javax.swing.JTextField();
         jl_codigo_devolucao = new javax.swing.JLabel();
         jtf_codigo_consulta_devolucao = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jb_pesquisar = new javax.swing.JButton();
         jLabel32 = new javax.swing.JLabel();
         jtf_valor_total = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
@@ -83,7 +83,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jcb_codigo_barras_devolucao = new javax.swing.JCheckBox();
         jLabel35 = new javax.swing.JLabel();
         jtf_valor_multa = new javax.swing.JTextField();
-        jButton11 = new javax.swing.JButton();
+        jb_finalizar = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -209,14 +209,19 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         });
         jPanel3.add(jtf_codigo_consulta_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jb_pesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_pesquisar.setName("jb_pesquisar"); // NOI18N
+        jb_pesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jb_pesquisarActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 30, 30));
+        jb_pesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_pesquisarKeyPressed(evt);
+            }
+        });
+        jPanel3.add(jb_pesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 30, 30));
 
         jLabel32.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel32.setText("Total");
@@ -285,15 +290,20 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         });
         jPanel3.add(jtf_valor_multa, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 330, 130, 30));
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
-        jButton11.setText("Finalizar");
-        jButton11.setName("jButton11"); // NOI18N
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        jb_finalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+        jb_finalizar.setText("Finalizar");
+        jb_finalizar.setName("jb_finalizar"); // NOI18N
+        jb_finalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                jb_finalizarActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 110, 50));
+        jb_finalizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_finalizarKeyPressed(evt);
+            }
+        });
+        jPanel3.add(jb_finalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 110, 50));
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
         jButton10.setText("Limpar");
@@ -301,6 +311,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
+            }
+        });
+        jButton10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton10KeyPressed(evt);
             }
         });
         jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 350, 100, 50));
@@ -312,6 +327,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_cancelarActionPerformed(evt);
+            }
+        });
+        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelarKeyPressed(evt);
             }
         });
         jPanel3.add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, 90, 50));
@@ -359,6 +379,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 jb_clienteActionPerformed(evt);
             }
         });
+        jb_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_clienteKeyPressed(evt);
+            }
+        });
         jPanel1.add(jb_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 30, -1));
 
         getContentPane().add(jPanel1);
@@ -396,6 +421,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
@@ -417,7 +443,7 @@ private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_jb_clienteActionPerformed
 
 private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
-    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+    if (evt.getKeyCode() == KeyEvent.VK_F5) {
         ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
         consultaCliente.janelapaiDevolucao = this;
         consultaCliente.setVisible(true);
@@ -425,19 +451,23 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
         setStatusTela(false);
     }
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        jtf_codigo_consulta_devolucao.requestFocus();
+    }
+    acionarAtalho(evt);
 }//GEN-LAST:event_jtf_nome_clienteKeyPressed
 
 private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusLost
 
 }//GEN-LAST:event_jtf_nome_clienteFocusLost
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jb_pesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisarActionPerformed
         ConsultaCopiaDevolucao copiaDevolucao = new ConsultaCopiaDevolucao();
         copiaDevolucao.janelapaiDevolucao = this;
         copiaDevolucao.setVisible(true);
         setStatusTela(false);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jb_pesquisarActionPerformed
 
     private void jtf_nome_objeto_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_devolucaoKeyPressed
         // TODO add your handling code here:
@@ -448,19 +478,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jtf_nome_objeto_devolucaoFocusGained
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        jtf_codigo_cliente.setText("");
-        jtf_nome_cliente.setText("");
-        jtf_valor_total.setText("R$ 0,00");
-        jtf_debito_total_devolucao.setText("R$ 0,00");
-
-        DefaultTableModel tb_devolucao = (DefaultTableModel) jtbl_devolucao.getModel();
-        int rows = tb_devolucao.getRowCount();
-        for (int i = rows - 1; i >= 0; i--) {
-            tb_devolucao.removeRow(i);
-        }
-        jtf_codigo_consulta_devolucao.setText("");
-        jtf_codigo_consulta_devolucao.requestFocus();
-
+        limparDados();
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jtp_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtp_locacaoFocusGained
@@ -497,11 +515,17 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void jtf_codigo_consulta_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_consulta_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
             if (jcb_codigo_barras_devolucao.isSelected() == true) {
                 consultarCopiaLocada(jtf_codigo_consulta_devolucao.getText().trim());
-            }
-
+            }            
+        }
+        acionarAtalho(evt);
+        
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            ConsultaCopiaDevolucao copiaDevolucao = new ConsultaCopiaDevolucao();
+            copiaDevolucao.janelapaiDevolucao = this;
+            copiaDevolucao.setVisible(true);
+            setStatusTela(false);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_codigo_consulta_devolucaoKeyPressed
@@ -511,10 +535,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_codigo_consulta_devolucaoFocusGained
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void jb_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_finalizarActionPerformed
         enviarDadosDevolucao();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_jb_finalizarActionPerformed
 
     private void jtf_valor_multaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_multaFocusGained
         // TODO add your handling code here:
@@ -528,6 +552,56 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         setVisible(false);
         janelapai.setStatusTela(true);
     }//GEN-LAST:event_jb_cancelarActionPerformed
+
+    private void jb_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_clienteKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
+            consultaCliente.janelapaiDevolucao = this;
+            consultaCliente.setVisible(true);
+            jtf_codigo_cliente.setText("");
+            consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
+            setStatusTela(false);
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_clienteKeyPressed
+
+    private void jb_pesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_finalizar.requestFocus();
+        }
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+
+            if (jcb_codigo_barras_devolucao.isSelected() == true) {
+                consultarCopiaLocada(jtf_codigo_consulta_devolucao.getText().trim());
+            }
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_pesquisarKeyPressed
+
+    private void jb_finalizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_finalizarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            enviarDadosDevolucao();
+        }
+        acionarAtalho(evt);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_finalizarKeyPressed
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
+
+    private void jButton10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton10KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            limparDados();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10KeyPressed
     public static boolean validaData(String dataString) throws java.text.ParseException {
         if (!dataString.equals("")) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -621,8 +695,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
@@ -639,11 +711,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_cliente;
+    private javax.swing.JButton jb_finalizar;
+    private javax.swing.JButton jb_pesquisar;
     private javax.swing.JCheckBox jcb_codigo_barras_devolucao;
     private javax.swing.JLabel jl_codigo_devolucao;
     public static javax.swing.JTable jtbl_devolucao;
     public static javax.swing.JTextField jtf_codigo_cliente;
-    private javax.swing.JTextField jtf_codigo_consulta_devolucao;
+    public static javax.swing.JTextField jtf_codigo_consulta_devolucao;
     public static javax.swing.JTextField jtf_debito_total_devolucao;
     public static javax.swing.JTextField jtf_nome_cliente;
     private javax.swing.JTextField jtf_nome_objeto_devolucao;
@@ -720,6 +794,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                     limparItemDevolvido();
                 } catch (ParseException ex) {
                     Logger.getLogger(AtendimentoDevolucao.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Esta cópia já foi adicionada");
@@ -769,6 +844,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             jtf_debito_total_devolucao.setText("R$ 0,00");
 
             jtf_nome_cliente.setText(dependente.getNome_dependente());
+            setTitle("Atendimento Devolução - " + dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
             Moeda moeda = new Moeda();
 
@@ -889,5 +965,30 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         valor_total = valor_total + valor_adicionar;
 
         jtf_valor_multa.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
+    }
+
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            enviarDadosDevolucao();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+    }
+
+    private void limparDados() {
+        jtf_codigo_cliente.setText("");
+        jtf_nome_cliente.setText("");
+        jtf_valor_total.setText("R$ 0,00");
+        jtf_debito_total_devolucao.setText("R$ 0,00");
+
+        DefaultTableModel tb_devolucao = (DefaultTableModel) jtbl_devolucao.getModel();
+        int rows = tb_devolucao.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            tb_devolucao.removeRow(i);
+        }
+        jtf_codigo_consulta_devolucao.setText("");
+        jtf_codigo_consulta_devolucao.requestFocus();
     }
 }

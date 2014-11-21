@@ -5,7 +5,6 @@ import br.com.locadora.model.dao.InterfaceDiariaDAO;
 import br.com.locadora.model.dao.InterfaceGeneroDAO;
 import br.com.locadora.model.dao.InterfaceObjetoDAO;
 import br.com.locadora.util.ItemDbGrid;
-import br.com.locadora.view.AtualizaObjeto;
 import br.com.locadora.view.MenuObjeto;
 import java.sql.SQLException;
 import java.util.List;
@@ -70,6 +69,9 @@ public class ConsultarObjeto implements InterfaceCommand {
                 System.out.println("0 - Diária alterar descrição: "+objeto1.getDiaria().getNome_diaria());
             }
             MenuObjeto.objetos = objetos;
+            
+            MenuObjeto.jtbl_objeto.requestFocus();
+            MenuObjeto.jtbl_objeto.setSelectionMode(1);
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum objeto encontrado");
         }

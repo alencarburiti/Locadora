@@ -25,8 +25,9 @@ public class GeneroDAO implements InterfaceGeneroDAO {
     public void atualizar(Genero genero) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
+        String sqlAtualizar = "UPDATE `locadora`.`genero` SET `NOME_GENERO` = ? WHERE `CODIGO_GENERO` = ?;";
         try {
-            ps = con.prepareCall("{CALL SP_UPDATE_GENERO_BY_PK(?,?)}");
+            ps = con.prepareStatement(sqlAtualizar);
             
             setPreparedStatement(genero, ps);
 
@@ -179,8 +180,8 @@ public class GeneroDAO implements InterfaceGeneroDAO {
 
     private void setPreparedStatement(Genero genero, PreparedStatement ps)
             throws SQLException {
-        ps.setInt(1, genero.getCodigo_genero());
-        ps.setString(2, genero.getNome_genero());
+        ps.setString(1, genero.getNome_genero());
+        ps.setInt(2, genero.getCodigo_genero());
      
     }
 
