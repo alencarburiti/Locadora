@@ -36,7 +36,6 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
      */
     public ConfiguraImpressora() {
         initComponents();
-//        listarDiaria();
     }
 
     /**
@@ -50,8 +49,10 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jButton1 = new javax.swing.JButton();
-        jcb_impressoras = new javax.swing.JComboBox();
+        jcb_impressora_principal = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jcb_impressora_alternativa = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Impressoras");
@@ -73,30 +74,51 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
 
-        jcb_impressoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
-        jcb_impressoras.setName("jcb_impressoras"); // NOI18N
-        jcb_impressoras.addActionListener(new java.awt.event.ActionListener() {
+        jcb_impressora_principal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
+        jcb_impressora_principal.setName("jcb_impressora_principal"); // NOI18N
+        jcb_impressora_principal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcb_impressorasActionPerformed(evt);
+                jcb_impressora_principalActionPerformed(evt);
             }
         });
-        jcb_impressoras.addFocusListener(new java.awt.event.FocusAdapter() {
+        jcb_impressora_principal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jcb_impressorasFocusGained(evt);
+                jcb_impressora_principalFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jcb_impressorasFocusLost(evt);
+                jcb_impressora_principalFocusLost(evt);
             }
         });
-        getContentPane().add(jcb_impressoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 210, -1));
+        getContentPane().add(jcb_impressora_principal, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 210, -1));
 
-        jLabel1.setText("Selecione impressora:");
+        jLabel1.setText("Selecione impressora principal:");
         jLabel1.setName("jLabel1"); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        setSize(new java.awt.Dimension(293, 191));
+        jLabel2.setText("Selecione impressora alternativa:");
+        jLabel2.setName("jLabel2"); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+
+        jcb_impressora_alternativa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
+        jcb_impressora_alternativa.setName("jcb_impressora_alternativa"); // NOI18N
+        jcb_impressora_alternativa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_impressora_alternativaActionPerformed(evt);
+            }
+        });
+        jcb_impressora_alternativa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jcb_impressora_alternativaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jcb_impressora_alternativaFocusLost(evt);
+            }
+        });
+        getContentPane().add(jcb_impressora_alternativa, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 210, -1));
+
+        setSize(new java.awt.Dimension(293, 279));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
    
@@ -112,21 +134,34 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        conf.writePropertie("impressora_principal",jcb_impressoras.getSelectedItem().toString());        
+        conf.writePropertie("impressora_principal",jcb_impressora_principal.getSelectedItem().toString());        
+        conf.writePropertie("impressora_alternativa",jcb_impressora_alternativa.getSelectedItem().toString());        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jcb_impressorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_impressorasActionPerformed
+    private void jcb_impressora_principalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_impressora_principalActionPerformed
 
-    }//GEN-LAST:event_jcb_impressorasActionPerformed
+    }//GEN-LAST:event_jcb_impressora_principalActionPerformed
 
-    private void jcb_impressorasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_impressorasFocusGained
+    private void jcb_impressora_principalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_impressora_principalFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_impressorasFocusGained
+    }//GEN-LAST:event_jcb_impressora_principalFocusGained
 
-    private void jcb_impressorasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_impressorasFocusLost
+    private void jcb_impressora_principalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_impressora_principalFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_impressorasFocusLost
+    }//GEN-LAST:event_jcb_impressora_principalFocusLost
+
+    private void jcb_impressora_alternativaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_impressora_alternativaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_impressora_alternativaActionPerformed
+
+    private void jcb_impressora_alternativaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_impressora_alternativaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_impressora_alternativaFocusGained
+
+    private void jcb_impressora_alternativaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_impressora_alternativaFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_impressora_alternativaFocusLost
     /**
      * @param args the command line arguments
      */
@@ -142,35 +177,42 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JComboBox jcb_impressoras;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox jcb_impressora_alternativa;
+    private javax.swing.JComboBox jcb_impressora_principal;
     // End of variables declaration//GEN-END:variables
 
     public void mostraImpressoras() {
 
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         String impressora_principal = conf.readPropertie("impressora_principal");
-        
+        String impressora_alternativa = conf.readPropertie("impressora_alternativa");
         List<String> impressoras = Printer.retornaImpressoras();
                 
-        if (impressoras.size() == 0) {
+        if (impressoras.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhuma impressora encontrada");
 
         } else {
             for (int i = 0; i < impressoras.size(); i++) {
-                jcb_impressoras.addItem(impressoras.get(i));
-
-                AutoCompletion auto = new AutoCompletion(jcb_impressoras);
+                jcb_impressora_principal.addItem(impressoras.get(i));
+                AutoCompletion auto = new AutoCompletion(jcb_impressora_principal);
             }
-            for (Integer x = 0; x < jcb_impressoras.getItemCount(); x++) {
-//                System.out.println("Tamanho combobox: "+jcb_impressoras.getItemCount());
-//                System.out.println("Impressora principal: "+impressora_principal);
-//                System.out.println("Impressora ComboBox: "+jcb_impressoras.getItemAt(x));
-//                System.out.println("Posição: " + x);
-//                System.out.println("Impressora conf: "+impressora_principal+"Impressora Combo: "+jcb_impressoras.getItemAt(x)+" Posição combo: "+x);
-                    if(impressora_principal.equals(jcb_impressoras.getItemAt(x))){
-//                        System.out.println("Impressora comboBox: "+impressora_principal.equals(jcb_impressoras.getItemAt(x)));
-//                        System.out.println("Impressora conf: "+impressora_principal+"Impressora Combo: "+jcb_impressoras.getItemAt(x)+" Posição combo: "+x);
-                        jcb_impressoras.setSelectedIndex(x);
+            
+            for (int i = 0; i < impressoras.size(); i++) {
+                jcb_impressora_alternativa.addItem(impressoras.get(i));
+                AutoCompletion auto = new AutoCompletion(jcb_impressora_alternativa);
+            }
+
+            for (Integer x = 0; x < jcb_impressora_principal.getItemCount(); x++) {
+                    if(impressora_principal.equals(jcb_impressora_principal.getItemAt(x))){
+                        jcb_impressora_principal.setSelectedIndex(x);
+                        break;
+                    }        
+                
+            }
+            for (Integer x = 0; x < jcb_impressora_alternativa.getItemCount(); x++) {
+                    if(impressora_alternativa.equals(jcb_impressora_alternativa.getItemAt(x))){
+                        jcb_impressora_alternativa.setSelectedIndex(x);
                         break;
                     }        
                 

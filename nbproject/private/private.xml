@@ -4,12 +4,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/AtualizaObjeto.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/CadastroObjeto.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/CopiaDAO.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/MenuObjeto.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/command/CadastrarCopia.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/command/AtualizarObjeto.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/CadastroDiaria.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/EntradaCaixa.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/DiariaDAO.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/AtualizaDiaria.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/MenuDiaria.java</file>
         </group>
     </open-files>
 </project-private>

@@ -74,7 +74,7 @@ public class CadastrarCopia implements InterfaceCommand {
             try {
                 copia.setData_aquisicao(new SimpleDateFormat("dd/MM/yyyy").parse((String) AtualizaObjeto.jtf_data_aquisicao.getText()));
             } catch (ParseException ex1) {
-                Logger.getLogger(CadastrarCopia.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(AtualizaObjeto.class.getName()).log(Level.SEVERE, null, ex1);
             }
 
             try {

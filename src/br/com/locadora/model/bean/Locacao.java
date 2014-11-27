@@ -19,7 +19,7 @@ public class Locacao {
     private List<ItemLocacao> itemLocacao;
     private Double valor_pago;
     private Usuario usuario;
-
+    
     public Integer getCodigo_locacao() {
         return codigo_locacao;
     }

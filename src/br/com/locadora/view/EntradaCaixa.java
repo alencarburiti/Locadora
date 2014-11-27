@@ -4,8 +4,10 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
+import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Printer;
@@ -541,11 +543,9 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     private void jtf_valor_pagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_pagoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("Campo jtf_desconto == " + jtf_desconto.isEditable());
-            if (jtf_desconto.isEditable() == true) {
-                jtf_desconto.requestFocus();
-            } else {
-                jb_salvar.requestFocus();
-            }
+            checarPagamento();
+            jb_salvar.requestFocus();
+
         }
         acionarAtalho(evt);
 
@@ -1015,4 +1015,63 @@ public final class EntradaCaixa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Problema encontrado com impressora padrão.");
         }
     }
+    List<Diaria> promocoes;
+
+    public void checarPagamento() {
+        pool = new Pool();
+        Double valor_pagamento_a_vista = 0.0;
+        DiariaDAO diDAO = new DiariaDAO(pool);
+
+        for (int j = 0; j < AtendimentoLocacao.copiasLocacao.size(); j++) {
+            System.out.println("Codigo Diaria: " + AtendimentoLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getCodigo_diaria()); 
+            promocoes = diDAO.getDiariaPromocao(AtendimentoLocacao.copiasLocacao.get(j).getObjeto().getDiaria());
+            for (int x = 0; x < promocoes.size(); x++) {
+                System.out.println("Valor da lista: " + AtendimentoLocacao.jtbl_locacao.getValueAt(j, 5)); 
+                System.out.println("Lista das promocoes: " + promocoes.get(x).getPromocao().getDescricao_promocao());
+                System.out.println("A vista: " + promocoes.get(x).getPromocao().getPagamento_a_vista());
+                if (AtendimentoLocacao.jtbl_locacao.getValueAt(j, 5).toString() == promocoes.get(x).getPromocao().getDescricao_promocao()) {
+                    System.out.println("Pagamento a vista: "+promocoes.get(x).getPromocao().getPagamento_a_vista() );
+                    if (promocoes.get(x).getPromocao().getPagamento_a_vista() == true) {
+                        valor_pagamento_a_vista = valor_pagamento_a_vista + promocoes.get(x).getPromocao().getValor_promocao();
+                    }
+                    break;
+                }
+            }
+        }
+        Double valor_pago;
+        Moeda moeda = new Moeda();
+        valor_pago = moeda.getPrecoFormato(moeda.setPrecoFormat(jtf_valor_pago.getText()));
+        
+        System.out.println("Valor para pagamento a vista: "+ valor_pagamento_a_vista);
+        System.out.println("Valor pago: "+ valor_pago);
+        
+        if (valor_pagamento_a_vista <= valor_pago) {
+            for (int j = 0; j < AtendimentoLocacao.copiasLocacao.size(); j++) {
+                promocoes = diDAO.getDiariaPromocao(AtendimentoLocacao.copiasLocacao.get(j).getObjeto().getDiaria());
+                for (int x = 0; x < promocoes.size(); x++) {
+                    if (AtendimentoLocacao.jtbl_locacao.getValueAt(j, 5).equals(promocoes.get(x).getPromocao().getDescricao_promocao())) {
+                        if (promocoes.get(x).getPromocao().getPagamento_a_vista() == true) {
+                            valor_pagamento_a_vista = valor_pagamento_a_vista + promocoes.get(x).getPromocao().getValor_promocao();
+                            if (valor_pago >= promocoes.get(x).getPromocao().getValor_promocao()) {
+                                valor_pago = valor_pago - promocoes.get(x).getPromocao().getValor_promocao();
+                                break;
+                            } else if( valor_pago < promocoes.get(x).getPromocao().getValor_promocao()){
+                                int selectedOption = JOptionPane.showConfirmDialog(this, "Autorizar promoção sem pagamento?", "Atenção", JOptionPane.YES_NO_OPTION);
+                                if (selectedOption == JOptionPane.YES_NO_OPTION) {
+//                                    AtendimentoLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(promocoes.get(x).getPromocao().getValor_promocao())), j, 2);
+//                                    AtendimentoLocacao.jtbl_locacao.setValueAt("", j, 5);                                    
+                                } else {
+                                    AtendimentoLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(AtendimentoLocacao.copiasLocacao.get(x).getObjeto().getDiaria().getValor())), j, 2);
+                                    AtendimentoLocacao.jtbl_locacao.setValueAt("", j, 5);                                    
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+
 }

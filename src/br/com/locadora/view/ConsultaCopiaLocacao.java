@@ -196,6 +196,11 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jrb_ator.setText("Ator");
                 jrb_ator.setName("jrb_ator"); // NOI18N
+                jrb_ator.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_atorActionPerformed(evt);
+                    }
+                });
                 getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
 
                 buttonGroup1.add(jrb_codigo_barras);
@@ -290,10 +295,12 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_copiaMouseClicked
 
     private void jrb_codigo_barrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigo_barrasActionPerformed
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_codigo_barrasActionPerformed
 
     private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_tituloActionPerformed
 
@@ -331,6 +338,11 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         }
     // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jrb_atorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_atorActionPerformed
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_atorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,16 +414,11 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     }
 
     public void listaCopia_codigo_barras(String codigo_barras) {
-        try {
-            pool = new Pool();
-            CopiaDAO copiaDAO = new CopiaDAO(pool);
-            copias = null;
-            copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
-            mostraCopia(copias);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Problemas com a consulta");
-            ex.printStackTrace();
-        }
+        pool = new Pool();
+        CopiaDAO copiaDAO = new CopiaDAO(pool);
+        copias = null;
+        copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
+        mostraCopia(copias);
     }
     
     public void listaTodasCopias() throws SQLException {

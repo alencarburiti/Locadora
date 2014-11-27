@@ -62,17 +62,17 @@ public class ConsultarDiaria implements InterfaceCommand {
                 diaria.setDias(diarias.get(i).getDias());
 
                 String valor = null;
-                String valor_promocao = null;
+                
                 String multa = null;
 
                 valor = String.valueOf(diarias.get(i).getValor());
-                valor_promocao = String.valueOf(diarias.get(i).getValor_promocao());
+                
                 multa = String.valueOf(diarias.get(i).getMultas());
 
                 Moeda moeda = new Moeda();
 
                 valor = moeda.setPrecoFormat(valor);
-                valor_promocao = moeda.setPrecoFormat(valor_promocao);
+                
                 multa = moeda.setPrecoFormat(multa);
 
                 DefaultTableModel row = (DefaultTableModel) MenuDiaria.jtbl_diaria.getModel();

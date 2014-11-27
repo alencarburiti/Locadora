@@ -7,7 +7,7 @@ import java.util.List;
 public interface InterfaceDiariaDAO {
 
 	public abstract void excluir(Integer codigo) throws SQLException;
-	public abstract void salvar(Diaria diaria) throws SQLException;
+	public abstract Diaria salvar(Diaria diaria) throws SQLException;
 	public abstract void atualizar(Diaria diaria) throws SQLException;
 	public abstract Diaria getDiaria_codigo(Integer codigo) throws SQLException;
 	public abstract List<Diaria> getDiaria_nome(String nome_diaria) throws SQLException;

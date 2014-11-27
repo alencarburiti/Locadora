@@ -239,7 +239,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Total"/>
+                <Property name="text" type="java.lang.String" value="Total:"/>
                 <Property name="name" type="java.lang.String" value="jLabel32" noResource="true"/>
               </Properties>
               <Constraints>
@@ -270,13 +270,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel33">
+            <Component class="javax.swing.JLabel" name="jl_debito_devolucao">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="D&#xe9;bito Total"/>
-                <Property name="name" type="java.lang.String" value="jLabel33" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jl_debito_devolucao" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -326,7 +326,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Multa"/>
+                <Property name="text" type="java.lang.String" value="Multa:"/>
                 <Property name="name" type="java.lang.String" value="jLabel35" noResource="true"/>
               </Properties>
               <Constraints>

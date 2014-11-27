@@ -182,6 +182,7 @@
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_lancamentoFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_lancamentoFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_valor_lancamentoKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/*try  {          &#xd;&#xa;Locale BRAZIL = new Locale(&quot;pt&quot;,&quot;BR&quot;);  &#xd;&#xa;DecimalFormatSymbols REAL = new DecimalFormatSymbols(BRAZIL);&#xd;&#xa;formatoPreco = new DecimalFormat(&quot;&#xa4; ###,###,##0.00&quot;,REAL);  &#xd;&#xa;}    catch (Exception erro)  &#xd;&#xa;{    &#xd;&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar&quot;);  &#xd;&#xa;}&#xd;&#xa;*/"/>
@@ -352,7 +353,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="350" y="330" width="130" height="30"/>
+              <AbsoluteConstraints x="360" y="330" width="130" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -431,21 +432,21 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="540" y="330" width="180" height="30"/>
+              <AbsoluteConstraints x="580" y="330" width="180" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel30">
+        <Component class="javax.swing.JLabel" name="jl_saldo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Saldo:"/>
-            <Property name="name" type="java.lang.String" value="jLabel30" noResource="true"/>
+            <Property name="text" type="java.lang.String" value="Devedor:"/>
+            <Property name="name" type="java.lang.String" value="jl_saldo" noResource="true"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="490" y="330" width="70" height="30"/>
+              <AbsoluteConstraints x="510" y="330" width="70" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -456,6 +457,9 @@
             </Property>
             <Property name="name" type="java.lang.String" value="jcb_tipo_servico" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcb_tipo_servicoKeyPressed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="20" y="40" width="250" height="-1"/>
@@ -468,6 +472,7 @@
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_data_lancamentoFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_data_lancamentoKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoData);"/>

@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -65,7 +67,6 @@ public class Printer {
                 linhasTxt.println("************ Recibo de Locação ************");
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Cliente: " + dependente.getNome_dependente());
-                linhasTxt.println("Usuário: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
                 linhasTxt.println(String.format("%-6s", "Cód    Descrição            Prev   Valor"));
                 //dados da tabela
@@ -96,6 +97,9 @@ public class Printer {
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
                 linhasTxt.println("Valor Pago (+):             " + EntradaCaixa.jtf_valor_pago.getText());
                 linhasTxt.println("Troco (-):                  " + EntradaCaixa.jtf_troco.getText());
+                linhasTxt.println("===========================================");
+                linhasTxt.println("===========================================");
+                linhasTxt.println("Usuário: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Termo de Responsabilidade: Estou ciente que");
                 linhasTxt.println("os DVD’s que foram por mim alugados, ou com");
@@ -154,7 +158,6 @@ public class Printer {
                 linhasTxt.println("********* Comprovante de Devolução ********");
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Cliente: " + dependente.getNome_dependente());
-                linhasTxt.println("Usuário: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
                 linhasTxt.println(String.format("%-6s", "Cód    Descrição            Prev   Dev"));
                 //dados da tabela
@@ -188,6 +191,8 @@ public class Printer {
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
                 linhasTxt.println("Valor Pago (+):             " + EntradaCaixaDevolucao.jtf_valor_pago.getText());
                 linhasTxt.println("Troco (-):                  " + EntradaCaixaDevolucao.jtf_troco.getText());
+                linhasTxt.println("===========================================");
+                linhasTxt.println("Usuário: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Termo de Responsabilidade: Estou ciente que");
                 linhasTxt.println("os DVD’s que foram por mim alugados, ou com");
@@ -229,9 +234,13 @@ public class Printer {
                 detectaImpressoras(conf.readPropertie("impressora_principal"));
                 java.io.InputStream is = new FileInputStream(nome_arquivo);
                 Scanner sc = new Scanner(is);
-                while (sc.hasNextLine()) {
-                    String linhas = sc.nextLine();
-                    imprime(linhas);
+                if (impressora != null) {
+                    while (sc.hasNextLine()) {
+                        String linhas = sc.nextLine();
+                        imprime(linhas);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
                 }
                 return true;
             } else {
@@ -243,6 +252,37 @@ public class Printer {
             JOptionPane.showMessageDialog(null, "Erro encontrado ao imprimir comanda.");
             return false;
         }
+    }
+
+    public void imprimirPDF(File file) {
+        // imprime arquivo 
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        try {
+            if (!conf.readPropertie("impressora_alternativa").equals("")) {
+                detectaImpressoras(conf.readPropertie("impressora_alternativa"));
+                java.io.InputStream is = new FileInputStream(file);
+                Scanner sc = new Scanner(is);
+                if (impressora != null) {
+                    while (sc.hasNextLine()) {
+                        String linhas = sc.nextLine();
+                        imprime(linhas);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Impressora não detectada");
+
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro encontrado ao imprimir comanda.");
+
+        } catch (PrintException ex) {
+            Logger.getLogger(Printer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public static List<String> retornaImpressoras() {
@@ -278,11 +318,7 @@ public class Printer {
 
     public boolean imprime(String texto) throws PrintException {
 
-        if (impressora == null) {
-            JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
-            return false;
-        } else {
-
+        try {
             DocPrintJob dpj = impressora.createPrintJob();
             InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes());
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
@@ -290,11 +326,17 @@ public class Printer {
             dpj.print(doc, null);
             return true;
 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
+            return false;
+
         }
 
     }
 
+}
+
 //    public void acionarGuilhotina(){  
 //        imprime(""+(char)27+(char)109);  
 //    }  
-}
+

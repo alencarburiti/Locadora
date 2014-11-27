@@ -47,6 +47,29 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         }
     }
 
+    public void salvarRelocacao(List<ItemLocacao> itens) {
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlAtualizar = " UPDATE ITEM_LOCACAO SET DIAS_RELOCACAO = ?, VALOR_RELOCACAO = ? WHERE COPIA_CODIGO_COPIA = ? AND DEL_FLAG = 0 ;";
+
+        try {
+            ps = con.prepareStatement(sqlAtualizar);
+            
+            for(int i = 0; i < itens.size(); i++){
+                ps.setInt(1, itens.get(i).getDias_multa());
+                ps.setDouble(2, itens.get(i).getValor_multa());
+                ps.setInt(3, itens.get(i).getCopia().getCodigo_copia());
+                ps.executeUpdate();
+            }
+            
+
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+    }
     @Override
     public void excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
@@ -447,8 +470,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         PreparedStatement ps;
 
         String sqlLancamento = "INSERT INTO `locadora`.`lancamento`(`valor`,`dependente_CODIGO_DEPENDENTE`,\n"
-                + "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,`locacao_CODIGO_LOCACAO`,data_lancamento)\n"
-                + "VALUES(?,?,?,?,?,CURRENT_DATE());";
+                + "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,`locacao_CODIGO_LOCACAO`,data_lancamento, caixa_codigo_caixa)\n"
+                + "VALUES(?,?,?,?,?,CURRENT_DATE(),?);";
 
         try {
 
@@ -552,6 +575,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         ps.setInt(3, lancamento.getTipoServico().getCodigo_tipo_servico());
         ps.setInt(4, lancamento.getUsuario().getCodigo_usuario());
         ps.setInt(5, lancamento.getLocacao().getCodigo_locacao());
+        ps.setInt(6, lancamento.getCaixa());
 
     }
 

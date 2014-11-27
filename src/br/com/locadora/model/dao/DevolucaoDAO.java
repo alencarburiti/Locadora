@@ -426,8 +426,8 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
         PreparedStatement ps;
 
         String sqlLancamento = "INSERT INTO `locadora`.`lancamento`(`valor`,`dependente_CODIGO_DEPENDENTE`,\n" +
-            "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,data_lancamento)\n" +
-            "VALUES(?,?,?,?,CURRENT_DATE());";
+            "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,data_lancamento, caixai_codigo_caixa)\n" +
+            "VALUES(?,?,?,?,CURRENT_DATE(),?);";
 
         try {
             
@@ -548,7 +548,7 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
         ps.setInt(2, lancamento.getDependente().getCodigo_dependente());
         ps.setInt(3, lancamento.getTipoServico().getCodigo_tipo_servico());
         ps.setInt(4, lancamento.getUsuario().getCodigo_usuario());
-//        ps.setInt(5, lancamento.getLocacao().getCodigo_locacao());
+        ps.setInt(5, lancamento.getCaixa());
 
     }
 }

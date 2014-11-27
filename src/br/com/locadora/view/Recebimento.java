@@ -93,7 +93,7 @@ public class Recebimento extends javax.swing.JFrame {
         jb_adicionar_locacao = new javax.swing.JButton();
         jb_remover_locacao = new javax.swing.JButton();
         jtf_saldo = new javax.swing.JTextField();
-        jLabel30 = new javax.swing.JLabel();
+        jl_saldo = new javax.swing.JLabel();
         jcb_tipo_servico = new javax.swing.JComboBox();
         try  {
             formatoData = new MaskFormatter("##/##/####");
@@ -194,6 +194,11 @@ public class Recebimento extends javax.swing.JFrame {
                 jtf_valor_lancamentoFocusLost(evt);
             }
         });
+        jtf_valor_lancamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_valor_lancamentoKeyPressed(evt);
+            }
+        });
         jp_locacao.add(jtf_valor_lancamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 100, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -272,7 +277,7 @@ public class Recebimento extends javax.swing.JFrame {
                 jtf_total_debitoFocusLost(evt);
             }
         });
-        jp_locacao.add(jtf_total_debito, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, 130, 30));
+        jp_locacao.add(jtf_total_debito, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 330, 130, 30));
 
         jtf_total_credito.setEditable(false);
         jtf_total_credito.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -325,20 +330,30 @@ public class Recebimento extends javax.swing.JFrame {
                 jtf_saldoFocusLost(evt);
             }
         });
-        jp_locacao.add(jtf_saldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, 180, 30));
+        jp_locacao.add(jtf_saldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 330, 180, 30));
 
-        jLabel30.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel30.setText("Saldo:");
-        jLabel30.setName("jLabel30"); // NOI18N
-        jp_locacao.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, 70, 30));
+        jl_saldo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jl_saldo.setText("Devedor:");
+        jl_saldo.setName("jl_saldo"); // NOI18N
+        jp_locacao.add(jl_saldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 330, 70, 30));
 
         jcb_tipo_servico.setName("jcb_tipo_servico"); // NOI18N
+        jcb_tipo_servico.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_tipo_servicoKeyPressed(evt);
+            }
+        });
         jp_locacao.add(jcb_tipo_servico, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 250, -1));
 
         jtf_data_lancamento.setName("jtf_data_lancamento"); // NOI18N
         jtf_data_lancamento.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtf_data_lancamentoFocusLost(evt);
+            }
+        });
+        jtf_data_lancamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_data_lancamentoKeyPressed(evt);
             }
         });
         jp_locacao.add(jtf_data_lancamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 110, -1));
@@ -416,10 +431,16 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jtf_valor_lancamentoFocusLost
 
     private void jtf_valor_lancamentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_lancamentoFocusGained
+        Moeda moeda = new Moeda();
+        if (jtf_valor_lancamento.getText().equals("R$ 0,00")) {
+            jtf_valor_lancamento.setText("");
+        } else {
+            jtf_valor_lancamento.setText(moeda.setPrecoFormat(jtf_valor_lancamento.getText()));
+        }
         jtf_valor_lancamento.setInputVerifier(new InputVerifier() {
 
             public boolean verify(JComponent input) {
-                if (jtf_valor_lancamento.getText().trim().equals("RS")) {
+                if (jtf_valor_lancamento.getText().trim().equals("RS 0,00")) {
                     JOptionPane.showMessageDialog(null, "Informe o preço");
                     jtf_valor_lancamento.requestFocus();
                     return false;
@@ -434,8 +455,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void jb_adicionar_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_locacaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            adicionarItemLocado(copiaLocacao);
+            adicionarLancamento();
         }
+        acionarAtalho(evt);
+
     }//GEN-LAST:event_jb_adicionar_locacaoKeyPressed
 
     private void jb_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_clienteKeyPressed
@@ -463,7 +486,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 if (validaData(jtf_data_lancamento.getText())) {
 
                     jtf_data_lancamento.setForeground(Color.black);
-                        //                        jtf_cpf_cliente.requestFocus();
+                    //                        jtf_cpf_cliente.requestFocus();
 
                 } else {
                     jtf_data_lancamento.setForeground(Color.red);
@@ -483,6 +506,31 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
     }//GEN-LAST:event_jtf_data_lancamentoFocusLost
 
+    private void jtf_data_lancamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_lancamentoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_valor_lancamento.requestFocus();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_data_lancamentoKeyPressed
+
+    private void jtf_valor_lancamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_lancamentoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_adicionar_locacao.requestFocus();
+        }
+        acionarAtalho(evt);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_valor_lancamentoKeyPressed
+
+    private void jcb_tipo_servicoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_tipo_servicoKeyPressed
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_data_lancamento.requestFocus();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_tipo_servicoKeyPressed
+
     public void consultarClienteAtendimento() {
         ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
         consultaCliente.janelapaiRecebimento = this;
@@ -491,7 +539,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         setStatusTela(false);
 
     }
-
 
     /**
      * @param args the command line arguments
@@ -512,7 +559,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -521,6 +567,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JButton jb_remover_locacao;
     private javax.swing.JComboBox jcb_tipo_servico;
     private javax.swing.JLabel jl_codigo_locacao;
+    private javax.swing.JLabel jl_saldo;
     public static javax.swing.JPanel jp_locacao;
     public static javax.swing.JTable jtbl_recebimento;
     public static javax.swing.JTextField jtf_codigo_cliente;
@@ -564,6 +611,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (selectedOption == JOptionPane.YES_NO_OPTION) {
                     retirarValordoTotal(String.valueOf(row.getValueAt(tb.getSelectedRow(), 2)));
+                    carregarClienteDependente(dependente);
                     row.removeRow(tb.getSelectedRow());
                 }
             } else {
@@ -628,7 +676,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
             Usuario usuario = new Usuario();
             usuario.setCodigo_usuario(Integer.parseInt(conf.readPropertie("codigo_usuario")));
-
+            lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
             lancamento.setUsuario(usuario);
             lancamentoDAO.salvarLancamento(lancamento);
             limparItemLancado();
@@ -752,19 +800,28 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
             lancamento = new Lancamento();
             lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
+            System.out.println(lancamento.getSaldo());
             if (lancamento.getSaldo() < 0) {
                 lancamento.setSaldo(lancamento.getSaldo() * (-1));
-                jtf_total_debito.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_total_debito.setCaretColor(Color.black);
-            } else {
+                jtf_saldo.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_saldo.setCaretColor(Color.black);
+                jtf_saldo.setForeground(Color.black);
+                jl_saldo.setText("Saldo:");
+            } else if (lancamento.getSaldo() > 0){
                 jtf_saldo.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_saldo.setCaretColor(Color.red);
+                jtf_saldo.setForeground(Color.red);
+                jl_saldo.setText("Devedor:");
+            } else {
+                jl_saldo.setText("Saldo:");
+                jtf_saldo.setForeground(Color.black);
+                jtf_saldo.setText("R$ 0,00");
             }
 
             jtf_total_credito.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getCredito())));
             jtf_total_debito.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getDebito())));
 
-            jtf_data_lancamento.requestFocus();
+            jcb_tipo_servico.requestFocus();
 
             //Limpa tabela depois de selecionar novo cliente
             DefaultTableModel tb_locacao = (DefaultTableModel) jtbl_recebimento.getModel();
@@ -784,4 +841,12 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         this.setEnabled(status);
     }
 
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+
+    }
 }

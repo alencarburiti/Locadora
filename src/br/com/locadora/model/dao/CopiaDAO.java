@@ -52,7 +52,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 
         try {
             ps = con.prepareStatement(sqlAtualizar);
-            
+
             ps.setString(1, copia.getStatus());
             ps.setInt(2, copia.getCodigo_copia());
 
@@ -123,14 +123,18 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "	A.CODIGO_BARRAS, \n"
                 + "    A.DEL_FLAG,\n"
                 + "    A.PRECO_CUSTO,\n"
+                + "    A.DATA_AQUISICAO,\n"
+                + "    A.NUMERO_COPIA,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
                 + "    A.IDIOMA,\n"
                 + "    A.LEGENDA,\n"
+                + "    C.CODIGO_DIARIA,\n"
                 + "    C.DIAS,\n"
                 + "    C.VALOR,\n"
-                + "    C.VALOR_PROMOCAO\n"
+                + "    C.MAXIMO_DIAS,\n"
+                + "    C.ACUMULATIVO\n"
                 + "FROM\n"
                 + "    locadora.COPIA A,\n"
                 + "    locadora.OBJETO B,\n"
@@ -159,8 +163,6 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return resultado;
     }
-    
-    
 
     public boolean getCopia_existente(String codigo_barras) throws SQLException {
 
@@ -216,7 +218,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         return false;
     }
 
-    public List<Copia> getCopia_codigo_barras(String codigo_barras) throws SQLException {
+    public List<Copia> getCopia_codigo_barras(String codigo_barras) {
         List<Copia> resultado = new ArrayList<Copia>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -228,6 +230,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    A.NUMERO_COPIA,\n"
                 + "    A.PRECO_CUSTO,\n"
                 + "    A.DEL_FLAG,\n"
+                + "    A.DATA_AQUISICAO,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.CODIGO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
@@ -235,9 +238,11 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    B.CENSURA,\n"
                 + "    A.IDIOMA,\n"
                 + "    A.LEGENDA,\n"
+                + "    C.CODIGO_DIARIA,\n"
                 + "    C.DIAS,\n"
-                + "    C.VALOR,\n"
-                + "    C.VALOR_PROMOCAO\n"
+                + "    C.MAXIMO_DIAS,\n"
+                + "    C.ACUMULATIVO,\n"
+                + "    C.VALOR\n"
                 + "FROM\n"
                 + "    locadora.COPIA A,\n"
                 + "    locadora.OBJETO B,\n"
@@ -260,14 +265,14 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 //            if (resultado.size() > 0) {
 //            }
             ps.close();
-            return resultado;
+        } catch (SQLException ex) {
+            Logger.getLogger(CopiaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
+        return resultado;
 
     }
-    
-    
 
     public List<Copia> getCopia_codigo_objeto(Integer codigo_objeto, Integer del_flag, String tipo_movimento) throws SQLException {
         List<Copia> resultado = new ArrayList<Copia>();
@@ -290,8 +295,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    A.IDIOMA,\n"
                 + "    A.LEGENDA,\n"
                 + "    C.DIAS,\n"
-                + "    C.VALOR,\n"
-                + "    C.VALOR_PROMOCAO\n"
+                + "    C.VALOR\n"
                 + "FROM\n"
                 + "    locadora.COPIA A,\n"
                 + "    locadora.OBJETO B,\n"
@@ -319,9 +323,11 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
                 + "    B.CENSURA,\n"
+                + "    C.CODIGO_DIARIA,\n"
                 + "    C.DIAS,\n"
                 + "    C.VALOR,\n"
-                + "    C.VALOR_PROMOCAO\n"
+                + "    C.MAXIMO_DIAS,\n"
+                + "    C.ACUMULATIVO\n"
                 + "FROM\n"
                 + "    locadora.COPIA A,\n"
                 + "    locadora.OBJETO B,\n"
@@ -369,15 +375,19 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "	A.CODIGO_BARRAS, \n"
                 + "    A.DEL_FLAG,\n"
                 + "    A.PRECO_CUSTO,\n"
+                + "    A.DATA_AQUISICAO,\n"
+                + "    A.NUMERO_COPIA,\n"
                 + "    B.DESCRICAO_OBJETO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
-                + "    B.CENSURA,\n"                
+                + "    B.CENSURA,\n"
                 + "    A.IDIOMA,\n"
                 + "    A.LEGENDA,\n"
+                + "    C.CODIGO_DIARIA,\n"
                 + "    C.DIAS,\n"
                 + "    C.VALOR,\n"
-                + "    C.VALOR_PROMOCAO\n"
+                + "    C.MAXIMO_DIAS,\n"
+                + "    C.ACUMULATIVO\n"
                 + "FROM\n"
                 + "    locadora.COPIA A,\n"
                 + "    locadora.OBJETO B,\n"
@@ -403,8 +413,6 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return resultado;
     }
-    
-    
 
     public List<Copia> getCopia_ator(String ator) throws SQLException {
         List<Copia> resultado = new ArrayList<Copia>();
@@ -422,9 +430,11 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "    B.TIPO_MIDIA,\n"
                 + "    A.IDIOMA,\n"
                 + "    A.LEGENDA,\n"
+                + "    C.CODIGO_DIARIA,\n"
                 + "    C.DIAS,\n"
                 + "    C.VALOR,\n"
-                + "    C.VALOR_PROMOCAO\n"
+                + "    C.MAXIMO_DIAS,\n"
+                + "    C.ACUMULATIVO\n"
                 + "FROM\n"
                 + "    locadora.COPIA A,\n"
                 + "    locadora.OBJETO B,\n"
@@ -450,8 +460,6 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return resultado;
     }
-    
-    
 
     @Override
     public List<Copia> getCopias(String nome_copia) throws SQLException {
@@ -476,7 +484,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         return resultado;
     }
 
-    public String getQuantidadeAssistida(Integer codigo_cliente, String codigo_barras) throws SQLException {
+    public String getQuantidadeAssistida(Integer codigo_cliente, String codigo_barras) {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT \n"
@@ -521,6 +529,9 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             } else {
                 return "";
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(CopiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } finally {
             pool.liberarConnection(con);
         }
@@ -554,10 +565,15 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             Copia copia = new Copia();
             Diaria diaria = new Diaria();
             Objeto objeto = new Objeto();
-
+            diaria.setCodigo_diaria(rs.getInt("CODIGO_DIARIA"));
             diaria.setDias(rs.getInt("DIAS"));
             diaria.setValor(rs.getDouble("VALOR"));
-            diaria.setValor_promocao(rs.getDouble("VALOR_PROMOCAO"));
+            diaria.setMaximo_dias(rs.getInt("MAXIMO_DIAS"));
+            if (rs.getInt("ACUMULATIVO") == 0) {
+                diaria.setAcumulativo(true);
+            } else {
+                diaria.setAcumulativo(false);
+            }
 
             objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
             objeto.setTipo_movimento(rs.getString("TIPO_MOVIMENTO"));

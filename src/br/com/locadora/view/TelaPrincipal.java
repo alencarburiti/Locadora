@@ -1,5 +1,6 @@
 package br.com.locadora.view;
 
+import br.com.locadora.barcode.Bar;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Usuario;
@@ -109,6 +110,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu17 = new javax.swing.JMenu();
         menu_relatórios = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
         menu_relatórios1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jmi_backup = new javax.swing.JMenuItem();
@@ -455,6 +457,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         menu_relatórios.add(jMenuItem16);
+
+        jMenuItem18.setText("Fluxo Detalhado");
+        jMenuItem18.setName("jMenuItem18"); // NOI18N
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        menu_relatórios.add(jMenuItem18);
 
         jMB_Cadastro.add(menu_relatórios);
 
@@ -862,8 +873,10 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }//GEN-LAST:event_jmi_legendaActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        JOptionPane.showMessageDialog(null, "Em construção");
-        // TODO add your handling code here:
+        Bar bar = new Bar();
+        bar.setVisible(true);
+        bar.janelapai = this;
+        bar.setLocationRelativeTo(null);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jmi_midiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_midiaActionPerformed
@@ -968,8 +981,16 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         ConfiguracaoCaixa caixa = new ConfiguracaoCaixa();
         caixa.setVisible(true);
         setStatusTela(false);
-
+        caixa.janelapai = this;
     }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        CaixaDiariaDetalhado control = new CaixaDiariaDetalhado();
+        control.janelapai = this;
+        control.setVisible(true);
+        setStatusTela(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1017,6 +1038,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem9;

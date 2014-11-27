@@ -24,10 +24,12 @@ public class CadastrarDiaria implements InterfaceCommand {
             diaria.setNome_diaria(CadastroDiaria.jtf_nome_diaria.getText());
             diaria.setValor(getPrecoFormato((String) CadastroDiaria.jtf_valor.getText()));
             diaria.setValor_promocao(getPrecoFormato((String) CadastroDiaria.jtf_valor_promocao.getText()));
-            diaria.setMultas(getPrecoFormato((String) CadastroDiaria.jtf_multa.getText()));
+            diaria.setMultas(getPrecoFormato((String) CadastroDiaria.jtf_relocacao.getText()));
             diaria.setDias(Integer.parseInt((String) CadastroDiaria.jtf_dias.getText()));
-
-            diariaDAO.salvar(diaria);
+            diaria.setMaximo_dias(Integer.parseInt((String) CadastroDiaria.jtf_dias_maximo.getText()));
+            diaria.setAcumulativo(CadastroDiaria.jcb_acumulativo.isSelected());
+            diaria = diariaDAO.salvar(diaria);
+            CadastroDiaria.jtf_codigo_diaria.setText(diaria.getCodigo_diaria().toString());
             
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a gravação: ");

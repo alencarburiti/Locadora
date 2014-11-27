@@ -4,6 +4,8 @@
  */
 package br.com.locadora.model.bean;
 
+import java.util.List;
+
 /**
  *
  * @author Alencar
@@ -14,8 +16,14 @@ public class Diaria {
     private String nome_diaria;
     private Double valor;
     private Double valor_promocao;
-    private Integer dias;
+    private Integer dias = 0;
     private Double multas;
+    private Integer maximo_dias;
+    private Integer dias_previsto = 0;
+    private Boolean acumulativo;
+    private Integer quantidade_filme = 0;
+    private List<Promocao> listPromocao;
+    private Promocao promocao;
 
     /**
      * @return the codigo_diaria
@@ -99,6 +107,54 @@ public class Diaria {
      */
     public void setMultas(Double multas) {
         this.multas = multas;
-    } 
-    
+    }
+
+    public Integer getMaximo_dias() {
+        return maximo_dias;
+    }
+
+    public void setMaximo_dias(Integer maximo_dias) {
+        this.maximo_dias = maximo_dias;
+    }
+
+    public Boolean getAcumulativo() {
+        return acumulativo;
+    }
+
+    public void setAcumulativo(Boolean acumulativo) {
+        this.acumulativo = acumulativo;
+    }
+
+    public Integer getQuantidade_filme() {
+        return quantidade_filme;
+    }
+
+    public void setQuantidade_filme(Integer quantidade_filme) {
+        this.quantidade_filme = quantidade_filme;
+    }
+
+    public Integer getDias_previsto() {
+        return dias_previsto;
+    }
+
+    public void setDias_previsto(Integer dias_previsto) {
+        this.dias_previsto = dias_previsto;
+    }
+
+    public List<Promocao> getListPromocao() {
+        return listPromocao;
+    }
+
+    public void setListPromocao(List<Promocao> listPromocao) {
+        this.listPromocao = listPromocao;
+    }
+
+    public Promocao getPromocao() {
+        return promocao;
+    }
+
+    public void setPromocao(Promocao promocao) {
+        this.promocao = promocao;
+    }
+
 }

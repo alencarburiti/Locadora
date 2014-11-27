@@ -78,7 +78,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_pesquisar = new javax.swing.JButton();
         jLabel32 = new javax.swing.JLabel();
         jtf_valor_total = new javax.swing.JTextField();
-        jLabel33 = new javax.swing.JLabel();
+        jl_debito_devolucao = new javax.swing.JLabel();
         jtf_debito_total_devolucao = new javax.swing.JTextField();
         jcb_codigo_barras_devolucao = new javax.swing.JCheckBox();
         jLabel35 = new javax.swing.JLabel();
@@ -224,7 +224,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jPanel3.add(jb_pesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 30, 30));
 
         jLabel32.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel32.setText("Total");
+        jLabel32.setText("Total:");
         jLabel32.setName("jLabel32"); // NOI18N
         jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 360, 60, 30));
 
@@ -242,10 +242,10 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         });
         jPanel3.add(jtf_valor_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, 130, 30));
 
-        jLabel33.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel33.setText("Débito Total");
-        jLabel33.setName("jLabel33"); // NOI18N
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 300, 100, 30));
+        jl_debito_devolucao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jl_debito_devolucao.setText("Débito Total");
+        jl_debito_devolucao.setName("jl_debito_devolucao"); // NOI18N
+        jPanel3.add(jl_debito_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 300, 100, 30));
 
         jtf_debito_total_devolucao.setEditable(false);
         jtf_debito_total_devolucao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -272,7 +272,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jPanel3.add(jcb_codigo_barras_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, 30));
 
         jLabel35.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel35.setText("Multa");
+        jLabel35.setText("Multa:");
         jLabel35.setName("jLabel35"); // NOI18N
         jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 90, 30));
 
@@ -702,7 +702,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -715,6 +714,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JButton jb_pesquisar;
     private javax.swing.JCheckBox jcb_codigo_barras_devolucao;
     private javax.swing.JLabel jl_codigo_devolucao;
+    private javax.swing.JLabel jl_debito_devolucao;
     public static javax.swing.JTable jtbl_devolucao;
     public static javax.swing.JTextField jtf_codigo_cliente;
     public static javax.swing.JTextField jtf_codigo_consulta_devolucao;
@@ -847,8 +847,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             setTitle("Atendimento Devolução - " + dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
             Moeda moeda = new Moeda();
-
-            Double debito;
+            
             pool = new Pool();
             DependenteDAO dependenteDAO = new DependenteDAO(pool);
 
@@ -857,10 +856,16 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             if (lancamento.getSaldo() < 0) {
                 lancamento.setSaldo(lancamento.getSaldo() * (-1));
                 jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_debito_total_devolucao.setCaretColor(Color.black);
-            } else {
+                jtf_debito_total_devolucao.setForeground(Color.black);
+                jl_debito_devolucao.setText("Saldo Total:");
+            } else if (lancamento.getSaldo() > 0) {
                 jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_debito_total_devolucao.setCaretColor(Color.red);
+                jtf_debito_total_devolucao.setForeground(Color.red);
+                jl_debito_devolucao.setText("Débito Total:");                
+            } else {
+                jtf_debito_total_devolucao.setText("R$ 0,00");
+                jl_debito_devolucao.setText("Saldo:");   
+                jtf_debito_total_devolucao.setForeground(Color.black);
             }
 
             jtf_codigo_consulta_devolucao.requestFocus();

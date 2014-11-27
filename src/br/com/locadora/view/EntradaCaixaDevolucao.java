@@ -6,6 +6,8 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.model.dao.DevolucaoDAO;
+import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Printer;
@@ -433,7 +435,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         });
         getContentPane().add(jb_cancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, -1, 35));
 
-        setSize(new java.awt.Dimension(484, 606));
+        setSize(new java.awt.Dimension(474, 606));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -520,11 +522,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     private void jtf_valor_pagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_pagoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("Campo jtf_desconto == " + jtf_desconto.isEditable());
-            if (jtf_desconto.isEditable() == true) {
-                jtf_desconto.requestFocus();
-            } else {
                 jb_salvar.requestFocus();
-            }
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -901,9 +899,13 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                     if (verificaLogin()) {
                         if (janelapaiDevolucao != null) {
 
+                            calculaRelocacao();
+                            
                             controller = new SiscomController();
                             controller.processarRequisicao("cadastrarDevolucao");
 
+                            
+                            
                             jpf_senha.setEnabled(false);
                             jb_logar.setEnabled(false);
                             jtf_valor_pago.setEnabled(false);
@@ -930,6 +932,21 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Caixa padrão não definido. Favor verificar");
         }
+    }
+    
+    public void calculaRelocacao(){
+        pool = new Pool();
+        LocacaoDAO locaDAO = new LocacaoDAO(pool);
+        List<ItemLocacao> itensRelocacao = AtendimentoDevolucao.itensDevolucao;
+        List<ItemLocacao> itensGravarRelocao = new ArrayList<ItemLocacao>();
+        for(int i = 0; i < itensRelocacao.size(); i++){
+            if(itensRelocacao.get(i).getDias_multa()>0){
+                itensGravarRelocao.add(itensRelocacao.get(i));
+            }
+        }
+        
+        locaDAO.salvarRelocacao(itensGravarRelocao);        
+                
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {

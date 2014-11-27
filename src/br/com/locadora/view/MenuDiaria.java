@@ -350,6 +350,8 @@ public class MenuDiaria extends javax.swing.JFrame {
             diaria.setDias(diarias.get(tb.getSelectedRow()).getDias());
             diaria.setValor(diarias.get(tb.getSelectedRow()).getValor());
             diaria.setMultas(diarias.get(tb.getSelectedRow()).getMultas());
+            diaria.setMaximo_dias(diarias.get(tb.getSelectedRow()).getMaximo_dias());
+            diaria.setAcumulativo(diarias.get(tb.getSelectedRow()).getAcumulativo());
         } else {
             diaria = null;
         }

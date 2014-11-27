@@ -16,7 +16,6 @@ import br.com.locadora.model.dao.InterfaceLocacaoDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.view.AtendimentoDevolucao;
-import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
 import java.sql.SQLException;
 import java.util.ArrayList;
