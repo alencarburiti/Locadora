@@ -83,6 +83,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jlabel_usuario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jMB_Cadastro = new javax.swing.JMenuBar();
         menu_cadastros = new javax.swing.JMenu();
         jmi_cliente = new javax.swing.JMenuItem();
@@ -235,7 +236,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel3.setName("jLabel3"); // NOI18N
         jToolBar1.add(jLabel3);
 
-        getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1340, 25));
+        getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 650, 1340, 25));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY.png"))); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, -1, -1));
 
         jMB_Cadastro.setName("jMB_Cadastro"); // NOI18N
 
@@ -1007,6 +1012,7 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMB_Cadastro;

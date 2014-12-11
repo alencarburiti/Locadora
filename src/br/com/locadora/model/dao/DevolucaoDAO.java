@@ -426,7 +426,7 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
         PreparedStatement ps;
 
         String sqlLancamento = "INSERT INTO `locadora`.`lancamento`(`valor`,`dependente_CODIGO_DEPENDENTE`,\n" +
-            "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,data_lancamento, caixai_codigo_caixa)\n" +
+            "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,data_lancamento, caixa_codigo_caixa)\n" +
             "VALUES(?,?,?,?,CURRENT_DATE(),?);";
 
         try {

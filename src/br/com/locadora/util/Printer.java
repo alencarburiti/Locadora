@@ -8,6 +8,7 @@ package br.com.locadora.util;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixa;
 import br.com.locadora.view.EntradaCaixaDevolucao;
 import java.io.ByteArrayInputStream;
@@ -80,10 +81,11 @@ public class Printer {
                     SimpleDateFormat dateFormat = new SimpleDateFormat(espelho);
                     String data_formatada = dateFormat.format(itens.get(x).getData_prevista());
                     data_formatada = data_formatada.substring(0, 5);
-
-                    linhasTxt.print(String.format("%-21s", itens.get(x).getCopia().getObjeto().getDescricao_objeto()));
+                    String descricao_objeto = itens.get(x).getCopia().getObjeto().getDescricao_objeto();
+                    
+                    linhasTxt.print(String.format("%-21s", descricao_objeto.substring(0, 19)));
                     linhasTxt.print(String.format("%-7s", data_formatada));
-                    linhasTxt.print(moeda.setPrecoFormat(String.valueOf(itens.get(x).getCopia().getObjeto().getDiaria().getValor())));
+                    linhasTxt.print(moeda.setPrecoFormat(String.valueOf(AtendimentoLocacao.jtbl_locacao.getValueAt(x, 2).toString())));
                     linhasTxt.println();
                 }
                 Double total_locacao = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_total_a_pagar.getText());
@@ -182,12 +184,14 @@ public class Printer {
                 }
                 Double total_devolucao = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_total_a_pagar.getText());
                 Double desconto = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_desconto.getText());
-                Double subTotal = total_devolucao - desconto;
+                Double desconto_entrega_antecipada = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
+                Double subTotal = total_devolucao - (desconto + desconto_entrega_antecipada);
 
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_debito_anterior.getText());
                 linhasTxt.println("Débito Devolução (-):       " + EntradaCaixaDevolucao.jtf_debito_devolucao.getText());
                 linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaDevolucao.jtf_desconto.getText());
+                linhasTxt.println("Valor Desc. Dev. Antec. (+):" + EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
                 linhasTxt.println("Valor Pago (+):             " + EntradaCaixaDevolucao.jtf_valor_pago.getText());
                 linhasTxt.println("Troco (-):                  " + EntradaCaixaDevolucao.jtf_troco.getText());

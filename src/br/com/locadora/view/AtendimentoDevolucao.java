@@ -7,11 +7,14 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.Produto;
+import br.com.locadora.model.bean.PromocaoDevolucao;
 import br.com.locadora.model.dao.DependenteDAO;
+import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
@@ -27,6 +30,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -55,7 +60,9 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     public ItemLocacao itemDevolucao;
     public Moeda moeda;
     public Lancamento lancamento;
-    AcessoUsuario acesso;
+    public AcessoUsuario acesso;
+    public DiariaDAO diariaDAO;
+    public List<Diaria> promocoesDevolucao;
 
     public AtendimentoDevolucao() {
         initComponents();
@@ -86,15 +93,14 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_finalizar = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
+        jLabel36 = new javax.swing.JLabel();
+        jtf_valor_desconto_entrega_antecipada = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtf_codigo_cliente = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jtf_nome_cliente = new javax.swing.JTextField();
         jb_cliente = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -147,14 +153,14 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código de Barras", "Nome Objeto", "Data Locação", "Valor Multa", "Dia Atraso"
+                "Código de Barras", "Nome Objeto", "Data Locação", "Valor Relocação", "Dias Atraso", "Entrega Antecipada Desc."
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -168,14 +174,15 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jtbl_devolucao.setName("jtbl_devolucao"); // NOI18N
         jScrollPane3.setViewportView(jtbl_devolucao);
         if (jtbl_devolucao.getColumnModel().getColumnCount() > 0) {
-            jtbl_devolucao.getColumnModel().getColumn(0).setPreferredWidth(40);
-            jtbl_devolucao.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jtbl_devolucao.getColumnModel().getColumn(2).setPreferredWidth(30);
+            jtbl_devolucao.getColumnModel().getColumn(0).setPreferredWidth(20);
+            jtbl_devolucao.getColumnModel().getColumn(1).setPreferredWidth(140);
+            jtbl_devolucao.getColumnModel().getColumn(2).setPreferredWidth(20);
             jtbl_devolucao.getColumnModel().getColumn(3).setPreferredWidth(20);
-            jtbl_devolucao.getColumnModel().getColumn(4).setPreferredWidth(20);
+            jtbl_devolucao.getColumnModel().getColumn(4).setPreferredWidth(10);
+            jtbl_devolucao.getColumnModel().getColumn(5).setPreferredWidth(50);
         }
 
-        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 780, 220));
+        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 780, 210));
 
         jtf_nome_objeto_devolucao.setEditable(false);
         jtf_nome_objeto_devolucao.setName("jtf_nome_objeto_devolucao"); // NOI18N
@@ -226,7 +233,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jLabel32.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel32.setText("Total:");
         jLabel32.setName("jLabel32"); // NOI18N
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 360, 60, 30));
+        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 50, 30));
 
         jtf_valor_total.setEditable(false);
         jtf_valor_total.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -240,12 +247,12 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 jtf_valor_totalFocusLost(evt);
             }
         });
-        jPanel3.add(jtf_valor_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, 130, 30));
+        jPanel3.add(jtf_valor_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 390, 130, 30));
 
         jl_debito_devolucao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jl_debito_devolucao.setText("Débito Total");
+        jl_debito_devolucao.setText("Débito Total:");
         jl_debito_devolucao.setName("jl_debito_devolucao"); // NOI18N
-        jPanel3.add(jl_debito_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 300, 100, 30));
+        jPanel3.add(jl_debito_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 300, 110, 30));
 
         jtf_debito_total_devolucao.setEditable(false);
         jtf_debito_total_devolucao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -274,7 +281,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jLabel35.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel35.setText("Multa:");
         jLabel35.setName("jLabel35"); // NOI18N
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 90, 30));
+        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 330, 60, 30));
 
         jtf_valor_multa.setEditable(false);
         jtf_valor_multa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -303,7 +310,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 jb_finalizarKeyPressed(evt);
             }
         });
-        jPanel3.add(jb_finalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 110, 50));
+        jPanel3.add(jb_finalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 110, 50));
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
         jButton10.setText("Limpar");
@@ -318,7 +325,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 jButton10KeyPressed(evt);
             }
         });
-        jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 350, 100, 50));
+        jPanel3.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 100, 50));
 
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Sair");
@@ -334,7 +341,26 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 jb_cancelarKeyPressed(evt);
             }
         });
-        jPanel3.add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, 90, 50));
+        jPanel3.add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, 90, 50));
+
+        jLabel36.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel36.setText("Desconto Entr. Antecipada:");
+        jLabel36.setName("jLabel36"); // NOI18N
+        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 190, 30));
+
+        jtf_valor_desconto_entrega_antecipada.setEditable(false);
+        jtf_valor_desconto_entrega_antecipada.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_valor_desconto_entrega_antecipada.setText("R$ 0,00");
+        jtf_valor_desconto_entrega_antecipada.setName("jtf_valor_desconto_entrega_antecipada"); // NOI18N
+        jtf_valor_desconto_entrega_antecipada.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_valor_desconto_entrega_antecipadaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_valor_desconto_entrega_antecipadaFocusLost(evt);
+            }
+        });
+        jPanel3.add(jtf_valor_desconto_entrega_antecipada, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, 130, 30));
 
         jtp_locacao.addTab("Devolução", jPanel3);
 
@@ -388,21 +414,6 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(20, 20, 500, 80);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Atendente"));
-        jPanel2.setName("jPanel2"); // NOI18N
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "alencarburiti", "teste\t", "eliesioxavier", "Item 4" }));
-        jComboBox1.setName("jComboBox1"); // NOI18N
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 40));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/reload.png"))); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
-
-        getContentPane().add(jPanel2);
-        jPanel2.setBounds(620, 20, 200, 80);
 
         setSize(new java.awt.Dimension(871, 608));
         setLocationRelativeTo(null);
@@ -517,10 +528,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (jcb_codigo_barras_devolucao.isSelected() == true) {
                 consultarCopiaLocada(jtf_codigo_consulta_devolucao.getText().trim());
-            }            
+            }
         }
         acionarAtalho(evt);
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             ConsultaCopiaDevolucao copiaDevolucao = new ConsultaCopiaDevolucao();
             copiaDevolucao.janelapaiDevolucao = this;
@@ -602,6 +613,14 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10KeyPressed
+
+    private void jtf_valor_desconto_entrega_antecipadaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_desconto_entrega_antecipadaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_valor_desconto_entrega_antecipadaFocusGained
+
+    private void jtf_valor_desconto_entrega_antecipadaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_desconto_entrega_antecipadaFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_valor_desconto_entrega_antecipadaFocusLost
     public static boolean validaData(String dataString) throws java.text.ParseException {
         if (!dataString.equals("")) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -695,17 +714,15 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton10;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_cancelar;
@@ -721,6 +738,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public static javax.swing.JTextField jtf_debito_total_devolucao;
     public static javax.swing.JTextField jtf_nome_cliente;
     private javax.swing.JTextField jtf_nome_objeto_devolucao;
+    public static javax.swing.JTextField jtf_valor_desconto_entrega_antecipada;
     public static javax.swing.JTextField jtf_valor_multa;
     public static javax.swing.JTextField jtf_valor_total;
     private javax.swing.JTabbedPane jtp_locacao;
@@ -768,40 +786,223 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
     }
 
+    public String convertMilisHora(long resultado) {
+        long conversaoSegundos = TimeUnit.MILLISECONDS.toSeconds(resultado);
+        String retornodeHoras;
+        int hr = (int) (conversaoSegundos / 3600);
+        int rem = (int) (conversaoSegundos % 3600);
+        int mn = rem / 60;
+        int sec = rem % 60;
+        String hrStr = (hr < 10 ? "0" : "") + hr;
+        String mnStr = (mn < 10 ? "0" : "") + mn;
+        String secStr = (sec < 10 ? "0" : "") + sec;
+        retornodeHoras = (hrStr + ":" + mnStr + ":" + secStr);
+        return retornodeHoras;
+    }
+
+    public Double calcularDescontoEntregaAntecipado(ItemLocacao itemLocacao) {
+        Double desconto_entrega_antecipada = 0.00;
+        String retornodeHoras;
+        Calendar cal;
+        long resultado;
+        try {
+            pool = new Pool();
+            diariaDAO = new DiariaDAO(pool);
+            promocoesDevolucao = null;
+            promocoesDevolucao = diariaDAO.getDiariaPromocaoDevolucao(itemLocacao.getCopia().getObjeto().getDiaria());
+
+            DateFormat df_data_hora_locada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            DateFormat df_data = new java.text.SimpleDateFormat("dd/MM/yyyy");
+            DateFormat df_hora = new SimpleDateFormat("HH:mm:ss");
+            System.out.println("===============Calculo Desconto Entrega Antecipada=============");
+            System.out.println("Data e Hora Locada: " + df_data_hora_locada.format(itemLocacao.getData_locacao()));
+
+            if (promocoesDevolucao.size() > 0) {
+
+                for (int i = 0; i < promocoesDevolucao.size(); i++) {
+                    System.out.println("===============Inicio Calculo=============");
+                    String df_horario_locacao = promocoesDevolucao.get(i).getPromocaoDevolucao().getHorario_locacao();
+                    String df_horario_devolucao = promocoesDevolucao.get(i).getPromocaoDevolucao().getHorario_devolucao();
+                    String df_horas_antecipada = promocoesDevolucao.get(i).getPromocaoDevolucao().getHora_antecipada();
+
+                    Date horario_locacao;
+                    Date horario_devolucao;
+                    Date horas_antecipada = df_hora.parse(df_horas_antecipada);
+
+                    cal = Calendar.getInstance();
+                    cal.setTime(itemLocacao.getData_locacao());
+                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+                    String data = new SimpleDateFormat("dd/MM/yyyy").format(cal.getTime());
+
+                    String data_locacao_promocao = data + " " + df_horario_locacao;
+                    horario_locacao = df_data_hora_locada.parse(data_locacao_promocao);
+                    System.out.println("Horário Locação: " + df_data_hora_locada.format(horario_locacao));
+
+                    Date data_devolucao = Calendar.getInstance().getTime();
+                    Date horas_24 = df_hora.parse("24:00:00");
+
+                    //Verifica se a devolução virou o dia
+//                    resultado = 0;
+//                    resultado = itemLocacao.getData_locacao().getTime() + data_devolucao.getTime();
+//                    retornodeHoras = convertMilisHora(resultado);
+//                    Date total_horas_ate_entregar = df_hora.parse(retornodeHoras);
+                    //Transformar a data apenas em horas
+                    resultado = 0;
+                    resultado = itemLocacao.getData_locacao().getTime();
+                    retornodeHoras = convertMilisHora(resultado);
+                    Date data_locacao = df_hora.parse(retornodeHoras);
+
+                    //Tempo gasto para devolver                    
+                    resultado = 0;
+                    resultado = data_devolucao.getTime() - itemLocacao.getData_locacao().getTime();
+                    retornodeHoras = convertMilisHora(resultado);
+                    Date quantidade_horas_antecipada = df_hora.parse(retornodeHoras);
+
+//                    //Verifica se é permitido virar o dia para a promocao
+//                    resultado = 0;
+//                    resultado = horario_locacao.getTime() + horas_antecipada.getTime();
+//                    retornodeHoras = convertMilisHora(resultado);
+//                    Date total_horas_permitido_entregar = df_hora.parse(retornodeHoras);
+//                    System.out.println("Total horas permitido entregar: " + df_data_hora_locada.format(total_horas_permitido_entregar));
+//                    System.out.println("Vira após: " + df_data_hora_locada.format(horas_24));
+                    //Horas antecipadas
+                    Calendar cal_hora_antecipada = Calendar.getInstance();
+                    cal_hora_antecipada.setTime(horas_antecipada);
+
+                    //Adicionar as horas de antecipacao no horario de locacao e inserir em nova variavel
+                    cal = Calendar.getInstance();
+                    cal.setTime(horario_locacao);
+                    cal.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY) + cal_hora_antecipada.get(Calendar.HOUR_OF_DAY));
+                    cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) + cal_hora_antecipada.get(Calendar.MINUTE));
+                    cal.set(Calendar.SECOND, cal.get(Calendar.SECOND) + cal_hora_antecipada.get(Calendar.SECOND));
+
+                    System.out.println("Previsão de Entrega: " + df_data_hora_locada.format(cal.getTime()));
+
+                    System.out.println("Horas antecipadas para Entrega: " + df_hora.format(horas_antecipada));
+                    horas_antecipada = cal.getTime();
+                    Calendar hora_atual = Calendar.getInstance();
+
+                    Calendar data_inicial = Calendar.getInstance();
+                    data_inicial.setTime(horario_locacao);
+                    data_inicial.set(Calendar.HOUR_OF_DAY, 0);
+                    data_inicial.set(Calendar.MINUTE, 0);
+                    data_inicial.set(Calendar.SECOND, 0);
+                    data_inicial.set(Calendar.MILLISECOND, 0);
+                    data_inicial.getTime();
+
+                    Calendar data_final = Calendar.getInstance();
+                    data_final.setTime(horas_antecipada);
+                    data_final.set(Calendar.HOUR_OF_DAY, 0);
+                    data_final.set(Calendar.MINUTE, 0);
+                    data_final.set(Calendar.SECOND, 0);
+                    data_final.set(Calendar.MILLISECOND, 0);
+                    data_final.getTime();
+
+                    System.out.println("Verificar se a Entrega será em dias diferentes: " + (data_final.after(data_inicial)));
+
+                    if (data_final.after(data_inicial)) {
+
+                        cal = Calendar.getInstance();
+                        cal.setTime(itemLocacao.getData_locacao());
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                        String d1 = new SimpleDateFormat("dd/MM/yyyy").format(cal.getTime());
+
+                        String data_devolucao_promocao = d1 + " " + df_horario_devolucao;
+                        horario_devolucao = df_data_hora_locada.parse(data_devolucao_promocao);
+                        System.out.println("Horário Devolução: " + df_data_hora_locada.format(horario_devolucao));
+
+                    } else {
+                        cal = Calendar.getInstance();
+                        cal.setTime(itemLocacao.getData_locacao());
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+                        String d1 = new SimpleDateFormat("dd/MM/yyyy").format(cal.getTime());
+
+                        String data_devolucao_promocao = d1 + " " + df_horario_devolucao;
+                        horario_devolucao = df_data_hora_locada.parse(data_devolucao_promocao);
+                        System.out.println("Horário Devolução: " + df_data_hora_locada.format(horario_devolucao));
+                    }
+
+                    System.out.println("Data da Locação ---> " + df_hora.format(itemLocacao.getData_locacao().getTime()));
+                    System.out.println("Data da Devolução ---> " + df_hora.format(data_devolucao.getTime()));
+
+                    System.out.println("Condição 1 --> antecipada_permitida >= antecipada  ---> " + (horas_antecipada.getTime() >= quantidade_horas_antecipada.getTime()));
+                    if (horas_antecipada.getTime() >= quantidade_horas_antecipada.getTime()) {
+
+                        System.out.println("Condição 2 ---> (data_locacao > horario_locacao) ---> " + (data_locacao.getTime() > horario_locacao.getTime()));
+                        System.out.println("Param. 1 ---> " + data_locacao);
+                        System.out.println("Param. 2 ---> " + horario_locacao);
+                        System.out.println("Condição 2.1 ---> data_locacao < horario_devolucao ---> " + (data_locacao.getTime() < horario_devolucao.getTime()));
+                        System.out.println("Param. 1 ---> " + data_locacao);
+                        System.out.println("Param. 2 ---> " + horario_devolucao);
+
+                        if (itemLocacao.getData_locacao().getTime() > horario_locacao.getTime() && itemLocacao.getData_locacao().getTime() < horario_devolucao.getTime()) {
+
+                            System.out.println("Condição 3.1 ---> (data_devolucao < horario_devolucao) ---> " + (data_devolucao.getTime() < horario_devolucao.getTime()));
+                            System.out.println("Param. 1 ---> " + data_devolucao);
+                            System.out.println("Param. 2 ---> " + horario_devolucao);
+                            if (data_devolucao.getTime() < horario_devolucao.getTime()) {
+                                desconto_entrega_antecipada = promocoesDevolucao.get(i).getPromocaoDevolucao().getValor_promocao_devolucao();
+                                System.out.println("Desconto: " + desconto_entrega_antecipada);
+                                System.out.println("Com desconto");
+                                break;
+                            } else {
+                                desconto_entrega_antecipada = 0.00;
+                                System.out.println("Demorou devolver ");
+                            }
+                        } else {
+                            desconto_entrega_antecipada = 0.00;
+                            System.out.println("Fora do periodo de locacao e devolucao");
+                        }
+
+                    } else {
+                        desconto_entrega_antecipada = 0.00;
+                        System.out.println("Tempo excedido");
+                    }
+                    System.out.println("===============Fim Calculo=============");
+                }
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(AtendimentoDevolucao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return desconto_entrega_antecipada;
+
+    }
+
     public void adicionarItemDevolvido(ItemLocacao itemLocacao) {
+
+        Double multa;
+        DateFormat df_data_hora_locada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         if (itemLocacao != null) {
             if (verificaTabela(itemLocacao) == false) {
-                try {
-                    SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-                    SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
 
-                    Moeda moeda = new Moeda();
-                    String data_locacao;
-                    data_locacao = out.format(in.parse(itemLocacao.getData_locacao().toString()));
+                moeda = new Moeda();
+                multa = itemLocacao.getValor_multa();
+                Double desconto_entrega_antecipada = calcularDescontoEntregaAntecipado(itemLocacao);
+                adicionarMulta(multa);
 
-                    Double multa;
-                    multa = itemLocacao.getValor_multa();
-
-                    adicionarMulta(multa);
-                    adicionarValorTotal();
-
-                    DefaultTableModel row = (DefaultTableModel) AtendimentoDevolucao.jtbl_devolucao.getModel();
-                    ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
-                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao,
-                        moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
-
-                    itensDevolucao.add(itemLocacao);
-                    limparItemDevolvido();
-                } catch (ParseException ex) {
-                    Logger.getLogger(AtendimentoDevolucao.class.getName()).log(Level.SEVERE, null, ex);
-                    
+                if (desconto_entrega_antecipada != 0.00) {
+                    if (itemLocacao.getValor_locado() > desconto_entrega_antecipada) {
+                        adicionarDesconto(desconto_entrega_antecipada);
+                    } else {
+                        desconto_entrega_antecipada = 0.00;
+                    }
                 }
+                adicionarValorTotal();
+
+                DefaultTableModel row = (DefaultTableModel) AtendimentoDevolucao.jtbl_devolucao.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
+                row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, df_data_hora_locada.format(itemLocacao.getData_locacao()),
+                    moeda.setPrecoFormat(itemLocacao.getValor_multa().toString()), itemLocacao.getDias_multa(),
+                    moeda.setPrecoFormat(desconto_entrega_antecipada.toString())});
+                itensDevolucao.add(itemLocacao);
+                limparItemDevolvido();
             } else {
                 JOptionPane.showMessageDialog(null, "Esta cópia já foi adicionada");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Objeto inválido para adicionar");
         }
+
     }
 
     public void limparItemDevolvido() {
@@ -847,7 +1048,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             setTitle("Atendimento Devolução - " + dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
             Moeda moeda = new Moeda();
-            
+
             pool = new Pool();
             DependenteDAO dependenteDAO = new DependenteDAO(pool);
 
@@ -861,10 +1062,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             } else if (lancamento.getSaldo() > 0) {
                 jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_debito_total_devolucao.setForeground(Color.red);
-                jl_debito_devolucao.setText("Débito Total:");                
+                jl_debito_devolucao.setText("Débito Total:");
             } else {
                 jtf_debito_total_devolucao.setText("R$ 0,00");
-                jl_debito_devolucao.setText("Saldo:");   
+                jl_debito_devolucao.setText("Saldo:");
                 jtf_debito_total_devolucao.setForeground(Color.black);
             }
 
@@ -950,11 +1151,14 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         moeda = new Moeda();
         Double valor_total;
         Double valor_adicionar;
+        Double desconto_entrega_antecipada;
         valor_adicionar = moeda.getPrecoFormato(jtf_valor_multa.getText());
 
         valor_total = moeda.getPrecoFormato(jtf_debito_total_devolucao.getText());
 
-        valor_total = valor_total + valor_adicionar;
+        desconto_entrega_antecipada = moeda.getPrecoFormato(jtf_valor_desconto_entrega_antecipada.getText());
+                
+        valor_total = (valor_total + valor_adicionar)-desconto_entrega_antecipada;
 
         jtf_valor_total.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
     }
@@ -970,6 +1174,19 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         valor_total = valor_total + valor_adicionar;
 
         jtf_valor_multa.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
+    }
+
+    public void adicionarDesconto(Double valor) {
+        moeda = new Moeda();
+        Double valor_total;
+        Double valor_adicionar;
+        valor_adicionar = valor;
+
+        valor_total = moeda.getPrecoFormato(jtf_valor_desconto_entrega_antecipada.getText());
+
+        valor_total = valor_total + valor_adicionar;
+
+        jtf_valor_desconto_entrega_antecipada.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {

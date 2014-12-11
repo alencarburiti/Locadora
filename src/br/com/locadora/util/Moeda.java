@@ -62,6 +62,7 @@ public class Moeda {
            
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");
+            ex.printStackTrace();
         }
         return precoFormatado;
     }

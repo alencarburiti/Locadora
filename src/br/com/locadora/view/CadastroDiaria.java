@@ -15,7 +15,8 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.bean.Promocao;
+import br.com.locadora.model.bean.PromocaoDevolucao;
+import br.com.locadora.model.bean.PromocaoLocacao;
 import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
@@ -23,17 +24,17 @@ import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.UnaccentedDocument;
-import static br.com.locadora.view.AtualizaDiaria.jtf_ganhar_quantidade;
-import static br.com.locadora.view.AtualizaDiaria.jtf_locar_quantidade;
-import static br.com.locadora.view.AtualizaDiaria.jtf_ordem;
-import static br.com.locadora.view.AtualizaDiaria.jtf_relocacao;
-import static br.com.locadora.view.AtualizaDiaria.jtf_valor_promocao;
+
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -43,12 +44,15 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     public MenuDiaria janelapai;
     public Diaria diaria;
-    public Promocao promocao;
+    public PromocaoLocacao promocaoLocacao;
+    public PromocaoDevolucao promocaoDevolucao;
     public ConsultaDiariaObjeto janelapaiConsulta;
     public List<Diaria> generos;
     public AcessoUsuario acesso;
-    public List<Diaria> itensPromocao;
+    public List<Diaria> itensPromocaoLocacao;
+    public List<Diaria> itensPromocaoDevolucao;
     public Moeda moeda;
+    public MaskFormatter formatoHora;
 
     /**
      * Creates new form DestinoCadastroGUI
@@ -56,7 +60,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     public CadastroDiaria() {
         initComponents();
         janelapai = null;
-        itensPromocao = new ArrayList<Diaria>();
+        itensPromocaoLocacao = new ArrayList<Diaria>();
     }
 
     @SuppressWarnings("unchecked")
@@ -88,24 +92,63 @@ public class CadastroDiaria extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jtf_dias_maximo = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jcb_acumulativo = new javax.swing.JCheckBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtbl_promocao = new javax.swing.JTable();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jtf_valor_promocao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jtf_valor_promocao_locacao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel5 = new javax.swing.JLabel();
         jtf_ordem = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel8 = new javax.swing.JLabel();
-        jb_eliminar1 = new javax.swing.JButton();
-        jb_adicionar_promocao = new javax.swing.JButton();
-        jtf_descricao_promocao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jb_eliminar_promocao_locacao = new javax.swing.JButton();
+        jb_adicionar_promocao_locacao = new javax.swing.JButton();
+        jtf_descricao_locacao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel12 = new javax.swing.JLabel();
-        jcb_a_vista = new javax.swing.JCheckBox();
-        jLabel13 = new javax.swing.JLabel();
-        jtf_hora_antecipada = new javax.swing.JTextField();
+        jcb_a_vista_locacao = new javax.swing.JCheckBox();
         jLabel16 = new javax.swing.JLabel();
         jtf_locar_quantidade = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jtf_ganhar_quantidade = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel17 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtbl_promocao_locacao = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jb_eliminar_promocao_devolucao = new javax.swing.JButton();
+        jb_adicionar_promocao_devolucao = new javax.swing.JButton();
+        jtf_descricao_devolucao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jLabel14 = new javax.swing.JLabel();
+        jcb_a_vista_devolucao = new javax.swing.JCheckBox();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jtf_valor_promocao_devolucao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        try  {
+            formatoHora = new MaskFormatter("##:##:##");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_horas_antecipada = new JFormattedTextField(formatoHora);
+        try  {
+            formatoHora = new MaskFormatter("##:##:##");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_horario_locacao = new JFormattedTextField(formatoHora);
+        try  {
+            formatoHora = new MaskFormatter("##:##:##");
+        }
+        catch (Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar");
+        }
+        jtf_horario_devolucao = new JFormattedTextField(formatoHora);
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtbl_promocao_devolucao = new javax.swing.JTable();
 
         jCheckBox2.setText("jCheckBox2");
         jCheckBox2.setName("jCheckBox2"); // NOI18N
@@ -116,11 +159,11 @@ public class CadastroDiaria extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -138,17 +181,17 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 jb_salvarKeyPressed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, 35));
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, -1, 35));
 
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setText("Sair");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, -1, 35));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, 35));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias de Promoção"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -194,7 +237,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
         jcb_quarta.setName("jcb_quarta"); // NOI18N
         jPanel1.add(jcb_quarta, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 360, 130));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 370, 130));
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.setName("jPanel2"); // NOI18N
@@ -320,69 +363,37 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
                 getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 430, 130));
 
-                jScrollPane1.setName("jScrollPane1"); // NOI18N
+                jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
-                jtbl_promocao.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-
-                    },
-                    new String [] {
-                        "Código", "Descrição", "Valor Promoção", "Hora Antecipada", "Locar Qtd.", "Ganhar Qtd.", "À vista", "Ordem"
-                    }
-                ) {
-                    Class[] types = new Class [] {
-                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class
-                    };
-                    boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false, false, false
-                    };
-
-                    public Class getColumnClass(int columnIndex) {
-                        return types [columnIndex];
-                    }
-
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {
-                        return canEdit [columnIndex];
-                    }
-                });
-                jtbl_promocao.setName("jtbl_promocao"); // NOI18N
-                jScrollPane1.setViewportView(jtbl_promocao);
-                if (jtbl_promocao.getColumnModel().getColumnCount() > 0) {
-                    jtbl_promocao.getColumnModel().getColumn(0).setPreferredWidth(20);
-                    jtbl_promocao.getColumnModel().getColumn(6).setResizable(false);
-                    jtbl_promocao.getColumnModel().getColumn(6).setPreferredWidth(20);
-                    jtbl_promocao.getColumnModel().getColumn(7).setResizable(false);
-                    jtbl_promocao.getColumnModel().getColumn(7).setPreferredWidth(20);
-                }
-
-                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 800, 200));
+                jPanel4.setName("jPanel4"); // NOI18N
+                jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
                 jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes"));
                 jPanel3.setName("jPanel3"); // NOI18N
                 jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
                 jtf_nome_diaria.setDocument(new UnaccentedDocument());
-                jtf_valor_promocao.setText("R$ 0,00");
-                jtf_valor_promocao.setName("jtf_valor_promocao"); // NOI18N
-                jtf_valor_promocao.addFocusListener(new java.awt.event.FocusAdapter() {
+                jtf_valor_promocao_locacao.setText("R$ 0,00");
+                jtf_valor_promocao_locacao.setName("jtf_valor_promocao_locacao"); // NOI18N
+                jtf_valor_promocao_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
                     public void focusGained(java.awt.event.FocusEvent evt) {
-                        jtf_valor_promocaoFocusGained(evt);
+                        jtf_valor_promocao_locacaoFocusGained(evt);
                     }
                     public void focusLost(java.awt.event.FocusEvent evt) {
-                        jtf_valor_promocaoFocusLost(evt);
+                        jtf_valor_promocao_locacaoFocusLost(evt);
                     }
                 });
-                jtf_valor_promocao.addKeyListener(new java.awt.event.KeyAdapter() {
+                jtf_valor_promocao_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
                     public void keyPressed(java.awt.event.KeyEvent evt) {
-                        jtf_valor_promocaoKeyPressed(evt);
+                        jtf_valor_promocao_locacaoKeyPressed(evt);
                     }
                 });
-                jPanel3.add(jtf_valor_promocao, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 90, 30));
+                jPanel3.add(jtf_valor_promocao_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 100, 30));
 
                 jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                 jLabel5.setText("Valor Promoção");
                 jLabel5.setName("jLabel5"); // NOI18N
-                jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, 20));
+                jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, 20));
 
                 jtf_ordem.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
                     public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
@@ -404,76 +415,68 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             jtf_ordemKeyPressed(evt);
                         }
                     });
-                    jPanel3.add(jtf_ordem, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 50, -1));
+                    jPanel3.add(jtf_ordem, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 50, -1));
 
                     jLabel8.setText("Ordem");
                     jLabel8.setName("jLabel8"); // NOI18N
-                    jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, -1, 20));
+                    jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, 20));
 
-                    jb_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
-                    jb_eliminar1.setToolTipText("Excluir");
-                    jb_eliminar1.setName("jb_eliminar1"); // NOI18N
-                    jb_eliminar1.addActionListener(new java.awt.event.ActionListener() {
+                    jb_eliminar_promocao_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+                    jb_eliminar_promocao_locacao.setToolTipText("Excluir");
+                    jb_eliminar_promocao_locacao.setName("jb_eliminar_promocao_locacao"); // NOI18N
+                    jb_eliminar_promocao_locacao.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            jb_eliminar1ActionPerformed(evt);
+                            jb_eliminar_promocao_locacaoActionPerformed(evt);
                         }
                     });
-                    jb_eliminar1.addKeyListener(new java.awt.event.KeyAdapter() {
+                    jb_eliminar_promocao_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
                         public void keyPressed(java.awt.event.KeyEvent evt) {
-                            jb_eliminar1KeyPressed(evt);
+                            jb_eliminar_promocao_locacaoKeyPressed(evt);
                         }
                     });
-                    jPanel3.add(jb_eliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, 30, 30));
+                    jPanel3.add(jb_eliminar_promocao_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 30, 30));
 
-                    jb_adicionar_promocao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
-                    jb_adicionar_promocao.setToolTipText("Incluir");
-                    jb_adicionar_promocao.setName("jb_adicionar_promocao"); // NOI18N
-                    jb_adicionar_promocao.addActionListener(new java.awt.event.ActionListener() {
+                    jb_adicionar_promocao_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
+                    jb_adicionar_promocao_locacao.setToolTipText("Incluir");
+                    jb_adicionar_promocao_locacao.setName("jb_adicionar_promocao_locacao"); // NOI18N
+                    jb_adicionar_promocao_locacao.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            jb_adicionar_promocaoActionPerformed(evt);
+                            jb_adicionar_promocao_locacaoActionPerformed(evt);
                         }
                     });
-                    jb_adicionar_promocao.addKeyListener(new java.awt.event.KeyAdapter() {
+                    jb_adicionar_promocao_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
                         public void keyPressed(java.awt.event.KeyEvent evt) {
-                            jb_adicionar_promocaoKeyPressed(evt);
+                            jb_adicionar_promocao_locacaoKeyPressed(evt);
                         }
                     });
-                    jPanel3.add(jb_adicionar_promocao, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 30, 30));
+                    jPanel3.add(jb_adicionar_promocao_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 40, 30, 30));
 
                     jtf_nome_diaria.setDocument(new UnaccentedDocument());
-                    jtf_descricao_promocao.setName("jtf_descricao_promocao"); // NOI18N
-                    jtf_descricao_promocao.addFocusListener(new java.awt.event.FocusAdapter() {
+                    jtf_descricao_locacao.setName("jtf_descricao_locacao"); // NOI18N
+                    jtf_descricao_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
                         public void focusGained(java.awt.event.FocusEvent evt) {
-                            jtf_descricao_promocaoFocusGained(evt);
+                            jtf_descricao_locacaoFocusGained(evt);
                         }
                     });
-                    jtf_descricao_promocao.addKeyListener(new java.awt.event.KeyAdapter() {
+                    jtf_descricao_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
                         public void keyPressed(java.awt.event.KeyEvent evt) {
-                            jtf_descricao_promocaoKeyPressed(evt);
+                            jtf_descricao_locacaoKeyPressed(evt);
                         }
                     });
-                    jPanel3.add(jtf_descricao_promocao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 240, -1));
+                    jPanel3.add(jtf_descricao_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 220, -1));
 
                     jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
                     jLabel12.setText("Descrição");
                     jLabel12.setName("jLabel12"); // NOI18N
                     jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-                    jcb_a_vista.setText("Aplicar esta promoção apenas para pagamentos à vista.");
-                    jcb_a_vista.setName("jcb_a_vista"); // NOI18N
-                    jPanel3.add(jcb_a_vista, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
-
-                    jLabel13.setText("Horas antecipada");
-                    jLabel13.setName("jLabel13"); // NOI18N
-                    jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, 20));
-
-                    jtf_hora_antecipada.setText("00:00");
-                    jtf_hora_antecipada.setName("jtf_hora_antecipada"); // NOI18N
-                    jPanel3.add(jtf_hora_antecipada, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 110, 30));
+                    jcb_a_vista_locacao.setText("Aplicar esta promoção apenas para pagamentos à vista.");
+                    jcb_a_vista_locacao.setName("jcb_a_vista_locacao"); // NOI18N
+                    jPanel3.add(jcb_a_vista_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
                     jLabel16.setText("Locar Qtd.");
                     jLabel16.setName("jLabel16"); // NOI18N
-                    jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
+                    jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
 
                     jtf_locar_quantidade.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
                         public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
@@ -490,7 +493,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                 jtf_locar_quantidadeKeyPressed(evt);
                             }
                         });
-                        jPanel3.add(jtf_locar_quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 70, -1));
+                        jPanel3.add(jtf_locar_quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 70, -1));
 
                         jtf_ganhar_quantidade.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
                             public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
@@ -507,15 +510,270 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jtf_ganhar_quantidadeKeyPressed(evt);
                                 }
                             });
-                            jPanel3.add(jtf_ganhar_quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 70, -1));
+                            jPanel3.add(jtf_ganhar_quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 70, -1));
 
                             jLabel17.setText("Ganha Qtd.");
                             jLabel17.setName("jLabel17"); // NOI18N
-                            jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
+                            jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
 
-                            getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 800, 100));
+                            jPanel4.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 770, 100));
 
-                            setSize(new java.awt.Dimension(849, 563));
+                            jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+                            jtbl_promocao_locacao.setModel(new javax.swing.table.DefaultTableModel(
+                                new Object [][] {
+
+                                },
+                                new String [] {
+                                    "Código", "Descrição", "Locar Qtd.", "Ganhar Qtd.", "Valor Promoção", "À vista", "Ordem"
+                                }
+                            ) {
+                                Class[] types = new Class [] {
+                                    java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class
+                                };
+                                boolean[] canEdit = new boolean [] {
+                                    false, false, false, false, false, false, false
+                                };
+
+                                public Class getColumnClass(int columnIndex) {
+                                    return types [columnIndex];
+                                }
+
+                                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                                    return canEdit [columnIndex];
+                                }
+                            });
+                            jtbl_promocao_locacao.setName("jtbl_promocao_locacao"); // NOI18N
+                            jtbl_promocao_locacao.addMouseListener(new java.awt.event.MouseAdapter() {
+                                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                    jtbl_promocao_locacaoMouseClicked(evt);
+                                }
+                            });
+                            jtbl_promocao_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jtbl_promocao_locacaoKeyPressed(evt);
+                                }
+                            });
+                            jScrollPane1.setViewportView(jtbl_promocao_locacao);
+                            if (jtbl_promocao_locacao.getColumnModel().getColumnCount() > 0) {
+                                jtbl_promocao_locacao.getColumnModel().getColumn(0).setPreferredWidth(5);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(1).setPreferredWidth(150);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(2).setPreferredWidth(20);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(3).setPreferredWidth(20);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(4).setPreferredWidth(40);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(5).setPreferredWidth(20);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(6).setPreferredWidth(20);
+                            }
+
+                            jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 770, 150));
+
+                            jLabel1.setText("* Selecione item na Tabela para verificar dias de promoção");
+                            jLabel1.setName("jLabel1"); // NOI18N
+                            jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+
+                            jTabbedPane1.addTab("Promoção Locação", jPanel4);
+
+                            jPanel5.setName("jPanel5"); // NOI18N
+                            jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+                            jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes"));
+                            jPanel6.setName("jPanel6"); // NOI18N
+                            jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+                            jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                            jLabel9.setText("Horário Locação");
+                            jLabel9.setName("jLabel9"); // NOI18N
+                            jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, 20));
+
+                            jb_eliminar_promocao_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+                            jb_eliminar_promocao_devolucao.setToolTipText("Excluir");
+                            jb_eliminar_promocao_devolucao.setName("jb_eliminar_promocao_devolucao"); // NOI18N
+                            jb_eliminar_promocao_devolucao.addActionListener(new java.awt.event.ActionListener() {
+                                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                    jb_eliminar_promocao_devolucaoActionPerformed(evt);
+                                }
+                            });
+                            jb_eliminar_promocao_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jb_eliminar_promocao_devolucaoKeyPressed(evt);
+                                }
+                            });
+                            jPanel6.add(jb_eliminar_promocao_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 30, 30));
+
+                            jb_adicionar_promocao_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
+                            jb_adicionar_promocao_devolucao.setToolTipText("Incluir");
+                            jb_adicionar_promocao_devolucao.setName("jb_adicionar_promocao_devolucao"); // NOI18N
+                            jb_adicionar_promocao_devolucao.addActionListener(new java.awt.event.ActionListener() {
+                                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                    jb_adicionar_promocao_devolucaoActionPerformed(evt);
+                                }
+                            });
+                            jb_adicionar_promocao_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jb_adicionar_promocao_devolucaoKeyPressed(evt);
+                                }
+                            });
+                            jPanel6.add(jb_adicionar_promocao_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 30, 30));
+
+                            jtf_nome_diaria.setDocument(new UnaccentedDocument());
+                            jtf_descricao_devolucao.setName("jtf_descricao_devolucao"); // NOI18N
+                            jtf_descricao_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
+                                public void focusGained(java.awt.event.FocusEvent evt) {
+                                    jtf_descricao_devolucaoFocusGained(evt);
+                                }
+                            });
+                            jtf_descricao_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jtf_descricao_devolucaoKeyPressed(evt);
+                                }
+                            });
+                            jPanel6.add(jtf_descricao_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 210, -1));
+
+                            jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                            jLabel14.setText("Descrição");
+                            jLabel14.setName("jLabel14"); // NOI18N
+                            jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+                            jcb_a_vista_devolucao.setText("Aplicar esta promoção apenas para pagamentos à vista.");
+                            jcb_a_vista_devolucao.setName("jcb_a_vista_devolucao"); // NOI18N
+                            jPanel6.add(jcb_a_vista_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+
+                            jLabel18.setText("Horas antecipada");
+                            jLabel18.setName("jLabel18"); // NOI18N
+                            jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, 20));
+
+                            jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                            jLabel10.setText("Horário Devolução");
+                            jLabel10.setName("jLabel10"); // NOI18N
+                            jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, 20));
+
+                            jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                            jLabel11.setText("Valor");
+                            jLabel11.setName("jLabel11"); // NOI18N
+                            jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, 20));
+
+                            jtf_nome_diaria.setDocument(new UnaccentedDocument());
+                            jtf_valor_promocao_devolucao.setText("R$ 0,00");
+                            jtf_valor_promocao_devolucao.setName("jtf_valor_promocao_devolucao"); // NOI18N
+                            jtf_valor_promocao_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
+                                public void focusGained(java.awt.event.FocusEvent evt) {
+                                    jtf_valor_promocao_devolucaoFocusGained(evt);
+                                }
+                                public void focusLost(java.awt.event.FocusEvent evt) {
+                                    jtf_valor_promocao_devolucaoFocusLost(evt);
+                                }
+                            });
+                            jtf_valor_promocao_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jtf_valor_promocao_devolucaoKeyPressed(evt);
+                                }
+                                public void keyReleased(java.awt.event.KeyEvent evt) {
+                                    jtf_valor_promocao_devolucaoKeyReleased(evt);
+                                }
+                            });
+                            jPanel6.add(jtf_valor_promocao_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, 90, 30));
+
+                            jtf_horas_antecipada.setText("00:00:00");
+                            jtf_horas_antecipada.setName("jtf_horas_antecipada"); // NOI18N
+                            jtf_horas_antecipada.addFocusListener(new java.awt.event.FocusAdapter() {
+                                public void focusLost(java.awt.event.FocusEvent evt) {
+                                    jtf_horas_antecipadaFocusLost(evt);
+                                }
+                            });
+                            jtf_horas_antecipada.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jtf_horas_antecipadaKeyPressed(evt);
+                                }
+                            });
+                            jPanel6.add(jtf_horas_antecipada, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 100, 30));
+
+                            jtf_horario_locacao.setText("00:00:00");
+                            jtf_horario_locacao.setName("jtf_horario_locacao"); // NOI18N
+                            jtf_horario_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
+                                public void focusLost(java.awt.event.FocusEvent evt) {
+                                    jtf_horario_locacaoFocusLost(evt);
+                                }
+                            });
+                            jtf_horario_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyTyped(java.awt.event.KeyEvent evt) {
+                                    jtf_horario_locacaoKeyTyped(evt);
+                                }
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jtf_horario_locacaoKeyPressed(evt);
+                                }
+                            });
+                            jPanel6.add(jtf_horario_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 100, 30));
+
+                            jtf_horario_devolucao.setText("00:00:00");
+                            jtf_horario_devolucao.setName("jtf_horario_devolucao"); // NOI18N
+                            jtf_horario_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
+                                public void focusLost(java.awt.event.FocusEvent evt) {
+                                    jtf_horario_devolucaoFocusLost(evt);
+                                }
+                            });
+                            jtf_horario_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jtf_horario_devolucaoKeyPressed(evt);
+                                }
+                            });
+                            jPanel6.add(jtf_horario_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 100, 30));
+
+                            jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 770, 100));
+
+                            jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+                            jtbl_promocao_devolucao.setModel(new javax.swing.table.DefaultTableModel(
+                                new Object [][] {
+
+                                },
+                                new String [] {
+                                    "Código", "Descrição", "Horário Locação", "Horário Devolução", "Horas Antecipada", "Valor Promoção", "À vista"
+                                }
+                            ) {
+                                Class[] types = new Class [] {
+                                    java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                                };
+                                boolean[] canEdit = new boolean [] {
+                                    false, false, false, false, false, false, false
+                                };
+
+                                public Class getColumnClass(int columnIndex) {
+                                    return types [columnIndex];
+                                }
+
+                                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                                    return canEdit [columnIndex];
+                                }
+                            });
+                            jtbl_promocao_devolucao.setName("jtbl_promocao_devolucao"); // NOI18N
+                            jtbl_promocao_devolucao.addMouseListener(new java.awt.event.MouseAdapter() {
+                                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                    jtbl_promocao_devolucaoMouseClicked(evt);
+                                }
+                            });
+                            jtbl_promocao_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+                                public void keyPressed(java.awt.event.KeyEvent evt) {
+                                    jtbl_promocao_devolucaoKeyPressed(evt);
+                                }
+                            });
+                            jScrollPane2.setViewportView(jtbl_promocao_devolucao);
+                            if (jtbl_promocao_devolucao.getColumnModel().getColumnCount() > 0) {
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(0).setPreferredWidth(5);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(1).setPreferredWidth(150);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(2).setPreferredWidth(50);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(3).setPreferredWidth(50);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(4).setPreferredWidth(50);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(5).setPreferredWidth(40);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(6).setPreferredWidth(20);
+                            }
+
+                            jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 770, 160));
+
+                            jTabbedPane1.addTab("Promoção Devolução", jPanel5);
+
+                            getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 830, 350));
+
+                            setSize(new java.awt.Dimension(854, 576));
                             setLocationRelativeTo(null);
                         }// </editor-fold>//GEN-END:initComponents
 
@@ -531,11 +789,13 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         janelapai.setStatusTela(true);
         setVisible(false);
+        janelapai.enviaDados();
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         janelapai.setStatusTela(true);
         setVisible(false);
+        janelapai.enviaDados();
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_valorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valorFocusGained
@@ -549,18 +809,18 @@ public class CadastroDiaria extends javax.swing.JFrame {
         acionarAtalho(evt);        // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valorKeyPressed
 
-    private void jtf_valor_promocaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocaoFocusGained
-        jtf_valor_promocao.setText("");
+    private void jtf_valor_promocao_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_locacaoFocusGained
+        jtf_valor_promocao_locacao.setText("");
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_promocaoFocusGained
+    }//GEN-LAST:event_jtf_valor_promocao_locacaoFocusGained
 
-    private void jtf_valor_promocaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_promocaoKeyPressed
+    private void jtf_valor_promocao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_locacaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtf_locar_quantidade.requestFocus();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_promocaoKeyPressed
+    }//GEN-LAST:event_jtf_valor_promocao_locacaoKeyPressed
 
     private void jtf_diasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_diasFocusGained
         // TODO add your handling code here:
@@ -613,7 +873,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     private void jtf_ordemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_ordemKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_adicionar_promocao.requestFocus();
+            jb_adicionar_promocao_locacao.requestFocus();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -623,46 +883,46 @@ public class CadastroDiaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_ordemActionPerformed
 
-    private void jb_adicionar_promocaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_promocaoActionPerformed
-        adicionarPromocao();
-    }//GEN-LAST:event_jb_adicionar_promocaoActionPerformed
+    private void jb_adicionar_promocao_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_promocao_locacaoActionPerformed
+        adicionarPromocaoLocacao();
+    }//GEN-LAST:event_jb_adicionar_promocao_locacaoActionPerformed
 
-    private void jb_adicionar_promocaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_promocaoKeyPressed
+    private void jb_adicionar_promocao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_promocao_locacaoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            adicionarPromocao();
+            adicionarPromocaoLocacao();
 
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_promocaoKeyPressed
+    }//GEN-LAST:event_jb_adicionar_promocao_locacaoKeyPressed
 
-    private void jb_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar1ActionPerformed
+    private void jb_eliminar_promocao_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_promocao_locacaoActionPerformed
 
-        excluirPromocao();
+        excluirPromocaoLocacao();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar1ActionPerformed
+    }//GEN-LAST:event_jb_eliminar_promocao_locacaoActionPerformed
 
-    private void jtf_descricao_promocaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descricao_promocaoFocusGained
+    private void jtf_descricao_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descricao_locacaoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_descricao_promocaoFocusGained
+    }//GEN-LAST:event_jtf_descricao_locacaoFocusGained
 
-    private void jtf_descricao_promocaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_promocaoKeyPressed
+    private void jtf_descricao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_locacaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_valor_promocao.requestFocus();
+            jtf_valor_promocao_locacao.requestFocus();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_descricao_promocaoKeyPressed
+    }//GEN-LAST:event_jtf_descricao_locacaoKeyPressed
 
-    private void jtf_valor_promocaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocaoFocusLost
-        if (jtf_valor_promocao.getText().equals("")) {
-            jtf_valor_promocao.setText("R$ 0,00");
+    private void jtf_valor_promocao_locacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_locacaoFocusLost
+        if (jtf_valor_promocao_locacao.getText().equals("")) {
+            jtf_valor_promocao_locacao.setText("R$ 0,00");
         } else {
             moeda = new Moeda();
-            jtf_valor_promocao.setText(moeda.setPrecoFormat(jtf_valor_promocao.getText()));
+            jtf_valor_promocao_locacao.setText(moeda.setPrecoFormat(jtf_valor_promocao_locacao.getText()));
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_promocaoFocusLost
+    }//GEN-LAST:event_jtf_valor_promocao_locacaoFocusLost
 
     private void jtf_dias_maximoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_dias_maximoFocusGained
         // TODO add your handling code here:
@@ -701,14 +961,14 @@ public class CadastroDiaria extends javax.swing.JFrame {
         acionarAtalho(evt);// TODO add your handling code here:
     }//GEN-LAST:event_jtf_ganhar_quantidadeKeyPressed
 
-    private void jb_eliminar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar1KeyPressed
+    private void jb_eliminar_promocao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_promocao_locacaoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            excluirPromocao();
+            excluirPromocaoLocacao();
 
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar1KeyPressed
+    }//GEN-LAST:event_jb_eliminar_promocao_locacaoKeyPressed
 
     private void jtf_valorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valorFocusLost
         if (jtf_valor.getText().equals("")) {
@@ -738,6 +998,148 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void jtbl_promocao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_promocao_locacaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jcb_domingo.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getDomingo());
+            jcb_segunda.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSegunda());
+            jcb_terca.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getTerca());
+            jcb_quarta.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getQuarta());
+            jcb_quinta.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getQuinta());
+            jcb_sexta.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSexta());
+            jcb_sabado.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSabado());
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_promocao_locacaoKeyPressed
+
+    private void jtbl_promocao_locacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_promocao_locacaoMouseClicked
+        jcb_domingo.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getDomingo());
+        jcb_segunda.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSegunda());
+        jcb_terca.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getTerca());
+        jcb_quarta.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getQuarta());
+        jcb_quinta.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getQuinta());
+        jcb_sexta.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSexta());
+        jcb_sabado.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSabado());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_promocao_locacaoMouseClicked
+
+    private void jb_eliminar_promocao_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_promocao_devolucaoActionPerformed
+        excluirPromocaoDevolucao();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_promocao_devolucaoActionPerformed
+
+    private void jb_eliminar_promocao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_promocao_devolucaoKeyPressed
+                acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            excluirPromocaoDevolucao();
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_promocao_devolucaoKeyPressed
+
+    private void jb_adicionar_promocao_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_promocao_devolucaoActionPerformed
+        adicionarPromocaoDevolucao();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_promocao_devolucaoActionPerformed
+
+    private void jb_adicionar_promocao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_promocao_devolucaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            adicionarPromocaoDevolucao();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_promocao_devolucaoKeyPressed
+
+    private void jtf_descricao_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descricao_devolucaoFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_descricao_devolucaoFocusGained
+
+    private void jtf_descricao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_devolucaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_horario_locacao.requestFocus();
+        }
+        acionarAtalho(evt);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_descricao_devolucaoKeyPressed
+
+    private void jtbl_promocao_devolucaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_promocao_devolucaoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_promocao_devolucaoMouseClicked
+
+    private void jtbl_promocao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_promocao_devolucaoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_promocao_devolucaoKeyPressed
+
+    private void jtf_valor_promocao_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_valor_promocao_devolucaoFocusGained
+
+    private void jtf_valor_promocao_devolucaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoFocusLost
+        if (jtf_valor_promocao_devolucao.getText().equals("")) {
+            jtf_valor_promocao_devolucao.setText("R$ 0,00");
+        } else {
+            moeda = new Moeda();
+            jtf_valor_promocao_devolucao.setText(moeda.setPrecoFormat(jtf_valor_promocao_devolucao.getText()));
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_valor_promocao_devolucaoFocusLost
+
+    private void jtf_valor_promocao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_adicionar_promocao_devolucao.requestFocus();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_valor_promocao_devolucaoKeyPressed
+
+    private void jtf_horas_antecipadaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_horas_antecipadaFocusLost
+        jtf_horas_antecipada.setText(validarHora(jtf_horas_antecipada.getText()));
+    }//GEN-LAST:event_jtf_horas_antecipadaFocusLost
+
+    private void jtf_horas_antecipadaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_horas_antecipadaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_valor_promocao_devolucao.requestFocus();
+        }
+        acionarAtalho(evt);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_horas_antecipadaKeyPressed
+
+    private void jtf_horario_locacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_horario_locacaoFocusLost
+        jtf_horario_locacao.setText(validarHora(jtf_horario_locacao.getText()));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_horario_locacaoFocusLost
+
+    private void jtf_horario_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_horario_locacaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_horario_devolucao.requestFocus();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_horario_locacaoKeyPressed
+
+    private void jtf_horario_devolucaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_horario_devolucaoFocusLost
+        jtf_horario_devolucao.setText(validarHora(jtf_horario_devolucao.getText()));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_horario_devolucaoFocusLost
+
+    private void jtf_horario_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_horario_devolucaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_horas_antecipada.requestFocus();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_horario_devolucaoKeyPressed
+
+    private void jtf_horario_locacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_horario_locacaoKeyTyped
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jtf_horario_locacaoKeyTyped
+
+    private void jtf_valor_promocao_devolucaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_valor_promocao_devolucaoKeyReleased
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -748,11 +1150,15 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -760,15 +1166,24 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jb_adicionar_promocao;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton jb_adicionar_promocao_devolucao;
+    private javax.swing.JButton jb_adicionar_promocao_locacao;
     private javax.swing.JButton jb_cancelar;
-    private javax.swing.JButton jb_eliminar1;
+    private javax.swing.JButton jb_eliminar_promocao_devolucao;
+    private javax.swing.JButton jb_eliminar_promocao_locacao;
     private javax.swing.JButton jb_salvar;
-    private javax.swing.JCheckBox jcb_a_vista;
+    private javax.swing.JCheckBox jcb_a_vista_devolucao;
+    private javax.swing.JCheckBox jcb_a_vista_locacao;
     public static javax.swing.JCheckBox jcb_acumulativo;
     public static javax.swing.JCheckBox jcb_domingo;
     public static javax.swing.JCheckBox jcb_quarta;
@@ -777,19 +1192,24 @@ public class CadastroDiaria extends javax.swing.JFrame {
     public static javax.swing.JCheckBox jcb_segunda;
     public static javax.swing.JCheckBox jcb_sexta;
     public static javax.swing.JCheckBox jcb_terca;
-    private javax.swing.JTable jtbl_promocao;
+    private javax.swing.JTable jtbl_promocao_devolucao;
+    private javax.swing.JTable jtbl_promocao_locacao;
     public static javax.swing.JTextField jtf_codigo_diaria;
-    public static javax.swing.JTextField jtf_descricao_promocao;
+    public static javax.swing.JTextField jtf_descricao_devolucao;
+    public static javax.swing.JTextField jtf_descricao_locacao;
     public static javax.swing.JTextField jtf_dias;
     public static javax.swing.JTextField jtf_dias_maximo;
     public static javax.swing.JTextField jtf_ganhar_quantidade;
-    private javax.swing.JTextField jtf_hora_antecipada;
+    public static javax.swing.JFormattedTextField jtf_horario_devolucao;
+    public static javax.swing.JFormattedTextField jtf_horario_locacao;
+    public static javax.swing.JFormattedTextField jtf_horas_antecipada;
     public static javax.swing.JTextField jtf_locar_quantidade;
     public static javax.swing.JTextField jtf_nome_diaria;
     public static javax.swing.JTextField jtf_ordem;
     public static javax.swing.JTextField jtf_relocacao;
     public static javax.swing.JTextField jtf_valor;
-    public static javax.swing.JTextField jtf_valor_promocao;
+    public static javax.swing.JTextField jtf_valor_promocao_devolucao;
+    public static javax.swing.JTextField jtf_valor_promocao_locacao;
     // End of variables declaration//GEN-END:variables
 
     private void retornaJanelaPai() {
@@ -816,7 +1236,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarDiaria");
             JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-            jtf_descricao_promocao.requestFocus();
+            jtf_descricao_locacao.requestFocus();
 //            retornaJanelaPai();
         }
     }
@@ -858,13 +1278,13 @@ public class CadastroDiaria extends javax.swing.JFrame {
         }
     }
 
-    public boolean verificarCamposPromocao() {
+    public boolean verificarCamposPromocaoLocacao() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
-        if (jtf_descricao_promocao.getText().equals("")) {
+        if (jtf_descricao_locacao.getText().equals("")) {
             msgERRO = msgERRO + " *Descrição Promoção\n";
         }
-        if (jtf_valor_promocao.getText().equals("") || jtf_valor_promocao.getText().equals("R$ 0,00")) {
+        if (jtf_valor_promocao_locacao.getText().equals("") || jtf_valor_promocao_locacao.getText().equals("R$ 0,00")) {
             msgERRO = msgERRO + " *Valor Promoção\n";
         }
         if (Integer.parseInt(jtf_locar_quantidade.getText()) < 0) {
@@ -886,59 +1306,124 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     }
 
-    public void adicionarPromocao() {
+    public boolean verificarCamposPromocaoDevolucao() {
+        String msgERRO = "Preencha os campos obrigatórios:\n";
+
+        if (jtf_descricao_devolucao.getText().equals("")) {
+            msgERRO = msgERRO + " *Descrição Promoção Devolução\n";
+        }
+        if (jtf_valor_promocao_devolucao.getText().equals("") || jtf_valor_promocao_devolucao.getText().equals("R$ 0,00")) {
+            msgERRO = msgERRO + " *Valor Promoção Devolução\n";
+        }
+
+        if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
+            JOptionPane.showMessageDialog(this, msgERRO);
+
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    public void adicionarPromocaoLocacao() {
 
         if (jtf_codigo_diaria.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Salvar primeiro a Diária");
         } else {
-            if (verificarCamposPromocao() == true) {
+            if (verificarCamposPromocaoLocacao() == true) {
                 diaria = new Diaria();
                 diaria.setCodigo_diaria(Integer.parseInt(jtf_codigo_diaria.getText()));
 
                 moeda = new Moeda();
 
-                promocao = new Promocao();
-                promocao.setDiaria(diaria);
-                promocao.setDescricao_promocao(jtf_descricao_promocao.getText());
-                promocao.setValor_promocao(moeda.getPrecoFormato(jtf_valor_promocao.getText()));
-                promocao.setOrderm(Integer.parseInt(jtf_ordem.getText()));
-                promocao.setPagamento_a_vista(jcb_a_vista.isSelected());
-                promocao.setDomingo(jcb_domingo.isSelected());
-                promocao.setSegunda(jcb_segunda.isSelected());
-                promocao.setTerca(jcb_terca.isSelected());
-                promocao.setQuarta(jcb_quarta.isSelected());
-                promocao.setQuinta(jcb_quinta.isSelected());
-                promocao.setSexta(jcb_sexta.isSelected());
-                promocao.setSabado(jcb_sabado.isSelected());
-                promocao.setLocar_quantidade(Integer.parseInt(jtf_locar_quantidade.getText()));
-                promocao.setGanhar_quantidade(Integer.parseInt(jtf_ganhar_quantidade.getText()));
+                promocaoLocacao = new PromocaoLocacao();
+                promocaoLocacao.setDiaria(diaria);
+                promocaoLocacao.setDescricao(jtf_descricao_locacao.getText());
+                promocaoLocacao.setValor_promocao_locacao(moeda.getPrecoFormato(jtf_valor_promocao_locacao.getText()));
+                promocaoLocacao.setOrderm(Integer.parseInt(jtf_ordem.getText()));
+                promocaoLocacao.setPagamento_a_vista(jcb_a_vista_locacao.isSelected());
+                promocaoLocacao.setDomingo(jcb_domingo.isSelected());
+                promocaoLocacao.setSegunda(jcb_segunda.isSelected());
+                promocaoLocacao.setTerca(jcb_terca.isSelected());
+                promocaoLocacao.setQuarta(jcb_quarta.isSelected());
+                promocaoLocacao.setQuinta(jcb_quinta.isSelected());
+                promocaoLocacao.setSexta(jcb_sexta.isSelected());
+                promocaoLocacao.setSabado(jcb_sabado.isSelected());
+                promocaoLocacao.setLocar_quantidade(Integer.parseInt(jtf_locar_quantidade.getText()));
+                promocaoLocacao.setGanhar_quantidade(Integer.parseInt(jtf_ganhar_quantidade.getText()));
 
-                diaria.setPromocao(promocao);
+                diaria.setPromocaoLocacao(promocaoLocacao);
                 pool = new Pool();
                 DiariaDAO diariaDAO = new DiariaDAO(pool);
 
-                diaria = diariaDAO.salvarPromocao(diaria);
+                diaria = diariaDAO.salvarPromocaoLocacao(diaria);
                 diaria.setCodigo_diaria(Integer.parseInt(jtf_codigo_diaria.getText()));
-                carregarPromocoes(diaria);
-                itensPromocao.add(diaria);
+                carregarPromocoesLocacao(diaria);
+                itensPromocaoLocacao.add(diaria);
 
-                limparPromocao();
+                limparPromocaoLocacao();
 
             }
         }
     }
 
-    private void limparPromocao() {
-        jtf_descricao_promocao.setText("");
-        jtf_valor_promocao.setText("R$ 0,00");
-        jtf_hora_antecipada.setText("");
+    public void adicionarPromocaoDevolucao() {
+
+        if (jtf_codigo_diaria.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Salvar primeiro a Diária");
+        } else {
+            if (verificarCamposPromocaoDevolucao() == true) {
+                diaria = new Diaria();
+                diaria.setCodigo_diaria(Integer.parseInt(jtf_codigo_diaria.getText()));
+
+                moeda = new Moeda();
+
+                promocaoDevolucao = new PromocaoDevolucao();
+                promocaoDevolucao.setDiaria(diaria);
+                promocaoDevolucao.setDescricao(jtf_descricao_devolucao.getText());
+                promocaoDevolucao.setValor_promocao_devolucao(moeda.getPrecoFormato(jtf_valor_promocao_devolucao.getText()));
+                promocaoDevolucao.setPagamento_a_vista(jcb_a_vista_devolucao.isSelected());
+                promocaoDevolucao.setHorario_locacao(jtf_horario_locacao.getText());
+                promocaoDevolucao.setHorario_devolucao(jtf_horario_devolucao.getText());
+                promocaoDevolucao.setHora_antecipada(jtf_horas_antecipada.getText());
+
+                diaria.setPromocaoDevolucao(promocaoDevolucao);
+
+                pool = new Pool();
+                DiariaDAO diariaDAO = new DiariaDAO(pool);
+
+                diaria = diariaDAO.salvarPromocaoDevolucao(diaria);
+                diaria.setCodigo_diaria(Integer.parseInt(jtf_codigo_diaria.getText()));
+                carregarPromocoesDevolucao(diaria);
+                itensPromocaoDevolucao.add(diaria);
+
+                limparPromocaoDevolucao();
+
+            }
+        }
+    }
+
+    private void limparPromocaoLocacao() {
+        jtf_descricao_locacao.setText("");
+        jtf_valor_promocao_locacao.setText("R$ 0,00");
         jtf_locar_quantidade.setText("");
         jtf_ganhar_quantidade.setText("");
         jtf_ordem.setText("");
+        jtf_descricao_locacao.requestFocus();
 
     }
 
-    private void excluirPromocao() {
+    private void limparPromocaoDevolucao() {
+        jtf_descricao_devolucao.setText("");
+        jtf_valor_promocao_devolucao.setText("R$ 0,00");
+        jtf_horario_locacao.setText("00:00");
+        jtf_horario_devolucao.setText("00:00");
+        jtf_horas_antecipada.setText("00:00");
+        jtf_descricao_devolucao.requestFocus();
+    }
+
+    private void excluirPromocaoLocacao() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
@@ -947,19 +1432,58 @@ public class CadastroDiaria extends javax.swing.JFrame {
         try {
 
             if (acesso.getDeletar() == 0) {
-                DefaultTableModel row = (DefaultTableModel) jtbl_promocao.getModel();
-                if (jtbl_promocao.getSelectedRow() != -1) {
+                DefaultTableModel row = (DefaultTableModel) jtbl_promocao_locacao.getModel();
+                if (jtbl_promocao_locacao.getSelectedRow() != -1) {
                     int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
                     if (selectedOption == JOptionPane.YES_NO_OPTION) {
                         pool = new Pool();
                         DiariaDAO diariaDAO = new DiariaDAO(pool);
-                        promocao = new Promocao();
-                        promocao.setCodigo_promocao(Integer.parseInt((String) jtbl_promocao.getValueAt(jtbl_promocao.getSelectedRow(), 0).toString()));
+                        promocaoLocacao = new PromocaoLocacao();
+                        promocaoLocacao.setCodigo_promocao_locacao(Integer.parseInt((String) jtbl_promocao_locacao.getValueAt(jtbl_promocao_locacao.getSelectedRow(), 0).toString()));
 
                         try {
-                            diariaDAO.excluirPromocao(promocao.getCodigo_promocao());
-                            row.removeRow(jtbl_promocao.getSelectedRow());
-                            carregarPromocoes(diaria);
+                            diariaDAO.excluirPromocaoLocacao(promocaoLocacao.getCodigo_promocao_locacao());
+                            row.removeRow(jtbl_promocao_locacao.getSelectedRow());
+                            carregarPromocoesLocacao(diaria);
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
+                        }
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma diária");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+    }
+    
+    private void excluirPromocaoDevolucao() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        AcessoUsuario acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
+
+        try {
+
+            if (acesso.getDeletar() == 0) {
+                DefaultTableModel row = (DefaultTableModel) jtbl_promocao_devolucao.getModel();
+                if (jtbl_promocao_devolucao.getSelectedRow() != -1) {
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                        pool = new Pool();
+                        DiariaDAO diariaDAO = new DiariaDAO(pool);
+                        promocaoDevolucao = new PromocaoDevolucao();
+                        promocaoDevolucao.setCodigo_promocao_devolucao(Integer.parseInt((String) jtbl_promocao_devolucao.getValueAt(jtbl_promocao_devolucao.getSelectedRow(), 0).toString()));
+
+                        try {
+                            diariaDAO.excluirPromocaoDevolucao(promocaoDevolucao.getCodigo_promocao_devolucao());
+                            row.removeRow(jtbl_promocao_devolucao.getSelectedRow());
+                            carregarPromocoesLocacao(diaria);
                         } catch (SQLException ex) {
                             JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
                         }
@@ -977,25 +1501,85 @@ public class CadastroDiaria extends javax.swing.JFrame {
         }
     }
 
-    public void carregarPromocoes(Diaria diaria) {
-        for (int i = 0; i < jtbl_promocao.getRowCount(); i++) {
-            jtbl_promocao.remove(i);
-        }
+    public void carregarPromocoesDevolucao(Diaria diaria) {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_promocao_devolucao.getModel();
+        tableModel.setNumRows(0);
+
         pool = new Pool();
         DiariaDAO diariaDAO = new DiariaDAO(pool);
 
-        itensPromocao = null;
-        itensPromocao = diariaDAO.getDiariaPromocao(diaria);
+        itensPromocaoDevolucao = null;
+        itensPromocaoDevolucao = diariaDAO.getDiariaPromocaoDevolucao(diaria);
 
-        for (int i = 0; i < itensPromocao.size(); i++) {
-            DefaultTableModel row = (DefaultTableModel) jtbl_promocao.getModel();
-            ItemDbGrid hashDbGrid = new ItemDbGrid(itensPromocao.get(i), itensPromocao.get(i).getPromocao().getDescricao_promocao());
-            row.addRow(new Object[]{itensPromocao.get(i).getPromocao().getCodigo_promocao(), hashDbGrid,
-                moeda.setPrecoFormat(String.valueOf(itensPromocao.get(i).getPromocao().getValor_promocao())),
-                itensPromocao.get(i).getPromocao().getHora_antecipada(), itensPromocao.get(i).getPromocao().getLocar_quantidade(),
-                itensPromocao.get(i).getPromocao().getGanhar_quantidade(), itensPromocao.get(i).getPromocao().getPagamento_a_vista(),
-                itensPromocao.get(i).getPromocao().getOrderm()});
+        for (int i = 0; i < itensPromocaoDevolucao.size(); i++) {
+            DefaultTableModel row = (DefaultTableModel) jtbl_promocao_devolucao.getModel();
+            ItemDbGrid hashDbGrid = new ItemDbGrid(itensPromocaoDevolucao.get(i), itensPromocaoDevolucao.get(i).getPromocaoDevolucao().getDescricao());
+            row.addRow(new Object[]{itensPromocaoDevolucao.get(i).getPromocaoDevolucao().getCodigo_promocao_devolucao(), hashDbGrid,
+                itensPromocaoDevolucao.get(i).getPromocaoDevolucao().getHorario_locacao(), itensPromocaoDevolucao.get(i).getPromocaoDevolucao().getHorario_devolucao(),
+                itensPromocaoDevolucao.get(i).getPromocaoDevolucao().getHora_antecipada(),
+                moeda.setPrecoFormat(String.valueOf(itensPromocaoDevolucao.get(i).getPromocaoDevolucao().getValor_promocao_devolucao())),
+                itensPromocaoDevolucao.get(i).getPromocaoDevolucao().getPagamento_a_vista()});
         }
 
     }
+
+    public void carregarPromocoesLocacao(Diaria diaria) {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_promocao_locacao.getModel();
+        tableModel.setNumRows(0);
+
+        pool = new Pool();
+        DiariaDAO diariaDAO = new DiariaDAO(pool);
+
+        itensPromocaoLocacao = null;
+        itensPromocaoLocacao = diariaDAO.getDiariaPromocao(diaria);
+
+        for (int i = 0; i < itensPromocaoLocacao.size(); i++) {
+            DefaultTableModel row = (DefaultTableModel) jtbl_promocao_locacao.getModel();
+            ItemDbGrid hashDbGrid = new ItemDbGrid(itensPromocaoLocacao.get(i), itensPromocaoLocacao.get(i).getPromocaoLocacao().getDescricao());
+            row.addRow(new Object[]{itensPromocaoLocacao.get(i).getPromocaoLocacao().getCodigo_promocao_locacao(), hashDbGrid,                
+                itensPromocaoLocacao.get(i).getPromocaoLocacao().getLocar_quantidade(),
+                itensPromocaoLocacao.get(i).getPromocaoLocacao().getGanhar_quantidade(), 
+                moeda.setPrecoFormat(String.valueOf(itensPromocaoLocacao.get(i).getPromocaoLocacao().getValor_promocao_locacao())),
+                itensPromocaoLocacao.get(i).getPromocaoLocacao().getPagamento_a_vista(),
+                itensPromocaoLocacao.get(i).getPromocaoLocacao().getOrderm()});
+        }
+
+    }
+
+        public String validarHora(String str) {
+        String hora = null;
+        String minuto = null;
+        String segundos = null;
+
+        try {
+            System.out.println("Minutos antes: " + str.substring(2));
+            if (Integer.valueOf(str.substring(0, 2)) > 23) {
+                hora = "23" + str.substring(2);
+            } else {
+                hora = str;
+            }
+
+            System.out.println("Horas: " + hora);
+            System.out.println("Minutos: " + hora.substring(3, 5));
+            System.out.println("Segundo: " + hora.substring(6, 8));
+
+            if (Integer.valueOf(hora.substring(3, 5)) > 59) {
+                minuto = hora.substring(0, 2) + ":59:" + hora.substring(6, 8);
+            } else {
+                minuto = hora;
+            }
+            System.out.println("Minutos depois: " + minuto);
+            if (Integer.valueOf(minuto.substring(6, 8)) > 59) {
+                segundos = minuto.substring(0, 2) + ":59:"+"59";
+            } else {
+                segundos = hora;
+            }
+
+            System.out.println("Horário final: " + segundos);
+        } catch (Exception ex) {
+            segundos = "00:00:00";
+        }
+        return segundos;
+    }
+
 }

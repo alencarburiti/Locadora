@@ -211,7 +211,8 @@ public class AtualizaGenero extends javax.swing.JFrame {
             controller = new SiscomController();
             controller.processarRequisicao("atualizarGenero");
             JOptionPane.showMessageDialog(null, "Atualização efetuada com sucesso");
-            janelapai.buscarDados();
+            janelapai.buscarDados();                        
+            janelapai.jtf_consulta.requestFocus();
             janelapai.setStatusTela(true);
             setVisible(false);
         }

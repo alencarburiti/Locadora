@@ -34,6 +34,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     public SiscomController controller;
     public String action;
     public static List<ItemLocacao> itens;
+    public Moeda moeda;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -483,7 +484,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
@@ -491,6 +492,17 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         setVisible(false);
         janelapaiLocacao.setStatusTela(true);
         janelapaiLocacao.jtf_nome_cliente.requestFocus();
+        
+        DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
+        int rows = tb_locacao.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            tb_locacao.removeRow(i);
+        }
+        AtendimentoLocacao.jtf_codigo_cliente.setText("");
+        AtendimentoLocacao.jtf_nome_cliente.setText("");
+
+        AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
+        AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_valor_total_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_total_locacaoKeyPressed
@@ -543,6 +555,10 @@ public final class EntradaCaixa extends javax.swing.JFrame {
     private void jtf_valor_pagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_pagoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("Campo jtf_desconto == " + jtf_desconto.isEditable());
+            moeda = new Moeda();
+            if(jtf_valor_pago.getText().equals("")){
+                jtf_valor_pago.setText("R$ 0,00");
+            } 
             checarPagamento();
             jb_salvar.requestFocus();
 
@@ -623,7 +639,7 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                 jtf_debito_atual.setCaretColor(Color.black);
             }
             jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
-        } else {
+        } else if (jtf_valor_pago.getText().equals("")) {
             jtf_valor_pago.setText("R$ 0,00");
         }
 
@@ -700,6 +716,17 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         setVisible(false);
         janelapaiLocacao.setStatusTela(true);
         janelapaiLocacao.jtf_nome_cliente.requestFocus();
+        
+        DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
+        int rows = tb_locacao.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            tb_locacao.removeRow(i);
+        }
+        AtendimentoLocacao.jtf_codigo_cliente.setText("");
+        AtendimentoLocacao.jtf_nome_cliente.setText("");
+
+        AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
+        AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
 // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1ActionPerformed
 
@@ -949,17 +976,6 @@ public final class EntradaCaixa extends javax.swing.JFrame {
                             jb_imprimir.setEnabled(true);
                             jb_imprimir.requestFocus();
 
-                            DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
-                            int rows = tb_locacao.getRowCount();
-                            for (int i = rows - 1; i >= 0; i--) {
-                                tb_locacao.removeRow(i);
-                            }
-                            AtendimentoLocacao.jtf_codigo_cliente.setText("");
-                            AtendimentoLocacao.jtf_nome_cliente.setText("");
-
-                            AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
-                            AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
-
                         }
                     }
                 }
@@ -979,13 +995,24 @@ public final class EntradaCaixa extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
 
             String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
-            File arquivo = new File(nome_arquivo);
-            arquivo.deleteOnExit();
-            arquivo.delete();
+        File arquivo = new File(nome_arquivo);
+        arquivo.deleteOnExit();
+        arquivo.delete();
 
-            setVisible(false);
-            janelapaiLocacao.setStatusTela(true);
-            janelapaiLocacao.jtf_nome_cliente.requestFocus();
+        setVisible(false);
+        janelapaiLocacao.setStatusTela(true);
+        janelapaiLocacao.jtf_nome_cliente.requestFocus();
+        
+        DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
+        int rows = tb_locacao.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            tb_locacao.removeRow(i);
+        }
+        AtendimentoLocacao.jtf_codigo_cliente.setText("");
+        AtendimentoLocacao.jtf_nome_cliente.setText("");
+
+        AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
+        AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
 
         }
     }
@@ -1027,12 +1054,12 @@ public final class EntradaCaixa extends javax.swing.JFrame {
             promocoes = diDAO.getDiariaPromocao(AtendimentoLocacao.copiasLocacao.get(j).getObjeto().getDiaria());
             for (int x = 0; x < promocoes.size(); x++) {
                 System.out.println("Valor da lista: " + AtendimentoLocacao.jtbl_locacao.getValueAt(j, 5)); 
-                System.out.println("Lista das promocoes: " + promocoes.get(x).getPromocao().getDescricao_promocao());
-                System.out.println("A vista: " + promocoes.get(x).getPromocao().getPagamento_a_vista());
-                if (AtendimentoLocacao.jtbl_locacao.getValueAt(j, 5).toString() == promocoes.get(x).getPromocao().getDescricao_promocao()) {
-                    System.out.println("Pagamento a vista: "+promocoes.get(x).getPromocao().getPagamento_a_vista() );
-                    if (promocoes.get(x).getPromocao().getPagamento_a_vista() == true) {
-                        valor_pagamento_a_vista = valor_pagamento_a_vista + promocoes.get(x).getPromocao().getValor_promocao();
+                System.out.println("Lista das promocoes: " + promocoes.get(x).getPromocaoLocacao().getDescricao());
+                System.out.println("A vista: " + promocoes.get(x).getPromocaoLocacao().getPagamento_a_vista());
+                if (AtendimentoLocacao.jtbl_locacao.getValueAt(j, 5).toString() == promocoes.get(x).getPromocaoLocacao().getDescricao()) {
+                    System.out.println("Pagamento a vista: "+promocoes.get(x).getPromocaoLocacao().getPagamento_a_vista() );
+                    if (promocoes.get(x).getPromocaoLocacao().getPagamento_a_vista() == true) {
+                        valor_pagamento_a_vista = valor_pagamento_a_vista + promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao();
                     }
                     break;
                 }
@@ -1049,13 +1076,13 @@ public final class EntradaCaixa extends javax.swing.JFrame {
             for (int j = 0; j < AtendimentoLocacao.copiasLocacao.size(); j++) {
                 promocoes = diDAO.getDiariaPromocao(AtendimentoLocacao.copiasLocacao.get(j).getObjeto().getDiaria());
                 for (int x = 0; x < promocoes.size(); x++) {
-                    if (AtendimentoLocacao.jtbl_locacao.getValueAt(j, 5).equals(promocoes.get(x).getPromocao().getDescricao_promocao())) {
-                        if (promocoes.get(x).getPromocao().getPagamento_a_vista() == true) {
-                            valor_pagamento_a_vista = valor_pagamento_a_vista + promocoes.get(x).getPromocao().getValor_promocao();
-                            if (valor_pago >= promocoes.get(x).getPromocao().getValor_promocao()) {
-                                valor_pago = valor_pago - promocoes.get(x).getPromocao().getValor_promocao();
+                    if (AtendimentoLocacao.jtbl_locacao.getValueAt(j, 5).equals(promocoes.get(x).getPromocaoLocacao().getDescricao())) {
+                        if (promocoes.get(x).getPromocaoLocacao().getPagamento_a_vista() == true) {
+                            valor_pagamento_a_vista = valor_pagamento_a_vista + promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao();
+                            if (valor_pago >= promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao()) {
+                                valor_pago = valor_pago - promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao();
                                 break;
-                            } else if( valor_pago < promocoes.get(x).getPromocao().getValor_promocao()){
+                            } else if( valor_pago < promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao()){
                                 int selectedOption = JOptionPane.showConfirmDialog(this, "Autorizar promoção sem pagamento?", "Atenção", JOptionPane.YES_NO_OPTION);
                                 if (selectedOption == JOptionPane.YES_NO_OPTION) {
 //                                    AtendimentoLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(promocoes.get(x).getPromocao().getValor_promocao())), j, 2);

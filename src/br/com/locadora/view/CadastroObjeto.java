@@ -45,6 +45,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     public AcessoUsuario acesso;
     public Copia copia;
     public MaskFormatter formatoData, formatoCPF, formatoTelefone;
+    public Moeda moeda;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -94,8 +95,6 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jtf_descricao_diaria = new javax.swing.JTextField();
         jb_diaria = new javax.swing.JButton();
         jtf_valor = new javax.swing.JTextField();
-        jtf_valor_promocao = new javax.swing.JTextField();
-        jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -290,7 +289,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jtf_descricao_generoActionPerformed(evt);
             }
         });
-        jPanel1.add(jtf_descricao_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 110, -1));
+        jPanel1.add(jtf_descricao_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 250, -1));
 
         jb_genero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_genero.setName("jb_genero"); // NOI18N
@@ -304,7 +303,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jb_generoKeyPressed(evt);
             }
         });
-        jPanel1.add(jb_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 30, 30));
+        jPanel1.add(jb_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 30, 30));
 
         jLabel24.setText("Produção");
         jLabel24.setName("jLabel24"); // NOI18N
@@ -334,11 +333,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jtf_diaria_diasActionPerformed(evt);
             }
         });
-        jPanel1.add(jtf_diaria_dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 80, -1));
+        jPanel1.add(jtf_diaria_dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 80, -1));
 
         jtf_descricao_diaria.setEditable(false);
         jtf_descricao_diaria.setName("jtf_descricao_diaria"); // NOI18N
-        jPanel1.add(jtf_descricao_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 130, -1));
+        jPanel1.add(jtf_descricao_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 250, -1));
 
         jb_diaria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_diaria.setName("jb_diaria"); // NOI18N
@@ -352,7 +351,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jb_diariaKeyPressed(evt);
             }
         });
-        jPanel1.add(jb_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 30, 30));
+        jPanel1.add(jb_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 30, 30));
 
         jtf_valor.setEditable(false);
         jtf_valor.setText("R$ 0,00");
@@ -362,25 +361,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jtf_valorActionPerformed(evt);
             }
         });
-        jPanel1.add(jtf_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 100, -1));
-
-        jtf_valor_promocao.setEditable(false);
-        jtf_valor_promocao.setText("R$ 0,00");
-        jtf_valor_promocao.setName("jtf_valor_promocao"); // NOI18N
-        jtf_valor_promocao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_valor_promocaoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jtf_valor_promocao, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 100, -1));
-
-        jLabel36.setText("Valor Promocional");
-        jLabel36.setName("jLabel36"); // NOI18N
-        jPanel1.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, -1, -1));
+        jPanel1.add(jtf_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 200, 100, -1));
 
         jLabel37.setText("Dias");
         jLabel37.setName("jLabel37"); // NOI18N
-        jPanel1.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, -1, -1));
+        jPanel1.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, -1, -1));
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setSelected(true);
@@ -435,7 +420,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
 
         jLabel40.setText("Valor");
         jLabel40.setName("jLabel40"); // NOI18N
-        jPanel1.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, -1, -1));
+        jPanel1.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, -1, -1));
 
         jtp_menu.addTab("Cadastro", jPanel1);
 
@@ -449,7 +434,9 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         jta_elenco.setColumns(20);
+        jta_elenco.setLineWrap(true);
         jta_elenco.setRows(5);
+        jta_elenco.setWrapStyleWord(true);
         jta_elenco.setName("jta_elenco"); // NOI18N
         jta_elenco.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -467,7 +454,9 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
         jta_sinopse.setColumns(20);
+        jta_sinopse.setLineWrap(true);
         jta_sinopse.setRows(5);
+        jta_sinopse.setWrapStyleWord(true);
         jta_sinopse.setName("jta_sinopse"); // NOI18N
         jta_sinopse.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -523,7 +512,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, false, true
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -590,6 +579,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 jtf_preco_custoActionPerformed(evt);
             }
         });
+        jtf_preco_custo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_preco_custoFocusLost(evt);
+            }
+        });
         jtf_preco_custo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_preco_custoKeyPressed(evt);
@@ -647,6 +641,8 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         if (janelapai != null) {
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
+            janelapai.buscarDados();
+            janelapai.jtf_consulta.requestFocus();
         }
 
     }
@@ -761,10 +757,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private void jtf_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valorActionPerformed
-
-    private void jtf_valor_promocaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_promocaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_promocaoActionPerformed
 
     private void jcb_tipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_tipoKeyPressed
         acionarAtalho(evt);
@@ -961,6 +953,16 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_copiaKeyPressed
 
+    private void jtf_preco_custoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco_custoFocusLost
+        moeda = new Moeda();
+        if(jtf_preco_custo.getText().equals("")){
+            jtf_preco_custo.setText("R$ 0,00");
+        } else {
+            jtf_preco_custo.setText(moeda.setPrecoFormat(String.valueOf(moeda.getPrecoFormato(jtf_preco_custo.getText()))));
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_preco_custoFocusLost
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -987,7 +989,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
@@ -1029,7 +1030,6 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
     public static javax.swing.JTextField jtf_preco_custo;
     public static javax.swing.JTextField jtf_titulo_original;
     public static javax.swing.JTextField jtf_valor;
-    public static javax.swing.JTextField jtf_valor_promocao;
     private javax.swing.JTabbedPane jtp_menu;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
@@ -1161,16 +1161,16 @@ private void jtf_titulo_originalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-F
             String multa = null;
 
             valor = String.valueOf(diaria.getValor());
-            valor_promocao = String.valueOf(diaria.getValor_promocao());
+            
             multa = String.valueOf(diaria.getMultas());
 
             Moeda moeda = new Moeda();
             valor = moeda.setPrecoFormat(valor);
-            valor_promocao = moeda.setPrecoFormat(valor_promocao);
+            
             multa = moeda.setPrecoFormat(multa);
 
             jtf_valor.setText(valor);
-            jtf_valor_promocao.setText(valor_promocao);
+            
 
             jtf_censura.requestFocus();
         } else {

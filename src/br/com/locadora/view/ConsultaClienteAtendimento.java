@@ -190,7 +190,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 });
                 jScrollPane3.setViewportView(jtbl_cliente);
                 if (jtbl_cliente.getColumnModel().getColumnCount() > 0) {
-                    jtbl_cliente.getColumnModel().getColumn(0).setResizable(false);
                     jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(20);
                     jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(150);
                     jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(20);
@@ -283,18 +282,18 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         if (janelapaiLocacao != null) {
             AtendimentoLocacao.jtf_codigo_cliente.setText("");
             listaClienteDependente();
-            jtbl_cliente.requestFocus();
-            jtbl_cliente.setSelectionMode(1);
+//            jtbl_cliente.requestFocus();
+//            jtbl_cliente.setSelectionMode(1);
         } else if (janelapaiDevolucao != null) {
             AtendimentoDevolucao.jtf_codigo_cliente.setText("");
             listaClienteDependente();
-            jtbl_cliente.requestFocus();
-            jtbl_cliente.setSelectionMode(1);
+//            jtbl_cliente.requestFocus();
+//            jtbl_cliente.setSelectionMode(1);
         } else if (janelapaiRecebimento != null) {
             Recebimento.jtf_codigo_cliente.setText("");
             listaClienteDependente();
-            jtbl_cliente.requestFocus();
-            jtbl_cliente.setSelectionMode(1);
+//            jtbl_cliente.requestFocus();
+//            jtbl_cliente.setSelectionMode(1);
         }
 
     }//GEN-LAST:event_formWindowOpened
@@ -432,7 +431,9 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 row.addRow(new Object[]{dependente.getCliente().getCodigo_cliente(), hashDbGrid, data_nascimento, dependente.getCliente().getStatus(), dependente.getTipo_dependente(), dependente.getCodigo_dependente()});
             }
             jtbl_cliente.requestFocus();
-            jtbl_cliente.setRowSelectionInterval(0, 0);
+            jtbl_cliente.setSelectionMode(0);
+//            jtbl_cliente.requestFocus();
+//            jtbl_cliente.setRowSelectionInterval(0, 0);
         }
     }
 

@@ -10,10 +10,13 @@ import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.Objeto;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -153,6 +156,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
+                + "    F.CODIGO_DIARIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
                 + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
                 + "    ADDDATE(D.DATA_LOCACAO, F.DIAS) AS DATA_DEVOLUCAO,\n"
@@ -235,9 +239,10 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    A.DESCRICAO_OBJETO,\n"
                 + "    A.CODIGO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
+                + "    F.CODIGO_DIARIA,\n"
+                + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
-                + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
                 + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
                 + "    CURRENT_DATE AS DATA_ATUAL,\n"
                 + "    (case\n"
@@ -279,6 +284,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             }
 
             ps.close();
+        } catch (ParseException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -301,6 +308,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    A.DESCRICAO_OBJETO,\n"
                 + "    A.CODIGO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
+                + "    F.CODIGO_DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
@@ -403,6 +411,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
             Diaria diaria = new Diaria();
             diaria.setDias(rs.getInt("DIARIA"));
+            diaria.setCodigo_diaria(rs.getInt("CODIGO_DIARIA"));
 
             Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
@@ -493,28 +502,23 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         PreparedStatement ps;
 
         String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`COPIA_CODIGO_COPIA`, `LOCACAO_CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`,"
-                + " `VALOR_PAGO`, DATA_PREVISTA)VALUES( ?, ?, CURRENT_DATE(), ?, ?, ? );";
+                + " `VALOR_PAGO`, DATA_PREVISTA)VALUES( ?, ?, CURRENT_TIMESTAMP(), ?, ?, ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
 
             for (int i = 0; i < itemLocacao.size(); i++) {
 
-                Date data_locacao = null;
-                if (itemLocacao.get(i).getData_locacao() != null) {
-                    data_locacao = new Date(itemLocacao.get(i).getData_locacao().getTime());
-                }
-
-                Date data_prevista = null;
+                java.sql.Date data_prevista = null;
                 if (itemLocacao.get(i).getData_prevista() != null) {
-                    data_prevista = new Date(itemLocacao.get(i).getData_prevista().getTime());
+                    data_prevista = new java.sql.Date(itemLocacao.get(i).getData_prevista().getTime());
                 }
 
                 ps.setInt(1, itemLocacao.get(i).getCopia().getCodigo_copia());
                 ps.setInt(2, itemLocacao.get(i).getLocacao().getCodigo_locacao());
                 ps.setDouble(3, itemLocacao.get(i).getValor_locado());
                 ps.setDouble(4, itemLocacao.get(i).getValor_pago());
-                ps.setDate(5, data_prevista);
+                ps.setDate(5, (java.sql.Date) data_prevista);
                 ps.executeUpdate();
 
             }
@@ -579,20 +583,27 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
     }
 
-    private List<ItemLocacao> getListaLocacaoAberta(ResultSet rs) throws SQLException {
+    private List<ItemLocacao> getListaLocacaoAberta(ResultSet rs) throws SQLException, ParseException {
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
         while (rs.next()) {
             ItemLocacao itemLocacao = new ItemLocacao();
             itemLocacao.setCodigo_item_locacao(rs.getInt("CODIGO_ITEM_LOCACAO"));
             itemLocacao.setValor_multa(rs.getDouble("VALOR_MULTA"));
             itemLocacao.setDias_multa(rs.getInt("DIAS_MULTA"));
-            itemLocacao.setData_locacao(rs.getDate("DATA_LOCACAO"));
+            
+            String dataString = rs.getString("DATA_LOCACAO");
+            Date dataLocacao = format.parse(dataString);
+            itemLocacao.setData_locacao(dataLocacao);
+            
             itemLocacao.setValor_pago(rs.getDouble("VALOR_PAGO"));
             itemLocacao.setValor_locado(rs.getDouble("VALOR_LOCADO"));
             itemLocacao.setData_prevista(rs.getDate("DATA_PREVISTA"));
 
             Diaria diaria = new Diaria();
             diaria.setDias(rs.getInt("DIARIA"));
+            diaria.setCodigo_diaria(rs.getInt("CODIGO_DIARIA"));
 
             Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
@@ -636,6 +647,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
+                + "    F.CODIGO_DIARIA,\n"
                 + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
                 + "    ADDDATE(D.DATA_LOCACAO, F.DIAS) AS DATA_DEVOLUCAO,\n"
                 + "    CURRENT_DATE AS DATA_ATUAL,\n"
@@ -704,6 +716,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
+                + "    F.CODIGO_DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
@@ -776,6 +789,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
+                + "    F.CODIGO_DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
@@ -844,6 +858,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
+                + "    F.CODIGO_DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
                 + "    F.MULTAS AS VALOR_MULTA_DIA,\n"

@@ -23,7 +23,7 @@ public class CadastrarDiaria implements InterfaceCommand {
             Diaria diaria = new Diaria();
             diaria.setNome_diaria(CadastroDiaria.jtf_nome_diaria.getText());
             diaria.setValor(getPrecoFormato((String) CadastroDiaria.jtf_valor.getText()));
-            diaria.setValor_promocao(getPrecoFormato((String) CadastroDiaria.jtf_valor_promocao.getText()));
+            diaria.setValor_promocao(getPrecoFormato((String) CadastroDiaria.jtf_valor_promocao_locacao.getText()));
             diaria.setMultas(getPrecoFormato((String) CadastroDiaria.jtf_relocacao.getText()));
             diaria.setDias(Integer.parseInt((String) CadastroDiaria.jtf_dias.getText()));
             diaria.setMaximo_dias(Integer.parseInt((String) CadastroDiaria.jtf_dias_maximo.getText()));

@@ -145,7 +145,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND A.CODIGO_COPIA = ?;";
+                + "		AND A.CODIGO_COPIA = ? ORDER BY B.DESCRICAO_OBJETO;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -253,7 +253,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND A.CODIGO_BARRAS = ?;";
+                + "		AND A.CODIGO_BARRAS = ? ORDER BY B.DESCRICAO_OBJETO;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -398,7 +398,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND B.DESCRICAO_OBJETO LIKE ?;";
+                + "		AND B.DESCRICAO_OBJETO LIKE ? ORDER BY B.DESCRICAO_OBJETO;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -445,7 +445,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND B.ELENCO LIKE ?;";
+                + "		AND B.ELENCO LIKE ? ORDER BY B.DESCRICAO_OBJETO;";
 
         try {
             ps = con.prepareStatement(sqlSelect);

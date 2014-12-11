@@ -182,6 +182,8 @@ public class CadastroGenero extends javax.swing.JFrame {
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarGenero");
             janelapai.setStatusTela(true);
+            janelapai.buscarDados();
+            janelapai.jtf_consulta.requestFocus();
         }
     }
 

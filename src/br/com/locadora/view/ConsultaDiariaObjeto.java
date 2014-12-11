@@ -134,14 +134,14 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Descrição", "Dias", "Valor", "Valor Promoção", "Multa"
+                        "Código", "Descrição", "Dias", "Valor", "Relocação"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false
+                        false, false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -169,9 +169,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
                     jtbl_diaria.getColumnModel().getColumn(3).setResizable(false);
                     jtbl_diaria.getColumnModel().getColumn(3).setPreferredWidth(35);
                     jtbl_diaria.getColumnModel().getColumn(4).setResizable(false);
-                    jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(35);
-                    jtbl_diaria.getColumnModel().getColumn(5).setResizable(false);
-                    jtbl_diaria.getColumnModel().getColumn(5).setPreferredWidth(20);
+                    jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(20);
                 }
 
                 jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 600, 200));
@@ -381,20 +379,20 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
                 diaria.setDias(diarias.get(i).getDias());
 
                 String valor = null;
-                String valor_promocao = null;
+                
                 String multa = null;
 
                 valor = String.valueOf(diarias.get(i).getValor());
-                valor_promocao = String.valueOf(diarias.get(i).getValor_promocao());
+                
                 multa = String.valueOf(diarias.get(i).getMultas());
                 moeda = new Moeda();
                 valor = moeda.setPrecoFormat(valor);
-                valor_promocao = moeda.setPrecoFormat(valor_promocao);
+                
                 multa = moeda.setPrecoFormat(multa);
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_diaria.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
-                row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, diaria.getDias(), valor, valor_promocao, multa});
+                row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, diaria.getDias(), valor, multa});
             }
             jtbl_diaria.requestFocus();
             jtbl_diaria.setSelectionMode(1);

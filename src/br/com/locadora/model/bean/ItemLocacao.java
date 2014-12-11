@@ -24,6 +24,7 @@ public class ItemLocacao {
     private Double valor_pago;
     private Integer dias_multa;
     private Dependente dependente;
+    
 
     public Integer getCodigo_item_locacao() {
         return codigo_item_locacao;

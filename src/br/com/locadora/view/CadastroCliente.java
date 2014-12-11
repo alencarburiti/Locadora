@@ -476,9 +476,16 @@ public final class CadastroCliente extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jtbl_telefone.setName("jtbl_telefone"); // NOI18N
@@ -661,9 +668,16 @@ public final class CadastroCliente extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jtbl_dependente.setName("jtbl_dependente"); // NOI18N
@@ -671,8 +685,6 @@ public final class CadastroCliente extends javax.swing.JFrame {
         if (jtbl_dependente.getColumnModel().getColumnCount() > 0) {
             jtbl_dependente.getColumnModel().getColumn(0).setPreferredWidth(80);
             jtbl_dependente.getColumnModel().getColumn(1).setPreferredWidth(40);
-            jtbl_dependente.getColumnModel().getColumn(2).setResizable(false);
-            jtbl_dependente.getColumnModel().getColumn(5).setResizable(false);
             jtbl_dependente.getColumnModel().getColumn(5).setPreferredWidth(30);
         }
 

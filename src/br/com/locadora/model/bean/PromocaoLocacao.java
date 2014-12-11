@@ -9,11 +9,11 @@ package br.com.locadora.model.bean;
  *
  * @author alencarburiti
  */
-public class Promocao {
+public class PromocaoLocacao {
 
-    private Integer codigo_promocao;
-    private String descricao_promocao;
-    private Double valor_promocao;
+    private Integer codigo_promocao_locacao;
+    private String descricao;
+    private Double valor_promocao_locacao;
 
     private Boolean pagamento_a_vista;
     private Integer orderm;
@@ -31,28 +31,28 @@ public class Promocao {
 
     private String hora_antecipada;
 
-    public Integer getCodigo_promocao() {
-        return codigo_promocao;
+    public Integer getCodigo_promocao_locacao() {
+        return codigo_promocao_locacao;
     }
 
-    public void setCodigo_promocao(Integer codigo_promocao) {
-        this.codigo_promocao = codigo_promocao;
+    public void setCodigo_promocao_locacao(Integer codigo_promocao_locacao) {
+        this.codigo_promocao_locacao = codigo_promocao_locacao;
     }
 
-    public String getDescricao_promocao() {
-        return descricao_promocao;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescricao_promocao(String descricao_promocao) {
-        this.descricao_promocao = descricao_promocao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public Double getValor_promocao() {
-        return valor_promocao;
+    public Double getValor_promocao_locacao() {
+        return valor_promocao_locacao;
     }
 
-    public void setValor_promocao(Double valor_promocao) {
-        this.valor_promocao = valor_promocao;
+    public void setValor_promocao_locacao(Double valor_promocao_locacao) {
+        this.valor_promocao_locacao = valor_promocao_locacao;
     }
 
     public Boolean getPagamento_a_vista() {

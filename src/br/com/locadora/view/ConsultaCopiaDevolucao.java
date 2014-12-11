@@ -400,6 +400,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
             Diaria diaria = new Diaria();
             diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDiaria().getDias());
+            diaria.setCodigo_diaria(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDiaria().getCodigo_diaria());
 
             Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
