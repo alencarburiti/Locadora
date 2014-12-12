@@ -120,7 +120,7 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlSelect = "SELECT C.CODIGO_LOCACAO, D.CODIGO_ITEM_LOCACAO, \n" +
-            "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n" +
+            "    A.TITULO AS TITULO,\n" +
             "    F.DIAS AS DIARIA,\n" +
             "    B.CODIGO_BARRAS,\n" +
             "    B.CODIGO_COPIA,\n" +
@@ -191,7 +191,7 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
             "    E.CLIENTE_CODIGO_CLIENTE,\n" +
             "    C.CODIGO_LOCACAO,\n" +
             "    D.CODIGO_ITEM_LOCACAO,\n" +
-            "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n" +
+            "    A.TITULO AS TITULO,\n" +
             "    F.DIAS AS DIARIA,\n" +
             "    B.CODIGO_BARRAS,\n" +
             "    B.CODIGO_COPIA,\n" +
@@ -251,7 +251,7 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlSelect = "SELECT C.CODIGO_LOCACAO, D.CODIGO_ITEM_LOCACAO, \n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
@@ -342,7 +342,7 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
 
             Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
-            objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
+            objeto.setTitulo(rs.getString("TITULO"));
 
             Copia copia = new Copia();
             copia.setObjeto(objeto);

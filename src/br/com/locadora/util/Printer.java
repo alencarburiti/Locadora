@@ -81,7 +81,7 @@ public class Printer {
                     SimpleDateFormat dateFormat = new SimpleDateFormat(espelho);
                     String data_formatada = dateFormat.format(itens.get(x).getData_prevista());
                     data_formatada = data_formatada.substring(0, 5);
-                    String descricao_objeto = itens.get(x).getCopia().getObjeto().getDescricao_objeto();
+                    String descricao_objeto = itens.get(x).getCopia().getObjeto().getTitulo();
                     
                     linhasTxt.print(String.format("%-21s", descricao_objeto.substring(0, 19)));
                     linhasTxt.print(String.format("%-7s", data_formatada));
@@ -177,7 +177,7 @@ public class Printer {
                     String data_devolucao = dateFormat.format(itens.get(x).getData_devolucao());
                     data_devolucao = data_devolucao.substring(0, 5);
 
-                    linhasTxt.print(String.format("%-21s", itens.get(x).getCopia().getObjeto().getDescricao_objeto()));
+                    linhasTxt.print(String.format("%-21s", itens.get(x).getCopia().getObjeto().getTitulo()));
                     linhasTxt.print(String.format("%-7s", data_prevista));
                     linhasTxt.print(data_devolucao);
                     linhasTxt.println();

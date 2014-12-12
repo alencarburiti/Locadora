@@ -15,6 +15,7 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.TemaInterface;
 import static br.com.locadora.view.AtendimentoLocacao.acesso;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -42,6 +43,7 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
     public MenuTipoObjeto() {
         initComponents();
         listarGenero();
+        TemaInterface.getInterface(this);
     }
     DefaultTableModel tmDestino = new DefaultTableModel(null, new String[]{"Código", "Descrição"});
     ListSelectionModel lsmDestino;
@@ -74,10 +76,12 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
         jtf_pesquisar_genero = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_pesquisar = new javax.swing.JTable();
-        jb_excluir = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jb_novo = new javax.swing.JButton();
         jb_alterar = new javax.swing.JButton();
+        jb_excluir = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento de Tipos de Gênero");
@@ -90,36 +94,31 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonGroup1.add(jrb_codigo);
-        jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jrb_codigo.setSelected(true);
+        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
-        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 24, -1, -1));
 
         buttonGroup1.add(jrb_detalhado);
-        jrb_detalhado.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_detalhado.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jrb_detalhado.setText("Específica");
         jrb_detalhado.setName("jrb_detalhado"); // NOI18N
-        jPanel1.add(jrb_detalhado, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 24, -1, -1));
 
         buttonGroup1.add(jrb_descricao);
-        jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
-        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
-        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 64, -1, -1));
 
+        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -127,20 +126,57 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                 jb_buscarActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, -1, -1));
 
+        jtf_pesquisar_genero.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_pesquisar_genero.setName("jtf_pesquisar_genero"); // NOI18N
         jtf_pesquisar_genero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_pesquisar_generoKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_pesquisar_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 378, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 70, 560, 120));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jrb_descricao)
+                        .addGap(10, 10, 10)
+                        .addComponent(jrb_detalhado)
+                        .addGap(10, 10, 10)
+                        .addComponent(jrb_codigo))
+                    .addComponent(jl_pesquisar_destino)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtf_pesquisar_genero, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jb_buscar)))
+                .addGap(10, 10, 10))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jrb_descricao)
+                    .addComponent(jrb_detalhado)
+                    .addComponent(jrb_codigo))
+                .addGap(10, 10, 10)
+                .addComponent(jl_pesquisar_destino)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_pesquisar_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_buscar))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_pesquisar_genero});
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        jt_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jt_pesquisar.setModel(tmDestino);
         jt_pesquisar.setUpdateSelectionOnSort(false);
 
@@ -173,28 +209,11 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                 });
                 jScrollPane1.setViewportView(jt_pesquisar);
 
-                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 561, 125));
+                jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+                jPanel2.setName("jPanel2"); // NOI18N
+                jPanel2.setLayout(new java.awt.GridBagLayout());
 
-                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
-                jb_excluir.setText("Excluir");
-                jb_excluir.setName("jb_excluir"); // NOI18N
-                jb_excluir.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_excluirActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, -1, -1));
-
-                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_sair.setText("Sair");
-                jb_sair.setName("jb_sair"); // NOI18N
-                jb_sair.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_sairActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, 33));
-
+                jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
                 jb_novo.setText("Novo");
                 jb_novo.setName("jb_novo"); // NOI18N
@@ -203,8 +222,9 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                         jb_novoActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
+                jPanel2.add(jb_novo, new java.awt.GridBagConstraints());
 
+                jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar.setText("Alterar");
                 jb_alterar.setName("jb_alterar"); // NOI18N
@@ -213,9 +233,64 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
                         jb_alterarActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, -1));
+                jPanel2.add(jb_alterar, new java.awt.GridBagConstraints());
 
-                setSize(new java.awt.Dimension(616, 374));
+                jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
+                jb_excluir.setText("Excluir");
+                jb_excluir.setName("jb_excluir"); // NOI18N
+                jb_excluir.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jb_excluirActionPerformed(evt);
+                    }
+                });
+                jPanel2.add(jb_excluir, new java.awt.GridBagConstraints());
+
+                jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+                jb_sair.setText("Sair");
+                jb_sair.setName("jb_sair"); // NOI18N
+                jb_sair.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jb_sairActionPerformed(evt);
+                    }
+                });
+                jPanel2.add(jb_sair, new java.awt.GridBagConstraints());
+
+                jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
+                jLabel2.setName("jLabel2"); // NOI18N
+
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(18, Short.MAX_VALUE))
+                );
+
+                setSize(new java.awt.Dimension(707, 503));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -334,7 +409,9 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_alterar;
     private javax.swing.JButton jb_buscar;

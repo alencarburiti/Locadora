@@ -17,6 +17,9 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Legenda;
 import br.com.locadora.model.dao.LegendaDAO;
 import br.com.locadora.util.ItemDbGrid;
+import br.com.locadora.util.TemaInterface;
+import static br.com.locadora.view.MenuIdioma.jtbl_idioma;
+import static br.com.locadora.view.MenuIdioma.jtf_consulta;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
@@ -37,16 +40,15 @@ public class MenuLegenda extends javax.swing.JFrame {
     public InterfacePool pool;
     public SiscomController controller;
     AcessoUsuario acesso;
-    
 
     /**
      * Creates new form DiariaGUI
      */
     public MenuLegenda() {
         initComponents();
-//        listarDiaria();
+        TemaInterface.getInterface(this);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,9 +65,11 @@ public class MenuLegenda extends javax.swing.JFrame {
         jtf_consulta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbl_legenda = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jb_sair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gerenciamento de Diárias");
+        setTitle("Gerenciamento de Legendas");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -75,17 +79,15 @@ public class MenuLegenda extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Legenda"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
-        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
+        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -93,20 +95,46 @@ public class MenuLegenda extends javax.swing.JFrame {
                 jb_buscarActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 30, 30));
 
+        jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 230, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 300, 90));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jl_pesquisar_destino)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jl_pesquisar_destino)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_consulta});
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        jtbl_legenda.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtbl_legenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -146,19 +174,82 @@ public class MenuLegenda extends javax.swing.JFrame {
             jtbl_legenda.getColumnModel().getColumn(1).setPreferredWidth(200);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 300, 180));
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        jPanel2.setName("jPanel2"); // NOI18N
 
-        setSize(new java.awt.Dimension(344, 346));
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setMaximumSize(new java.awt.Dimension(62, 36));
+        jb_sair.setMinimumSize(new java.awt.Dimension(62, 36));
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_sairActionPerformed(evt);
+            }
+        });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(0, 116, Short.MAX_VALUE)
+                    .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 117, Short.MAX_VALUE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 34, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+
+        setSize(new java.awt.Dimension(341, 451));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-   
+
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
         janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       
+        jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
@@ -168,13 +259,27 @@ public class MenuLegenda extends javax.swing.JFrame {
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtbl_legenda.addRowSelectionInterval(0, 0);
+                    consultarLegenda();
         }
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_legendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_legendaKeyPressed
 
     }//GEN-LAST:event_jtbl_legendaKeyPressed
+
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
+        setVisible(false);
+        janelapai.setStatusTela(true);
+    }//GEN-LAST:event_jb_sairActionPerformed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
     /**
      * @param args the command line arguments
      */
@@ -189,8 +294,10 @@ public class MenuLegenda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JButton jb_buscar;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar_destino;
     public static javax.swing.JTable jtbl_legenda;
     public static javax.swing.JTextField jtf_consulta;
@@ -206,8 +313,8 @@ public class MenuLegenda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    public void consultarLegenda(){
-        try {        
+    public void consultarLegenda() {
+        try {
             pool = new Pool();
             LegendaDAO legendaDAO = new LegendaDAO(pool);
             legendas = null;
@@ -217,7 +324,7 @@ public class MenuLegenda extends javax.swing.JFrame {
             Logger.getLogger(MenuIdioma.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void mostrarLegendas(List<Legenda> legendas) {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_legenda.getModel();
         tableModel.setNumRows(0);
@@ -227,13 +334,21 @@ public class MenuLegenda extends javax.swing.JFrame {
 
         } else {
             for (int i = 0; i < legendas.size(); i++) {
-                
+
                 DefaultTableModel row = (DefaultTableModel) jtbl_legenda.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(legendas.get(i), legendas.get(i).getNome_legenda());
                 row.addRow(new Object[]{legendas.get(i).getCodigo_legenda(), hashDbGrid});
-            }            
+            }
+            jtbl_legenda.requestFocus();
+            jtbl_legenda.setSelectionMode(1);
         }
     }
-    
-    
+
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+    }
 }

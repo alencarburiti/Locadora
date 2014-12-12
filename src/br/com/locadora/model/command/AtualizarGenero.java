@@ -21,7 +21,7 @@ public class AtualizarGenero implements InterfaceCommand {
 
             Genero genero = new Genero();
 
-            genero.setCodigo_genero(Integer.parseInt(AtualizaGenero.jtf_codigo.getText()));
+            genero.setCodigo_genero(Integer.parseInt(AtualizaGenero.jtf_codigo_genero.getText()));
             genero.setNome_genero(AtualizaGenero.jtf_nome_genero.getText());
 
             generoDAO.atualizar(genero);

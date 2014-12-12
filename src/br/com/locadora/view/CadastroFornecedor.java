@@ -14,6 +14,7 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.dao.FornecedorDAO;
 import br.com.locadora.model.bean.FornecedorModel;
 import br.com.locadora.util.LimitadorTexto;
+import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
 import br.com.locadora.util.ValidaCnpj;
 import java.awt.event.KeyAdapter;
@@ -42,9 +43,10 @@ public class CadastroFornecedor extends javax.swing.JFrame {
      */
     public CadastroFornecedor() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapai = null;
         janelapai2 = null;
-       
+
     }
 
     /**
@@ -440,7 +442,7 @@ public class CadastroFornecedor extends javax.swing.JFrame {
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
         verificaCadastro();
 }//GEN-LAST:event_jb_salvarActionPerformed
-    
+
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         janelapai.setStatusTela(true);
         setVisible(false);

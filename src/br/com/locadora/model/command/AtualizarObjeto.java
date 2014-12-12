@@ -23,9 +23,8 @@ public class AtualizarObjeto implements InterfaceCommand {
                 Objeto objeto = new Objeto();
 
                 objeto.setCodigo_objeto(Integer.parseInt(AtualizaObjeto.jtf_codigo_objeto.getText().trim()));
-                objeto.setDescricao_objeto(AtualizaObjeto.jtf_descricao_objeto.getText().trim());
+                objeto.setTitulo(AtualizaObjeto.jtf_titulo.getText().trim());
                 objeto.setTitulo_original(AtualizaObjeto.jtf_titulo_original.getText().trim());
-                objeto.setDescricao_resumida(AtualizaObjeto.jtf_descricao_resumida.getText().trim());
                 objeto.setTipo_movimento((String) AtualizaObjeto.jcb_tipo.getSelectedItem());
                 objeto.setProducao((String) AtualizaObjeto.jcb_producao.getSelectedItem());
                 objeto.setDuracao(AtualizaObjeto.jtf_duracao.getText().trim());

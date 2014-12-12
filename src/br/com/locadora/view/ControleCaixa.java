@@ -16,6 +16,7 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.util.Moeda;
+import br.com.locadora.util.TemaInterface;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ControleCaixa extends javax.swing.JFrame {
 
     public ControleCaixa() {
         initComponents();
+        TemaInterface.getInterface(this);
     }
 
     /**

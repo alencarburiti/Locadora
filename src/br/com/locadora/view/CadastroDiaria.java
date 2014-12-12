@@ -23,6 +23,7 @@ import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
+import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
 
 import java.awt.event.KeyEvent;
@@ -32,8 +33,6 @@ import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -59,6 +58,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
      */
     public CadastroDiaria() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapai = null;
         itensPromocaoLocacao = new ArrayList<Diaria>();
     }
@@ -71,13 +71,13 @@ public class CadastroDiaria extends javax.swing.JFrame {
         jb_salvar = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jcb_quinta = new javax.swing.JCheckBox();
-        jcb_sexta = new javax.swing.JCheckBox();
-        jcb_sabado = new javax.swing.JCheckBox();
         jcb_domingo = new javax.swing.JCheckBox();
         jcb_segunda = new javax.swing.JCheckBox();
         jcb_terca = new javax.swing.JCheckBox();
         jcb_quarta = new javax.swing.JCheckBox();
+        jcb_quinta = new javax.swing.JCheckBox();
+        jcb_sexta = new javax.swing.JCheckBox();
+        jcb_sabado = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jtf_nome_diaria = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel3 = new javax.swing.JLabel();
@@ -85,10 +85,11 @@ public class CadastroDiaria extends javax.swing.JFrame {
         jtf_codigo_diaria = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jtf_valor = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
-        jLabel6 = new javax.swing.JLabel();
-        jtf_dias = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel7 = new javax.swing.JLabel();
         jtf_relocacao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jPanel7 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jtf_dias = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel15 = new javax.swing.JLabel();
         jtf_dias_maximo = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jcb_acumulativo = new javax.swing.JCheckBox();
@@ -166,8 +167,8 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
@@ -181,8 +182,8 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 jb_salvarKeyPressed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, -1, 35));
 
+        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
@@ -191,27 +192,11 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, 35));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias de Promoção"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jcb_quinta.setSelected(true);
-        jcb_quinta.setText("Quinta");
-        jcb_quinta.setName("jcb_quinta"); // NOI18N
-        jPanel1.add(jcb_quinta, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
-
-        jcb_sexta.setSelected(true);
-        jcb_sexta.setText("Sexta");
-        jcb_sexta.setName("jcb_sexta"); // NOI18N
-        jPanel1.add(jcb_sexta, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
-
-        jcb_sabado.setSelected(true);
-        jcb_sabado.setText("Sábado");
-        jcb_sabado.setName("jcb_sabado"); // NOI18N
-        jPanel1.add(jcb_sabado, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
-
+        jcb_domingo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_domingo.setSelected(true);
         jcb_domingo.setText("Domingo");
         jcb_domingo.setName("jcb_domingo"); // NOI18N
@@ -220,57 +205,73 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 jcb_domingoActionPerformed(evt);
             }
         });
-        jPanel1.add(jcb_domingo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel1.add(jcb_domingo);
 
+        jcb_segunda.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_segunda.setSelected(true);
         jcb_segunda.setText("Segunda");
         jcb_segunda.setName("jcb_segunda"); // NOI18N
-        jPanel1.add(jcb_segunda, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
+        jPanel1.add(jcb_segunda);
 
+        jcb_terca.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_terca.setSelected(true);
         jcb_terca.setText("Terça");
         jcb_terca.setName("jcb_terca"); // NOI18N
-        jPanel1.add(jcb_terca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, -1, -1));
+        jPanel1.add(jcb_terca);
 
+        jcb_quarta.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_quarta.setSelected(true);
         jcb_quarta.setText("Quarta");
         jcb_quarta.setName("jcb_quarta"); // NOI18N
-        jPanel1.add(jcb_quarta, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, -1, -1));
+        jPanel1.add(jcb_quarta);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 370, 130));
+        jcb_quinta.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jcb_quinta.setSelected(true);
+        jcb_quinta.setText("Quinta");
+        jcb_quinta.setName("jcb_quinta"); // NOI18N
+        jPanel1.add(jcb_quinta);
 
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jcb_sexta.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jcb_sexta.setSelected(true);
+        jcb_sexta.setText("Sexta");
+        jcb_sexta.setName("jcb_sexta"); // NOI18N
+        jPanel1.add(jcb_sexta);
+
+        jcb_sabado.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jcb_sabado.setSelected(true);
+        jcb_sabado.setText("Sábado");
+        jcb_sabado.setName("jcb_sabado"); // NOI18N
+        jPanel1.add(jcb_sabado);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Informação Diária"));
         jPanel2.setName("jPanel2"); // NOI18N
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jtf_nome_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_diaria.setName("jtf_nome_diaria"); // NOI18N
         jtf_nome_diaria.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_nome_diariaKeyPressed(evt);
             }
         });
-        jPanel2.add(jtf_nome_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 190, -1));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setText("Nome");
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel3.setText("Nome*");
         jLabel3.setName("jLabel3"); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel2.setText("Código Diária");
         jLabel2.setName("jLabel2"); // NOI18N
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jtf_codigo_diaria.setEditable(false);
+        jtf_codigo_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_codigo_diaria.setName("jtf_codigo_diaria"); // NOI18N
-        jPanel2.add(jtf_codigo_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 90, -1));
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setText("Valor");
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel4.setText("Valor*");
         jLabel4.setName("jLabel4"); // NOI18N
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, -1));
 
         jtf_nome_diaria.setDocument(new UnaccentedDocument());
+        jtf_valor.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_valor.setText("R$ 0,00");
         jtf_valor.setName("jtf_valor"); // NOI18N
         jtf_valor.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -286,17 +287,43 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 jtf_valorKeyPressed(evt);
             }
         });
-        jPanel2.add(jtf_valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 90, -1));
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel6.setText("Minimo Dias");
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel7.setText("Relocação*");
+        jLabel7.setName("jLabel7"); // NOI18N
+
+        jtf_nome_diaria.setDocument(new UnaccentedDocument());
+        jtf_relocacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_relocacao.setText("R$ 0,00");
+        jtf_relocacao.setName("jtf_relocacao"); // NOI18N
+        jtf_relocacao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_relocacaoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_relocacaoFocusLost(evt);
+            }
+        });
+        jtf_relocacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_relocacaoKeyPressed(evt);
+            }
+        });
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias Locados"));
+        jPanel7.setName("jPanel7"); // NOI18N
+        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.LINE_AXIS));
+
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel6.setText("Minimo Dias*");
         jLabel6.setName("jLabel6"); // NOI18N
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jPanel7.add(jLabel6);
 
         jtf_dias.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
             public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
                 jtf_dias.setText(jtf_dias.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
             }   });
+            jtf_dias.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
             jtf_dias.setText("1");
             jtf_dias.setName("jtf_dias"); // NOI18N
             jtf_dias.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -309,40 +336,18 @@ public class CadastroDiaria extends javax.swing.JFrame {
                     jtf_diasKeyPressed(evt);
                 }
             });
-            jPanel2.add(jtf_dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 70, -1));
+            jPanel7.add(jtf_dias);
 
-            jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-            jLabel7.setText("Relocação");
-            jLabel7.setName("jLabel7"); // NOI18N
-            jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 70, -1));
-
-            jtf_nome_diaria.setDocument(new UnaccentedDocument());
-            jtf_relocacao.setText("R$ 0,00");
-            jtf_relocacao.setName("jtf_relocacao"); // NOI18N
-            jtf_relocacao.addFocusListener(new java.awt.event.FocusAdapter() {
-                public void focusGained(java.awt.event.FocusEvent evt) {
-                    jtf_relocacaoFocusGained(evt);
-                }
-                public void focusLost(java.awt.event.FocusEvent evt) {
-                    jtf_relocacaoFocusLost(evt);
-                }
-            });
-            jtf_relocacao.addKeyListener(new java.awt.event.KeyAdapter() {
-                public void keyPressed(java.awt.event.KeyEvent evt) {
-                    jtf_relocacaoKeyPressed(evt);
-                }
-            });
-            jPanel2.add(jtf_relocacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 80, -1));
-
-            jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-            jLabel15.setText("Máximo Dias");
+            jLabel15.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+            jLabel15.setText("Máximo Dias*");
             jLabel15.setName("jLabel15"); // NOI18N
-            jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, -1));
+            jPanel7.add(jLabel15);
 
             jtf_dias.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
                 public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
                     jtf_dias.setText(jtf_dias.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
                 }   });
+                jtf_dias_maximo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jtf_dias_maximo.setText("1");
                 jtf_dias_maximo.setName("jtf_dias_maximo"); // NOI18N
                 jtf_dias_maximo.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -355,24 +360,75 @@ public class CadastroDiaria extends javax.swing.JFrame {
                         jtf_dias_maximoKeyPressed(evt);
                     }
                 });
-                jPanel2.add(jtf_dias_maximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 70, -1));
+                jPanel7.add(jtf_dias_maximo);
 
+                jcb_acumulativo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jcb_acumulativo.setText("Acumulativo");
                 jcb_acumulativo.setName("jcb_acumulativo"); // NOI18N
-                jPanel2.add(jcb_acumulativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, -1, -1));
+                jPanel7.add(jcb_acumulativo);
 
-                getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 430, 130));
+                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+                jPanel2.setLayout(jPanel2Layout);
+                jPanel2Layout.setHorizontalGroup(
+                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtf_codigo_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                            .addComponent(jtf_nome_diaria))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtf_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                );
+                jPanel2Layout.setVerticalGroup(
+                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel7))
+                                        .addGap(0, 0, 0)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jtf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtf_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel3))
+                                        .addGap(0, 0, 0)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jtf_codigo_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtf_nome_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10))
+                );
 
                 jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
+                jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
                 jPanel4.setName("jPanel4"); // NOI18N
-                jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
                 jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes"));
                 jPanel3.setName("jPanel3"); // NOI18N
-                jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
                 jtf_nome_diaria.setDocument(new UnaccentedDocument());
+                jtf_valor_promocao_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jtf_valor_promocao_locacao.setText("R$ 0,00");
                 jtf_valor_promocao_locacao.setName("jtf_valor_promocao_locacao"); // NOI18N
                 jtf_valor_promocao_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -388,17 +444,16 @@ public class CadastroDiaria extends javax.swing.JFrame {
                         jtf_valor_promocao_locacaoKeyPressed(evt);
                     }
                 });
-                jPanel3.add(jtf_valor_promocao_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 100, 30));
 
-                jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jLabel5.setText("Valor Promoção");
                 jLabel5.setName("jLabel5"); // NOI18N
-                jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, 20));
 
                 jtf_ordem.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
                     public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
                         jtf_ordem.setText(jtf_ordem.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
                     }   });
+                    jtf_ordem.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jtf_ordem.setName("jtf_ordem"); // NOI18N
                     jtf_ordem.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,12 +470,12 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             jtf_ordemKeyPressed(evt);
                         }
                     });
-                    jPanel3.add(jtf_ordem, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 50, -1));
 
+                    jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jLabel8.setText("Ordem");
                     jLabel8.setName("jLabel8"); // NOI18N
-                    jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, 20));
 
+                    jb_eliminar_promocao_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jb_eliminar_promocao_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
                     jb_eliminar_promocao_locacao.setToolTipText("Excluir");
                     jb_eliminar_promocao_locacao.setName("jb_eliminar_promocao_locacao"); // NOI18N
@@ -434,8 +489,8 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             jb_eliminar_promocao_locacaoKeyPressed(evt);
                         }
                     });
-                    jPanel3.add(jb_eliminar_promocao_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 30, 30));
 
+                    jb_adicionar_promocao_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jb_adicionar_promocao_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
                     jb_adicionar_promocao_locacao.setToolTipText("Incluir");
                     jb_adicionar_promocao_locacao.setName("jb_adicionar_promocao_locacao"); // NOI18N
@@ -449,10 +504,15 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             jb_adicionar_promocao_locacaoKeyPressed(evt);
                         }
                     });
-                    jPanel3.add(jb_adicionar_promocao_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 40, 30, 30));
 
                     jtf_nome_diaria.setDocument(new UnaccentedDocument());
+                    jtf_descricao_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jtf_descricao_locacao.setName("jtf_descricao_locacao"); // NOI18N
+                    jtf_descricao_locacao.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jtf_descricao_locacaoActionPerformed(evt);
+                        }
+                    });
                     jtf_descricao_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
                         public void focusGained(java.awt.event.FocusEvent evt) {
                             jtf_descricao_locacaoFocusGained(evt);
@@ -463,25 +523,24 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             jtf_descricao_locacaoKeyPressed(evt);
                         }
                     });
-                    jPanel3.add(jtf_descricao_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 220, -1));
 
-                    jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                    jLabel12.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jLabel12.setText("Descrição");
                     jLabel12.setName("jLabel12"); // NOI18N
-                    jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
+                    jcb_a_vista_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jcb_a_vista_locacao.setText("Aplicar esta promoção apenas para pagamentos à vista.");
                     jcb_a_vista_locacao.setName("jcb_a_vista_locacao"); // NOI18N
-                    jPanel3.add(jcb_a_vista_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
+                    jLabel16.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jLabel16.setText("Locar Qtd.");
                     jLabel16.setName("jLabel16"); // NOI18N
-                    jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
 
                     jtf_locar_quantidade.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
                         public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
                             jtf_locar_quantidade.setText(jtf_locar_quantidade.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
                         }   });
+                        jtf_locar_quantidade.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                         jtf_locar_quantidade.setName("jtf_locar_quantidade"); // NOI18N
                         jtf_locar_quantidade.addFocusListener(new java.awt.event.FocusAdapter() {
                             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -493,12 +552,12 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                 jtf_locar_quantidadeKeyPressed(evt);
                             }
                         });
-                        jPanel3.add(jtf_locar_quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 70, -1));
 
                         jtf_ganhar_quantidade.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
                             public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
                                 jtf_ganhar_quantidade.setText(jtf_ganhar_quantidade.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
                             }   });
+                            jtf_ganhar_quantidade.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_ganhar_quantidade.setName("jtf_ganhar_quantidade"); // NOI18N
                             jtf_ganhar_quantidade.addFocusListener(new java.awt.event.FocusAdapter() {
                                 public void focusGained(java.awt.event.FocusEvent evt) {
@@ -510,16 +569,89 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jtf_ganhar_quantidadeKeyPressed(evt);
                                 }
                             });
-                            jPanel3.add(jtf_ganhar_quantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 70, -1));
 
+                            jLabel17.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jLabel17.setText("Ganha Qtd.");
                             jLabel17.setName("jLabel17"); // NOI18N
-                            jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
 
-                            jPanel4.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 770, 100));
+                            javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+                            jPanel3.setLayout(jPanel3Layout);
+                            jPanel3Layout.setHorizontalGroup(
+                                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addGap(10, 10, 10)
+                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                    .addComponent(jtf_descricao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, 0))
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                    .addGap(10, 10, 10)
+                                                    .addComponent(jLabel5))
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                    .addGap(10, 10, 10)
+                                                    .addComponent(jtf_valor_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(10, 10, 10))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jcb_a_vista_locacao)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jtf_locar_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(10, 10, 10)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addComponent(jtf_ganhar_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jtf_ordem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jb_adicionar_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jb_eliminar_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addComponent(jLabel17)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jLabel8)))
+                                    .addGap(453, 453, 453))
+                            );
+                            jPanel3Layout.setVerticalGroup(
+                                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel17)
+                                            .addComponent(jLabel16))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jb_adicionar_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel12)
+                                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(0, 0, 0)
+                                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jtf_descricao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jtf_valor_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jtf_locar_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jtf_ganhar_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jtf_ordem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(jb_eliminar_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(5, 5, 5)
+                                            .addComponent(jcb_a_vista_locacao)))
+                                    .addGap(5, 5, 5))
+                            );
+
+                            jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_promocao_locacao, jb_eliminar_promocao_locacao, jtf_descricao_locacao, jtf_ganhar_quantidade, jtf_locar_quantidade, jtf_ordem, jtf_valor_promocao_locacao});
 
                             jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+                            jtbl_promocao_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtbl_promocao_locacao.setModel(new javax.swing.table.DefaultTableModel(
                                 new Object [][] {
 
@@ -556,34 +688,52 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             });
                             jScrollPane1.setViewportView(jtbl_promocao_locacao);
                             if (jtbl_promocao_locacao.getColumnModel().getColumnCount() > 0) {
-                                jtbl_promocao_locacao.getColumnModel().getColumn(0).setPreferredWidth(5);
-                                jtbl_promocao_locacao.getColumnModel().getColumn(1).setPreferredWidth(150);
-                                jtbl_promocao_locacao.getColumnModel().getColumn(2).setPreferredWidth(20);
-                                jtbl_promocao_locacao.getColumnModel().getColumn(3).setPreferredWidth(20);
-                                jtbl_promocao_locacao.getColumnModel().getColumn(4).setPreferredWidth(40);
-                                jtbl_promocao_locacao.getColumnModel().getColumn(5).setPreferredWidth(20);
-                                jtbl_promocao_locacao.getColumnModel().getColumn(6).setPreferredWidth(20);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(0).setPreferredWidth(10);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(1).setPreferredWidth(200);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(2).setPreferredWidth(10);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(3).setPreferredWidth(10);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(4).setPreferredWidth(10);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(5).setPreferredWidth(10);
+                                jtbl_promocao_locacao.getColumnModel().getColumn(6).setPreferredWidth(10);
                             }
-
-                            jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 770, 150));
 
                             jLabel1.setText("* Selecione item na Tabela para verificar dias de promoção");
                             jLabel1.setName("jLabel1"); // NOI18N
-                            jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+
+                            javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+                            jPanel4.setLayout(jPanel4Layout);
+                            jPanel4Layout.setHorizontalGroup(
+                                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 878, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane1))
+                                    .addGap(20, 20, 20))
+                            );
+                            jPanel4Layout.setVerticalGroup(
+                                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(jLabel1))
+                            );
 
                             jTabbedPane1.addTab("Promoção Locação", jPanel4);
 
+                            jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
                             jPanel5.setName("jPanel5"); // NOI18N
-                            jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
                             jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes"));
                             jPanel6.setName("jPanel6"); // NOI18N
-                            jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-                            jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                            jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jLabel9.setText("Horário Locação");
                             jLabel9.setName("jLabel9"); // NOI18N
-                            jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, 20));
 
                             jb_eliminar_promocao_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
                             jb_eliminar_promocao_devolucao.setToolTipText("Excluir");
@@ -598,7 +748,6 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jb_eliminar_promocao_devolucaoKeyPressed(evt);
                                 }
                             });
-                            jPanel6.add(jb_eliminar_promocao_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 30, 30));
 
                             jb_adicionar_promocao_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
                             jb_adicionar_promocao_devolucao.setToolTipText("Incluir");
@@ -613,9 +762,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jb_adicionar_promocao_devolucaoKeyPressed(evt);
                                 }
                             });
-                            jPanel6.add(jb_adicionar_promocao_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 30, 30));
 
                             jtf_nome_diaria.setDocument(new UnaccentedDocument());
+                            jtf_descricao_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_descricao_devolucao.setName("jtf_descricao_devolucao"); // NOI18N
                             jtf_descricao_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
                                 public void focusGained(java.awt.event.FocusEvent evt) {
@@ -627,32 +776,29 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jtf_descricao_devolucaoKeyPressed(evt);
                                 }
                             });
-                            jPanel6.add(jtf_descricao_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 210, -1));
 
-                            jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                            jLabel14.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jLabel14.setText("Descrição");
                             jLabel14.setName("jLabel14"); // NOI18N
-                            jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
+                            jcb_a_vista_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jcb_a_vista_devolucao.setText("Aplicar esta promoção apenas para pagamentos à vista.");
                             jcb_a_vista_devolucao.setName("jcb_a_vista_devolucao"); // NOI18N
-                            jPanel6.add(jcb_a_vista_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
+                            jLabel18.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jLabel18.setText("Horas antecipada");
                             jLabel18.setName("jLabel18"); // NOI18N
-                            jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, 20));
 
-                            jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                            jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jLabel10.setText("Horário Devolução");
                             jLabel10.setName("jLabel10"); // NOI18N
-                            jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, 20));
 
-                            jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                            jLabel11.setText("Valor");
+                            jLabel11.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                            jLabel11.setText("Valor Promoção");
                             jLabel11.setName("jLabel11"); // NOI18N
-                            jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, 20));
 
                             jtf_nome_diaria.setDocument(new UnaccentedDocument());
+                            jtf_valor_promocao_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_valor_promocao_devolucao.setText("R$ 0,00");
                             jtf_valor_promocao_devolucao.setName("jtf_valor_promocao_devolucao"); // NOI18N
                             jtf_valor_promocao_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -671,9 +817,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jtf_valor_promocao_devolucaoKeyReleased(evt);
                                 }
                             });
-                            jPanel6.add(jtf_valor_promocao_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, 90, 30));
 
                             jtf_horas_antecipada.setText("00:00:00");
+                            jtf_horas_antecipada.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_horas_antecipada.setName("jtf_horas_antecipada"); // NOI18N
                             jtf_horas_antecipada.addFocusListener(new java.awt.event.FocusAdapter() {
                                 public void focusLost(java.awt.event.FocusEvent evt) {
@@ -685,9 +831,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jtf_horas_antecipadaKeyPressed(evt);
                                 }
                             });
-                            jPanel6.add(jtf_horas_antecipada, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 100, 30));
 
                             jtf_horario_locacao.setText("00:00:00");
+                            jtf_horario_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_horario_locacao.setName("jtf_horario_locacao"); // NOI18N
                             jtf_horario_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
                                 public void focusLost(java.awt.event.FocusEvent evt) {
@@ -702,9 +848,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jtf_horario_locacaoKeyPressed(evt);
                                 }
                             });
-                            jPanel6.add(jtf_horario_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 100, 30));
 
                             jtf_horario_devolucao.setText("00:00:00");
+                            jtf_horario_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_horario_devolucao.setName("jtf_horario_devolucao"); // NOI18N
                             jtf_horario_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
                                 public void focusLost(java.awt.event.FocusEvent evt) {
@@ -716,12 +862,82 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                     jtf_horario_devolucaoKeyPressed(evt);
                                 }
                             });
-                            jPanel6.add(jtf_horario_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 100, 30));
 
-                            jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 770, 100));
+                            javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+                            jPanel6.setLayout(jPanel6Layout);
+                            jPanel6Layout.setHorizontalGroup(
+                                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jcb_a_vista_devolucao)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                            .addGap(10, 10, 10)
+                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, Short.MAX_VALUE))
+                                                .addComponent(jtf_descricao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(10, 10, 10)
+                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                                    .addComponent(jLabel9)
+                                                    .addGap(14, 14, 14)
+                                                    .addComponent(jLabel10))
+                                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                                    .addComponent(jtf_horario_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(10, 10, 10)
+                                                    .addComponent(jtf_horario_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(10, 10, 10)
+                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                                    .addComponent(jLabel18)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                                    .addComponent(jtf_horas_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(10, 10, 10)
+                                                    .addComponent(jtf_valor_promocao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jb_adicionar_promocao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jb_eliminar_promocao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addContainerGap())
+                            );
+                            jPanel6Layout.setVerticalGroup(
+                                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                    .addGap(8, 8, 8)
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(jLabel14)
+                                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(0, 0, 0)
+                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(jtf_descricao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jtf_horario_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jtf_horario_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jtf_horas_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jtf_valor_promocao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jb_adicionar_promocao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jb_eliminar_promocao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(5, 5, 5)
+                                    .addComponent(jcb_a_vista_devolucao)
+                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            );
 
                             jScrollPane2.setName("jScrollPane2"); // NOI18N
 
+                            jtbl_promocao_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtbl_promocao_devolucao.setModel(new javax.swing.table.DefaultTableModel(
                                 new Object [][] {
 
@@ -758,22 +974,77 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             });
                             jScrollPane2.setViewportView(jtbl_promocao_devolucao);
                             if (jtbl_promocao_devolucao.getColumnModel().getColumnCount() > 0) {
-                                jtbl_promocao_devolucao.getColumnModel().getColumn(0).setPreferredWidth(5);
-                                jtbl_promocao_devolucao.getColumnModel().getColumn(1).setPreferredWidth(150);
-                                jtbl_promocao_devolucao.getColumnModel().getColumn(2).setPreferredWidth(50);
-                                jtbl_promocao_devolucao.getColumnModel().getColumn(3).setPreferredWidth(50);
-                                jtbl_promocao_devolucao.getColumnModel().getColumn(4).setPreferredWidth(50);
-                                jtbl_promocao_devolucao.getColumnModel().getColumn(5).setPreferredWidth(40);
-                                jtbl_promocao_devolucao.getColumnModel().getColumn(6).setPreferredWidth(20);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(0).setPreferredWidth(10);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(1).setPreferredWidth(200);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(2).setPreferredWidth(30);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(3).setPreferredWidth(30);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(4).setPreferredWidth(30);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(5).setPreferredWidth(10);
+                                jtbl_promocao_devolucao.getColumnModel().getColumn(6).setPreferredWidth(10);
                             }
 
-                            jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 770, 160));
+                            javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+                            jPanel5.setLayout(jPanel5Layout);
+                            jPanel5Layout.setHorizontalGroup(
+                                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane2))
+                                    .addGap(20, 20, 20))
+                            );
+                            jPanel5Layout.setVerticalGroup(
+                                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(20, 20, 20))
+                            );
 
                             jTabbedPane1.addTab("Promoção Devolução", jPanel5);
 
-                            getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 830, 350));
+                            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                            getContentPane().setLayout(layout);
+                            layout.setHorizontalGroup(
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jb_salvar)
+                                            .addGap(10, 10, 10)
+                                            .addComponent(jb_cancelar))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGap(20, 20, 20))
+                            );
 
-                            setSize(new java.awt.Dimension(854, 576));
+                            layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
+
+                            layout.setVerticalGroup(
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(10, 10, 10))
+                            );
+
+                            layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
+
+                            setSize(new java.awt.Dimension(980, 622));
                             setLocationRelativeTo(null);
                         }// </editor-fold>//GEN-END:initComponents
 
@@ -804,7 +1075,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     private void jtf_valorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valorKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_dias.requestFocus();
+            jtf_relocacao.requestFocus();
         }
         acionarAtalho(evt);        // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valorKeyPressed
@@ -848,7 +1119,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 moeda = new Moeda();
                 jtf_relocacao.setText(moeda.setPrecoFormat(jtf_relocacao.getText()));
             }
-            jb_salvar.requestFocus();
+            jtf_dias.requestFocus();
         }
 
         acionarAtalho(evt);
@@ -930,7 +1201,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     private void jtf_dias_maximoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_dias_maximoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_relocacao.requestFocus();
+            jb_salvar.requestFocus();
         }
         acionarAtalho(evt);
 
@@ -1029,7 +1300,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_eliminar_promocao_devolucaoActionPerformed
 
     private void jb_eliminar_promocao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_promocao_devolucaoKeyPressed
-                acionarAtalho(evt);
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             excluirPromocaoDevolucao();
 
@@ -1140,6 +1411,10 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private void jtf_valor_promocao_devolucaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_promocao_devolucaoKeyReleased
+
+    private void jtf_descricao_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_descricao_locacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_descricao_locacaoActionPerformed
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1173,6 +1448,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -1461,7 +1737,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
-    
+
     private void excluirPromocaoDevolucao() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
@@ -1536,9 +1812,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
         for (int i = 0; i < itensPromocaoLocacao.size(); i++) {
             DefaultTableModel row = (DefaultTableModel) jtbl_promocao_locacao.getModel();
             ItemDbGrid hashDbGrid = new ItemDbGrid(itensPromocaoLocacao.get(i), itensPromocaoLocacao.get(i).getPromocaoLocacao().getDescricao());
-            row.addRow(new Object[]{itensPromocaoLocacao.get(i).getPromocaoLocacao().getCodigo_promocao_locacao(), hashDbGrid,                
+            row.addRow(new Object[]{itensPromocaoLocacao.get(i).getPromocaoLocacao().getCodigo_promocao_locacao(), hashDbGrid,
                 itensPromocaoLocacao.get(i).getPromocaoLocacao().getLocar_quantidade(),
-                itensPromocaoLocacao.get(i).getPromocaoLocacao().getGanhar_quantidade(), 
+                itensPromocaoLocacao.get(i).getPromocaoLocacao().getGanhar_quantidade(),
                 moeda.setPrecoFormat(String.valueOf(itensPromocaoLocacao.get(i).getPromocaoLocacao().getValor_promocao_locacao())),
                 itensPromocaoLocacao.get(i).getPromocaoLocacao().getPagamento_a_vista(),
                 itensPromocaoLocacao.get(i).getPromocaoLocacao().getOrderm()});
@@ -1546,7 +1822,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     }
 
-        public String validarHora(String str) {
+    public String validarHora(String str) {
         String hora = null;
         String minuto = null;
         String segundos = null;
@@ -1570,7 +1846,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
             }
             System.out.println("Minutos depois: " + minuto);
             if (Integer.valueOf(minuto.substring(6, 8)) > 59) {
-                segundos = minuto.substring(0, 2) + ":59:"+"59";
+                segundos = minuto.substring(0, 2) + ":59:" + "59";
             } else {
                 segundos = hora;
             }

@@ -15,6 +15,7 @@ import br.com.locadora.model.dao.TipoServicoDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
+import br.com.locadora.util.TemaInterface;
 import static br.com.locadora.view.AtendimentoLocacao.jtf_nome_objeto_locacao;
 import static br.com.locadora.view.CadastroCliente.validaData;
 import java.awt.Color;
@@ -55,7 +56,7 @@ public class Recebimento extends javax.swing.JFrame {
 
     public Recebimento() {
         initComponents();
-
+        TemaInterface.getInterface(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -86,14 +87,8 @@ public class Recebimento extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbl_recebimento = new javax.swing.JTable();
         jl_codigo_locacao = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jtf_total_debito = new javax.swing.JTextField();
-        jtf_total_credito = new javax.swing.JTextField();
         jb_adicionar_locacao = new javax.swing.JButton();
         jb_remover_locacao = new javax.swing.JButton();
-        jtf_saldo = new javax.swing.JTextField();
-        jl_saldo = new javax.swing.JLabel();
         jcb_tipo_servico = new javax.swing.JComboBox();
         try  {
             formatoData = new MaskFormatter("##/##/####");
@@ -103,6 +98,13 @@ public class Recebimento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Não foi possivel setar");
         }
         jtf_data_lancamento = new JFormattedTextField(formatoData);
+        jLabel2 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jtf_total_credito = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        jtf_total_debito = new javax.swing.JTextField();
+        jl_saldo = new javax.swing.JLabel();
+        jtf_saldo = new javax.swing.JTextField();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -126,30 +128,25 @@ public class Recebimento extends javax.swing.JFrame {
                 formKeyReleased(evt);
             }
         });
-        getContentPane().setLayout(null);
 
         jDesktopPane2.setName("jDesktopPane2"); // NOI18N
-        getContentPane().add(jDesktopPane2);
-        jDesktopPane2.setBounds(710, 100, 0, 0);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel1.setText("Código ");
         jLabel1.setName("jLabel1"); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, -1));
 
         jtf_codigo_cliente.setEditable(false);
+        jtf_codigo_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_codigo_cliente.setName("jtf_codigo_cliente"); // NOI18N
-        jPanel1.add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, -1));
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel10.setText("Cliente");
         jLabel10.setName("jLabel10"); // NOI18N
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
 
+        jtf_nome_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_cliente.setName("jtf_nome_cliente"); // NOI18N
         jtf_nome_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -161,8 +158,8 @@ public class Recebimento extends javax.swing.JFrame {
                 jtf_nome_clienteKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 320, -1));
 
+        jb_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_cliente.setName("jb_cliente"); // NOI18N
         jb_cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -175,15 +172,44 @@ public class Recebimento extends javax.swing.JFrame {
                 jb_clienteKeyPressed(evt);
             }
         });
-        jPanel1.add(jb_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 30, -1));
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 10, 500, 80);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jtf_nome_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel10))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_nome_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_cliente))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cliente, jtf_codigo_cliente, jtf_nome_cliente});
 
         jp_locacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Recebimentos"));
         jp_locacao.setName("jp_locacao"); // NOI18N
-        jp_locacao.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jtf_valor_lancamento.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_valor_lancamento.setText("R$ 0,00");
         jtf_valor_lancamento.setName("jtf_valor_lancamento"); // NOI18N
         jtf_valor_lancamento.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -199,20 +225,18 @@ public class Recebimento extends javax.swing.JFrame {
                 jtf_valor_lancamentoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_valor_lancamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 100, -1));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel3.setText("Data Lançamento");
         jLabel3.setName("jLabel3"); // NOI18N
-        jp_locacao.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 120, -1));
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel5.setText("Valor");
         jLabel5.setName("jLabel5"); // NOI18N
-        jp_locacao.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, 50, -1));
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
+        jtbl_recebimento.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtbl_recebimento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -248,51 +272,11 @@ public class Recebimento extends javax.swing.JFrame {
             jtbl_recebimento.getColumnModel().getColumn(5).setPreferredWidth(40);
         }
 
-        jp_locacao.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 780, 220));
-
-        jl_codigo_locacao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jl_codigo_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jl_codigo_locacao.setText("Serviço");
         jl_codigo_locacao.setName("jl_codigo_locacao"); // NOI18N
-        jp_locacao.add(jl_codigo_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jLabel27.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel27.setText("Total Crédito:");
-        jLabel27.setName("jLabel27"); // NOI18N
-        jp_locacao.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 120, 30));
-
-        jLabel28.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel28.setText("Total Débito:");
-        jLabel28.setName("jLabel28"); // NOI18N
-        jp_locacao.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 100, 30));
-
-        jtf_total_debito.setEditable(false);
-        jtf_total_debito.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_total_debito.setText("R$ 0,00");
-        jtf_total_debito.setName("jtf_total_debito"); // NOI18N
-        jtf_total_debito.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_total_debitoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_total_debitoFocusLost(evt);
-            }
-        });
-        jp_locacao.add(jtf_total_debito, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 330, 130, 30));
-
-        jtf_total_credito.setEditable(false);
-        jtf_total_credito.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_total_credito.setText("R$ 0,00");
-        jtf_total_credito.setName("jtf_total_credito"); // NOI18N
-        jtf_total_credito.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_total_creditoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_total_creditoFocusLost(evt);
-            }
-        });
-        jp_locacao.add(jtf_total_credito, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 130, 30));
-
+        jb_adicionar_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_adicionar_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_locacao.setToolTipText("Incluir");
         jb_adicionar_locacao.setName("jb_adicionar_locacao"); // NOI18N
@@ -306,8 +290,8 @@ public class Recebimento extends javax.swing.JFrame {
                 jb_adicionar_locacaoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jb_adicionar_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 30, 30));
 
+        jb_remover_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_remover_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_remover_locacao.setToolTipText("Excluir");
         jb_remover_locacao.setName("jb_remover_locacao"); // NOI18N
@@ -316,35 +300,16 @@ public class Recebimento extends javax.swing.JFrame {
                 jb_remover_locacaoActionPerformed(evt);
             }
         });
-        jp_locacao.add(jb_remover_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 40, 30, 30));
 
-        jtf_saldo.setEditable(false);
-        jtf_saldo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_saldo.setText("R$ 0,00");
-        jtf_saldo.setName("jtf_saldo"); // NOI18N
-        jtf_saldo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_saldoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_saldoFocusLost(evt);
-            }
-        });
-        jp_locacao.add(jtf_saldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 330, 180, 30));
-
-        jl_saldo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jl_saldo.setText("Devedor:");
-        jl_saldo.setName("jl_saldo"); // NOI18N
-        jp_locacao.add(jl_saldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 330, 70, 30));
-
+        jcb_tipo_servico.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_tipo_servico.setName("jcb_tipo_servico"); // NOI18N
         jcb_tipo_servico.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jcb_tipo_servicoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jcb_tipo_servico, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 250, -1));
 
+        jtf_data_lancamento.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_data_lancamento.setName("jtf_data_lancamento"); // NOI18N
         jtf_data_lancamento.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -356,12 +321,181 @@ public class Recebimento extends javax.swing.JFrame {
                 jtf_data_lancamentoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_data_lancamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 110, -1));
 
-        getContentPane().add(jp_locacao);
-        jp_locacao.setBounds(10, 100, 830, 404);
+        javax.swing.GroupLayout jp_locacaoLayout = new javax.swing.GroupLayout(jp_locacao);
+        jp_locacao.setLayout(jp_locacaoLayout);
+        jp_locacaoLayout.setHorizontalGroup(
+            jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jcb_tipo_servico, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jl_codigo_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addComponent(jtf_data_lancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jtf_valor_lancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(10, 10, 10))
+        );
+        jp_locacaoLayout.setVerticalGroup(
+            jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jl_codigo_locacao)
+                    .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(jLabel3)))
+                .addGap(0, 0, 0)
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcb_tipo_servico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_data_lancamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_valor_lancamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-        setSize(new java.awt.Dimension(867, 564));
+        jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_locacao, jb_remover_locacao, jcb_tipo_servico, jtf_data_lancamento, jtf_valor_lancamento});
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jLabel27.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel27.setText("Total Crédito:");
+        jLabel27.setName("jLabel27"); // NOI18N
+
+        jtf_total_credito.setEditable(false);
+        jtf_total_credito.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_total_credito.setText("R$ 0,00");
+        jtf_total_credito.setName("jtf_total_credito"); // NOI18N
+        jtf_total_credito.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_total_creditoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_total_creditoFocusLost(evt);
+            }
+        });
+
+        jLabel28.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel28.setText("Total Débito:");
+        jLabel28.setName("jLabel28"); // NOI18N
+
+        jtf_total_debito.setEditable(false);
+        jtf_total_debito.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_total_debito.setText("R$ 0,00");
+        jtf_total_debito.setName("jtf_total_debito"); // NOI18N
+        jtf_total_debito.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_total_debitoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_total_debitoFocusLost(evt);
+            }
+        });
+
+        jl_saldo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jl_saldo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jl_saldo.setText("Devedor:");
+        jl_saldo.setName("jl_saldo"); // NOI18N
+
+        jtf_saldo.setEditable(false);
+        jtf_saldo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_saldo.setText("R$ 0,00");
+        jtf_saldo.setName("jtf_saldo"); // NOI18N
+        jtf_saldo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_saldoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_saldoFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(566, 566, 566)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtf_total_credito, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(474, 474, 474)
+                                    .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jp_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jl_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jtf_saldo, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jtf_total_debito))))
+                .addGap(20, 20, 20))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jtf_saldo, jtf_total_credito, jtf_total_debito});
+
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jp_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_total_credito, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_total_debito, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jl_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_saldo, jtf_total_credito, jtf_total_debito});
+
+        setSize(new java.awt.Dimension(842, 610));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -524,7 +658,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jtf_valor_lancamentoKeyPressed
 
     private void jcb_tipo_servicoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_tipo_servicoKeyPressed
-                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtf_data_lancamento.requestFocus();
         }
         acionarAtalho(evt);
@@ -556,6 +690,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
@@ -807,7 +942,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 jtf_saldo.setCaretColor(Color.black);
                 jtf_saldo.setForeground(Color.black);
                 jl_saldo.setText("Saldo:");
-            } else if (lancamento.getSaldo() > 0){
+            } else if (lancamento.getSaldo() > 0) {
                 jtf_saldo.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_saldo.setCaretColor(Color.red);
                 jtf_saldo.setForeground(Color.red);

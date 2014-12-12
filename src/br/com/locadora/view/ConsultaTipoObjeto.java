@@ -12,15 +12,13 @@ package br.com.locadora.view;
 
 import br.com.locadora.model.dao.FornecedorDAO;
 import br.com.locadora.model.bean.TipoObjeto;
-import br.com.locadora.util.ItemDbGrid;
+import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,6 +31,7 @@ public class ConsultaTipoObjeto extends javax.swing.JFrame {
 
     public ConsultaTipoObjeto() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapai = null;
     }
     List<TipoObjeto> fornecedores;

@@ -11,11 +11,9 @@
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
-import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
-import br.com.locadora.util.LocalHost;
+import br.com.locadora.util.TemaInterface;
 
 /**
  *
@@ -26,16 +24,15 @@ public class ConfiguracaoCaixa extends javax.swing.JFrame {
     public TelaPrincipal janelapai;
     public InterfacePool pool;
     public SiscomController controller;
-    
+
     /**
      * Creates new form DiariaGUI
      */
     public ConfiguracaoCaixa() {
         initComponents();
-
+        TemaInterface.getInterface(this);
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,7 +109,7 @@ public class ConfiguracaoCaixa extends javax.swing.JFrame {
 //        
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         conf.writePropertie("caixa", (String) jcb_caixa.getSelectedItem());
-        
+
     }//GEN-LAST:event_jb_aplicarActionPerformed
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);
@@ -127,8 +124,6 @@ public class ConfiguracaoCaixa extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-        
-        
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
     /**
@@ -151,5 +146,4 @@ public class ConfiguracaoCaixa extends javax.swing.JFrame {
     private javax.swing.JComboBox jcb_caixa;
     // End of variables declaration//GEN-END:variables
 
-    
 }

@@ -81,7 +81,7 @@ public class ConsultarLocacao implements InterfaceCommand {
 
                 Objeto objeto = new Objeto();
                 objeto.setDiaria(diaria);
-                objeto.setDescricao_objeto(itemLocacoes.get(i).getCopia().getObjeto().getDescricao_objeto());
+                objeto.setTitulo(itemLocacoes.get(i).getCopia().getObjeto().getTitulo());
 
                 Copia copia = new Copia();
                 copia.setObjeto(objeto);
@@ -98,7 +98,7 @@ public class ConsultarLocacao implements InterfaceCommand {
                 Moeda moeda = new Moeda();
                 
                 DefaultTableModel row = (DefaultTableModel) ConsultaCopiaDevolucao.jtbl_locacao_aberto.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getTitulo());
                 row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao, data_devolucao,
                 moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
 

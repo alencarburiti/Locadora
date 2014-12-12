@@ -16,10 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import br.com.locadora.util.LimitadorTexto;
-import br.com.locadora.util.UnaccentedDocument;
-import java.awt.event.KeyAdapter;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
+import br.com.locadora.util.TemaInterface;
 
 /**
  *
@@ -36,15 +33,16 @@ public class AtualizaGenero extends javax.swing.JFrame {
      */
     public AtualizaGenero() {
         initComponents();
-
+        TemaInterface.getInterface(this);
     }
 
     public AtualizaGenero(Genero genero) {
         this.objdestino = genero;
         initComponents();
-
-        jtf_codigo.setText(String.valueOf(objdestino.getCodigo_genero()));
+        TemaInterface.getInterface(this);
+        jtf_codigo_genero.setText(String.valueOf(objdestino.getCodigo_genero()));
         jtf_nome_genero.setText(objdestino.getNome_genero());
+
     }
 
     @SuppressWarnings("unchecked")
@@ -53,10 +51,11 @@ public class AtualizaGenero extends javax.swing.JFrame {
 
         jb_salvar = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
-        jtf_codigo = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jtf_codigo_genero = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jtf_nome_genero = new javax.swing.JTextField (new LimitadorTexto(45), "",10);
         jLabel3 = new javax.swing.JLabel();
+        jtf_nome_genero = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alterando Gênero");
@@ -64,14 +63,13 @@ public class AtualizaGenero extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
@@ -86,7 +84,6 @@ public class AtualizaGenero extends javax.swing.JFrame {
                 jb_salvarKeyPressed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, 35));
 
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Cancelar");
@@ -101,17 +98,23 @@ public class AtualizaGenero extends javax.swing.JFrame {
                 jb_cancelarKeyPressed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, 35));
 
-        jtf_codigo.setEditable(false);
-        jtf_codigo.setName("jtf_codigo"); // NOI18N
-        getContentPane().add(jtf_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 90, -1));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        jPanel1.setName("jPanel1"); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jtf_codigo_genero.setEditable(false);
+        jtf_codigo_genero.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_codigo_genero.setName("jtf_codigo_genero"); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel2.setText("Código");
         jLabel2.setName("jLabel2"); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel3.setText("Nome Gênero*");
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        jtf_nome_genero.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_genero.setName("jtf_nome_genero"); // NOI18N
         jtf_nome_genero.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -123,14 +126,66 @@ public class AtualizaGenero extends javax.swing.JFrame {
                 jtf_nome_generoKeyPressed(evt);
             }
         });
-        getContentPane().add(jtf_nome_genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 370, -1));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setText("Nome Gênero*");
-        jLabel3.setName("jLabel3"); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jtf_codigo_genero, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jtf_nome_genero, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel2)
+                .addGap(10, 10, 10)
+                .addComponent(jtf_codigo_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel3)
+                .addGap(10, 10, 10)
+                .addComponent(jtf_nome_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
 
-        setSize(new java.awt.Dimension(413, 171));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(161, Short.MAX_VALUE)
+                .addComponent(jb_salvar)
+                .addGap(14, 14, 14)
+                .addComponent(jb_cancelar)
+                .addGap(22, 22, 22))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(20, 20, 20)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(178, 178, 178)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jb_cancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_salvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(20, 20, 20)))
+        );
+
+        setSize(new java.awt.Dimension(362, 255));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -154,18 +209,6 @@ public class AtualizaGenero extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
-    private void jtf_nome_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_generoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_salvar.requestFocus();
-        }
-        acionarAtalho(evt);
-    }//GEN-LAST:event_jtf_nome_generoKeyPressed
-
-    private void jtf_nome_generoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_generoFocusGained
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_generoFocusGained
-
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             enviaDados();
@@ -183,6 +226,18 @@ public class AtualizaGenero extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelarKeyPressed
 
+    private void jtf_nome_generoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_generoFocusGained
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_generoFocusGained
+
+    private void jtf_nome_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_generoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_salvar.requestFocus();
+        }
+        acionarAtalho(evt);
+    }//GEN-LAST:event_jtf_nome_generoKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -197,9 +252,10 @@ public class AtualizaGenero extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_salvar;
-    public static javax.swing.JTextField jtf_codigo;
+    public static javax.swing.JTextField jtf_codigo_genero;
     public static javax.swing.JTextField jtf_nome_genero;
     // End of variables declaration//GEN-END:variables
 
@@ -211,7 +267,7 @@ public class AtualizaGenero extends javax.swing.JFrame {
             controller = new SiscomController();
             controller.processarRequisicao("atualizarGenero");
             JOptionPane.showMessageDialog(null, "Atualização efetuada com sucesso");
-            janelapai.buscarDados();                        
+            janelapai.buscarDados();
             janelapai.jtf_consulta.requestFocus();
             janelapai.setStatusTela(true);
             setVisible(false);

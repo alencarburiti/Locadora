@@ -34,7 +34,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
     ResultSet rs;
 
     //comando sql para inserir dados na tabela destino
-    private String cadastraUsuario = "INSERT INTO usuario (NOME_USUARIO, LOGIN, SENHA,TIPO_USUARIO)VALUES(?,?,?,?)";
+    private String cadastraUsuario = "INSERT INTO usuario (NOME_USUARIO, LOGIN, SENHA)VALUES(?,?,?)";
     //comando sql para consultar pelo nome
     private String consultaUsuarioNome = "SELECT * FROM USUARIO WHERE NOME_USUARIO LIKE ? ORDER BY NOME_USUARIO";
     private String consultaUsuarioDescricao = "SELECT * FROM USUARIO WHERE (NOME_USUARIO LIKE ?) ORDER BY NOME_USUARIO";
@@ -42,7 +42,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
     private String consultaUsuarioCodigo = "SELECT * FROM USUARIO WHERE CODIGO_USUARIO = ? ORDER BY NOME_USUARIO";
     private String consultaUsuarioLogin = "SELECT * FROM USUARIO WHERE LOGIN = ?";
     // comando sql para alterar dados da tabela aluno
-    private String alteraUsuario = "UPDATE usuario SET NOME_USUARIO = ?,LOGIN = ?,SENHA = ?, TIPO_USUARIO=? WHERE CODIGO_USUARIO = ?";
+    private String alteraUsuario = "UPDATE usuario SET NOME_USUARIO = ?,LOGIN = ?,SENHA = ? WHERE CODIGO_USUARIO = ?";
     private String excluiUsuario = "DELETE FROM USUARIO WHERE CODIGO_USUARIO = ?";
 
     public void cadastraUsuario(Usuario usuario) {
@@ -54,7 +54,6 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             pstm.setString(1, usuario.getNome_usuario());
             pstm.setString(2, usuario.getLogin());
             pstm.setString(3, usuario.getSenha());
-            pstm.setString(4, usuario.getPermissao());
             pstm.executeUpdate();
             
             
@@ -73,8 +72,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             pstm.setString(1, usuario.getNome_usuario());
             pstm.setString(2, usuario.getLogin());
             pstm.setString(3, usuario.getSenha());
-            pstm.setString(4, usuario.getPermissao());
-            pstm.setInt(5, usuario.getCodigo_usuario());
+            pstm.setInt(4, usuario.getCodigo_usuario());
             pstm.executeUpdate();
             conexao.desconecta();
         } catch (Exception erro) {
@@ -183,8 +181,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
                 usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
                 usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
-                usua.setSenha(rs.getString("SENHA"));
-                usua.setPermissao(rs.getString("TIPO_USUARIO "));
+                usua.setSenha(rs.getString("SENHA"));                
                 usuario.add(usua);
 
             }
@@ -209,8 +206,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
                 usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
                 usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
-                usua.setSenha(rs.getString("SENHA"));
-                usua.setPermissao(rs.getString("TIPO_USUARIO"));
+                usua.setSenha(rs.getString("SENHA"));                
                 usuario.add(usua);
 
             }
@@ -241,7 +237,6 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
                 usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
                 usua.setSenha(rs.getString("SENHA"));
-                usua.setPermissao(rs.getString("TIPO_USUARIO"));
                 usuario.add(usua);
 
             }

@@ -15,6 +15,7 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.dao.TipoObjetoDAO;
 import br.com.locadora.model.bean.TipoObjeto;
 import br.com.locadora.util.LimitadorTexto;
+import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -22,8 +23,6 @@ import java.util.List;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
@@ -32,17 +31,15 @@ import javax.swing.UIManager;
 public class CadastroTipoObjeto extends javax.swing.JFrame {
 
     public MenuTipoObjeto janelapai;
-
-    List<TipoObjeto> generos;
+    public List<TipoObjeto> generos;
 
     /**
      * Creates new form DestinoCadastroGUI
      */
     public CadastroTipoObjeto() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapai = null;
-      
-       
     }
 
     @SuppressWarnings("unchecked")

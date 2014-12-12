@@ -21,6 +21,7 @@ import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
+import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -51,6 +52,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     public ConsultaCopiaDevolucao() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapaiDevolucao = null;
     }
 
@@ -65,8 +67,6 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
-        jb_cancelar = new javax.swing.JButton();
-        jb_ok = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jtf_consulta = new javax.swing.JTextField();
         jb_buscar = new javax.swing.JButton();
@@ -76,6 +76,10 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         jrb_codigo_barras = new javax.swing.JRadioButton();
         jrb_codigo = new javax.swing.JRadioButton();
         jrb_titulo = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jb_ok = new javax.swing.JButton();
+        jb_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Objeto");
@@ -91,40 +95,19 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                 formWindowDeactivated(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
-        jb_cancelar.setName("jb_cancelar"); // NOI18N
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 330, 110, 40));
-
-        jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
-        jb_ok.setText("OK");
-        jb_ok.setName("jb_ok"); // NOI18N
-        jb_ok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_okActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, 80, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Objeto"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 450, -1));
 
+        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -132,7 +115,6 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
 
         jScrollPane6.setName("jScrollPane6"); // NOI18N
 
@@ -145,6 +127,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                     botaoOK(jtbl_locacao_aberto);
 
                 }}});
+                jtbl_locacao_aberto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jtbl_locacao_aberto.setModel(new javax.swing.table.DefaultTableModel(
                     new Object [][] {
 
@@ -176,12 +159,8 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                 });
                 jScrollPane6.setViewportView(jtbl_locacao_aberto);
 
-                jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 770, 210));
-
-                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 810, 280));
-
                 buttonGroup1.add(jrb_ator);
-                jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_ator.setText("Ator");
                 jrb_ator.setName("jrb_ator"); // NOI18N
                 jrb_ator.addActionListener(new java.awt.event.ActionListener() {
@@ -189,10 +168,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                         jrb_atorActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
 
                 buttonGroup1.add(jrb_codigo_barras);
-                jrb_codigo_barras.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_codigo_barras.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_codigo_barras.setText("Código de Barras");
                 jrb_codigo_barras.setName("jrb_codigo_barras"); // NOI18N
                 jrb_codigo_barras.addActionListener(new java.awt.event.ActionListener() {
@@ -200,10 +178,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                         jrb_codigo_barrasActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
 
                 buttonGroup1.add(jrb_codigo);
-                jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_codigo.setText("Código Objeto");
                 jrb_codigo.setName("jrb_codigo"); // NOI18N
                 jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
@@ -211,10 +188,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                         jrb_codigoActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
 
                 buttonGroup1.add(jrb_titulo);
-                jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_titulo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_titulo.setSelected(true);
                 jrb_titulo.setText("Título");
                 jrb_titulo.setName("jrb_titulo"); // NOI18N
@@ -223,9 +199,130 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                         jrb_tituloActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-                setSize(new java.awt.Dimension(832, 410));
+                jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jLabel1.setText("Parâmetro");
+                jLabel1.setName("jLabel1"); // NOI18N
+
+                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                jPanel1.setLayout(jPanel1Layout);
+                jPanel1Layout.setHorizontalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jrb_titulo)
+                                .addGap(10, 10, 10)
+                                .addComponent(jrb_ator)
+                                .addGap(14, 14, 14)
+                                .addComponent(jrb_codigo_barras)
+                                .addGap(8, 8, 8)
+                                .addComponent(jrb_codigo))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jb_buscar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel1)))
+                        .addGap(10, 10, 10))
+                );
+                jPanel1Layout.setVerticalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jrb_titulo)
+                            .addComponent(jrb_ator)
+                            .addComponent(jrb_codigo_barras)
+                            .addComponent(jrb_codigo))
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_buscar))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                );
+
+                jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+                jPanel2.setName("jPanel2"); // NOI18N
+
+                jb_ok.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+                jb_ok.setText("OK");
+                jb_ok.setName("jb_ok"); // NOI18N
+                jb_ok.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jb_okActionPerformed(evt);
+                    }
+                });
+
+                jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+                jb_cancelar.setText("Cancelar");
+                jb_cancelar.setName("jb_cancelar"); // NOI18N
+                jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jb_cancelarActionPerformed(evt);
+                    }
+                });
+
+                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+                jPanel2.setLayout(jPanel2Layout);
+                jPanel2Layout.setHorizontalGroup(
+                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
+
+                jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_ok});
+
+                jPanel2Layout.setVerticalGroup(
+                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10))
+                );
+
+                jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_ok});
+
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                );
+
+                setSize(new java.awt.Dimension(842, 499));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -373,7 +470,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_cancelar;
@@ -385,7 +484,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_locacao_aberto;
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-    
+
     public ItemLocacao tbItemLocacaoLinhaSelecionada(JTable tb) {
         ItemLocacao itemSelecionada = null;
         if (tb.getSelectedRow() != -1) {
@@ -404,7 +503,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
             Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
-            objeto.setDescricao_objeto(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDescricao_objeto());
+            objeto.setTitulo(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getTitulo());
 
             Copia copia = new Copia();
             copia.setObjeto(objeto);
@@ -482,7 +581,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
                     Objeto objeto = new Objeto();
                     objeto.setDiaria(diaria);
-                    objeto.setDescricao_objeto(itemLocacoes.get(i).getCopia().getObjeto().getDescricao_objeto());
+                    objeto.setTitulo(itemLocacoes.get(i).getCopia().getObjeto().getTitulo());
 
                     Copia copia = new Copia();
                     copia.setObjeto(objeto);
@@ -500,7 +599,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                     Moeda moeda = new Moeda();
 
                     DefaultTableModel row = (DefaultTableModel) ConsultaCopiaDevolucao.jtbl_locacao_aberto.getModel();
-                    ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getDescricao_objeto());
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getTitulo());
                     row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao, data_devolucao,
                         moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
 

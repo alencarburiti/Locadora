@@ -15,6 +15,7 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.AutoCompletion;
 import br.com.locadora.util.Printer;
+import br.com.locadora.util.TemaInterface;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -25,7 +26,7 @@ import javax.swing.JOptionPane;
 public class ConfiguraImpressora extends javax.swing.JFrame {
 
     public String tipoCadastro;
-    public TelaPrincipal janelapai;    
+    public TelaPrincipal janelapai;
     public EntradaCaixa janelapaiCaixaLocacao;
     public EntradaCaixaDevolucao janelapaiCaixaDevolucao;
     public InterfacePool pool;
@@ -36,6 +37,7 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
      */
     public ConfiguraImpressora() {
         initComponents();
+        TemaInterface.getInterface(this);
     }
 
     /**
@@ -121,7 +123,7 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(293, 279));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-   
+
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
         janelapai.setStatusTela(true);
@@ -134,8 +136,8 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        conf.writePropertie("impressora_principal",jcb_impressora_principal.getSelectedItem().toString());        
-        conf.writePropertie("impressora_alternativa",jcb_impressora_alternativa.getSelectedItem().toString());        
+        conf.writePropertie("impressora_principal", jcb_impressora_principal.getSelectedItem().toString());
+        conf.writePropertie("impressora_alternativa", jcb_impressora_alternativa.getSelectedItem().toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -188,7 +190,7 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
         String impressora_principal = conf.readPropertie("impressora_principal");
         String impressora_alternativa = conf.readPropertie("impressora_alternativa");
         List<String> impressoras = Printer.retornaImpressoras();
-                
+
         if (impressoras.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhuma impressora encontrada");
 
@@ -197,25 +199,25 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
                 jcb_impressora_principal.addItem(impressoras.get(i));
                 AutoCompletion auto = new AutoCompletion(jcb_impressora_principal);
             }
-            
+
             for (int i = 0; i < impressoras.size(); i++) {
                 jcb_impressora_alternativa.addItem(impressoras.get(i));
                 AutoCompletion auto = new AutoCompletion(jcb_impressora_alternativa);
             }
 
             for (Integer x = 0; x < jcb_impressora_principal.getItemCount(); x++) {
-                    if(impressora_principal.equals(jcb_impressora_principal.getItemAt(x))){
-                        jcb_impressora_principal.setSelectedIndex(x);
-                        break;
-                    }        
-                
+                if (impressora_principal.equals(jcb_impressora_principal.getItemAt(x))) {
+                    jcb_impressora_principal.setSelectedIndex(x);
+                    break;
+                }
+
             }
             for (Integer x = 0; x < jcb_impressora_alternativa.getItemCount(); x++) {
-                    if(impressora_alternativa.equals(jcb_impressora_alternativa.getItemAt(x))){
-                        jcb_impressora_alternativa.setSelectedIndex(x);
-                        break;
-                    }        
-                
+                if (impressora_alternativa.equals(jcb_impressora_alternativa.getItemAt(x))) {
+                    jcb_impressora_alternativa.setSelectedIndex(x);
+                    break;
+                }
+
             }
         }
     }

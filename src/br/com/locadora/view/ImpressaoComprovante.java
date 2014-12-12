@@ -16,6 +16,7 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.util.Moeda;
+import br.com.locadora.util.TemaInterface;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -25,7 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ImpressaoComprovante extends javax.swing.JFrame {
-    
+
     public TelaPrincipal janelapai;
     public static List<Lancamento> lancamentos;
     public InterfacePool pool;
@@ -33,6 +34,7 @@ public class ImpressaoComprovante extends javax.swing.JFrame {
 
     public ImpressaoComprovante() {
         initComponents();
+        TemaInterface.getInterface(this);
     }
 
     /**
@@ -182,8 +184,8 @@ public class ImpressaoComprovante extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_lancamento_caixaMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
-        lancamentoCaixa();        
+
+        lancamentoCaixa();
     }//GEN-LAST:event_formWindowOpened
 
     private void jtbl_lancamento_caixa1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_lancamento_caixa1MouseClicked
@@ -214,16 +216,16 @@ public class ImpressaoComprovante extends javax.swing.JFrame {
         controller = new SiscomController();
         controller.processarRequisicao("consultarCliente");
     }
-    
-    public void lancamentoCaixa(){
+
+    public void lancamentoCaixa() {
         pool = new Pool();
         LancamentoDAO lancDAO = new LancamentoDAO(pool);
-        
+
         lancamentos = lancDAO.getLancamentoCaixa();
-        
+
         mostrarLancamentoCaixa(lancamentos);
     }
-    
+
     public void mostrarLancamentoCaixa(List<Lancamento> lancamentos) {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_lancamento_caixa.getModel();
         tableModel.setNumRows(0);
@@ -233,9 +235,9 @@ public class ImpressaoComprovante extends javax.swing.JFrame {
 
         } else {
             for (int i = 0; i < lancamentos.size(); i++) {
-                
+
                 String valor = null;
-                
+
                 valor = String.valueOf(lancamentos.get(i).getValor());
 
                 Moeda moeda = new Moeda();
@@ -251,14 +253,15 @@ public class ImpressaoComprovante extends javax.swing.JFrame {
                 } catch (ParseException ex) {
                     Logger.getLogger(ImpressaoComprovante.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 DefaultTableModel row = (DefaultTableModel) jtbl_lancamento_caixa.getModel();
 //                ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
                 row.addRow(new Object[]{lancamentos.get(i).getCaixa(), data_lancamento, valor});
             }
-            
+
         }
     }
+
     public void statusTela(boolean status) {
         if (status) {
             this.setVisible(status);

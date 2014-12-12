@@ -67,7 +67,7 @@ public class AcessoUsuarioDAO {
                 + "	A.CODIGO_COPIA, \n"
                 + "    A.CODIGO_INTERNO,\n"
                 + "    A.DEL_FLAG,\n"
-                + "    B.DESCRICAO_OBJETO,\n"
+                + "    B.TITULO,\n"
                 + "    B.TIPO_MOVIMENTO,\n"
                 + "    B.TIPO_MIDIA,\n"
                 + "    A.LOCALIZACAO,\n"

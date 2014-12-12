@@ -15,6 +15,7 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.util.ItemDbGrid;
+import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -33,12 +34,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
-    public AtendimentoLocacao janelapai;   
+    public AtendimentoLocacao janelapai;
     public List<Copia> copias;
     public Copia copia;
 
     public ConsultaCopiaLocacao() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapai = null;
     }
 
@@ -53,16 +55,18 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
-        jb_cancelar = new javax.swing.JButton();
-        jb_ok = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jtf_consulta = new javax.swing.JTextField();
         jb_buscar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_copia = new javax.swing.JTable();
+        jrb_titulo = new javax.swing.JRadioButton();
         jrb_ator = new javax.swing.JRadioButton();
         jrb_codigo_barras = new javax.swing.JRadioButton();
-        jrb_titulo = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jb_cancelar = new javax.swing.JButton();
+        jb_ok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Objeto");
@@ -80,40 +84,19 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 formKeyPressed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
-        jb_cancelar.setName("jb_cancelar"); // NOI18N
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 330, 110, 40));
-
-        jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
-        jb_ok.setText("OK");
-        jb_ok.setName("jb_ok"); // NOI18N
-        jb_ok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_okActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jb_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 80, 40));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Objeto"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 450, -1));
 
+        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +104,6 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 jb_buscarActionPerformed1(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -134,12 +116,13 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                     botaoOK(jtbl_copia);
 
                 }}});
+                jtbl_copia.setFont(new java.awt.Font("Helvetica Neue", 0, 3)); // NOI18N
                 jtbl_copia.setModel(new javax.swing.table.DefaultTableModel(
                     new Object [][] {
 
                     },
                     new String [] {
-                        "Código", "Código de Barras", "Descrição Objeto", "Idioma", "Legenda", "Tipo Mídia", "Livre", "Data Prevista"
+                        "Código", "Código de Barras", "Título", "Idioma", "Legenda", "Tipo Mídia", "Livre", "Data Prevista"
                     }
                 ) {
                     Class[] types = new Class [] {
@@ -177,23 +160,29 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                     jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(20);
                 }
 
-                jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 760, 210));
-
-                getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 780, 280));
+                buttonGroup1.add(jrb_titulo);
+                jrb_titulo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jrb_titulo.setSelected(true);
+                jrb_titulo.setText("Título");
+                jrb_titulo.setName("jrb_titulo"); // NOI18N
+                jrb_titulo.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_tituloActionPerformed(evt);
+                    }
+                });
 
                 buttonGroup1.add(jrb_ator);
-                jrb_ator.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_ator.setText("Ator");
+                jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jrb_ator.setText("Elenco");
                 jrb_ator.setName("jrb_ator"); // NOI18N
                 jrb_ator.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jrb_atorActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_ator, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
 
                 buttonGroup1.add(jrb_codigo_barras);
-                jrb_codigo_barras.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+                jrb_codigo_barras.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_codigo_barras.setText("Código de Barras");
                 jrb_codigo_barras.setName("jrb_codigo_barras"); // NOI18N
                 jrb_codigo_barras.addActionListener(new java.awt.event.ActionListener() {
@@ -201,21 +190,123 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                         jrb_codigo_barrasActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_codigo_barras, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, -1));
 
-                buttonGroup1.add(jrb_titulo);
-                jrb_titulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-                jrb_titulo.setSelected(true);
-                jrb_titulo.setText("Descrição");
-                jrb_titulo.setName("jrb_titulo"); // NOI18N
-                jrb_titulo.addActionListener(new java.awt.event.ActionListener() {
+                jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jLabel2.setText("Parâmetro");
+                jLabel2.setName("jLabel2"); // NOI18N
+
+                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                jPanel1.setLayout(jPanel1Layout);
+                jPanel1Layout.setHorizontalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jb_buscar))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jrb_titulo)
+                                .addGap(10, 10, 10)
+                                .addComponent(jrb_ator)
+                                .addGap(10, 10, 10)
+                                .addComponent(jrb_codigo_barras))
+                            .addComponent(jLabel2))
+                        .addGap(10, 10, 10))
+                );
+                jPanel1Layout.setVerticalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jrb_titulo)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jrb_ator)
+                                .addComponent(jrb_codigo_barras)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_buscar))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                );
+
+                jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+                jPanel2.setName("jPanel2"); // NOI18N
+
+                jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+                jb_cancelar.setText("Cancelar");
+                jb_cancelar.setName("jb_cancelar"); // NOI18N
+                jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_tituloActionPerformed(evt);
+                        jb_cancelarActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jrb_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-                setSize(new java.awt.Dimension(800, 409));
+                jb_ok.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+                jb_ok.setText("OK");
+                jb_ok.setName("jb_ok"); // NOI18N
+                jb_ok.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jb_okActionPerformed(evt);
+                    }
+                });
+
+                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+                jPanel2.setLayout(jPanel2Layout);
+                jPanel2Layout.setHorizontalGroup(
+                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(290, 290, 290)
+                        .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
+
+                jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_ok});
+
+                jPanel2Layout.setVerticalGroup(
+                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10))
+                );
+
+                jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_ok});
+
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                );
+
+                setSize(new java.awt.Dimension(832, 499));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -259,12 +350,12 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jtf_consulta.requestFocus();
-                
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
         try {
-             if (jrb_titulo.isSelected() == true) {
+            if (jrb_titulo.isSelected() == true) {
                 listaCopia_titulo(jtf_consulta.getText().trim());
             } else if (jrb_codigo_barras.isSelected() == true) {
                 listaCopia_codigo_barras(jtf_consulta.getText().trim());
@@ -293,7 +384,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                 if (jrb_titulo.isSelected() == true) {
+                if (jrb_titulo.isSelected() == true) {
                     listaCopia_titulo(jtf_consulta.getText().trim());
                 } else if (jrb_codigo_barras.isSelected() == true) {
                     listaCopia_codigo_barras(jtf_consulta.getText().trim());
@@ -302,7 +393,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ConsultaCopiaLocacao.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+            }
         }
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
@@ -320,9 +411,9 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 janelapai.setEnabled(true);
                 janelapai.setVisible(true);
                 //telaCadastroObjeto.setStatusTela(false);
-            }            
+            }
         }
-    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
     private void jrb_atorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_atorActionPerformed
@@ -344,7 +435,9 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_cancelar;
@@ -355,8 +448,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_copia;
     private javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
-    
-   
+
     public Copia tbCopiaLinhaSelecionada(JTable tb) {
         Copia copiaSelecionada = null;
         if (tb.getSelectedRow() != -1) {
@@ -402,7 +494,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
         mostraCopia(copias);
     }
-    
+
     public void listaTodasCopias() throws SQLException {
         pool = new Pool();
         CopiaDAO copiaDAO = new CopiaDAO(pool);
@@ -430,7 +522,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 copia.setCodigo_barras(copias.get(i).getCodigo_barras());
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_copia(), copia.getCodigo_barras(),
                     hashDbGrid, copia.getIdioma(), copia.getLegenda(),
                     copia.getObjeto().getTipo_midia(), copia.getStatus()});

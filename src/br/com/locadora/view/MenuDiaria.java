@@ -14,15 +14,11 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
-import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
-import static br.com.locadora.view.EntradaCaixaDevolucao.acesso;
-import static br.com.locadora.view.MenuCliente.clientes;
-import static br.com.locadora.view.MenuCliente.jtbl_cliente;
+import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -51,7 +47,7 @@ public class MenuDiaria extends javax.swing.JFrame {
      */
     public MenuDiaria() {
         initComponents();
-//        listarDiaria();
+        TemaInterface.getInterface(this);
     }
 
     public void setTela(String permissao) {
@@ -81,10 +77,12 @@ public class MenuDiaria extends javax.swing.JFrame {
         jtf_consulta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbl_diaria = new javax.swing.JTable();
-        jb_excluir = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jb_novo = new javax.swing.JButton();
         jb_alterar = new javax.swing.JButton();
+        jb_excluir = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento de Diárias");
@@ -97,30 +95,26 @@ public class MenuDiaria extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Diária"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonGroup1.add(jrb_codigo_diaria);
-        jrb_codigo_diaria.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_codigo_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jrb_codigo_diaria.setText("Código");
         jrb_codigo_diaria.setName("jrb_codigo_diaria"); // NOI18N
-        jPanel1.add(jrb_codigo_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
 
         buttonGroup1.add(jrb_descricao);
-        jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
-        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
-        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
+        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -128,20 +122,55 @@ public class MenuDiaria extends javax.swing.JFrame {
                 jb_buscarActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, -1, -1));
 
+        jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 520, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 70, 660, 100));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jrb_descricao)
+                        .addGap(10, 10, 10)
+                        .addComponent(jrb_codigo_diaria))
+                    .addComponent(jl_pesquisar_destino)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jb_buscar)))
+                .addGap(10, 10, 10))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jb_buscar)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jrb_descricao)
+                            .addComponent(jrb_codigo_diaria))
+                        .addGap(10, 10, 10)
+                        .addComponent(jl_pesquisar_destino)
+                        .addGap(10, 10, 10)
+                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_consulta});
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        jtbl_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtbl_diaria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -178,6 +207,11 @@ public class MenuDiaria extends javax.swing.JFrame {
                 jtbl_diaria.setDragEnabled(true);
                 jtbl_diaria.setName("jtbl_diaria"); // NOI18N
                 jtbl_diaria.getTableHeader().setReorderingAllowed(false);
+                jtbl_diaria.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        jtbl_diariaMouseClicked(evt);
+                    }
+                });
                 jtbl_diaria.addKeyListener(new java.awt.event.KeyAdapter() {
                     public void keyPressed(java.awt.event.KeyEvent evt) {
                         jtbl_diariaKeyPressed(evt);
@@ -192,28 +226,11 @@ public class MenuDiaria extends javax.swing.JFrame {
                     jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(30);
                 }
 
-                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 183, 660, 190));
+                jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+                jPanel2.setName("jPanel2"); // NOI18N
+                jPanel2.setLayout(new java.awt.GridBagLayout());
 
-                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
-                jb_excluir.setText("Excluir");
-                jb_excluir.setName("jb_excluir"); // NOI18N
-                jb_excluir.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_excluirActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
-
-                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_sair.setText("Sair");
-                jb_sair.setName("jb_sair"); // NOI18N
-                jb_sair.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_sairActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, -1, 33));
-
+                jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
                 jb_novo.setText("Novo");
                 jb_novo.setName("jb_novo"); // NOI18N
@@ -222,8 +239,9 @@ public class MenuDiaria extends javax.swing.JFrame {
                         jb_novoActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
+                jPanel2.add(jb_novo, new java.awt.GridBagConstraints());
 
+                jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
                 jb_alterar.setText("Alterar");
                 jb_alterar.setName("jb_alterar"); // NOI18N
@@ -232,9 +250,64 @@ public class MenuDiaria extends javax.swing.JFrame {
                         jb_alterarActionPerformed(evt);
                     }
                 });
-                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
+                jPanel2.add(jb_alterar, new java.awt.GridBagConstraints());
 
-                setSize(new java.awt.Dimension(720, 424));
+                jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
+                jb_excluir.setText("Excluir");
+                jb_excluir.setName("jb_excluir"); // NOI18N
+                jb_excluir.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jb_excluirActionPerformed(evt);
+                    }
+                });
+                jPanel2.add(jb_excluir, new java.awt.GridBagConstraints());
+
+                jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+                jb_sair.setText("Sair");
+                jb_sair.setName("jb_sair"); // NOI18N
+                jb_sair.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jb_sairActionPerformed(evt);
+                    }
+                });
+                jPanel2.add(jb_sair, new java.awt.GridBagConstraints());
+
+                jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
+                jLabel1.setName("jLabel1"); // NOI18N
+
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(18, Short.MAX_VALUE))
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                );
+
+                setSize(new java.awt.Dimension(729, 499));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -301,14 +374,15 @@ public class MenuDiaria extends javax.swing.JFrame {
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             alterar();
-        }        
-        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            excluirDiaria();
-        }
-        if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            jtf_consulta.requestFocus();
         }
     }//GEN-LAST:event_jtbl_diariaKeyPressed
+
+    private void jtbl_diariaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_diariaMouseClicked
+        if(evt.getClickCount() == 2){
+     alterar();
+}
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_diariaMouseClicked
     /**
      * @param args the command line arguments
      */
@@ -322,7 +396,9 @@ public class MenuDiaria extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_alterar;
     public static javax.swing.JButton jb_buscar;
@@ -442,6 +518,12 @@ public class MenuDiaria extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
             janelapai.setStatusTela(true);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            excluirDiaria();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
         }
     }
 }

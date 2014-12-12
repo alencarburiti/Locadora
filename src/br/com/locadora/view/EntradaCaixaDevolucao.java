@@ -12,6 +12,7 @@ import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Printer;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
+import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -39,6 +40,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
      */
     public EntradaCaixaDevolucao() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapaiDevolucao = null;
     }
 

@@ -152,7 +152,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"                
                 + "    D.VALOR_PAGO,\n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
@@ -236,7 +236,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.VALOR_PAGO,\n"
                 + "    D.DATA_PREVISTA,\n"
-                + "    A.DESCRICAO_OBJETO,\n"
+                + "    A.TITULO,\n"
                 + "    A.CODIGO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
@@ -305,7 +305,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.CODIGO_ITEM_LOCACAO,\n"
-                + "    A.DESCRICAO_OBJETO,\n"
+                + "    A.TITULO,\n"
                 + "    A.CODIGO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
@@ -415,7 +415,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
             Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
-            objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
+            objeto.setTitulo(rs.getString("TITULO"));
 
             Copia copia = new Copia();
             copia.setObjeto(objeto);
@@ -607,7 +607,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
             Objeto objeto = new Objeto();
             objeto.setDiaria(diaria);
-            objeto.setDescricao_objeto(rs.getString("DESCRICAO_OBJETO"));
+            objeto.setTitulo(rs.getString("TITULO"));
             objeto.setCodigo_objeto(rs.getInt("CODIGO_OBJETO"));
 
             Copia copia = new Copia();
@@ -642,7 +642,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.VALOR_PAGO,\n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
                 + "    B.CODIGO_COPIA,\n"
@@ -714,7 +714,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.VALOR_PAGO,\n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
@@ -787,7 +787,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.VALOR_PAGO,\n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
@@ -827,7 +827,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
                 + "        AND D.DEL_FLAG = 0\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
-                + "        AND A.DESCRICAO_OBJETO LIKE ?;";
+                + "        AND A.TITULO LIKE ?;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -856,7 +856,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.VALOR_PAGO,\n"
-                + "    A.DESCRICAO_OBJETO AS DESCRICAO_OBJETO,\n"
+                + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"

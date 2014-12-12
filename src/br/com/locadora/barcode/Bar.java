@@ -86,7 +86,6 @@ public class Bar extends javax.swing.JFrame {
         imagemLabel4 = new javax.swing.JLabel();
         imagemLabel2 = new javax.swing.JLabel();
         imagemLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jtf_codigo_1 = new javax.swing.JTextField();
@@ -108,11 +107,11 @@ public class Bar extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jtf_codigo_4 = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jb_gerar_barra = new javax.swing.JButton();
+        jb_imprimir = new javax.swing.JButton();
+        jb_salvar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        salvar = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerar BarCode ");
@@ -164,13 +163,6 @@ public class Bar extends javax.swing.JFrame {
                     .addComponent(imagemLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        jButton1.setText("Gerar Barra");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(76, 76, 76)), "Atributos"));
 
@@ -333,39 +325,34 @@ public class Bar extends javax.swing.JFrame {
                             .addComponent(altura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
                             .addComponent(rotacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Arquivo");
+        jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
 
-        salvar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        salvar.setText("Salvar");
-        salvar.addActionListener(new java.awt.event.ActionListener() {
+        jb_gerar_barra.setText("Gerar Barra");
+        jb_gerar_barra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salvarActionPerformed(evt);
+                jb_gerar_barraActionPerformed(evt);
             }
         });
-        jMenu1.add(salvar);
+        jPanel3.add(jb_gerar_barra);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Abrir");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jb_imprimir.setText("Imprimir");
+        jb_imprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jb_imprimirActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jPanel3.add(jb_imprimir);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Imprimir");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jb_salvar.setText("Salvar");
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jb_salvarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu1);
+        jPanel3.add(jb_salvar);
 
         setJMenuBar(jMenuBar1);
 
@@ -373,12 +360,15 @@ public class Bar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,9 +377,9 @@ public class Bar extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGap(15, 15, 15)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -398,7 +388,7 @@ public class Bar extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jb_gerar_barraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gerar_barraActionPerformed
 
         imagem1 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_1.getText(),
                 new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
@@ -424,7 +414,7 @@ public class Bar extends javax.swing.JFrame {
                 Integer.parseInt(rotacao.getValue().toString()));
         imagemLabel4.setIcon(new ImageIcon(imagem4));
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jb_gerar_barraActionPerformed
 
     private void paletaCorBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paletaCorBarraActionPerformed
         // TODO add your handling code here:
@@ -438,7 +428,85 @@ public class Bar extends javax.swing.JFrame {
         paletaCorTexto.setBackground(corTextoSelecionada);
 }//GEN-LAST:event_paletaCorTextoActionPerformed
 
-    private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        setVisible(false);
+        janelapai.setStatusTela(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jtf_codigo_1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_codigo_2.requestFocus();
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_codigo_1KeyPressed
+
+    private void jtf_codigo_2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_2KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_codigo_3.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_codigo_2KeyPressed
+
+    private void jtf_codigo_3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_3KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_codigo_4.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_codigo_3KeyPressed
+
+    private void jtf_codigo_4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_4KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_gerar_barra.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_codigo_4KeyPressed
+
+    private void jb_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_imprimirActionPerformed
+        String arquivo = "Etiqueta/Etiqueta.pdf";
+        File file = new File(arquivo);
+        Document document = new Document();
+        try {
+
+            com.itextpdf.text.Image imageEnvio1 = com.itextpdf.text.Image.getInstance(imagem1, null);
+            com.itextpdf.text.Image imageEnvio2 = com.itextpdf.text.Image.getInstance(imagem2, null);
+            com.itextpdf.text.Image imageEnvio3 = com.itextpdf.text.Image.getInstance(imagem3, null);
+            com.itextpdf.text.Image imageEnvio4 = com.itextpdf.text.Image.getInstance(imagem4, null);
+
+            
+            PdfWriter.getInstance(document, new FileOutputStream(file));
+            document.open();
+            
+            Paragraph p = new Paragraph();
+            p.add(new Paragraph());
+            p.add(new Paragraph());
+            
+            p.add(new Chunk(imageEnvio1, 0, -40));
+
+            p.add(new Chunk(imageEnvio2, 40, -40));
+
+            p.add(new Chunk(imageEnvio3, 80, -40));
+
+            p.add(new Chunk(imageEnvio4, 120, -40));
+
+            document.add(p);
+
+            document.close();
+        } catch (DocumentException de) {
+            System.err.println(de.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+            System.out.println("Erro!");
+        }
+        Printer prin = new Printer();
+//        PrintUtilities.printComponent(file);
+        prin.imprimirPDF(file);
+        //PrintUtilities.printComponent(imagemLabel1);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_imprimirActionPerformed
+
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
 
         String arquivo = "Etiqueta/Etiqueta.pdf";
         File file = new File(arquivo);
@@ -482,101 +550,9 @@ public class Bar extends javax.swing.JFrame {
             System.err.println(ioe.getMessage());
             System.out.println("Erro!");
         }
-    }//GEN-LAST:event_salvarActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        try {
-            // TODO add your handling code here:
-            File file = new File(System.getProperty("user.home"));
-            JFileChooser jfile = new JFileChooser(file);
-            jfile.showOpenDialog(this);
-            if (jfile.getSelectedFile() != null) {
-                BufferedImage buffer = ImageIO.read(jfile.getSelectedFile());
-                imagemLabel1.setIcon(new ImageIcon(buffer));
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(Bar.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        String arquivo = "Etiqueta/Etiqueta.pdf";
-        File file = new File(arquivo);
-        Document document = new Document();
-        try {
-
-            com.itextpdf.text.Image imageEnvio1 = com.itextpdf.text.Image.getInstance(imagem1, null);
-            com.itextpdf.text.Image imageEnvio2 = com.itextpdf.text.Image.getInstance(imagem2, null);
-            com.itextpdf.text.Image imageEnvio3 = com.itextpdf.text.Image.getInstance(imagem3, null);
-            com.itextpdf.text.Image imageEnvio4 = com.itextpdf.text.Image.getInstance(imagem4, null);
-
-            
-            PdfWriter.getInstance(document, new FileOutputStream(file));
-            document.open();
-            
-            Paragraph p = new Paragraph();
-            p.add(new Paragraph());
-            p.add(new Paragraph());
-            
-            p.add(new Chunk(imageEnvio1, 0, -40));
-
-            p.add(new Chunk(imageEnvio2, 40, -40));
-
-            p.add(new Chunk(imageEnvio3, 80, -40));
-
-            p.add(new Chunk(imageEnvio4, 120, -40));
-
-            document.add(p);
-
-            document.close();
-        } catch (DocumentException de) {
-            System.err.println(de.getMessage());
-        } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
-            System.out.println("Erro!");
-        }
-        Printer prin = new Printer();
-//        PrintUtilities.printComponent(file);
-        prin.imprimirPDF(file);
-        //PrintUtilities.printComponent(imagemLabel1);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        setVisible(false);
-        janelapai.setStatusTela(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosed
-
-    private void jtf_codigo_1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_1KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_codigo_2.requestFocus();
-        }
         
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_1KeyPressed
-
-    private void jtf_codigo_2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_2KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_codigo_3.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_2KeyPressed
-
-    private void jtf_codigo_3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_3KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_codigo_4.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_3KeyPressed
-
-    private void jtf_codigo_4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_4KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jButton1.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_4KeyPressed
+// TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -608,7 +584,6 @@ public class Bar extends javax.swing.JFrame {
     private javax.swing.JLabel imagemLabel2;
     private javax.swing.JLabel imagemLabel3;
     private javax.swing.JLabel imagemLabel4;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -619,12 +594,13 @@ public class Bar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JButton jb_gerar_barra;
+    private javax.swing.JButton jb_imprimir;
+    private javax.swing.JButton jb_salvar;
     private javax.swing.JTextField jtf_codigo_1;
     private javax.swing.JTextField jtf_codigo_2;
     private javax.swing.JTextField jtf_codigo_3;
@@ -632,7 +608,6 @@ public class Bar extends javax.swing.JFrame {
     private javax.swing.JButton paletaCorBarra;
     private javax.swing.JButton paletaCorTexto;
     private javax.swing.JSpinner rotacao;
-    private javax.swing.JMenuItem salvar;
     // End of variables declaration//GEN-END:variables
 
 

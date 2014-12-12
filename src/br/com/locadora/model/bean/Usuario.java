@@ -18,7 +18,6 @@ public class Usuario {
     private String nome_usuario;
     private String login;
     private String senha;
-    private String permissao;
 
     public Usuario() {
     }
@@ -56,17 +55,4 @@ public class Usuario {
         return senha;
     }
 
-    /**
-     * @return the permissao
-     */
-    public String getPermissao() {
-        return permissao;
-    }
-
-    /**
-     * @param permissao the permissao to set
-     */
-    public void setPermissao(String permissao) {
-        this.permissao = permissao;
-    }
 }

@@ -10,6 +10,7 @@ import br.com.locadora.model.dao.AcessoUsuarioDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.AutoCompletion;
 import br.com.locadora.util.ItemDbGrid;
+import br.com.locadora.util.TemaInterface;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -33,6 +34,8 @@ public final class AcessoInterface extends javax.swing.JFrame {
      */
     public AcessoInterface() {
         initComponents();
+
+        TemaInterface.getInterface(this);
     }
 
     //public ProdutoConsultarGUI janelapaim;
@@ -92,7 +95,7 @@ public final class AcessoInterface extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 440, -1, 35));
+        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, -1, 35));
 
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_salvar.setText("Aplicar");
@@ -102,7 +105,7 @@ public final class AcessoInterface extends javax.swing.JFrame {
                 jb_salvarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 440, -1, 35));
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 430, -1, 35));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Usuário"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -152,6 +155,7 @@ public final class AcessoInterface extends javax.swing.JFrame {
         if (jtbl_permissoes.getColumnModel().getColumnCount() > 0) {
             jtbl_permissoes.getColumnModel().getColumn(0).setPreferredWidth(150);
             jtbl_permissoes.getColumnModel().getColumn(1).setPreferredWidth(30);
+            jtbl_permissoes.getColumnModel().getColumn(2).setPreferredWidth(30);
             jtbl_permissoes.getColumnModel().getColumn(3).setPreferredWidth(30);
             jtbl_permissoes.getColumnModel().getColumn(4).setPreferredWidth(30);
         }
@@ -212,7 +216,7 @@ public final class AcessoInterface extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 500, 120));
 
-        setSize(new java.awt.Dimension(536, 517));
+        setSize(new java.awt.Dimension(536, 504));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -423,28 +427,28 @@ public final class AcessoInterface extends javax.swing.JFrame {
                 String deletar;
                 String super_usuario;
 
-                if(acessos.get(i).getLer() == 0){
-                    ler = "X";                    
+                if (acessos.get(i).getLer() == 0) {
+                    ler = "X";
                 } else {
-                    ler = "";                    
+                    ler = "";
                 }
-                
-                if (acessos.get(i).getEscrever() == 0){
-                    escrever = "X";                    
+
+                if (acessos.get(i).getEscrever() == 0) {
+                    escrever = "X";
                 } else {
                     escrever = "";
                 }
-                
-                if (acessos.get(i).getDeletar() == 0){
-                    deletar = "X";                    
+
+                if (acessos.get(i).getDeletar() == 0) {
+                    deletar = "X";
                 } else {
-                    deletar = "";                    
+                    deletar = "";
                 }
-                
-                if (acessos.get(i).getSuper_usuario() == 0){
-                    super_usuario = "X";                    
+
+                if (acessos.get(i).getSuper_usuario() == 0) {
+                    super_usuario = "X";
                 } else {
-                    super_usuario = "";                    
+                    super_usuario = "";
                 }
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_permissoes.getModel();
@@ -504,9 +508,8 @@ public final class AcessoInterface extends javax.swing.JFrame {
 
         acessoUsuario.setUsuario(usuario);
         acessoUsuario.setInterfaceAcesso(inter);
-        
-//        System.out.println(acessoUsuario.getCodigo_acesso());
 
+//        System.out.println(acessoUsuario.getCodigo_acesso());
         acessoUsuario = checarCadastroExistente(acessoUsuario);
 
         if (acessoUsuario.getCodigo_acesso() == null) {
@@ -531,7 +534,7 @@ public final class AcessoInterface extends javax.swing.JFrame {
         } else {
             for (int i = 0; i < jtbl_permissoes.getRowCount(); i++) {
                 tabela = acessoUsuario.getInterfaceAcesso().getDescricao().equals(jtbl_permissoes.getValueAt(i, 0).toString());
-                System.out.println("Index: "+i+ " Size: " + jtbl_permissoes.getRowCount() + " Valor: "+jtbl_permissoes.getValueAt(i, 0).toString());
+                System.out.println("Index: " + i + " Size: " + jtbl_permissoes.getRowCount() + " Valor: " + jtbl_permissoes.getValueAt(i, 0).toString());
                 if (tabela == true) {
                     acessoUsuario.setCodigo_acesso(acessos.get(i).getCodigo_acesso());
                     break;

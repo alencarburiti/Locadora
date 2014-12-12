@@ -117,7 +117,7 @@ public class CadastrarLocacao implements InterfaceCommand {
             DiariaDAO diaDAO = new DiariaDAO(pool);
             dias = diaDAO.getTodasDiarias();
             for (int i = 0; i < AtendimentoLocacao.jtbl_locacao.getRowCount(); i++) {
-                System.out.println("Inciar Verificação: "+ AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDescricao_objeto());
+                System.out.println("Inciar Verificação: "+ AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getTitulo());
                 System.out.println("Acumulativo: "+AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo());
                 if (AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo() == true) {
                     for (int j = 0; j < dias.size(); j++) {
@@ -144,7 +144,7 @@ public class CadastrarLocacao implements InterfaceCommand {
                 ItemLocacao itemLocacao = new ItemLocacao();
                 Objeto objeto = new Objeto();
                 objeto.setCodigo_objeto(AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getCodigo_objeto());
-                objeto.setDescricao_objeto(AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDescricao_objeto());
+                objeto.setTitulo(AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getTitulo());
 
                 Diaria diaria = new Diaria();
                 diaria.setValor(AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getValor());

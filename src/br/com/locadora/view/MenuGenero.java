@@ -18,6 +18,7 @@ import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.dao.GeneroDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -36,7 +37,7 @@ public class MenuGenero extends javax.swing.JFrame {
 
     public String tipoCadastro;
     public TelaPrincipal janelapai;
-    public static List<Genero> generos;    
+    public static List<Genero> generos;
     public SiscomController controller;
     public Genero genero;
     public InterfacePool pool;
@@ -47,7 +48,7 @@ public class MenuGenero extends javax.swing.JFrame {
      */
     public MenuGenero() {
         initComponents();
-//        listarGenero();
+        TemaInterface.getInterface(this);
     }
     DefaultTableModel tmDestino = new DefaultTableModel(null, new String[]{"Código", "Descrição"});
     ListSelectionModel lsmDestino;
@@ -70,10 +71,12 @@ public class MenuGenero extends javax.swing.JFrame {
         jtf_consulta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbl_genero = new javax.swing.JTable();
-        jb_excluir = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jb_novo = new javax.swing.JButton();
         jb_alterar = new javax.swing.JButton();
+        jb_excluir = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento de Gênero");
@@ -86,30 +89,26 @@ public class MenuGenero extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonGroup1.add(jrb_codigo);
-        jrb_codigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
-        jPanel1.add(jrb_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
 
         buttonGroup1.add(jrb_descricao);
-        jrb_descricao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
-        jPanel1.add(jrb_descricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
-        jPanel1.add(jl_pesquisar_destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
+        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -117,20 +116,54 @@ public class MenuGenero extends javax.swing.JFrame {
                 jb_buscarActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, -1, -1));
 
+        jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_consulta.setName("jtf_consulta"); // NOI18N
         jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_consultaKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_consulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 270, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 490, 120));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jrb_descricao)
+                        .addGap(10, 10, 10)
+                        .addComponent(jrb_codigo))
+                    .addComponent(jl_pesquisar_destino)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jb_buscar)))
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jrb_descricao)
+                    .addComponent(jrb_codigo))
+                .addGap(10, 10, 10)
+                .addComponent(jl_pesquisar_destino)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_buscar))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_consulta});
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        jtbl_genero.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtbl_genero.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -154,88 +187,113 @@ public class MenuGenero extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtbl_genero.setUpdateSelectionOnSort(false);
+        jtbl_genero.setDoubleBuffered(true);
+        jtbl_genero.setDragEnabled(true);
+        jtbl_genero.setName("jtbl_genero"); // NOI18N
+        jtbl_genero.getTableHeader().setReorderingAllowed(false);
+        jtbl_genero.setModel(tmDestino);
+        jtbl_genero.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lsmDestino = jtbl_genero.getSelectionModel();
+        jtbl_genero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbl_generoMouseClicked(evt);
+            }
+        });
+        jtbl_genero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_generoKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtbl_genero);
+        if (jtbl_genero.getColumnModel().getColumnCount() > 0) {
+            jtbl_genero.getColumnModel().getColumn(0).setPreferredWidth(20);
+            jtbl_genero.getColumnModel().getColumn(1).setPreferredWidth(500);
+        }
 
-        jtbl_genero.setVerifyInputWhenFocusTarget(false);
-        jtbl_genero.setDefaultEditor(Object.class, null);
-        jtbl_genero.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e){
-                if(e.getClickCount() == 2){
-                    alterar();
-                }}});
-                jtbl_genero.setDoubleBuffered(true);
-                jtbl_genero.setDragEnabled(true);
-                jtbl_genero.setName("jtbl_genero"); // NOI18N
-                jtbl_genero.getTableHeader().setReorderingAllowed(false);
-                jtbl_genero.setModel(tmDestino);
-                jtbl_genero.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                lsmDestino = jtbl_genero.getSelectionModel();
-                /*
-                lsmDestino.addListSelectionListener(new ListSelectionListener() {
-                    public void valueChanged(ListSelectionEvent e){
-                        if (! e.getValueIsAdjusting()){
-                            tbDestinoLinhaSelecionada(jtbl_genero);
-                        }
-                    }
-                });*/
-                jtbl_genero.addKeyListener(new java.awt.event.KeyAdapter() {
-                    public void keyPressed(java.awt.event.KeyEvent evt) {
-                        jtbl_generoKeyPressed(evt);
-                    }
-                });
-                jScrollPane1.setViewportView(jtbl_genero);
-                if (jtbl_genero.getColumnModel().getColumnCount() > 0) {
-                    jtbl_genero.getColumnModel().getColumn(0).setResizable(false);
-                    jtbl_genero.getColumnModel().getColumn(0).setPreferredWidth(20);
-                    jtbl_genero.getColumnModel().getColumn(1).setResizable(false);
-                    jtbl_genero.getColumnModel().getColumn(1).setPreferredWidth(300);
-                }
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
-                getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 490, 150));
+        jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
+        jb_novo.setText("Novo");
+        jb_novo.setName("jb_novo"); // NOI18N
+        jb_novo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_novoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jb_novo, new java.awt.GridBagConstraints());
 
-                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
-                jb_excluir.setText("Excluir");
-                jb_excluir.setName("jb_excluir"); // NOI18N
-                jb_excluir.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_excluirActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jb_excluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, -1, -1));
+        jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
+        jb_alterar.setText("Alterar");
+        jb_alterar.setName("jb_alterar"); // NOI18N
+        jb_alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_alterarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jb_alterar, new java.awt.GridBagConstraints());
 
-                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_sair.setText("Sair");
-                jb_sair.setName("jb_sair"); // NOI18N
-                jb_sair.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_sairActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, 33));
+        jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
+        jb_excluir.setText("Excluir");
+        jb_excluir.setName("jb_excluir"); // NOI18N
+        jb_excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_excluirActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jb_excluir, new java.awt.GridBagConstraints());
 
-                jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
-                jb_novo.setText("Novo");
-                jb_novo.setName("jb_novo"); // NOI18N
-                jb_novo.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_novoActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jb_novo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_sairActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jb_sair, new java.awt.GridBagConstraints());
 
-                jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
-                jb_alterar.setText("Alterar");
-                jb_alterar.setName("jb_alterar"); // NOI18N
-                jb_alterar.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_alterarActionPerformed(evt);
-                    }
-                });
-                getContentPane().add(jb_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
 
-                setSize(new java.awt.Dimension(536, 376));
-                setLocationRelativeTo(null);
-            }// </editor-fold>//GEN-END:initComponents
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(20, 20, 20))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+
+        setSize(new java.awt.Dimension(652, 497));
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
         pool = new Pool();
@@ -272,11 +330,6 @@ public class MenuGenero extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairActionPerformed
 
-    private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
-        buscarDados();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_buscarActionPerformed
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
         janelapai.setStatusTela(true);
@@ -286,26 +339,31 @@ public class MenuGenero extends javax.swing.JFrame {
         jtf_consulta.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
-    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            buscarDados();
-        }
-        acionarAtalho(evt);
-
-    }//GEN-LAST:event_jtf_consultaKeyPressed
-
     private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_generoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             alterar();
         }
-        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            excluirGenero();
-        }
-        if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            jtf_consulta.requestFocus();
-        }
     }//GEN-LAST:event_jtbl_generoKeyPressed
+
+    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarDados();
+        }
+        acionarAtalho(evt);
+    }//GEN-LAST:event_jtf_consultaKeyPressed
+
+    private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
+        buscarDados();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_buscarActionPerformed
+
+    private void jtbl_generoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_generoMouseClicked
+        if (evt.getClickCount() == 2) {
+            alterar();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_generoMouseClicked
     /**
      * @param args the command line arguments
      */
@@ -319,7 +377,9 @@ public class MenuGenero extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
     public static javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     public static javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_alterar;
     private javax.swing.JButton jb_buscar;
@@ -339,7 +399,7 @@ public class MenuGenero extends javax.swing.JFrame {
     }
 
     public Genero tbGeneroLinhaSelecionada(JTable tb) {
-        
+
         if (tb != null && tb.getSelectedRow() != -1) {
             genero = new Genero();
             genero.setCodigo_genero(generos.get(tb.getSelectedRow()).getCodigo_genero());
@@ -430,11 +490,18 @@ public class MenuGenero extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
+
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
             janelapai.setStatusTela(true);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            excluirGenero();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
         }
     }
 }

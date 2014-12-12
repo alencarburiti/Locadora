@@ -26,9 +26,8 @@ public class CadastrarObjeto implements InterfaceCommand {
             if (CadastroObjeto.jtf_codigo_objeto.getText().isEmpty()) {
                 Objeto objeto = new Objeto();
 
-                objeto.setDescricao_objeto(CadastroObjeto.jtf_descricao_objeto.getText().trim());
-                objeto.setTitulo_original(CadastroObjeto.jtf_titulo_original.getText().trim());
-                objeto.setDescricao_resumida(CadastroObjeto.jtf_descricao_resumida.getText().trim());
+                objeto.setTitulo(CadastroObjeto.jtf_titulo.getText().trim());
+                objeto.setTitulo_original(CadastroObjeto.jtf_titulo_original.getText().trim());                
                 objeto.setTipo_movimento((String) CadastroObjeto.jcb_tipo.getSelectedItem());
                 objeto.setProducao((String) CadastroObjeto.jcb_producao.getSelectedItem());
                 objeto.setDuracao(CadastroObjeto.jtf_duracao.getText().trim());

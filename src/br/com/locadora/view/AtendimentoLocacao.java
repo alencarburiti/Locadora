@@ -18,6 +18,7 @@ import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
+import br.com.locadora.util.TemaInterface;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -29,7 +30,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -63,7 +63,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
 
     public AtendimentoLocacao() {
         initComponents();
-
+        TemaInterface.getInterface(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -71,7 +71,13 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jtp_locacao = new javax.swing.JTabbedPane();
+        jDesktopPane2 = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jtf_codigo_cliente = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jtf_nome_cliente = new javax.swing.JTextField();
+        jb_cliente = new javax.swing.JButton();
         jp_locacao = new javax.swing.JPanel();
         /*try  {          
             Locale BRAZIL = new Locale("pt","BR");  
@@ -95,24 +101,20 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jl_codigo_locacao = new javax.swing.JLabel();
         jtf_codigo_consulta_locacao = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jLabel27 = new javax.swing.JLabel();
-        jl_debito_locacao = new javax.swing.JLabel();
-        jtf_debito_total_locacao = new javax.swing.JTextField();
-        jtf_valor_total_locacao = new javax.swing.JTextField();
         jb_adicionar_locacao = new javax.swing.JButton();
         jb_remover_locacao = new javax.swing.JButton();
-        jb_cancelar = new javax.swing.JButton();
         jcb_codigo_barras_locacao = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         jcb_promocao = new javax.swing.JComboBox();
-        jDesktopPane2 = new javax.swing.JDesktopPane();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jtf_codigo_cliente = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jtf_nome_cliente = new javax.swing.JTextField();
-        jb_cliente = new javax.swing.JButton();
+        jl_debito_locacao = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jtf_debito_total_locacao = new javax.swing.JTextField();
+        jtf_valor_total_locacao = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jb_cancelar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -136,22 +138,103 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 formKeyReleased(evt);
             }
         });
-        getContentPane().setLayout(null);
 
-        jtp_locacao.setName("jtp_locacao"); // NOI18N
-        jtp_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtp_locacaoFocusGained(evt);
+        jDesktopPane2.setName("jDesktopPane2"); // NOI18N
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel1.setText("Código ");
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jtf_codigo_cliente.setEditable(false);
+        jtf_codigo_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_codigo_cliente.setName("jtf_codigo_cliente"); // NOI18N
+
+        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel10.setText("Cliente");
+        jLabel10.setName("jLabel10"); // NOI18N
+
+        jtf_nome_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_nome_cliente.setName("jtf_nome_cliente"); // NOI18N
+        jtf_nome_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_nome_clienteActionPerformed(evt);
+            }
+        });
+        jtf_nome_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_nome_clienteFocusLost(evt);
+            }
+        });
+        jtf_nome_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_clienteKeyPressed(evt);
             }
         });
 
-        jp_locacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Itens"));
+        jb_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_cliente.setName("jb_cliente"); // NOI18N
+        jb_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_clienteActionPerformed(evt);
+            }
+        });
+        jb_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_clienteKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                    .addComponent(jtf_codigo_cliente))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtf_nome_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel10))
+                .addGap(10, 10, 10))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel10))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_nome_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_cliente))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cliente, jtf_codigo_cliente, jtf_nome_cliente});
+
+        jp_locacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Itens Locação"));
         jp_locacao.setName("jp_locacao"); // NOI18N
-        jp_locacao.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtf_valor_locacao.setEditable(false);
+        jtf_valor_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_valor_locacao.setText("R$ 0,00");
         jtf_valor_locacao.setName("jtf_valor_locacao"); // NOI18N
+        jtf_valor_locacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_valor_locacaoActionPerformed(evt);
+            }
+        });
         jtf_valor_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jtf_valor_locacaoFocusGained(evt);
@@ -160,7 +243,6 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jtf_valor_locacaoFocusLost(evt);
             }
         });
-        jp_locacao.add(jtf_valor_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 100, -1));
 
         jtf_tipo_midia.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
 
@@ -171,6 +253,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
             }
         });
         jtf_tipo_midia.setEditable(false);
+        jtf_tipo_midia.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_tipo_midia.setName("jtf_tipo_midia"); // NOI18N
         jtf_tipo_midia.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -182,34 +265,30 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jtf_tipo_midiaKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_tipo_midia, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 90, -1));
 
         jtf_diaria.setEditable(false);
+        jtf_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_diaria.setName("jtf_diaria"); // NOI18N
-        jp_locacao.add(jtf_diaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 50, -1));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel3.setText("Nome Objeto");
         jLabel3.setName("jLabel3"); // NOI18N
-        jp_locacao.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 300, -1));
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel5.setText("Valor");
         jLabel5.setName("jLabel5"); // NOI18N
-        jp_locacao.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 50, -1));
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel6.setText("Promoção");
         jLabel6.setName("jLabel6"); // NOI18N
-        jp_locacao.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 70, -1));
 
-        jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel13.setText("Diária");
         jLabel13.setName("jLabel13"); // NOI18N
-        jp_locacao.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
+        jtbl_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtbl_locacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -236,16 +315,15 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jtbl_locacao.setName("jtbl_locacao"); // NOI18N
         jScrollPane2.setViewportView(jtbl_locacao);
         if (jtbl_locacao.getColumnModel().getColumnCount() > 0) {
-            jtbl_locacao.getColumnModel().getColumn(0).setPreferredWidth(20);
-            jtbl_locacao.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jtbl_locacao.getColumnModel().getColumn(0).setPreferredWidth(30);
+            jtbl_locacao.getColumnModel().getColumn(1).setPreferredWidth(150);
             jtbl_locacao.getColumnModel().getColumn(2).setPreferredWidth(30);
             jtbl_locacao.getColumnModel().getColumn(3).setPreferredWidth(30);
             jtbl_locacao.getColumnModel().getColumn(4).setPreferredWidth(20);
         }
 
-        jp_locacao.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 660, 200));
-
         jtf_nome_objeto_locacao.setEditable(false);
+        jtf_nome_objeto_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_objeto_locacao.setName("jtf_nome_objeto_locacao"); // NOI18N
         jtf_nome_objeto_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -257,13 +335,12 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jtf_nome_objeto_locacaoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_nome_objeto_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 270, -1));
 
-        jl_codigo_locacao.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jl_codigo_locacao.setText("Código do Objeto");
+        jl_codigo_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jl_codigo_locacao.setText("Código de Barras");
         jl_codigo_locacao.setName("jl_codigo_locacao"); // NOI18N
-        jp_locacao.add(jl_codigo_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
+        jtf_codigo_consulta_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_codigo_consulta_locacao.setName("jtf_codigo_consulta_locacao"); // NOI18N
         jtf_codigo_consulta_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -275,8 +352,8 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jtf_codigo_consulta_locacaoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jtf_codigo_consulta_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, -1));
 
+        jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -284,61 +361,8 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jp_locacao.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 30, 30));
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
-        jButton7.setText("Finalizar");
-        jButton7.setName("jButton7"); // NOI18N
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        jButton7.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton7KeyPressed(evt);
-            }
-        });
-        jp_locacao.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, 110, 50));
-
-        jLabel27.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel27.setText("Total:");
-        jLabel27.setName("jLabel27"); // NOI18N
-        jp_locacao.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 60, 30));
-
-        jl_debito_locacao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jl_debito_locacao.setText("Devedor:");
-        jl_debito_locacao.setName("jl_debito_locacao"); // NOI18N
-        jp_locacao.add(jl_debito_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 90, 30));
-
-        jtf_debito_total_locacao.setEditable(false);
-        jtf_debito_total_locacao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jtf_debito_total_locacao.setText("R$ 0,00");
-        jtf_debito_total_locacao.setName("jtf_debito_total_locacao"); // NOI18N
-        jtf_debito_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_total_locacaoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_debito_total_locacaoFocusLost(evt);
-            }
-        });
-        jp_locacao.add(jtf_debito_total_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 180, 40));
-
-        jtf_valor_total_locacao.setEditable(false);
-        jtf_valor_total_locacao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jtf_valor_total_locacao.setText("R$ 0,00");
-        jtf_valor_total_locacao.setName("jtf_valor_total_locacao"); // NOI18N
-        jtf_valor_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_total_locacaoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_valor_total_locacaoFocusLost(evt);
-            }
-        });
-        jp_locacao.add(jtf_valor_total_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 180, 40));
-
+        jb_adicionar_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_adicionar_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_locacao.setToolTipText("Incluir");
         jb_adicionar_locacao.setName("jb_adicionar_locacao"); // NOI18N
@@ -352,8 +376,8 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jb_adicionar_locacaoKeyPressed(evt);
             }
         });
-        jp_locacao.add(jb_adicionar_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 30, 30));
 
+        jb_remover_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_remover_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_remover_locacao.setToolTipText("Excluir");
         jb_remover_locacao.setName("jb_remover_locacao"); // NOI18N
@@ -362,18 +386,6 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jb_remover_locacaoActionPerformed(evt);
             }
         });
-        jp_locacao.add(jb_remover_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 30, 30));
-
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Sair");
-        jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
-        jb_cancelar.setName("jb_cancelar"); // NOI18N
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
-            }
-        });
-        jp_locacao.add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 370, 90, 50));
 
         jcb_codigo_barras_locacao.setSelected(true);
         jcb_codigo_barras_locacao.setText("Usar Código de Barras");
@@ -383,13 +395,12 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jcb_codigo_barras_locacaoActionPerformed(evt);
             }
         });
-        jp_locacao.add(jcb_codigo_barras_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 180, 30));
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel7.setText("Tipo Mídia");
         jLabel7.setName("jLabel7"); // NOI18N
-        jp_locacao.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 70, -1));
 
+        jcb_promocao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_promocao.setMaximumRowCount(20);
         jcb_promocao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
         jcb_promocao.setName("jcb_promocao"); // NOI18N
@@ -414,66 +425,271 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jcb_promocaoKeyReleased(evt);
             }
         });
-        jp_locacao.add(jcb_promocao, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 190, -1));
 
-        jtp_locacao.addTab("Locação", jp_locacao);
+        javax.swing.GroupLayout jp_locacaoLayout = new javax.swing.GroupLayout(jp_locacao);
+        jp_locacao.setLayout(jp_locacaoLayout);
+        jp_locacaoLayout.setHorizontalGroup(
+            jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_valor_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(10, 10, 10)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jtf_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jtf_tipo_midia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(10, 10, 10)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jcb_promocao, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtf_codigo_consulta_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jl_codigo_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(10, 10, 10)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(280, 280, 280))
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jtf_nome_objeto_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jcb_codigo_barras_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addGap(14, 14, 14))
+        );
+        jp_locacaoLayout.setVerticalGroup(
+            jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jl_codigo_locacao)
+                    .addComponent(jLabel3))
+                .addGap(0, 0, 0)
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtf_codigo_consulta_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_nome_objeto_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel7))
+                                        .addGap(0, 0, 0))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jp_locacaoLayout.createSequentialGroup()
+                                        .addGap(0, 0, 0)
+                                        .addComponent(jLabel13)))
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtf_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_tipo_midia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jcb_promocao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, 0)
+                                .addComponent(jtf_valor_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcb_codigo_barras_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
+        );
 
-        getContentPane().add(jtp_locacao);
-        jtp_locacao.setBounds(10, 100, 830, 470);
+        jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_locacao, jb_remover_locacao, jcb_promocao, jtf_diaria, jtf_tipo_midia});
 
-        jDesktopPane2.setName("jDesktopPane2"); // NOI18N
-        getContentPane().add(jDesktopPane2);
-        jDesktopPane2.setBounds(710, 100, 0, 0);
+        jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jcb_codigo_barras_locacao, jtf_codigo_consulta_locacao, jtf_nome_objeto_locacao, jtf_valor_locacao});
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
-        jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jl_debito_locacao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jl_debito_locacao.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jl_debito_locacao.setText("Devedor:");
+        jl_debito_locacao.setName("jl_debito_locacao"); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel1.setText("Código ");
-        jLabel1.setName("jLabel1"); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, -1));
+        jLabel27.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel27.setText("Total:");
+        jLabel27.setName("jLabel27"); // NOI18N
 
-        jtf_codigo_cliente.setEditable(false);
-        jtf_codigo_cliente.setName("jtf_codigo_cliente"); // NOI18N
-        jPanel1.add(jtf_codigo_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, -1));
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setText("Cliente");
-        jLabel10.setName("jLabel10"); // NOI18N
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
-
-        jtf_nome_cliente.setName("jtf_nome_cliente"); // NOI18N
-        jtf_nome_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_debito_total_locacao.setEditable(false);
+        jtf_debito_total_locacao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_debito_total_locacao.setText("R$ 0,00");
+        jtf_debito_total_locacao.setName("jtf_debito_total_locacao"); // NOI18N
+        jtf_debito_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_debito_total_locacaoFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_nome_clienteFocusLost(evt);
+                jtf_debito_total_locacaoFocusLost(evt);
             }
         });
-        jtf_nome_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_clienteKeyPressed(evt);
-            }
-        });
-        jPanel1.add(jtf_nome_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 320, -1));
 
-        jb_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jb_cliente.setName("jb_cliente"); // NOI18N
-        jb_cliente.addActionListener(new java.awt.event.ActionListener() {
+        jtf_valor_total_locacao.setEditable(false);
+        jtf_valor_total_locacao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_valor_total_locacao.setText("R$ 0,00");
+        jtf_valor_total_locacao.setName("jtf_valor_total_locacao"); // NOI18N
+        jtf_valor_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_valor_total_locacaoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_valor_total_locacaoFocusLost(evt);
+            }
+        });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        jButton7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+        jButton7.setText("Finalizar");
+        jButton7.setName("jButton7"); // NOI18N
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_clienteActionPerformed(evt);
+                jButton7ActionPerformed(evt);
             }
         });
-        jb_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+        jButton7.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_clienteKeyPressed(evt);
+                jButton7KeyPressed(evt);
             }
         });
-        jPanel1.add(jb_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 30, -1));
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(20, 20, 500, 80);
+        jButton10.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
+        jButton10.setText("Limpar");
+        jButton10.setName("jButton10"); // NOI18N
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jButton10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton10KeyPressed(evt);
+            }
+        });
 
-        setSize(new java.awt.Dimension(854, 596));
+        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+        jb_cancelar.setText("Sair");
+        jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
+        jb_cancelar.setName("jb_cancelar"); // NOI18N
+        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_cancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jButton10)
+                .addGap(10, 10, 10)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(150, 150, 150))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton10)
+                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
+        );
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jl_debito_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jtf_debito_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(276, 276, 276)
+                                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jp_locacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jp_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jl_debito_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_debito_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        setSize(new java.awt.Dimension(856, 594));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -645,11 +861,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_locacaoFocusGained
 
-    private void jtp_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtp_locacaoFocusGained
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtp_locacaoFocusGained
-
     private void jtf_codigo_consulta_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_consulta_locacaoKeyPressed
         try {
 
@@ -762,6 +973,26 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jcb_promocaoKeyReleased
 
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+//        limparDados();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton10KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            limparDados();
+        }
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10KeyPressed
+
+    private void jtf_nome_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_clienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_clienteActionPerformed
+
+    private void jtf_valor_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_locacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_valor_locacaoActionPerformed
+
     public void consultarClienteAtendimento() {
         ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
         consultaCliente.janelapaiLocacao = this;
@@ -784,18 +1015,21 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton7;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jb_adicionar_locacao;
     private javax.swing.JButton jb_cancelar;
@@ -816,7 +1050,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JTextField jtf_tipo_midia;
     private javax.swing.JTextField jtf_valor_locacao;
     public static javax.swing.JTextField jtf_valor_total_locacao;
-    private javax.swing.JTabbedPane jtp_locacao;
     // End of variables declaration//GEN-END:variables
 
     private void enviarDadosLocacao() {
@@ -981,7 +1214,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Loca Ganha");
                 diariaLocaGanha = calculaPromocaoLocaGanha(diariaCombo);
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaLocaGanha.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaLocaGanha.getPromocaoLocacao().getDescricao()});
@@ -994,7 +1227,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Simples semanal");
                 System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaCombo.getPromocaoLocacao().getDescricao()});
@@ -1012,7 +1245,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Loca Ganha");
                 diariaLocaGanha = calculaPromocaoLocaGanha(diariaCombo);
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaLocaGanha.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaLocaGanha.getPromocaoLocacao().getDescricao()});
@@ -1025,7 +1258,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Simples semanal");
                 System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaCombo.getPromocaoLocacao().getDescricao()});
@@ -1043,7 +1276,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Loca Ganha");
                 diariaLocaGanha = calculaPromocaoLocaGanha(diariaCombo);
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaLocaGanha.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaLocaGanha.getPromocaoLocacao().getDescricao()});
@@ -1056,7 +1289,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Simples semanal");
                 System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaCombo.getPromocaoLocacao().getDescricao()});
@@ -1074,7 +1307,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Loca Ganha");
                 diariaLocaGanha = calculaPromocaoLocaGanha(diariaCombo);
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaLocaGanha.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaLocaGanha.getPromocaoLocacao().getDescricao()});
@@ -1087,7 +1320,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Simples semanal");
                 System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaCombo.getPromocaoLocacao().getDescricao()});
@@ -1105,7 +1338,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Loca Ganha");
                 diariaLocaGanha = calculaPromocaoLocaGanha(diariaCombo);
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaLocaGanha.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaLocaGanha.getPromocaoLocacao().getDescricao()});
@@ -1118,7 +1351,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Simples semanal");
                 System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaCombo.getPromocaoLocacao().getDescricao()});
@@ -1136,7 +1369,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Loca Ganha");
                 diariaLocaGanha = calculaPromocaoLocaGanha(diariaCombo);
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaLocaGanha.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaLocaGanha.getPromocaoLocacao().getDescricao()});
@@ -1149,7 +1382,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Simples semanal");
                 System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaCombo.getPromocaoLocacao().getDescricao()});
@@ -1167,7 +1400,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Loca Ganha");
                 diariaLocaGanha = calculaPromocaoLocaGanha(diariaCombo);
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaLocaGanha.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaLocaGanha.getPromocaoLocacao().getDescricao()});
@@ -1180,7 +1413,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 System.out.println("Calcular promocao Simples semanal");
                 System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getDescricao_objeto());
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
                     hashDbGrid, moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())),
                     copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), diariaCombo.getPromocaoLocacao().getDescricao()});
@@ -1255,7 +1488,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 jtf_codigo_consulta_locacao.setText(String.valueOf(copiaLocacao.getObjeto().getCodigo_objeto()));
             }
 
-            jtf_nome_objeto_locacao.setText(copiaLocacao.getObjeto().getDescricao_objeto());
+            jtf_nome_objeto_locacao.setText(copiaLocacao.getObjeto().getTitulo());
             jtf_diaria.setText(String.valueOf(copiaLocacao.getObjeto().getDiaria().getDias()));
             jtf_valor_locacao.setText(moeda.setPrecoFormat(String.valueOf(copiaLocacao.getObjeto().getDiaria().getValor())));
             jtf_tipo_midia.setText(copiaLocacao.getObjeto().getTipo_midia());
@@ -1578,7 +1811,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         dias = diaDAO.getTodasDiarias();
 
         for (int i = 0; i < AtendimentoLocacao.jtbl_locacao.getRowCount(); i++) {
-            System.out.println("Inciar Verificação: " + copiasLocacao.get(i).getObjeto().getDescricao_objeto());
+            System.out.println("Inciar Verificação: " + copiasLocacao.get(i).getObjeto().getTitulo());
             System.out.println("CODIGO DIARIA - DIARIA: " + diaria.getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
             if (diaria.getCodigo_diaria() == copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria()) {
                 diaria.setQuantidade_filme(diaria.getQuantidade_filme() + 1);

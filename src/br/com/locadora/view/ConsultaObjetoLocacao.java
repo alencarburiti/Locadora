@@ -14,6 +14,7 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.ObjetoDAO;
+import br.com.locadora.util.TemaInterface;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -35,6 +36,7 @@ public class ConsultaObjetoLocacao extends javax.swing.JFrame {
     
     public ConsultaObjetoLocacao() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapai = null;        
     }
     
@@ -279,7 +281,7 @@ public class ConsultaObjetoLocacao extends javax.swing.JFrame {
         if (tb.getSelectedRow() != -1) {
             objeto = new Objeto();
             objeto.setCodigo_objeto(objetos.get(tb.getSelectedRow()).getCodigo_objeto());
-            objeto.setDescricao_objeto(objetos.get(tb.getSelectedRow()).getDescricao_objeto());            
+            objeto.setTitulo(objetos.get(tb.getSelectedRow()).getTitulo());            
         }
         return objeto;
     }

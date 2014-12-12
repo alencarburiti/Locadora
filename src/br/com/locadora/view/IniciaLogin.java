@@ -5,6 +5,7 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,29 +22,28 @@ public class IniciaLogin extends javax.swing.JFrame {
     public String login;
     public String permissao;
     public InterfacePool pool;
-        
+
     /**
      * Creates new form Log_login
      */
     public IniciaLogin() {
-
         initComponents();
-        
+        TemaInterface.getInterface(this);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jb_logar = new javax.swing.JButton();
-        jb_cancelar = new javax.swing.JButton();
         jl_erro = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        label1 = new java.awt.Label();
-        label2 = new java.awt.Label();
         jtf_login = new javax.swing.JTextField();
         jpf_senha = new javax.swing.JPasswordField();
+        jb_logar = new javax.swing.JButton();
+        jb_cancelar = new javax.swing.JButton();
         jb_limpar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,18 +58,40 @@ public class IniciaLogin extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jb_logar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/http___iconesbr.oficinadanet.com_8533_16x16.png"))); // NOI18N
-        jb_logar.setText("OK !");
+        jl_erro.setText("        ");
+        jl_erro.setName("jl_erro"); // NOI18N
+
+        jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        jtf_login.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jtf_login.setName("jtf_login"); // NOI18N
+        jtf_login.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_loginKeyPressed(evt);
+            }
+        });
+
+        jpf_senha.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jpf_senha.setName("jpf_senha"); // NOI18N
+        jpf_senha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jpf_senhaKeyPressed(evt);
+            }
+        });
+
+        jb_logar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_logar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/usuarios.png"))); // NOI18N
+        jb_logar.setText("Entrar");
         jb_logar.setName("jb_logar"); // NOI18N
         jb_logar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_logarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_logar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 81, 40));
 
+        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.gif"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
@@ -78,44 +100,8 @@ public class IniciaLogin extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 97, -1));
 
-        jl_erro.setText("        ");
-        jl_erro.setName("jl_erro"); // NOI18N
-        getContentPane().add(jl_erro, new org.netbeans.lib.awtextra.AbsoluteConstraints(643, 17, -1, -1));
-
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        label1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        label1.setName("label1"); // NOI18N
-        label1.setText("Login:");
-        jPanel1.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 50, -1));
-
-        label2.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        label2.setName("label2"); // NOI18N
-        label2.setText("Senha:");
-        jPanel1.add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
-
-        jtf_login.setName("jtf_login"); // NOI18N
-        jtf_login.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_loginKeyPressed(evt);
-            }
-        });
-        jPanel1.add(jtf_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 150, -1));
-
-        jpf_senha.setName("jpf_senha"); // NOI18N
-        jpf_senha.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jpf_senhaKeyPressed(evt);
-            }
-        });
-        jPanel1.add(jpf_senha, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 150, -1));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 260, 110));
-
+        jb_limpar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
         jb_limpar.setText("Limpar");
         jb_limpar.setName("jb_limpar"); // NOI18N
@@ -124,15 +110,96 @@ public class IniciaLogin extends javax.swing.JFrame {
                 jb_limparActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_limpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Login:");
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Senha:");
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jb_logar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jb_limpar)
+                .addGap(10, 10, 10)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 13, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_login, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_limpar, jb_logar});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jb_logar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_limpar, jb_logar});
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 260, 110));
 
-        setSize(new java.awt.Dimension(426, 347));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addComponent(jl_erro))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jl_erro))
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
+
+        setSize(new java.awt.Dimension(350, 315));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -174,7 +241,7 @@ public class IniciaLogin extends javax.swing.JFrame {
         limparCampos();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_limparActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -188,6 +255,8 @@ public class IniciaLogin extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_limpar;
@@ -195,8 +264,6 @@ public class IniciaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jl_erro;
     private javax.swing.JPasswordField jpf_senha;
     private javax.swing.JTextField jtf_login;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
     // End of variables declaration//GEN-END:variables
 
     private void entrar() {
@@ -206,7 +273,7 @@ public class IniciaLogin extends javax.swing.JFrame {
                 ArquivoConfiguracao conf = new ArquivoConfiguracao();
                 conf.writePropertie("login", usuarios.get(0).getLogin());
                 conf.writePropertie("codigo_usuario", String.valueOf(usuarios.get(0).getCodigo_usuario()));
-                TelaPrincipal tela = new TelaPrincipal();                
+                TelaPrincipal tela = new TelaPrincipal();
                 tela.carregaUsuario(usuarios.get(0));
                 tela.show();
                 this.dispose();
@@ -267,7 +334,7 @@ public class IniciaLogin extends javax.swing.JFrame {
 
         return true;
     }
-    
+
     public boolean limparCampos() {
         jtf_login.setText("");
         jpf_senha.setText("");

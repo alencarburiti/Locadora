@@ -12,12 +12,11 @@ package br.com.locadora.model.bean;
 public class Objeto {
 
     private Integer codigo_objeto;
-    private String descricao_objeto;
+    private String titulo;
     private String tipo_movimento;
     private String titulo_original;
     private String producao;
     private String duracao;
-    private String descricao_resumida;
     private String midia;
     private Integer censura;
     private String tipo_midia;
@@ -37,12 +36,12 @@ public class Objeto {
         this.codigo_objeto = codigo_objeto;
     }
 
-    public String getDescricao_objeto() {
-        return descricao_objeto;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setDescricao_objeto(String descricao_objeto) {
-        this.descricao_objeto = descricao_objeto;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getTipo_movimento() {
@@ -75,14 +74,6 @@ public class Objeto {
 
     public void setDuracao(String duracao) {
         this.duracao = duracao;
-    }
-
-    public String getDescricao_resumida() {
-        return descricao_resumida;
-    }
-
-    public void setDescricao_resumida(String descricao_resumida) {
-        this.descricao_resumida = descricao_resumida;
     }
 
     public String getMidia() {

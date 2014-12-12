@@ -59,7 +59,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM CLIENTE WHERE NOME_CLIENTE LIKE ? ORDER BY NOME_CLIENTE";
+        String sqlSelect = "SELECT * FROM CLIENTE WHERE NOME_CLIENTE LIKE ? ORDER BY NOME_CLIENTE LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -82,7 +82,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM CLIENTE WHERE CPF = ? ORDER BY NOME_CLIENTE";
+        String sqlSelect = "SELECT * FROM CLIENTE WHERE CPF = ? ORDER BY NOME_CLIENTE LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -109,7 +109,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM CLIENTE WHERE CPF = ? AND CODIGO_CLIENTE = ? ORDER BY NOME_CLIENTE";
+        String sqlSelect = "SELECT * FROM CLIENTE WHERE CPF = ? AND CODIGO_CLIENTE = ? ORDER BY NOME_CLIENTE LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -137,7 +137,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM CLIENTE WHERE CODIGO_CLIENTE = ?;";
+        String sqlSelect = "SELECT * FROM CLIENTE WHERE CODIGO_CLIENTE = ? LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -161,7 +161,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         List<Cliente> resultado = new ArrayList<Cliente>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM CLIENTE ORDER BY NOME_CLIENTE;";
+        String sqlSelect = "SELECT * FROM CLIENTE ORDER BY NOME_CLIENTE LIMIT 0, 50;";
         ResultSet rs = null;
 
         try {
@@ -183,7 +183,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         List<Cliente> resultado = new ArrayList<Cliente>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM CLIENTE ORDER BY NOME_CLIENTE;";
+        String sqlSelect = "SELECT * FROM CLIENTE ORDER BY NOME_CLIENTE LIMIT 0, 50;";
         ResultSet rs = null;
 
         try {
@@ -204,7 +204,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         List<Cliente> resultado = new ArrayList<Cliente>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM locadora.DEPENDENTE WHERE NOME_DEPENDENTE LIKE ? ORDER BY NOME_DEPENDENTE;";
+        String sqlSelect = "SELECT * FROM locadora.DEPENDENTE WHERE NOME_DEPENDENTE LIKE ? ORDER BY NOME_DEPENDENTE LIMIT 0, 50;";
         ResultSet rs = null;
 
         try {
