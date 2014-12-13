@@ -45,7 +45,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     public Diaria diaria;
     public PromocaoLocacao promocaoLocacao;
     public PromocaoDevolucao promocaoDevolucao;
-    public ConsultaDiariaObjeto janelapaiConsulta;
+    public ConsultaDiariaObjeto janelapai2;
     public List<Diaria> generos;
     public AcessoUsuario acesso;
     public List<Diaria> itensPromocaoLocacao;
@@ -60,6 +60,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
         initComponents();
         TemaInterface.getInterface(this);
         janelapai = null;
+        janelapai2 = null;
         itensPromocaoLocacao = new ArrayList<Diaria>();
     }
 
@@ -1058,15 +1059,27 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        janelapai.setStatusTela(true);
-        setVisible(false);
-        janelapai.enviaDados();
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
+            setVisible(false);
+            janelapai.enviaDados();
+        } else if (janelapai2 != null) {
+            janelapai2.setStatusTela(true);
+            setVisible(false);
+
+        }
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setStatusTela(true);
-        setVisible(false);
-        janelapai.enviaDados();
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
+            setVisible(false);
+            janelapai.enviaDados();
+        } else if (janelapai2 != null) {
+            janelapai2.setStatusTela(true);
+            setVisible(false);
+
+        }
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_valorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valorFocusGained
@@ -1496,9 +1509,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
             janelapai.setVisible(true);
             janelapai.request();
         }
-        if (janelapaiConsulta != null) {
-            janelapaiConsulta.setEnabled(true);
-            janelapaiConsulta.setVisible(true);
+        if (janelapai2 != null) {
+            janelapai2.setEnabled(true);
+            janelapai2.setVisible(true);
 
         }
 
@@ -1546,11 +1559,27 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            enviaDados();
+            if (janelapai != null) {
+                janelapai.setStatusTela(true);
+                setVisible(false);
+                janelapai.enviaDados();
+            } else if (janelapai2 != null) {
+                janelapai2.setStatusTela(true);
+                setVisible(false);
+
+            }
+
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            if (janelapai != null) {
+                janelapai.setStatusTela(true);
+                setVisible(false);
+                janelapai.enviaDados();
+            } else if (janelapai2 != null) {
+                janelapai2.setStatusTela(true);
+                setVisible(false);
+
+            }
         }
     }
 

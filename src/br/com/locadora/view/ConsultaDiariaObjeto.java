@@ -100,7 +100,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
                     botaoOK(jtbl_diaria);
 
                 }}});
-                jtbl_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 1213)); // NOI18N
+                jtbl_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jtbl_diaria.setModel(new javax.swing.table.DefaultTableModel(
                     new Object [][] {
 
@@ -132,11 +132,9 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
                 });
                 jScrollPane1.setViewportView(jtbl_diaria);
                 if (jtbl_diaria.getColumnModel().getColumnCount() > 0) {
-                    jtbl_diaria.getColumnModel().getColumn(0).setResizable(false);
                     jtbl_diaria.getColumnModel().getColumn(0).setPreferredWidth(15);
                     jtbl_diaria.getColumnModel().getColumn(1).setPreferredWidth(200);
                     jtbl_diaria.getColumnModel().getColumn(2).setPreferredWidth(10);
-                    jtbl_diaria.getColumnModel().getColumn(3).setResizable(false);
                     jtbl_diaria.getColumnModel().getColumn(3).setPreferredWidth(20);
                     jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(20);
                 }
@@ -328,7 +326,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
         try {
             if (acesso.getEscrever() == 0) {
                 CadastroDiaria cadastroDiaria = new CadastroDiaria();
-                cadastroDiaria.janelapaiConsulta = this;
+                cadastroDiaria.janelapai2 = this;
                 cadastroDiaria.setVisible(true);
                 setStatusTela(false);
                 cadastroDiaria.acesso = acesso;
@@ -457,15 +455,15 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
                 diaria.setDias(diarias.get(i).getDias());
 
                 String valor = null;
-                
+
                 String multa = null;
 
                 valor = String.valueOf(diarias.get(i).getValor());
-                
+
                 multa = String.valueOf(diarias.get(i).getMultas());
                 moeda = new Moeda();
                 valor = moeda.setPrecoFormat(valor);
-                
+
                 multa = moeda.setPrecoFormat(multa);
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_diaria.getModel();

@@ -4,17 +4,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/util/Printer.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/ConsultaClienteAtendimento.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/AtendimentoDevolucao.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/TelaPrincipal.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/CadastroDiaria.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/IniciaLogin.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/EntradaCaixa.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/EntradaCaixaDevolucao.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/DiariaDAO.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/LocacaoDAO.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/AtualizaDiaria.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/AtualizaUsuario.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/MenuCliente.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/MenuUsuario.java</file>
         </group>
     </open-files>
 </project-private>

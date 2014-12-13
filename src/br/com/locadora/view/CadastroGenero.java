@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 public class CadastroGenero extends javax.swing.JFrame {
 
     public MenuGenero janelapai;
+    public ConsultaGeneroObjeto janelapai2;
     public List<Genero> generos;
     public InterfacePool pool;
     public SiscomController controller;
@@ -37,6 +38,7 @@ public class CadastroGenero extends javax.swing.JFrame {
         initComponents();
         TemaInterface.getInterface(this);
         janelapai = null;
+        janelapai2 = null;
     }
 
     @SuppressWarnings("unchecked")
@@ -190,13 +192,23 @@ public class CadastroGenero extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        janelapai.setStatusTela(true);
-        setVisible(false);
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
+            setVisible(false);
+        } else if (janelapai2 != null) {
+            janelapai.setStatusTela(true);
+            setVisible(false);
+        }
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setStatusTela(true);
-        setVisible(false);
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
+            setVisible(false);
+        } else if (janelapai2 != null) {
+            janelapai.setStatusTela(true);
+            setVisible(false);
+        }
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_nome_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_generoKeyPressed
@@ -240,9 +252,17 @@ public class CadastroGenero extends javax.swing.JFrame {
         if (verificarCampos()) {
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarGenero");
-            janelapai.setStatusTela(true);
-            janelapai.buscarDados();
-            janelapai.jtf_consulta.requestFocus();
+
+            if (janelapai != null) {
+                setVisible(false);
+                janelapai.setStatusTela(true);
+                janelapai.buscarDados();
+                janelapai.jtf_consulta.requestFocus();
+            } else if (janelapai2 != null) {
+                janelapai2.setStatusTela(true);
+                setVisible(false);
+
+            }
         }
     }
 

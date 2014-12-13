@@ -840,7 +840,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         });
 
         jcb_parentesco.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jcb_parentesco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Esposa", "Esposo", "Filho", "Filha", "Neta", "Neto", "Pai", "Mãe", "Sobrinho", "Sobrinha", "Avô", "Avó", "Tio", "Tia", "Namorada", "Namorado", "Noiva", "Noivo", "Cunhado", "Cunhada", "Primo", "Prima", "Amigo", "Amiga", "Outro" }));
+        jcb_parentesco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Esposa", "Esposo", "Filho", "Filha", "Neta", "Neto", "Pai", "Mãe", "Irmão", "Irmã", "Sobrinho", "Sobrinha", "Avô", "Avó", "Tio", "Tia", "Namorada", "Namorado", "Noiva", "Noivo", "Cunhado", "Cunhada", "Primo", "Prima", "Amigo", "Amiga", "Outro" }));
         jcb_parentesco.setName("jcb_parentesco"); // NOI18N
         jcb_parentesco.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -974,14 +974,10 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel25)
-                                    .addComponent(jLabel4))
-                                .addGap(0, 0, 0))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel24)
-                                .addGap(0, 0, 0)))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel25)
+                                .addComponent(jLabel4))
+                            .addComponent(jLabel24))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtf_telefone_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jcb_parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1375,7 +1371,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 jtf_data_nascimento.requestFocus();
             } else {
                 if (validaData(jtf_data_nascimento.getText())) {
-                    idade = data.calcularIdade(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastroCliente.jtf_data_nascimento.getText()));
+                    idade = data.calcularIdade(new SimpleDateFormat("dd/MM/yyyy").parse((String) AtualizaCliente.jtf_data_nascimento.getText()));
                     if (idade < 18) {
                         int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente menor de Idade, Desejar continuar?", "Atenção", JOptionPane.YES_NO_OPTION);
                         if (selectedOption == JOptionPane.YES_NO_OPTION) {
@@ -1946,7 +1942,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
                 if (jtf_cpf_dependente.getText().trim().length() != 14) {
                     dependente.setCPF("");
-                } else if (jtf_cpf_dependente.getCaretColor().equals(Color.RED)) {
+                } else if (jtf_cpf_dependente.getForeground().equals(Color.RED)) {
                     dependente.setCPF("");
                 } else {
                     dependente.setCPF(jtf_cpf_dependente.getText());

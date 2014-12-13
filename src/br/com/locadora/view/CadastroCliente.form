@@ -77,7 +77,6 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Component id="jTabbedPane1" min="-2" pref="467" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
@@ -88,7 +87,7 @@
                       <Component id="jb_salvar" linkSize="2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -1022,7 +1021,7 @@
                   <Font name="Helvetica Neue" size="13" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="25">
+                  <StringArray count="27">
                     <StringItem index="0" value="Esposa"/>
                     <StringItem index="1" value="Esposo"/>
                     <StringItem index="2" value="Filho"/>
@@ -1031,23 +1030,25 @@
                     <StringItem index="5" value="Neto"/>
                     <StringItem index="6" value="Pai"/>
                     <StringItem index="7" value="M&#xe3;e"/>
-                    <StringItem index="8" value="Sobrinho"/>
-                    <StringItem index="9" value="Sobrinha"/>
-                    <StringItem index="10" value="Av&#xf4;"/>
-                    <StringItem index="11" value="Av&#xf3;"/>
-                    <StringItem index="12" value="Tio"/>
-                    <StringItem index="13" value="Tia"/>
-                    <StringItem index="14" value="Namorada"/>
-                    <StringItem index="15" value="Namorado"/>
-                    <StringItem index="16" value="Noiva"/>
-                    <StringItem index="17" value="Noivo"/>
-                    <StringItem index="18" value="Cunhado"/>
-                    <StringItem index="19" value="Cunhada"/>
-                    <StringItem index="20" value="Primo"/>
-                    <StringItem index="21" value="Prima"/>
-                    <StringItem index="22" value="Amigo"/>
-                    <StringItem index="23" value="Amiga"/>
-                    <StringItem index="24" value="Outro"/>
+                    <StringItem index="8" value="Irm&#xe3;o"/>
+                    <StringItem index="9" value="Irm&#xe3;"/>
+                    <StringItem index="10" value="Sobrinho"/>
+                    <StringItem index="11" value="Sobrinha"/>
+                    <StringItem index="12" value="Av&#xf4;"/>
+                    <StringItem index="13" value="Av&#xf3;"/>
+                    <StringItem index="14" value="Tio"/>
+                    <StringItem index="15" value="Tia"/>
+                    <StringItem index="16" value="Namorada"/>
+                    <StringItem index="17" value="Namorado"/>
+                    <StringItem index="18" value="Noiva"/>
+                    <StringItem index="19" value="Noivo"/>
+                    <StringItem index="20" value="Cunhado"/>
+                    <StringItem index="21" value="Cunhada"/>
+                    <StringItem index="22" value="Primo"/>
+                    <StringItem index="23" value="Prima"/>
+                    <StringItem index="24" value="Amigo"/>
+                    <StringItem index="25" value="Amiga"/>
+                    <StringItem index="26" value="Outro"/>
                   </StringArray>
                 </Property>
                 <Property name="name" type="java.lang.String" value="jcb_parentesco" noResource="true"/>

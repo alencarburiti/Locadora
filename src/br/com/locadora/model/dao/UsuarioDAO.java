@@ -243,10 +243,9 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.out.println("Error: "+ ex);
         } finally {
             pool.liberarConnection(con);
-
         }
         return usuario;
     }
