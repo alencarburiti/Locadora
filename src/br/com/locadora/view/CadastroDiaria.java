@@ -580,24 +580,18 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             jPanel3Layout.setHorizontalGroup(
                                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jtf_descricao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addGap(10, 10, 10)
                                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                                    .addComponent(jtf_descricao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(0, 0, 0))
-                                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                                    .addGap(10, 10, 10)
-                                                    .addComponent(jLabel5))
-                                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                                    .addGap(10, 10, 10)
-                                                    .addComponent(jtf_valor_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(jLabel5)
+                                                .addComponent(jtf_valor_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGap(10, 10, 10))
                                         .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
                                             .addComponent(jcb_a_vista_locacao)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -609,9 +603,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                             .addComponent(jtf_ganhar_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(10, 10, 10)
                                             .addComponent(jtf_ordem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(10, 10, 10)
+                                            .addGap(8, 8, 8)
                                             .addComponent(jb_adicionar_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(10, 10, 10)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jb_eliminar_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                             .addComponent(jLabel17)
@@ -869,19 +863,16 @@ public class CadastroDiaria extends javax.swing.JFrame {
                             jPanel6Layout.setHorizontalGroup(
                                 jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel6Layout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
                                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel6Layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
                                             .addComponent(jcb_a_vista_devolucao)
                                             .addGap(0, 0, Short.MAX_VALUE))
                                         .addGroup(jPanel6Layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
                                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel6Layout.createSequentialGroup()
-                                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(0, 0, Short.MAX_VALUE))
+                                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jtf_descricao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(10, 10, 10)
+                                            .addGap(6, 6, Short.MAX_VALUE)
                                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addGroup(jPanel6Layout.createSequentialGroup()
                                                     .addComponent(jLabel9)
@@ -1078,7 +1069,6 @@ public class CadastroDiaria extends javax.swing.JFrame {
         } else if (janelapai2 != null) {
             janelapai2.setStatusTela(true);
             setVisible(false);
-
         }
     }//GEN-LAST:event_formWindowClosed
 
@@ -1722,9 +1712,9 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private void limparPromocaoDevolucao() {
         jtf_descricao_devolucao.setText("");
         jtf_valor_promocao_devolucao.setText("R$ 0,00");
-        jtf_horario_locacao.setText("00:00");
-        jtf_horario_devolucao.setText("00:00");
-        jtf_horas_antecipada.setText("00:00");
+        jtf_horario_locacao.setText("00:00:00");
+        jtf_horario_devolucao.setText("00:00:00");
+        jtf_horas_antecipada.setText("00:00:00  ");
         jtf_descricao_devolucao.requestFocus();
     }
 

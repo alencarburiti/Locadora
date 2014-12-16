@@ -203,8 +203,6 @@ public class MenuDiaria extends javax.swing.JFrame {
                 if(e.getClickCount() == 2){
                     alterar();
                 }}});
-                jtbl_diaria.setDoubleBuffered(true);
-                jtbl_diaria.setDragEnabled(true);
                 jtbl_diaria.setName("jtbl_diaria"); // NOI18N
                 jtbl_diaria.getTableHeader().setReorderingAllowed(false);
                 jtbl_diaria.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -378,9 +376,9 @@ public class MenuDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_diariaKeyPressed
 
     private void jtbl_diariaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_diariaMouseClicked
-        if(evt.getClickCount() == 2){
-     alterar();
-}
+        if(evt.getClickCount() > 1){
+            alterar(); 
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_diariaMouseClicked
     /**

@@ -581,9 +581,9 @@
                                   <Component id="jtf_ganhar_quantidade" min="-2" pref="70" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                   <Component id="jtf_ordem" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                                   <Component id="jb_adicionar_promocao_locacao" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jb_eliminar_promocao_locacao" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
@@ -967,7 +967,7 @@
                                       <Component id="jLabel14" min="-2" pref="207" max="-2" attributes="0"/>
                                       <Component id="jtf_descricao_devolucao" min="-2" pref="312" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="10" max="32767" attributes="0"/>
+                                  <EmptySpace min="10" pref="6" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>

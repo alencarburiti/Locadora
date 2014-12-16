@@ -145,7 +145,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND A.CODIGO_COPIA = ? ORDER BY B.TITULO, CODIGO_BARRAS LIMIT 0, 50;";
+                + "		AND A.CODIGO_COPIA = ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -253,7 +253,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND A.CODIGO_BARRAS = ? ORDER BY B.TITULO, CODIGO_BARRAS LIMIT 0, 50;";
+                + "		AND A.CODIGO_BARRAS = ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -398,7 +398,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND B.TITULO LIKE ? ORDER BY B.TITULO, CODIGO_BARRAS LIMIT 0, 50;";
+                + "		AND B.TITULO LIKE ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -445,7 +445,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
                 + "        AND A.DEL_FLAG = 0\n"
                 + "        AND A.DEFECT_FLAG = 0\n"
                 + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND B.ELENCO LIKE ? ORDER BY B.TITULO, CODIGO_BARRAS LIMIT 0, 50;";
+                + "		AND B.ELENCO LIKE ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);

@@ -82,7 +82,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         jb_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta Objeto");
+        setTitle("Consulta Locações em Aberto");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -133,7 +133,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código Barras", "Objeto", "Data Locação", "Data Devolução", "Valor Multa", "Dia atraso"
+                        "Código Barras", "Objeto", "Data Locação", "Data Prevista", "Valor Multa", "Dia atraso"
                     }
                 ) {
                     Class[] types = new Class [] {
@@ -158,6 +158,14 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                     }
                 });
                 jScrollPane6.setViewportView(jtbl_locacao_aberto);
+                if (jtbl_locacao_aberto.getColumnModel().getColumnCount() > 0) {
+                    jtbl_locacao_aberto.getColumnModel().getColumn(0).setPreferredWidth(10);
+                    jtbl_locacao_aberto.getColumnModel().getColumn(1).setPreferredWidth(100);
+                    jtbl_locacao_aberto.getColumnModel().getColumn(2).setPreferredWidth(30);
+                    jtbl_locacao_aberto.getColumnModel().getColumn(3).setPreferredWidth(30);
+                    jtbl_locacao_aberto.getColumnModel().getColumn(4).setPreferredWidth(20);
+                    jtbl_locacao_aberto.getColumnModel().getColumn(5).setPreferredWidth(10);
+                }
 
                 buttonGroup1.add(jrb_ator);
                 jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -209,9 +217,9 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                 jPanel1Layout.setHorizontalGroup(
                     jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
                                 .addComponent(jrb_titulo)
                                 .addGap(10, 10, 10)
                                 .addComponent(jrb_ator)
@@ -219,17 +227,12 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                                 .addComponent(jrb_codigo_barras)
                                 .addGap(8, 8, 8)
                                 .addComponent(jrb_codigo))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
                                 .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(jb_buscar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel1)))
+                            .addComponent(jLabel1))
                         .addGap(10, 10, 10))
                 );
                 jPanel1Layout.setVerticalGroup(
@@ -494,6 +497,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
             itemSelecionada.setValor_multa(itensDevolucao.get(tb.getSelectedRow()).getValor_multa());
             itemSelecionada.setDias_multa(itensDevolucao.get(tb.getSelectedRow()).getDias_multa());
             itemSelecionada.setData_locacao(itensDevolucao.get(tb.getSelectedRow()).getData_locacao());
+            itemSelecionada.setData_prevista(itensDevolucao.get(tb.getSelectedRow()).getData_prevista());
             itemSelecionada.setValor_locado(itensDevolucao.get(tb.getSelectedRow()).getValor_locado());
             itemSelecionada.setValor_pago(itensDevolucao.get(tb.getSelectedRow()).getValor_pago());
 
@@ -546,14 +550,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         itens = null;
         itens = locacaoDAO.getCopiaDevolucaoCodigoBarras(codigo_barras);
         mostrar_locacoes(itens);
-    }
-
-    public void listaTodasCopias() throws SQLException {
-        pool = new Pool();
-        CopiaDAO copiaDAO = new CopiaDAO(pool);
-//        copias = copiaDAO.getTodasCopias();
-//        mostraCopia(copias);
-    }
+    }    
 
     public void mostrar_locacoes(List<ItemLocacao> itemLocacoes) {
 
@@ -588,19 +585,19 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                     copia.setCodigo_barras(itemLocacoes.get(i).getCopia().getCodigo_barras());
 
                     itemLocacao.setCopia(copia);
-
+                    
+                    SimpleDateFormat df_data_hora_locada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                     SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
 
-                    String data_locacao;
-                    data_locacao = out.format(in.parse(itemLocacoes.get(i).getData_locacao().toString()));
+                    
                     String data_devolucao = out.format(in.parse(itemLocacoes.get(i).getData_devolucao().toString()));
 
                     Moeda moeda = new Moeda();
 
                     DefaultTableModel row = (DefaultTableModel) ConsultaCopiaDevolucao.jtbl_locacao_aberto.getModel();
                     ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getTitulo());
-                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, data_locacao, data_devolucao,
+                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, df_data_hora_locada.format(itemLocacao.getData_locacao()), data_devolucao,
                         moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
 
                 }

@@ -707,6 +707,9 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             }
         });
         jtf_preco_custo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_preco_custoFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtf_preco_custoFocusLost(evt);
             }
@@ -729,6 +732,9 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             }
         });
         jtf_data_aquisicao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_data_aquisicaoFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtf_data_aquisicaoFocusLost(evt);
             }
@@ -1168,6 +1174,15 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jta_sinopseKeyPressed
 
+    private void jtf_preco_custoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco_custoFocusGained
+        jtf_preco_custo.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_preco_custoFocusGained
+
+    private void jtf_data_aquisicaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_data_aquisicaoFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_data_aquisicaoFocusGained
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1302,9 +1317,15 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     public boolean verificarCamposCopia() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
+        if (jtf_data_aquisicao.getForeground().equals(Color.RED) || jtf_data_aquisicao.getText().trim().length() < 2) {
+            msgERRO = msgERRO + " *Data de Aquisição\n";
+        }
+
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-//            .requestFocus();
+
+            jtf_data_aquisicao.requestFocus();
+
             return false;
         } else {
             return true;

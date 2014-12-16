@@ -82,8 +82,11 @@ public class Printer {
                     String data_formatada = dateFormat.format(itens.get(x).getData_prevista());
                     data_formatada = data_formatada.substring(0, 5);
                     String descricao_objeto = itens.get(x).getCopia().getObjeto().getTitulo();
-                    
-                    linhasTxt.print(String.format("%-21s", descricao_objeto.substring(0, 19)));
+                    try {
+                        linhasTxt.print(String.format("%-21s", descricao_objeto.substring(0, 19)));
+                    } catch (Exception e) {
+                        linhasTxt.print(String.format("%-21s", descricao_objeto));
+                    }
                     linhasTxt.print(String.format("%-7s", data_formatada));
                     linhasTxt.print(moeda.setPrecoFormat(String.valueOf(AtendimentoLocacao.jtbl_locacao.getValueAt(x, 2).toString())));
                     linhasTxt.println();
@@ -104,8 +107,8 @@ public class Printer {
                 linhasTxt.println("Usuário: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Termo de Responsabilidade: Estou ciente que");
-                linhasTxt.println("os DVD’s que foram por mim alugados, ou com");
-                linhasTxt.println("minha autorização, deverão ser devolvidos no");
+                linhasTxt.println("os DVDs que foram por mim alugados, ou com");
+                linhasTxt.println("minha autorizacao, deverão ser devolvidos no");
                 linhasTxt.println("mesmo estado de conservação, e que qualquer ");
                 linhasTxt.println("dano ou perda, eu me comprometo a pagar o ");
                 linhasTxt.println("valor da Nota Fiscal do Filme. ");
@@ -127,7 +130,6 @@ public class Printer {
             } else {
                 //se naum existir
                 arquivo.createNewFile();
-                //criaTxt();
             }
         } catch (IOException error) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontradao");
@@ -185,7 +187,7 @@ public class Printer {
                 Double total_devolucao = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_total_a_pagar.getText());
                 Double desconto = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_desconto.getText());
                 Double desconto_entrega_antecipada = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
-                Double subTotal = total_devolucao - (desconto + desconto_entrega_antecipada);
+                Double subTotal = total_devolucao - (desconto );
 
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_debito_anterior.getText());
@@ -218,12 +220,9 @@ public class Printer {
                     linhasTxt.println();
                 }
                 arquivoTxt.close();
-                //emiteComanda();
-
             } else {
                 //se naum existir
                 arquivo.createNewFile();
-                //criaTxt();
             }
         } catch (IOException error) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontradao");
@@ -232,6 +231,7 @@ public class Printer {
 
     public boolean imprimirArquivo(String nome_arquivo) throws PrintException {
         // imprime arquivo 
+        boolean cond = false;
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         try {
             if (!conf.readPropertie("impressora_principal").equals("")) {
@@ -241,20 +241,29 @@ public class Printer {
                 if (impressora != null) {
                     while (sc.hasNextLine()) {
                         String linhas = sc.nextLine();
-                        imprime(linhas);
+//                        System.out.println(linhas);
+                        if (imprime(linhas) == true) {
+                            cond = true;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
+                            cond = false;
+                            break;
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
+                    cond = false;
                 }
-                return true;
+
             } else {
                 JOptionPane.showMessageDialog(null, "Impressora não detectada");
-                return false;
+                cond = false;
             }
+            return cond;
         } catch (IOException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro encontrado ao imprimir comanda.");
-            return false;
+            return cond;
         }
     }
 
@@ -324,14 +333,15 @@ public class Printer {
 
         try {
             DocPrintJob dpj = impressora.createPrintJob();
-            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes());
+            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes("UTF-8"));
+            System.out.println(stream);
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
             Doc doc = new SimpleDoc(stream, flavor, null);
             dpj.print(doc, null);
             return true;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
+//            JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
             return false;
 
         }
@@ -339,8 +349,3 @@ public class Printer {
     }
 
 }
-
-//    public void acionarGuilhotina(){  
-//        imprime(""+(char)27+(char)109);  
-//    }  
-

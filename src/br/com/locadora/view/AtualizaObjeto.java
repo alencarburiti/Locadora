@@ -75,7 +75,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             jcb_tipo.setSelectedItem(objeto.getTipo_movimento());
             jtf_titulo_original.setText(objeto.getTitulo_original());
             jcb_producao.setSelectedItem(objeto.getProducao());
-            jtf_duracao.setText(objeto.getDuracao());            
+            jtf_duracao.setText(objeto.getDuracao());
             jcb_midia.setSelectedItem(objeto.getMidia());
             jcb_tipo_midia.setSelectedItem(objeto.getTipo_midia());
             jtf_censura.setText(String.valueOf(objeto.getCensura()));
@@ -769,6 +769,9 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             }
         });
         jtf_preco_custo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_preco_custoFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtf_preco_custoFocusLost(evt);
             }
@@ -1008,7 +1011,6 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jrb_ativoActionPerformed
 
     private void jb_adicionar_copiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaActionPerformed
-
         if (jtf_codigo_objeto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Salvar primeiro o Objeto");
         } else {
@@ -1226,6 +1228,11 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_data_aquisicaoActionPerformed
 
+    private void jtf_preco_custoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco_custoFocusGained
+        jtf_preco_custo.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_preco_custoFocusGained
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1438,7 +1445,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             valor = moeda.setPrecoFormat(String.valueOf(diaria.getValor()));
 
             jtf_valor.setText(valor);
-            
+
             jb_genero.requestFocus();
 
         } else {
@@ -1462,7 +1469,9 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
 
     public boolean verificarCamposCopia() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
-
+        if (jtf_data_aquisicao.getForeground().equals(Color.RED) || jtf_data_aquisicao.getText().trim().length() < 2) {
+            msgERRO = msgERRO + " *Data de Aquisição\n";
+        }
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
             jtf_titulo.requestFocus();

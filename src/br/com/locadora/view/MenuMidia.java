@@ -373,7 +373,7 @@ public class MenuMidia extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_diariaKeyPressed
 
     private void jtbl_diariaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_diariaMouseClicked
-        if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() > 1) {
             alterar();
         }
         // TODO add your handling code here:

@@ -21,6 +21,7 @@ import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixa;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -119,7 +120,7 @@ public class CadastrarLocacao implements InterfaceCommand {
             for (int i = 0; i < AtendimentoLocacao.jtbl_locacao.getRowCount(); i++) {
                 System.out.println("Inciar Verificação: "+ AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getTitulo());
                 System.out.println("Acumulativo: "+AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo());
-                if (AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo() == true) {
+//                if (AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo() == true) {
                     for (int j = 0; j < dias.size(); j++) {
                         if (dias.size() > 0) {
                             System.out.println("CODIGO DIARIA - DIARIA: "+dias.get(j).getCodigo_diaria()+ " CODIGO DIARIA - COPIA: "+AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
@@ -137,7 +138,7 @@ public class CadastrarLocacao implements InterfaceCommand {
                             }
                         } 
                     }
-                }
+//                }
             }
 
             for (int i = 0; i < AtendimentoLocacao.jtbl_locacao.getRowCount(); i++) {
@@ -172,15 +173,19 @@ public class CadastrarLocacao implements InterfaceCommand {
 
                 //Inserir a lógica da promoção de objetos e para cada um sera gravada  a data prevista de devolucao no banco e somar
                 //conforme quantidade e regra de negócio
-                Date data = new Date();
+                Calendar cal = Calendar.getInstance();
+                
                 for (int d = 0; d < dias.size(); d++) {
                     if (dias.get(d).getCodigo_diaria() == AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria()) {
-                        data.setDate(data.getDate() + dias.get(d).getDias_previsto());
-                        System.out.println("Data prevista: " + data);
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + dias.get(d).getDias_previsto());
+//                        data.setDate(data.getDate() + dias.get(d).getDias_previsto());
+                        System.out.println("Dias: " + dias.get(d).getDias_previsto());
+                        System.out.println("Day Month: " + cal.get(Calendar.DAY_OF_MONTH));
+                        System.out.println("Data prevista: " + cal.getTime());
                     }
                 }
 
-                itemLocacao.setData_prevista(data);
+                itemLocacao.setData_prevista(cal.getTime());
                 itens.add(itemLocacao);
 
                 copiaDAO.alterarStatusFilme(copia);

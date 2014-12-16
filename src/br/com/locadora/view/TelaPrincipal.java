@@ -44,6 +44,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         TemaInterface.getInterface(this);
+        
     }
 
     /**
@@ -108,9 +109,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jmi_atendimento_locacao = new javax.swing.JMenuItem();
         jmi_atendimento_devolucao = new javax.swing.JMenuItem();
         jMenu17 = new javax.swing.JMenu();
-        menu_relatórios = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
+        menu_relatórios = new javax.swing.JMenu();
+        jMenuItem19 = new javax.swing.JMenuItem();
         menu_relatórios1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jmi_backup = new javax.swing.JMenuItem();
@@ -201,8 +204,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Siscom Locadora");
-        setExtendedState(MAXIMIZED_BOTH);
-        setFocusable(false);
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setIconImages(null);
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -213,10 +215,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         label_data.setName("label_data"); // NOI18N
-        getContentPane().add(label_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(1243, 632, -1, -1));
 
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
@@ -230,11 +230,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel4.setName("jLabel4"); // NOI18N
         jToolBar1.add(jLabel4);
 
-        getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1340, 25));
-
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY.png"))); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, -1, -1));
 
         jMB_Cadastro.setName("jMB_Cadastro"); // NOI18N
 
@@ -437,6 +435,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu17.setText("Consultas");
         jMenu17.setName("jMenu17"); // NOI18N
+
+        jMenuItem16.setText("Fluxo de Caixa");
+        jMenuItem16.setName("jMenuItem16"); // NOI18N
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu17.add(jMenuItem16);
+
+        jMenuItem4.setText("Em Aberto");
+        jMenuItem4.setName("jMenuItem4"); // NOI18N
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu17.add(jMenuItem4);
+
+        jMenuItem18.setText("Fluxo Detalhado");
+        jMenuItem18.setName("jMenuItem18"); // NOI18N
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu17.add(jMenuItem18);
+
         jMB_Cadastro.add(jMenu17);
 
         menu_relatórios.setMnemonic('R');
@@ -448,23 +474,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem16.setText("Fluxo de Caixa");
-        jMenuItem16.setName("jMenuItem16"); // NOI18N
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem19.setText("Gerar Relatórios");
+        jMenuItem19.setName("jMenuItem19"); // NOI18N
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
+                jMenuItem19ActionPerformed(evt);
             }
         });
-        menu_relatórios.add(jMenuItem16);
-
-        jMenuItem18.setText("Fluxo Detalhado");
-        jMenuItem18.setName("jMenuItem18"); // NOI18N
-        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem18ActionPerformed(evt);
-            }
-        });
-        menu_relatórios.add(jMenuItem18);
+        menu_relatórios.add(jMenuItem19);
 
         jMB_Cadastro.add(menu_relatórios);
 
@@ -578,7 +595,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMB_Cadastro);
 
-        setSize(new java.awt.Dimension(1268, 745));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 1340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(374, 374, 374)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
+        );
+
+        setSize(new java.awt.Dimension(1340, 745));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -991,6 +1029,21 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        LocacaoEmAberto locAberto = new LocacaoEmAberto();
+        locAberto.janelapai = this;
+        locAberto.setVisible(true);
+        setStatusTela(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        MenuRelatorio menuRelatorio = new MenuRelatorio();
+        menuRelatorio.janelapai = this;
+        menuRelatorio.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1038,8 +1091,10 @@ private void jmi_recoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator4;

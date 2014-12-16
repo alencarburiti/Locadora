@@ -152,6 +152,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"                
                 + "    D.VALOR_PAGO,\n"
+                + "    E.CODIGO_DEPENDENTE,\n"
+                + "    E.NOME_DEPENDENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
@@ -215,6 +217,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             resultado = getListaLocacoes(rs);
 
             ps.close();
+        } catch (ParseException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -305,6 +309,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.CODIGO_ITEM_LOCACAO,\n"
+                + "    E.CODIGO_DEPENDENTE,\n"
+                + "    E.NOME_DEPENDENTE,\n"
                 + "    A.TITULO,\n"
                 + "    A.CODIGO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
@@ -368,6 +374,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             }
 
             ps.close();
+        } catch (ParseException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -396,14 +404,19 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return resultado;
     }
 
-    private List<ItemLocacao> getListaLocacoes(ResultSet rs) throws SQLException {
+    private List<ItemLocacao> getListaLocacoes(ResultSet rs) throws SQLException, ParseException {
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         while (rs.next()) {
             ItemLocacao itemLocacao = new ItemLocacao();
             itemLocacao.setCodigo_item_locacao(rs.getInt("CODIGO_ITEM_LOCACAO"));
             itemLocacao.setValor_multa(rs.getDouble("VALOR_MULTA"));
             itemLocacao.setDias_multa(rs.getInt("DIAS_MULTA"));
-            itemLocacao.setData_locacao(rs.getDate("DATA_LOCACAO"));
+            
+            String dataString = rs.getString("DATA_LOCACAO");
+            Date dataLocacao = format.parse(dataString);
+            itemLocacao.setData_locacao(dataLocacao);
+            
             itemLocacao.setData_prevista(rs.getDate("DATA_PREVISTA"));
             itemLocacao.setData_devolucao(rs.getDate("DATA_DEVOLUCAO"));
             itemLocacao.setValor_locado(rs.getDouble("VALOR_LOCADO"));
@@ -421,11 +434,13 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             copia.setObjeto(objeto);
 
             Dependente dependente = new Dependente();
-            dependente.setCodigo_dependente(Integer.MIN_VALUE);
+            dependente.setCodigo_dependente(rs.getInt("CODIGO_DEPENDENTE"));
+            dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
 
             copia.setCodigo_barras(rs.getString("CODIGO_BARRAS"));
             copia.setCodigo_copia(rs.getInt("CODIGO_COPIA"));
             itemLocacao.setCopia(copia);
+            itemLocacao.setDependente(dependente);
 
             resultado.add(itemLocacao);
         }
@@ -642,6 +657,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.VALOR_PAGO,\n"
+                + "    E.CODIGO_DEPENDENTE,\n"
+                + "    E.NOME_DEPENDENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
@@ -691,11 +708,11 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             rs = ps.executeQuery();
 
             resultado = getListaLocacoes(rs);
-//            if (resultado.size() > 0) {
-//                return resultado.get(0);
-//            }
+
             ps.close();
         } catch (SQLException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
@@ -714,6 +731,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.VALOR_PAGO,\n"
+                + "    E.CODIGO_DEPENDENTE,\n"
+                + "    E.NOME_DEPENDENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
@@ -763,11 +782,12 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             rs = ps.executeQuery();
 
             resultado = getListaLocacoes(rs);
-//            if (resultado.size() > 0) {
-//            }
+
             ps.close();
             return resultado;
         } catch (SQLException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
@@ -787,6 +807,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.VALOR_PAGO,\n"
+                + "    E.CODIGO_DEPENDENTE,\n"
+                + "    E.NOME_DEPENDENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
@@ -839,6 +861,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -856,6 +880,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_LOCADO,\n"
                 + "    D.DATA_PREVISTA,\n"
                 + "    D.VALOR_PAGO,\n"
+                + "    E.CODIGO_DEPENDENTE,\n"
+                + "    E.NOME_DEPENDENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
@@ -907,6 +933,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             resultado = getListaLocacoes(rs);
             ps.close();
         } catch (SQLException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);

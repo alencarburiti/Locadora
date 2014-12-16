@@ -406,12 +406,12 @@ public class MenuObjeto extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             alterar();
         }
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_objetoKeyPressed
 
     private void jtbl_objetoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_objetoMouseClicked
-        if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() > 1) {
             alterar();
         }
         // TODO add your handling code here:

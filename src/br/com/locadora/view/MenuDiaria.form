@@ -249,8 +249,6 @@
                 </Column>
               </TableColumnModel>
             </Property>
-            <Property name="doubleBuffered" type="boolean" value="true"/>
-            <Property name="dragEnabled" type="boolean" value="true"/>
             <Property name="name" type="java.lang.String" value="jtbl_diaria" noResource="true"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>

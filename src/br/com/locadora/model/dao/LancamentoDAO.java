@@ -10,7 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -82,6 +86,57 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             pool.liberarConnection(con);
         }
         return null;
+    }
+    
+    public Lancamento getDebito(Cliente cliente){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT \n" +
+            "    MAX(CODIGO_LANCAMENTO),\n" +
+            "    (CASE\n" +
+            "        WHEN DATA_LANCAMENTO IS NULL THEN 0\n" +
+            "        ELSE DATA_LANCAMENTO\n" +
+            "    END) AS DATA_LANCAMENTO\n" +
+            "FROM\n" +
+            "    LANCAMENTO A,\n" +
+            "    TIPO_SERVICO B,\n" +
+            "    DEPENDENTE C\n" +
+            "WHERE\n" +
+            "    A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
+            "        AND A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n" +
+            "        AND CLIENTE_CODIGO_CLIENTE = ?\n" +
+            "        AND B.TIPO = 'C';";
+        ResultSet rs = null;
+        Lancamento lancamento = new Lancamento();
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setInt(1, cliente.getCodigo_cliente());
+            rs = ps.executeQuery();
+            
+            rs.next();            
+            
+            System.out.println(rs.getString("DATA_LANCAMENTO"));
+            if(rs.getInt("DATA_LANCAMENTO") == 0){
+                lancamento = null;
+            } else {
+                String dataString = rs.getString("DATA_LANCAMENTO");
+                Date data_lancamento = format.parse(dataString);
+                lancamento.setData_lancamento(data_lancamento);                
+            } 
+            
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return lancamento;
     }
 
     @Override

@@ -61,6 +61,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
 
     public AtualizaDiaria(Diaria diaria) {
         initComponents();
+        janelapai = null;
         TemaInterface.getInterface(this);
         this.diaria = diaria;
         System.out.println("Código Diária: " + this.diaria.getCodigo_diaria());
@@ -1541,12 +1542,8 @@ public class AtualizaDiaria extends javax.swing.JFrame {
     }
 
     public void retornaJanelaPai() {
-        setVisible(false);
-//        janelapai.listarDestino();
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
-        janelapai.enviaDados();
-        janelapai.request();
+        this.setVisible(false);
+        janelapai.setStatusTela(true);
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
@@ -1662,9 +1659,9 @@ public class AtualizaDiaria extends javax.swing.JFrame {
     private void limparPromocaoDevolucao() {
         jtf_descricao_devolucao.setText("");
         jtf_valor_promocao_devolucao.setText("R$ 0,00");
-        jtf_horario_locacao.setText("00:00");
-        jtf_horario_devolucao.setText("00:00");
-        jtf_horas_antecipada.setText("00:00");
+        jtf_horario_locacao.setText("00:00:00");
+        jtf_horario_devolucao.setText("00:00:00");
+        jtf_horas_antecipada.setText("00:00:00");
         jtf_descricao_devolucao.requestFocus();
     }
 

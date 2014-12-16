@@ -421,17 +421,17 @@ public class MenuUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1KeyPressed
 
     private void jtf_pesquisar_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisar_usuarioKeyPressed
-                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                    if (jrb_codigo.isSelected() == true) {
-            listarUsuárioCodigo();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jrb_codigo.isSelected() == true) {
+                listarUsuárioCodigo();
 
-        } else if (jrb_nome.isSelected() == true) {
-            listarUsuárioDescrição();
-        } else if (jrb_login.isSelected() == true) {
-            listarUsuário();
-        } else {
-            listarUsuário();
-        }
+            } else if (jrb_nome.isSelected() == true) {
+                listarUsuárioDescrição();
+            } else if (jrb_login.isSelected() == true) {
+                listarUsuário();
+            } else {
+                listarUsuário();
+            }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_pesquisar_usuarioKeyPressed
@@ -445,7 +445,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_usuarioKeyPressed
 
     private void jtbl_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_usuarioMouseClicked
-        if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() > 1) {
             alterar();
         }
         // TODO add your handling code here:
@@ -518,7 +518,6 @@ public class MenuUsuario extends javax.swing.JFrame {
     public void mostraUsuarios(List<Usuario> usuarios) {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_usuario.getModel();
         tableModel.setNumRows(0);
-        
 
         if (usuarios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhum usuário encontrado");
@@ -593,6 +592,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         this.setEnabled(status);
 
     }
+
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {

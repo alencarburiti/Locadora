@@ -119,7 +119,7 @@ public class CadastrarDevolucao implements InterfaceCommand {
                 
                 
                 AtendimentoDevolucao.itensDevolucao.get(i).setData_devolucao(data);                        
-                
+                System.out.println("Data Prevista: "+ AtendimentoDevolucao.itensDevolucao.get(i).getData_prevista());
                 itens.add(itemDevolve);
 
                 copiaDAO.alterarStatusFilme(itemDevolve.getCopia());

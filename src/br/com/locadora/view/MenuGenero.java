@@ -187,13 +187,8 @@ public class MenuGenero extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtbl_genero.setDoubleBuffered(true);
-        jtbl_genero.setDragEnabled(true);
         jtbl_genero.setName("jtbl_genero"); // NOI18N
         jtbl_genero.getTableHeader().setReorderingAllowed(false);
-        jtbl_genero.setModel(tmDestino);
-        jtbl_genero.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lsmDestino = jtbl_genero.getSelectionModel();
         jtbl_genero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtbl_generoMouseClicked(evt);
@@ -359,7 +354,7 @@ public class MenuGenero extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jtbl_generoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_generoMouseClicked
-        if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() > 1) {
             alterar();
         }
         // TODO add your handling code here:

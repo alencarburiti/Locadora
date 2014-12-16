@@ -116,7 +116,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                     botaoOK(jtbl_copia);
 
                 }}});
-                jtbl_copia.setFont(new java.awt.Font("Helvetica Neue", 0, 3)); // NOI18N
+                jtbl_copia.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jtbl_copia.setModel(new javax.swing.table.DefaultTableModel(
                     new Object [][] {
 
