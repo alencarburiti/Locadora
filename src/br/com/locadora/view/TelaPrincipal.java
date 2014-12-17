@@ -231,7 +231,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jToolBar1.add(jLabel4);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGO.png"))); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
         jMB_Cadastro.setName("jMB_Cadastro"); // NOI18N

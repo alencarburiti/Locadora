@@ -1051,18 +1051,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     private void jb_adicionar_copiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            if (jtf_codigo_objeto.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Salvar primeiro o Objeto");
-            } else {
-                if (verificarCamposCopia() == true) {
-                    controller = new SiscomController();
-                    controller.processarRequisicao("cadastrarCopia");
-                    jtf_data_aquisicao.setText("");
-                    jtf_preco_custo.setText("R$ 0,00");
-                    jcb_idioma.requestFocus();
-                }
-            }
+            jb_adicionar_copia.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_copiaKeyPressed

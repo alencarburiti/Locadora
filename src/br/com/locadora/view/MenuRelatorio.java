@@ -14,20 +14,22 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Copia;
-import br.com.locadora.model.bean.Dependente;
-import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
-import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.LocacaoDAO;
+import br.com.locadora.relatorios.RelatorioLocacaoAberta;
+import br.com.locadora.relatorios.RelatorioLocacaoRelocacao;
 import br.com.locadora.util.Data;
-import br.com.locadora.util.ItemDbGrid;
-import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,10 +39,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -80,6 +81,8 @@ public class MenuRelatorio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jb_cancelar = new javax.swing.JButton();
+        jb_gerar_relatorio = new javax.swing.JButton();
+        jb_gerar_relatorio1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         try  {
             formatoData = new MaskFormatter("##/##/####");
@@ -100,9 +103,9 @@ public class MenuRelatorio extends javax.swing.JFrame {
         }
         jtf_data_final = new JFormattedTextField(formatoData);
         jPanel4 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        jrb_quantidade_locacao_relocacao = new javax.swing.JRadioButton();
+        jrb_retorno_financeiro = new javax.swing.JRadioButton();
+        jrb_locacao_em_aberto = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
         jRadioButton5 = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
@@ -172,20 +175,47 @@ public class MenuRelatorio extends javax.swing.JFrame {
             }
         });
 
+        jb_gerar_relatorio.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_gerar_relatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pdficon.jpg.png"))); // NOI18N
+        jb_gerar_relatorio.setText("Gerar");
+        jb_gerar_relatorio.setName("jb_gerar_relatorio"); // NOI18N
+        jb_gerar_relatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_gerar_relatorioActionPerformed(evt);
+            }
+        });
+
+        jb_gerar_relatorio1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_gerar_relatorio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/excel_icon.png"))); // NOI18N
+        jb_gerar_relatorio1.setText("Gerar");
+        jb_gerar_relatorio1.setName("jb_gerar_relatorio1"); // NOI18N
+        jb_gerar_relatorio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_gerar_relatorio1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
+                .addContainerGap()
+                .addComponent(jb_gerar_relatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jb_gerar_relatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_gerar_relatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_gerar_relatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
 
@@ -243,13 +273,13 @@ public class MenuRelatorio extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtf_data_inicial, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jtf_data_inicial)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtf_data_final, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
+                    .addComponent(jtf_data_final)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,28 +300,28 @@ public class MenuRelatorio extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipos"));
         jPanel4.setName("jPanel4"); // NOI18N
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Quantidade de Locação | Relocação");
-        jRadioButton1.setName("jRadioButton1"); // NOI18N
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jrb_quantidade_locacao_relocacao);
+        jrb_quantidade_locacao_relocacao.setSelected(true);
+        jrb_quantidade_locacao_relocacao.setText("Quantidade de Locação | Relocação - OK");
+        jrb_quantidade_locacao_relocacao.setName("jrb_quantidade_locacao_relocacao"); // NOI18N
+        jrb_quantidade_locacao_relocacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                jrb_quantidade_locacao_relocacaoActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Retorno financeiro por filme");
-        jRadioButton2.setName("jRadioButton2"); // NOI18N
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jrb_retorno_financeiro);
+        jrb_retorno_financeiro.setText("Retorno financeiro por filme");
+        jrb_retorno_financeiro.setName("jrb_retorno_financeiro"); // NOI18N
+        jrb_retorno_financeiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                jrb_retorno_financeiroActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Locacões em Aberto");
-        jRadioButton3.setName("jRadioButton3"); // NOI18N
+        buttonGroup1.add(jrb_locacao_em_aberto);
+        jrb_locacao_em_aberto.setText("Locacões em Aberto - OK");
+        jrb_locacao_em_aberto.setName("jrb_locacao_em_aberto"); // NOI18N
 
         buttonGroup1.add(jRadioButton4);
         jRadioButton4.setText("Fechamento de Caixa ");
@@ -317,12 +347,12 @@ public class MenuRelatorio extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(jrb_quantidade_locacao_relocacao)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton3)
+                            .addComponent(jrb_retorno_financeiro)
+                            .addComponent(jrb_locacao_em_aberto)
                             .addComponent(jRadioButton4)
                             .addComponent(jRadioButton5)
                             .addComponent(jRadioButton6)
@@ -333,11 +363,11 @@ public class MenuRelatorio extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jRadioButton1)
+                .addComponent(jrb_quantidade_locacao_relocacao)
                 .addGap(10, 10, 10)
-                .addComponent(jRadioButton2)
+                .addComponent(jrb_retorno_financeiro)
                 .addGap(10, 10, 10)
-                .addComponent(jRadioButton3)
+                .addComponent(jrb_locacao_em_aberto)
                 .addGap(10, 10, 10)
                 .addComponent(jRadioButton4)
                 .addGap(10, 10, 10)
@@ -356,16 +386,11 @@ public class MenuRelatorio extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(20, 20, 20))))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,7 +406,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(372, 598));
+        setSize(new java.awt.Dimension(402, 598));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -472,13 +497,83 @@ public class MenuRelatorio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_data_finalKeyPressed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void jrb_quantidade_locacao_relocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_quantidade_locacao_relocacaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_jrb_quantidade_locacao_relocacaoActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void jrb_retorno_financeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_retorno_financeiroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_jrb_retorno_financeiroActionPerformed
+
+    private void jb_gerar_relatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gerar_relatorioActionPerformed
+        SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");        
+        SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd");
+        
+        String dataInicial = null;
+        String dataFinal = null;
+        try {
+            dataInicial = out.format(in.parse(jtf_data_inicial.getText()));
+            dataFinal = out.format(in.parse(jtf_data_final.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String titulo = jtf_consulta.getText().trim();
+        
+        pool = new Pool();
+        
+        if(jrb_quantidade_locacao_relocacao.isSelected()== true){
+            RelatorioLocacaoRelocacao rel = new RelatorioLocacaoRelocacao(pool);
+            rel.gerarRelatorio(dataInicial, dataFinal, titulo);
+        } else if (jrb_retorno_financeiro.isSelected() == true){
+            
+        } else if(jrb_locacao_em_aberto.isSelected() == true){
+            RelatorioLocacaoAberta rel = new RelatorioLocacaoAberta(pool);
+            rel.gerarRelatorio(dataInicial, dataFinal, titulo);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_gerar_relatorioActionPerformed
+
+    private void jb_gerar_relatorio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gerar_relatorio1ActionPerformed
+        
+        JFileChooser jfile = new JFileChooser();
+        
+        jfile.showSaveDialog(this);
+        System.out.println("Arquivo: "+ jfile.getSelectedFile());
+        String arquivo = null;
+        File file = null;
+        if(jfile.getSelectedFile() != null){
+            arquivo = jfile.getSelectedFile()+".xls";
+            file = new File(arquivo);
+        }
+        
+        SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");        
+        SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd");
+        
+        String dataInicial = null;
+        String dataFinal = null;
+        try {
+            dataInicial = out.format(in.parse(jtf_data_inicial.getText()));
+            dataFinal = out.format(in.parse(jtf_data_final.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MenuRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String titulo = jtf_consulta.getText().trim();
+        
+        pool = new Pool();
+        
+        if(jrb_quantidade_locacao_relocacao.isSelected()== true){
+            RelatorioLocacaoRelocacao rel = new RelatorioLocacaoRelocacao(pool);
+            rel.gerarRelatorioExcel(dataInicial, dataFinal, titulo, file);
+        } else if (jrb_retorno_financeiro.isSelected() == true){
+            
+        } else if(jrb_locacao_em_aberto.isSelected() == true){
+            RelatorioLocacaoAberta rel = new RelatorioLocacaoAberta(pool);
+            rel.gerarRelatorioExcel(dataInicial, dataFinal, titulo, file);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_gerar_relatorio1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -502,14 +597,16 @@ public class MenuRelatorio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JButton jb_cancelar;
+    private javax.swing.JButton jb_gerar_relatorio;
+    private javax.swing.JButton jb_gerar_relatorio1;
+    private javax.swing.JRadioButton jrb_locacao_em_aberto;
+    private javax.swing.JRadioButton jrb_quantidade_locacao_relocacao;
+    private javax.swing.JRadioButton jrb_retorno_financeiro;
     private javax.swing.JTextField jtf_consulta;
     public static javax.swing.JFormattedTextField jtf_data_final;
     public static javax.swing.JFormattedTextField jtf_data_inicial;
@@ -567,4 +664,16 @@ public class MenuRelatorio extends javax.swing.JFrame {
         }
         return false;
     }
+    
+    public void getCaminho(){
+//        String arquivo = "Etiqueta/Etiqueta.pdf";
+//        File file = new File(arquivo);
+        JFileChooser jfile = new JFileChooser();
+        
+        jfile.showSaveDialog(this);
+        System.out.println("Arquivo: "+ jfile.getSelectedFile());
+        
+        
+    }
+    
 }

@@ -495,11 +495,17 @@ public class Bar extends javax.swing.JFrame {
             System.err.println(ioe.getMessage());
             System.out.println("Erro!");
         }
-        Printer prin = new Printer();
-//        PrintUtilities.printComponent(file);
-        prin.imprimirPDF(file);
-        //PrintUtilities.printComponent(imagemLabel1);
-        // TODO add your handling code here:
+        
+        try {
+            Printer printer = new Printer();
+            printer.printPDF(file);
+            
+//            HPTPDFPrintService printService = new HPTPDFPrintService(arquivo);  
+//            printService.print();  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        } 
+        
     }//GEN-LAST:event_jb_imprimirActionPerformed
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed

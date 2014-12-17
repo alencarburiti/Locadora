@@ -267,37 +267,43 @@ public class Printer {
         }
     }
 
-    public void imprimirPDF(File file) {
-        // imprime arquivo 
+    public void printPDF(File f){
+        boolean cond = false;
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        try {
+        try{
             if (!conf.readPropertie("impressora_alternativa").equals("")) {
-                detectaImpressoras(conf.readPropertie("impressora_alternativa"));
-                java.io.InputStream is = new FileInputStream(file);
-                Scanner sc = new Scanner(is);
-                if (impressora != null) {
-                    while (sc.hasNextLine()) {
-                        String linhas = sc.nextLine();
-                        imprime(linhas);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
+                detectaImpressoras(conf.readPropertie("impressora_alternativa"));                
+            } 
+            
+            DocFlavor dflavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            PrintService[] impressoras = PrintServiceLookup.lookupPrintServices(dflavor, null);
+            for(PrintService ps : impressoras){
+                System.out.println("Impressora Encontrada: "+ps.getName());
+                if(ps.getName().contains(conf.readPropertie("impressora_alternativa"))){
+                    System.out.println("Impressora Selecionada: "+ps.getName());
+                    impressora = ps;
+                    break;
                 }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Impressora não detectada");
-
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro encontrado ao imprimir comanda.");
-
-        } catch (PrintException ex) {
-            Logger.getLogger(Printer.class.getName()).log(Level.SEVERE, null, ex);
+            DocPrintJob dpj = impressora.createPrintJob();  
+            FileInputStream fis = new FileInputStream(f);
+            byte[] buffer = new byte[fis.available()];
+            int buff = 0;
+            while((buff = fis.available()) != 0){
+                fis.read(buffer, 0, buff);
+            }
+            System.out.println(new String(buffer));
+            InputStream stream = new ByteArrayInputStream(buffer);  
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;  
+            Doc doc = new SimpleDoc(stream, flavor, null);  
+            dpj.print(doc, null);
+            
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Configurar impressora Alternativa");
+            e.printStackTrace();
         }
-
     }
-
+    
     public static List<String> retornaImpressoras() {
         try {
             List<String> listaImpressoras = new ArrayList<String>();
@@ -341,7 +347,7 @@ public class Printer {
             return true;
 
         } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Nennhuma impressora foi encontrada. Instale uma impressora padrão \r\n(Generic Text Only) e reinicie o programa.");
+            e.printStackTrace();
             return false;
 
         }

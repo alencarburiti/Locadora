@@ -35,7 +35,6 @@ public class IniciaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jl_erro = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jtf_login = new javax.swing.JTextField();
         jpf_senha = new javax.swing.JPasswordField();
@@ -58,9 +57,6 @@ public class IniciaLogin extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-
-        jl_erro.setText("        ");
-        jl_erro.setName("jl_erro"); // NOI18N
 
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -132,7 +128,7 @@ public class IniciaLogin extends javax.swing.JFrame {
                 .addComponent(jb_limpar)
                 .addGap(10, 10, 10)
                 .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,27 +175,22 @@ public class IniciaLogin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addComponent(jl_erro))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jl_erro))
-                .addGap(10, 10, 10)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(350, 315));
+        setSize(new java.awt.Dimension(346, 315));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -261,7 +252,6 @@ public class IniciaLogin extends javax.swing.JFrame {
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_limpar;
     private javax.swing.JButton jb_logar;
-    private javax.swing.JLabel jl_erro;
     private javax.swing.JPasswordField jpf_senha;
     private javax.swing.JTextField jtf_login;
     // End of variables declaration//GEN-END:variables

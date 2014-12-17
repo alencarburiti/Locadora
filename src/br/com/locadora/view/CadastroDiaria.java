@@ -1164,8 +1164,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private void jb_adicionar_promocao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_promocao_locacaoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            adicionarPromocaoLocacao();
-
+            jb_adicionar_promocao_locacao.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_promocao_locacaoKeyPressed
