@@ -20,16 +20,9 @@ import br.com.locadora.relatorios.RelatorioLocacaoAberta;
 import br.com.locadora.relatorios.RelatorioLocacaoRelocacao;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.TemaInterface;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -663,17 +656,6 @@ public class MenuRelatorio extends javax.swing.JFrame {
             return (true);
         }
         return false;
-    }
-    
-    public void getCaminho(){
-//        String arquivo = "Etiqueta/Etiqueta.pdf";
-//        File file = new File(arquivo);
-        JFileChooser jfile = new JFileChooser();
-        
-        jfile.showSaveDialog(this);
-        System.out.println("Arquivo: "+ jfile.getSelectedFile());
-        
-        
     }
     
 }
