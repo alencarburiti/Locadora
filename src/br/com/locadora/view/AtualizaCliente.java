@@ -49,6 +49,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     public List<Dependente> dependentes;
     public MaskFormatter formatoData, formatoCPF, formatoTelefone;
     public SiscomController controller;
+    public ClienteDAO clienteDAO;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -90,13 +91,13 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             jtf_cidade.setText(objetoCliente.getCidade());
             jtf_estado.setText(objetoCliente.getEstado());
             jtf_email.setText(objetoCliente.getEmail());
-            System.out.println("Status: "+objetoCliente.getStatus());
-            if(objetoCliente.getStatus().equals("0")){
+            System.out.println("Status: " + objetoCliente.getStatus());
+            if (objetoCliente.getStatus().equals("0")) {
                 jrb_ativo.setSelected(true);
             } else {
                 jrb_inativo.setSelected(true);
             }
-            
+
             carregaTelefone(objetoCliente.getCodigo_cliente());
             carregaDependente(objetoCliente.getCodigo_cliente());
 
@@ -179,7 +180,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jta_observacao = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jb_adicionar_dependente = new javax.swing.JButton();
-        jb_eliminar1 = new javax.swing.JButton();
+        jb_eliminar_dependente = new javax.swing.JButton();
         jrb_ativo_dependente = new javax.swing.JRadioButton();
         jrb_inativo_dependente = new javax.swing.JRadioButton();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -237,7 +238,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -253,6 +254,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_salvarActionPerformed(evt);
+            }
+        });
+        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_salvarKeyPressed(evt);
             }
         });
 
@@ -388,12 +394,19 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
         jtf_email.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_email.setName("jtf_email"); // NOI18N
+        jtf_email.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_emailFocusGained(evt);
+            }
+        });
         jtf_email.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_emailKeyPressed(evt);
             }
         });
 
+        buttonGroup1.add(jrb_ativo);
+        jrb_ativo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_ativo.setSelected(true);
         jrb_ativo.setText("Ativo");
         jrb_ativo.setName("jrb_ativo"); // NOI18N
@@ -403,6 +416,8 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(jrb_inativo);
+        jrb_inativo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_inativo.setText("Inativo");
         jrb_inativo.setName("jrb_inativo"); // NOI18N
 
@@ -726,6 +741,8 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 .addGap(10, 10, 10))
         );
 
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_bairro, jtf_cidade, jtf_complemento, jtf_cpf_cliente, jtf_data_nascimento, jtf_email, jtf_empresa, jtf_endereco, jtf_estado, jtf_nome_cliente, jtf_profissao});
+
         jTabbedPane1.addTab("Cliente Titular", jPanel3);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
@@ -750,16 +767,22 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             }
         });
 
-        jb_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
-        jb_eliminar1.setToolTipText("Excluir");
-        jb_eliminar1.setName("jb_eliminar1"); // NOI18N
-        jb_eliminar1.addActionListener(new java.awt.event.ActionListener() {
+        jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_eliminar_dependente.setToolTipText("Excluir");
+        jb_eliminar_dependente.setName("jb_eliminar_dependente"); // NOI18N
+        jb_eliminar_dependente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_eliminar1ActionPerformed(evt);
+                jb_eliminar_dependenteActionPerformed(evt);
+            }
+        });
+        jb_eliminar_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_eliminar_dependenteKeyPressed(evt);
             }
         });
 
         buttonGroup2.add(jrb_ativo_dependente);
+        jrb_ativo_dependente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_ativo_dependente.setSelected(true);
         jrb_ativo_dependente.setText("Ativo");
         jrb_ativo_dependente.setName("jrb_ativo_dependente"); // NOI18N
@@ -770,6 +793,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         });
 
         buttonGroup2.add(jrb_inativo_dependente);
+        jrb_inativo_dependente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_inativo_dependente.setText("Inativo");
         jrb_inativo_dependente.setName("jrb_inativo_dependente"); // NOI18N
         jrb_inativo_dependente.addActionListener(new java.awt.event.ActionListener() {
@@ -805,6 +829,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             }
         });
         jtbl_dependente.setName("jtbl_dependente"); // NOI18N
+        jtbl_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_dependenteKeyPressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(jtbl_dependente);
         if (jtbl_dependente.getColumnModel().getColumnCount() > 0) {
             jtbl_dependente.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -928,14 +957,14 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jrb_ativo_dependente)
+                .addGap(691, 691, 691)
+                .addComponent(jrb_ativo_dependente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(15, 15, 15)
-                .addComponent(jrb_inativo_dependente)
-                .addGap(21, 21, 21))
+                .addComponent(jrb_inativo_dependente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -960,8 +989,8 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jb_eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20))
+                        .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(14, 14, 14))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -993,7 +1022,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                         .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jb_eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
@@ -1041,18 +1070,10 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         retornaJanelaPai();
-
 }//GEN-LAST:event_jb_cancelarActionPerformed
-    private void retornaJanelaPai() {
-        setVisible(false);
 
-        if (janelapai != null) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-        }
-    }
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        enviaDados();
+        atualizarCliente();
 }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -1069,10 +1090,10 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
 
-    private void jb_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar1ActionPerformed
+    private void jb_eliminar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteActionPerformed
         removeDependente(jtbl_dependente);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar1ActionPerformed
+    }//GEN-LAST:event_jb_eliminar_dependenteActionPerformed
 
     private void jrb_ativo_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_ativo_dependenteActionPerformed
         // TODO add your handling code here:
@@ -1090,7 +1111,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private void jb_adicionar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            adicionarDependente();
+            jb_adicionar_dependente.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_dependenteKeyPressed
@@ -1112,7 +1133,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         try {
             if (jtf_cpf_dependente.getText().trim().length() == 14) {
                 if (ValidaCPF.isCPF(jtf_cpf_dependente.getText()) == true) {
-                    if (verificaCadastro(jtf_cpf_dependente.getText().trim()) == true) {
+                    if (verificaCadastroDependente(jtf_cpf_dependente.getText().trim()) == true) {
                         jtf_cpf_dependente.setForeground(Color.black);
                     } else {
                         jtf_cpf_dependente.setForeground(Color.red);
@@ -1241,29 +1262,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_empresaActionPerformed
 
     private void jtf_empresaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_empresaFocusGained
-        try {
 
-            ValidaCPF valida = new ValidaCPF();
-            if (jtf_cpf_cliente.getText().trim().length() == 14) {
-                if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
-                    if (verificaCadastro(jtf_cpf_cliente.getText()) == true) {
-                        jtf_cpf_cliente.setForeground(Color.black);
-                    } else {
-                        jtf_cpf_cliente.setForeground(Color.red);
-                        jtf_cpf_cliente.requestFocus();
-                    }
-                } else {
-                    jtf_cpf_cliente.setForeground(Color.red);
-                    jtf_cpf_cliente.requestFocus();
-                }
-            } else {
-                jtf_cpf_cliente.setForeground(Color.red);
-                jtf_cpf_cliente.requestFocus();
-            }
-        } catch (Exception e) {
-            jtf_cpf_cliente.setForeground(Color.red);
-            jtf_cpf_cliente.requestFocus();
-        }
     }//GEN-LAST:event_jtf_empresaFocusGained
 
     private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_empresaKeyPressed
@@ -1420,6 +1419,29 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_cpf_clienteFocusGained
 
     private void jtf_cpf_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusLost
+        try {
+
+            ValidaCPF valida = new ValidaCPF();
+            if (jtf_cpf_cliente.getText().trim().length() == 14) {
+                if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
+                    if (verificaCadastro(jtf_cpf_cliente.getText()) == true) {
+                        jtf_cpf_cliente.setForeground(Color.black);
+                    } else {
+                        jtf_cpf_cliente.setForeground(Color.red);
+                        jtf_cpf_cliente.requestFocus();
+                    }
+                } else {
+                    jtf_cpf_cliente.setForeground(Color.red);
+                    jtf_cpf_cliente.requestFocus();
+                }
+            } else {
+                jtf_cpf_cliente.setForeground(Color.red);
+                jtf_cpf_cliente.requestFocus();
+            }
+        } catch (Exception e) {
+            jtf_cpf_cliente.setForeground(Color.red);
+            jtf_cpf_cliente.requestFocus();
+        }
 
     }//GEN-LAST:event_jtf_cpf_clienteFocusLost
 
@@ -1482,6 +1504,34 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         removeTelefone(jtbl_telefone);
     }//GEN-LAST:event_jb_eliminarActionPerformed
 
+    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_salvar.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void jtf_emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_emailFocusGained
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_emailFocusGained
+
+    private void jb_eliminar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_eliminar_dependente.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_dependenteKeyPressed
+
+    private void jtbl_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_dependenteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            jb_eliminar_dependente.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_dependenteKeyPressed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1524,7 +1574,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private javax.swing.JButton jb_adicionar_telefone;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_eliminar;
-    private javax.swing.JButton jb_eliminar1;
+    private javax.swing.JButton jb_eliminar_dependente;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JComboBox jcb_parentesco;
     public static javax.swing.JRadioButton jrb_ativo;
@@ -1554,22 +1604,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
-    public void setTela(String permissao) {
-        if (permissao.equals("usuario")) {
-        } else {
-        }
-    }
-
-    private void enviaDados() {
-        if (verificarCampos()) {
-            controller = new SiscomController();
-            controller.processarRequisicao("atualizarCliente");
-            JOptionPane.showMessageDialog(null, "Atualização efetuada com sucesso");
-            janelapai.buscarDados();
-            retornaJanelaPai();
-        }
-    }
-
     public boolean verificaCadastro(String cpf) {
         if (cpf.equals("")) {
         } else {
@@ -1580,11 +1614,32 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             if (null != cliente) {
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "CPF já existente");
-                return false;
+                pool = new Pool();
+                clienteDAO = new ClienteDAO(pool);
+                cliente = null;
+                cliente = clienteDAO.getCliente_cpf(cpf);
+                if (null == cliente) {
+                    return true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "CPF já existente");
+                    return false;
+                }
             }
         }
         return false;
+    }
+
+    public boolean verificaCadastroDependente(String cpf) {
+        pool = new Pool();
+        ClienteDAO clienteDAO = new ClienteDAO(pool);
+        cliente = null;
+        cliente = clienteDAO.getCliente_cpf(cpf);
+        if (null == cliente) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "CPF já existente");
+            return false;
+        }
     }
 
     public boolean verificarCampos() {
@@ -1605,12 +1660,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             msgERRO = msgERRO + " *CPF\n";
         }
 
-        if (jtf_empresa.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Empresa\n";
-        }
-        if (jtf_profissao.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Profissão\n";
-        }
         if (jtf_endereco.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Endereço\n";
         }
@@ -1622,6 +1671,12 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         }
         if (jtf_estado.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Estado\n";
+        }
+        if (jtf_profissao.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Profissão\n";
+        }
+        if (jtf_empresa.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Empresa\n";
         }
 
         if (jtbl_telefone.getRowCount() <= 0) {
@@ -1922,7 +1977,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            enviaDados();
+            jb_salvar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
@@ -2007,5 +2062,60 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             return (true);
         }
         return false;
+    }
+
+    public void atualizarCliente() {
+        if (verificarCampos()) {
+
+            try {
+
+                cliente = new Cliente();
+
+                cliente.setCodigo_cliente(Integer.parseInt(AtualizaCliente.jtf_codigo_cliente.getText()));
+                cliente.setNome_cliente(AtualizaCliente.jtf_nome_cliente.getText());
+
+                cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) AtualizaCliente.jtf_data_nascimento.getText()));
+
+                cliente.setCpf(AtualizaCliente.jtf_cpf_cliente.getText());
+                cliente.setNome_empresa_trabalho(AtualizaCliente.jtf_empresa.getText());
+                cliente.setProfissao(AtualizaCliente.jtf_profissao.getText());
+                cliente.setEndereco(AtualizaCliente.jtf_endereco.getText());
+                cliente.setBairro(AtualizaCliente.jtf_bairro.getText());
+                cliente.setComplemento(AtualizaCliente.jtf_complemento.getText());
+                cliente.setCidade(AtualizaCliente.jtf_cidade.getText());
+                cliente.setEstado(AtualizaCliente.jtf_estado.getText());
+                cliente.setEmail(AtualizaCliente.jtf_email.getText());
+                cliente.setObservacao(AtualizaCliente.jta_observacao.getText());
+
+                if (AtualizaCliente.jrb_ativo.isSelected() == true) {
+                    cliente.setStatus("0");
+                } else {
+                    cliente.setStatus("1");
+                }
+                pool = new Pool();
+                clienteDAO = new ClienteDAO(pool);
+                clienteDAO.atualizar(cliente);
+                JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage() + "Problemas com a gravação: ");
+
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                System.out.println("Valor inválido: " + e.getMessage());
+
+                e.printStackTrace();
+            } catch (ParseException ex) {
+                Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void retornaJanelaPai() {
+        setVisible(false);
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
+            janelapai.atualizaCliente = null;
+            janelapai.buscarDados();
+        }
     }
 }

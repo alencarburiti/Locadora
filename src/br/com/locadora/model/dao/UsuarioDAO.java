@@ -216,6 +216,8 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         }
         return usuario;
     }
+    
+    
 
     public List<Usuario> consultarLogin(String login) {
         List<Usuario> usuario = new ArrayList();
@@ -230,6 +232,39 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             ps.setString(1, login);
             rs = ps.executeQuery();
             //rs.absolute(1);
+            Usuario usua;
+            while (rs.next()) {
+                usua = new Usuario();
+                usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
+                usua.setNome_usuario(rs.getString("NOME_USUARIO"));
+                usua.setLogin(rs.getString("LOGIN"));
+                usua.setSenha(rs.getString("SENHA"));
+                usuario.add(usua);
+
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return usuario;
+    }
+    
+    public List<Usuario> consultarSenha(String senha) {
+        List<Usuario> usuario = new ArrayList();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT * FROM USUARIO WHERE SENHA = ?";
+        try {
+
+            ps = con.prepareStatement(sqlSelect);
+
+            ps.setString(1, senha);
+            rs = ps.executeQuery();
+            
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
@@ -303,14 +338,13 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
     }
     
     public AcessoUsuario permissaoInterface(String login, String nome_classe) {
-
+        
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         AcessoUsuario acesso = new AcessoUsuario();
         Usuario usuario = new Usuario();
-            
             
         String sqlSelect = "SELECT \n"
                 + "    * \n"
@@ -355,15 +389,12 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
                 acesso.setDeletar(rs.getInt("DELETAR"));   
                 acesso.setSuper_usuario(rs.getInt("SUPER_USUARIO"));
             }
-
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());            
         } finally {
             pool.liberarConnection(con);
-
         }
         return acesso;
     }
@@ -424,6 +455,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             usuario.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
             usuario.setNome_usuario(rs.getString("NOME_USUARIO"));
             usuario.setLogin(rs.getString("LOGIN"));
+            usuario.setSenha(rs.getString("SENHA"));
             resultado.add(usuario);
         }
         return resultado;

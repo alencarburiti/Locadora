@@ -418,7 +418,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
         PreparedStatement ps;
         Diaria diariaRetorno = new Diaria();
 
-        String sqlInsert = "INSERT INTO `locadora`.`promocao`(`descricao_promocao`,`valor_promocao`, \n"
+        String sqlInsert = "INSERT INTO PROMOCAO_LOCACAO(`descricao_promocao`,`valor_promocao`, \n"
                 + " `ordem`,`diaria_codigo_diaria`,pagamento_a_vista, "
                 + " `domingo`, segunda, terca, quarta, quinta, sexta, sabado, locar_quantidade, ganhar_quantidade)\n"
                 + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";

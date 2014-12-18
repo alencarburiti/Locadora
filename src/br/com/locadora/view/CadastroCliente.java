@@ -165,7 +165,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
         }
         jtf_cpf_dependente = new JFormattedTextField(formatoCPF);
         jb_adicionar_dependente = new javax.swing.JButton();
-        jb_eliminar1 = new javax.swing.JButton();
+        jb_eliminar_dependente = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jtbl_dependente = new javax.swing.JTable();
         jrb_ativo_dependente = new javax.swing.JRadioButton();
@@ -322,6 +322,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jtf_email.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_email.setName("jtf_email"); // NOI18N
+        jtf_email.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_emailFocusGained(evt);
+            }
+        });
         jtf_email.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_emailKeyPressed(evt);
@@ -386,25 +391,9 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jtf_cpf_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_cpf_cliente.setName("jtf_cpf_cliente"); // NOI18N
-        jtf_cpf_cliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_cpf_clienteActionPerformed(evt);
-            }
-        });
-        jtf_cpf_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_cpf_clienteFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_cpf_clienteFocusLost(evt);
-            }
-        });
         jtf_cpf_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_cpf_clienteKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_cpf_clienteKeyReleased(evt);
             }
         });
 
@@ -801,12 +790,17 @@ public final class CadastroCliente extends javax.swing.JFrame {
             }
         });
 
-        jb_eliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
-        jb_eliminar1.setToolTipText("Excluir");
-        jb_eliminar1.setName("jb_eliminar1"); // NOI18N
-        jb_eliminar1.addActionListener(new java.awt.event.ActionListener() {
+        jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_eliminar_dependente.setToolTipText("Excluir");
+        jb_eliminar_dependente.setName("jb_eliminar_dependente"); // NOI18N
+        jb_eliminar_dependente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_eliminar1ActionPerformed(evt);
+                jb_eliminar_dependenteActionPerformed(evt);
+            }
+        });
+        jb_eliminar_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_eliminar_dependenteKeyPressed(evt);
             }
         });
 
@@ -836,6 +830,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
             }
         });
         jtbl_dependente.setName("jtbl_dependente"); // NOI18N
+        jtbl_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_dependenteKeyPressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(jtbl_dependente);
         if (jtbl_dependente.getColumnModel().getColumnCount() > 0) {
             jtbl_dependente.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -898,7 +897,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jb_eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jrb_ativo_dependente)
                         .addGap(10, 10, 10)
@@ -933,7 +932,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                                     .addComponent(jtf_data_nascimento_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jb_eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(0, 0, 0)
@@ -949,7 +948,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -1021,7 +1020,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        enviaDados();
+        if (verificarCampos()) {
+            controller = new SiscomController();
+            controller.processarRequisicao("cadastrarCliente");
+            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+        }
 }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -1035,29 +1038,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_empresaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_empresaFocusGained
-        try {
 
-            ValidaCPF valida = new ValidaCPF();
-            if (jtf_cpf_cliente.getText().trim().length() == 14) {
-                if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
-                    if (verificaCadastro(jtf_cpf_cliente.getText()) == true) {
-                        jtf_cpf_cliente.setForeground(Color.black);
-                    } else {
-                        jtf_cpf_cliente.setForeground(Color.red);
-                        jtf_cpf_cliente.requestFocus();
-                    }
-                } else {
-                    jtf_cpf_cliente.setForeground(Color.red);
-                    jtf_cpf_cliente.requestFocus();
-                }
-            } else {
-                jtf_cpf_cliente.setForeground(Color.red);
-                jtf_cpf_cliente.requestFocus();
-            }
-        } catch (Exception e) {
-            jtf_cpf_cliente.setForeground(Color.red);
-            jtf_cpf_cliente.requestFocus();
-        }
 
     }//GEN-LAST:event_jtf_empresaFocusGained
 
@@ -1103,9 +1084,9 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
 
-    private void jb_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar1ActionPerformed
+    private void jb_eliminar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar1ActionPerformed
+    }//GEN-LAST:event_jb_eliminar_dependenteActionPerformed
 
     private void jtf_cidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cidadeActionPerformed
         // TODO add your handling code here:
@@ -1123,29 +1104,12 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_inativo_dependenteActionPerformed
 
-    private void jtf_cpf_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteActionPerformed
-
-    }//GEN-LAST:event_jtf_cpf_clienteActionPerformed
-
-    private void jtf_cpf_clienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusGained
-
-
-    }//GEN-LAST:event_jtf_cpf_clienteFocusGained
-
-    private void jtf_cpf_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusLost
-
-    }//GEN-LAST:event_jtf_cpf_clienteFocusLost
-
     private void jtf_cpf_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtf_email.requestFocus();
         }
     }//GEN-LAST:event_jtf_cpf_clienteKeyPressed
-
-    private void jtf_cpf_clienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteKeyReleased
-
-    }//GEN-LAST:event_jtf_cpf_clienteKeyReleased
 
     private void jtf_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_telefoneActionPerformed
         // TODO add your handling code here:
@@ -1183,7 +1147,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         try {
             if (jtf_cpf_dependente.getText().trim().length() == 14) {
                 if (ValidaCPF.isCPF(jtf_cpf_dependente.getText()) == true) {
-                    if (verificaCadastro(jtf_cpf_dependente.getText().trim()) == true) {
+                    if (verificaCadastroDependente(jtf_cpf_dependente.getText().trim()) == true) {
                         jtf_cpf_dependente.setForeground(Color.black);
                     } else {
                         jtf_cpf_dependente.setForeground(Color.red);
@@ -1428,11 +1392,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jb_adicionar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                alimentarTelefone();
-            } catch (ParseException ex) {
-                Logger.getLogger(AtendimentoLocacao.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            jb_adicionar_telefone.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_telefoneKeyPressed
@@ -1450,7 +1410,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jb_adicionar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            adicionarDependente();
+            jb_adicionar_dependente.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_dependenteKeyPressed
@@ -1458,6 +1418,50 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jtf_nome_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_clienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nome_clienteActionPerformed
+
+    private void jtf_emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_emailFocusGained
+        try {
+
+            ValidaCPF valida = new ValidaCPF();
+            if (jtf_cpf_cliente.getText().trim().length() == 14) {
+                if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
+                    if (verificaCadastro(jtf_cpf_cliente.getText()) == true) {
+                        jtf_cpf_cliente.setForeground(Color.black);
+                    } else {
+                        jtf_cpf_cliente.setForeground(Color.red);
+                        jtf_cpf_cliente.requestFocus();
+                    }
+                } else {
+                    jtf_cpf_cliente.setForeground(Color.red);
+                    jtf_cpf_cliente.requestFocus();
+                }
+            } else {
+                jtf_cpf_cliente.setForeground(Color.red);
+                jtf_cpf_cliente.requestFocus();
+            }
+        } catch (Exception e) {
+            jtf_cpf_cliente.setForeground(Color.red);
+            jtf_cpf_cliente.requestFocus();
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_emailFocusGained
+
+    private void jb_eliminar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_eliminar_dependente.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_dependenteKeyPressed
+
+    private void jtbl_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_dependenteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            jb_eliminar_dependente.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_dependenteKeyPressed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1501,7 +1505,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private javax.swing.JButton jb_adicionar_telefone;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_eliminar;
-    private javax.swing.JButton jb_eliminar1;
+    private javax.swing.JButton jb_eliminar_dependente;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JComboBox jcb_parentesco;
     public static javax.swing.JRadioButton jrb_ativo;
@@ -1534,21 +1538,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     public InterfacePool pool;
     public SiscomController controller;
 
-    private void enviaDados() {
-        if (verificarCampos()) {
-            controller = new SiscomController();
-            controller.processarRequisicao("cadastrarCliente");
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-            if (janelapai != null) {
-                janelapai.setStatusTela(true);
-            } else if (janelapai2 != null) {
-                janelapai2.setStatusTela(true);
-            }
-
-            setVisible(false);
-        }
-    }
-
     public boolean verificarCampos() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
@@ -1567,12 +1556,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             msgERRO = msgERRO + " *CPF\n";
         }
 
-        if (jtf_empresa.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Empresa\n";
-        }
-        if (jtf_profissao.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Profissão\n";
-        }
         if (jtf_endereco.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Endereço\n";
         }
@@ -1584,6 +1567,14 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
         if (jtf_estado.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Estado\n";
+        }
+
+        if (jtf_profissao.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Profissão\n";
+        }
+
+        if (jtf_empresa.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Empresa\n";
         }
 
         if (jtbl_telefone.getRowCount() <= 0) {
@@ -1615,6 +1606,21 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         if (null == cliente) {
             return true;
         } else {
+            jtf_cpf_cliente.requestFocus();
+            JOptionPane.showMessageDialog(null, "CPF já existente");
+            return false;
+        }
+    }
+
+    public boolean verificaCadastroDependente(String cpf) {
+        pool = new Pool();
+        ClienteDAO clienteDAO = new ClienteDAO(pool);
+        cliente = null;
+        cliente = clienteDAO.getCliente_cpf(cpf);
+        if (null == cliente) {
+            return true;
+        } else {
+            jtf_cpf_cliente.requestFocus();
             JOptionPane.showMessageDialog(null, "CPF já existente");
             return false;
         }
@@ -1681,8 +1687,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         if (jtf_data_nascimento_dependente.getText().trim().length() != 10) {
             msgERRO = msgERRO + " *Data Inválida\n";
         }
-        
-        
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
@@ -1793,7 +1797,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            enviaDados();
+            jb_salvar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);

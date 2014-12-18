@@ -35,10 +35,12 @@ public class MenuCliente extends javax.swing.JFrame {
     public SiscomController controller;
     public AcessoUsuario acesso;
     public Cliente cliente;
+    public AtualizaCliente atualizaCliente;
 
     public MenuCliente() {
         initComponents();
         TemaInterface.getInterface(this);
+        atualizaCliente = null;
     }
 
     /**
@@ -49,6 +51,7 @@ public class MenuCliente extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
@@ -64,7 +67,6 @@ public class MenuCliente extends javax.swing.JFrame {
         jb_novo = new javax.swing.JButton();
         jb_alterar = new javax.swing.JButton();
         jb_excluir = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -179,7 +181,7 @@ public class MenuCliente extends javax.swing.JFrame {
                         .addComponent(jl_pesquisar_destino)
                         .addGap(10, 10, 10)
                         .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_consulta});
@@ -250,7 +252,13 @@ public class MenuCliente extends javax.swing.JFrame {
                 jb_novoKeyPressed(evt);
             }
         });
-        jPanel2.add(jb_novo, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 291, 2, 0);
+        jPanel2.add(jb_novo, gridBagConstraints);
 
         jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
@@ -266,7 +274,13 @@ public class MenuCliente extends javax.swing.JFrame {
                 jb_alterarKeyPressed(evt);
             }
         });
-        jPanel2.add(jb_alterar, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 10, 2, 0);
+        jPanel2.add(jb_alterar, gridBagConstraints);
 
         jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
@@ -282,25 +296,12 @@ public class MenuCliente extends javax.swing.JFrame {
                 jb_excluirKeyPressed(evt);
             }
         });
-        jPanel2.add(jb_excluir, new java.awt.GridBagConstraints());
-
-        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_sair.setText("Sair");
-        jb_sair.setMaximumSize(new java.awt.Dimension(62, 36));
-        jb_sair.setMinimumSize(new java.awt.Dimension(62, 36));
-        jb_sair.setName("jb_sair"); // NOI18N
-        jb_sair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_sairActionPerformed(evt);
-            }
-        });
-        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_sairKeyPressed(evt);
-            }
-        });
-        jPanel2.add(jb_sair, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 10, 2, 291);
+        jPanel2.add(jb_excluir, gridBagConstraints);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
@@ -310,20 +311,15 @@ public class MenuCliente extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane3)
-                        .addGap(1, 1, 1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -331,16 +327,16 @@ public class MenuCliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(15, 15, 15)
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(915, 502));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -367,11 +363,6 @@ public class MenuCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
 }//GEN-LAST:event_jb_novoActionPerformed
-
-    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        setVisible(false);
-        janelapai.setStatusTela(true);
-}//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
@@ -457,11 +448,6 @@ public class MenuCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirKeyPressed
 
-    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
-        acionarAtalho(evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_sairKeyPressed
-
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -488,7 +474,6 @@ public class MenuCliente extends javax.swing.JFrame {
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_excluir;
     private javax.swing.JButton jb_novo;
-    private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar_destino;
     public static javax.swing.JRadioButton jrb_codigo_cliente;
     public static javax.swing.JRadioButton jrb_cpf;
@@ -545,14 +530,18 @@ public class MenuCliente extends javax.swing.JFrame {
 
                 cliente = tbClienteLinhaSelecionada(jtbl_cliente);
                 if (cliente != null) {
-                    AtualizaCliente alteraCliente = new AtualizaCliente(cliente);
-                    alteraCliente.janelapai = this;
-                    alteraCliente.setVisible(true);
-                    setStatusTela(false);
+                    if(atualizaCliente == null ){
+                        atualizaCliente = new AtualizaCliente(cliente);
+                        atualizaCliente.janelapai = this;
+                        atualizaCliente.setVisible(true);
+                        setEnabled(false);
+                    } else {
+                        atualizaCliente.setVisible(true);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um cliente");
                     jtf_consulta.requestFocus();
-                    System.out.println("Objeto: " + (cliente == null));
+                    
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");

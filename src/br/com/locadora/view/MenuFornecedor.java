@@ -35,24 +35,18 @@ public class MenuFornecedor extends javax.swing.JFrame {
     public TelaPrincipal janelapai;
     public static AcessoUsuario acesso = new AcessoUsuario();
     public InterfacePool pool;
+    public AtualizaFornecedor atualizaFornecedor;
 
     /**
      * Creates new form Cad_Fornecedor
      */
     public MenuFornecedor() {
         initComponents();
-        listarFornecedor();
         TemaInterface.getInterface(this);
+        listarFornecedor();
+        atualizaFornecedor = null;
     }
-
-    public void setTela(String permissao) {
-//        if (permissao.equals("usuario")) {
-//            jb_novo.setEnabled(false);
-//            jb_alterar.setEnabled(false);
-//            jb_excluir.setEnabled(false);
-//        } else {
-//        }
-    }
+    
     List<FornecedorModel> fornecedores;
     DefaultTableModel tmFornecedor = new DefaultTableModel(null, new String[]{"CÓDIGO", "RAZÃO SOCIAL", "NOME FANTASIA", "ENDEREÇO",
         "CNPJ", "TELEFONE", "FAX", "VENDEDOR", "TELEFONE VENDEDOR"});
@@ -83,7 +77,6 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jb_novo = new javax.swing.JButton();
         jb_alterar = new javax.swing.JButton();
         jb_excluir = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -235,17 +228,6 @@ public class MenuFornecedor extends javax.swing.JFrame {
         });
         jPanel1.add(jb_excluir, new java.awt.GridBagConstraints());
 
-        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_sair.setText("Sair");
-        jb_sair.setName("jb_sair"); // NOI18N
-        jb_sair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_sairActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jb_sair, new java.awt.GridBagConstraints());
-
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
@@ -289,7 +271,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(1008, 502));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -373,15 +355,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
         alterar();
-
-        // TODO add your handling code here:
 }//GEN-LAST:event_jb_alterarActionPerformed
-
-    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        setVisible(false);
-        janelapai.setStatusTela(true);
-        // TODO add your handling code here:
-}//GEN-LAST:event_jb_sairActionPerformed
 
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
         excluiFornecedor();
@@ -422,7 +396,6 @@ if(evt.getClickCount() == 2){
     private javax.swing.JButton jb_alterar;
     private javax.swing.JButton jb_excluir;
     private javax.swing.JButton jb_novo;
-    private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar;
     private javax.swing.JRadioButton jrb_codigo;
     private javax.swing.JRadioButton jrb_descricao;
@@ -547,10 +520,14 @@ if(evt.getClickCount() == 2){
             if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
                 FornecedorModel forn = tbFornecedorLinhaSelecionada(jt_pesquisar);
                 if (forn != null) {
-                    AtualizaFornecedor fornecedorAltera = new AtualizaFornecedor(forn);
-                    fornecedorAltera.janelapai = this;
-                    fornecedorAltera.setVisible(true);
-                    this.setEnabled(false);
+                    if(atualizaFornecedor == null){
+                        atualizaFornecedor = new AtualizaFornecedor(forn);
+                        atualizaFornecedor.janelapai = this;
+                        atualizaFornecedor.setVisible(true);
+                        setEnabled(false);
+                    } else {
+                        atualizaFornecedor.setVisible(true);
+                    }
                 } else {
 
                     JOptionPane.showMessageDialog(null, "Selecione um fornecedor");

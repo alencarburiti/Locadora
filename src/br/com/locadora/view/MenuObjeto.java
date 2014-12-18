@@ -40,10 +40,12 @@ public class MenuObjeto extends javax.swing.JFrame {
     public TelaPrincipal janelapai;
     public static Objeto objeto;
     public AcessoUsuario acesso;
-
+    public AtualizaObjeto atualizaObjeto;
+    
     public MenuObjeto() {
         initComponents();
         TemaInterface.getInterface(this);
+        atualizaObjeto = null;
     }
 
     /**
@@ -69,7 +71,6 @@ public class MenuObjeto extends javax.swing.JFrame {
         jb_novo = new javax.swing.JButton();
         jb_alterar = new javax.swing.JButton();
         jb_excluir = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -271,17 +272,6 @@ public class MenuObjeto extends javax.swing.JFrame {
                 });
                 jPanel2.add(jb_excluir, new java.awt.GridBagConstraints());
 
-                jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_sair.setText("Sair");
-                jb_sair.setName("jb_sair"); // NOI18N
-                jb_sair.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_sairActionPerformed(evt);
-                    }
-                });
-                jPanel2.add(jb_sair, new java.awt.GridBagConstraints());
-
                 jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
                 jLabel2.setName("jLabel2"); // NOI18N
@@ -315,7 +305,7 @@ public class MenuObjeto extends javax.swing.JFrame {
                         .addGap(20, 20, 20))
                 );
 
-                setSize(new java.awt.Dimension(836, 500));
+                pack();
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -343,13 +333,6 @@ public class MenuObjeto extends javax.swing.JFrame {
 
 
 }//GEN-LAST:event_jb_novoActionPerformed
-
-    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        if (janelapai != null) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
-        }
-}//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
@@ -438,7 +421,6 @@ public class MenuObjeto extends javax.swing.JFrame {
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_excluir;
     private javax.swing.JButton jb_novo;
-    private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar_destino;
     public static javax.swing.JRadioButton jrb_ator;
     public static javax.swing.JRadioButton jrb_codigo;
@@ -545,11 +527,14 @@ public class MenuObjeto extends javax.swing.JFrame {
             if (acesso.getEscrever() == 0) {
                 objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
                 if (objeto != null) {
-                    AtualizaObjeto alteraObjeto = new AtualizaObjeto(objeto);
-
-                    alteraObjeto.janelapai = this;
-                    alteraObjeto.setVisible(true);
-                    this.setEnabled(false);
+                    if(atualizaObjeto == null){
+                        atualizaObjeto = new AtualizaObjeto(objeto);
+                        atualizaObjeto.janelapai = this;
+                        atualizaObjeto.setVisible(true);
+                        this.setEnabled(false);                        
+                    } else {
+                        atualizaObjeto.setVisible(true);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um objeto");
                     jtf_consulta.requestFocus();

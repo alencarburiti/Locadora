@@ -5,9 +5,6 @@
  */
 package br.com.locadora.util;
 
-import java.util.InputMismatchException;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author alencarburiti

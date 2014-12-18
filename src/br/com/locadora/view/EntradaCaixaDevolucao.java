@@ -503,11 +503,10 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
-
+        
         setVisible(false);
-        setVisible(false);
-        janelapaiDevolucao.setStatusTela(true);
-        janelapaiDevolucao.jtf_codigo_consulta_devolucao.requestFocus();
+        janelapaiDevolucao.setStatusTela(true);        
+        janelapaiDevolucao.jtf_codigo_barras_objeto.requestFocus();
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_debito_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoKeyPressed
@@ -716,11 +715,10 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
-
-        setVisible(false);
+        
         setVisible(false);
         janelapaiDevolucao.setStatusTela(true);
-        janelapaiDevolucao.jtf_codigo_consulta_devolucao.requestFocus();
+        janelapaiDevolucao.jtf_codigo_barras_objeto.requestFocus();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1ActionPerformed
@@ -761,7 +759,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            finalizarCaixa();
+            jb_salvar.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -770,7 +768,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     private void jb_imprimirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_imprimirKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            imprimir();
+            jb_imprimir.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_imprimirKeyPressed
@@ -782,8 +780,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
     private void jb_cancelar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelar1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            setVisible(false);
-            janelapaiDevolucao.setStatusTela(true);
+            jb_cancelar1.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -976,7 +973,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                             jb_imprimir.setEnabled(true);
                             jb_imprimir.requestFocus();
 
-                            DefaultTableModel tb_devolucao = (DefaultTableModel) AtendimentoDevolucao.jtbl_devolucao.getModel();
+                            DefaultTableModel tb_devolucao = (DefaultTableModel) janelapaiDevolucao.jtbl_devolucao.getModel();
                             int rows = tb_devolucao.getRowCount();
                             for (int i = rows - 1; i >= 0; i--) {
                                 tb_devolucao.removeRow(i);
@@ -1024,7 +1021,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             setVisible(false);
             setVisible(false);
             janelapaiDevolucao.setStatusTela(true);
-            janelapaiDevolucao.jtf_codigo_consulta_devolucao.requestFocus();
+            janelapaiDevolucao.jtf_codigo_barras_objeto.requestFocus();
         }
     }
 
@@ -1043,7 +1040,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
                 setVisible(false);
                 janelapaiDevolucao.setStatusTela(true);
-                janelapaiDevolucao.jtf_codigo_consulta_devolucao.requestFocus();
+                janelapaiDevolucao.jtf_codigo_barras_objeto.requestFocus();
 
                 File arquivo = new File(nome_arquivo);
                 arquivo.deleteOnExit();

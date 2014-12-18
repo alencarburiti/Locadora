@@ -777,6 +777,7 @@
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="jtf_horas_antecipada">
                   <Properties>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" value="00:00:00"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
@@ -795,6 +796,7 @@
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="jtf_horario_locacao">
                   <Properties>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" value="00:00:00"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
@@ -814,6 +816,7 @@
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="jtf_horario_devolucao">
                   <Properties>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" value="00:00:00"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>

@@ -1,7 +1,6 @@
 package br.com.locadora.model.helper;
 
 import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.model.command.AtualizarCliente;
 import br.com.locadora.model.command.AtualizarGenero;
 import br.com.locadora.model.command.AtualizarObjeto;
 import br.com.locadora.model.command.CadastrarCliente;
@@ -37,8 +36,7 @@ public class SiscomHelper
 		mapaComandos = new HashMap<String, InterfaceCommand>();
 		
 		mapaComandos.put("cadastrarCliente", new CadastrarCliente(new ClienteDAO(pool), new TelefoneDAO(pool), new DependenteDAO(pool)));
-		mapaComandos.put("consultarCliente", new ConsultarCliente(new ClienteDAO(pool)));
-		mapaComandos.put("atualizarCliente", new AtualizarCliente(new ClienteDAO(pool), new TelefoneDAO(pool), new DependenteDAO(pool)));
+		mapaComandos.put("consultarCliente", new ConsultarCliente(new ClienteDAO(pool)));		
 //		mapaComandos.put("editarCliente", new EditarCliente(new ClienteDAO(pool)));
 //		mapaComandos.put("excluirCliente", new ExcluirCliente(new ClienteDAO(pool)));
                 

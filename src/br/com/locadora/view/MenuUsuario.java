@@ -38,7 +38,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     public TelaPrincipal janelapai;
     public InterfacePool pool;
     public AcessoUsuario acesso;
-
+    public AtualizaUsuario usuarioAltera;
     /**
      * Creates new form Cad_Usuário
      */
@@ -46,6 +46,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         initComponents();
         listarUsuário();
         TemaInterface.getInterface(this);
+        usuarioAltera = null;
     }
 
     /**
@@ -69,12 +70,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         jrb_login = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jtf_pesquisar_usuario = new javax.swing.JTextField();
+        jtf_consultar_usuario = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jb_novo = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
-        jb_excluir1 = new javax.swing.JButton();
         jb_alterar1 = new javax.swing.JButton();
+        jb_excluir1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -96,7 +96,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         popupMenu1.setLabel("popupMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gerenciamento de usuários");
+        setTitle("Gerenciamento de Usuários");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -198,11 +198,11 @@ public class MenuUsuario extends javax.swing.JFrame {
                     }
                 });
 
-                jtf_pesquisar_usuario.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jtf_pesquisar_usuario.setName("jtf_pesquisar_usuario"); // NOI18N
-                jtf_pesquisar_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+                jtf_consultar_usuario.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jtf_consultar_usuario.setName("jtf_consultar_usuario"); // NOI18N
+                jtf_consultar_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
                     public void keyPressed(java.awt.event.KeyEvent evt) {
-                        jtf_pesquisar_usuarioKeyPressed(evt);
+                        jtf_consultar_usuarioKeyPressed(evt);
                     }
                 });
 
@@ -221,7 +221,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                                 .addComponent(jrb_codigo))
                             .addComponent(jLabel1)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jtf_pesquisar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtf_consultar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(jButton1)))
                         .addGap(10, 10, 10))
@@ -238,12 +238,12 @@ public class MenuUsuario extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(10, 10, 10)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_pesquisar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_consultar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addGap(10, 10, 10))
                 );
 
-                jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jtf_pesquisar_usuario});
+                jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jtf_consultar_usuario});
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
                 jPanel1.setName("jPanel1"); // NOI18N
@@ -260,16 +260,16 @@ public class MenuUsuario extends javax.swing.JFrame {
                 });
                 jPanel1.add(jb_novo, new java.awt.GridBagConstraints());
 
-                jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_sair.setText("Sair");
-                jb_sair.setName("jb_sair"); // NOI18N
-                jb_sair.addActionListener(new java.awt.event.ActionListener() {
+                jb_alterar1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_alterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
+                jb_alterar1.setText("Alterar");
+                jb_alterar1.setName("jb_alterar1"); // NOI18N
+                jb_alterar1.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_sairActionPerformed(evt);
+                        jb_alterar1ActionPerformed(evt);
                     }
                 });
-                jPanel1.add(jb_sair, new java.awt.GridBagConstraints());
+                jPanel1.add(jb_alterar1, new java.awt.GridBagConstraints());
 
                 jb_excluir1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_excluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
@@ -281,17 +281,6 @@ public class MenuUsuario extends javax.swing.JFrame {
                     }
                 });
                 jPanel1.add(jb_excluir1, new java.awt.GridBagConstraints());
-
-                jb_alterar1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-                jb_alterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
-                jb_alterar1.setText("Alterar");
-                jb_alterar1.setName("jb_alterar1"); // NOI18N
-                jb_alterar1.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_alterar1ActionPerformed(evt);
-                    }
-                });
-                jPanel1.add(jb_alterar1, new java.awt.GridBagConstraints());
 
                 jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
@@ -307,7 +296,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(20, 20, 20)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(20, 20, 20))
@@ -326,13 +315,13 @@ public class MenuUsuario extends javax.swing.JFrame {
                         .addGap(20, 20, 20))
                 );
 
-                setSize(new java.awt.Dimension(658, 499));
+                pack();
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-        jtf_pesquisar_usuario.requestFocus();
+        jtf_consultar_usuario.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
@@ -361,23 +350,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         alterar();
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_alterar1ActionPerformed
-    public void alterar() {
-        Usuario usu = tbUsuarioLinhaSelecionada(jtbl_usuario);
-        if (usu != null) {
-            AtualizaUsuario usuarioAltera = new AtualizaUsuario(usu);
-            usuarioAltera.janelapai = this;
-            usuarioAltera.setVisible(true);
-            this.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um Usuário");
-            jtf_pesquisar_usuario.requestFocus();
-        }
-    }
-    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        setVisible(false);
-        janelapai.setStatusTela(true);
-}//GEN-LAST:event_jb_sairActionPerformed
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jrb_codigo.isSelected() == true) {
             listarUsuárioCodigo();
@@ -420,7 +393,8 @@ public class MenuUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1KeyPressed
 
-    private void jtf_pesquisar_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisar_usuarioKeyPressed
+    private void jtf_consultar_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultar_usuarioKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (jrb_codigo.isSelected() == true) {
                 listarUsuárioCodigo();
@@ -434,7 +408,7 @@ public class MenuUsuario extends javax.swing.JFrame {
             }
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_pesquisar_usuarioKeyPressed
+    }//GEN-LAST:event_jtf_consultar_usuarioKeyPressed
 
     private void jtbl_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_usuarioKeyPressed
         acionarAtalho(evt);
@@ -445,7 +419,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_usuarioKeyPressed
 
     private void jtbl_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_usuarioMouseClicked
-        if (evt.getClickCount() > 1) {
+        if (evt.getClickCount() == 2) {
             alterar();
         }
         // TODO add your handling code here:
@@ -475,34 +449,33 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jb_alterar1;
     private javax.swing.JButton jb_excluir1;
     private javax.swing.JButton jb_novo;
-    private javax.swing.JButton jb_sair;
     private javax.swing.JRadioButton jrb_codigo;
     private javax.swing.JRadioButton jrb_login;
     private javax.swing.JRadioButton jrb_nome;
     private javax.swing.JTable jtbl_usuario;
-    private javax.swing.JTextField jtf_pesquisar_usuario;
+    private javax.swing.JTextField jtf_consultar_usuario;
     private java.awt.PopupMenu popupMenu1;
     // End of variables declaration//GEN-END:variables
     Usuario usuario = new Usuario();
 
     public void request() {
-        jtf_pesquisar_usuario.requestFocus();
+        jtf_consultar_usuario.requestFocus();
     }
 
     public void listarUsuário() {
         pool = new Pool();
         UsuarioDAO usu = new UsuarioDAO(pool);
-        usuarios = usu.getUsuarios("%" + jtf_pesquisar_usuario.getText().trim() + "%");
+        usuarios = usu.getUsuarios("%" + jtf_consultar_usuario.getText().trim() + "%");
         mostraUsuarios(usuarios);
     }
 
     public void listarUsuárioCodigo() {
-        if (jtf_pesquisar_usuario.getText().equals("")) {
+        if (jtf_consultar_usuario.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Informe um código");
         } else {
             pool = new Pool();
             UsuarioDAO usu = new UsuarioDAO(pool);
-            usuarios = usu.listarUsuarioCodigo(jtf_pesquisar_usuario.getText().trim());
+            usuarios = usu.listarUsuarioCodigo(jtf_consultar_usuario.getText().trim());
             mostraUsuarios(usuarios);
         }
     }
@@ -511,7 +484,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usu = new UsuarioDAO(pool);
 
-        usuarios = usu.listarUsuarioDescrição(jtf_pesquisar_usuario.getText().trim() + "%");
+        usuarios = usu.listarUsuarioDescrição(jtf_consultar_usuario.getText().trim() + "%");
         mostraUsuarios(usuarios);
     }
 
@@ -603,7 +576,38 @@ public class MenuUsuario extends javax.swing.JFrame {
             excluirUsuario();
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            jtf_pesquisar_usuario.requestFocus();
+            jtf_consultar_usuario.requestFocus();
+        }
+    }
+    
+    public void alterar() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuUsuario");
+        try {
+            System.out.println("Escrever: " + acesso.getEscrever());
+            if (acesso.getEscrever() == 0) {
+                Usuario usu = tbUsuarioLinhaSelecionada(jtbl_usuario);
+                if (usu != null) {
+                    if(usuarioAltera == null){
+                        usuarioAltera = new AtualizaUsuario(usu);
+                        usuarioAltera.janelapai = this;
+                        usuarioAltera.setVisible(true);
+                        this.setEnabled(false);                
+                    } else {
+                        usuarioAltera.setVisible(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um Usuário");
+                    jtf_consultar_usuario.requestFocus();
+                }
+                
+            }
+        
+    }  catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
 }

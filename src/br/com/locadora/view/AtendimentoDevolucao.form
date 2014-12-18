@@ -276,20 +276,11 @@
                       <Component id="jScrollPane3" min="-2" pref="830" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jtf_codigo_consulta_devolucao" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="jtf_codigo_barras_objeto" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                               <Component id="jl_codigo_devolucao" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jtf_nome_objeto_devolucao" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jLabel4" min="-2" pref="245" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Component id="jb_pesquisar" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="jb_adicionar_locacao" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="jb_remover_locacao" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Component id="jcb_codigo_barras_devolucao" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -304,20 +295,12 @@
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jl_codigo_devolucao" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jl_codigo_devolucao" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jtf_codigo_consulta_devolucao" linkSize="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jtf_nome_objeto_devolucao" linkSize="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jtf_codigo_barras_objeto" linkSize="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jb_pesquisar" linkSize="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jb_adicionar_locacao" linkSize="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jb_remover_locacao" linkSize="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jcb_codigo_barras_devolucao" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -329,20 +312,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel4">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="13" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Nome Objeto"/>
-            <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
-          </Properties>
-        </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane3">
           <Properties>
             <Property name="name" type="java.lang.String" value="jScrollPane3" noResource="true"/>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
 
@@ -402,25 +377,15 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtbl_devolucaoKeyPressed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="jtf_nome_objeto_devolucao">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="13" style="0"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="jtf_nome_objeto_devolucao" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_nome_objeto_devolucaoFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_nome_objeto_devolucaoKeyPressed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="jl_codigo_devolucao">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -430,16 +395,16 @@
             <Property name="name" type="java.lang.String" value="jl_codigo_devolucao" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jtf_codigo_consulta_devolucao">
+        <Component class="javax.swing.JTextField" name="jtf_codigo_barras_objeto">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="jtf_codigo_consulta_devolucao" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jtf_codigo_barras_objeto" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_codigo_consulta_devolucaoFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_codigo_consulta_devolucaoKeyPressed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_codigo_barras_objetoFocusGained"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_codigo_barras_objetoKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -471,37 +436,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcb_codigo_barras_devolucaoActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jb_adicionar_locacao">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="13" style="0"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/locadora/image/edit_add.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Incluir"/>
-            <Property name="name" type="java.lang.String" value="jb_adicionar_locacao" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_adicionar_locacaoActionPerformed"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_adicionar_locacaoKeyPressed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jb_remover_locacao">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="13" style="0"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/locadora/image/edit_remove.png"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Excluir"/>
-            <Property name="name" type="java.lang.String" value="jb_remover_locacao" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_remover_locacaoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -644,10 +578,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                  <Component id="jButton10" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="jb_finalizar" min="-2" pref="110" max="-2" attributes="0"/>
-                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jb_limpar" min="-2" pref="100" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jb_cancelar" min="-2" pref="90" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
               </Group>
@@ -655,12 +589,12 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton10" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="jb_finalizar" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="jb_cancelar" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jb_cancelar" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="jb_limpar" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="jb_finalizar" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               </Group>
@@ -668,7 +602,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton10">
+        <Component class="javax.swing.JButton" name="jb_limpar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>
@@ -677,11 +611,11 @@
               <Image iconType="3" name="/br/com/locadora/image/limpar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Limpar"/>
-            <Property name="name" type="java.lang.String" value="jButton10" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jb_limpar" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton10ActionPerformed"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButton10KeyPressed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_limparActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_limparKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jb_finalizar">

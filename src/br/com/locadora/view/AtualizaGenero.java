@@ -200,8 +200,7 @@ public class AtualizaGenero extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        janelapai.setStatusTela(true);
-        setVisible(false);
+        retornaJanelaPai();
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -220,8 +219,7 @@ public class AtualizaGenero extends javax.swing.JFrame {
     private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            janelapai.setStatusTela(true);
-            setVisible(false);
+            retornaJanelaPai();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelarKeyPressed
@@ -259,18 +257,12 @@ public class AtualizaGenero extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_nome_genero;
     // End of variables declaration//GEN-END:variables
 
-    public void alimentaCampos(List<MenuGenero> destinos) {
-    }
-
     private void enviaDados() {
         if (verificarCampos()) {
             controller = new SiscomController();
             controller.processarRequisicao("atualizarGenero");
             JOptionPane.showMessageDialog(null, "Atualização efetuada com sucesso");
-            janelapai.buscarDados();
-            janelapai.jtf_consulta.requestFocus();
-            janelapai.setStatusTela(true);
-            setVisible(false);
+            retornaJanelaPai();
         }
     }
 
@@ -297,5 +289,11 @@ public class AtualizaGenero extends javax.swing.JFrame {
             setVisible(false);
             janelapai.setStatusTela(true);
         }
+    }
+    public void retornaJanelaPai() {
+        this.setVisible(false);
+        janelapai.setStatusTela(true);
+        janelapai.atualizaGenero = null;
+        janelapai.buscarDados();
     }
 }

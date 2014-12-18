@@ -813,6 +813,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                 }
                             });
 
+                            jtf_horas_antecipada.setHorizontalAlignment(javax.swing.JTextField.LEFT);
                             jtf_horas_antecipada.setText("00:00:00");
                             jtf_horas_antecipada.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_horas_antecipada.setName("jtf_horas_antecipada"); // NOI18N
@@ -827,9 +828,11 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                 }
                             });
 
+                            jtf_horario_locacao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
                             jtf_horario_locacao.setText("00:00:00");
                             jtf_horario_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_horario_locacao.setName("jtf_horario_locacao"); // NOI18N
+                            jtf_horario_locacao.setOpaque(true);
                             jtf_horario_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
                                 public void focusLost(java.awt.event.FocusEvent evt) {
                                     jtf_horario_locacaoFocusLost(evt);
@@ -844,6 +847,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
                                 }
                             });
 
+                            jtf_horario_devolucao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
                             jtf_horario_devolucao.setText("00:00:00");
                             jtf_horario_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                             jtf_horario_devolucao.setName("jtf_horario_devolucao"); // NOI18N
@@ -1237,7 +1241,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private void jb_eliminar_promocao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_promocao_locacaoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            excluirPromocaoLocacao();
+            jb_eliminar_promocao_locacao.doClick();
 
         }
         // TODO add your handling code here:
@@ -1317,7 +1321,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     private void jb_adicionar_promocao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_promocao_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            adicionarPromocaoDevolucao();
+            jb_adicionar_promocao_devolucao.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -1345,6 +1349,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_promocao_devolucaoKeyPressed
 
     private void jtf_valor_promocao_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoFocusGained
+        jtf_valor_promocao_devolucao.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_promocao_devolucaoFocusGained
 

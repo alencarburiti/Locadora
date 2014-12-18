@@ -20,8 +20,6 @@ import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -42,17 +40,16 @@ public class MenuGenero extends javax.swing.JFrame {
     public Genero genero;
     public InterfacePool pool;
     public AcessoUsuario acesso;
-
+    public AtualizaGenero atualizaGenero;
     /**
      * Creates new form DestinoGUI
      */
     public MenuGenero() {
         initComponents();
         TemaInterface.getInterface(this);
+        atualizaGenero = null;
     }
-    DefaultTableModel tmDestino = new DefaultTableModel(null, new String[]{"Código", "Descrição"});
-    ListSelectionModel lsmDestino;
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,7 +72,6 @@ public class MenuGenero extends javax.swing.JFrame {
         jb_novo = new javax.swing.JButton();
         jb_alterar = new javax.swing.JButton();
         jb_excluir = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -242,17 +238,6 @@ public class MenuGenero extends javax.swing.JFrame {
         });
         jPanel2.add(jb_excluir, new java.awt.GridBagConstraints());
 
-        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_sair.setText("Sair");
-        jb_sair.setName("jb_sair"); // NOI18N
-        jb_sair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_sairActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jb_sair, new java.awt.GridBagConstraints());
-
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
@@ -286,7 +271,7 @@ public class MenuGenero extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(667, 497));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -318,12 +303,6 @@ public class MenuGenero extends javax.swing.JFrame {
         excluirGenero();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
-
-    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        setVisible(false);
-        janelapai.setStatusTela(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         setVisible(false);
@@ -380,7 +359,6 @@ public class MenuGenero extends javax.swing.JFrame {
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_excluir;
     private javax.swing.JButton jb_novo;
-    private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar_destino;
     public static javax.swing.JRadioButton jrb_codigo;
     public static javax.swing.JRadioButton jrb_descricao;
@@ -431,10 +409,14 @@ public class MenuGenero extends javax.swing.JFrame {
             if (acesso.getEscrever() == 0) {
                 genero = tbGeneroLinhaSelecionada(jtbl_genero);
                 if (genero != null) {
-                    AtualizaGenero generoAltera = new AtualizaGenero(genero);
-                    generoAltera.janelapai = this;
-                    generoAltera.setVisible(true);
-                    setStatusTela(false);
+                    if(atualizaGenero == null){
+                        atualizaGenero = new AtualizaGenero(genero);
+                        atualizaGenero.janelapai = this;
+                        atualizaGenero.setVisible(true);
+                        setEnabled(false);                     
+                    } else {
+                        atualizaGenero.setVisible(true);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um Gênero");
                     jtf_consulta.requestFocus();

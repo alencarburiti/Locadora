@@ -300,7 +300,7 @@ public class Printer {
             
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Configurar impressora Alternativa");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
     

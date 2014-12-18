@@ -136,6 +136,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jLabel4.setName("jLabel4"); // NOI18N
 
         jpf_senha.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jpf_senha.setToolTipText("Senha deve conter no mínimo 6 dígitos");
         jpf_senha.setName("jpf_senha"); // NOI18N
         jpf_senha.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -264,15 +265,12 @@ public class CadastroUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        verificaCadastro();
-        janelapai.listarUsuário();
+        cadastraUsuario();              
 }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-
         janelapai.setEnabled(true);
         janelapai.setVisible(true);
-
         setVisible(false);
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
@@ -281,17 +279,15 @@ public class CadastroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
+        janelapai.setStatusTela(true);        
         setVisible(false);
-
-        // TODO add your handling code here:
+        janelapai.listarUsuário();        
     }//GEN-LAST:event_formWindowClosed
 
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            verificaCadastro();
-            janelapai.listarUsuário();
+            jb_salvar.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jpf_senhaKeyPressed
@@ -309,60 +305,33 @@ public class CadastroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jpf_senhaFocusLost
 
     private void jtf_nomeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nomeFocusGained
-        jtf_nome.setInputVerifier(new InputVerifier() {
-
-            public boolean verify(JComponent input) {
-                if (jtf_nome.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Informe o nome do usuário");
-                    jtf_nome.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nomeFocusGained
 
     private void jtf_loginFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_loginFocusGained
-        jtf_login.setInputVerifier(new InputVerifier() {
 
-            public boolean verify(JComponent input) {
-                if (jtf_login.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Informe o login do usuário");
-                    jtf_login.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_loginFocusGained
 
     private void jpf_senhaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jpf_senhaFocusGained
-        jpf_senha.setInputVerifier(new InputVerifier() {
 
-            public boolean verify(JComponent input) {
-                if (jpf_senha.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Informe a senha do usuário");
-                    jpf_senha.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
         // TODO add your handling code here:
     }//GEN-LAST:event_jpf_senhaFocusGained
 
 private void jtf_nomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nomeKeyPressed
-
+    acionarAtalho(evt);
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        jtf_login.requestFocus();
+    }
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_nomeKeyPressed
 
 private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_loginKeyPressed
-
+    acionarAtalho(evt);
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        jpf_senha.requestFocus();
+    }
     // TODO add your handling code here:
 }//GEN-LAST:event_jtf_loginKeyPressed
 
@@ -417,13 +386,43 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         if (jtf_nome.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Nome\n";
         }
+
+        pool = new Pool();
+        UsuarioDAO usu = new UsuarioDAO(pool);
+        usuarios = usu.consultarLogin(jtf_login.getText().trim());
         if (jtf_login.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Login\n";
-        }
-        if (jpf_senha.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Senha\n";
+        } else if (usuarios.size() != 0) {
+            msgERRO = msgERRO + " *Login Existente\n";
         }
 
+        if (jpf_senha.getText().trim().equals("")) {
+            msgERRO = msgERRO + " *Senha\n";
+        } else if (jpf_senha.getText().length() <= 5) {
+            msgERRO = msgERRO + " *Senha menor que 6 caracteres\n";
+        } else {
+            char[] senha = jpf_senha.getPassword();
+            String senha_consultar = "";
+            for (int i = 0; i < senha.length; i++) {
+                senha_consultar = senha_consultar + senha[i];
+            }
+            pool = new Pool();
+            usu = new UsuarioDAO(pool);
+            usuarios = usu.consultarSenha(senha_consultar);
+            if (usuarios.size() != 0) {
+                char[] senhaDoBanco = usuarios.get(0).getSenha().toCharArray();
+                // verifica o tamanho da senha
+                int caracter_igual = 0;
+                for (int i = 0; i < senha.length; i++) {
+                    if (senha[i] == senhaDoBanco[i]) {
+                        caracter_igual = caracter_igual + 1;
+                    }
+                }
+                if (senha.length == caracter_igual) {
+                    msgERRO = msgERRO + " *Senha Existente\n";
+                }
+            }
+        }
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
             return false;
@@ -434,27 +433,19 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     }
 
     public void retornaJanelaPai() {
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
+        janelapai.setStatusTela(true);        
         janelapai.request();
         setVisible(false);
-
+        janelapai.listarUsuário();
     }
 
-    public void verificaCadastro() {
-        pool = new Pool();
-        UsuarioDAO usu = new UsuarioDAO(pool);
-        usuarios = usu.listarUsuarioDescrição1(jtf_nome.getText().trim(), jtf_login.getText().trim());
-        validaCadastro(usuarios);
-    }
-
-    public void validaCadastro(List<Usuario> usuario) {//verifica cadastro existente que retornou de uma lista
-
-        if (usuario.size() == 0) {
-            cadastraUsuario();
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuário ou login existente");
-            jtf_nome.requestFocus();
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            jb_salvar.doClick();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
         }
     }
 }

@@ -114,8 +114,8 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jtf_debito_total_locacao = new javax.swing.JTextField();
         jtf_valor_total_locacao = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        jb_finalizar = new javax.swing.JButton();
+        jb_limpar = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -316,6 +316,11 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
             }
         });
         jtbl_locacao.setName("jtbl_locacao"); // NOI18N
+        jtbl_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_locacaoKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jtbl_locacao);
         if (jtbl_locacao.getColumnModel().getColumnCount() > 0) {
             jtbl_locacao.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -387,6 +392,11 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jb_remover_locacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_remover_locacaoActionPerformed(evt);
+            }
+        });
+        jb_remover_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_remover_locacaoKeyPressed(evt);
             }
         });
 
@@ -558,33 +568,33 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel2.setName("jPanel2"); // NOI18N
 
-        jButton7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
-        jButton7.setText("Finalizar");
-        jButton7.setName("jButton7"); // NOI18N
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jb_finalizar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_finalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+        jb_finalizar.setText("Finalizar");
+        jb_finalizar.setName("jb_finalizar"); // NOI18N
+        jb_finalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jb_finalizarActionPerformed(evt);
             }
         });
-        jButton7.addKeyListener(new java.awt.event.KeyAdapter() {
+        jb_finalizar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton7KeyPressed(evt);
+                jb_finalizarKeyPressed(evt);
             }
         });
 
-        jButton10.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
-        jButton10.setText("Limpar");
-        jButton10.setName("jButton10"); // NOI18N
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        jb_limpar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
+        jb_limpar.setText("Limpar");
+        jb_limpar.setName("jb_limpar"); // NOI18N
+        jb_limpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                jb_limparActionPerformed(evt);
             }
         });
-        jButton10.addKeyListener(new java.awt.event.KeyAdapter() {
+        jb_limpar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton10KeyPressed(evt);
+                jb_limparKeyPressed(evt);
             }
         });
 
@@ -598,6 +608,11 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
+        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -605,9 +620,9 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(150, 150, 150)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jButton10)
+                .addComponent(jb_limpar)
                 .addGap(10, 10, 10)
                 .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(150, 150, 150))
@@ -617,9 +632,9 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton10)
+                        .addComponent(jb_limpar)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10))
         );
@@ -637,7 +652,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jl_debito_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -647,17 +662,17 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                                 .addGap(20, 20, 20)
                                 .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, 0))
+                    .addComponent(jp_locacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(276, 276, 276)
-                                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addComponent(jp_locacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(747, 747, 747)
+                        .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -672,19 +687,20 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                     .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jp_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jl_debito_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtf_debito_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(854, 594));
+        setSize(new java.awt.Dimension(848, 594));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -726,13 +742,18 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
 private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_clienteActionPerformed
-    consultarClienteAtendimento();
+    ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
+    consultaCliente.janelapaiLocacao = this;
+    consultaCliente.setVisible(true);
+    consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
+    setStatusTela(false);
 }//GEN-LAST:event_jb_clienteActionPerformed
 
 private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
     acionarAtalho(evt);
     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-        consultarClienteAtendimento();
+        jb_cliente.doClick();
+
     }
 
 }//GEN-LAST:event_jtf_nome_clienteKeyPressed
@@ -757,9 +778,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_total_locacaoFocusGained
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void jb_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_finalizarActionPerformed
         enviarDadosLocacao();
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_jb_finalizarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jtf_codigo_cliente.getText().isEmpty()) {
@@ -786,7 +807,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jtf_nome_objeto_locacaoFocusGained
 
     private void jb_remover_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_remover_locacaoActionPerformed
-        excluirProduto();
+        removeObjeto(jtbl_locacao);
     }//GEN-LAST:event_jb_remover_locacaoActionPerformed
 
     private void jb_adicionar_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_locacaoActionPerformed
@@ -892,29 +913,14 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void jb_adicionar_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_locacaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-
-                if (!jtf_codigo_cliente.getText().equals("")) {
-
-                    if (jcb_codigo_barras_locacao.isSelected() == true) {
-                        locar_consulta_codigo_barras(jtf_codigo_consulta_locacao.getText().trim());
-                        adicionarItemLocado(copias.get(0));
-                    } else {
-                        locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
-                        adicionarItemLocado(copias.get(0));
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
-                    jtf_codigo_cliente.requestFocus();
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
-            }
+            jb_adicionar_locacao.doClick();
         }
     }//GEN-LAST:event_jb_adicionar_locacaoKeyPressed
 
     private void jb_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_clienteKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_cliente.doClick();
+        }
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_clienteKeyPressed
@@ -924,10 +930,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         janelapai.setStatusTela(true);
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
-    private void jButton7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton7KeyPressed
+    private void jb_finalizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_finalizarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_finalizar.doClick();
+        }
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7KeyPressed
+    }//GEN-LAST:event_jb_finalizarKeyPressed
 
     private void jcb_codigo_barras_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_codigo_barras_locacaoActionPerformed
         // TODO add your handling code here:
@@ -968,17 +977,18 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jcb_promocaoKeyReleased
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-//        limparDados();
-    }//GEN-LAST:event_jButton10ActionPerformed
+    private void jb_limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_limparActionPerformed
+        limparCampos();
+        limparItemLocado();
+    }//GEN-LAST:event_jb_limparActionPerformed
 
-    private void jButton10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton10KeyPressed
+    private void jb_limparKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_limparKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            limparDados();
+            jb_limpar.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10KeyPressed
+    }//GEN-LAST:event_jb_limparKeyPressed
 
     private void jtf_nome_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_clienteActionPerformed
         // TODO add your handling code here:
@@ -988,14 +998,26 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_locacaoActionPerformed
 
-    public void consultarClienteAtendimento() {
-        ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
-        consultaCliente.janelapaiLocacao = this;
-        consultaCliente.setVisible(true);
-        consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
-        setStatusTela(false);
+    private void jb_remover_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_remover_locacaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_remover_locacao.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_remover_locacaoKeyPressed
 
-    }
+    private void jtbl_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_locacaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            jb_remover_locacao.doClick();
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_locacaoKeyPressed
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_cancelar.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -1010,8 +1032,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton7;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
@@ -1029,6 +1049,8 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JButton jb_adicionar_locacao;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_cliente;
+    private javax.swing.JButton jb_finalizar;
+    private javax.swing.JButton jb_limpar;
     private javax.swing.JButton jb_remover_locacao;
     private javax.swing.JCheckBox jcb_codigo_barras_locacao;
     private javax.swing.JComboBox jcb_promocao;
@@ -1071,10 +1093,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         jtf_valor_locacao.setText("");
         jtf_tipo_midia.setText("");
         jtf_diaria.setText("");
-    }
-
-    private void excluirProduto() {
-        removeObjeto(jtbl_locacao);
     }
 
     public void removeObjeto(JTable tb) {
@@ -1624,17 +1642,17 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
         this.setEnabled(status);
     }
-    
-    public void verificarDebito(Cliente cliente){
+
+    public void verificarDebito(Cliente cliente) {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        
+
         pool = new Pool();
         LancamentoDAO lancDAO = new LancamentoDAO(pool);
-        
+
         Lancamento lancamento = lancDAO.getDebito(cliente);
-        
-        if(lancamento != null){
-        
+
+        if (lancamento != null) {
+
             Calendar data_inicial = Calendar.getInstance();
             data_inicial.setTime(lancamento.getData_lancamento());
             data_inicial.set(Calendar.HOUR_OF_DAY, 0);
@@ -1643,7 +1661,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             data_inicial.set(Calendar.MILLISECOND, 0);
             data_inicial.getTime();
 
-            Calendar data_final = Calendar.getInstance();        
+            Calendar data_final = Calendar.getInstance();
             data_final.set(Calendar.HOUR_OF_DAY, 0);
             data_final.set(Calendar.MINUTE, 0);
             data_final.set(Calendar.SECOND, 0);
@@ -1651,11 +1669,11 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             data_final.getTime();
 
             long intervalo = data_final.getTimeInMillis() - data_inicial.getTimeInMillis();
-            int duracaoDebito = (int)(intervalo / (1000 * 60 * 60 * 24 * 30)); // resultado em meses 
-            System.out.println("Calculo de dias em Debito:"+ duracaoDebito);
+            int duracaoDebito = (int) (intervalo / (1000 * 60 * 60 * 24 * 30)); // resultado em meses 
+            System.out.println("Calculo de dias em Debito:" + duracaoDebito);
 
-            if(duracaoDebito > 3){
-                JOptionPane.showMessageDialog(null, "Cliente com débito desde: "+  df.format(lancamento.getData_lancamento()));
+            if (duracaoDebito > 3) {
+                JOptionPane.showMessageDialog(null, "Cliente com débito desde: " + df.format(lancamento.getData_lancamento()));
                 jtf_codigo_consulta_locacao.setEnabled(false);
             } else {
                 jtf_codigo_consulta_locacao.setEnabled(true);
@@ -1828,7 +1846,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            enviarDadosLocacao();
+            jb_finalizar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
@@ -1850,7 +1868,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             if (diaria.getCodigo_diaria() == copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria()) {
                 if (!jtbl_locacao.getValueAt(i, 2).equals("R$ 0,00")) {
                     diaria.setQuantidade_filme(diaria.getQuantidade_filme() + 1);
-                    System.out.println("Quantidade de filme: " + diaria.getQuantidade_filme());                
+                    System.out.println("Quantidade de filme: " + diaria.getQuantidade_filme());
                 }
             }
         }

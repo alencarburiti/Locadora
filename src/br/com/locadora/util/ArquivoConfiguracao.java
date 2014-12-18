@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +24,7 @@ public class ArquivoConfiguracao {
     private String impressora;
     
     public String readPropertie(String propertie){
-        File configFile = new File("src/br/com/locadora/util/config.properties");
+        File configFile = new File("config.properties");
         String valor_property = "";
         try {
             FileReader reader = new FileReader(configFile);
@@ -35,15 +36,16 @@ public class ArquivoConfiguracao {
             System.out.println("Property: " + propertie + " - Valor: "+ valor_property);
             reader.close();
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Arquivo de configuração não encontrado.\n Favor entrar em contato com o administrador do Sistema");
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Favor entrar em contato com o administrador do Sistema. Error: " +propertie);
             ex.printStackTrace();
         }
         return valor_property;
     }
     
     public void writePropertie(String key, String valor){
-        File configFile = new File("src/br/com/locadora/util/config.properties");
+        File configFile = new File("config.properties");
  
         try {
             FileReader reader = new FileReader(configFile);
@@ -54,9 +56,9 @@ public class ArquivoConfiguracao {
             props.store(writer, null);
             writer.close();
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Arquivo de configuração não encontrado.\n Favor entrar em contato com o administrador do Sistema");
         } catch (IOException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Favor entrar em contato com o administrador do Sistema. Error: " +key+ " "+ valor);
         }
     }
         

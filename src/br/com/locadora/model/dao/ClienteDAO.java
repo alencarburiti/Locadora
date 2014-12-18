@@ -25,13 +25,43 @@ public class ClienteDAO implements InterfaceClienteDAO {
     public void atualizar(Cliente cliente) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
+        String sqlAtualizar = "UPDATE CLIENTE \n" +
+            "SET \n" +
+            "    NOME_CLIENTE = ?,\n" +
+            "    NOME_EMPRESA_TRABALHO = ?,\n" +
+            "    PROFISSAO = ?,\n" +
+            "    CPF = ?,\n" +
+            "    DATA_NASCIMENTO = ?,\n" +
+            "    ENDERECO = ?,\n" +
+            "    BAIRRO = ?,\n" +
+            "    COMPLEMENTO = ?,\n" +
+            "    CIDADE = ?,\n" +
+            "    ESTADO = ?,\n" +
+            "    EMAIL = ?,\n" +
+            "    OBSERVACAO = ?,\n" +
+            "    DEL_FLAG = ?\n" +
+            "WHERE\n" +
+            "    CODIGO_CLIENTE = ?;";
+        
+        String sqlAtualizar2 = "UPDATE DEPENDENTE SET\n" +
+            "NOME_DEPENDENTE = ?\n" +
+            "WHERE CLIENTE_CODIGO_CLIENTE = ?\n" +
+            "AND TIPO_DEPENDENTE = 0;";
         try {
-            ps = con.prepareCall("{CALL SP_UPDATE_CLIENTE_BY_PK(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            
+            ps = con.prepareStatement(sqlAtualizar);
+
             setPreparedStatement(cliente, ps);
 
-            ps.execute();
+            ps.executeUpdate();
+            
+            ps = null;
+            ps = con.prepareStatement(sqlAtualizar2);
+            ps.setString(1, cliente.getNome_cliente());
+            ps.setInt(2, cliente.getCodigo_cliente());
+            ps.executeUpdate();                        
             ps.close();
+            
+            System.out.println("Gravado com sucesso");
         } finally {
             pool.liberarConnection(con);
         }
@@ -82,15 +112,30 @@ public class ClienteDAO implements InterfaceClienteDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM CLIENTE WHERE CPF = ? ORDER BY NOME_CLIENTE LIMIT 0, 50;";
+        String sqlSelect = "(SELECT \n" +
+            "    C.CPF\n" +
+            "FROM\n" +
+            "    CLIENTE AS C\n" +
+            "WHERE\n" +
+            "    CPF = ?) UNION (SELECT \n" +
+            "    D.CPF\n" +
+            "FROM\n" +
+            "    DEPENDENTE AS D\n" +
+            "WHERE\n" +
+            "    CPF = ?);";
 
         try {
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, cpf);
+            ps.setString(2, cpf);
 
             rs = ps.executeQuery();
-
-            List<Cliente> resultado = getListaCliente(rs);
+            List<Cliente> resultado = new ArrayList<>();
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setCpf(rs.getString("CPF"));
+                resultado.add(cliente);
+            }
 
             if (resultado.size() > 0) {
                 return resultado.get(0);
@@ -285,21 +330,21 @@ public class ClienteDAO implements InterfaceClienteDAO {
         Date data_nascimento = null;
         if (cliente.getData_nascimento() != null) {
             data_nascimento = new Date(cliente.getData_nascimento().getTime());
-        }
-        ps.setInt(1, cliente.getCodigo_cliente());
-        ps.setString(2, cliente.getNome_cliente());
-        ps.setString(3, cliente.getNome_empresa_trabalho());
-        ps.setString(4, cliente.getProfissao());
-        ps.setString(5, cliente.getCpf());
-        ps.setDate(6, data_nascimento);
-        ps.setString(7, cliente.getEndereco());
-        ps.setString(8, cliente.getBairro());
-        ps.setString(9, cliente.getComplemento());
-        ps.setString(10, cliente.getCidade());
-        ps.setString(11, cliente.getEstado());
-        ps.setString(12, cliente.getEmail());
-        ps.setString(13, cliente.getObservacao());
-        ps.setString(14, cliente.getStatus());
+        }        
+        ps.setString(1, cliente.getNome_cliente());
+        ps.setString(2, cliente.getNome_empresa_trabalho());
+        ps.setString(3, cliente.getProfissao());
+        ps.setString(4, cliente.getCpf());
+        ps.setDate(5,data_nascimento);
+        ps.setString(6, cliente.getEndereco());
+        ps.setString(7, cliente.getBairro());
+        ps.setString(8, cliente.getComplemento());
+        ps.setString(9, cliente.getCidade());
+        ps.setString(10, cliente.getEstado());
+        ps.setString(11, cliente.getEmail());
+        ps.setString(12, cliente.getObservacao());
+        ps.setString(13, cliente.getStatus());
+        ps.setInt(14, cliente.getCodigo_cliente());
 
     }
 

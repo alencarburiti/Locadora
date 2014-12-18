@@ -60,7 +60,7 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
         jb_sair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Impressoras");
+        setTitle("Configurar Impressoras");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -198,7 +198,7 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
@@ -252,9 +252,14 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
     }//GEN-LAST:event_jcb_impressora_alternativaFocusLost
 
     private void jb_aplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_aplicarActionPerformed
-        ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        conf.writePropertie("impressora_principal", jcb_impressora_principal.getSelectedItem().toString());
-        conf.writePropertie("impressora_alternativa", jcb_impressora_alternativa.getSelectedItem().toString());
+        try {
+            ArquivoConfiguracao conf = new ArquivoConfiguracao();
+            conf.writePropertie("impressora_principal", jcb_impressora_principal.getSelectedItem().toString());
+            conf.writePropertie("impressora_alternativa", jcb_impressora_alternativa.getSelectedItem().toString());
+            JOptionPane.showMessageDialog(null, "Configurado com sucesso");            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível configurar impressora");
+        }
     }//GEN-LAST:event_jb_aplicarActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed

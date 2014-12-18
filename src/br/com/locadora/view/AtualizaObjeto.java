@@ -912,16 +912,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         retornaJanelaPai();
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
-    private void retornaJanelaPai() {
-        setVisible(false);
-
-        if (janelapai != null) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            janelapai.buscarDados();
-            janelapai.jtf_consulta.requestFocus();
-        }
-    }
+    
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
         enviaDados();
 }//GEN-LAST:event_jb_salvarActionPerformed
@@ -1522,11 +1513,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
             enviaDados();
         }
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
-
-            janelapai.buscarDados();
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {            
             retornaJanelaPai();
 
         }
@@ -1575,5 +1562,13 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             return (true);
         }
         return false;
+    }
+    private void retornaJanelaPai() {
+        setVisible(false);
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);            
+            janelapai.buscarDados();
+            janelapai.jtf_consulta.requestFocus();
+        }
     }
 }

@@ -776,7 +776,7 @@ String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.depend
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            finalizarCaixa();
+            jb_salvar.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -790,7 +790,7 @@ String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.depend
     private void jb_imprimirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_imprimirKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            imprimir();
+            jb_imprimir.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_imprimirKeyPressed
@@ -802,6 +802,9 @@ String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.depend
 
     private void jb_cancelar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelar1KeyPressed
         acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_cancelar1.doClick();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1KeyPressed
 

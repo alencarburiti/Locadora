@@ -16,12 +16,8 @@ import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
-import br.com.locadora.util.UnaccentedDocument;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 /**
@@ -51,7 +47,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         jtf_nome.setText(usu.getNome_usuario());
         jtf_login.setText(usu.getLogin());
         jpf_senha.setText(usu.getSenha());
-        
+        System.out.println("Senha para alterar: "+usu.getSenha());
     }
 
     /**
@@ -74,8 +70,8 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jpf_senha = new javax.swing.JPasswordField(new LimitadorTexto(45), "",10);
         jPanel2 = new javax.swing.JPanel();
-        jb_salvar1 = new javax.swing.JButton();
-        jb_cancelar1 = new javax.swing.JButton();
+        jb_salvar = new javax.swing.JButton();
+        jb_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alterando Usuário");
@@ -97,6 +93,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         jLabel1.setText("Nome");
         jLabel1.setName("jLabel1"); // NOI18N
 
+        jtf_login.setEditable(false);
         jtf_login.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_login.setName("jtf_login"); // NOI18N
         jtf_login.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -147,6 +144,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         jLabel4.setName("jLabel4"); // NOI18N
 
         jpf_senha.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jpf_senha.setToolTipText("Senha deve conter no mínimo 6 dígitos");
         jpf_senha.setName("jpf_senha"); // NOI18N
         jpf_senha.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -208,23 +206,23 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel2.setName("jPanel2"); // NOI18N
 
-        jb_salvar1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_salvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
-        jb_salvar1.setText("Salvar");
-        jb_salvar1.setName("jb_salvar1"); // NOI18N
-        jb_salvar1.addActionListener(new java.awt.event.ActionListener() {
+        jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setText("Salvar");
+        jb_salvar.setName("jb_salvar"); // NOI18N
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_salvar1ActionPerformed(evt);
+                jb_salvarActionPerformed(evt);
             }
         });
 
-        jb_cancelar1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar1.setText("Cancelar");
-        jb_cancelar1.setName("jb_cancelar1"); // NOI18N
-        jb_cancelar1.addActionListener(new java.awt.event.ActionListener() {
+        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setName("jb_cancelar"); // NOI18N
+        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelar1ActionPerformed(evt);
+                jb_cancelarActionPerformed(evt);
             }
         });
 
@@ -234,9 +232,9 @@ public class AtualizaUsuario extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jb_salvar1)
+                .addComponent(jb_salvar)
                 .addGap(4, 4, 4)
-                .addComponent(jb_cancelar1)
+                .addComponent(jb_cancelar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -244,8 +242,8 @@ public class AtualizaUsuario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_salvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
 
@@ -275,24 +273,15 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
-        janelapai.request();        // TODO add your handling code here:
+        janelapai.setStatusTela(true);
+        janelapai.request();  
+        janelapai.listarUsuário();
+        janelapai.usuarioAltera = null;
+        setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_loginFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_loginFocusGained
-        jtf_login.setInputVerifier(new InputVerifier() {
 
-            public boolean verify(JComponent input) {
-                if (jtf_login.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Informe o login do usuário");
-                    jtf_login.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_loginFocusGained
 
@@ -301,7 +290,10 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_loginFocusLost
 
     private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_loginKeyPressed
-
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jpf_senha.requestFocus();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_loginKeyPressed
 
@@ -310,18 +302,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_nomeActionPerformed
 
     private void jtf_nomeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nomeFocusGained
-        jtf_nome.setInputVerifier(new InputVerifier() {
 
-            public boolean verify(JComponent input) {
-                if (jtf_nome.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Informe o nome do usuário");
-                    jtf_nome.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nomeFocusGained
 
@@ -330,23 +311,15 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_nomeFocusLost
 
     private void jtf_nomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nomeKeyPressed
-
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_login.requestFocus();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nomeKeyPressed
 
     private void jpf_senhaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jpf_senhaFocusGained
-        jpf_senha.setInputVerifier(new InputVerifier() {
 
-            public boolean verify(JComponent input) {
-                if (jpf_senha.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Informe a senha do usuário");
-                    jpf_senha.requestFocus();
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
         // TODO add your handling code here:
     }//GEN-LAST:event_jpf_senhaFocusGained
 
@@ -355,26 +328,24 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jpf_senhaFocusLost
 
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            verificaCadastro();
-            janelapai.listarUsuário();
+            jb_salvar.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jpf_senhaKeyPressed
 
-    private void jb_salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvar1ActionPerformed
-        if (verificarCampos()) {
-            verificaCadastro();
-        }
-        janelapai.listarUsuário();
-    }//GEN-LAST:event_jb_salvar1ActionPerformed
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        alteraUsuario();
+    }//GEN-LAST:event_jb_salvarActionPerformed
 
-    private void jb_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelar1ActionPerformed
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
-        janelapai.request();
+    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
+        janelapai.setStatusTela(true);
+        janelapai.request();  
+        janelapai.listarUsuário();
+        janelapai.usuarioAltera = null;
         setVisible(false);
-    }//GEN-LAST:event_jb_cancelar1ActionPerformed
+    }//GEN-LAST:event_jb_cancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -395,8 +366,8 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton jb_cancelar1;
-    private javax.swing.JButton jb_salvar1;
+    private javax.swing.JButton jb_cancelar;
+    private javax.swing.JButton jb_salvar;
     private javax.swing.JPasswordField jpf_senha;
     private javax.swing.JTextField jtf_codigo_usuario;
     private javax.swing.JTextField jtf_login;
@@ -412,43 +383,49 @@ public class AtualizaUsuario extends javax.swing.JFrame {
             usuario.setNome_usuario(jtf_nome.getText().trim());
             usuario.setLogin(jtf_login.getText().trim());
             usuario.setSenha(jpf_senha.getText().trim());
-            
+
             usuarioControl.alteraUsuario(usuario);
             JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso");
             retornaJanelaPai();
         }
     }
-
-    public void verificaCadastro() {
-        pool = new Pool();
-        UsuarioDAO usu = new UsuarioDAO(pool);
-        usuarios = usu.listarUsuarioDescrição1(jtf_nome.getText().trim(), jtf_login.getText().trim());
-        validaCadastro(usuarios);
-    }
-
-    public void validaCadastro(List<Usuario> usuario) {//verifica cadastro existente que retornou de uma lista
-
-        if (usuario.size() == 1) {
-            alteraUsuario();
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuário ou login existente");
-            jtf_nome.requestFocus();
-        }
-    }
-
+    
     public boolean verificarCampos() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
         if (jtf_nome.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Nome\n";
         }
-        if (jtf_login.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Login\n";
-        }
+
         if (jpf_senha.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Senha\n";
+        } else if (jpf_senha.getText().length() <= 5) {
+            msgERRO = msgERRO + " *Senha menor que 6 caracteres\n";
+        } else {
+            char[] senha = jpf_senha.getPassword();
+            String senha_consultar = "";
+            for (int i = 0; i < senha.length; i++) {
+                senha_consultar = senha_consultar + senha[i];
+            }
+            pool = new Pool();
+            UsuarioDAO usu = new UsuarioDAO(pool);
+            usuarios = usu.consultarSenha(senha_consultar);
+            if (usuarios.size() != 0) {
+                char[] senhaDoBanco = usuarios.get(0).getSenha().toCharArray();
+                // verifica o tamanho da senha
+                int caracter_igual = 0;
+                for (int i = 0; i < senha.length; i++) {
+                    if (senha[i] == senhaDoBanco[i]) {
+                        caracter_igual = caracter_igual + 1;
+                    }
+                }
+                if (senha.length == caracter_igual) {
+                    if (usuarios.get(0).getLogin() != jtf_login.getText()) {
+                        msgERRO = msgERRO + " *Senha Existente\n";
+                    }
+                }
+            }
         }
-
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
             return false;
@@ -463,7 +440,17 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         janelapai.setVisible(true);
         janelapai.request();
         setVisible(false);
+        janelapai.listarUsuário();
 
     }
 
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            jb_salvar.doClick();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+            janelapai.setStatusTela(true);
+        }
+    }
 }

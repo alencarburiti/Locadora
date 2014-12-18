@@ -41,18 +41,13 @@ public class CadastrarCopia implements InterfaceCommand {
 
             try {
                 copia.setData_aquisicao(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastroObjeto.jtf_data_aquisicao.getText()));
+                copia = copiaDAO.salvar(copia);
+                alimentarCopiaCadastro(copia);
             } catch (ParseException ex) {
+                System.out.println("Error: "+ ex.getMessage());
                 Logger.getLogger(CadastrarCopia.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            try {
-                copia = copiaDAO.salvar(copia);
-                alimentarCopiaCadastro(copia);
-            } catch (SQLException ex) {
-                Logger.getLogger(CadastrarCopia.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(CadastrarCopia.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
         } catch (NumberFormatException e) {
             System.out.println("Valor inválido: " + e.getMessage());
@@ -73,18 +68,14 @@ public class CadastrarCopia implements InterfaceCommand {
 
             try {
                 copia.setData_aquisicao(new SimpleDateFormat("dd/MM/yyyy").parse((String) AtualizaObjeto.jtf_data_aquisicao.getText()));
-            } catch (ParseException ex1) {
-                Logger.getLogger(AtualizaObjeto.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-
-            try {
                 copia = copiaDAO.salvar(copia);
                 alimentarCopiaAlteracao(copia);
-            } catch (SQLException ex1) {
-                Logger.getLogger(AtualizaObjeto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex1) {
-                Logger.getLogger(AtualizaObjeto.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error: "+ ex1.getMessage());                
+            } catch (SQLException ex1) {
+                System.out.println("Error: "+ ex1.getMessage());                
             }
+
 
         }
         return "OK";

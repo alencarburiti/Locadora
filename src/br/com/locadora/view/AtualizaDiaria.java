@@ -56,7 +56,6 @@ public class AtualizaDiaria extends javax.swing.JFrame {
     public AtualizaDiaria() {
         initComponents();
         TemaInterface.getInterface(this);
-
     }
 
     public AtualizaDiaria(Diaria diaria) {
@@ -594,6 +593,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                         }
                     });
 
+                    jtf_horas_antecipada.setHorizontalAlignment(javax.swing.JTextField.LEFT);
                     jtf_horas_antecipada.setText("00:00:00");
                     jtf_horas_antecipada.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jtf_horas_antecipada.setName("jtf_horas_antecipada"); // NOI18N
@@ -608,6 +608,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                         }
                     });
 
+                    jtf_horario_locacao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
                     jtf_horario_locacao.setText("00:00:00");
                     jtf_horario_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jtf_horario_locacao.setName("jtf_horario_locacao"); // NOI18N
@@ -625,6 +626,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                         }
                     });
 
+                    jtf_horario_devolucao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
                     jtf_horario_devolucao.setText("00:00:00");
                     jtf_horario_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                     jtf_horario_devolucao.setName("jtf_horario_devolucao"); // NOI18N
@@ -646,9 +648,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                         .addGroup(jp_detalhes_promocao_devolucaoLayout.createSequentialGroup()
                             .addGap(10, 10, 10)
                             .addGroup(jp_detalhes_promocao_devolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jp_detalhes_promocao_devolucaoLayout.createSequentialGroup()
-                                    .addComponent(jcb_a_vista_devolucao)
-                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jcb_a_vista_devolucao)
                                 .addGroup(jp_detalhes_promocao_devolucaoLayout.createSequentialGroup()
                                     .addGroup(jp_detalhes_promocao_devolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -677,7 +677,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                                     .addComponent(jb_adicionar_promocao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(10, 10, 10)
                                     .addComponent(jb_eliminar_promocao_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap())
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     );
                     jp_detalhes_promocao_devolucaoLayout.setVerticalGroup(
                         jp_detalhes_promocao_devolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1247,7 +1247,10 @@ public class AtualizaDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descricao_devolucaoKeyPressed
 
     private void jtf_valor_promocao_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoFocusGained
-        // TODO add your handling code here:
+jtf_valor_promocao_devolucao.setText("");        
+// TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_jtf_valor_promocao_devolucaoFocusGained
 
     private void jtf_valor_promocao_devolucaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoFocusLost
@@ -1544,6 +1547,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
     public void retornaJanelaPai() {
         this.setVisible(false);
         janelapai.setStatusTela(true);
+        janelapai.atualizaDiaria = null;
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {

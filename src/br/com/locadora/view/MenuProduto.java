@@ -56,7 +56,6 @@ public class MenuProduto extends javax.swing.JFrame {
         jb_novo = new javax.swing.JButton();
         jb_alterar1 = new javax.swing.JButton();
         jb_excluir = new javax.swing.JButton();
-        jb_sair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         tf_codigo.setName("tf_codigo"); // NOI18N
@@ -226,17 +225,6 @@ public class MenuProduto extends javax.swing.JFrame {
         });
         jPanel1.add(jb_excluir, new java.awt.GridBagConstraints());
 
-        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_sair.setText("Sair");
-        jb_sair.setName("jb_sair"); // NOI18N
-        jb_sair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_sairActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jb_sair, new java.awt.GridBagConstraints());
-
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
@@ -310,12 +298,6 @@ public class MenuProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_alterar1ActionPerformed
 
-    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        setVisible(false);
-        janelapai.setStatusTela(true);
-
-}//GEN-LAST:event_jb_sairActionPerformed
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         janelapai.setStatusTela(true);
         setVisible(false);
@@ -355,7 +337,6 @@ public class MenuProduto extends javax.swing.JFrame {
     private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_excluir;
     private javax.swing.JButton jb_novo;
-    private javax.swing.JButton jb_sair;
     private javax.swing.JRadioButton jrb_apresentação;
     private javax.swing.JRadioButton jrb_nome;
     private javax.swing.JTable jtbl_produto;

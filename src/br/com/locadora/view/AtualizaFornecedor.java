@@ -408,10 +408,7 @@ public class AtualizaFornecedor extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
-        janelapai.request();
-        setVisible(false);
+        retornaJanelaPai();
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
@@ -894,5 +891,11 @@ private void tf_nomeVendedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST
             return false;
         }
 
+    }
+    
+    public void retornaJanelaPai() {        
+        this.setVisible(false);
+        janelapai.setStatusTela(true);
+        janelapai.atualizaFornecedor = null;
     }
 }
