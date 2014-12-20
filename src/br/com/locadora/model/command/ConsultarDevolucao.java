@@ -42,12 +42,7 @@ public class ConsultarDevolucao implements InterfaceCommand {
                 cliente.setCodigo_cliente(clientes.get(i).getCodigo_cliente());
                 cliente.setNome_cliente(clientes.get(i).getNome_cliente());
                 cliente.setCpf(clientes.get(i).getCpf());
-                cliente.setEmail(clientes.get(i).getEmail());
-                if(clientes.get(i).getStatus() == "A"){
-                    cliente.setStatus("Ativo");
-                }else{
-                    cliente.setStatus("Inativo");
-                }
+                cliente.setEmail(clientes.get(i).getEmail());                
                 cliente.setStatus(clientes.get(i).getStatus());
 
                 SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");

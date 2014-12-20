@@ -9,7 +9,7 @@ import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.view.AtendimentoLocacao;
-import br.com.locadora.view.EntradaCaixa;
+import br.com.locadora.view.EntradaCaixaLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -91,17 +91,17 @@ public class Printer {
                     linhasTxt.print(moeda.setPrecoFormat(String.valueOf(AtendimentoLocacao.jtbl_locacao.getValueAt(x, 2).toString())));
                     linhasTxt.println();
                 }
-                Double total_locacao = moeda.getPrecoFormato(EntradaCaixa.jtf_valor_total_a_pagar.getText());
-                Double desconto = moeda.getPrecoFormato(EntradaCaixa.jtf_desconto.getText());
+                Double total_locacao = moeda.getPrecoFormato(EntradaCaixaLocacao.jtf_valor_total_a_pagar.getText());
+                Double desconto = moeda.getPrecoFormato(EntradaCaixaLocacao.jtf_desconto.getText());
                 Double subTotal = total_locacao - desconto;
 
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixa.jtf_debito_anterior.getText());
-                linhasTxt.println("Valor Locação (-):          " + EntradaCaixa.jtf_valor_total_locacao.getText());
-                linhasTxt.println("Valor Desconto (+):         " + EntradaCaixa.jtf_desconto.getText());
+                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaLocacao.jtf_debito_anterior.getText());
+                linhasTxt.println("Valor Locação (-):          " + EntradaCaixaLocacao.jtf_valor_total_locacao.getText());
+                linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaLocacao.jtf_desconto.getText());
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
-                linhasTxt.println("Valor Pago (+):             " + EntradaCaixa.jtf_valor_pago.getText());
-                linhasTxt.println("Troco (-):                  " + EntradaCaixa.jtf_troco.getText());
+                linhasTxt.println("Valor Pago (+):             " + EntradaCaixaLocacao.jtf_valor_pago.getText());
+                linhasTxt.println("Troco (-):                  " + EntradaCaixaLocacao.jtf_troco.getText());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Usuário: " + usuario.getNome_usuario());

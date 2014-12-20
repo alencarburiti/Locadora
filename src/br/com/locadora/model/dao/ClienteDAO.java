@@ -44,12 +44,20 @@ public class ClienteDAO implements InterfaceClienteDAO {
             "    CODIGO_CLIENTE = ?;";
         
         String sqlAtualizar2 = "UPDATE DEPENDENTE SET\n" +
-            "NOME_DEPENDENTE = ?\n" +
+            "NOME_DEPENDENTE = ?,\n" +
+            "DEL_FLAG = ?,\n" +
+            "DATA_NASCIMENTO = ?\n" +
             "WHERE CLIENTE_CODIGO_CLIENTE = ?\n" +
             "AND TIPO_DEPENDENTE = 0;";
         try {
+            
+        
             ps = con.prepareStatement(sqlAtualizar);
 
+            Date data_nascimento = null;
+            if (cliente.getData_nascimento() != null) {
+                data_nascimento = new Date(cliente.getData_nascimento().getTime());
+            }        
             setPreparedStatement(cliente, ps);
 
             ps.executeUpdate();
@@ -57,7 +65,13 @@ public class ClienteDAO implements InterfaceClienteDAO {
             ps = null;
             ps = con.prepareStatement(sqlAtualizar2);
             ps.setString(1, cliente.getNome_cliente());
-            ps.setInt(2, cliente.getCodigo_cliente());
+            if(cliente.getStatus() == true){
+                    ps.setInt(2, 0);
+                } else {
+                    ps.setInt(2, 1);
+                }            
+            ps.setDate(3,data_nascimento);
+            ps.setInt(4, cliente.getCodigo_cliente());
             ps.executeUpdate();                        
             ps.close();
             
@@ -284,7 +298,11 @@ public class ClienteDAO implements InterfaceClienteDAO {
             cliente.setCidade(rs.getString("CIDADE"));
             cliente.setEstado(rs.getString("ESTADO"));
             cliente.setEmail(rs.getString("EMAIL"));
-            cliente.setStatus(rs.getString("DEL_FLAG"));
+            if(rs.getInt("DEL_FLAG") == 0){
+                cliente.setStatus(true);                
+            } else {
+                cliente.setStatus(false);                
+            }
             cliente.setObservacao(rs.getString("OBSERVACAO"));
             resultado.add(cliente);
         }
@@ -343,7 +361,11 @@ public class ClienteDAO implements InterfaceClienteDAO {
         ps.setString(10, cliente.getEstado());
         ps.setString(11, cliente.getEmail());
         ps.setString(12, cliente.getObservacao());
-        ps.setString(13, cliente.getStatus());
+        if(cliente.getStatus() == true){
+            ps.setInt(13, 0);            
+        } else {
+            ps.setInt(13, 1);            
+        }
         ps.setInt(14, cliente.getCodigo_cliente());
 
     }
@@ -369,7 +391,12 @@ public class ClienteDAO implements InterfaceClienteDAO {
         ps.setString(12, cliente.getLogin());
         ps.setString(13, cliente.getSenha());
         ps.setString(14, cliente.getObservacao());        
-        ps.setString(15, cliente.getStatus());
+        if(cliente.getStatus() == true){
+            ps.setInt(15, 0);            
+        } else {
+            ps.setInt(15, 1);            
+        }
+        
     }
 
 }

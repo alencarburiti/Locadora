@@ -17,6 +17,7 @@ public class Copia {
     private String idioma;
     private String legenda;
     private Date data_aquisicao;
+    private Date data_prevista;
     private Double preco_custo;
     private Objeto objeto;
     private String status;
@@ -93,6 +94,14 @@ public class Copia {
 
     public void setNumero_copia(Integer numero_copia) {
         this.numero_copia = numero_copia;
+    }
+
+    public Date getData_prevista() {
+        return data_prevista;
+    }
+
+    public void setData_prevista(Date data_prevista) {
+        this.data_prevista = data_prevista;
     }
 
 }

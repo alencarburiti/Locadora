@@ -286,7 +286,7 @@ public class ConsultaGeneroObjeto extends javax.swing.JFrame {
 
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
-        if (jtbl_genero.getSelectedRow() == 1) {
+        if (jtbl_genero.getSelectedRow() != 1) {
             botaoOK(jtbl_genero);
         }
 }//GEN-LAST:event_jb_okActionPerformed

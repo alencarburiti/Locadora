@@ -8,12 +8,15 @@ import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Genero;
+import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.CopiaDAO;
+import br.com.locadora.model.dao.ObjetoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Data;
+import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
@@ -28,6 +31,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -45,8 +50,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     public static Genero genero;
     public AcessoUsuario acesso;
     public Copia copia;
-    public MaskFormatter formatoData, formatoCPF, formatoTelefone;
+    public MaskFormatter formatoData, formatoCPF, formatoTelefone, formatoNumero;
     public Moeda moeda;
+    public ObjetoDAO objetoDAO;
+    public InterfacePool pool;
+    public List<Copia> copias;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -76,14 +84,13 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jtf_codigo_objeto = new javax.swing.JTextField();
         jtf_titulo_original = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
-        jtf_titulo = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_titulo = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jtf_duracao = new javax.swing.JTextField();
+        jtf_duracao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel15 = new javax.swing.JLabel();
-        jtf_censura = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jb_genero = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
@@ -104,6 +111,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jcb_tipo = new javax.swing.JComboBox();
         jLabel40 = new javax.swing.JLabel();
         jtf_descricao_genero = new javax.swing.JTextField();
+        jtf_censura = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -121,7 +129,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         jcb_legenda = new javax.swing.JComboBox();
         jLabel29 = new javax.swing.JLabel();
-        jtf_preco_custo = new javax.swing.JTextField();
+        jtf_preco_custo = new javax.swing.JTextField(new LimitadorTexto(10), "",10);
         jLabel31 = new javax.swing.JLabel();
         try  {
             formatoData = new MaskFormatter("##/##/####");
@@ -241,19 +249,6 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel15.setText("Censura*");
         jLabel15.setName("jLabel15"); // NOI18N
-
-        jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
-            public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
-                jtf_censura.setText(jtf_censura.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
-            }
-        });
-        jtf_censura.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jtf_censura.setName("jtf_censura"); // NOI18N
-        jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_censuraKeyPressed(evt);
-            }
-        });
 
         jLabel23.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel23.setText("Gênero");
@@ -397,6 +392,21 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             }
         });
 
+        jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
+
+            public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
+
+                jtf_censura.setText(jtf_censura.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
+
+            }
+        });
+        jtf_censura.setName("jtf_censura"); // NOI18N
+        jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_censuraKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -426,8 +436,8 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
-                            .addComponent(jtf_censura, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                            .addComponent(jtf_censura, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jcb_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -510,9 +520,9 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                             .addComponent(jLabel15)
                             .addGap(0, 0, 0)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jtf_censura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jtf_duracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jcb_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jcb_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtf_censura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel14)
                             .addGap(29, 29, 29))))
@@ -535,6 +545,8 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                     .addComponent(jtf_descricao_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_censura, jtf_duracao});
 
         jtp_menu.addTab("Cadastro", jPanel1);
 
@@ -615,6 +627,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jb_adicionar_copia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_copia.setToolTipText("Incluir");
         jb_adicionar_copia.setName("jb_adicionar_copia"); // NOI18N
+        jb_adicionar_copia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_adicionar_copiaMouseClicked(evt);
+            }
+        });
         jb_adicionar_copia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_adicionar_copiaActionPerformed(evt);
@@ -881,13 +898,13 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        enviaDados();
+        cadastrarObjeto();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            enviaDados();
+            cadastrarObjeto();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarKeyPressed
@@ -935,14 +952,6 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             jtf_censura.requestFocus();
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jtf_duracaoKeyPressed
-
-    private void jtf_censuraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_censuraKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jcb_tipo.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_censuraKeyPressed
 
     private void jb_generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_generoActionPerformed
         ConsultaGeneroObjeto consultaGenero = new ConsultaGeneroObjeto();
@@ -1034,24 +1043,13 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descricao_generoActionPerformed
 
     private void jb_adicionar_copiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaActionPerformed
-
-        if (jtf_codigo_objeto.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Salvar primeiro o Objeto");
-        } else {
-            if (verificarCamposCopia() == true) {
-                controller = new SiscomController();
-                controller.processarRequisicao("cadastrarCopia");
-                jtf_data_aquisicao.setText("");
-                jtf_preco_custo.setText("R$ 0,00");
-                jcb_idioma.requestFocus();
-            }
-        }
+        
     }//GEN-LAST:event_jb_adicionar_copiaActionPerformed
 
     private void jb_adicionar_copiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_adicionar_copia.doClick();
+            cadastrarCopia();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_copiaKeyPressed
@@ -1116,28 +1114,21 @@ public final class CadastroObjeto extends javax.swing.JFrame {
 
             if (jtf_data_aquisicao.getText().trim().length() < 10) {
                 jtf_data_aquisicao.setForeground(Color.red);
-                jtf_data_aquisicao.requestFocus();
             } else if (jtf_data_aquisicao.getText().equals("  /  /    ")) {
                 jtf_data_aquisicao.setForeground(Color.red);
-                jtf_data_aquisicao.requestFocus();
             } else {
                 if (validaData(jtf_data_aquisicao.getText())) {
-
                     jtf_data_aquisicao.setForeground(Color.black);
-
                 } else {
                     jtf_data_aquisicao.setForeground(Color.red);
-                    jtf_data_aquisicao.requestFocus();
                 }
 
             }
         } catch (ParseException ex) {
             jtf_data_aquisicao.setForeground(Color.red);
-            jtf_data_aquisicao.requestFocus();
         } catch (NumberFormatException ex) {
             jtf_data_aquisicao.setText("  /  /    ");
             jtf_data_aquisicao.setForeground(Color.red);
-            jtf_data_aquisicao.requestFocus();
         }
     }//GEN-LAST:event_jtf_data_aquisicaoFocusLost
 
@@ -1164,13 +1155,28 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jta_sinopseKeyPressed
 
     private void jtf_preco_custoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco_custoFocusGained
-        jtf_preco_custo.setText("");
+        jtf_preco_custo.selectAll();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_preco_custoFocusGained
 
     private void jtf_data_aquisicaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_data_aquisicaoFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_data_aquisicaoFocusGained
+
+    private void jtf_censuraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_censuraKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jcb_tipo.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_censuraKeyPressed
+
+    private void jb_adicionar_copiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaMouseClicked
+        if(evt.getClickCount() == 1){
+            cadastrarCopia();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_copiaMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1226,7 +1232,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     public static javax.swing.JTextArea jta_elenco;
     public static javax.swing.JTextArea jta_sinopse;
     public static javax.swing.JTable jtbl_copia;
-    public static javax.swing.JTextField jtf_censura;
+    private javax.swing.JFormattedTextField jtf_censura;
     public static javax.swing.JTextField jtf_codigo_objeto;
     public static javax.swing.JFormattedTextField jtf_data_aquisicao;
     private javax.swing.JTextField jtf_descricao_diaria;
@@ -1246,21 +1252,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         } else {
         }
     }
-
-    InterfacePool pool;
     SiscomController controller;
-
-    private void enviaDados() {
-        if (verificarCampos()) {
-            controller = new SiscomController();
-            controller.processarRequisicao("cadastrarObjeto");
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-
-            jtp_menu.setSelectedIndex(2);
-            jcb_idioma.requestFocus();
-
-        }
-    }
 
     public boolean verificarCampos() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
@@ -1306,9 +1298,38 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     public boolean verificarCamposCopia() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
-        if (jtf_data_aquisicao.getForeground().equals(Color.RED) || jtf_data_aquisicao.getText().trim().length() < 2) {
-            msgERRO = msgERRO + " *Data de Aquisição\n";
+        try {
+            Data data = new Data();
+            int idade;
+
+            if (jtf_data_aquisicao.getText().trim().length() != 10) {
+                jtf_data_aquisicao.setForeground(Color.red);
+                msgERRO = msgERRO + " *Data de Aquisição inválida\n";
+            } else if (jtf_data_aquisicao.getText().equals("  /  /    ")) {
+                jtf_data_aquisicao.setForeground(Color.red);
+                msgERRO = msgERRO + " *Data de Aquisição inválida\n";
+            } else {
+                if (validaData(jtf_data_aquisicao.getText())) {
+                    jtf_data_aquisicao.setForeground(Color.black);
+                } else {
+                    jtf_data_aquisicao.setForeground(Color.red);
+                    msgERRO = msgERRO + " *Data de Aquisição inválida\n";
+                }
+
+            }
+        } catch (ParseException ex) {
+            jtf_data_aquisicao.setForeground(Color.red);
+            msgERRO = msgERRO + " *Data de Aquisição inválida\n";
+        } catch (NumberFormatException ex) {
+            jtf_data_aquisicao.setText("  /  /    ");
+            jtf_data_aquisicao.setForeground(Color.red);
+            msgERRO = msgERRO + " *Data de Aquisição inválida\n";
         }
+        
+//        if (jtf_data_aquisicao.getForeground().equals(Color.RED) || jtf_data_aquisicao.getText().trim().length() != 10) {
+//            System.out.println("Tamanho data_aquisicao: "+jtf_data_aquisicao.getText().trim().length());
+//            msgERRO = msgERRO + " *Data de Aquisição inválida\n";
+//        }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
@@ -1461,7 +1482,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            enviaDados();
+            cadastrarObjeto();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
@@ -1512,5 +1533,145 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             return (true);
         }
         return false;
+    }
+
+    public void cadastrarObjeto() {
+
+        try {
+
+            if (verificarCampos()) {
+
+                pool = new Pool();
+                objetoDAO = new ObjetoDAO(pool);
+                Objeto objeto = new Objeto();
+                objeto.setTitulo(jtf_titulo.getText().trim());
+                objeto.setTitulo_original(jtf_titulo_original.getText().trim());
+                objeto.setTipo_movimento((String) jcb_tipo.getSelectedItem());
+                objeto.setProducao((String) jcb_producao.getSelectedItem());
+                objeto.setDuracao(jtf_duracao.getText().trim());
+                objeto.setMidia((String) jcb_midia.getSelectedItem());
+                objeto.setTipo_midia((String) jcb_tipo_midia.getSelectedItem());
+                objeto.setGenero(getObjetoGenero());
+                objeto.setDiaria(getObjetoDiaria());
+                if (jta_elenco.getText().length() > 1000) {
+                    objeto.setElenco(jta_elenco.getText().substring(0, 1000));
+                } else {
+                    objeto.setElenco(jta_elenco.getText().trim());
+                }
+                if (jta_sinopse.getText().length() > 1000) {
+                    objeto.setSinopse(jta_sinopse.getText().substring(0, 1000));
+                } else {
+                    objeto.setSinopse(jta_sinopse.getText().trim());
+                }
+                objeto.setCensura(Integer.parseInt(jtf_censura.getText()));
+                if (jrb_ativo.isSelected() == true) {
+                    objeto.setStatus("0");
+                } else {
+                    objeto.setStatus("1");
+                }
+                if (jtf_codigo_objeto.getText().isEmpty()) {
+
+                    objeto = objetoDAO.salvar(objeto);
+                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+
+                    jtf_codigo_objeto.setText(String.valueOf(objeto.getCodigo_objeto()));
+
+                } else {
+                    objeto.setCodigo_objeto(Integer.parseInt(jtf_codigo_objeto.getText()));
+                    objetoDAO.atualizar(objeto);
+                    JOptionPane.showMessageDialog(null, "Alteração efetuada com sucesso");
+                }
+                jtp_menu.setSelectedIndex(2);
+                jcb_idioma.requestFocus();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage() + "Problemas com a gravação: ");
+
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Valor inválido: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Valor inválido: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void cadastrarCopia() {
+        try {
+            if (jtf_codigo_objeto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Salvar primeiro o Objeto");
+            } else {
+                if (verificarCamposCopia() == true) {
+
+                    Moeda moeda = new Moeda();
+                    Copia copia = new Copia();
+                    Objeto objeto = new Objeto();
+
+                    objeto.setCodigo_objeto(Integer.parseInt(jtf_codigo_objeto.getText()));
+                    System.out.println("Código do Objeto: " + Integer.parseInt(jtf_codigo_objeto.getText()));
+                    copia.setObjeto(objeto);
+
+                    copia.setIdioma((String) jcb_idioma.getSelectedItem());
+                    copia.setLegenda((String) jcb_legenda.getSelectedItem());
+                    copia.setPreco_custo(moeda.getPrecoFormato((String) jtf_preco_custo.getText()));
+                    pool = new Pool();
+                    CopiaDAO copiaDAO = new CopiaDAO(pool);
+
+                    copia.setData_aquisicao(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_aquisicao.getText()));
+                    copiaDAO.salvar(copia);
+                    carregaCopia(objeto.getCodigo_objeto());
+                    
+                    jtf_data_aquisicao.setText("");
+                    jtf_preco_custo.setText("R$ 0,00");
+                    jcb_idioma.requestFocus();
+                }
+            }
+
+
+        } catch (NumberFormatException e) {
+            System.out.println("Valor inválido: " + e.getMessage());
+
+            e.printStackTrace();
+        } catch (Exception ex) {
+
+        }
+
+    }
+
+    public void carregaCopia(Integer codigo_objeto) {
+        try {
+            if (codigo_objeto != null) {
+                pool = new Pool();
+                CopiaDAO copiaDAO = new CopiaDAO(pool);
+                copias = null;
+                copias = copiaDAO.getCopia_codigo_objeto(codigo_objeto, 1, "");
+                if (copias != null && copias.size() > 0) {
+                    DefaultTableModel tableModel = (DefaultTableModel) jtbl_copia.getModel();
+                    tableModel.setNumRows(0);
+
+                    for (int i = 0; i < copias.size(); i++) {
+                        String preco_custo;
+
+                        preco_custo = String.valueOf(copias.get(i).getPreco_custo());
+                        Moeda moeda = new Moeda();
+                        preco_custo = moeda.setPrecoFormat(preco_custo);
+
+                        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                        String data_aquisicao = out.format(in.parse(copias.get(i).getData_aquisicao().toString()));
+
+                        DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
+                        ItemDbGrid hashDbGrid = new ItemDbGrid(copias.get(i), copias.get(i).getCodigo_barras());
+                        row.addRow(new Object[]{copias.get(i).getCodigo_copia(), copias.get(i).getNumero_copia(),
+                            hashDbGrid, copias.get(i).getIdioma(), copias.get(i).getLegenda(), preco_custo, data_aquisicao});
+
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AtualizaObjeto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AtualizaObjeto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

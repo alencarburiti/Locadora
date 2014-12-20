@@ -23,12 +23,28 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
     public void atualizar(Objeto objeto) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
+        String sqlAtualizar = "UPDATE `LOCADORA`.`OBJETO`\n" +
+            "SET\n" +
+            "`TITULO` = ?,\n" +
+            "`TITULO_ORIGINAL` = ?,\n" +
+            "`TIPO_MOVIMENTO` = ?,\n" +
+            "`PRODUCAO` = ?,\n" +
+            "`DURACAO` = ?,\n" +
+            "`MIDIA` = ?,\n" +
+            "`TIPO_MIDIA` = ?,\n" +
+            "`ELENCO` = ?,\n" +
+            "`SINOPSE` = ?,\n" +
+            "`CENSURA` = ?,\n" +
+            "`GENERO_CODIGO_GENERO` = ?,\n" +
+            "`DIARIA_CODIGO_DIARIA` = ?,\n" +
+            "`DEL_FLAG` = ?\n" +
+            "WHERE `CODIGO_OBJETO` = ?;";
         try {
-            ps = con.prepareCall("{CALL SP_UPDATE_OBJETO_BY_PK(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            ps = con.prepareStatement(sqlAtualizar);
             
             setPreparedStatement(objeto, ps);
 
-            ps.execute();
+            ps.executeUpdate();
             ps.close();
         } finally {
             pool.liberarConnection(con);
@@ -239,20 +255,20 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
     private void setPreparedStatement(Objeto objeto, PreparedStatement ps)
             throws SQLException {
         
-        ps.setInt(1, objeto.getCodigo_objeto());
-        ps.setString(2, objeto.getTitulo());
-        ps.setString(3, objeto.getTitulo_original());        
-        ps.setString(4, objeto.getTipo_movimento());
-        ps.setString(5, objeto.getProducao());
-        ps.setString(6, objeto.getDuracao());
-        ps.setString(7, objeto.getMidia());
-        ps.setString(8, objeto.getTipo_midia());
-        ps.setString(9, objeto.getElenco());
-        ps.setString(10, objeto.getSinopse());
-        ps.setInt(11, objeto.getCensura());
-        ps.setInt(12, objeto.getGenero().getCodigo_genero());
-        ps.setInt(13, objeto.getDiaria().getCodigo_diaria());
-        ps.setInt(14, Integer.parseInt(objeto.getStatus()));
+        ps.setString(1, objeto.getTitulo());
+        ps.setString(2, objeto.getTitulo_original());        
+        ps.setString(3, objeto.getTipo_movimento());
+        ps.setString(4, objeto.getProducao());
+        ps.setString(5, objeto.getDuracao());
+        ps.setString(6, objeto.getMidia());
+        ps.setString(7, objeto.getTipo_midia());
+        ps.setString(8, objeto.getElenco());
+        ps.setString(9, objeto.getSinopse());
+        ps.setInt(10, objeto.getCensura());
+        ps.setInt(11, objeto.getGenero().getCodigo_genero());
+        ps.setInt(12, objeto.getDiaria().getCodigo_diaria());
+        ps.setInt(13, Integer.parseInt(objeto.getStatus()));
+        ps.setInt(14, objeto.getCodigo_objeto());
         System.out.println("6 - Diária alterar código: "+objeto.getDiaria().getCodigo_diaria());
         System.out.println("6 - Diária alterar descrição: "+objeto.getDiaria().getNome_diaria());
     }

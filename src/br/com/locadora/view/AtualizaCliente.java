@@ -92,7 +92,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             jtf_estado.setText(objetoCliente.getEstado());
             jtf_email.setText(objetoCliente.getEmail());
             System.out.println("Status: " + objetoCliente.getStatus());
-            if (objetoCliente.getStatus().equals("0")) {
+            if (objetoCliente.getStatus() == true) {
                 jrb_ativo.setSelected(true);
             } else {
                 jrb_inativo.setSelected(true);
@@ -120,7 +120,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jb_cancelar = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jtp_cliente = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jtf_codigo_cliente = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -172,7 +172,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         }
         jtf_telefone = new JFormattedTextField(formatoTelefone);
         jb_adicionar_telefone = new javax.swing.JButton();
-        jb_eliminar = new javax.swing.JButton();
+        jb_eliminar_telefone = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jtbl_telefone = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
@@ -251,9 +251,9 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
-        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_salvarActionPerformed(evt);
+        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_salvarMouseClicked(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -265,10 +265,10 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jLabel2.setText("Observação: Os campos com asteristico são obrigatórios ");
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
-        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtp_cliente.setName("jtp_cliente"); // NOI18N
+        jtp_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTabbedPane1MouseClicked(evt);
+                jtp_clienteMouseClicked(evt);
             }
         });
 
@@ -518,9 +518,9 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jb_adicionar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_telefone.setToolTipText("Incluir");
         jb_adicionar_telefone.setName("jb_adicionar_telefone"); // NOI18N
-        jb_adicionar_telefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_adicionar_telefoneActionPerformed(evt);
+        jb_adicionar_telefone.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_adicionar_telefoneMouseClicked(evt);
             }
         });
         jb_adicionar_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -529,12 +529,12 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             }
         });
 
-        jb_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
-        jb_eliminar.setToolTipText("Excluir");
-        jb_eliminar.setName("jb_eliminar"); // NOI18N
-        jb_eliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_eliminarActionPerformed(evt);
+        jb_eliminar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_eliminar_telefone.setToolTipText("Excluir");
+        jb_eliminar_telefone.setName("jb_eliminar_telefone"); // NOI18N
+        jb_eliminar_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_eliminar_telefoneKeyPressed(evt);
             }
         });
 
@@ -565,6 +565,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             }
         });
         jtbl_telefone.setName("jtbl_telefone"); // NOI18N
+        jtbl_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_telefoneKeyPressed(evt);
+            }
+        });
         jScrollPane4.setViewportView(jtbl_telefone);
 
         jLabel17.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
@@ -595,7 +600,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jb_adicionar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jb_eliminar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(10, 10, 10))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel21)
@@ -736,14 +741,14 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jb_adicionar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jb_eliminar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2))
                 .addGap(10, 10, 10))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_bairro, jtf_cidade, jtf_complemento, jtf_cpf_cliente, jtf_data_nascimento, jtf_email, jtf_empresa, jtf_endereco, jtf_estado, jtf_nome_cliente, jtf_profissao});
 
-        jTabbedPane1.addTab("Cliente Titular", jPanel3);
+        jtp_cliente.addTab("Cliente Titular", jPanel3);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel2.setName("jPanel2"); // NOI18N
@@ -756,9 +761,9 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_dependente.setToolTipText("Incluir");
         jb_adicionar_dependente.setName("jb_adicionar_dependente"); // NOI18N
-        jb_adicionar_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_adicionar_dependenteActionPerformed(evt);
+        jb_adicionar_dependente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_adicionar_dependenteMouseClicked(evt);
             }
         });
         jb_adicionar_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -770,6 +775,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_eliminar_dependente.setToolTipText("Excluir");
         jb_eliminar_dependente.setName("jb_eliminar_dependente"); // NOI18N
+        jb_eliminar_dependente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_eliminar_dependenteMouseClicked(evt);
+            }
+        });
         jb_eliminar_dependente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_eliminar_dependenteActionPerformed(evt);
@@ -871,6 +881,16 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jcb_parentesco.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_parentesco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Esposa", "Esposo", "Filho", "Filha", "Neta", "Neto", "Pai", "Mãe", "Irmão", "Irmã", "Sobrinho", "Sobrinha", "Avô", "Avó", "Tio", "Tia", "Namorada", "Namorado", "Noiva", "Noivo", "Cunhado", "Cunhada", "Primo", "Prima", "Amigo", "Amiga", "Outro" }));
         jcb_parentesco.setName("jcb_parentesco"); // NOI18N
+        jcb_parentesco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_parentescoActionPerformed(evt);
+            }
+        });
+        jcb_parentesco.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jcb_parentescoFocusGained(evt);
+            }
+        });
         jcb_parentesco.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jcb_parentescoKeyPressed(evt);
@@ -879,15 +899,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
         jtf_telefone_dependente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_telefone_dependente.setName("jtf_telefone_dependente"); // NOI18N
-        jtf_telefone_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_telefone_dependenteActionPerformed(evt);
-            }
-        });
         jtf_telefone_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_telefone_dependenteFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtf_telefone_dependenteFocusLost(evt);
             }
@@ -895,9 +907,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jtf_telefone_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_telefone_dependenteKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_telefone_dependenteKeyReleased(evt);
             }
         });
 
@@ -984,12 +993,16 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                             .addComponent(jcb_parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(14, 14, 14)))))
                 .addGap(14, 14, 14))
         );
         jPanel2Layout.setVerticalGroup(
@@ -1030,7 +1043,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_parentesco, jtf_cpf_dependente, jtf_data_nascimento_dependente, jtf_nome_dependente, jtf_telefone_dependente});
 
-        jTabbedPane1.addTab("Dependentes", jPanel2);
+        jtp_cliente.addTab("Dependentes", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1047,34 +1060,30 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
-                .addGap(10, 10, 10))
+                .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(920, 553));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         retornaJanelaPai();
 }//GEN-LAST:event_jb_cancelarActionPerformed
-
-    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        atualizarCliente();
-}//GEN-LAST:event_jb_salvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jtf_nome_cliente.requestFocus();
@@ -1084,11 +1093,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
-
-    private void jb_adicionar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteActionPerformed
-        adicionarDependente();
-// TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
 
     private void jb_eliminar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteActionPerformed
         removeDependente(jtbl_dependente);
@@ -1109,17 +1113,18 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2FocusGained
 
     private void jb_adicionar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteKeyPressed
+
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_adicionar_dependente.doClick();
+            adicionarDependente();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_dependenteKeyPressed
 
-    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+    private void jtp_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtp_clienteMouseClicked
         jtf_nome_dependente.requestFocus();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTabbedPane1MouseClicked
+    }//GEN-LAST:event_jtp_clienteMouseClicked
 
     private void jtf_cpf_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteActionPerformed
         // TODO add your handling code here:
@@ -1169,24 +1174,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jcb_parentescoKeyPressed
 
-    private void jtf_telefone_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteActionPerformed
-
-    private void jtf_telefone_dependenteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteFocusGained
-
-    private void jtf_telefone_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusLost
-        if (verificar_campo_telefone(jtf_telefone_dependente.getText()) == false) {
-            jtf_telefone_dependente.setCaretColor(Color.red);
-            jtf_telefone_dependente.requestFocus();
-        } else {
-            jtf_telefone_dependente.setCaretColor(Color.black);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteFocusLost
-
     private void jtf_telefone_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -1195,16 +1182,12 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_telefone_dependenteKeyPressed
 
-    private void jtf_telefone_dependenteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteKeyReleased
-
     private void jtf_nome_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nome_dependenteActionPerformed
 
     private void jtf_nome_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteFocusLost
-        jtf_data_nascimento_dependente.requestFocus();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nome_dependenteFocusLost
 
@@ -1223,29 +1206,29 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
             if (jtf_data_nascimento_dependente.getText().trim().length() < 10) {
                 jtf_data_nascimento_dependente.setForeground(Color.red);
-                jtf_data_nascimento_dependente.requestFocus();
+//                jtf_data_nascimento_dependente.requestFocus();
             } else if (jtf_data_nascimento_dependente.getText().equals("  /  /    ")) {
                 jtf_data_nascimento_dependente.setForeground(Color.red);
-                jtf_data_nascimento_dependente.requestFocus();
+//                jtf_data_nascimento_dependente.requestFocus();
             } else {
                 if (validaData(jtf_data_nascimento_dependente.getText())) {
                     jtf_data_nascimento_dependente.setForeground(Color.black);
 
                 } else {
                     jtf_data_nascimento_dependente.setForeground(Color.red);
-                    jtf_data_nascimento_dependente.requestFocus();
+//                    jtf_data_nascimento_dependente.requestFocus();
                 }
 
             }
         } catch (ParseException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             jtf_data_nascimento_dependente.setForeground(Color.red);
-            jtf_data_nascimento_dependente.requestFocus();
+//            jtf_data_nascimento_dependente.requestFocus();
         } catch (NumberFormatException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             jtf_data_nascimento_dependente.setText("  /  /    ");
             jtf_data_nascimento_dependente.setForeground(Color.red);
-            jtf_data_nascimento_dependente.requestFocus();
+//            jtf_data_nascimento_dependente.requestFocus();
         }
     }//GEN-LAST:event_jtf_data_nascimento_dependenteFocusLost
 
@@ -1364,10 +1347,10 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
             if (jtf_data_nascimento.getText().trim().length() < 10) {
                 jtf_data_nascimento.setForeground(Color.red);
-                jtf_data_nascimento.requestFocus();
+//                jtf_data_nascimento.requestFocus();
             } else if (jtf_data_nascimento.getText().equals("  /  /    ")) {
                 jtf_data_nascimento.setForeground(Color.red);
-                jtf_data_nascimento.requestFocus();
+//                jtf_data_nascimento.requestFocus();
             } else {
                 if (validaData(jtf_data_nascimento.getText())) {
                     idade = data.calcularIdade(new SimpleDateFormat("dd/MM/yyyy").parse((String) AtualizaCliente.jtf_data_nascimento.getText()));
@@ -1378,7 +1361,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                             //                            jtf_cpf_cliente.requestFocus();
                         } else {
                             jtf_data_nascimento.setForeground(Color.red);
-                            jtf_data_nascimento.requestFocus();
+//                            jtf_data_nascimento.requestFocus();
                         }
                     } else {
                         jtf_data_nascimento.setForeground(Color.black);
@@ -1386,19 +1369,19 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                     }
                 } else {
                     jtf_data_nascimento.setForeground(Color.red);
-                    jtf_data_nascimento.requestFocus();
+//                    jtf_data_nascimento.requestFocus();
                 }
 
             }
         } catch (ParseException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             jtf_data_nascimento.setForeground(Color.red);
-            jtf_data_nascimento.requestFocus();
+//            jtf_data_nascimento.requestFocus();
         } catch (NumberFormatException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             jtf_data_nascimento.setText("  /  /    ");
             jtf_data_nascimento.setForeground(Color.red);
-            jtf_data_nascimento.requestFocus();
+//            jtf_data_nascimento.requestFocus();
         }
     }//GEN-LAST:event_jtf_data_nascimentoFocusLost
 
@@ -1428,19 +1411,19 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                         jtf_cpf_cliente.setForeground(Color.black);
                     } else {
                         jtf_cpf_cliente.setForeground(Color.red);
-                        jtf_cpf_cliente.requestFocus();
+//                        jtf_cpf_cliente.requestFocus();
                     }
                 } else {
                     jtf_cpf_cliente.setForeground(Color.red);
-                    jtf_cpf_cliente.requestFocus();
+//                    jtf_cpf_cliente.requestFocus();
                 }
             } else {
                 jtf_cpf_cliente.setForeground(Color.red);
-                jtf_cpf_cliente.requestFocus();
+//                jtf_cpf_cliente.requestFocus();
             }
         } catch (Exception e) {
             jtf_cpf_cliente.setForeground(Color.red);
-            jtf_cpf_cliente.requestFocus();
+//            jtf_cpf_cliente.requestFocus();
         }
 
     }//GEN-LAST:event_jtf_cpf_clienteFocusLost
@@ -1480,33 +1463,17 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_telefoneKeyReleased
 
-    private void jb_adicionar_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneActionPerformed
-        try {
-            alimentarTelefone();
-        } catch (ParseException ex) {
-            Logger.getLogger(AtendimentoLocacao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jb_adicionar_telefoneActionPerformed
-
     private void jb_adicionar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                alimentarTelefone();
-            } catch (ParseException ex) {
-                Logger.getLogger(AtendimentoLocacao.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            alimentarTelefone();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_telefoneKeyPressed
 
-    private void jb_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminarActionPerformed
-        removeTelefone(jtbl_telefone);
-    }//GEN-LAST:event_jb_eliminarActionPerformed
-
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_salvar.doClick();
+            atualizarCliente();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarKeyPressed
@@ -1519,7 +1486,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private void jb_eliminar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_eliminar_dependente.doClick();
+            removeDependente(jtbl_dependente);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_eliminar_dependenteKeyPressed
@@ -1531,6 +1498,70 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_dependenteKeyPressed
+
+    private void jcb_parentescoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_parentescoFocusGained
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_parentescoFocusGained
+
+    private void jtbl_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_telefoneKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            removeTelefone(jtbl_telefone);
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_telefoneKeyPressed
+
+    private void jb_adicionar_telefoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneMouseClicked
+        if (evt.getClickCount() == 1) {
+            alimentarTelefone();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_telefoneMouseClicked
+
+    private void jb_eliminar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneKeyPressed
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            removeTelefone(jtbl_telefone);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_telefoneKeyPressed
+
+    private void jb_adicionar_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteMouseClicked
+        if (evt.getClickCount() == 1) {
+            adicionarDependente();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_dependenteMouseClicked
+
+    private void jb_eliminar_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteMouseClicked
+        if (evt.getClickCount() == 1) {
+            removeDependente(jtbl_dependente);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_dependenteMouseClicked
+
+    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
+        if (evt.getClickCount() == 1) {
+            atualizarCliente();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarMouseClicked
+
+    private void jcb_parentescoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_parentescoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_parentescoActionPerformed
+
+    private void jtf_telefone_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusLost
+        System.out.println(jtf_telefone_dependente.getText().trim().length());
+        if (jtf_telefone_dependente.getText().trim().length() != 14){
+            jtf_telefone_dependente.setForeground(Color.red);
+//            jtf_telefone_dependente.requestFocus();
+        } else {
+            jtf_telefone_dependente.setForeground(Color.black);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefone_dependenteFocusLost
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1569,12 +1600,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jb_adicionar_dependente;
     private javax.swing.JButton jb_adicionar_telefone;
     private javax.swing.JButton jb_cancelar;
-    private javax.swing.JButton jb_eliminar;
     private javax.swing.JButton jb_eliminar_dependente;
+    private javax.swing.JButton jb_eliminar_telefone;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JComboBox jcb_parentesco;
     public static javax.swing.JRadioButton jrb_ativo;
@@ -1601,6 +1631,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_profissao;
     public static javax.swing.JFormattedTextField jtf_telefone;
     public static javax.swing.JFormattedTextField jtf_telefone_dependente;
+    private javax.swing.JTabbedPane jtp_cliente;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
@@ -1703,30 +1734,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     Telefone telefone = new Telefone();
     Cliente cliente;
 
-    public void alimentarDependente(Dependente dependente) {
-
-        if (dependente != null) {
-
-            adicionarDependentes();
-
-            DefaultTableModel row = (DefaultTableModel) jtbl_dependente.getModel();
-            ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
-            row.addRow(new Object[]{dependente.getNome_dependente(), jtf_data_nascimento_dependente.getText(),
-                dependente.getTelefone(), dependente.getParentesco(), dependente.getCPF(), dependente.getStatus()});
-            jtf_nome_dependente.setText("");
-            jtf_telefone_dependente.setText("");
-            jcb_parentesco.setSelectedIndex(0);
-            jtf_data_nascimento_dependente.setText("");
-            jtf_cpf_dependente.setText("");
-            jtf_nome_dependente.requestFocus();
-            dependentes.add(dependente);
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
-        }
-
-    }
-
-    public void alimentarTelefone() throws ParseException {
+    public void alimentarTelefone() {
         if (verificar_campo_telefone(jtf_telefone.getText()) == true) { //&& (verificaTabela()
 
             adicionarTelefone();
@@ -1735,8 +1743,8 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             telefone.setTelefone(jtf_telefone.getText());
 
             DefaultTableModel row = (DefaultTableModel) jtbl_telefone.getModel();
-            ItemDbGrid hashDbGrid = new ItemDbGrid(telefone, telefone.getTelefone());
             row.addRow(new Object[]{telefone.getTelefone()});
+
             jtf_telefone.setText("");
             jtf_telefone.requestFocus();
         } else {
@@ -1819,6 +1827,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         try {
             if (codigo_cliente != null) {
                 pool = new Pool();
+                dependentes = null;
                 DependenteDAO dependenteDAO = new DependenteDAO(pool);
                 dependentes = dependenteDAO.getDependentes(codigo_cliente);
 
@@ -1918,7 +1927,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um Dependente");
+                    JOptionPane.showMessageDialog(null, "Selecione um Telefone");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -1946,38 +1955,9 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         }
     }
 
-    public void adicionarDependentes() {
-        try {
-            Dependente dependente = new Dependente();
-            List<Dependente> itens_dependente = new ArrayList();
-
-            cliente = new Cliente();
-            if (!jtf_codigo_cliente.getText().equals("")) {
-                cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
-
-                dependente.setNome_dependente(jtf_nome_dependente.getText());
-                dependente.setTipo_dependente("1");
-                dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse(jtf_data_nascimento_dependente.getText()));
-                dependente.setCPF(jtf_cpf_dependente.getText());
-                dependente.setTelefone(jtf_telefone_dependente.getText());
-                dependente.setParentesco((String) jcb_parentesco.getSelectedItem());
-
-                itens_dependente.add(dependente);
-
-                DependenteDAO dependenteDAO = new DependenteDAO(pool);
-                dependenteDAO.salvar(itens_dependente, cliente);
-            }
-
-        } catch (ParseException ex) {
-            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            jb_salvar.doClick();
+            jb_salvar.doClick(1);
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
@@ -1988,33 +1968,47 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private void adicionarDependente() {
         try {
             Dependente dependente = new Dependente();
-            if (verificar_campo_dependente() == true) {
-                dependente.setCliente(cliente);
-                dependente.setNome_dependente(jtf_nome_dependente.getText());
-                dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento_dependente.getText()));
-                dependente.setTelefone(jtf_telefone_dependente.getText());
-                dependente.setParentesco((String) jcb_parentesco.getSelectedItem());
+            if (!jtf_codigo_cliente.getText().equals("")) {
+                if (verificar_campo_dependente() == true) {
+                    Cliente cliente = new Cliente();
+                    cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
+                    dependente.setCliente(cliente);
+                    dependente.setNome_dependente(jtf_nome_dependente.getText());
+                    dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento_dependente.getText()));
+                    dependente.setTelefone(jtf_telefone_dependente.getText());
+                    dependente.setParentesco((String) jcb_parentesco.getSelectedItem());
+                    dependente.setTipo_dependente("1");
+                    if (jtf_cpf_dependente.getText().trim().length() != 14) {
+                        dependente.setCPF("");
+                    } else if (jtf_cpf_dependente.getForeground().equals(Color.RED)) {
+                        dependente.setCPF("");
+                    } else {
+                        dependente.setCPF(jtf_cpf_dependente.getText());
+                    }
 
-                if (jtf_cpf_dependente.getText().trim().length() != 14) {
-                    dependente.setCPF("");
-                } else if (jtf_cpf_dependente.getForeground().equals(Color.RED)) {
-                    dependente.setCPF("");
-                } else {
-                    dependente.setCPF(jtf_cpf_dependente.getText());
-                }
+                    if (jrb_ativo_dependente.isSelected() == true) {
+                        dependente.setStatus(true);
+                    } else {
+                        dependente.setStatus(false);
+                    }
 
-                if (jrb_ativo_dependente.isSelected() == true) {
-                    dependente.setStatus(true);
-                } else {
-                    dependente.setStatus(false);
+                    DependenteDAO dependenteDAO = new DependenteDAO(pool);
+                    dependenteDAO.salvar(dependente, cliente);
+                    
+                    carregaDependente(cliente.getCodigo_cliente());
+                    jtf_nome_dependente.setText("");
+                    jtf_data_nascimento_dependente.setText("");
+                    jtf_cpf_dependente.setText("");
+                    jtf_telefone_dependente.setText("");
+                    jcb_parentesco.setSelectedIndex(0);
                 }
-                alimentarDependente(dependente);
-                jtf_nome_dependente.requestFocus();
             } else {
-                JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
+                JOptionPane.showMessageDialog(null, "Salvar primeiro o Cliente");
             }
         } catch (ParseException ex) {
 
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex);
         }
     }
@@ -2071,31 +2065,34 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
                 cliente = new Cliente();
 
-                cliente.setCodigo_cliente(Integer.parseInt(AtualizaCliente.jtf_codigo_cliente.getText()));
-                cliente.setNome_cliente(AtualizaCliente.jtf_nome_cliente.getText());
+                cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
+                cliente.setNome_cliente(jtf_nome_cliente.getText());
 
-                cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) AtualizaCliente.jtf_data_nascimento.getText()));
+                cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
 
-                cliente.setCpf(AtualizaCliente.jtf_cpf_cliente.getText());
-                cliente.setNome_empresa_trabalho(AtualizaCliente.jtf_empresa.getText());
-                cliente.setProfissao(AtualizaCliente.jtf_profissao.getText());
-                cliente.setEndereco(AtualizaCliente.jtf_endereco.getText());
-                cliente.setBairro(AtualizaCliente.jtf_bairro.getText());
-                cliente.setComplemento(AtualizaCliente.jtf_complemento.getText());
-                cliente.setCidade(AtualizaCliente.jtf_cidade.getText());
-                cliente.setEstado(AtualizaCliente.jtf_estado.getText());
-                cliente.setEmail(AtualizaCliente.jtf_email.getText());
-                cliente.setObservacao(AtualizaCliente.jta_observacao.getText());
+                cliente.setCpf(jtf_cpf_cliente.getText());
+                cliente.setNome_empresa_trabalho(jtf_empresa.getText());
+                cliente.setProfissao(jtf_profissao.getText());
+                cliente.setEndereco(jtf_endereco.getText());
+                cliente.setBairro(jtf_bairro.getText());
+                cliente.setComplemento(jtf_complemento.getText());
+                cliente.setCidade(jtf_cidade.getText());
+                cliente.setEstado(jtf_estado.getText());
+                cliente.setEmail(jtf_email.getText());
+                cliente.setObservacao(jta_observacao.getText());
 
-                if (AtualizaCliente.jrb_ativo.isSelected() == true) {
-                    cliente.setStatus("0");
+                if (jrb_ativo.isSelected() == true) {
+                    cliente.setStatus(true);
                 } else {
-                    cliente.setStatus("1");
+                    cliente.setStatus(false);
                 }
                 pool = new Pool();
                 clienteDAO = new ClienteDAO(pool);
                 clienteDAO.atualizar(cliente);
                 JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");
+
+                jtp_cliente.setSelectedIndex(1);
+                jtf_nome_dependente.requestFocus();
             } catch (SQLException e) {
                 System.out.println(e.getMessage() + "Problemas com a gravação: ");
 
@@ -2105,7 +2102,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
 
                 e.printStackTrace();
             } catch (ParseException ex) {
-                Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         }
     }

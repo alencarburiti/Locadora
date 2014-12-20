@@ -64,7 +64,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
     public void excluirPromocaoLocacao(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlExcluir = "DELETE FROM PROMOCAO WHERE CODIGO_PROMOCAO = ?;";
+        String sqlExcluir = "DELETE FROM PROMOCAO_LOCACAO WHERE CODIGO_PROMOCAO = ?;";
 
         try {
             ps = con.prepareStatement(sqlExcluir);
@@ -187,7 +187,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
         List<Diaria> resultado = new ArrayList<Diaria>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM DIARIA A, PROMOCAO B WHERE A.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA;";
+        String sqlSelect = "SELECT * FROM DIARIA A, PROMOCAO_LOCACAO B WHERE A.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA;";
         ResultSet rs = null;
 
         try {
@@ -210,7 +210,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
         List<Diaria> resultado = new ArrayList<Diaria>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM DIARIA A, PROMOCAO B WHERE A.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA and codigo_diaria = ?"
+        String sqlSelect = "SELECT * FROM DIARIA A, PROMOCAO_LOCACAO B WHERE A.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA and codigo_diaria = ?"
                 + " ORDER BY ORDEM;";
         ResultSet rs = null;
 
@@ -341,7 +341,12 @@ public class DiariaDAO implements InterfaceDiariaDAO {
             diaria.setValor(rs.getDouble("VALOR"));
             diaria.setMultas(rs.getDouble("MULTAS"));
             diaria.setDias(rs.getInt("DIAS"));
-
+            if (rs.getInt("ACUMULATIVO") == 0) {
+                diaria.setAcumulativo(true);
+            } else {
+                diaria.setAcumulativo(false);
+            }
+            
             resultado.add(diaria);
         }
         return resultado;
@@ -485,7 +490,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
 
             ResultSet res;
             Integer codigo_max;
-            String sql_max = "SELECT MAX(CODIGO_PROMOCAO) FROM PROMOCAO";
+            String sql_max = "SELECT MAX(CODIGO_PROMOCAO) FROM PROMOCAO_LOCACAO";
 
             ps = con.prepareStatement(sql_max);
             res = ps.executeQuery();

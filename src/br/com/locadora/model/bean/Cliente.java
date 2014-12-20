@@ -31,7 +31,7 @@ public class Cliente {
     private String login;
     private String senha;
     private String observacao;
-    private String status;
+    private boolean status;
 
     public Cliente() {
 
@@ -185,11 +185,11 @@ public class Cliente {
         this.observacao = observacao;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

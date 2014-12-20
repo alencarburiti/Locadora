@@ -21,6 +21,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -157,7 +159,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                     jtbl_copia.getColumnModel().getColumn(0).setPreferredWidth(40);
                     jtbl_copia.getColumnModel().getColumn(1).setPreferredWidth(100);
                     jtbl_copia.getColumnModel().getColumn(2).setPreferredWidth(150);
-                    jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(20);
+                    jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(40);
                 }
 
                 buttonGroup1.add(jrb_titulo);
@@ -206,14 +208,14 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                                 .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(jb_buscar))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jrb_titulo)
                                 .addGap(10, 10, 10)
                                 .addComponent(jrb_ator)
                                 .addGap(10, 10, 10)
                                 .addComponent(jrb_codigo_barras))
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10))
                 );
                 jPanel1Layout.setVerticalGroup(
@@ -264,11 +266,11 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 jPanel2Layout.setHorizontalGroup(
                     jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(290, 290, 290)
+                        .addGap(315, 315, 315)
                         .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(315, 315, 315))
                 );
 
                 jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_ok});
@@ -292,8 +294,8 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(20, 20, 20))
                 );
                 layout.setVerticalGroup(
@@ -306,7 +308,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                         .addGap(20, 20, 20))
                 );
 
-                setSize(new java.awt.Dimension(832, 499));
+                setSize(new java.awt.Dimension(901, 499));
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -401,6 +403,14 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             botaoOK(jtbl_copia);
         }
+        if (evt.getKeyCode() == KeyEvent.VK_F5) {
+            jtf_consulta.requestFocus();
+        }
+                if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            janelapai.setStatusTela(true);
+                    setVisible(false);
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_copiaKeyPressed
 
@@ -478,6 +488,14 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         copias = copiaDAO.getCopia_titulo(titulo);
         mostraCopia(copias);
     }
+    
+    public void listaCopia_titulo_original(String titulo) throws SQLException {
+        pool = new Pool();
+        CopiaDAO copiaDAO = new CopiaDAO(pool);
+        copias = null;
+        copias = copiaDAO.getCopia_titulo(titulo);
+        mostraCopia(copias);
+    }
 
     public void listaCopia_ator(String ator) throws SQLException {
         pool = new Pool();
@@ -520,12 +538,26 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 copia.setLegenda(copias.get(i).getLegenda());
                 copia.setObjeto(copias.get(i).getObjeto());
                 copia.setCodigo_barras(copias.get(i).getCodigo_barras());
-
+                copia.setStatus(copias.get(i).getStatus());
+                copia.setData_prevista(copias.get(i).getData_prevista());
+                System.out.println("Data Prevista adicionada na tabela: "+ copias.get(i).getData_prevista());
+                
+                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                String data_prevista = "";
+                try {
+                    if(copia.getData_prevista() != null){
+                        data_prevista = out.format(in.parse(copia.getData_prevista().toString()));                        
+                    }
+                } catch (ParseException ex) {
+//                    data_prevista = "";
+                }
+                
                 DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_copia(), copia.getCodigo_barras(),
                     hashDbGrid, copia.getIdioma(), copia.getLegenda(),
-                    copia.getObjeto().getTipo_midia(), copia.getStatus()});
+                    copia.getObjeto().getTipo_midia(), copia.getStatus(), data_prevista});
 
             }
             jtbl_copia.requestFocus();

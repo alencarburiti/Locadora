@@ -130,7 +130,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Cód. Cliente", "Nome do Cliente/Dependente", "Data Nascimento", "Situação", "Tipo do Cliente", "Cód. Dependente"
+                        "Cód. Cliente", "Nome do Cliente/Dependente", "Data Nascimento", "Tipo do Cliente", "Situação", "Cód. Dependente"
                     }
                 ) {
                     Class[] types = new Class [] {
@@ -165,8 +165,8 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                     jtbl_cliente.getColumnModel().getColumn(0).setPreferredWidth(10);
                     jtbl_cliente.getColumnModel().getColumn(1).setPreferredWidth(180);
                     jtbl_cliente.getColumnModel().getColumn(2).setPreferredWidth(20);
-                    jtbl_cliente.getColumnModel().getColumn(3).setPreferredWidth(20);
-                    jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(40);
+                    jtbl_cliente.getColumnModel().getColumn(3).setPreferredWidth(40);
+                    jtbl_cliente.getColumnModel().getColumn(4).setPreferredWidth(20);
                     jtbl_cliente.getColumnModel().getColumn(5).setPreferredWidth(20);
                 }
 
@@ -303,7 +303,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
-        if (jtbl_cliente.getSelectedRow() == 1) {
+        if (jtbl_cliente.getSelectedRow() != -1) {
             botaoOK(jtbl_cliente);
         }
 }//GEN-LAST:event_jb_okActionPerformed
@@ -311,9 +311,17 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         if (tb != null) {
             Dependente dependente = tbClienteDependenteLinhaSelecionada(jtbl_cliente);
             if ((janelapaiLocacao != null) && (dependente != null)) {
-                setVisible(false);
-                janelapaiLocacao.carregarClienteDependente(dependente);
-                janelapaiLocacao.setStatusTela(true);
+                if(jtbl_cliente.getValueAt(jtbl_cliente.getSelectedRow(), 4) != "Cliente Inativo" ){
+                    if(jtbl_cliente.getValueAt(jtbl_cliente.getSelectedRow(), 4) != "Dependente Inativo" ){
+                        janelapaiLocacao.carregarClienteDependente(dependente);
+                        janelapaiLocacao.setStatusTela(true);                        
+                        setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Dependente Inativo. Favor consultar o titular!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cliente Inativo. Favor verificar!");
+                }
             } else if ((janelapaiDevolucao != null) && (dependente != null)) {
                 setVisible(false);
                 janelapaiDevolucao.carregarClienteDependente(dependente);
@@ -486,13 +494,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         }
     }
 
-    public void listaTodasClientes() throws SQLException {
-        pool = new Pool();
-        ClienteDAO clienteDAO = new ClienteDAO(pool);
-//        clientes = clienteDAO.getTodasClientes();
-//        mostraClienteDependente(clientes);
-    }
-
     public void mostraClienteDependente(List<Dependente> dependentes) {
         ((DefaultTableModel) jtbl_cliente.getModel()).setRowCount(0);
         jtbl_cliente.updateUI();
@@ -511,9 +512,29 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 } catch (ParseException ex) {
                     Logger.getLogger(ConsultaClienteAtendimento.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                //Escreve na tela se o cliente/dependente esta ou nao ativo
+                String status = "";
+                if(dependente.getCliente().getStatus() == true){
+                    if(dependente.getTipo_dependente().equals("Cliente")){
+                        if(dependente.getStatus() == true){
+                            status = "Ativo";
+                        } else {
+                            status = "Cliente Inativo";
+                        }                        
+                    } else if(dependente.getTipo_dependente().equals("Dependente")){
+                        if(dependente.getStatus() == true){
+                            status = "Ativo";
+                        } else {
+                            status = "Dependente Inativo";
+                        }
+                    }
+                } else {
+                    status = "Cliente Inativo";
+                }
+                        
                 DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
-                row.addRow(new Object[]{dependente.getCliente().getCodigo_cliente(), hashDbGrid, data_nascimento, dependente.getCliente().getStatus(), dependente.getTipo_dependente(), dependente.getCodigo_dependente()});
+                row.addRow(new Object[]{dependente.getCliente().getCodigo_cliente(), hashDbGrid, data_nascimento, dependente.getTipo_dependente(), status, dependente.getCodigo_dependente()});
             }
             jtbl_cliente.requestFocus();
             jtbl_cliente.setSelectionMode(0);

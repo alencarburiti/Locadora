@@ -257,7 +257,7 @@ public class MenuCliente extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 291, 2, 0);
+        gridBagConstraints.insets = new java.awt.Insets(2, 292, 1, 0);
         jPanel2.add(jb_novo, gridBagConstraints);
 
         jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
@@ -279,7 +279,7 @@ public class MenuCliente extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 10, 2, 0);
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 1, 0);
         jPanel2.add(jb_alterar, gridBagConstraints);
 
         jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
@@ -300,7 +300,7 @@ public class MenuCliente extends javax.swing.JFrame {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 10, 2, 291);
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 1, 268);
         jPanel2.add(jb_excluir, gridBagConstraints);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -319,7 +319,7 @@ public class MenuCliente extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -504,12 +504,6 @@ public class MenuCliente extends javax.swing.JFrame {
             cliente.setCidade(clientes.get(tb.getSelectedRow()).getCidade());
             cliente.setEstado(clientes.get(tb.getSelectedRow()).getEstado());
             cliente.setEmail(clientes.get(tb.getSelectedRow()).getEmail());
-
-            if (clientes.get(tb.getSelectedRow()).getStatus().equals("A")) {
-                cliente.setStatus("Ativo");
-            } else {
-                cliente.setStatus("Inativo");
-            }
             cliente.setStatus(clientes.get(tb.getSelectedRow()).getStatus());
             cliente.setObservacao(clientes.get(tb.getSelectedRow()).getObservacao());
 

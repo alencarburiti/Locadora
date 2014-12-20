@@ -192,7 +192,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
                 + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                + "        AND D.DEL_FLAG = 0\n"
+                + "        AND D.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
                 + "        AND E.CODIGO_DEPENDENTE IN (SELECT \n"
                 + "            CODIGO_DEPENDENTE\n"
@@ -342,7 +342,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
                 + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                + "        AND D.DEL_FLAG = 0\n"
+                + "        AND D.DEL_FLAG = 1\n"
                 + "        AND B.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
                 + "        AND B.CODIGO_BARRAS = ?\n"
@@ -517,7 +517,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         PreparedStatement ps;
 
         String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`COPIA_CODIGO_COPIA`, `LOCACAO_CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`,"
-                + " `VALOR_PAGO`, DATA_PREVISTA)VALUES( ?, ?, CURRENT_TIMESTAMP(), ?, ?, ? );";
+                + " `VALOR_PAGO`, DATA_PREVISTA, DEL_FLAG )VALUES( ?, ?, CURRENT_TIMESTAMP(), ?, ?, ?, ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -534,6 +534,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 ps.setDouble(3, itemLocacao.get(i).getValor_locado());
                 ps.setDouble(4, itemLocacao.get(i).getValor_pago());
                 ps.setDate(5, (java.sql.Date) data_prevista);
+                ps.setInt(6, 1);
                 ps.executeUpdate();
 
             }
@@ -560,7 +561,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
             for (int i = 0; i < itemLocacao.size(); i++) {
 
-                ps.setInt(1, 1);
+                ps.setInt(1, 0);
                 ps.setInt(2, itemLocacao.get(i).getCodigo_item_locacao());
                 ps.executeUpdate();
 
@@ -697,7 +698,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
                 + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                + "        AND D.DEL_FLAG = 0\n"
+                + "        AND D.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
                 + "        AND A.CODIGO_OBJETO = ?;";
 
@@ -771,7 +772,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
                 + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                + "        AND D.DEL_FLAG = 0\n"
+                + "        AND D.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
                 + "        AND B.CODIGO_BARRAS = ?;";
 
@@ -847,7 +848,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
                 + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                + "        AND D.DEL_FLAG = 0\n"
+                + "        AND D.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
                 + "        AND A.TITULO LIKE ?;";
 
@@ -920,7 +921,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
                 + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                + "        AND D.DEL_FLAG = 0\n"
+                + "        AND D.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
                 + "        AND A.ELENCO LIKE ? ;";
 

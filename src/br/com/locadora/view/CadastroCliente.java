@@ -8,14 +8,18 @@ import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.ClienteDAO;
+import br.com.locadora.model.dao.DependenteDAO;
+import br.com.locadora.model.dao.TelefoneDAO;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.ValidaCPF;
+import static br.com.locadora.view.AtualizaCliente.jtf_telefone;
 import static br.com.locadora.view.MenuCliente.jtf_consulta;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -41,14 +45,15 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
     public List<Cliente> clientes;
     public List<Dependente> dependentes = new ArrayList<Dependente>();
-//    public MenuCliente janelaPaim;
+    public ClienteDAO clienteDAO;
     public Telefone telefone = new Telefone();
     public Cliente cliente;
     public MenuCliente janelapai;
     public ConsultaClienteAtendimento janelapai2;
     public DecimalFormat formatoPreco;
     public MaskFormatter formatoData, formatoCPF, formatoTelefone;
-    AcessoUsuario acesso;
+    public AcessoUsuario acesso;
+    public TelefoneDAO telefoneDAO;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -74,9 +79,9 @@ public final class CadastroCliente extends javax.swing.JFrame {
         tfa_similar = new javax.swing.JTextArea();
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jtp_cliente = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jtf_codigo = new javax.swing.JTextField();
+        jtf_codigo_cliente = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jtf_empresa = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jtf_nome_cliente = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
@@ -126,7 +131,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
         }
         jtf_telefone = new JFormattedTextField(formatoTelefone);
         jb_adicionar_telefone = new javax.swing.JButton();
-        jb_eliminar = new javax.swing.JButton();
+        jb_eliminar_telefone = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jtbl_telefone = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
@@ -193,19 +198,19 @@ public final class CadastroCliente extends javax.swing.JFrame {
             }
         });
 
-        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
-        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtp_cliente.setName("jtp_cliente"); // NOI18N
+        jtp_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTabbedPane1MouseClicked(evt);
+                jtp_clienteMouseClicked(evt);
             }
         });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel3.setName("jPanel3"); // NOI18N
 
-        jtf_codigo.setEditable(false);
-        jtf_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jtf_codigo.setName("jtf_codigo"); // NOI18N
+        jtf_codigo_cliente.setEditable(false);
+        jtf_codigo_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_codigo_cliente.setName("jtf_codigo_cliente"); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel6.setText("CPF*");
@@ -391,6 +396,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jtf_cpf_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_cpf_cliente.setName("jtf_cpf_cliente"); // NOI18N
+        jtf_cpf_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_cpf_clienteFocusLost(evt);
+            }
+        });
         jtf_cpf_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_cpf_clienteKeyPressed(evt);
@@ -403,34 +413,18 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jtf_telefone.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_telefone.setName("jtf_telefone"); // NOI18N
-        jtf_telefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_telefoneActionPerformed(evt);
-            }
-        });
-        jtf_telefone.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_telefoneFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_telefoneFocusLost(evt);
-            }
-        });
         jtf_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_telefoneKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_telefoneKeyReleased(evt);
             }
         });
 
         jb_adicionar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_telefone.setToolTipText("Incluir");
         jb_adicionar_telefone.setName("jb_adicionar_telefone"); // NOI18N
-        jb_adicionar_telefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_adicionar_telefoneActionPerformed(evt);
+        jb_adicionar_telefone.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_adicionar_telefoneMouseClicked(evt);
             }
         });
         jb_adicionar_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -439,12 +433,17 @@ public final class CadastroCliente extends javax.swing.JFrame {
             }
         });
 
-        jb_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
-        jb_eliminar.setToolTipText("Excluir");
-        jb_eliminar.setName("jb_eliminar"); // NOI18N
-        jb_eliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_eliminarActionPerformed(evt);
+        jb_eliminar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_eliminar_telefone.setToolTipText("Excluir");
+        jb_eliminar_telefone.setName("jb_eliminar_telefone"); // NOI18N
+        jb_eliminar_telefone.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_eliminar_telefoneMouseClicked(evt);
+            }
+        });
+        jb_eliminar_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_eliminar_telefoneKeyPressed(evt);
             }
         });
 
@@ -475,6 +474,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
             }
         });
         jtbl_telefone.setName("jtbl_telefone"); // NOI18N
+        jtbl_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_telefoneKeyPressed(evt);
+            }
+        });
         jScrollPane4.setViewportView(jtbl_telefone);
 
         jLabel17.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
@@ -505,7 +509,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jb_adicionar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jb_eliminar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(10, 10, 10))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel21)
@@ -567,7 +571,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(jtf_email, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtf_codigo)
+                            .addComponent(jtf_codigo_cliente)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jrb_ativo)
@@ -585,7 +589,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addComponent(jrb_inativo))
                 .addGap(0, 0, 0)
-                .addComponent(jtf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -646,14 +650,14 @@ public final class CadastroCliente extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jb_adicionar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jb_eliminar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2))
                 .addGap(20, 20, 20))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_bairro, jtf_cidade, jtf_codigo, jtf_complemento, jtf_cpf_cliente, jtf_data_nascimento, jtf_email, jtf_empresa, jtf_endereco, jtf_estado, jtf_nome_cliente, jtf_profissao, jtf_telefone});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_bairro, jtf_cidade, jtf_codigo_cliente, jtf_complemento, jtf_cpf_cliente, jtf_data_nascimento, jtf_email, jtf_empresa, jtf_endereco, jtf_estado, jtf_nome_cliente, jtf_profissao, jtf_telefone});
 
-        jTabbedPane1.addTab("Cliente Titular", jPanel3);
+        jtp_cliente.addTab("Cliente Titular", jPanel3);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel2.setName("jPanel2"); // NOI18N
@@ -685,11 +689,6 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jtf_nome_dependente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_dependente.setName("jtf_nome_dependente"); // NOI18N
-        jtf_nome_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_nome_dependenteActionPerformed(evt);
-            }
-        });
         jtf_nome_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtf_nome_dependenteFocusLost(evt);
@@ -716,15 +715,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jtf_telefone_dependente.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         jtf_telefone_dependente.setName("jtf_telefone_dependente"); // NOI18N
-        jtf_telefone_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_telefone_dependenteActionPerformed(evt);
-            }
-        });
         jtf_telefone_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_telefone_dependenteFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtf_telefone_dependenteFocusLost(evt);
             }
@@ -741,6 +732,16 @@ public final class CadastroCliente extends javax.swing.JFrame {
         jcb_parentesco.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_parentesco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Esposa", "Esposo", "Filho", "Filha", "Neta", "Neto", "Pai", "Mãe", "Irmão", "Irmã", "Sobrinho", "Sobrinha", "Avô", "Avó", "Tio", "Tia", "Namorada", "Namorado", "Noiva", "Noivo", "Cunhado", "Cunhada", "Primo", "Prima", "Amigo", "Amiga", "Outro" }));
         jcb_parentesco.setName("jcb_parentesco"); // NOI18N
+        jcb_parentesco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_parentescoActionPerformed(evt);
+            }
+        });
+        jcb_parentesco.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jcb_parentescoFocusGained(evt);
+            }
+        });
         jcb_parentesco.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jcb_parentescoKeyPressed(evt);
@@ -774,14 +775,9 @@ public final class CadastroCliente extends javax.swing.JFrame {
         jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
         jb_adicionar_dependente.setToolTipText("Incluir");
         jb_adicionar_dependente.setName("jb_adicionar_dependente"); // NOI18N
-        jb_adicionar_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_adicionar_dependenteActionPerformed(evt);
-            }
-        });
-        jb_adicionar_dependente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jb_adicionar_dependenteFocusGained(evt);
+        jb_adicionar_dependente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_adicionar_dependenteMouseClicked(evt);
             }
         });
         jb_adicionar_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -793,9 +789,9 @@ public final class CadastroCliente extends javax.swing.JFrame {
         jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
         jb_eliminar_dependente.setToolTipText("Excluir");
         jb_eliminar_dependente.setName("jb_eliminar_dependente"); // NOI18N
-        jb_eliminar_dependente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_eliminar_dependenteActionPerformed(evt);
+        jb_eliminar_dependente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_eliminar_dependenteMouseClicked(evt);
             }
         });
         jb_eliminar_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -870,8 +866,15 @@ public final class CadastroCliente extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jrb_ativo_dependente)
+                                .addGap(10, 10, 10)
+                                .addComponent(jrb_inativo_dependente))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtf_nome_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -890,19 +893,13 @@ public final class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(jcb_parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jtf_cpf_dependente))
-                        .addGap(10, 10, 10)
+                            .addComponent(jLabel5)
+                            .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jrb_ativo_dependente)
-                        .addGap(10, 10, 10)
-                        .addComponent(jrb_inativo_dependente)))
-                .addGap(20, 20, 20))
+                        .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -944,16 +941,21 @@ public final class CadastroCliente extends javax.swing.JFrame {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_parentesco, jtf_cpf_dependente, jtf_data_nascimento_dependente, jtf_nome_dependente, jtf_telefone_dependente});
 
-        jTabbedPane1.addTab("Dependentes", jPanel2);
+        jtp_cliente.addTab("Dependentes", jPanel2);
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
         jb_cancelar.setName("jb_cancelar"); // NOI18N
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
+        jb_cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_cancelarMouseClicked(evt);
+            }
+        });
+        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelarKeyPressed(evt);
             }
         });
 
@@ -961,9 +963,14 @@ public final class CadastroCliente extends javax.swing.JFrame {
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
-        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_salvarActionPerformed(evt);
+        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_salvarMouseClicked(evt);
+            }
+        });
+        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_salvarKeyPressed(evt);
             }
         });
 
@@ -977,13 +984,13 @@ public final class CadastroCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtp_cliente)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jb_salvar)
                         .addGap(0, 0, 0)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
 
@@ -993,39 +1000,26 @@ public final class CadastroCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel2)
-                        .addComponent(jb_salvar)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jb_salvar))))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
 
-        setSize(new java.awt.Dimension(910, 568));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        if (janelapai != null) {
-            janelapai.setStatusTela(true);
-        } else if (janelapai2 != null) {
-            janelapai2.setStatusTela(true);
-        }
-        setVisible(false);
-}//GEN-LAST:event_jb_cancelarActionPerformed
-
-    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        if (verificarCampos()) {
-            controller = new SiscomController();
-            controller.processarRequisicao("cadastrarCliente");
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-        }
-}//GEN-LAST:event_jb_salvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jtf_nome_cliente.requestFocus();
@@ -1066,35 +1060,9 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_enderecoActionPerformed
 
-    private void jb_adicionar_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneActionPerformed
-        try {
-            alimentarTelefone();
-        } catch (ParseException ex) {
-            Logger.getLogger(AtendimentoLocacao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jb_adicionar_telefoneActionPerformed
-
-    private void jb_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminarActionPerformed
-        excluirTelefone();
-    }//GEN-LAST:event_jb_eliminarActionPerformed
-
-    private void jb_adicionar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteActionPerformed
-        adicionarDependente();
-
-// TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
-
-    private void jb_eliminar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar_dependenteActionPerformed
-
     private void jtf_cidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_cidadeActionPerformed
-
-    private void jtf_nome_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_dependenteActionPerformed
 
     private void jrb_ativo_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_ativo_dependenteActionPerformed
         // TODO add your handling code here:
@@ -1111,18 +1079,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
     }//GEN-LAST:event_jtf_cpf_clienteKeyPressed
 
-    private void jtf_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_telefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneActionPerformed
-
-    private void jtf_telefoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefoneFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneFocusGained
-
-    private void jtf_telefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefoneFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneFocusLost
-
     private void jtf_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefoneKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -1130,10 +1086,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_telefoneKeyPressed
-
-    private void jtf_telefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefoneKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneKeyReleased
 
     private void jtf_cpf_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteActionPerformed
         // TODO add your handling code here:
@@ -1182,10 +1134,10 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
             if (jtf_data_nascimento.getText().trim().length() < 10) {
                 jtf_data_nascimento.setForeground(Color.red);
-                jtf_data_nascimento.requestFocus();
+//                jtf_data_nascimento.requestFocus();
             } else if (jtf_data_nascimento.getText().equals("  /  /    ")) {
                 jtf_data_nascimento.setForeground(Color.red);
-                jtf_data_nascimento.requestFocus();
+//                jtf_data_nascimento.requestFocus();
             } else {
                 if (validaData(jtf_data_nascimento.getText())) {
                     idade = data.calcularIdade(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastroCliente.jtf_data_nascimento.getText()));
@@ -1196,7 +1148,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 //                            jtf_cpf_cliente.requestFocus();
                         } else {
                             jtf_data_nascimento.setForeground(Color.red);
-                            jtf_data_nascimento.requestFocus();
+//                            jtf_data_nascimento.requestFocus();
                         }
                     } else {
                         jtf_data_nascimento.setForeground(Color.black);
@@ -1204,19 +1156,19 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
                     }
                 } else {
                     jtf_data_nascimento.setForeground(Color.red);
-                    jtf_data_nascimento.requestFocus();
+//                    jtf_data_nascimento.requestFocus();
                 }
 
             }
         } catch (ParseException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             jtf_data_nascimento.setForeground(Color.red);
-            jtf_data_nascimento.requestFocus();
+//            jtf_data_nascimento.requestFocus();
         } catch (NumberFormatException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             jtf_data_nascimento.setText("  /  /    ");
             jtf_data_nascimento.setForeground(Color.red);
-            jtf_data_nascimento.requestFocus();
+//            jtf_data_nascimento.requestFocus();
         }
 
     }//GEN-LAST:event_jtf_data_nascimentoFocusLost
@@ -1228,29 +1180,29 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
             if (jtf_data_nascimento_dependente.getText().trim().length() < 10) {
                 jtf_data_nascimento_dependente.setForeground(Color.red);
-                jtf_data_nascimento_dependente.requestFocus();
+//                jtf_data_nascimento_dependente.requestFocus();
             } else if (jtf_data_nascimento_dependente.getText().equals("  /  /    ")) {
                 jtf_data_nascimento_dependente.setForeground(Color.red);
-                jtf_data_nascimento_dependente.requestFocus();
+//                jtf_data_nascimento_dependente.requestFocus();
             } else {
                 if (validaData(jtf_data_nascimento_dependente.getText())) {
                     jtf_data_nascimento_dependente.setForeground(Color.black);
 
                 } else {
                     jtf_data_nascimento_dependente.setForeground(Color.red);
-                    jtf_data_nascimento_dependente.requestFocus();
+//                    jtf_data_nascimento_dependente.requestFocus();
                 }
 
             }
         } catch (ParseException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             jtf_data_nascimento_dependente.setForeground(Color.red);
-            jtf_data_nascimento_dependente.requestFocus();
+//            jtf_data_nascimento_dependente.requestFocus();
         } catch (NumberFormatException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             jtf_data_nascimento_dependente.setText("  /  /    ");
             jtf_data_nascimento_dependente.setForeground(Color.red);
-            jtf_data_nascimento_dependente.requestFocus();
+//            jtf_data_nascimento_dependente.requestFocus();
         }
     }//GEN-LAST:event_jtf_data_nascimento_dependenteFocusLost
 
@@ -1258,28 +1210,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         jtf_data_nascimento_dependente.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nome_dependenteFocusLost
-
-    private void jb_adicionar_dependenteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteFocusGained
-
-    }//GEN-LAST:event_jb_adicionar_dependenteFocusGained
-
-    private void jtf_telefone_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteActionPerformed
-
-    private void jtf_telefone_dependenteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteFocusGained
-
-    private void jtf_telefone_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusLost
-        if (verificar_campo_telefone(jtf_telefone_dependente.getText()) == false) {
-            jtf_telefone_dependente.setCaretColor(Color.red);
-            jtf_telefone_dependente.requestFocus();
-        } else {
-            jtf_telefone_dependente.setCaretColor(Color.black);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteFocusLost
 
     private void jtf_telefone_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteKeyPressed
         acionarAtalho(evt);
@@ -1392,7 +1322,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jb_adicionar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_adicionar_telefone.doClick();
+            alimentarTelefone();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_telefoneKeyPressed
@@ -1402,15 +1332,15 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2FocusGained
 
-    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+    private void jtp_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtp_clienteMouseClicked
         jtf_nome_dependente.requestFocus();
 // TODO add your handling code here:
-    }//GEN-LAST:event_jTabbedPane1MouseClicked
+    }//GEN-LAST:event_jtp_clienteMouseClicked
 
     private void jb_adicionar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_adicionar_dependente.doClick();
+            adicionarDependente();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_dependenteKeyPressed
@@ -1420,29 +1350,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     }//GEN-LAST:event_jtf_nome_clienteActionPerformed
 
     private void jtf_emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_emailFocusGained
-        try {
-
-            ValidaCPF valida = new ValidaCPF();
-            if (jtf_cpf_cliente.getText().trim().length() == 14) {
-                if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
-                    if (verificaCadastro(jtf_cpf_cliente.getText()) == true) {
-                        jtf_cpf_cliente.setForeground(Color.black);
-                    } else {
-                        jtf_cpf_cliente.setForeground(Color.red);
-                        jtf_cpf_cliente.requestFocus();
-                    }
-                } else {
-                    jtf_cpf_cliente.setForeground(Color.red);
-                    jtf_cpf_cliente.requestFocus();
-                }
-            } else {
-                jtf_cpf_cliente.setForeground(Color.red);
-                jtf_cpf_cliente.requestFocus();
-            }
-        } catch (Exception e) {
-            jtf_cpf_cliente.setForeground(Color.red);
-            jtf_cpf_cliente.requestFocus();
-        }
+        
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_emailFocusGained
@@ -1450,7 +1358,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jb_eliminar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_eliminar_dependente.doClick();
+            removeDependente(jtbl_dependente);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_eliminar_dependenteKeyPressed
@@ -1462,6 +1370,147 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_dependenteKeyPressed
+
+    private void jtbl_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_telefoneKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            removeTelefone(jtbl_telefone);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_telefoneKeyPressed
+
+    private void jb_adicionar_telefoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneMouseClicked
+        if (evt.getClickCount() == 1) {
+            alimentarTelefone();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_telefoneMouseClicked
+
+    private void jcb_parentescoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_parentescoFocusGained
+                    
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_parentescoFocusGained
+
+    private void jb_eliminar_telefoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneMouseClicked
+        if (evt.getClickCount() == 1) {
+            removeTelefone(jtbl_telefone);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_telefoneMouseClicked
+
+    private void jb_eliminar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            removeTelefone(jtbl_telefone);
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_telefoneKeyPressed
+
+    private void jb_adicionar_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteMouseClicked
+        if (evt.getClickCount() == 1) {
+            adicionarDependente();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_dependenteMouseClicked
+
+    private void jb_eliminar_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteMouseClicked
+        if (evt.getClickCount() == 1) {
+            removeDependente(jtbl_dependente);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_dependenteMouseClicked
+
+    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (verificarCampos()) {
+                cadastrarCliente();
+                jtp_cliente.setSelectedIndex(1);
+                jtf_nome_dependente.requestFocus();
+            }
+
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
+        if (evt.getClickCount() == 1) {
+            if (verificarCampos()) {
+                cadastrarCliente();
+                jtp_cliente.setSelectedIndex(1);
+                jtf_nome_dependente.requestFocus();
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarMouseClicked
+
+    private void jb_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cancelarMouseClicked
+        if (evt.getClickCount() == 1) {
+            if (janelapai != null) {
+                janelapai.setStatusTela(true);
+            } else if (janelapai2 != null) {
+                janelapai2.setStatusTela(true);
+            }
+            setVisible(false);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarMouseClicked
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (janelapai != null) {
+                janelapai.setStatusTela(true);
+            } else if (janelapai2 != null) {
+                janelapai2.setStatusTela(true);
+            }
+            setVisible(false);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
+
+    private void jcb_parentescoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_parentescoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_parentescoActionPerformed
+
+    private void jtf_telefone_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusLost
+        System.out.println(jtf_telefone_dependente.getText().trim().length());
+        if (jtf_telefone_dependente.getText().trim().length() != 14){
+            jtf_telefone_dependente.setForeground(Color.red);
+//            jtf_telefone_dependente.requestFocus();
+        } else {
+            jtf_telefone_dependente.setForeground(Color.black);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefone_dependenteFocusLost
+
+    private void jtf_cpf_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusLost
+try {
+
+            ValidaCPF valida = new ValidaCPF();
+            if (jtf_cpf_cliente.getText().trim().length() == 14) {
+                if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
+                    if (verificaCadastro(jtf_cpf_cliente.getText()) == true) {
+                        jtf_cpf_cliente.setForeground(Color.black);
+                    } else {
+                        jtf_cpf_cliente.setForeground(Color.red);
+//                        jtf_cpf_cliente.requestFocus();
+                    }
+                } else {
+                    jtf_cpf_cliente.setForeground(Color.red);
+//                    jtf_cpf_cliente.requestFocus();
+                }
+            } else {
+                jtf_cpf_cliente.setForeground(Color.red);
+//                jtf_cpf_cliente.requestFocus();
+            }
+        } catch (Exception e) {
+            jtf_cpf_cliente.setForeground(Color.red);
+//            jtf_cpf_cliente.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_clienteFocusLost
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1500,12 +1549,11 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jb_adicionar_dependente;
     private javax.swing.JButton jb_adicionar_telefone;
     private javax.swing.JButton jb_cancelar;
-    private javax.swing.JButton jb_eliminar;
     private javax.swing.JButton jb_eliminar_dependente;
+    private javax.swing.JButton jb_eliminar_telefone;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JComboBox jcb_parentesco;
     public static javax.swing.JRadioButton jrb_ativo;
@@ -1517,7 +1565,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     public static javax.swing.JTable jtbl_telefone;
     public static javax.swing.JTextField jtf_bairro;
     public static javax.swing.JTextField jtf_cidade;
-    public javax.swing.JTextField jtf_codigo;
+    public javax.swing.JTextField jtf_codigo_cliente;
     public static javax.swing.JTextField jtf_complemento;
     public static javax.swing.JFormattedTextField jtf_cpf_cliente;
     public static javax.swing.JFormattedTextField jtf_cpf_dependente;
@@ -1532,6 +1580,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     public static javax.swing.JTextField jtf_profissao;
     public static javax.swing.JFormattedTextField jtf_telefone;
     public static javax.swing.JFormattedTextField jtf_telefone_dependente;
+    private javax.swing.JTabbedPane jtp_cliente;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
@@ -1606,7 +1655,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         if (null == cliente) {
             return true;
         } else {
-            jtf_cpf_cliente.requestFocus();
+//            jtf_cpf_cliente.requestFocus();
             JOptionPane.showMessageDialog(null, "CPF já existente");
             return false;
         }
@@ -1626,32 +1675,34 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
     }
 
-    public void alimentarDependente(Dependente dependente) {
-        if (dependente != null) {
-            DefaultTableModel row = (DefaultTableModel) jtbl_dependente.getModel();
-            ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
-            row.addRow(new Object[]{dependente.getNome_dependente(), jtf_data_nascimento_dependente.getText(),
-                dependente.getTelefone(), dependente.getParentesco(), dependente.getCPF(), dependente.getStatus()});
-            jtf_nome_dependente.setText("");
-            jtf_data_nascimento_dependente.setText("");
-            jtf_cpf_dependente.setText("");
-            jtf_telefone_dependente.setText("");
-            jcb_parentesco.setSelectedIndex(0);
-            jtf_nome_dependente.requestFocus();
-            dependentes.add(dependente);
-        }
-    }
+    public void alimentarTelefone() {
+        try {
+            if (verificar_campo_telefone(jtf_telefone.getText()) == true) {
+                List<Telefone> itens_telefone = new ArrayList();
 
-    public void alimentarTelefone() throws ParseException {
-        if (verificar_campo_telefone(jtf_telefone.getText()) == true) { //&& (verificaTabela()
-            telefone.setCliente(cliente);
-            telefone.setTelefone(jtf_telefone.getText());
+                telefone = new Telefone();
 
-            DefaultTableModel row = (DefaultTableModel) jtbl_telefone.getModel();
-            ItemDbGrid hashDbGrid = new ItemDbGrid(telefone, telefone.getTelefone());
-            row.addRow(new Object[]{telefone.getTelefone()});
-            jtf_telefone.setText("");
-            jtf_telefone.requestFocus();
+                cliente = new Cliente();
+                if (!jtf_codigo_cliente.getText().equals("")) {
+                    cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
+
+                    telefone.setTelefone(jtf_telefone.getText());
+                    itens_telefone.add(telefone);
+                    TelefoneDAO telefoneDAO = new TelefoneDAO(pool);
+                    telefoneDAO.salvar(itens_telefone, cliente);
+                } else {
+                    telefone.setCliente(cliente);
+                    telefone.setTelefone(jtf_telefone.getText());
+                }
+
+                DefaultTableModel row = (DefaultTableModel) jtbl_telefone.getModel();
+                row.addRow(new Object[]{telefone.getTelefone()});
+
+                jtf_telefone.setText("");
+                jtf_telefone.requestFocus();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }
     }
 
@@ -1699,6 +1750,29 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
     private void excluirTelefone() {
         removeTelefone(jtbl_telefone);
+    }
+
+    public void removeDependente(JTable tb) {
+        if (tb != null) {
+            DefaultTableModel row = (DefaultTableModel) tb.getModel();
+
+            try {
+                if (tb.getSelectedRow() != -1) {
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                        DependenteDAO dependenteDAo = new DependenteDAO(pool);
+
+                        if (dependenteDAo.excluir(dependentes.get(tb.getSelectedRow()).getCodigo_dependente())) {
+                            row.removeRow(tb.getSelectedRow());
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um Dependente");
+                }
+            } catch (SQLException ex) {
+
+            }
+        }
     }
 
     public void removeTelefone(JTable tb) {
@@ -1808,34 +1882,197 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void adicionarDependente() {
         try {
             Dependente dependente = new Dependente();
-            if (verificar_campo_dependente() == true) {
-                dependente.setCliente(cliente);
-                dependente.setNome_dependente(jtf_nome_dependente.getText());
-                dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento_dependente.getText()));
-                dependente.setTelefone(jtf_telefone_dependente.getText());
-                dependente.setParentesco((String) jcb_parentesco.getSelectedItem());
+            if (!jtf_codigo_cliente.getText().equals("")) {
+                if (verificar_campo_dependente() == true) {
+                    Cliente cliente = new Cliente();
+                    cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
+                    dependente.setCliente(cliente);
+                    dependente.setNome_dependente(jtf_nome_dependente.getText());
+                    dependente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento_dependente.getText()));
+                    dependente.setTelefone(jtf_telefone_dependente.getText());
+                    dependente.setParentesco((String) jcb_parentesco.getSelectedItem());
+                    dependente.setTipo_dependente("1");
+                    if (jtf_cpf_dependente.getText().trim().length() != 14) {
+                        dependente.setCPF("");
+                    } else if (jtf_cpf_dependente.getForeground().equals(Color.RED)) {
+                        dependente.setCPF("");
+                    } else {
+                        dependente.setCPF(jtf_cpf_dependente.getText());
+                    }
 
-                if (jtf_cpf_dependente.getText().trim().length() != 14) {
-                    dependente.setCPF("");
-                } else if (jtf_cpf_dependente.getForeground().equals(Color.RED)) {
-                    dependente.setCPF("");
-                } else {
-                    dependente.setCPF(jtf_cpf_dependente.getText());
+                    if (jrb_ativo_dependente.isSelected() == true) {
+                        dependente.setStatus(true);
+                    } else {
+                        dependente.setStatus(false);
+                    }
+
+                    DependenteDAO dependenteDAO = new DependenteDAO(pool);
+                    dependenteDAO.salvar(dependente, cliente);
+                    
+                    carregaDependente(cliente.getCodigo_cliente());
+                    jtf_nome_dependente.setText("");
+                    jtf_data_nascimento_dependente.setText("");
+                    jtf_cpf_dependente.setText("");
+                    jtf_telefone_dependente.setText("");
+                    jcb_parentesco.setSelectedIndex(0);
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Salvar primeiro o Cliente");
+            }
+        } catch (ParseException ex) {
 
-                if (jrb_ativo_dependente.isSelected() == true) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex);
+        }
+    }
+
+    public void cadastrarCliente() {
+
+        try {
+            Cliente cliente;
+            if (jtf_codigo_cliente.getText().equals("")) {
+                cliente = new Cliente();
+
+                cliente.setNome_cliente(jtf_nome_cliente.getText());
+                cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
+                cliente.setCpf(jtf_cpf_cliente.getText());
+                cliente.setNome_empresa_trabalho(jtf_empresa.getText());
+                cliente.setProfissao(jtf_profissao.getText());
+                cliente.setEndereco(jtf_endereco.getText());
+                cliente.setBairro(jtf_bairro.getText());
+                cliente.setComplemento(jtf_complemento.getText());
+                cliente.setCidade(jtf_cidade.getText());
+                cliente.setEstado(jtf_estado.getText());
+                cliente.setEmail(jtf_email.getText());
+                cliente.setObservacao(jta_observacao.getText());
+                if (jrb_ativo.isSelected() == true) {
+                    cliente.setStatus(true);
+
+                } else {
+                    cliente.setStatus(false);
+                }
+                
+                pool = new Pool();
+                clienteDAO = new ClienteDAO(pool);
+                cliente = clienteDAO.salvar(cliente);
+                JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+                
+                pool = new Pool();
+                DependenteDAO dependenteDAO = new DependenteDAO(pool);
+                Dependente dependente = new Dependente();                
+                dependente.setNome_dependente(cliente.getNome_cliente());
+                dependente.setData_nascimento(cliente.getData_nascimento());
+                dependente.setTipo_dependente("0");                
+                if (jrb_ativo.isSelected() == true) {
                     dependente.setStatus(true);
                 } else {
                     dependente.setStatus(false);
                 }
-                alimentarDependente(dependente);
-                jtf_nome_dependente.requestFocus();
+                dependenteDAO.salvar(dependente, cliente);
+                
+
+                List<Telefone> itens_telefone = new ArrayList();
+                for (int i = 0; i < jtbl_telefone.getRowCount(); i++) {
+                    Telefone telefone = new Telefone();
+                    telefone.setTelefone((String) jtbl_telefone.getValueAt(i, 0));
+                    itens_telefone.add(telefone);
+                }
+                pool = new Pool();
+                telefoneDAO = new TelefoneDAO(pool);
+                telefoneDAO.salvar(itens_telefone, cliente);
             } else {
-                JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
+                cliente = new Cliente();
+
+                cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
+                cliente.setNome_cliente(jtf_nome_cliente.getText());
+
+                cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
+
+                cliente.setCpf(jtf_cpf_cliente.getText());
+                cliente.setNome_empresa_trabalho(jtf_empresa.getText());
+                cliente.setProfissao(jtf_profissao.getText());
+                cliente.setEndereco(jtf_endereco.getText());
+                cliente.setBairro(jtf_bairro.getText());
+                cliente.setComplemento(jtf_complemento.getText());
+                cliente.setCidade(jtf_cidade.getText());
+                cliente.setEstado(jtf_estado.getText());
+                cliente.setEmail(jtf_email.getText());
+                cliente.setObservacao(jta_observacao.getText());
+
+                if (jrb_ativo.isSelected() == true) {
+                    cliente.setStatus(true);
+                } else {
+                    cliente.setStatus(false);
+                }
+                pool = new Pool();
+                clienteDAO = new ClienteDAO(pool);
+                clienteDAO.atualizar(cliente);
+                JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");                                
+
+                jtp_cliente.setSelectedIndex(1);
+                jtf_nome_dependente.requestFocus();
             }
+            jtf_codigo_cliente.setText(cliente.getCodigo_cliente().toString());
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage() + "Problemas com a gravação: ");
+
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Valor inválido: " + e.getMessage());
+
+            e.printStackTrace();
         } catch (ParseException ex) {
-            Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error: " + ex);
+
+        }
+
+    }
+    
+    public void carregaDependente(Integer codigo_cliente) {
+        try {
+            if (codigo_cliente != null) {
+                pool = new Pool();
+                dependentes = null;
+                DependenteDAO dependenteDAO = new DependenteDAO(pool);
+                dependentes = dependenteDAO.getDependentes(codigo_cliente);
+
+                mostrar_dependentes(dependentes);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void mostrar_dependentes(List<Dependente> dependentes) throws ParseException {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_dependente.getModel();
+        tableModel.setNumRows(0);
+
+        if (dependentes != null) {
+
+            for (Dependente dependente1 : dependentes) {
+                Dependente dependente = new Dependente();
+                dependente.setCodigo_dependente(dependente1.getCodigo_dependente());
+                dependente.setNome_dependente(dependente1.getNome_dependente());
+                dependente.setParentesco(dependente1.getParentesco());
+                dependente.setTelefone(dependente1.getTelefone());
+                dependente.setCPF(dependente1.getCPF());
+                dependente.setStatus(dependente1.getStatus());
+
+                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                String data_nascimento = out.format(in.parse(dependente1.getData_nascimento().toString()));
+                Cliente cli = new Cliente();
+                cli.setCodigo_cliente(dependente1.getCodigo_dependente());
+                dependente.setCliente(cli);
+
+                DefaultTableModel row = (DefaultTableModel) jtbl_dependente.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
+                row.addRow(new Object[]{hashDbGrid, data_nascimento, dependente.getTelefone(), dependente.getParentesco(), dependente.getCPF(), dependente.getStatus()});
+            }
+
         }
     }
 }

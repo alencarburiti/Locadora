@@ -84,18 +84,19 @@ public class ConsultarCliente implements InterfaceCommand {
                 cliente.setEstado(cliente1.getEstado());
                 cliente.setEmail(cliente1.getEmail());
                 cliente.setStatus(cliente1.getStatus());
-                if (cliente.getStatus().equals("0")) {
-                    cliente.setStatus("Ativo");
-                } else {
-                    cliente.setStatus("Inativo");
-                }
+                String status = "";
+            if (cliente.getStatus() == true) {
+                status = "Ativo";
+            } else {
+                status = "Inativo";
+            }
                 cliente.setObservacao(cliente1.getObservacao());
                 SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
                 String data_nascimento = out.format(in.parse(cliente1.getData_nascimento().toString()));
                 DefaultTableModel row = (DefaultTableModel) MenuCliente.jtbl_cliente.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
-                row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
+                row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), status});
             }
             MenuCliente.clientes = clientes;
             
@@ -113,11 +114,11 @@ public class ConsultarCliente implements InterfaceCommand {
         if (cliente == null) {
             JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
         } else {
-
-            if (cliente.getStatus().equals("0")) {
-                cliente.setStatus("Ativo");
+            String status = "";
+            if (cliente.getStatus() == true) {
+                status = "Ativo";
             } else {
-                cliente.setStatus("Inativo");
+                status = "Inativo";
             }
 
             SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
@@ -127,7 +128,7 @@ public class ConsultarCliente implements InterfaceCommand {
 
             DefaultTableModel row = (DefaultTableModel) MenuCliente.jtbl_cliente.getModel();
             ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
-            row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), cliente.getStatus()});
+            row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cliente.getCpf(), cliente.getEmail(), status});
 
             MenuCliente.jtbl_cliente.requestFocus();
             MenuCliente.jtbl_cliente.setSelectionMode(1);

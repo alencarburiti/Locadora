@@ -73,7 +73,6 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jtf_troco = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel11 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
         jtf_debito_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -124,7 +123,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jb_imprimirKeyPressed(evt);
             }
         });
-        getContentPane().add(jb_imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 530, -1, 35));
+        getContentPane().add(jb_imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, -1, 35));
 
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_salvar.setText("Finalizar");
@@ -140,7 +139,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jb_salvarKeyPressed(evt);
             }
         });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 530, -1, 35));
+        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 470, -1, 35));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Verificar Permissão"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -315,15 +314,6 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jLabel11.setName("jLabel11"); // NOI18N
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão de Crédito", "Cartão de Débito", "Video Card" }));
-        jComboBox1.setName("jComboBox1"); // NOI18N
-        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jComboBox1KeyPressed(evt);
-            }
-        });
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 170, 40));
-
         jtf_debito_devolucao.setDocument(new UnaccentedDocument());
         jtf_debito_anterior.setEditable(false);
         jtf_debito_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
@@ -454,7 +444,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         });
         jPanel2.add(jtf_desconto_entrega_antecipada, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 170, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 430, 410));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 430, 350));
 
         jb_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar1.setText("Fechar");
@@ -470,9 +460,9 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jb_cancelar1KeyPressed(evt);
             }
         });
-        getContentPane().add(jb_cancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 530, -1, 35));
+        getContentPane().add(jb_cancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 470, -1, 35));
 
-        setSize(new java.awt.Dimension(474, 606));
+        setSize(new java.awt.Dimension(474, 543));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -531,7 +521,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descontoActionPerformed
 
     private void jtf_descontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusGained
-        jtf_desconto.setText("");
+        jtf_desconto.selectAll();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descontoFocusGained
 
@@ -552,7 +542,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_valor_pagoActionPerformed
 
     private void jtf_valor_pagoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_pagoFocusGained
-        jtf_valor_pago.setText("");
+        jtf_valor_pago.selectAll();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_pagoFocusGained
 
@@ -773,11 +763,6 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_imprimirKeyPressed
 
-    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
-        acionarAtalho(evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1KeyPressed
-
     private void jb_cancelar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelar1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jb_cancelar1.doClick();
@@ -815,7 +800,6 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

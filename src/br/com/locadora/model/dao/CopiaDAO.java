@@ -118,34 +118,48 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT \n"
-                + "	A.CODIGO_COPIA, \n"
-                + "	A.CODIGO_BARRAS, \n"
-                + "    A.DEL_FLAG,\n"
-                + "    A.PRECO_CUSTO,\n"
-                + "    A.DATA_AQUISICAO,\n"
-                + "    A.NUMERO_COPIA,\n"
-                + "    B.TITULO,\n"
-                + "    B.TIPO_MOVIMENTO,\n"
-                + "    B.TIPO_MIDIA,\n"
-                + "    A.IDIOMA,\n"
-                + "    A.LEGENDA,\n"
-                + "    C.CODIGO_DIARIA,\n"
-                + "    C.DIAS,\n"
-                + "    C.VALOR,\n"
-                + "    C.MAXIMO_DIAS,\n"
-                + "    C.ACUMULATIVO\n"
-                + "FROM\n"
-                + "    locadora.COPIA A,\n"
-                + "    locadora.OBJETO B,\n"
-                + "    locadora.DIARIA C\n"
-                + "WHERE\n"
-                + "    A.CODIGO_OBJETO = B.CODIGO_OBJETO\n"
-                + "        AND C.CODIGO_DIARIA = B.CODIGO_DIARIA\n"
-                + "        AND A.DEL_FLAG = 0\n"
-                + "        AND A.DEFECT_FLAG = 0\n"
-                + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND A.CODIGO_COPIA = ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
+        String sqlSelect = "SELECT \n" +
+            "    *,\n" +
+            "    (CASE\n" +
+            "        WHEN OB.DEL_FLAG = 0 THEN ''\n" +
+            "        ELSE (SELECT \n" +
+            "                MAX(DATA_PREVISTA)\n" +
+            "            FROM\n" +
+            "                ITEM_LOCACAO\n" +
+            "            WHERE\n" +
+            "                COPIA_CODIGO_COPIA = OB.CODIGO_COPIA AND DEL_FLAG = 1)\n" +
+            "    END) AS DATA_PREVISTA\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        A.CODIGO_COPIA AS CODIGO_COPIA,\n" +
+            "            A.OBJETO_CODIGO_OBJETO AS OBJETO_CODIGO_OBJETO,\n" +
+            "            A.CODIGO_BARRAS AS CODIGO_BARRAS,\n" +
+            "            A.DEL_FLAG AS DEL_FLAG,\n" +
+            "            A.PRECO_CUSTO AS PRECO_CUSTO,\n" +
+            "            A.DATA_AQUISICAO AS DATA_AQUISICAO,\n" +
+            "            A.NUMERO_COPIA AS NUMERO_COPIA,\n" +
+            "            B.TITULO AS TITULO,\n" +
+            "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n" +
+            "            B.TIPO_MIDIA AS TIPO_MIDIA,\n" +
+            "            B.CENSURA AS CENSURA,\n" +
+            "            A.IDIOMA AS IDIOMA,\n" +
+            "            A.LEGENDA AS LEGENDA,\n" +
+            "            C.CODIGO_DIARIA AS CODIGO_DIARIA,\n" +
+            "            C.DIAS AS DIAS,\n" +
+            "            C.VALOR AS VALOR,\n" +
+            "            C.MAXIMO_DIAS AS MAXIMO_DIAS,\n" +
+            "            C.ACUMULATIVO AS ACUMULATIVO\n" +
+            "    FROM\n" +
+            "        locadora.COPIA A, locadora.OBJETO B, locadora.DIARIA C\n" +
+            "    WHERE\n" +
+            "        A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n" +
+            "            AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n" +            
+            "            AND TIPO_MOVIMENTO = 'Locação'\n" +
+            "            AND A.CODIGO_COPIA = ? \n" +
+            "    ORDER BY B.TITULO , CODIGO_COPIA\n" +
+            "    LIMIT 0 , 50) AS OB;\n" +
+            "           \n" +
+            "           ";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -154,9 +168,6 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             rs = ps.executeQuery();
 
             resultado = getListaCopia(rs);
-//            if (resultado.size() > 0) {
-//                return resultado.get(0);
-//            }
             ps.close();
         } finally {
             pool.liberarConnection(con);
@@ -223,37 +234,48 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT \n"
-                + "	A.CODIGO_COPIA, \n"
-                + "	A.OBJETO_CODIGO_OBJETO, \n"
-                + "    A.CODIGO_BARRAS,\n"
-                + "    A.NUMERO_COPIA,\n"
-                + "    A.PRECO_CUSTO,\n"
-                + "    A.DEL_FLAG,\n"
-                + "    A.DATA_AQUISICAO,\n"
-                + "    B.TITULO,\n"
-                + "    B.CODIGO_OBJETO,\n"
-                + "    B.TIPO_MOVIMENTO,\n"
-                + "    B.TIPO_MIDIA,\n"
-                + "    B.CENSURA,\n"
-                + "    A.IDIOMA,\n"
-                + "    A.LEGENDA,\n"
-                + "    C.CODIGO_DIARIA,\n"
-                + "    C.DIAS,\n"
-                + "    C.MAXIMO_DIAS,\n"
-                + "    C.ACUMULATIVO,\n"
-                + "    C.VALOR\n"
-                + "FROM\n"
-                + "    locadora.COPIA A,\n"
-                + "    locadora.OBJETO B,\n"
-                + "    locadora.DIARIA C\n"
-                + "WHERE\n"
-                + "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
-                + "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n"
-                + "        AND A.DEL_FLAG = 0\n"
-                + "        AND A.DEFECT_FLAG = 0\n"
-                + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND A.CODIGO_BARRAS = ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
+        String sqlSelect = "SELECT \n" +
+            "    *,\n" +
+            "    (CASE\n" +
+            "        WHEN OB.DEL_FLAG = 0 THEN ''\n" +
+            "        ELSE (SELECT \n" +
+            "                MAX(DATA_PREVISTA)\n" +
+            "            FROM\n" +
+            "                ITEM_LOCACAO\n" +
+            "            WHERE\n" +
+            "                COPIA_CODIGO_COPIA = OB.CODIGO_COPIA AND DEL_FLAG = 1)\n" +
+            "    END) AS DATA_PREVISTA\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        A.CODIGO_COPIA AS CODIGO_COPIA,\n" +
+            "            A.OBJETO_CODIGO_OBJETO AS OBJETO_CODIGO_OBJETO,\n" +
+            "            A.CODIGO_BARRAS AS CODIGO_BARRAS,\n" +
+            "            A.DEL_FLAG AS DEL_FLAG,\n" +
+            "            A.PRECO_CUSTO AS PRECO_CUSTO,\n" +
+            "            A.DATA_AQUISICAO AS DATA_AQUISICAO,\n" +
+            "            A.NUMERO_COPIA AS NUMERO_COPIA,\n" +
+            "            B.TITULO AS TITULO,\n" +
+            "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n" +
+            "            B.TIPO_MIDIA AS TIPO_MIDIA,\n" +
+            "            B.CENSURA AS CENSURA,\n" +
+            "            A.IDIOMA AS IDIOMA,\n" +
+            "            A.LEGENDA AS LEGENDA,\n" +
+            "            C.CODIGO_DIARIA AS CODIGO_DIARIA,\n" +
+            "            C.DIAS AS DIAS,\n" +
+            "            C.VALOR AS VALOR,\n" +
+            "            C.MAXIMO_DIAS AS MAXIMO_DIAS,\n" +
+            "            C.ACUMULATIVO AS ACUMULATIVO\n" +
+            "    FROM\n" +
+            "        locadora.COPIA A, locadora.OBJETO B, locadora.DIARIA C\n" +
+            "    WHERE\n" +
+            "        A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n" +
+            "            AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n" +            
+            "            AND TIPO_MOVIMENTO = 'Locação'\n" +
+            "            AND A.CODIGO_BARRAS = ? \n" +
+            "    ORDER BY B.TITULO , CODIGO_COPIA\n" +
+            "    LIMIT 0 , 50) AS OB;\n" +
+            "           \n" +
+            "           ";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -262,8 +284,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             rs = ps.executeQuery();
 
             resultado = getListaCopia(rs);
-//            if (resultado.size() > 0) {
-//            }
+
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(CopiaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -279,65 +300,89 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect_del_flag = "SELECT \n"
-                + "	A.CODIGO_COPIA, \n"
-                + "	A.OBJETO_CODIGO_OBJETO, \n"
-                + "    A.CODIGO_BARRAS,\n"
-                + "    A.NUMERO_COPIA,\n"
-                + "    A.PRECO_CUSTO,\n"
-                + "    A.DEL_FLAG,\n"
-                + "    A.DATA_AQUISICAO,\n"
-                + "    B.TITULO,\n"
-                + "    B.CODIGO_OBJETO,\n"
-                + "    B.TIPO_MOVIMENTO,\n"
-                + "    B.TIPO_MIDIA,\n"
-                + "    B.CENSURA,\n"
-                + "    A.IDIOMA,\n"
-                + "    A.LEGENDA,\n"
-                + "    C.DIAS,\n"
-                + "    C.VALOR\n"
-                + "FROM\n"
-                + "    locadora.COPIA A,\n"
-                + "    locadora.OBJETO B,\n"
-                + "    locadora.DIARIA C\n"
-                + "WHERE\n"
-                + "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
-                + "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n"
-                + "        AND A.DEL_FLAG = 0\n"
-                + "        AND A.DEFECT_FLAG = 0\n"
-                + "        AND TIPO_MOVIMENTO LIKE ?\n"
-                + "		AND B.CODIGO_OBJETO = ? ORDER BY CODIGO_COPIA, CODIGO_BARRAS LIMIT 0, 50;";
+        String sqlSelect_del_flag = "SELECT \n" +
+            "    *,\n" +
+            "    (CASE\n" +
+            "        WHEN OB.DEL_FLAG = 0 THEN ''\n" +
+            "        ELSE (SELECT \n" +
+            "                MAX(DATA_PREVISTA)\n" +
+            "            FROM\n" +
+            "                ITEM_LOCACAO\n" +
+            "            WHERE\n" +
+            "                COPIA_CODIGO_COPIA = OB.CODIGO_COPIA AND DEL_FLAG = 1)\n" +
+            "    END) AS DATA_PREVISTA\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "     A.CODIGO_COPIA, \n" +
+            "     A.OBJETO_CODIGO_OBJETO, \n" +
+            "    A.CODIGO_BARRAS,\n" +
+            "    A.NUMERO_COPIA,\n" +
+            "    A.PRECO_CUSTO,\n" +
+            "    A.DEL_FLAG,\n" +
+            "    A.DATA_AQUISICAO,\n" +
+            "    B.TITULO,\n" +
+            "    B.CODIGO_OBJETO,\n" +
+            "    B.TIPO_MOVIMENTO,\n" +
+            "    B.TIPO_MIDIA,\n" +
+            "    B.CENSURA,\n" +
+            "    A.IDIOMA,\n" +
+            "    A.LEGENDA,\n" +
+            "    C.DIAS,\n" +
+            "    C.VALOR\n" +
+            "FROM\n" +
+            "    locadora.COPIA A,\n" +
+            "    locadora.OBJETO B,\n" +
+            "    locadora.DIARIA C\n" +
+            "WHERE\n" +
+            "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n" +
+            "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n" +
+            "        AND A.DEL_FLAG = 0\n" +
+            "        AND A.DEFECT_FLAG = 0\n" +
+            "        AND TIPO_MOVIMENTO LIKE ?\n" +
+            "           AND B.CODIGO_OBJETO = ? ORDER BY CODIGO_COPIA, CODIGO_BARRAS LIMIT 0, 50) AS OB;";
 
-        String sqlSelect = "SELECT \n"
-                + "	A.CODIGO_COPIA, \n"
-                + "	A.OBJETO_CODIGO_OBJETO, \n"
-                + "    A.CODIGO_BARRAS,\n"
-                + "    A.NUMERO_COPIA,\n"
-                + "    A.PRECO_CUSTO,\n"
-                + "    A.DEL_FLAG,\n"
-                + "    A.IDIOMA,\n"
-                + "    A.LEGENDA,\n"
-                + "    A.DATA_AQUISICAO,\n"
-                + "    B.TITULO,\n"
-                + "    B.CODIGO_OBJETO,\n"
-                + "    B.TIPO_MOVIMENTO,\n"
-                + "    B.TIPO_MIDIA,\n"
-                + "    B.CENSURA,\n"
-                + "    C.CODIGO_DIARIA,\n"
-                + "    C.DIAS,\n"
-                + "    C.VALOR,\n"
-                + "    C.MAXIMO_DIAS,\n"
-                + "    C.ACUMULATIVO\n"
-                + "FROM\n"
-                + "    locadora.COPIA A,\n"
-                + "    locadora.OBJETO B,\n"
-                + "    locadora.DIARIA C\n"
-                + "WHERE\n"
-                + "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
-                + "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n"
-                + "        AND A.DEFECT_FLAG = 0\n"
-                + "        AND TIPO_MOVIMENTO LIKE ?\n"
-                + "		AND B.CODIGO_OBJETO = ? ORDER BY CODIGO_COPIA, CODIGO_BARRAS LIMIT 0, 50;";
+        String sqlSelect = "SELECT \n" +
+            "    *,\n" +
+            "    (CASE\n" +
+            "        WHEN OB.DEL_FLAG = 0 THEN ''\n" +
+            "        ELSE (SELECT \n" +
+            "                MAX(DATA_PREVISTA)\n" +
+            "            FROM\n" +
+            "                ITEM_LOCACAO\n" +
+            "            WHERE\n" +
+            "                COPIA_CODIGO_COPIA = OB.CODIGO_COPIA AND DEL_FLAG = 1)\n" +
+            "    END) AS DATA_PREVISTA\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "     A.CODIGO_COPIA, \n" +
+            "     A.OBJETO_CODIGO_OBJETO, \n" +
+            "    A.CODIGO_BARRAS,\n" +
+            "    A.NUMERO_COPIA,\n" +
+            "    A.PRECO_CUSTO,\n" +
+            "    A.DEL_FLAG,\n" +
+            "    A.IDIOMA,\n" +
+            "    A.LEGENDA,\n" +
+            "    A.DATA_AQUISICAO,\n" +
+            "    B.TITULO,\n" +
+            "    B.CODIGO_OBJETO,\n" +
+            "    B.TIPO_MOVIMENTO,\n" +
+            "    B.TIPO_MIDIA,\n" +
+            "    B.CENSURA,\n" +
+            "    C.CODIGO_DIARIA,\n" +
+            "    C.DIAS,\n" +
+            "    C.VALOR,\n" +
+            "    C.MAXIMO_DIAS,\n" +
+            "    C.ACUMULATIVO\n" +
+            "FROM\n" +
+            "    locadora.COPIA A,\n" +
+            "    locadora.OBJETO B,\n" +
+            "    locadora.DIARIA C\n" +
+            "WHERE\n" +
+            "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n" +
+            "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA        \n" +
+            "        AND A.DEFECT_FLAG = 0\n" +
+            "        AND TIPO_MOVIMENTO LIKE ?\n" +
+            "           AND B.CODIGO_OBJETO = ? ORDER BY CODIGO_COPIA, CODIGO_BARRAS LIMIT 0, 50) AS OB;";
 
         try {
             if (del_flag == 0) {
@@ -351,8 +396,6 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             rs = ps.executeQuery();
 
             resultado = getListaCopia(rs);
-//            if (resultado.size() > 0) {
-//            }
             ps.close();
             return resultado;
         } catch (SQLException ex) {
@@ -369,37 +412,79 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT \n"
-                + "	A.CODIGO_COPIA, \n"
-                + "	A.OBJETO_CODIGO_OBJETO, \n"
-                + "	A.CODIGO_BARRAS, \n"
-                + "    A.DEL_FLAG,\n"
-                + "    A.PRECO_CUSTO,\n"
-                + "    A.DATA_AQUISICAO,\n"
-                + "    A.NUMERO_COPIA,\n"
-                + "    B.TITULO,\n"
-                + "    B.TIPO_MOVIMENTO,\n"
-                + "    B.TIPO_MIDIA,\n"
-                + "    B.CENSURA,\n"
-                + "    A.IDIOMA,\n"
-                + "    A.LEGENDA,\n"
-                + "    C.CODIGO_DIARIA,\n"
-                + "    C.DIAS,\n"
-                + "    C.VALOR,\n"
-                + "    C.MAXIMO_DIAS,\n"
-                + "    C.ACUMULATIVO\n"
-                + "FROM\n"
-                + "    locadora.COPIA A,\n"
-                + "    locadora.OBJETO B,\n"
-                + "    locadora.DIARIA C\n"
-                + "WHERE\n"
-                + "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
-                + "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n"
-                + "        AND A.DEL_FLAG = 0\n"
-                + "        AND A.DEFECT_FLAG = 0\n"
-                + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND B.TITULO LIKE ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
+//        String sqlSelect = "SELECT \n"
+//                + "	A.CODIGO_COPIA, \n"
+//                + "	A.OBJETO_CODIGO_OBJETO, \n"
+//                + "	A.CODIGO_BARRAS, \n"
+//                + "    A.DEL_FLAG,\n"
+//                + "    A.PRECO_CUSTO,\n"
+//                + "    A.DATA_AQUISICAO,\n"
+//                + "    A.NUMERO_COPIA,\n"
+//                + "    B.TITULO,\n"
+//                + "    B.TIPO_MOVIMENTO,\n"
+//                + "    B.TIPO_MIDIA,\n"
+//                + "    B.CENSURA,\n"
+//                + "    A.IDIOMA,\n"
+//                + "    A.LEGENDA,\n"
+//                + "    C.CODIGO_DIARIA,\n"
+//                + "    C.DIAS,\n"
+//                + "    C.VALOR,\n"
+//                + "    C.MAXIMO_DIAS,\n"
+//                + "    C.ACUMULATIVO\n"
+//                + "FROM\n"
+//                + "    locadora.COPIA A,\n"
+//                + "    locadora.OBJETO B,\n"
+//                + "    locadora.DIARIA C\n"
+//                + "WHERE\n"
+//                + "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
+//                + "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n"
+//                + "        AND A.DEL_FLAG = 0\n"
+//                + "        AND A.DEFECT_FLAG = 0\n"
+//                + "        AND TIPO_MOVIMENTO = 'Locação'\n"
+//                + "		AND B.TITULO LIKE ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
 
+        String sqlSelect = "SELECT \n" +
+            "    *,\n" +
+            "    (CASE\n" +
+            "        WHEN OB.DEL_FLAG = 0 THEN ''\n" +
+            "        ELSE (SELECT \n" +
+            "                MAX(DATA_PREVISTA)\n" +
+            "            FROM\n" +
+            "                ITEM_LOCACAO\n" +
+            "            WHERE\n" +
+            "                COPIA_CODIGO_COPIA = OB.CODIGO_COPIA AND DEL_FLAG = 1)\n" +
+            "    END) AS DATA_PREVISTA\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        A.CODIGO_COPIA AS CODIGO_COPIA,\n" +
+            "            A.OBJETO_CODIGO_OBJETO AS OBJETO_CODIGO_OBJETO,\n" +
+            "            A.CODIGO_BARRAS AS CODIGO_BARRAS,\n" +
+            "            A.DEL_FLAG AS DEL_FLAG,\n" +
+            "            A.PRECO_CUSTO AS PRECO_CUSTO,\n" +
+            "            A.DATA_AQUISICAO AS DATA_AQUISICAO,\n" +
+            "            A.NUMERO_COPIA AS NUMERO_COPIA,\n" +
+            "            B.TITULO AS TITULO,\n" +
+            "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n" +
+            "            B.TIPO_MIDIA AS TIPO_MIDIA,\n" +
+            "            B.CENSURA AS CENSURA,\n" +
+            "            A.IDIOMA AS IDIOMA,\n" +
+            "            A.LEGENDA AS LEGENDA,\n" +
+            "            C.CODIGO_DIARIA AS CODIGO_DIARIA,\n" +
+            "            C.DIAS AS DIAS,\n" +
+            "            C.VALOR AS VALOR,\n" +
+            "            C.MAXIMO_DIAS AS MAXIMO_DIAS,\n" +
+            "            C.ACUMULATIVO AS ACUMULATIVO\n" +
+            "    FROM\n" +
+            "        locadora.COPIA A, locadora.OBJETO B, locadora.DIARIA C\n" +
+            "    WHERE\n" +
+            "        A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n" +
+            "            AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n" +            
+            "            AND TIPO_MOVIMENTO = 'Locação'\n" +
+            "            AND B.TITULO LIKE ? \n" +
+            "    ORDER BY B.TITULO , CODIGO_COPIA\n" +
+            "    LIMIT 0 , 50) AS OB;\n" +
+            "           \n" +
+            "           ";
         try {
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, "%" + titulo + "%");
@@ -419,33 +504,48 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT \n"
-                + "	A.CODIGO_COPIA, \n"
-                + "	A.CODIGO_BARRAS, \n"
-                + "	A.OBJETO_CODIGO_OBJETO, \n"
-                + "    A.DEL_FLAG,\n"
-                + "    A.PRECO_CUSTO,\n"
-                + "    B.TITULO,\n"
-                + "    B.TIPO_MOVIMENTO,\n"
-                + "    B.TIPO_MIDIA,\n"
-                + "    A.IDIOMA,\n"
-                + "    A.LEGENDA,\n"
-                + "    C.CODIGO_DIARIA,\n"
-                + "    C.DIAS,\n"
-                + "    C.VALOR,\n"
-                + "    C.MAXIMO_DIAS,\n"
-                + "    C.ACUMULATIVO\n"
-                + "FROM\n"
-                + "    locadora.COPIA A,\n"
-                + "    locadora.OBJETO B,\n"
-                + "    locadora.DIARIA C\n"
-                + "WHERE\n"
-                + "    A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
-                + "        AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n"
-                + "        AND A.DEL_FLAG = 0\n"
-                + "        AND A.DEFECT_FLAG = 0\n"
-                + "        AND TIPO_MOVIMENTO = 'Locação'\n"
-                + "		AND B.ELENCO LIKE ? ORDER BY B.TITULO, CODIGO_COPIA LIMIT 0, 50;";
+        String sqlSelect = "SELECT \n" +
+            "    *,\n" +
+            "    (CASE\n" +
+            "        WHEN OB.DEL_FLAG = 0 THEN ''\n" +
+            "        ELSE (SELECT \n" +
+            "                MAX(DATA_PREVISTA)\n" +
+            "            FROM\n" +
+            "                ITEM_LOCACAO\n" +
+            "            WHERE\n" +
+            "                COPIA_CODIGO_COPIA = OB.CODIGO_COPIA AND DEL_FLAG = 1)\n" +
+            "    END) AS DATA_PREVISTA\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        A.CODIGO_COPIA AS CODIGO_COPIA,\n" +
+            "            A.OBJETO_CODIGO_OBJETO AS OBJETO_CODIGO_OBJETO,\n" +
+            "            A.CODIGO_BARRAS AS CODIGO_BARRAS,\n" +
+            "            A.DEL_FLAG AS DEL_FLAG,\n" +
+            "            A.PRECO_CUSTO AS PRECO_CUSTO,\n" +
+            "            A.DATA_AQUISICAO AS DATA_AQUISICAO,\n" +
+            "            A.NUMERO_COPIA AS NUMERO_COPIA,\n" +
+            "            B.TITULO AS TITULO,\n" +
+            "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n" +
+            "            B.TIPO_MIDIA AS TIPO_MIDIA,\n" +
+            "            B.CENSURA AS CENSURA,\n" +
+            "            A.IDIOMA AS IDIOMA,\n" +
+            "            A.LEGENDA AS LEGENDA,\n" +
+            "            C.CODIGO_DIARIA AS CODIGO_DIARIA,\n" +
+            "            C.DIAS AS DIAS,\n" +
+            "            C.VALOR AS VALOR,\n" +
+            "            C.MAXIMO_DIAS AS MAXIMO_DIAS,\n" +
+            "            C.ACUMULATIVO AS ACUMULATIVO\n" +
+            "    FROM\n" +
+            "        locadora.COPIA A, locadora.OBJETO B, locadora.DIARIA C\n" +
+            "    WHERE\n" +
+            "        A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n" +
+            "            AND C.CODIGO_DIARIA = B.DIARIA_CODIGO_DIARIA\n" +            
+            "            AND TIPO_MOVIMENTO = 'Locação'\n" +
+            "            AND B.ELENCO LIKE ?\n" +
+            "    ORDER BY B.TITULO , CODIGO_COPIA\n" +
+            "    LIMIT 0 , 50) AS OB;\n" +
+            "           \n" +
+            "           ";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -591,12 +691,18 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             copia.setIdioma(rs.getString("IDIOMA"));
             copia.setLegenda(rs.getString("LEGENDA"));
             copia.setData_aquisicao(rs.getDate("DATA_AQUISICAO"));
+            System.out.println("Data prevista Devolução: "+ rs.getString("DATA_PREVISTA"));
+            if(rs.getString("DATA_PREVISTA").equals("")){
+                copia.setData_prevista(null);                
+            } else {
+                copia.setData_prevista(rs.getDate("DATA_PREVISTA"));                
+            }
             copia.setNumero_copia(rs.getInt("NUMERO_COPIA"));
 
             if (rs.getInt("DEL_FLAG") == 0) {
-                copia.setStatus("Disponivel");
+                copia.setStatus("Disponível");
             } else {
-                copia.setStatus("Indisponivel");
+                copia.setStatus("X");
             }
 
             resultado.add(copia);
