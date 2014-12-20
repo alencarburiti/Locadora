@@ -66,6 +66,11 @@ public class CadastroGenero extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
@@ -192,23 +197,11 @@ public class CadastroGenero extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        if (janelapai != null) {
-            janelapai.setStatusTela(true);
-            setVisible(false);
-        } else if (janelapai2 != null) {
-            janelapai.setStatusTela(true);
-            setVisible(false);
-        }
+        retornaJanelaPai();
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        if (janelapai != null) {
-            janelapai.setStatusTela(true);
-            setVisible(false);
-        } else if (janelapai2 != null) {
-            janelapai.setStatusTela(true);
-            setVisible(false);
-        }
+        retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_nome_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_generoKeyPressed
@@ -230,6 +223,11 @@ public class CadastroGenero extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -252,17 +250,8 @@ public class CadastroGenero extends javax.swing.JFrame {
         if (verificarCampos()) {
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarGenero");
-
-            if (janelapai != null) {
-                setVisible(false);
-                janelapai.setStatusTela(true);
-                janelapai.buscarDados();
-                janelapai.jtf_consulta.requestFocus();
-            } else if (janelapai2 != null) {
-                janelapai2.setStatusTela(true);
-                setVisible(false);
-
-            }
+            
+            retornaJanelaPai();            
         }
     }
 
@@ -290,8 +279,17 @@ public class CadastroGenero extends javax.swing.JFrame {
             enviaDados();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornaJanelaPai();
+        }
+    }
+    public void retornaJanelaPai(){
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);            
+            janelapai.buscarDados();
+        } else if(janelapai2 != null){
+            janelapai2.setStatusTela(true);
+            janelapai2.listaGenero();
         }
     }
 }

@@ -2,15 +2,12 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
-import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Lancamento;
-import br.com.locadora.model.bean.Objeto;
-import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.PromocaoLocacao;
 import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.model.dao.DependenteDAO;
@@ -24,7 +21,6 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,24 +35,23 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 public class AtendimentoLocacao extends javax.swing.JFrame {
 
-    public DecimalFormat formatoPreco;
-    public MaskFormatter formatoData;
-    public String permissao;
-    public Cliente cliente;
+//    public DecimalFormat formatoPreco;
+//    public MaskFormatter formatoData;
+//    public String permissao;
+//    public Cliente cliente;
     public static Dependente dependente = new Dependente();
-    public Objeto objeto;
+//    public Objeto objeto;
     public Copia copiaLocacao;
-    public Copia copiaDevolucao;
+//    public Copia copiaDevolucao;
     public List<Copia> copias;
     public static List<Copia> copiasLocacao = new ArrayList<Copia>();
-    public List<Produto> produtos;
-    public Produto produto;
+//    public List<Produto> produtos;
+//    public Produto produto;
     public InterfacePool pool;
-    public SiscomController controller;
+//    public SiscomController controller;
     public TelaPrincipal janelapai;
     public Moeda moeda;
     public Lancamento lancamento;
@@ -733,8 +728,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         ((DefaultTableModel) jtbl_locacao.getModel()).setRowCount(0);
         jtbl_locacao.updateUI();
-        this.setVisible(false);
-        janelapai.setStatusTela(true);
+        retornaJanelaPai();        
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -910,8 +904,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jb_clienteKeyPressed
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        setVisible(false);
-        janelapai.setStatusTela(true);
+        retornaJanelaPai();
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_finalizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_finalizarKeyPressed
@@ -1945,9 +1938,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             jb_finalizar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
+            retornaJanelaPai();
+        }
+    }
+    private void retornaJanelaPai() {
+        setVisible(false);
+        if (janelapai != null) {
             janelapai.setStatusTela(true);
-
         }
     }
 
@@ -1957,13 +1954,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             System.out.println("Iniciar Verificação: " + copiasLocacao.get(i).getObjeto().getTitulo());
             System.out.println("CODIGO DIARIA - DIARIA: " + diaria.getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
             System.out.println("Posição: " + i + " Ganhar: " + copiasLocacao.get(i).getObjeto().getDiaria().getPromocaoLocacao().getGanhar_quantidade());
-//            Acumular todos
-//            if(copiasLocacao.get(i).getObjeto().getDiaria().getPromocaoLocacao().getGanhar_quantidade() > 0){
-//                if (!jtbl_locacao.getValueAt(i, 2).equals("R$ 0,00")) {
-//                    diaria.setQuantidade_filme(diaria.getQuantidade_filme() + 1);
-//                    System.out.println("Quantidade de filme: " + diaria.getQuantidade_filme());
-//                }                
-//            }
+
             if (diaria.getPromocaoLocacao().getCodigo_promocao_locacao() == copiasLocacao.get(i).getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao()) {
                 if (!jtbl_locacao.getValueAt(i, 2).equals("R$ 0,00")) {
                     diaria.setQuantidade_filme(diaria.getQuantidade_filme() + 1);

@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
 public class AtualizaUsuario extends javax.swing.JFrame {
 
     public MenuUsuario janelapai;
-    private Usuario objusuario;
+    private Usuario usuario;
     List<Usuario> usuarios;
     public InterfacePool pool;
 
@@ -37,17 +37,22 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     public AtualizaUsuario() {
         initComponents();
         TemaInterface.getInterface(this);
+        janelapai = null;
     }
 
     public AtualizaUsuario(Usuario usu) {
-        this.objusuario = usu;
         initComponents();
-        TemaInterface.getInterface(this);
-        jtf_codigo_usuario.setText(String.valueOf(usu.getCodigo_usuario()));
-        jtf_nome.setText(usu.getNome_usuario());
-        jtf_login.setText(usu.getLogin());
-        jpf_senha.setText(usu.getSenha());
-        System.out.println("Senha para alterar: "+usu.getSenha());
+        if(usu != null){
+            TemaInterface.getInterface(this);
+            janelapai = null;
+            
+            this.usuario = usu;
+            jtf_codigo_usuario.setText(String.valueOf(usu.getCodigo_usuario()));
+            jtf_nome.setText(usu.getNome_usuario());
+            jtf_login.setText(usu.getLogin());
+            jpf_senha.setText(usu.getSenha());
+            System.out.println("Senha para alterar: "+usu.getSenha());
+        }
     }
 
     /**
@@ -79,6 +84,11 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -273,11 +283,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setStatusTela(true);
-        janelapai.request();  
-        janelapai.listarUsuário();
-        janelapai.usuarioAltera = null;
-        setVisible(false);
+        retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_loginFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_loginFocusGained
@@ -340,12 +346,13 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        janelapai.setStatusTela(true);
-        janelapai.request();  
-        janelapai.listarUsuário();
-        janelapai.usuarioAltera = null;
-        setVisible(false);
+        retornaJanelaPai();
     }//GEN-LAST:event_jb_cancelarActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -373,20 +380,19 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField jtf_login;
     private javax.swing.JTextField jtf_nome;
     // End of variables declaration//GEN-END:variables
-    Usuario usuario = new Usuario();
 
     public void alteraUsuario() {
         if (verificarCampos()) {
             pool = new Pool();
             UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+            usuario = new Usuario();
             usuario.setCodigo_usuario(Integer.parseInt(jtf_codigo_usuario.getText().trim()));
             usuario.setNome_usuario(jtf_nome.getText().trim());
             usuario.setLogin(jtf_login.getText().trim());
             usuario.setSenha(jpf_senha.getText().trim());
 
             usuarioControl.alteraUsuario(usuario);
-            JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso");
-            retornaJanelaPai();
+            JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso");            
         }
     }
     
@@ -436,12 +442,13 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     }
 
     public void retornaJanelaPai() {
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
-        janelapai.request();
         setVisible(false);
-        janelapai.listarUsuário();
-
+        if(janelapai != null){
+            janelapai.setStatusTela(true);
+            janelapai.jtf_consultar_usuario.requestFocus();
+            janelapai.atualizaUsuario = null;
+            janelapai.listarUsuário();            
+        }
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
@@ -449,8 +456,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
             jb_salvar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornaJanelaPai();
         }
     }
 }

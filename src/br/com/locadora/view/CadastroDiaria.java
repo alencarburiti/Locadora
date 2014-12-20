@@ -23,7 +23,6 @@ import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
-import br.com.locadora.util.NumberDocument;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
 import java.awt.event.KeyEvent;
@@ -46,7 +45,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     public PromocaoLocacao promocaoLocacao;
     public PromocaoDevolucao promocaoDevolucao;
     public ConsultaDiariaObjeto janelapai2;
-    public List<Diaria> generos;
+//    public List<Diaria> generos;
     public AcessoUsuario acesso;
     public List<Diaria> itensPromocaoLocacao;
     public List<Diaria> itensPromocaoDevolucao;
@@ -59,7 +58,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
         TemaInterface.getInterface(this);
         janelapai = null;
         janelapai2 = null;
-        itensPromocaoLocacao = new ArrayList<Diaria>();
+//        itensPromocaoLocacao = new ArrayList<Diaria>();
     }
 
     @SuppressWarnings("unchecked")
@@ -166,14 +165,19 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
-        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_salvarActionPerformed(evt);
+        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_salvarMouseClicked(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -186,9 +190,14 @@ public class CadastroDiaria extends javax.swing.JFrame {
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
+        jb_cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_cancelarMouseClicked(evt);
+            }
+        });
+        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelarKeyPressed(evt);
             }
         });
 
@@ -1030,36 +1039,13 @@ public class CadastroDiaria extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        cadastrarDiaria();
-    }//GEN-LAST:event_jb_salvarActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jtf_nome_diaria.requestFocus();
         this.setEnabled(true);
     }//GEN-LAST:event_formWindowOpened
 
-    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        if (janelapai != null) {
-            janelapai.setStatusTela(true);
-            setVisible(false);
-            janelapai.enviaDados();
-        } else if (janelapai2 != null) {
-            janelapai2.setStatusTela(true);
-            setVisible(false);
-
-        }
-    }//GEN-LAST:event_jb_cancelarActionPerformed
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        if (janelapai != null) {
-            janelapai.setStatusTela(true);
-            setVisible(false);
-            janelapai.enviaDados();
-        } else if (janelapai2 != null) {
-            janelapai2.setStatusTela(true);
-            setVisible(false);
-        }
+        retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_valorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valorFocusGained
@@ -1396,6 +1382,32 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private void jb_adicionar_promocao_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_promocao_locacaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_promocao_locacaoActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
+        if(evt.getClickCount() == 1){
+            cadastrarDiaria();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarMouseClicked
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            retornaJanelaPai();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
+
+    private void jb_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cancelarMouseClicked
+        if(evt.getClickCount() == 1){
+            retornaJanelaPai();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarMouseClicked
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1471,18 +1483,14 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     private void retornaJanelaPai() {
         setVisible(false);
-
         if (janelapai != null) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            janelapai.request();
+            janelapai.setStatusTela(true);            
+            janelapai.buscarDados();
         }
         if (janelapai2 != null) {
-            janelapai2.setEnabled(true);
-            janelapai2.setVisible(true);
-
+            janelapai2.setStatusTela(true);            
+            janelapai2.listaDiaria();
         }
-
     }
 
     InterfacePool pool;
@@ -1517,27 +1525,10 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            if (janelapai != null) {
-                janelapai.setStatusTela(true);
-                setVisible(false);
-                janelapai.enviaDados();
-            } else if (janelapai2 != null) {
-                janelapai2.setStatusTela(true);
-                setVisible(false);
-
-            }
-
+            cadastrarDiaria();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            if (janelapai != null) {
-                janelapai.setStatusTela(true);
-                setVisible(false);
-                janelapai.enviaDados();
-            } else if (janelapai2 != null) {
-                janelapai2.setStatusTela(true);
-                setVisible(false);
-
-            }
+            retornaJanelaPai();
         }
     }
 

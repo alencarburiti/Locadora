@@ -96,6 +96,11 @@ public class MenuDiaria extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Diária"));
         jPanel1.setName("jPanel1"); // NOI18N
@@ -330,7 +335,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_excluirActionPerformed
 
     private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
-        enviaDados();
+        buscarDados();
     }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -345,7 +350,7 @@ public class MenuDiaria extends javax.swing.JFrame {
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            enviaDados();
+            buscarDados();
         }
         acionarAtalho(evt);
 
@@ -365,6 +370,11 @@ public class MenuDiaria extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_diariaMouseClicked
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
     /**
      * @param args the command line arguments
      */
@@ -393,7 +403,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
-    public void enviaDados() {
+    public void buscarDados() {
         controller = new SiscomController();
         controller.processarRequisicao("consultarDiaria");
     }

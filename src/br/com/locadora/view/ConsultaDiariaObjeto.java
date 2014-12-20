@@ -365,20 +365,12 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 }//GEN-LAST:event_jtbl_diariaKeyPressed
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        try {
-            listaDiaria(jtf_consulta.getText().trim());
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaDiariaObjeto.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        listaDiaria();
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                listaDiaria(jtf_consulta.getText().trim());
-            } catch (SQLException ex) {
-                Logger.getLogger(ConsultaDiariaObjeto.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            listaDiaria();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_consultaKeyPressed
@@ -405,7 +397,7 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private javax.swing.JButton jb_novo1;
     private javax.swing.JButton jb_ok;
     private javax.swing.JTable jtbl_diaria;
-    private javax.swing.JTextField jtf_consulta;
+    public static javax.swing.JTextField jtf_consulta;
     // End of variables declaration//GEN-END:variables
 
     public void setCadastro() {
@@ -426,11 +418,15 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         return diaria;
     }
 
-    public void listaDiaria(String consulta) throws SQLException {
-        pool = new Pool();
-        DiariaDAO diariaDAO = new DiariaDAO(pool);
-        diarias = diariaDAO.getDiarias("%" + jtf_consulta.getText().trim() + "%");
-        mostraDiaria(diarias);
+    public void listaDiaria() {
+        try {
+            pool = new Pool();
+            DiariaDAO diariaDAO = new DiariaDAO(pool);
+            diarias = diariaDAO.getDiarias("%" + jtf_consulta.getText().trim() + "%");
+            mostraDiaria(diarias);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaDiariaObjeto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void listaTodasDiarias() {

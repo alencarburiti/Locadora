@@ -368,20 +368,12 @@ private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 }//GEN-LAST:event_jtbl_generoKeyPressed
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        try {
-            listaGenero(jtf_consulta.getText().trim());
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaGeneroObjeto.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        listaGenero();
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                listaGenero(jtf_consulta.getText().trim());
-            } catch (SQLException ex) {
-                Logger.getLogger(ConsultaGeneroObjeto.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            listaGenero();
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             jtf_consulta.requestFocus();
@@ -437,11 +429,15 @@ private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     }
     private InterfacePool pool;
 
-    public void listaGenero(String consulta) throws SQLException {
-        pool = new Pool();
-        GeneroDAO generoDAO = new GeneroDAO(pool);
-        generos = generoDAO.getGeneros("%" + jtf_consulta.getText().trim() + "%");
-        mostraGenero(generos);
+    public void listaGenero() {
+        try {
+            pool = new Pool();
+            GeneroDAO generoDAO = new GeneroDAO(pool);
+            generos = generoDAO.getGeneros("%" + jtf_consulta.getText().trim() + "%");
+            mostraGenero(generos);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaGeneroObjeto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void listaTodasGeneros() {

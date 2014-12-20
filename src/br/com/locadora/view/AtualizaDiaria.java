@@ -46,8 +46,8 @@ public class AtualizaDiaria extends javax.swing.JFrame {
     public Moeda moeda;
     public InterfacePool pool;
     public List<Diaria> itensPromocaoLocacao;
-    public DiariaDAO diariaDAO;
     public List<Diaria> itensPromocaoDevolucao;
+    public DiariaDAO diariaDAO;
     public MaskFormatter formatoHora, formatoNumero;
 
     /**
@@ -60,20 +60,21 @@ public class AtualizaDiaria extends javax.swing.JFrame {
 
     public AtualizaDiaria(Diaria diaria) {
         initComponents();
-        janelapai = null;
-        TemaInterface.getInterface(this);
-        this.diaria = diaria;
-        System.out.println("Código Diária: " + this.diaria.getCodigo_diaria());
-        jtf_codigo_diaria.setText(String.valueOf(this.diaria.getCodigo_diaria()));
-        jtf_nome_diaria.setText(this.diaria.getNome_diaria());
-        jtf_dias.setText(this.diaria.getDias().toString());
-        jtf_dias_maximo.setText(this.diaria.getMaximo_dias().toString());
-        moeda = new Moeda();
-        jtf_valor.setText(moeda.setPrecoFormat(this.diaria.getValor().toString()));
-        jtf_relocacao.setText(moeda.setPrecoFormat(this.diaria.getMultas().toString()));
-        carregarPromocoesLocacao(diaria);
-        carregarPromocoesDevolucao(diaria);
-
+        if(diaria != null){
+            TemaInterface.getInterface(this);
+            janelapai = null;
+            this.diaria = diaria;
+            System.out.println("Código Diária: " + this.diaria.getCodigo_diaria());
+            jtf_codigo_diaria.setText(String.valueOf(this.diaria.getCodigo_diaria()));
+            jtf_nome_diaria.setText(this.diaria.getNome_diaria());
+            jtf_dias.setText(this.diaria.getDias().toString());
+            jtf_dias_maximo.setText(this.diaria.getMaximo_dias().toString());
+            moeda = new Moeda();
+            jtf_valor.setText(moeda.setPrecoFormat(this.diaria.getValor().toString()));
+            jtf_relocacao.setText(moeda.setPrecoFormat(this.diaria.getMultas().toString()));
+            carregarPromocoesLocacao(diaria);
+            carregarPromocoesDevolucao(diaria);            
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -174,6 +175,11 @@ public class AtualizaDiaria extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -1383,6 +1389,11 @@ public class AtualizaDiaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_dias_maximoKeyPressed
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -1478,9 +1489,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
             diaria.setMultas(moeda.getPrecoFormato(jtf_relocacao.getText()));
             diaria.setAcumulativo(jcb_acumulativo.isSelected());
             diariaDAO.atualizar(diaria);
-            JOptionPane.showMessageDialog(null, "Alteração efetuada com sucesso");
-            janelapai.enviaDados();
-
+            JOptionPane.showMessageDialog(null, "Alteração efetuada com sucesso");            
         }
     }
 
@@ -1513,8 +1522,11 @@ public class AtualizaDiaria extends javax.swing.JFrame {
 
     public void retornaJanelaPai() {
         this.setVisible(false);
-        janelapai.setStatusTela(true);
-        janelapai.atualizaDiaria = null;
+        if(janelapai != null){
+            janelapai.setStatusTela(true);
+            janelapai.atualizaDiaria = null;
+            janelapai.buscarDados();
+        }
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
@@ -1522,8 +1534,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
             alteraDiaria();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornaJanelaPai();
         }
     }
 

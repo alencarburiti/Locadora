@@ -30,8 +30,7 @@ public final class CadastroProduto extends javax.swing.JFrame {
     private TelaPrincipal janela;
     public List<Produto> produtos;
     public MenuProduto janelapai;
-    public ProdutoConsultarGUI janelapai2;
-
+    
     /**
      * Creates new form ProdutoCadastroGUI
      */
@@ -39,7 +38,7 @@ public final class CadastroProduto extends javax.swing.JFrame {
         initComponents();
         TemaInterface.getInterface(this);
         janelapai = null;
-        janelapai2 = null;
+        
 
     }
     //public ProdutoConsultarGUI janelapaim;
@@ -189,12 +188,7 @@ public final class CadastroProduto extends javax.swing.JFrame {
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
         }
-        if (janelapai2 != null) {
-            janelapai2.listaProduto("");
-            janelapai2.setEnabled(true);
-            janelapai2.setVisible(true);
-
-        }
+        
 
     }
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed

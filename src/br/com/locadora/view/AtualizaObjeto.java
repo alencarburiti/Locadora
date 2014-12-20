@@ -44,11 +44,11 @@ import javax.swing.text.MaskFormatter;
 public final class AtualizaObjeto extends javax.swing.JFrame {
 
     public MenuObjeto janelapai;
-    private Objeto objetoObjeto;
+//    private Objeto objetoObjeto;
     private InterfacePool pool;
     public List<Copia> copias;
     public MaskFormatter formatoData, formatoNumero;
-    public SiscomController controller;
+//    public SiscomController controller;
     public static Genero genero;
     public static Diaria diaria;
     public static Objeto objeto;
@@ -62,14 +62,14 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         initComponents();
         janelapai = null;
         TemaInterface.getInterface(this);
-
     }
 
     public AtualizaObjeto(Objeto objeto) {
+        initComponents();
         if (objeto != null) {
-
-            initComponents();
             TemaInterface.getInterface(this);
+            janelapai = null;
+            
             jtf_codigo_objeto.setText(String.valueOf(objeto.getCodigo_objeto()));
             jtf_titulo.setText(objeto.getTitulo());
             jcb_tipo.setSelectedItem(objeto.getTipo_movimento());
@@ -181,6 +181,11 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -929,9 +934,6 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        setVisible(false);
-        janelapai.setStatusTela(true);
-
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
@@ -1209,6 +1211,11 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_copiaMouseClicked
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1588,10 +1595,10 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
     private void retornaJanelaPai() {
         setVisible(false);
         if (janelapai != null) {
-            janelapai.setStatusTela(true);
-            janelapai.buscarDados();
+            janelapai.setStatusTela(true);            
             janelapai.jtf_consulta.requestFocus();
             janelapai.atualizaObjeto = null;
+            janelapai.buscarDados();
         }
     }
 

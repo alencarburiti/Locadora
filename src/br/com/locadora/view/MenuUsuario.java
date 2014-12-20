@@ -38,7 +38,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     public TelaPrincipal janelapai;
     public InterfacePool pool;
     public AcessoUsuario acesso;
-    public AtualizaUsuario usuarioAltera;
+    public AtualizaUsuario atualizaUsuario;
     /**
      * Creates new form Cad_Usuário
      */
@@ -46,7 +46,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         initComponents();
         listarUsuário();
         TemaInterface.getInterface(this);
-        usuarioAltera = null;
+        atualizaUsuario = null;
     }
 
     /**
@@ -104,6 +104,11 @@ public class MenuUsuario extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -425,6 +430,11 @@ public class MenuUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_usuarioMouseClicked
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -453,7 +463,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JRadioButton jrb_login;
     private javax.swing.JRadioButton jrb_nome;
     private javax.swing.JTable jtbl_usuario;
-    private javax.swing.JTextField jtf_consultar_usuario;
+    public static javax.swing.JTextField jtf_consultar_usuario;
     private java.awt.PopupMenu popupMenu1;
     // End of variables declaration//GEN-END:variables
     Usuario usuario = new Usuario();
@@ -590,13 +600,13 @@ public class MenuUsuario extends javax.swing.JFrame {
             if (acesso.getEscrever() == 0) {
                 Usuario usu = tbUsuarioLinhaSelecionada(jtbl_usuario);
                 if (usu != null) {
-                    if(usuarioAltera == null){
-                        usuarioAltera = new AtualizaUsuario(usu);
-                        usuarioAltera.janelapai = this;
-                        usuarioAltera.setVisible(true);
+                    if(atualizaUsuario == null){
+                        atualizaUsuario = new AtualizaUsuario(usu);
+                        atualizaUsuario.janelapai = this;
+                        atualizaUsuario.setVisible(true);
                         this.setEnabled(false);                
                     } else {
-                        usuarioAltera.setVisible(true);
+                        atualizaUsuario.setVisible(true);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um Usuário");

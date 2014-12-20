@@ -13,7 +13,6 @@ package br.com.locadora.view;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Genero;
 import java.awt.event.KeyEvent;
-import java.util.List;
 import javax.swing.JOptionPane;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
@@ -24,7 +23,7 @@ import br.com.locadora.util.TemaInterface;
  */
 public class AtualizaGenero extends javax.swing.JFrame {
 
-    private Genero objdestino;
+    private Genero genero;
     public MenuGenero janelapai;
     public SiscomController controller;
 
@@ -37,12 +36,14 @@ public class AtualizaGenero extends javax.swing.JFrame {
     }
 
     public AtualizaGenero(Genero genero) {
-        this.objdestino = genero;
         initComponents();
-        TemaInterface.getInterface(this);
-        jtf_codigo_genero.setText(String.valueOf(objdestino.getCodigo_genero()));
-        jtf_nome_genero.setText(objdestino.getNome_genero());
-
+        if(genero != null){
+            TemaInterface.getInterface(this);
+            janelapai = null;
+            this.genero = genero;
+            jtf_codigo_genero.setText(String.valueOf(genero.getCodigo_genero()));
+            jtf_nome_genero.setText(genero.getNome_genero());            
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -68,6 +69,11 @@ public class AtualizaGenero extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -204,8 +210,7 @@ public class AtualizaGenero extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setStatusTela(true);
-        setVisible(false);
+        retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
@@ -235,6 +240,11 @@ public class AtualizaGenero extends javax.swing.JFrame {
         }
         acionarAtalho(evt);
     }//GEN-LAST:event_jtf_nome_generoKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -286,8 +296,7 @@ public class AtualizaGenero extends javax.swing.JFrame {
             enviaDados();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornaJanelaPai();
         }
     }
     public void retornaJanelaPai() {

@@ -18,8 +18,6 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,6 +36,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
     public CadastroUsuario() {
         initComponents();
         TemaInterface.getInterface(this);
+        janelapai = null;
     }
 
     /**
@@ -72,6 +71,11 @@ public class CadastroUsuario extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -202,9 +206,9 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
-        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_salvarActionPerformed(evt);
+        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_salvarMouseClicked(evt);
             }
         });
 
@@ -264,14 +268,8 @@ public class CadastroUsuario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        cadastraUsuario();              
-}//GEN-LAST:event_jb_salvarActionPerformed
-
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        janelapai.setEnabled(true);
-        janelapai.setVisible(true);
-        setVisible(false);
+        retornaJanelaPai();
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -279,15 +277,13 @@ public class CadastroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setStatusTela(true);        
-        setVisible(false);
-        janelapai.listarUsuário();        
+        retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_salvar.doClick();
+            cadastraUsuario();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jpf_senhaKeyPressed
@@ -338,6 +334,18 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private void jtf_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_nomeActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
+        if(evt.getClickCount() == 1){
+            cadastraUsuario();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -433,10 +441,11 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     }
 
     public void retornaJanelaPai() {
-        janelapai.setStatusTela(true);        
-        janelapai.request();
         setVisible(false);
-        janelapai.listarUsuário();
+        if(janelapai != null){
+            janelapai.setStatusTela(true);                    
+            janelapai.listarUsuário();            
+        }
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
@@ -444,8 +453,7 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
             jb_salvar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornaJanelaPai();
         }
     }
 }

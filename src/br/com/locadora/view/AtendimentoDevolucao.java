@@ -2,7 +2,6 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
-import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
@@ -11,7 +10,6 @@ import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Objeto;
-import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
@@ -42,18 +40,17 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
 
     public DecimalFormat formatoPreco;
     public MaskFormatter formatoData;
-    public String permissao;
     public Cliente cliente;
     public static Dependente dependente = new Dependente();
     public Objeto objeto;
-    public Copia copiaLocacao;
+//    public Copia copiaLocacao;
     public Copia copiaDevolucao;
-    public List<Copia> copias;
+//    public List<Copia> copias;
     public static List<Copia> copiasLocacao = new ArrayList<Copia>();
-    public List<Produto> produtos;
-    public Produto produto;
+//    public List<Produto> produtos;
+//    public Produto produto;
     public InterfacePool pool;
-    public SiscomController controller;
+//    public SiscomController controller;
     public TelaPrincipal janelapai;
     public static List<ItemLocacao> itensDevolucao;
     public ItemLocacao itemDevolucao;
@@ -65,8 +62,8 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
 
     public AtendimentoDevolucao() {
         initComponents();
-
         TemaInterface.getInterface(this);
+        janelapai = null;
     }
 
     @SuppressWarnings("unchecked")
@@ -578,9 +575,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyReleased
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setStatusTela(true);
-        setVisible(false);
-
+        retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
 private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_clienteActionPerformed
@@ -645,8 +640,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jtf_valor_multaFocusLost
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        setVisible(false);
-        janelapai.setStatusTela(true);
+        retornaJanelaPai();
     }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_clienteKeyPressed
@@ -1296,13 +1290,19 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         jtf_valor_desconto_entrega_antecipada.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
     }
 
+    private void retornaJanelaPai() {
+        setVisible(false);
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
+        }
+    }
+
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
             jb_finalizar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornaJanelaPai();
         }
     }
 

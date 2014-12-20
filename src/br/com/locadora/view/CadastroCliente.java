@@ -15,7 +15,6 @@ import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.ValidaCPF;
-import static br.com.locadora.view.AtualizaCliente.jtf_telefone;
 import static br.com.locadora.view.MenuCliente.jtf_consulta;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -195,6 +194,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -1027,8 +1031,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        janelapai.setStatusTela(true);
-        setVisible(false);
+        retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_empresaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_empresaFocusGained
@@ -1350,7 +1353,6 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     }//GEN-LAST:event_jtf_nome_clienteActionPerformed
 
     private void jtf_emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_emailFocusGained
-        
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_emailFocusGained
@@ -1387,8 +1389,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     }//GEN-LAST:event_jb_adicionar_telefoneMouseClicked
 
     private void jcb_parentescoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_parentescoFocusGained
-                    
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jcb_parentescoFocusGained
 
@@ -1424,12 +1425,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (verificarCampos()) {
-                cadastrarCliente();
-                jtp_cliente.setSelectedIndex(1);
-                jtf_nome_dependente.requestFocus();
-            }
-
+            cadastrarCliente();            
         }
 
         // TODO add your handling code here:
@@ -1437,35 +1433,21 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
     private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
         if (evt.getClickCount() == 1) {
-            if (verificarCampos()) {
-                cadastrarCliente();
-                jtp_cliente.setSelectedIndex(1);
-                jtf_nome_dependente.requestFocus();
-            }
+            cadastrarCliente();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarMouseClicked
 
     private void jb_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cancelarMouseClicked
         if (evt.getClickCount() == 1) {
-            if (janelapai != null) {
-                janelapai.setStatusTela(true);
-            } else if (janelapai2 != null) {
-                janelapai2.setStatusTela(true);
-            }
-            setVisible(false);
+            retornaJanelaPai();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelarMouseClicked
 
     private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (janelapai != null) {
-                janelapai.setStatusTela(true);
-            } else if (janelapai2 != null) {
-                janelapai2.setStatusTela(true);
-            }
-            setVisible(false);
+            retornaJanelaPai();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelarKeyPressed
@@ -1476,7 +1458,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
     private void jtf_telefone_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusLost
         System.out.println(jtf_telefone_dependente.getText().trim().length());
-        if (jtf_telefone_dependente.getText().trim().length() != 14){
+        if (jtf_telefone_dependente.getText().trim().length() != 14) {
             jtf_telefone_dependente.setForeground(Color.red);
 //            jtf_telefone_dependente.requestFocus();
         } else {
@@ -1486,7 +1468,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     }//GEN-LAST:event_jtf_telefone_dependenteFocusLost
 
     private void jtf_cpf_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusLost
-try {
+        try {
 
             ValidaCPF valida = new ValidaCPF();
             if (jtf_cpf_cliente.getText().trim().length() == 14) {
@@ -1511,6 +1493,11 @@ try {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_cpf_clienteFocusLost
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1871,11 +1858,10 @@ try {
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            jb_salvar.doClick();
+            cadastrarCliente();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornaJanelaPai();
         }
     }
 
@@ -1908,7 +1894,7 @@ try {
 
                     DependenteDAO dependenteDAO = new DependenteDAO(pool);
                     dependenteDAO.salvar(dependente, cliente);
-                    
+
                     carregaDependente(cliente.getCodigo_cliente());
                     jtf_nome_dependente.setText("");
                     jtf_data_nascimento_dependente.setText("");
@@ -1928,107 +1914,110 @@ try {
     }
 
     public void cadastrarCliente() {
+        if (verificarCampos()) {
 
-        try {
-            Cliente cliente;
-            if (jtf_codigo_cliente.getText().equals("")) {
-                cliente = new Cliente();
+            try {
+                Cliente cliente;
+                if (jtf_codigo_cliente.getText().equals("")) {
+                    cliente = new Cliente();
 
-                cliente.setNome_cliente(jtf_nome_cliente.getText());
-                cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
-                cliente.setCpf(jtf_cpf_cliente.getText());
-                cliente.setNome_empresa_trabalho(jtf_empresa.getText());
-                cliente.setProfissao(jtf_profissao.getText());
-                cliente.setEndereco(jtf_endereco.getText());
-                cliente.setBairro(jtf_bairro.getText());
-                cliente.setComplemento(jtf_complemento.getText());
-                cliente.setCidade(jtf_cidade.getText());
-                cliente.setEstado(jtf_estado.getText());
-                cliente.setEmail(jtf_email.getText());
-                cliente.setObservacao(jta_observacao.getText());
-                if (jrb_ativo.isSelected() == true) {
-                    cliente.setStatus(true);
+                    cliente.setNome_cliente(jtf_nome_cliente.getText());
+                    cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
+                    cliente.setCpf(jtf_cpf_cliente.getText());
+                    cliente.setNome_empresa_trabalho(jtf_empresa.getText());
+                    cliente.setProfissao(jtf_profissao.getText());
+                    cliente.setEndereco(jtf_endereco.getText());
+                    cliente.setBairro(jtf_bairro.getText());
+                    cliente.setComplemento(jtf_complemento.getText());
+                    cliente.setCidade(jtf_cidade.getText());
+                    cliente.setEstado(jtf_estado.getText());
+                    cliente.setEmail(jtf_email.getText());
+                    cliente.setObservacao(jta_observacao.getText());
+                    if (jrb_ativo.isSelected() == true) {
+                        cliente.setStatus(true);
 
+                    } else {
+                        cliente.setStatus(false);
+                    }
+
+                    pool = new Pool();
+                    clienteDAO = new ClienteDAO(pool);
+                    cliente = clienteDAO.salvar(cliente);
+                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+
+                    pool = new Pool();
+                    DependenteDAO dependenteDAO = new DependenteDAO(pool);
+                    Dependente dependente = new Dependente();
+                    dependente.setNome_dependente(cliente.getNome_cliente());
+                    dependente.setData_nascimento(cliente.getData_nascimento());
+                    dependente.setTipo_dependente("0");
+                    if (jrb_ativo.isSelected() == true) {
+                        dependente.setStatus(true);
+                    } else {
+                        dependente.setStatus(false);
+                    }
+                    dependenteDAO.salvar(dependente, cliente);
+
+                    List<Telefone> itens_telefone = new ArrayList();
+                    for (int i = 0; i < jtbl_telefone.getRowCount(); i++) {
+                        Telefone telefone = new Telefone();
+                        telefone.setTelefone((String) jtbl_telefone.getValueAt(i, 0));
+                        itens_telefone.add(telefone);
+                    }
+                    pool = new Pool();
+                    telefoneDAO = new TelefoneDAO(pool);
+                    telefoneDAO.salvar(itens_telefone, cliente);
                 } else {
-                    cliente.setStatus(false);
+                    cliente = new Cliente();
+
+                    cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
+                    cliente.setNome_cliente(jtf_nome_cliente.getText());
+
+                    cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
+
+                    cliente.setCpf(jtf_cpf_cliente.getText());
+                    cliente.setNome_empresa_trabalho(jtf_empresa.getText());
+                    cliente.setProfissao(jtf_profissao.getText());
+                    cliente.setEndereco(jtf_endereco.getText());
+                    cliente.setBairro(jtf_bairro.getText());
+                    cliente.setComplemento(jtf_complemento.getText());
+                    cliente.setCidade(jtf_cidade.getText());
+                    cliente.setEstado(jtf_estado.getText());
+                    cliente.setEmail(jtf_email.getText());
+                    cliente.setObservacao(jta_observacao.getText());
+
+                    if (jrb_ativo.isSelected() == true) {
+                        cliente.setStatus(true);
+                    } else {
+                        cliente.setStatus(false);
+                    }
+                    pool = new Pool();
+                    clienteDAO = new ClienteDAO(pool);
+                    clienteDAO.atualizar(cliente);
+                    JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");
+
+                    jtp_cliente.setSelectedIndex(1);
+                    jtf_nome_dependente.requestFocus();
                 }
-                
-                pool = new Pool();
-                clienteDAO = new ClienteDAO(pool);
-                cliente = clienteDAO.salvar(cliente);
-                JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
-                
-                pool = new Pool();
-                DependenteDAO dependenteDAO = new DependenteDAO(pool);
-                Dependente dependente = new Dependente();                
-                dependente.setNome_dependente(cliente.getNome_cliente());
-                dependente.setData_nascimento(cliente.getData_nascimento());
-                dependente.setTipo_dependente("0");                
-                if (jrb_ativo.isSelected() == true) {
-                    dependente.setStatus(true);
-                } else {
-                    dependente.setStatus(false);
-                }
-                dependenteDAO.salvar(dependente, cliente);
-                
+                jtf_codigo_cliente.setText(cliente.getCodigo_cliente().toString());
 
-                List<Telefone> itens_telefone = new ArrayList();
-                for (int i = 0; i < jtbl_telefone.getRowCount(); i++) {
-                    Telefone telefone = new Telefone();
-                    telefone.setTelefone((String) jtbl_telefone.getValueAt(i, 0));
-                    itens_telefone.add(telefone);
-                }
-                pool = new Pool();
-                telefoneDAO = new TelefoneDAO(pool);
-                telefoneDAO.salvar(itens_telefone, cliente);
-            } else {
-                cliente = new Cliente();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage() + "Problemas com a gravação: ");
 
-                cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
-                cliente.setNome_cliente(jtf_nome_cliente.getText());
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                System.out.println("Valor inválido: " + e.getMessage());
 
-                cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
+                e.printStackTrace();
+            } catch (ParseException ex) {
 
-                cliente.setCpf(jtf_cpf_cliente.getText());
-                cliente.setNome_empresa_trabalho(jtf_empresa.getText());
-                cliente.setProfissao(jtf_profissao.getText());
-                cliente.setEndereco(jtf_endereco.getText());
-                cliente.setBairro(jtf_bairro.getText());
-                cliente.setComplemento(jtf_complemento.getText());
-                cliente.setCidade(jtf_cidade.getText());
-                cliente.setEstado(jtf_estado.getText());
-                cliente.setEmail(jtf_email.getText());
-                cliente.setObservacao(jta_observacao.getText());
-
-                if (jrb_ativo.isSelected() == true) {
-                    cliente.setStatus(true);
-                } else {
-                    cliente.setStatus(false);
-                }
-                pool = new Pool();
-                clienteDAO = new ClienteDAO(pool);
-                clienteDAO.atualizar(cliente);
-                JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");                                
-
-                jtp_cliente.setSelectedIndex(1);
-                jtf_nome_dependente.requestFocus();
             }
-            jtf_codigo_cliente.setText(cliente.getCodigo_cliente().toString());
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + "Problemas com a gravação: ");
-
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            System.out.println("Valor inválido: " + e.getMessage());
-
-            e.printStackTrace();
-        } catch (ParseException ex) {
-
+            jtp_cliente.setSelectedIndex(1);
+            jtf_nome_dependente.requestFocus();
         }
-
     }
-    
+
     public void carregaDependente(Integer codigo_cliente) {
         try {
             if (codigo_cliente != null) {
@@ -2045,7 +2034,7 @@ try {
             Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void mostrar_dependentes(List<Dependente> dependentes) throws ParseException {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_dependente.getModel();
         tableModel.setNumRows(0);
@@ -2073,6 +2062,17 @@ try {
                 row.addRow(new Object[]{hashDbGrid, data_nascimento, dependente.getTelefone(), dependente.getParentesco(), dependente.getCPF(), dependente.getStatus()});
             }
 
+        }
+    }
+
+    public void retornaJanelaPai() {
+        setVisible(false);
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
+            janelapai.buscarDados();
+        } else if (janelapai2 != null) {
+            janelapai2.setStatusTela(true);
+            janelapai2.listaClienteDependente();
         }
     }
 }

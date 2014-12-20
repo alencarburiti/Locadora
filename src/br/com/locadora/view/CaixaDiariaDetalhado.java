@@ -17,6 +17,7 @@ import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -35,6 +36,7 @@ public class CaixaDiariaDetalhado extends javax.swing.JFrame {
     public CaixaDiariaDetalhado() {
         initComponents();
         TemaInterface.getInterface(this);
+        janelapai = null;
     }
 
     /**
@@ -61,6 +63,11 @@ public class CaixaDiariaDetalhado extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -179,9 +186,15 @@ public class CaixaDiariaDetalhado extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_lancamento_caixaMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
         lancamentoCaixa();
     }//GEN-LAST:event_formWindowOpened
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            
+//        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -210,9 +223,7 @@ public class CaixaDiariaDetalhado extends javax.swing.JFrame {
     public void lancamentoCaixa() {
         pool = new Pool();
         LancamentoDAO lancDAO = new LancamentoDAO(pool);
-
         lancamentos = lancDAO.getLancamentoDetalhado();
-
         mostrarLancamentoCaixa(lancamentos);
     }
 
@@ -258,6 +269,12 @@ public class CaixaDiariaDetalhado extends javax.swing.JFrame {
             this.setVisible(status);
         }
         this.setEnabled(status);
+    }
+    public void retornaJanelaPai(){
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);            
+        }
     }
 
 }

@@ -2,10 +2,8 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
-import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
-import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DependenteDAO;
@@ -40,15 +38,15 @@ import javax.swing.text.MaskFormatter;
  */
 public final class AtualizaCliente extends javax.swing.JFrame {
 
-    public MenuCliente janela1;
-    private Cliente objetoCliente;
-    public Produto produto = new Produto();
+//    public MenuCliente janela1;
+    private Cliente cliente;
+//    public Produto produto = new Produto();
     public MenuCliente janelapai;
-    private InterfacePool pool = new Pool();
+    private InterfacePool pool;
     public List<Telefone> telefones;
     public List<Dependente> dependentes;
     public MaskFormatter formatoData, formatoCPF, formatoTelefone;
-    public SiscomController controller;
+//    public SiscomController controller;
     public ClienteDAO clienteDAO;
 
     /**
@@ -56,50 +54,50 @@ public final class AtualizaCliente extends javax.swing.JFrame {
      */
     public AtualizaCliente() {
         initComponents();
-        janelapai = null;
         TemaInterface.getInterface(this);
-
+        janelapai = null;
     }
 
     public AtualizaCliente(Cliente cliente) {
         if (cliente != null) {
-            objetoCliente = new Cliente();
-            this.objetoCliente = cliente;
             initComponents();
+            janelapai = null;
+            cliente = new Cliente();
+            this.cliente = cliente;
             TemaInterface.getInterface(this);
 
-            jtf_codigo_cliente.setText(String.valueOf(objetoCliente.getCodigo_cliente()));
-            jtf_nome_cliente.setText(objetoCliente.getNome_cliente());
+            jtf_codigo_cliente.setText(String.valueOf(cliente.getCodigo_cliente()));
+            jtf_nome_cliente.setText(cliente.getNome_cliente());
 
             SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
 
             String data_nascimento = null;
             try {
-                data_nascimento = out.format(in.parse(objetoCliente.getData_nascimento().toString()));
+                data_nascimento = out.format(in.parse(cliente.getData_nascimento().toString()));
             } catch (ParseException ex) {
                 Logger.getLogger(AtualizaCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             jtf_data_nascimento.setText(data_nascimento);
-            jtf_cpf_cliente.setText(objetoCliente.getCpf());
-            jtf_empresa.setText(objetoCliente.getNome_empresa_trabalho());
-            jtf_profissao.setText(objetoCliente.getProfissao());
-            jtf_endereco.setText(objetoCliente.getEndereco());
-            jtf_bairro.setText(objetoCliente.getBairro());
-            jtf_complemento.setText(objetoCliente.getComplemento());
-            jtf_cidade.setText(objetoCliente.getCidade());
-            jtf_estado.setText(objetoCliente.getEstado());
-            jtf_email.setText(objetoCliente.getEmail());
-            System.out.println("Status: " + objetoCliente.getStatus());
-            if (objetoCliente.getStatus() == true) {
+            jtf_cpf_cliente.setText(cliente.getCpf());
+            jtf_empresa.setText(cliente.getNome_empresa_trabalho());
+            jtf_profissao.setText(cliente.getProfissao());
+            jtf_endereco.setText(cliente.getEndereco());
+            jtf_bairro.setText(cliente.getBairro());
+            jtf_complemento.setText(cliente.getComplemento());
+            jtf_cidade.setText(cliente.getCidade());
+            jtf_estado.setText(cliente.getEstado());
+            jtf_email.setText(cliente.getEmail());
+            System.out.println("Status: " + cliente.getStatus());
+            if (cliente.getStatus() == true) {
                 jrb_ativo.setSelected(true);
             } else {
                 jrb_inativo.setSelected(true);
             }
 
-            carregaTelefone(objetoCliente.getCodigo_cliente());
-            carregaDependente(objetoCliente.getCodigo_cliente());
+            carregaTelefone(cliente.getCodigo_cliente());
+            carregaDependente(cliente.getCodigo_cliente());
 
         }
     }
@@ -233,6 +231,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -1563,6 +1566,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_telefone_dependenteFocusLost
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1731,8 +1739,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         this.setEnabled(status);
     }
 
-    Telefone telefone = new Telefone();
-    Cliente cliente;
+    Telefone telefone = new Telefone();    
 
     public void alimentarTelefone() {
         if (verificar_campo_telefone(jtf_telefone.getText()) == true) { //&& (verificaTabela()
@@ -1960,8 +1967,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             jb_salvar.doClick(1);
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornaJanelaPai();
         }
     }
 

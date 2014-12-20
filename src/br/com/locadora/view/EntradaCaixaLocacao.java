@@ -482,25 +482,13 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
 
-        setVisible(false);
-        janelapaiLocacao.setStatusTela(true);
-        janelapaiLocacao.jtf_nome_cliente.requestFocus();
-        
-        DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
-        int rows = tb_locacao.getRowCount();
-        for (int i = rows - 1; i >= 0; i--) {
-            tb_locacao.removeRow(i);
-        }
-        AtendimentoLocacao.jtf_codigo_cliente.setText("");
-        AtendimentoLocacao.jtf_nome_cliente.setText("");
-
-        AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
-        AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
+        retornaJanelaPai();
+                        
     }//GEN-LAST:event_formWindowClosed
 
     private void jtf_valor_total_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_total_locacaoKeyPressed
@@ -711,20 +699,7 @@ String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.depend
         arquivo.deleteOnExit();
         arquivo.delete();
 
-        setVisible(false);
-        janelapaiLocacao.setStatusTela(true);
-        janelapaiLocacao.jtf_nome_cliente.requestFocus();
-        
-        DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
-        int rows = tb_locacao.getRowCount();
-        for (int i = rows - 1; i >= 0; i--) {
-            tb_locacao.removeRow(i);
-        }
-        AtendimentoLocacao.jtf_codigo_cliente.setText("");
-        AtendimentoLocacao.jtf_nome_cliente.setText("");
-
-        AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
-        AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
+        retornaJanelaPai();
 // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1ActionPerformed
 
@@ -981,6 +956,16 @@ String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.depend
                             jb_imprimir.setEnabled(true);
                             jb_imprimir.requestFocus();
 
+                            DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
+                            int rows = tb_locacao.getRowCount();
+                            for (int i = rows - 1; i >= 0; i--) {
+                                tb_locacao.removeRow(i);
+                            }
+                            AtendimentoLocacao.jtf_codigo_cliente.setText("");
+                            AtendimentoLocacao.jtf_nome_cliente.setText("");
+
+                            AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
+                            AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
                         }
                     }
                 }
@@ -1000,25 +985,11 @@ String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.depend
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
 
             String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
-        File arquivo = new File(nome_arquivo);
-        arquivo.deleteOnExit();
-        arquivo.delete();
+            File arquivo = new File(nome_arquivo);
+            arquivo.deleteOnExit();
+            arquivo.delete();
 
-        setVisible(false);
-        janelapaiLocacao.setStatusTela(true);
-        janelapaiLocacao.jtf_nome_cliente.requestFocus();
-        
-        DefaultTableModel tb_locacao = (DefaultTableModel) AtendimentoLocacao.jtbl_locacao.getModel();
-        int rows = tb_locacao.getRowCount();
-        for (int i = rows - 1; i >= 0; i--) {
-            tb_locacao.removeRow(i);
-        }
-        AtendimentoLocacao.jtf_codigo_cliente.setText("");
-        AtendimentoLocacao.jtf_nome_cliente.setText("");
-
-        AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
-        AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
-
+            retornaJanelaPai();
         }
     }
 
@@ -1034,9 +1005,7 @@ String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.depend
                 jtf_valor_pago.setEditable(false);
                 jtf_desconto.setEditable(false);
 
-                setVisible(false);
-                janelapaiLocacao.setStatusTela(true);
-                janelapaiLocacao.jtf_nome_cliente.requestFocus();
+                retornaJanelaPai();
 
                 File arquivo = new File(nome_arquivo);
                 arquivo.deleteOnExit();
@@ -1266,5 +1235,13 @@ String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.depend
 
             e.printStackTrace();
         }        
+    }
+    
+    public void retornaJanelaPai(){
+        this.setVisible(false);
+        if(janelapaiLocacao != null){
+            janelapaiLocacao.setStatusTela(true);
+            janelapaiLocacao.jtf_nome_cliente.requestFocus();
+        }
     }
 }
