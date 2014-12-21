@@ -101,7 +101,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         List<Usuario> resultado = new ArrayList<Usuario>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM USUARIO WHERE NOME_USUARIO LIKE ?;";
+        String sqlSelect = "SELECT * FROM USUARIO WHERE NOME_USUARIO LIKE ? ORDER BY NOME_USUARIO;";
         ResultSet rs = null;
 
         try {

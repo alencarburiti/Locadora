@@ -27,7 +27,7 @@ public class ConsultarDiaria implements InterfaceCommand {
     public String execute() {
 
         try {
-            if (MenuDiaria.jtf_consulta.getText().equals("")) {
+            
                 if (MenuDiaria.jrb_codigo_diaria.isSelected() == true) {
                     diaria = null;
                     diaria = diariaDAO.getDiaria_codigo(Integer.parseInt(MenuDiaria.jtf_consulta.getText().trim()));
@@ -36,12 +36,11 @@ public class ConsultarDiaria implements InterfaceCommand {
                     diarias = diariaDAO.getDiaria_nome(MenuDiaria.jtf_consulta.getText().trim());
                     mostrar_Diarias(diarias);
                 }
-            } else {
-
-                JOptionPane.showMessageDialog(null, "Informe um parâmentro");
-            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(ConsultarDiaria.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(null, "Informe um Código");
         }
 
         return "OK";
@@ -52,7 +51,7 @@ public class ConsultarDiaria implements InterfaceCommand {
         tableModel.setNumRows(0);
 
         if (diarias.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhuma diaria encontrada");
+            JOptionPane.showMessageDialog(null, "Nenhuma Diária encontrada");
 
         } else {
             for (int i = 0; i < diarias.size(); i++) {

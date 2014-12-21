@@ -42,6 +42,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
     private Cliente cliente;
 //    public Produto produto = new Produto();
     public MenuCliente janelapai;
+    public LocacaoEmAberto janelapai2;
     private InterfacePool pool;
     public List<Telefone> telefones;
     public List<Dependente> dependentes;
@@ -56,15 +57,17 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         initComponents();
         TemaInterface.getInterface(this);
         janelapai = null;
+        janelapai2 = null;
     }
 
     public AtualizaCliente(Cliente cliente) {
+        initComponents();
         if (cliente != null) {
-            initComponents();
-            janelapai = null;
-            cliente = new Cliente();
-            this.cliente = cliente;
             TemaInterface.getInterface(this);
+            janelapai = null;
+            janelapai2 = null;
+//            cliente = new Cliente();
+            this.cliente = cliente;
 
             jtf_codigo_cliente.setText(String.valueOf(cliente.getCodigo_cliente()));
             jtf_nome_cliente.setText(cliente.getNome_cliente());
@@ -223,7 +226,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tfa_similar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atualizar Cliente");
+        setTitle("Alterando Cliente");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -257,6 +260,11 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_salvarMouseClicked(evt);
+            }
+        });
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1059,18 +1067,21 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jb_salvar)
-                        .addGap(4, 4, 4)
+                        .addGap(10, 10, 10)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1079,6 +1090,8 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(20, 20, 20))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
 
         pack();
         setLocationRelativeTo(null);
@@ -1571,6 +1584,10 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1787,9 +1804,37 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             msgERRO = msgERRO + " *Telefone Dependente\n";
         }
 
-        if (jtf_data_nascimento_dependente.getText().trim().length() != 10) {
-            msgERRO = msgERRO + " *Data Inválida\n";
+        try {
+            Data data = new Data();
+            int idade;
+
+            if (jtf_data_nascimento_dependente.getText().trim().length() != 10) {
+                jtf_data_nascimento_dependente.setForeground(Color.red);
+                msgERRO = msgERRO + " *Data de Nascimento inválida\n";
+            } else if (jtf_data_nascimento_dependente.getText().equals("  /  /    ")) {
+                jtf_data_nascimento_dependente.setForeground(Color.red);
+                msgERRO = msgERRO + " *Data de Nascimento inválida\n";
+            } else {
+                if (validaData(jtf_data_nascimento_dependente.getText())) {
+                    jtf_data_nascimento_dependente.setForeground(Color.black);
+                } else {
+                    jtf_data_nascimento_dependente.setForeground(Color.red);
+                    msgERRO = msgERRO + " *Data de Nascimento inválida\n";
+                }
+
+            }
+        } catch (ParseException ex) {
+            jtf_data_nascimento_dependente.setForeground(Color.red);
+            msgERRO = msgERRO + " *Data de Nascimento inválida\n";
+        } catch (NumberFormatException ex) {
+            jtf_data_nascimento_dependente.setText("  /  /    ");
+            jtf_data_nascimento_dependente.setForeground(Color.red);
+            msgERRO = msgERRO + " *Data de Nascimento inválida\n";
         }
+        
+//        if (jtf_data_nascimento_dependente.getText().trim().length() != 10) {
+//            msgERRO = msgERRO + " *Data Inválida\n";
+//        }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
@@ -2003,6 +2048,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                     
                     carregaDependente(cliente.getCodigo_cliente());
                     jtf_nome_dependente.setText("");
+                    jtf_nome_dependente.requestFocus();
                     jtf_data_nascimento_dependente.setText("");
                     jtf_cpf_dependente.setText("");
                     jtf_telefone_dependente.setText("");
@@ -2095,7 +2141,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                 pool = new Pool();
                 clienteDAO = new ClienteDAO(pool);
                 clienteDAO.atualizar(cliente);
-                JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");
+                JOptionPane.showMessageDialog(null, "Atualizado com Sucesso!");
 
                 jtp_cliente.setSelectedIndex(1);
                 jtf_nome_dependente.requestFocus();
@@ -2119,6 +2165,10 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             janelapai.setStatusTela(true);
             janelapai.atualizaCliente = null;
             janelapai.buscarDados();
+        } else if(janelapai2 != null){
+            janelapai2.setStatusTela(true);
+            janelapai2.atualizaCliente = null;
+//            janelapai.buscarDados();
         }
     }
 }

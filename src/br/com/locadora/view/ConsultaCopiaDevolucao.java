@@ -270,7 +270,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
                 jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_cancelar.setText("Cancelar");
+                jb_cancelar.setText("Sair");
                 jb_cancelar.setName("jb_cancelar"); // NOI18N
                 jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,7 +286,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                         .addGap(270, 270, 270)
                         .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
@@ -325,7 +325,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                         .addGap(20, 20, 20))
                 );
 
-                setSize(new java.awt.Dimension(842, 499));
+                pack();
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -340,7 +340,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
-        if (jtbl_locacao_aberto.getSelectedRow() == 1) {
+        if (jtbl_locacao_aberto.getSelectedRow() != -1) {
             botaoOK(jtbl_locacao_aberto);
         }
 }//GEN-LAST:event_jb_okActionPerformed

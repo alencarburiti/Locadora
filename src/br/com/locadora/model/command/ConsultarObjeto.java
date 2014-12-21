@@ -37,7 +37,7 @@ public class ConsultarObjeto implements InterfaceCommand {
                     
                     mostrar_Objeto(objetos);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Informe um parâmentro");
+                    JOptionPane.showMessageDialog(null, "Informe um Código");
                 }
             } else if (MenuObjeto.jrb_titulo.isSelected() == true) {
                 objetos = null;
@@ -73,7 +73,7 @@ public class ConsultarObjeto implements InterfaceCommand {
             MenuObjeto.jtbl_objeto.requestFocus();
             MenuObjeto.jtbl_objeto.setSelectionMode(1);
         } else {
-            JOptionPane.showMessageDialog(null, "Nenhum objeto encontrado");
+            JOptionPane.showMessageDialog(null, "Nenhum Objeto encontrado");
         }
     }
 

@@ -54,7 +54,7 @@ public class CadastroGenero extends javax.swing.JFrame {
         jtf_nome_genero = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastrando Gêneros");
+        setTitle("Cadastrando Gênero");
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
@@ -89,7 +89,7 @@ public class CadastroGenero extends javax.swing.JFrame {
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setText("Sair");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +97,7 @@ public class CadastroGenero extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Gênero"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         jtf_codigo.setEditable(false);
@@ -174,7 +174,7 @@ public class CadastroGenero extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,7 +183,7 @@ public class CadastroGenero extends javax.swing.JFrame {
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
 
-        setSize(new java.awt.Dimension(362, 260));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -250,7 +250,7 @@ public class CadastroGenero extends javax.swing.JFrame {
         if (verificarCampos()) {
             controller = new SiscomController();
             controller.processarRequisicao("cadastrarGenero");
-            
+            JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
             retornaJanelaPai();            
         }
     }

@@ -69,14 +69,12 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tfa_similar = new javax.swing.JTextArea();
-        jb_imprimir = new javax.swing.JButton();
-        jb_salvar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        label1 = new java.awt.Label();
         jtf_login = new javax.swing.JTextField();
-        label2 = new java.awt.Label();
         jpf_senha = new javax.swing.JPasswordField();
         jb_logar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jtf_valor_total_locacao = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel1 = new javax.swing.JLabel();
@@ -92,6 +90,8 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel6 = new javax.swing.JLabel();
         jtf_valor_pago = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jb_imprimir = new javax.swing.JButton();
+        jb_salvar = new javax.swing.JButton();
         jb_cancelar1 = new javax.swing.JButton();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -102,7 +102,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tfa_similar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Caixa");
+        setTitle("Caixa - Atendimento Locação");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -125,64 +125,20 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 formKeyPressed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jb_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/printer.png"))); // NOI18N
-        jb_imprimir.setText("Imprimir");
-        jb_imprimir.setEnabled(false);
-        jb_imprimir.setMaximumSize(new java.awt.Dimension(101, 33));
-        jb_imprimir.setName("jb_imprimir"); // NOI18N
-        jb_imprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_imprimirActionPerformed(evt);
-            }
-        });
-        jb_imprimir.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_imprimirKeyPressed(evt);
-            }
-        });
-        getContentPane().add(jb_imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 440, -1, 35));
-
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
-        jb_salvar.setText("Finalizar");
-        jb_salvar.setEnabled(false);
-        jb_salvar.setName("jb_salvar"); // NOI18N
-        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_salvarMouseClicked(evt);
-            }
-        });
-        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_salvarKeyPressed(evt);
-            }
-        });
-        getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, -1, 35));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Verificar Permissão"));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        label1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        label1.setName("label1"); // NOI18N
-        label1.setText("Login:");
-        jPanel1.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, -1));
 
         jtf_login.setEditable(false);
+        jtf_login.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_login.setName("jtf_login"); // NOI18N
         jtf_login.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_loginKeyPressed(evt);
             }
         });
-        jPanel1.add(jtf_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 150, -1));
 
-        label2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        label2.setName("label2"); // NOI18N
-        label2.setText("Senha:");
-        jPanel1.add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
-
+        jpf_senha.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jpf_senha.setName("jpf_senha"); // NOI18N
         jpf_senha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,7 +150,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jpf_senhaKeyPressed(evt);
             }
         });
-        jPanel1.add(jpf_senha, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 150, -1));
 
         jb_logar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/http___iconesbr.oficinadanet.com_8533_16x16.png"))); // NOI18N
         jb_logar.setText("OK !");
@@ -209,9 +164,48 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jb_logarKeyPressed(evt);
             }
         });
-        jPanel1.add(jb_logar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, 81, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 430, 90));
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel2.setText("Login:");
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jLabel3.setText("Senha:");
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_login, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(10, 10, 10)
+                .addComponent(jb_logar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jb_logar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(1, 1, 1)
+                        .addComponent(jtf_login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
+        );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Caixa"));
         jPanel2.setName("jPanel2"); // NOI18N
@@ -441,10 +435,39 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         });
         jPanel2.add(jtf_valor_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 170, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 360, 310));
+        jb_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/printer.png"))); // NOI18N
+        jb_imprimir.setText("Imprimir");
+        jb_imprimir.setEnabled(false);
+        jb_imprimir.setMaximumSize(new java.awt.Dimension(101, 33));
+        jb_imprimir.setName("jb_imprimir"); // NOI18N
+        jb_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_imprimirActionPerformed(evt);
+            }
+        });
+        jb_imprimir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_imprimirKeyPressed(evt);
+            }
+        });
+
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+        jb_salvar.setText("Finalizar");
+        jb_salvar.setEnabled(false);
+        jb_salvar.setName("jb_salvar"); // NOI18N
+        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_salvarMouseClicked(evt);
+            }
+        });
+        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_salvarKeyPressed(evt);
+            }
+        });
 
         jb_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-        jb_cancelar1.setText("Fechar");
+        jb_cancelar1.setText("Sair");
         jb_cancelar1.setMaximumSize(new java.awt.Dimension(101, 33));
         jb_cancelar1.setName("jb_cancelar1"); // NOI18N
         jb_cancelar1.addActionListener(new java.awt.event.ActionListener() {
@@ -457,9 +480,48 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jb_cancelar1KeyPressed(evt);
             }
         });
-        getContentPane().add(jb_cancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, 35));
 
-        setSize(new java.awt.Dimension(480, 514));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(jb_salvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar1, jb_imprimir, jb_salvar});
+
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_salvar))
+                .addGap(20, 20, 20))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar1, jb_imprimir, jb_salvar});
+
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -806,6 +868,8 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -826,8 +890,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     public static javax.swing.JTextField jtf_valor_pago;
     public static javax.swing.JTextField jtf_valor_total_a_pagar;
     public static javax.swing.JTextField jtf_valor_total_locacao;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 

@@ -90,7 +90,7 @@ public class MenuObjeto extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultar Objeto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Objeto"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         buttonGroup1.add(jrb_codigo);
@@ -105,7 +105,7 @@ public class MenuObjeto extends javax.swing.JFrame {
 
         buttonGroup1.add(jrb_ator);
         jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jrb_ator.setText("Ator");
+        jrb_ator.setText("Elenco");
         jrb_ator.setName("jrb_ator"); // NOI18N
         jrb_ator.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

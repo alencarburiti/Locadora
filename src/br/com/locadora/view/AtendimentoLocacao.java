@@ -203,7 +203,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel10))
-                .addGap(10, 10, 10))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -612,13 +612,13 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(146, 146, 146)
+                .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jb_limpar)
-                .addGap(10, 10, 10)
-                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(150, 150, 150))
+                .addComponent(jb_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -641,7 +641,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -662,7 +662,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                         .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
@@ -689,10 +689,10 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(848, 594));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -728,7 +728,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         ((DefaultTableModel) jtbl_locacao.getModel()).setRowCount(0);
         jtbl_locacao.updateUI();
-        retornaJanelaPai();        
+        retornaJanelaPai();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -871,27 +871,27 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void jb_adicionar_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_locacaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                    try {
+            try {
 
-            if (!jtf_codigo_cliente.getText().equals("")) {
+                if (!jtf_codigo_cliente.getText().equals("")) {
 
-                if (jcb_codigo_barras_locacao.isSelected() == true) {
+                    if (jcb_codigo_barras_locacao.isSelected() == true) {
 
-                    if (consultarCodigoDeBarras(jtf_codigo_consulta_locacao.getText().trim()) == true) {
+                        if (consultarCodigoDeBarras(jtf_codigo_consulta_locacao.getText().trim()) == true) {
+                            adicionarItemLocado(copias.get(0));
+                        }
+                    } else {
+                        locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
                         adicionarItemLocado(copias.get(0));
                     }
-                } else {
-                    locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
-                    adicionarItemLocado(copias.get(0));
-                }
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
-                jtf_codigo_cliente.requestFocus();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
+                    jtf_codigo_cliente.requestFocus();
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
-        }
         }
     }//GEN-LAST:event_jb_adicionar_locacaoKeyPressed
 
@@ -933,19 +933,22 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void jcb_promocaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_promocaoKeyPressed
 
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jcb_promocao.setSelectedItem(jcb_promocao.getSelectedIndex());
-            ItemDbGrid hashDbGrid1 = (ItemDbGrid) jcb_promocao.getSelectedItem();
-            diariaCombo = (Diaria) hashDbGrid1.getObjeto();
+        try {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                jcb_promocao.setSelectedItem(jcb_promocao.getSelectedIndex());
+                ItemDbGrid hashDbGrid1 = (ItemDbGrid) jcb_promocao.getSelectedItem();
+                diariaCombo = (Diaria) hashDbGrid1.getObjeto();
 
-            System.out.println("====Verificação após seleção com Enter=====================================");
-            System.out.println("Código da promoção no ComboBox: " + diariaCombo.getPromocaoLocacao().getCodigo_promocao_locacao());
-            System.out.println("Nome da promoção no ComboBox: " + diariaCombo.getPromocaoLocacao().getDescricao());
-            System.out.println("Valor da promoção no ComboBox: " + diariaCombo.getPromocaoLocacao().getValor_promocao_locacao());
-            System.out.println("Valor do Index: " + jcb_promocao.getSelectedIndex());
-            System.out.println("=================================================================");
-
-            jb_adicionar_locacao.requestFocus();
+//                    System.out.println("====Verificação após seleção com Enter=====================================");
+//                    System.out.println("Código da promoção no ComboBox: " + diariaCombo.getPromocaoLocacao().getCodigo_promocao_locacao());
+//                    System.out.println("Nome da promoção no ComboBox: " + diariaCombo.getPromocaoLocacao().getDescricao());
+//                    System.out.println("Valor da promoção no ComboBox: " + diariaCombo.getPromocaoLocacao().getValor_promocao_locacao());
+//                    System.out.println("Valor do Index: " + jcb_promocao.getSelectedIndex());
+//                    System.out.println("=================================================================");                    
+                jb_adicionar_locacao.requestFocus();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jcb_promocaoKeyPressed
@@ -1007,28 +1010,28 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jcb_promocaoMouseClicked
 
     private void jb_adicionar_locacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_locacaoMouseClicked
-        if(evt.getClickCount() == 1){
+        if (evt.getClickCount() == 1) {
             try {
 
-            if (!jtf_codigo_cliente.getText().equals("")) {
+                if (!jtf_codigo_cliente.getText().equals("")) {
 
-                if (jcb_codigo_barras_locacao.isSelected() == true) {
+                    if (jcb_codigo_barras_locacao.isSelected() == true) {
 
-                    if (consultarCodigoDeBarras(jtf_codigo_consulta_locacao.getText().trim()) == true) {
+                        if (consultarCodigoDeBarras(jtf_codigo_consulta_locacao.getText().trim()) == true) {
+                            adicionarItemLocado(copias.get(0));
+                        }
+                    } else {
+                        locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
                         adicionarItemLocado(copias.get(0));
                     }
-                } else {
-                    locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
-                    adicionarItemLocado(copias.get(0));
-                }
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
-                jtf_codigo_cliente.requestFocus();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
+                    jtf_codigo_cliente.requestFocus();
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
-        }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_locacaoMouseClicked
@@ -1115,17 +1118,17 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             if (tb.getSelectedRow() != -1) {
                 int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                    for(int i = 0; i < copiasLocacao.size(); i++){
-                        System.out.println("Antes de deletar: "+copiasLocacao.get(i).getCodigo_barras());
+                    for (int i = 0; i < copiasLocacao.size(); i++) {
+                        System.out.println("Antes de deletar: " + copiasLocacao.get(i).getCodigo_barras());
                     }
-                    
-                    int index_remove = tb.getSelectedRow();                    
+
+                    int index_remove = tb.getSelectedRow();
                     System.out.println("Linha deletada: " + index_remove);
                     row.removeRow(tb.getSelectedRow());
                     copiasLocacao.remove(index_remove);
-                    
-                    for(int i = 0; i < copiasLocacao.size(); i++){
-                        System.out.println("Depois de deletar: "+copiasLocacao.get(i).getCodigo_barras());
+
+                    for (int i = 0; i < copiasLocacao.size(); i++) {
+                        System.out.println("Depois de deletar: " + copiasLocacao.get(i).getCodigo_barras());
                     }
                     dobleCheckPromocao();
                     recalcularValorTotal();
@@ -1182,7 +1185,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                     if (selectedOption == JOptionPane.YES_NO_OPTION) {
                         //Caso o cliente queira relocar 
                         adicionaItemTabela(copia);
-                        
+
                     } else {
 
                         limparItemLocado();
@@ -1191,7 +1194,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 } else {
                     //Locar sem confirmacao
                     adicionaItemTabela(copia);
-                    
+
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Última cópia disponível já foi adicionada: " + copia.getCodigo_barras());
@@ -1239,266 +1242,273 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 break;
         }
 
-        System.out.println("====================Inciar Verificação para Diária: " + diariaCombo.getCodigo_diaria());
-        System.out.println("Tamanho da tabela: " + jtbl_locacao.getRowCount());
-        System.out.println("Tamanho da lista de Copias Locacao: " + copiasLocacao.size());
-        System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
-        System.out.println("Hoje: " + segunda + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getSegunda());
-        System.out.println("Hoje: " + terca + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getTerca());
-        System.out.println("Hoje: " + quarta + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getQuarta());
-        System.out.println("Hoje: " + quinta + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getQuinta());
-        System.out.println("Hoje: " + sexta + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getSexta());
-        System.out.println("Hoje: " + sabado + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getSabado());
-        Diaria diariaLocaGanha;
-        if (diariaCombo.getPromocaoLocacao().getDomingo() == true && domingo == true) {
-            System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
+        try {
+
+            System.out.println("====================Inciar Verificação para Diária: " + diariaCombo.getCodigo_diaria());
+            System.out.println("Tamanho da tabela: " + jtbl_locacao.getRowCount());
+            System.out.println("Tamanho da lista de Copias Locacao: " + copiasLocacao.size());
             System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
-            if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
-                System.out.println("Calcular promocao Loca Ganha");
-                //Calcula quantos são necessários levar para ganhar X                       
-                copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
+            System.out.println("Hoje: " + segunda + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getSegunda());
+            System.out.println("Hoje: " + terca + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getTerca());
+            System.out.println("Hoje: " + quarta + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getQuarta());
+            System.out.println("Hoje: " + quinta + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getQuinta());
+            System.out.println("Hoje: " + sexta + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getSexta());
+            System.out.println("Hoje: " + sabado + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getSabado());
+            Diaria diariaLocaGanha;
+            if (diariaCombo.getPromocaoLocacao().getDomingo() == true && domingo == true) {
+                System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
+                System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
+                if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
+                    System.out.println("Calcular promocao Loca Ganha");
+                    //Calcula quantos são necessários levar para ganhar X                       
+                    copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
 
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
 
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+                } else {
+                    System.out.println("Calcular promocao Simples semanal");
+                    System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
+                    //Inserir a promocao do combo no objeto
+                    copia.getObjeto().setDiaria(diariaCombo);
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+
+                }
+            } else if (diariaCombo.getPromocaoLocacao().getSegunda() == true && segunda == true) {
+                System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
+                System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
+                if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
+                    System.out.println("Calcular promocao Loca Ganha");
+                    //Calcula quantos são necessários levar para ganhar X                       
+                    copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+                } else {
+                    System.out.println("Calcular promocao Simples semanal");
+                    System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
+                    //Inserir a promocao do combo no objeto
+                    copia.getObjeto().setDiaria(diariaCombo);
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+
+                }
+            } else if (diariaCombo.getPromocaoLocacao().getTerca() == true && terca == true) {
+                System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
+                System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
+                if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
+                    System.out.println("Calcular promocao Loca Ganha");
+                    //Calcula quantos são necessários levar para ganhar X                       
+                    copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+                } else {
+                    System.out.println("Calcular promocao Simples semanal");
+                    System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
+                    //Inserir a promocao do combo no objeto
+                    copia.getObjeto().setDiaria(diariaCombo);
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+
+                }
+            } else if (diariaCombo.getPromocaoLocacao().getQuarta() == true && quarta == true) {
+                System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
+                System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
+                if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
+                    System.out.println("Calcular promocao Loca Ganha");
+                    //Calcula quantos são necessários levar para ganhar X                       
+                    copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+                } else {
+                    System.out.println("Calcular promocao Simples semanal");
+                    System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
+                    //Inserir a promocao do combo no objeto
+                    copia.getObjeto().setDiaria(diariaCombo);
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+
+                }
+            } else if (diariaCombo.getPromocaoLocacao().getQuinta() == true && quinta == true) {
+                System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
+                System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
+                if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
+                    System.out.println("Calcular promocao Loca Ganha");
+                    //Calcula quantos são necessários levar para ganhar X                       
+                    copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+                } else {
+                    System.out.println("Calcular promocao Simples semanal");
+                    System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
+                    //Inserir a promocao do combo no objeto
+                    copia.getObjeto().setDiaria(diariaCombo);
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+
+                }
+            } else if (diariaCombo.getPromocaoLocacao().getSexta() == true && sexta == true) {
+                System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
+                System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
+                if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
+                    System.out.println("Calcular promocao Loca Ganha");
+                    //Calcula quantos são necessários levar para ganhar X                       
+                    copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+                } else {
+                    System.out.println("Calcular promocao Simples semanal");
+                    System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
+                    //Inserir a promocao do combo no objeto
+                    copia.getObjeto().setDiaria(diariaCombo);
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+
+                }
+            } else if (diariaCombo.getPromocaoLocacao().getSabado() == true && sabado == true) {
+                System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
+                System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
+                if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
+                    System.out.println("Calcular promocao Loca Ganha");
+                    //Calcula quantos são necessários levar para ganhar X                       
+                    copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+                } else {
+                    System.out.println("Calcular promocao Simples semanal");
+                    System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
+                    //Inserir a promocao do combo no objeto
+                    copia.getObjeto().setDiaria(diariaCombo);
+
+                    DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
+                    row.addRow(new Object[]{copia.getCodigo_barras(),
+                        hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
+                        copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+
+                    copiasLocacao.add(copia);
+                    limparItemLocado();
+                    jtf_codigo_consulta_locacao.requestFocus();
+
+                }
             } else {
-                System.out.println("Calcular promocao Simples semanal");
-                System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
-                //Inserir a promocao do combo no objeto
-                copia.getObjeto().setDiaria(diariaCombo);
-
+                System.out.println("Sem promoção existente para o dia");
+                System.out.println("Valor normal: " + moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getValor())));
+                //Alimenta a tabela
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
+                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getValor())),
+                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura()});
 
                 copiasLocacao.add(copia);
                 limparItemLocado();
                 jtf_codigo_consulta_locacao.requestFocus();
-
             }
-        } else if (diariaCombo.getPromocaoLocacao().getSegunda() == true && segunda == true) {
-            System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
-            System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
-            if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
-                System.out.println("Calcular promocao Loca Ganha");
-                //Calcula quantos são necessários levar para ganhar X                       
-                copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-            } else {
-                System.out.println("Calcular promocao Simples semanal");
-                System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
-                //Inserir a promocao do combo no objeto
-                copia.getObjeto().setDiaria(diariaCombo);
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-
-            }
-        } else if (diariaCombo.getPromocaoLocacao().getTerca() == true && terca == true) {
-            System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
-            System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
-            if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
-                System.out.println("Calcular promocao Loca Ganha");
-                //Calcula quantos são necessários levar para ganhar X                       
-                copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-            } else {
-                System.out.println("Calcular promocao Simples semanal");
-                System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
-                //Inserir a promocao do combo no objeto
-                copia.getObjeto().setDiaria(diariaCombo);
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-
-            }
-        } else if (diariaCombo.getPromocaoLocacao().getQuarta() == true && quarta == true) {
-            System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
-            System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
-            if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
-                System.out.println("Calcular promocao Loca Ganha");
-                //Calcula quantos são necessários levar para ganhar X                       
-                copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-            } else {
-                System.out.println("Calcular promocao Simples semanal");
-                System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
-                //Inserir a promocao do combo no objeto
-                copia.getObjeto().setDiaria(diariaCombo);
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-
-            }
-        } else if (diariaCombo.getPromocaoLocacao().getQuinta() == true && quinta == true) {
-            System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
-            System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
-            if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
-                System.out.println("Calcular promocao Loca Ganha");
-                //Calcula quantos são necessários levar para ganhar X                       
-                copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-            } else {
-                System.out.println("Calcular promocao Simples semanal");
-                System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
-                //Inserir a promocao do combo no objeto
-                copia.getObjeto().setDiaria(diariaCombo);
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-
-            }
-        } else if (diariaCombo.getPromocaoLocacao().getSexta() == true && sexta == true) {
-            System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
-            System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
-            if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
-                System.out.println("Calcular promocao Loca Ganha");
-                //Calcula quantos são necessários levar para ganhar X                       
-                copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-            } else {
-                System.out.println("Calcular promocao Simples semanal");
-                System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
-                //Inserir a promocao do combo no objeto
-                copia.getObjeto().setDiaria(diariaCombo);
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-                
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-
-            }
-        } else if (diariaCombo.getPromocaoLocacao().getSabado() == true && sabado == true) {
-            System.out.println("Descrição da Promoção: " + diariaCombo.getPromocaoLocacao().getDescricao());
-            System.out.println("Hoje: " + domingo + " Dia Promocao: " + diariaCombo.getPromocaoLocacao().getDomingo());
-            if (diariaCombo.getPromocaoLocacao().getGanhar_quantidade() > 0) {
-                System.out.println("Calcular promocao Loca Ganha");
-                //Calcula quantos são necessários levar para ganhar X                       
-                copia.getObjeto().setDiaria(calculaPromocaoLocaGanha(diariaCombo));
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-            } else {
-                System.out.println("Calcular promocao Simples semanal");
-                System.out.println("Valor promoção: " + moeda.setPrecoFormat(String.valueOf(diariaCombo.getPromocaoLocacao().getValor_promocao_locacao())));
-                //Inserir a promocao do combo no objeto
-                copia.getObjeto().setDiaria(diariaCombo);
-
-                DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_barras(),
-                    hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao())),
-                    copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura(), copia.getObjeto().getDiaria().getPromocaoLocacao().getDescricao()});
-
-
-                copiasLocacao.add(copia);
-                limparItemLocado();
-                jtf_codigo_consulta_locacao.requestFocus();
-
-            }
-        } else {
+            recalcularValorTotal();
+        } catch (Exception e) {
             System.out.println("Sem promoção existente para o dia");
             System.out.println("Valor normal: " + moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getValor())));
             //Alimenta a tabela
@@ -1507,20 +1517,19 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             row.addRow(new Object[]{copia.getCodigo_barras(),
                 hashDbGrid, moeda.setPrecoFormat(String.valueOf(copia.getObjeto().getDiaria().getValor())),
                 copia.getObjeto().getDiaria().getDias(), copia.getObjeto().getCensura()});
-            
+
             copiasLocacao.add(copia);
             limparItemLocado();
             jtf_codigo_consulta_locacao.requestFocus();
+            recalcularValorTotal();
         }
-        recalcularValorTotal();
-
     }
 
     public void recalcularValorTotal() {
-        
+
         moeda = new Moeda();
         Double valor_total = 0.00;
-        for(int i =0; i < jtbl_locacao.getRowCount(); i++){
+        for (int i = 0; i < jtbl_locacao.getRowCount(); i++) {
             Double valor_adicionar = moeda.getPrecoFormato(jtbl_locacao.getValueAt(i, 2).toString());
             valor_total = valor_total + valor_adicionar;
         }
@@ -1577,24 +1586,29 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             jtf_diaria.setText(String.valueOf(copiaLocacao.getObjeto().getDiaria().getDias()));
             jtf_valor_locacao.setText(moeda.setPrecoFormat(String.valueOf(copiaLocacao.getObjeto().getDiaria().getValor())));
             jtf_tipo_midia.setText(copiaLocacao.getObjeto().getTipo_midia());
-
+            promocoes = null;
             promocoes = diDAO.getDiariaPromocao(copia.getObjeto().getDiaria());
             System.out.println("Quantidade de promoções para Diária: " + promocoes.size());
             System.out.println("Tamanho do inicial do combo antes de limpar: " + jcb_promocao.getItemCount());
             jcb_promocao.removeAllItems();
             System.out.println("Tamanho combo após limpar: " + jcb_promocao.getItemCount());
+            if (promocoes.size() > 0) {
+                for (int i = 0; i < promocoes.size(); i++) {
 
-            for (int i = 0; i < promocoes.size(); i++) {
+                    ItemDbGrid hashDbGrid = new ItemDbGrid(promocoes.get(i), promocoes.get(i).getPromocaoLocacao().getDescricao());
+                    jcb_promocao.addItem(hashDbGrid);
 
-                ItemDbGrid hashDbGrid = new ItemDbGrid(promocoes.get(i), promocoes.get(i).getPromocaoLocacao().getDescricao());
+                    System.out.println("=================================================================");
+                    System.out.println("Código da promoção no ComboBox: " + promocoes.get(i).getPromocaoLocacao().getCodigo_promocao_locacao());
+                    System.out.println("Código da promoção no ComboBox: " + jcb_promocao.getItemAt(i));
+                    System.out.println("Nome da promoção no ComboBox: " + promocoes.get(i).getPromocaoLocacao().getDescricao());
+                    System.out.println("Valor da promoção no ComboBox: " + promocoes.get(i).getPromocaoLocacao().getValor_promocao_locacao());
+                    System.out.println("=================================================================");
+                }
+            } else {
+                Diaria diaria = null;
+                ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, "");
                 jcb_promocao.addItem(hashDbGrid);
-
-                System.out.println("=================================================================");
-                System.out.println("Código da promoção no ComboBox: " + promocoes.get(i).getPromocaoLocacao().getCodigo_promocao_locacao());
-                System.out.println("Código da promoção no ComboBox: " + jcb_promocao.getItemAt(i));
-                System.out.println("Nome da promoção no ComboBox: " + promocoes.get(i).getPromocaoLocacao().getDescricao());
-                System.out.println("Valor da promoção no ComboBox: " + promocoes.get(i).getPromocaoLocacao().getValor_promocao_locacao());
-                System.out.println("=================================================================");
             }
 
             Date d = new Date();
@@ -1631,29 +1645,30 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                     sabado = true;
                     break;
             }
-
-            for (int i = 0; i < jcb_promocao.getItemCount(); i++) {
-                if (promocoes.get(i).getPromocaoLocacao().getDomingo() == true && domingo == true) {
-                    jcb_promocao.setSelectedIndex(i);
-                    break;
-                } else if (promocoes.get(i).getPromocaoLocacao().getSegunda() == true && segunda == true) {
-                    jcb_promocao.setSelectedIndex(i);
-                    break;
-                } else if (promocoes.get(i).getPromocaoLocacao().getTerca() == true && terca == true) {
-                    jcb_promocao.setSelectedIndex(i);
-                    break;
-                } else if (promocoes.get(i).getPromocaoLocacao().getQuarta() == true && quarta == true) {
-                    jcb_promocao.setSelectedIndex(i);
-                    break;
-                } else if (promocoes.get(i).getPromocaoLocacao().getQuinta() == true && quinta == true) {
-                    jcb_promocao.setSelectedIndex(i);
-                    break;
-                } else if (promocoes.get(i).getPromocaoLocacao().getSexta() == true && sexta == true) {
-                    jcb_promocao.setSelectedIndex(i);
-                    break;
-                } else if (promocoes.get(i).getPromocaoLocacao().getSabado() == true && sabado == true) {
-                    jcb_promocao.setSelectedIndex(i);
-                    break;
+            if (promocoes.size() > 0) {
+                for (int i = 0; i < jcb_promocao.getItemCount(); i++) {
+                    if (promocoes.get(i).getPromocaoLocacao().getDomingo() == true && domingo == true) {
+                        jcb_promocao.setSelectedIndex(i);
+                        break;
+                    } else if (promocoes.get(i).getPromocaoLocacao().getSegunda() == true && segunda == true) {
+                        jcb_promocao.setSelectedIndex(i);
+                        break;
+                    } else if (promocoes.get(i).getPromocaoLocacao().getTerca() == true && terca == true) {
+                        jcb_promocao.setSelectedIndex(i);
+                        break;
+                    } else if (promocoes.get(i).getPromocaoLocacao().getQuarta() == true && quarta == true) {
+                        jcb_promocao.setSelectedIndex(i);
+                        break;
+                    } else if (promocoes.get(i).getPromocaoLocacao().getQuinta() == true && quinta == true) {
+                        jcb_promocao.setSelectedIndex(i);
+                        break;
+                    } else if (promocoes.get(i).getPromocaoLocacao().getSexta() == true && sexta == true) {
+                        jcb_promocao.setSelectedIndex(i);
+                        break;
+                    } else if (promocoes.get(i).getPromocaoLocacao().getSabado() == true && sabado == true) {
+                        jcb_promocao.setSelectedIndex(i);
+                        break;
+                    }
                 }
             }
             jcb_promocao.requestFocus();
@@ -1776,15 +1791,15 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                     }
                 } else {
                     SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-                String data_prevista = "";
-                try {
-                    if(copias.get(0).getData_prevista() != null){
-                        data_prevista = out.format(in.parse(copias.get(0).getData_prevista().toString()));                        
-                    }
-                } catch (ParseException ex) {
+                    SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                    String data_prevista = "";
+                    try {
+                        if (copias.get(0).getData_prevista() != null) {
+                            data_prevista = out.format(in.parse(copias.get(0).getData_prevista().toString()));
+                        }
+                    } catch (ParseException ex) {
 //                    data_prevista = "";
-                }
+                    }
                     JOptionPane.showMessageDialog(null, "Cópia indisponivel no momento. Devolução prevista para " + data_prevista);
                     retorno = false;
                 }
@@ -1935,12 +1950,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            jb_finalizar.doClick();
+            abrirCaixa();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
         }
     }
+
     private void retornaJanelaPai() {
         setVisible(false);
         if (janelapai != null) {
@@ -1949,7 +1965,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
 
     public Diaria calculaPromocaoLocaGanha(Diaria diaria) {
-        
+
         for (int i = 0; i < AtendimentoLocacao.jtbl_locacao.getRowCount(); i++) {
             System.out.println("Iniciar Verificação: " + copiasLocacao.get(i).getObjeto().getTitulo());
             System.out.println("CODIGO DIARIA - DIARIA: " + diaria.getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
@@ -2008,9 +2024,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         List<Diaria> dias = new ArrayList<Diaria>();
         DiariaDAO diaDAO = new DiariaDAO(pool);
         diaDAO = new DiariaDAO(pool);
-        dias = diaDAO.getDiariaPromocao();       
+        dias = diaDAO.getDiariaPromocao();
         for (int i = 0; i < dias.size(); i++) {
-            
+
             for (int j = 0; j < jtbl_locacao.getRowCount(); j++) {
                 if (dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao() == copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao()) {
                     if (!jtbl_locacao.getValueAt(j, 2).equals("R$ 0,00")) {
@@ -2041,7 +2057,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                         for (int z = 0; z < jtbl_locacao.getRowCount(); z++) {
                             if (dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao() == copiasLocacao.get(z).getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao()) {
                                 copiasLocacao.get(z).getObjeto().getDiaria().getPromocaoLocacao().setValor_promocao_locacao(0.0);
-                                jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get(z).getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), i, 2);                                
+                                jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get(z).getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), i, 2);
                                 System.out.println("Colocar promocação:");
                                 dobleCheckPromocao();
                                 break;
@@ -2056,7 +2072,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                                     if (jtbl_locacao.getValueAt(y, 2).equals("R$ 0,00")) {
                                         copiasLocacao.get(y).getObjeto().getDiaria().getPromocaoLocacao().setValor_promocao_locacao(dias.get(i).getPromocaoLocacao().getValor_promocao_locacao());
                                         jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get(y).getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), y, 2);
-                                        System.out.println("Retirar promocação:"+ dias.get(i).getPromocaoLocacao().getValor_promocao_locacao());
+                                        System.out.println("Retirar promocação:" + dias.get(i).getPromocaoLocacao().getValor_promocao_locacao());
                                         break;
                                     }
                                 }

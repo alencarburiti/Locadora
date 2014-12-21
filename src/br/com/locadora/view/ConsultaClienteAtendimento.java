@@ -15,7 +15,6 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
-import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
@@ -208,7 +207,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
                 jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_cancelar.setText("Cancelar");
+                jb_cancelar.setText("Sair");
                 jb_cancelar.setName("jb_cancelar"); // NOI18N
                 jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,8 +245,8 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(220, 220, 220))
+                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(222, 222, 222))
                 );
 
                 jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_novo1, jb_ok});
@@ -314,7 +313,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 if(jtbl_cliente.getValueAt(jtbl_cliente.getSelectedRow(), 4) != "Cliente Inativo" ){
                     if(jtbl_cliente.getValueAt(jtbl_cliente.getSelectedRow(), 4) != "Dependente Inativo" ){
                         janelapaiLocacao.carregarClienteDependente(dependente);
-                        janelapaiLocacao.setStatusTela(true);                        
+                        retornaJanelaPai();
                         setVisible(false);
                     } else {
                         JOptionPane.showMessageDialog(null, "Dependente Inativo. Favor consultar o titular!");
@@ -325,11 +324,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
             } else if ((janelapaiDevolucao != null) && (dependente != null)) {
                 setVisible(false);
                 janelapaiDevolucao.carregarClienteDependente(dependente);
-                janelapaiDevolucao.setStatusTela(true);
+                retornaJanelaPai();
             } else if ((janelapaiRecebimento != null) && (dependente != null)) {
                 setVisible(false);
                 janelapaiRecebimento.carregarClienteDependente(dependente);
-                janelapaiRecebimento.setStatusTela(true);
+                retornaJanelaPai();
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um Cliente");
             }            
@@ -399,6 +398,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_clienteMouseClicked
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             listaClienteDependente();
         }
@@ -406,6 +406,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_clienteKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             botaoOK(jtbl_cliente);
         }
@@ -415,6 +416,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_clienteKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             jtf_consulta.requestFocus();
         }
@@ -423,13 +425,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            if ((janelapaiLocacao != null)) {
-                janelapaiLocacao.setEnabled(true);
-                janelapaiLocacao.setVisible(true);
-                //telaCadastroObjeto.setStatusTela(false);
-            }
-
+            retornaJanelaPai();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
@@ -548,5 +544,25 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
             this.setVisible(status);
         }
         this.setEnabled(status);
+    }
+    
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            botaoOK(jtbl_cliente);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            retornaJanelaPai();
+        }
+    }
+
+    private void retornaJanelaPai() {
+        setVisible(false);
+        if(janelapaiLocacao != null){
+            janelapaiLocacao.setStatusTela(true);
+        } else if (janelapaiDevolucao != null){
+            janelapaiDevolucao.setStatusTela(true);
+        } else if (janelapaiRecebimento != null){
+            janelapaiRecebimento.setStatusTela(true);
+        }            
     }
 }

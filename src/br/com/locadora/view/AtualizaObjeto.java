@@ -2,7 +2,6 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
-import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Objeto;
@@ -173,7 +172,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tfa_similar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atualizar Objeto");
+        setTitle("Alterando Objeto");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -189,6 +188,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             }
         });
 
+        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
@@ -199,6 +199,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             }
         });
 
+        jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
@@ -384,11 +385,21 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
                 jrb_ativoActionPerformed(evt);
             }
         });
+        jrb_ativo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_ativoKeyPressed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_inativo);
         jrb_inativo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_inativo.setText("Inativo");
         jrb_inativo.setName("jrb_inativo"); // NOI18N
+        jrb_inativo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_inativoKeyPressed(evt);
+            }
+        });
 
         jcb_midia.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_midia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu Ray", "CD", "DVD", "Playstation", "VHs", "Xbox", " " }));
@@ -595,9 +606,13 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
                 .addGap(10, 10, 10))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_midia, jcb_producao, jcb_tipo, jcb_tipo_midia, jtf_duracao});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_midia, jcb_producao, jcb_tipo, jcb_tipo_midia, jtf_censura, jtf_duracao});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_codigo_objeto, jtf_titulo, jtf_titulo_original});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_diaria, jtf_descricao_diaria, jtf_diaria_dias, jtf_valor});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_genero, jtf_descricao_genero});
 
         jtp_menu.addTab("Cadastro", jPanel1);
 
@@ -914,7 +929,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
 
-        setSize(new java.awt.Dimension(799, 418));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1216,6 +1231,16 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jrb_ativoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_ativoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_ativoKeyPressed
+
+    private void jrb_inativoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_inativoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_inativoKeyPressed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1543,7 +1568,6 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
-
         }
     }
 
@@ -1641,7 +1665,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
 
                     objeto.setCodigo_objeto(Integer.parseInt(jtf_codigo_objeto.getText()));
                     objetoDAO.atualizar(objeto);
-                    JOptionPane.showMessageDialog(null, "Alteração efetuada com sucesso");
+                    JOptionPane.showMessageDialog(null, "Atualizado com Sucesso!");
 
                 }
                 jtp_menu.setSelectedIndex(2);

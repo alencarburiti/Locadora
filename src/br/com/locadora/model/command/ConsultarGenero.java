@@ -45,7 +45,7 @@ public class ConsultarGenero implements InterfaceCommand {
         } catch (ParseException ex) {
             Logger.getLogger(ConsultarGenero.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Informe um parâmentro válido");
+            JOptionPane.showMessageDialog(null, "Informe um Código");
         }
 
         return "OK";
@@ -56,7 +56,7 @@ public class ConsultarGenero implements InterfaceCommand {
         tableModel.setNumRows(0);
 
         if (generos.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhum dado encontrado");
+            JOptionPane.showMessageDialog(null, "Nenhum Gênero encontrado");
         } else {
 
             for (int i = 0; i < generos.size(); i++) {

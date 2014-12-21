@@ -149,7 +149,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tfa_similar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastrando Objetos");
+        setTitle("Cadastrando Objeto");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -165,6 +165,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             }
         });
 
+        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
@@ -551,7 +552,13 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 .addGap(10, 10, 10))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_censura, jtf_duracao});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_midia, jcb_producao, jcb_tipo, jcb_tipo_midia, jtf_censura, jtf_duracao});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_codigo_objeto, jtf_titulo, jtf_titulo_original});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_diaria, jtf_descricao_diaria, jtf_diaria_dias, jtf_valor});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_genero, jtf_descricao_genero});
 
         jtp_menu.addTab("Cadastro", jPanel1);
 
@@ -828,8 +835,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 .addGap(10, 10, 10))
         );
 
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_copia, jb_eliminar1, jcb_idioma, jcb_legenda, jtf_data_aquisicao, jtf_preco_custo});
+
         jtp_menu.addTab("Cópias", jPanel2);
 
+        jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
@@ -850,10 +860,10 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(167, 167, 167)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jb_salvar)
                         .addGap(14, 14, 14)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -874,7 +884,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 .addGap(10, 10, 10))
         );
 
-        setSize(new java.awt.Dimension(800, 417));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1581,14 +1591,14 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                 if (jtf_codigo_objeto.getText().isEmpty()) {
 
                     objeto = objetoDAO.salvar(objeto);
-                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
 
                     jtf_codigo_objeto.setText(String.valueOf(objeto.getCodigo_objeto()));
 
                 } else {
                     objeto.setCodigo_objeto(Integer.parseInt(jtf_codigo_objeto.getText()));
                     objetoDAO.atualizar(objeto);
-                    JOptionPane.showMessageDialog(null, "Alteração efetuada com sucesso");
+                    JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
                 }
                 jtp_menu.setSelectedIndex(2);
                 jcb_idioma.requestFocus();

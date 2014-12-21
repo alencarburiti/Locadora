@@ -1,9 +1,15 @@
 package br.com.locadora.view;
 
+import br.com.locadora.conexao.InterfacePool;
+import br.com.locadora.conexao.Pool;
+import br.com.locadora.model.bean.AcessoUsuario;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.TemaInterface;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,6 +18,8 @@ import java.util.logging.Logger;
 public class MenuProduto extends javax.swing.JFrame {
 
     public TelaPrincipal janelapai;
+    public AcessoUsuario acesso;
+    public InterfacePool pool;
 
     /**
      * Creates new form Cad_Fornecedor
@@ -270,7 +278,7 @@ public class MenuProduto extends javax.swing.JFrame {
 
         getAccessibleContext().setAccessibleParent(this);
 
-        setSize(new java.awt.Dimension(737, 489));
+        setSize(new java.awt.Dimension(737, 492));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -283,18 +291,44 @@ public class MenuProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
+
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        AcessoUsuario acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuProduto");
         try {
-            CadastroProduto prod = new CadastroProduto();
-            prod.setVisible(true);
-            prod.janelapai = this;
-            this.setEnabled(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(MenuProduto.class.getName()).log(Level.SEVERE, null, ex);
+            if (acesso.getEscrever() == 0) {
+                CadastroProduto prod = new CadastroProduto();
+                prod.setVisible(true);
+                prod.janelapai = this;
+                this.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
+
+
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_alterar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterar1ActionPerformed
-
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        AcessoUsuario acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuProduto");
+        try {
+            if (acesso.getEscrever() == 0) {
+//                CadastroProduto prod = new CadastroProduto();
+//                prod.setVisible(true);
+//                prod.janelapai = this;
+//                this.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
         // TODO add your handling code here:
 }//GEN-LAST:event_jb_alterar1ActionPerformed
 

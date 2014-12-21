@@ -153,6 +153,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.DATA_PREVISTA,\n"                
                 + "    D.VALOR_PAGO,\n"
                 + "    E.CODIGO_DEPENDENTE,\n"
+                + "    E.CLIENTE_CODIGO_CLIENTE,\n"
                 + "    E.NOME_DEPENDENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
@@ -270,7 +271,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
                 + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                + "        AND D.DEL_FLAG = 0\n"
+                + "        AND D.DEL_FLAG = 1\n"
                 + "        AND B.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
                 + "        AND B.CODIGO_BARRAS = ?;";
@@ -311,6 +312,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.CODIGO_ITEM_LOCACAO,\n"
                 + "    E.CODIGO_DEPENDENTE,\n"
                 + "    E.NOME_DEPENDENTE,\n"
+                + "    E.CLIENTE_CODIGO_CLIENTE,\n"
                 + "    A.TITULO,\n"
                 + "    A.CODIGO_OBJETO,\n"
                 + "    F.DIAS AS DIARIA,\n"
@@ -436,7 +438,11 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             Dependente dependente = new Dependente();
             dependente.setCodigo_dependente(rs.getInt("CODIGO_DEPENDENTE"));
             dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
-
+            
+            Cliente cliente = new Cliente();
+            cliente.setCodigo_cliente(rs.getInt("CLIENTE_CODIGO_CLIENTE"));
+            dependente.setCliente(cliente);
+            
             copia.setCodigo_barras(rs.getString("CODIGO_BARRAS"));
             copia.setCodigo_copia(rs.getInt("CODIGO_COPIA"));
             itemLocacao.setCopia(copia);
@@ -660,6 +666,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    E.CODIGO_DEPENDENTE,\n"
                 + "    E.NOME_DEPENDENTE,\n"
+                + "    E.CLIENTE_CODIGO_CLIENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    B.CODIGO_BARRAS,\n"
@@ -734,6 +741,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    E.CODIGO_DEPENDENTE,\n"
                 + "    E.NOME_DEPENDENTE,\n"
+                + "    E.CLIENTE_CODIGO_CLIENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
@@ -810,6 +818,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    E.CODIGO_DEPENDENTE,\n"
                 + "    E.NOME_DEPENDENTE,\n"
+                + "    E.CLIENTE_CODIGO_CLIENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"
@@ -883,6 +892,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    D.VALOR_PAGO,\n"
                 + "    E.CODIGO_DEPENDENTE,\n"
                 + "    E.NOME_DEPENDENTE,\n"
+                + "    E.CLIENTE_CODIGO_CLIENTE,\n"
                 + "    A.TITULO AS TITULO,\n"
                 + "    F.DIAS AS DIARIA,\n"
                 + "    F.CODIGO_DIARIA,\n"

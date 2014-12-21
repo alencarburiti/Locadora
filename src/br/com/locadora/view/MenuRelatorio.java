@@ -106,7 +106,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
         jRadioButton7 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta Locações em Aberto");
+        setTitle("Relatório");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -125,7 +125,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta por Objeto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Objeto"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -392,7 +392,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(402, 594));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

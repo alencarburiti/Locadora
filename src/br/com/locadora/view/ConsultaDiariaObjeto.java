@@ -75,7 +75,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
         jb_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta Diária");
+        setTitle(" Consulta Diária");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -214,7 +214,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
 
                 jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_cancelar.setText("Cancelar");
+                jb_cancelar.setText("Sair");
                 jb_cancelar.setName("jb_cancelar"); // NOI18N
                 jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,7 +267,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
                         .addGap(20, 20, 20))
                 );
 
-                setSize(new java.awt.Dimension(672, 464));
+                pack();
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -441,7 +441,7 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         jtbl_diaria.updateUI();
 
         if (diarias.size() == 0) {
-            JOptionPane.showMessageDialog(this, "Nenhuma diaria encontrada");
+            JOptionPane.showMessageDialog(this, "Nenhuma Diária encontrada");
 
         } else {
             for (int i = 0; i < diarias.size(); i++) {

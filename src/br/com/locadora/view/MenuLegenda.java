@@ -18,8 +18,6 @@ import br.com.locadora.model.bean.Legenda;
 import br.com.locadora.model.dao.LegendaDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
-import static br.com.locadora.view.MenuIdioma.jtbl_idioma;
-import static br.com.locadora.view.MenuIdioma.jtf_consulta;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
@@ -86,7 +84,7 @@ public class MenuLegenda extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Legenda"));
         jPanel1.setName("jPanel1"); // NOI18N
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
 
@@ -217,13 +215,14 @@ public class MenuLegenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     consultarLegenda();
         }
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_legendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_legendaKeyPressed
-
+        acionarAtalho(evt);
     }//GEN-LAST:event_jtbl_legendaKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -278,7 +277,7 @@ public class MenuLegenda extends javax.swing.JFrame {
         tableModel.setNumRows(0);
 
         if (legendas.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhuma legenda encontrada");
+            JOptionPane.showMessageDialog(null, "Nenhuma Legenda encontrada");
 
         } else {
             for (int i = 0; i < legendas.size(); i++) {

@@ -16,6 +16,7 @@ import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.AutoCompletion;
 import br.com.locadora.util.Printer;
 import br.com.locadora.util.TemaInterface;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -38,6 +39,9 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
     public ConfiguraImpressora() {
         initComponents();
         TemaInterface.getInterface(this);
+        janelapai = null;
+        janelapaiCaixaLocacao = null;
+        janelapaiCaixaDevolucao = null;
     }
 
     /**
@@ -60,7 +64,7 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
         jb_sair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Configurar Impressoras");
+        setTitle("Configurar Impressora");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -68,6 +72,11 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -88,6 +97,11 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jcb_impressora_principalFocusLost(evt);
+            }
+        });
+        jcb_impressora_principal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_impressora_principalKeyPressed(evt);
             }
         });
 
@@ -113,6 +127,11 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jcb_impressora_alternativaFocusLost(evt);
+            }
+        });
+        jcb_impressora_alternativa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_impressora_alternativaKeyPressed(evt);
             }
         });
 
@@ -147,12 +166,17 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
         jPanel2.setName("jPanel2"); // NOI18N
 
         jb_aplicar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_aplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
+        jb_aplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
         jb_aplicar.setText("Aplicar");
         jb_aplicar.setName("jb_aplicar"); // NOI18N
-        jb_aplicar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_aplicarActionPerformed(evt);
+        jb_aplicar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_aplicarMouseClicked(evt);
+            }
+        });
+        jb_aplicar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_aplicarKeyPressed(evt);
             }
         });
 
@@ -213,13 +237,12 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(282, 280));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        setVisible(false);
-        janelapai.setStatusTela(true);
+        retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -251,22 +274,39 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jcb_impressora_alternativaFocusLost
 
-    private void jb_aplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_aplicarActionPerformed
-        try {
-            ArquivoConfiguracao conf = new ArquivoConfiguracao();
-            conf.writePropertie("impressora_principal", jcb_impressora_principal.getSelectedItem().toString());
-            conf.writePropertie("impressora_alternativa", jcb_impressora_alternativa.getSelectedItem().toString());
-            JOptionPane.showMessageDialog(null, "Configurado com sucesso");            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível configurar impressora");
-        }
-    }//GEN-LAST:event_jb_aplicarActionPerformed
-
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
-        setVisible(false);
-        janelapai.setStatusTela(true);
+        retornaJanelaPai();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jb_aplicarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_aplicarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            configurarImpressora();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_aplicarKeyPressed
+
+    private void jb_aplicarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_aplicarMouseClicked
+        if(evt.getClickCount() == 1){
+            configurarImpressora();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_aplicarMouseClicked
+
+    private void jcb_impressora_principalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_impressora_principalKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_impressora_principalKeyPressed
+
+    private void jcb_impressora_alternativaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_impressora_alternativaKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_impressora_alternativaKeyPressed
     /**
      * @param args the command line arguments
      */
@@ -328,4 +368,34 @@ public class ConfiguraImpressora extends javax.swing.JFrame {
         }
     }
 
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            configurarImpressora();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            retornaJanelaPai();
+        }
+    }
+
+    private void retornaJanelaPai() {
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);
+        } else if(janelapaiCaixaDevolucao != null){
+            janelapaiCaixaDevolucao.setStatusTela(true);
+        } else if (janelapaiCaixaLocacao != null){
+            janelapaiCaixaLocacao.setStatusTela(true);
+        }
+    }
+    
+    public void configurarImpressora(){
+        try {
+            ArquivoConfiguracao conf = new ArquivoConfiguracao();
+            conf.writePropertie("impressora_principal", jcb_impressora_principal.getSelectedItem().toString());
+            conf.writePropertie("impressora_alternativa", jcb_impressora_alternativa.getSelectedItem().toString());
+            JOptionPane.showMessageDialog(null, "Configurado com sucesso");            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível configurar impressora");
+        }
+    }
 }

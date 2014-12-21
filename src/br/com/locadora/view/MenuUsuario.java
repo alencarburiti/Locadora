@@ -166,7 +166,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                     jtbl_usuario.getColumnModel().getColumn(2).setPreferredWidth(80);
                 }
 
-                jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
+                jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Usuário"));
                 jPanel3.setName("jPanel3"); // NOI18N
 
                 buttonGroup1.add(jrb_codigo);
@@ -325,7 +325,6 @@ public class MenuUsuario extends javax.swing.JFrame {
             }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
         jtf_consultar_usuario.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
@@ -336,7 +335,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuUsuario");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getSuper_usuario()== 0) {
                 CadastroUsuario cadastroUsuario = new CadastroUsuario();
                 cadastroUsuario.janelapai = this;
                 cadastroUsuario.setVisible(true);
@@ -481,7 +480,7 @@ public class MenuUsuario extends javax.swing.JFrame {
 
     public void listarUsuárioCodigo() {
         if (jtf_consultar_usuario.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Informe um código");
+            JOptionPane.showMessageDialog(null, "Informe um Código");
         } else {
             pool = new Pool();
             UsuarioDAO usu = new UsuarioDAO(pool);
@@ -494,7 +493,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usu = new UsuarioDAO(pool);
 
-        usuarios = usu.listarUsuarioDescrição(jtf_consultar_usuario.getText().trim() + "%");
+        usuarios = usu.listarUsuarioDescrição("%"+jtf_consultar_usuario.getText().trim() + "%");
         mostraUsuarios(usuarios);
     }
 
@@ -503,7 +502,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         tableModel.setNumRows(0);
 
         if (usuarios.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhum usuário encontrado");
+            JOptionPane.showMessageDialog(this, "Nenhum Usuário encontrado");
 
         } else {
 
@@ -597,7 +596,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuUsuario");
         try {
             System.out.println("Escrever: " + acesso.getEscrever());
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getSuper_usuario()== 0) {
                 Usuario usu = tbUsuarioLinhaSelecionada(jtbl_usuario);
                 if (usu != null) {
                     if(atualizaUsuario == null){

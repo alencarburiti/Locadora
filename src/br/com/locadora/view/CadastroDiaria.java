@@ -887,7 +887,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel18)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -928,6 +928,8 @@ public class CadastroDiaria extends javax.swing.JFrame {
                 .addComponent(jcb_a_vista_devolucao)
                 .addGap(0, 0, 0))
         );
+
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_promocao_devolucao, jb_eliminar_promocao_devolucao, jtf_descricao_devolucao, jtf_horario_devolucao, jtf_horario_locacao, jtf_horas_antecipada, jtf_valor_promocao_devolucao});
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -1856,14 +1858,14 @@ public class CadastroDiaria extends javax.swing.JFrame {
                     diaria = diariaDAO.salvar(diaria);
                     jtf_codigo_diaria.setText(diaria.getCodigo_diaria().toString());
 
-                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
                     jtf_descricao_locacao.requestFocus();
                 } else {
                     diaria.setCodigo_diaria(Integer.parseInt(jtf_codigo_diaria.getText()));
                     diariaDAO.atualizar(diaria);
                     jtf_codigo_diaria.setText(diaria.getCodigo_diaria().toString());
 
-                    JOptionPane.showMessageDialog(null, "Alteração efetuada com sucesso");
+                    JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
                     jtf_descricao_locacao.requestFocus();
                 }
             }

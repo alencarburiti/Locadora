@@ -109,12 +109,22 @@ public class MenuDiaria extends javax.swing.JFrame {
         jrb_codigo_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jrb_codigo_diaria.setText("Código");
         jrb_codigo_diaria.setName("jrb_codigo_diaria"); // NOI18N
+        jrb_codigo_diaria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_codigo_diariaActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_descricao);
         jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
+        jrb_descricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_descricaoActionPerformed(evt);
+            }
+        });
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
@@ -339,6 +349,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        
         setVisible(false);
         janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
@@ -375,6 +386,16 @@ public class MenuDiaria extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jrb_descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_descricaoActionPerformed
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_descricaoActionPerformed
+
+    private void jrb_codigo_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigo_diariaActionPerformed
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_codigo_diariaActionPerformed
     /**
      * @param args the command line arguments
      */

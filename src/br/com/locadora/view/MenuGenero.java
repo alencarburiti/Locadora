@@ -75,7 +75,7 @@ public class MenuGenero extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gerenciamento de Gênero");
+        setTitle("Gerenciamento de Gêneros");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -91,19 +91,29 @@ public class MenuGenero extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultas"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Gênero"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         buttonGroup1.add(jrb_codigo);
-        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
+        jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_codigoActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_descricao);
-        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
+        jrb_descricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_descricaoActionPerformed(evt);
+            }
+        });
 
         jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
@@ -348,6 +358,16 @@ public class MenuGenero extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jrb_descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_descricaoActionPerformed
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_descricaoActionPerformed
+
+    private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
+        jtf_consulta.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_codigoActionPerformed
     /**
      * @param args the command line arguments
      */

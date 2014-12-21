@@ -518,6 +518,8 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                 .addComponent(jcb_a_vista_locacao))
         );
 
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_promocao_locacao, jb_eliminar_promocao_locacao, jtf_descricao_locacao, jtf_ganhar_quantidade, jtf_locar_quantidade, jtf_ordem, jtf_valor_promocao_locacao});
+
         javax.swing.GroupLayout jp_promocao_locacaoLayout = new javax.swing.GroupLayout(jp_promocao_locacao);
         jp_promocao_locacao.setLayout(jp_promocao_locacaoLayout);
         jp_promocao_locacaoLayout.setHorizontalGroup(
@@ -540,7 +542,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jp_dias_promoca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addGap(14, 14, 14))
@@ -717,7 +719,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(jp_detalhes_promocao_devolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jp_detalhes_promocao_devolucaoLayout.createSequentialGroup()
-                                .addComponent(jLabel18)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jp_detalhes_promocao_devolucaoLayout.createSequentialGroup()
@@ -758,6 +760,8 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                 .addComponent(jcb_a_vista_devolucao)
                 .addGap(0, 0, 0))
         );
+
+        jp_detalhes_promocao_devolucaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_promocao_devolucao, jb_eliminar_promocao_devolucao, jtf_descricao_devolucao, jtf_horario_devolucao, jtf_horario_locacao, jtf_horas_antecipada, jtf_valor_promocao_devolucao});
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -1489,7 +1493,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
             diaria.setMultas(moeda.getPrecoFormato(jtf_relocacao.getText()));
             diaria.setAcumulativo(jcb_acumulativo.isSelected());
             diariaDAO.atualizar(diaria);
-            JOptionPane.showMessageDialog(null, "Alteração efetuada com sucesso");            
+            JOptionPane.showMessageDialog(null, "Atualizado com Sucesso!");
         }
     }
 

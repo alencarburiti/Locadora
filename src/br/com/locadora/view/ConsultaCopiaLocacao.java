@@ -71,7 +71,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         jb_ok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta Objeto");
+        setTitle("Consulta Objeto/Cópias");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -243,7 +243,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
                 jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
                 jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_cancelar.setText("Cancelar");
+                jb_cancelar.setText("Sair");
                 jb_cancelar.setName("jb_cancelar"); // NOI18N
                 jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,17 +260,22 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                         jb_okActionPerformed(evt);
                     }
                 });
+                jb_ok.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        jb_okKeyPressed(evt);
+                    }
+                });
 
                 javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
                 jPanel2.setLayout(jPanel2Layout);
                 jPanel2Layout.setHorizontalGroup(
                     jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(315, 315, 315)
-                        .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(315, 315, 315))
+                        .addGap(286, 286, 286)
+                        .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(329, 329, 329))
                 );
 
                 jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_ok});
@@ -308,7 +313,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                         .addGap(20, 20, 20))
                 );
 
-                setSize(new java.awt.Dimension(901, 499));
+                pack();
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -384,6 +389,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_jrb_tituloActionPerformed
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
                 if (jrb_titulo.isSelected() == true) {
@@ -400,16 +406,14 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_copiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_copiaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             botaoOK(jtbl_copia);
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             jtf_consulta.requestFocus();
         }
-                if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            janelapai.setStatusTela(true);
-                    setVisible(false);
-        }
+        
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_copiaKeyPressed
@@ -430,6 +434,11 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_atorActionPerformed
+
+    private void jb_okKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_okKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_okKeyPressed
 
     /**
      * @param args the command line arguments
@@ -586,6 +595,22 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         }
 
         return precoFormatado;
+    }
+    
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_F10) {
+            botaoOK(jtbl_copia);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            retornaJanelaPai();
+        }
+    }
+
+    private void retornaJanelaPai() {
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);
+        }            
     }
 
 }

@@ -85,7 +85,7 @@ public class MenuIdioma extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Idioma"));
         jPanel1.setName("jPanel1"); // NOI18N
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
 
@@ -215,6 +215,7 @@ public class MenuIdioma extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             consultaIdioma();
         }
@@ -222,7 +223,7 @@ public class MenuIdioma extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
     private void jtbl_idiomaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_idiomaKeyPressed
-
+        acionarAtalho(evt);        
     }//GEN-LAST:event_jtbl_idiomaKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -267,7 +268,7 @@ public class MenuIdioma extends javax.swing.JFrame {
         tableModel.setNumRows(0);
 
         if (idiomas.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhuma idioma encontrado");
+            JOptionPane.showMessageDialog(null, "Nenhuma Idioma encontrado");
 
         } else {
             for (int i = 0; i < idiomas.size(); i++) {

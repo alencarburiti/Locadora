@@ -13,12 +13,17 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
+import br.com.locadora.model.bean.AcessoUsuario;
+import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Objeto;
+import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
@@ -48,6 +53,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
     public SiscomController controller;
     public static List<ItemLocacao> itensDevolucao;
     public LocacaoDAO locacaoDAO;
+    public AtualizaCliente atualizaCliente;
 
     public LocacaoEmAberto() {
         initComponents();
@@ -81,7 +87,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
         jb_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta Locações em Aberto");
+        setTitle("Consulta locação em Aberto");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -214,6 +220,11 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
 
                 jButton1.setText("Verificar Cliente");
                 jButton1.setName("jButton1"); // NOI18N
+                jButton1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton1ActionPerformed(evt);
+                    }
+                });
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
@@ -279,7 +290,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
                 jPanel2Layout.setHorizontalGroup(
                     jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(345, 345, 345)
+                        .addGap(450, 450, 450)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
@@ -312,7 +323,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
                         .addGap(20, 20, 20))
                 );
 
-                setSize(new java.awt.Dimension(1046, 499));
+                pack();
                 setLocationRelativeTo(null);
             }// </editor-fold>//GEN-END:initComponents
 
@@ -430,6 +441,11 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
         jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_atorActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -591,5 +607,50 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
             setVisible(false);
             janelapai.setStatusTela(true);
         }
+    }
+    
+    public void alterar() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        AcessoUsuario acesso;
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuCliente");
+        try {
+            System.out.println("Escrever: " + acesso.getEscrever());
+            if (acesso.getEscrever() == 0) {
+                if(jtbl_locacao_aberto.getSelectedRow() != -1){
+                    pool = new Pool();
+                    ClienteDAO clienteDAO = new ClienteDAO(pool);
+                    Cliente cliente = clienteDAO.getCliente_codigo(itensDevolucao.get(jtbl_locacao_aberto.getSelectedRow()).getDependente().getCliente().getCodigo_cliente());
+
+                    if (cliente != null) {
+                        if(atualizaCliente == null ){
+                            atualizaCliente = new AtualizaCliente(cliente);
+                            atualizaCliente.janelapai2 = this;
+                            atualizaCliente.setVisible(true);
+                            setEnabled(false);
+                        } else {
+                            atualizaCliente.setVisible(true);
+                        }
+                    }
+                }
+                 else {
+                    JOptionPane.showMessageDialog(null, "Selecione um cliente");
+                    jtf_consulta.requestFocus();                    
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+    }
+    
+    public void setStatusTela(boolean status) {
+        if (status) {
+            this.setVisible(status);
+        }
+        this.setEnabled(status);
     }
 }

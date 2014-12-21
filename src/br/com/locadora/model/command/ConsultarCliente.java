@@ -53,7 +53,7 @@ public class ConsultarCliente implements InterfaceCommand {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage() + "Problemas com a consulta: ");            
         } catch (NumberFormatException e) {            
-            JOptionPane.showMessageDialog(null, "Valor inválido");
+            JOptionPane.showMessageDialog(null, "Informe um Código");
         } catch (ParseException ex) {
             Logger.getLogger(ConsultarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,7 +65,7 @@ public class ConsultarCliente implements InterfaceCommand {
         tableModel.setNumRows(0);
 
         if (clientes.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
+            JOptionPane.showMessageDialog(null, "Nenhum Cliente encontrado");
         } else {
 
             for (Cliente cliente1 : clientes) {

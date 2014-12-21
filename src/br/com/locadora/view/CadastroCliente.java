@@ -993,7 +993,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jb_salvar)
-                        .addGap(0, 0, 0)
+                        .addGap(10, 10, 10)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
@@ -1010,13 +1010,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jb_salvar))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
@@ -1722,9 +1720,37 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             msgERRO = msgERRO + " *Telefone Dependente\n";
         }
 
-        if (jtf_data_nascimento_dependente.getText().trim().length() != 10) {
-            msgERRO = msgERRO + " *Data Inválida\n";
+        try {
+            Data data = new Data();
+            int idade;
+
+            if (jtf_data_nascimento_dependente.getText().trim().length() != 10) {
+                jtf_data_nascimento_dependente.setForeground(Color.red);
+                msgERRO = msgERRO + " *Data de Nascimento inválida\n";
+            } else if (jtf_data_nascimento_dependente.getText().equals("  /  /    ")) {
+                jtf_data_nascimento_dependente.setForeground(Color.red);
+                msgERRO = msgERRO + " *Data de Nascimento inválida\n";
+            } else {
+                if (validaData(jtf_data_nascimento_dependente.getText())) {
+                    jtf_data_nascimento_dependente.setForeground(Color.black);
+                } else {
+                    jtf_data_nascimento_dependente.setForeground(Color.red);
+                    msgERRO = msgERRO + " *Data de Nascimento inválida\n";
+                }
+
+            }
+        } catch (ParseException ex) {
+            jtf_data_nascimento_dependente.setForeground(Color.red);
+            msgERRO = msgERRO + " *Data de Nascimento inválida\n";
+        } catch (NumberFormatException ex) {
+            jtf_data_nascimento_dependente.setText("  /  /    ");
+            jtf_data_nascimento_dependente.setForeground(Color.red);
+            msgERRO = msgERRO + " *Data de Nascimento inválida\n";
         }
+        
+//        if (jtf_data_nascimento_dependente.getText().trim().length() != 10) {
+//            msgERRO = msgERRO + " *Data Inválida\n";
+//        }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
@@ -1897,6 +1923,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
 
                     carregaDependente(cliente.getCodigo_cliente());
                     jtf_nome_dependente.setText("");
+                    jtf_nome_dependente.requestFocus();
                     jtf_data_nascimento_dependente.setText("");
                     jtf_cpf_dependente.setText("");
                     jtf_telefone_dependente.setText("");
@@ -1943,7 +1970,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
                     pool = new Pool();
                     clienteDAO = new ClienteDAO(pool);
                     cliente = clienteDAO.salvar(cliente);
-                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
 
                     pool = new Pool();
                     DependenteDAO dependenteDAO = new DependenteDAO(pool);

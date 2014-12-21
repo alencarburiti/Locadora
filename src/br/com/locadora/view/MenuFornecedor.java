@@ -358,11 +358,37 @@ public class MenuFornecedor extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
-        alterar();
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
+        try {
+            if (acesso.getEscrever() == 0) {
+                alterar();                
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+        
 }//GEN-LAST:event_jb_alterarActionPerformed
 
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
-        excluiFornecedor();
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
+        try {
+            if (acesso.getEscrever() == 0) {
+                excluiFornecedor();               
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
 

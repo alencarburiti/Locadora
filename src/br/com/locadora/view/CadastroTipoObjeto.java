@@ -79,7 +79,7 @@ public class CadastroTipoObjeto extends javax.swing.JFrame {
         getContentPane().add(jb_salvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, 35));
 
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/medicalpharm/image/exit.png"))); // NOI18N
-        jb_cancelar.setText("Cancelar");
+        jb_cancelar.setText("Sair");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

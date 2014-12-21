@@ -11,6 +11,7 @@ import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.AutoCompletion;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
+import static br.com.locadora.view.AtualizaObjeto.jtf_titulo_original;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,8 +87,13 @@ public final class ControleAcesso extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Usuário"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Usuário"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         jcb_usuario.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -154,6 +160,11 @@ public final class ControleAcesso extends javax.swing.JFrame {
             }
         });
         jtbl_permissoes.setName("jtbl_permissoes"); // NOI18N
+        jtbl_permissoes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_permissoesKeyPressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtbl_permissoes);
         if (jtbl_permissoes.getColumnModel().getColumnCount() > 0) {
             jtbl_permissoes.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -168,9 +179,14 @@ public final class ControleAcesso extends javax.swing.JFrame {
 
         jcb_interface.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jcb_interface.setName("jcb_interface"); // NOI18N
-        jcb_interface.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcb_interfaceActionPerformed(evt);
+        jcb_interface.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcb_interfaceMouseClicked(evt);
+            }
+        });
+        jcb_interface.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jcb_interfaceKeyPressed(evt);
             }
         });
 
@@ -269,8 +285,8 @@ public final class ControleAcesso extends javax.swing.JFrame {
         });
 
         jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
-        jb_salvar.setText("Aplicar");
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -343,7 +359,7 @@ public final class ControleAcesso extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(485, 520));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -377,11 +393,6 @@ public final class ControleAcesso extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jcb_deletarActionPerformed
 
-    private void jcb_interfaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_interfaceActionPerformed
-        checkBoxSelecionado();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_interfaceActionPerformed
-
     private void jcb_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_usuarioActionPerformed
         permissaoSelecionado();
         // TODO add your handling code here:
@@ -405,6 +416,7 @@ public final class ControleAcesso extends javax.swing.JFrame {
     }//GEN-LAST:event_jcb_lerActionPerformed
 
     private void jcb_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_usuarioKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jcb_interface.requestFocus();
         }
@@ -424,6 +436,34 @@ public final class ControleAcesso extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelarKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+                acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_titulo_original.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jcb_interfaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_interfaceKeyPressed
+        acionarAtalho(evt);
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            checkBoxSelecionado();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_interfaceKeyPressed
+
+    private void jtbl_permissoesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_permissoesKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_permissoesKeyPressed
+
+    private void jcb_interfaceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcb_interfaceMouseClicked
+        if(evt.getClickCount() == 1){
+            checkBoxSelecionado();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_interfaceMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -610,7 +650,7 @@ public final class ControleAcesso extends javax.swing.JFrame {
             jcb_escrever.setSelected(true);
             jcb_deletar.setSelected(false);
             jcb_super.setSelected(false);
-            JOptionPane.showMessageDialog(null, "Não tem acessos cadastrados");
+            JOptionPane.showMessageDialog(null, "Nenhum Acesso encontrado para Usuário.");
         }
 
     }
@@ -681,8 +721,8 @@ public final class ControleAcesso extends javax.swing.JFrame {
         if (jtbl_permissoes.getRowCount() == 0) {
             tabela = false;
         } else {
-            for (int i = 0; i < jtbl_permissoes.getRowCount(); i++) {
-                tabela = acessoUsuario.getInterfaceAcesso().getDescricao().equals(jtbl_permissoes.getValueAt(i, 0).toString());
+            for (int i = 0; i < acessos.size(); i++) {
+                tabela = acessoUsuario.getInterfaceAcesso().getCodigo_interface() == acessos.get(i).getInterfaceAcesso().getCodigo_interface();
                 System.out.println("Index: " + i + " Size: " + jtbl_permissoes.getRowCount() + " Valor: " + jtbl_permissoes.getValueAt(i, 0).toString());
                 if (tabela == true) {
                     acessoUsuario.setCodigo_acesso(acessos.get(i).getCodigo_acesso());
@@ -693,6 +733,19 @@ public final class ControleAcesso extends javax.swing.JFrame {
         }
 
         return acessoUsuario;
+    }
+    
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {        
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            retornaJanelaPai();
+        }
+    }
+
+    public void retornaJanelaPai() {
+        this.setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);
+        }
     }
 
 }

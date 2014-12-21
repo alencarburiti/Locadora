@@ -8,9 +8,7 @@ import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Backup;
-import br.com.locadora.util.Restaurar;
 import br.com.locadora.util.TemaInterface;
-import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import javax.swing.*;
 
@@ -109,8 +107,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jmi_atendimento_devolucao = new javax.swing.JMenuItem();
         jMenu17 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         menu_relatórios = new javax.swing.JMenu();
         jMenuItem19 = new javax.swing.JMenuItem();
         menu_relatórios1 = new javax.swing.JMenu();
@@ -409,7 +407,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMB_Cadastro.add(menu_movimentos2);
 
         menu_movimentos.setMnemonic('M');
-        menu_movimentos.setText("Movimento");
+        menu_movimentos.setText("Atendimento");
         menu_movimentos.setName("menu_movimentos"); // NOI18N
 
         jmi_atendimento_locacao.setText("Locação");
@@ -434,7 +432,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu17.setText("Consultas");
         jMenu17.setName("jMenu17"); // NOI18N
 
-        jMenuItem16.setText("Fluxo de Caixa");
+        jMenuItem16.setText("Fluxo de Caixa Diário");
         jMenuItem16.setName("jMenuItem16"); // NOI18N
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -443,16 +441,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu17.add(jMenuItem16);
 
-        jMenuItem4.setText("Em Aberto");
-        jMenuItem4.setName("jMenuItem4"); // NOI18N
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu17.add(jMenuItem4);
-
-        jMenuItem18.setText("Fluxo Detalhado");
+        jMenuItem18.setText("Fluxo de Caixa Detalhado");
         jMenuItem18.setName("jMenuItem18"); // NOI18N
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -460,6 +449,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu17.add(jMenuItem18);
+
+        jMenuItem4.setText("Locação em Aberto");
+        jMenuItem4.setName("jMenuItem4"); // NOI18N
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu17.add(jMenuItem4);
 
         jMB_Cadastro.add(jMenu17);
 
@@ -515,7 +513,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jm_caixa.setText("Configurações");
         jm_caixa.setName("jm_caixa"); // NOI18N
 
-        jm_usuario.setText("Cadastro Usuário");
+        jm_usuario.setText("Usuário");
         jm_usuario.setName("jm_usuario"); // NOI18N
         jm_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -542,7 +540,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jm_caixa.add(jm_conf_impressora);
 
-        jMenuItem17.setText("Configuração de Caixa");
+        jMenuItem17.setText("Configurar Caixa");
         jMenuItem17.setName("jMenuItem17"); // NOI18N
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -616,16 +614,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if(acesso.getLer() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getLer() == 0) {
                 menuProduto = new MenuProduto();
                 menuProduto.janelapai = this;
                 menuProduto.setVisible(true);
                 setStatusTela(false);
-                atendimentoLocacao.acesso = acesso;
+                menuProduto.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
         }
 
 
@@ -638,7 +639,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
 
         try {
-            if (acesso.getEscrever() == 0) {
+            if(acesso.getEscrever() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getEscrever() == 0) {
                 atendimentoLocacao = new AtendimentoLocacao();
                 atendimentoLocacao.acesso = acesso;
                 atendimentoLocacao.setVisible(true);
@@ -646,10 +649,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 //                setStatusTela(false);
                 System.out.println("Nome da classe: " + getClass().getName());
                 System.out.println("Login: " + acesso.getUsuario().getLogin());
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");                        
         }
 
     }//GEN-LAST:event_jmi_atendimento_locacaoActionPerformed1
@@ -666,16 +670,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
 
         try {
-            if (acesso.getEscrever() == 0) {
+            if(acesso.getLer() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getLer() == 0) {
                 menuGenero = new MenuGenero();
                 menuGenero.janelapai = this;
                 menuGenero.setVisible(true);
                 setStatusTela(false);
                 menuGenero.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");                        
         }
 
 
@@ -696,15 +703,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if(acesso.getLer() == null){
+               JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
+            } else if (acesso.getLer() == 0 ) {
                 menuFornecedor = new MenuFornecedor();
                 menuFornecedor.janelapai = this;
                 menuFornecedor.setVisible(true);
                 setStatusTela(false);
                 menuFornecedor.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
+            ex.printStackTrace();
         }
 
 
@@ -732,17 +744,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AcessoInterface");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.ControleAcesso");
         try {
-            if (acesso.getSuper_usuario() == 0) {
+            if(acesso.getSuper_usuario() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getSuper_usuario() == 0) {
                 acessoInterface = new ControleAcesso();
                 acessoInterface.janelapai = this;
                 acessoInterface.setVisible(true);
                 setStatusTela(false);
                 acessoInterface.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");                        
         }
 
     }//GEN-LAST:event_jm_acessoActionPerformed
@@ -794,11 +810,12 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private void jmi_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_clienteActionPerformed
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        ArquivoConfiguracao conf = new ArquivoConfiguracao();
-
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();        
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
         try {
-            if (acesso.getLer() == 0) {
+            if(acesso.getLer() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getLer() == 0) {
                 clienteInterface = new MenuCliente();
                 clienteInterface.janelapai = this;
                 clienteInterface.setVisible(true);
@@ -807,8 +824,8 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
+        } catch (Exception ex) {            
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");            
         }
     }//GEN-LAST:event_jmi_clienteActionPerformed
 
@@ -819,7 +836,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
 
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if (acesso.getLer() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getLer() == 0 ) {
                 menuDiaria = new MenuDiaria();
                 menuDiaria.janelapai = this;
                 menuDiaria.setVisible(true);
@@ -839,9 +858,10 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
-
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if(acesso.getLer() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getLer() == 0) {
                 menuObjeto = new MenuObjeto();
                 menuObjeto.janelapai = this;
                 menuObjeto.setVisible(true);
@@ -860,9 +880,10 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuIdioma");
-
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if(acesso.getLer() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getLer() == 0) {
                 menuIdioma = new MenuIdioma();
                 menuIdioma.janelapai = this;
                 menuIdioma.setVisible(true);
@@ -883,9 +904,10 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuLegenda");
-
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if(acesso.getLer() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getLer() == 0) {
                 menuLegenda = new MenuLegenda();
                 menuLegenda.janelapai = this;
                 menuLegenda.setVisible(true);
@@ -932,15 +954,19 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.Recebimento");
 
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if(acesso.getEscrever() == null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getEscrever() == 0) {
                 recebimento = new Recebimento();
                 recebimento.janelapai = this;
                 recebimento.setVisible(true);
                 setStatusTela(false);
                 recebimento.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
         }
 
         // TODO add your handling code here:
@@ -953,15 +979,19 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuUsuario");
 
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if(acesso.getSuper_usuario()== null){
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getSuper_usuario() == 0) {
                 menuUsuario = new MenuUsuario();
                 menuUsuario.janelapai = this;
                 menuUsuario.setVisible(true);
                 setStatusTela(false);
                 menuUsuario.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
         }
 
         // TODO add your handling code here:
@@ -974,15 +1004,19 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoDevolucao");
 
         try {
-            if (acesso.getEscrever() == 0) {
+            if(acesso.getEscrever() == null){
+               JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
+            } else if (acesso.getEscrever() == 0) {
                 atendimentoDevolucao = new AtendimentoDevolucao();
                 atendimentoDevolucao.janelapai = this;
                 atendimentoDevolucao.setVisible(true);
 //                setStatusTela(false);
                 atendimentoDevolucao.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
         }
 
         // TODO add your handling code here:
@@ -998,7 +1032,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jm_conf_impressoraActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        ControleCaixa control = new ControleCaixa();
+        FluxodeCaixaDiario control = new FluxodeCaixaDiario();
         control.janelapai = this;
         control.setVisible(true);
         setStatusTela(false);
@@ -1006,14 +1040,30 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        ConfiguraCaixa caixa = new ConfiguraCaixa();
-        caixa.setVisible(true);
-        setStatusTela(false);
-        caixa.janelapai = this;
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoDevolucao");
+
+        try {
+            if(acesso.getSuper_usuario()== null){
+               JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
+            } else if (acesso.getSuper_usuario() == 0) {
+                ConfiguraCaixa caixa = new ConfiguraCaixa();
+                caixa.setVisible(true);
+                setStatusTela(false);
+                caixa.janelapai = this;
+                caixa.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
+        }
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-        CaixaDiariaDetalhado control = new CaixaDiariaDetalhado();
+        FluxodeCaixaDetalhado control = new FluxodeCaixaDetalhado();
         control.janelapai = this;
         control.setVisible(true);
         setStatusTela(false);
