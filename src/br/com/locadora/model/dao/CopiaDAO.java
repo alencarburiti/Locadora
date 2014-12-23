@@ -327,8 +327,11 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             "    B.CENSURA,\n" +
             "    A.IDIOMA,\n" +
             "    A.LEGENDA,\n" +
+            "    C.CODIGO_DIARIA,\n" +
             "    C.DIAS,\n" +
-            "    C.VALOR\n" +
+            "    C.VALOR,\n" +
+                "    C.MAXIMO_DIAS,\n" +
+            "    C.ACUMULATIVO\n" +
             "FROM\n" +
             "    locadora.COPIA A,\n" +
             "    locadora.OBJETO B,\n" +

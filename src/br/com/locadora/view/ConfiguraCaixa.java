@@ -195,8 +195,7 @@ public class ConfiguraCaixa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_aplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_aplicarActionPerformed
-        
-
+        salvarCaixa();
     }//GEN-LAST:event_jb_aplicarActionPerformed
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         setVisible(false);

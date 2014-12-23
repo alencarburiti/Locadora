@@ -43,14 +43,9 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     public Cliente cliente;
     public static Dependente dependente = new Dependente();
     public Objeto objeto;
-//    public Copia copiaLocacao;
     public Copia copiaDevolucao;
-//    public List<Copia> copias;
     public static List<Copia> copiasLocacao = new ArrayList<Copia>();
-//    public List<Produto> produtos;
-//    public Produto produto;
     public InterfacePool pool;
-//    public SiscomController controller;
     public TelaPrincipal janelapai;
     public static List<ItemLocacao> itensDevolucao;
     public ItemLocacao itemDevolucao;
@@ -59,6 +54,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     public AcessoUsuario acesso;
     public DiariaDAO diariaDAO;
     public List<Diaria> promocoesDevolucao;
+    public ConsultaCopiaDevolucao consultaCopiaDevolucao;
 
     public AtendimentoDevolucao() {
         initComponents();
@@ -84,15 +80,18 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jl_codigo_devolucao = new javax.swing.JLabel();
         jtf_codigo_barras_objeto = new javax.swing.JTextField();
         jb_pesquisar = new javax.swing.JButton();
-        jcb_codigo_barras_devolucao = new javax.swing.JCheckBox();
+        jb_adicionar_devolucao = new javax.swing.JButton();
+        jb_remover_locacao = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jtf_nome_objeto_devolucao = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
-        jtf_valor_total = new javax.swing.JTextField();
+        jtf_total_a_pagar = new javax.swing.JTextField();
         jl_debito_devolucao = new javax.swing.JLabel();
-        jtf_debito_total_devolucao = new javax.swing.JTextField();
+        jtf_debito_total_anterior = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
-        jtf_valor_multa = new javax.swing.JTextField();
+        jtf_valor_total_relocacao = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
-        jtf_valor_desconto_entrega_antecipada = new javax.swing.JTextField();
+        jtf_total_desconto_entrega_antecipada = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jb_limpar = new javax.swing.JButton();
@@ -277,13 +276,51 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             }
         });
 
-        jcb_codigo_barras_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jcb_codigo_barras_devolucao.setSelected(true);
-        jcb_codigo_barras_devolucao.setText("Usar Código de Barras");
-        jcb_codigo_barras_devolucao.setName("jcb_codigo_barras_devolucao"); // NOI18N
-        jcb_codigo_barras_devolucao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcb_codigo_barras_devolucaoActionPerformed(evt);
+        jb_adicionar_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_adicionar_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
+        jb_adicionar_devolucao.setToolTipText("Incluir");
+        jb_adicionar_devolucao.setName("jb_adicionar_devolucao"); // NOI18N
+        jb_adicionar_devolucao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_adicionar_devolucaoMouseClicked(evt);
+            }
+        });
+        jb_adicionar_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_adicionar_devolucaoKeyPressed(evt);
+            }
+        });
+
+        jb_remover_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_remover_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_remover_locacao.setToolTipText("Excluir");
+        jb_remover_locacao.setName("jb_remover_locacao"); // NOI18N
+        jb_remover_locacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_remover_locacaoMouseClicked(evt);
+            }
+        });
+        jb_remover_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_remover_locacaoKeyPressed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel3.setText("Nome Objeto");
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        jtf_nome_objeto_devolucao.setEditable(false);
+        jtf_nome_objeto_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_nome_objeto_devolucao.setName("jtf_nome_objeto_devolucao"); // NOI18N
+        jtf_nome_objeto_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_nome_objeto_devolucaoFocusGained(evt);
+            }
+        });
+        jtf_nome_objeto_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_objeto_devolucaoKeyPressed(evt);
             }
         });
 
@@ -300,24 +337,37 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                             .addComponent(jtf_codigo_barras_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jl_codigo_devolucao))
                         .addGap(10, 10, 10)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(50, 50, 50))
+                            .addComponent(jtf_nome_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
                         .addComponent(jb_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jcb_codigo_barras_devolucao)))
-                .addGap(10, 10, 10))
+                        .addComponent(jb_adicionar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jl_codigo_devolucao)
-                        .addGap(0, 0, 0)
-                        .addComponent(jtf_codigo_barras_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jl_codigo_devolucao)
+                            .addGap(0, 0, 0)
+                            .addComponent(jtf_codigo_barras_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jb_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jcb_codigo_barras_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jb_adicionar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, 0)
+                        .addComponent(jtf_nome_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
         );
@@ -329,17 +379,17 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jLabel32.setText("Total:");
         jLabel32.setName("jLabel32"); // NOI18N
 
-        jtf_valor_total.setEditable(false);
-        jtf_valor_total.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_valor_total.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jtf_valor_total.setText("R$ 0,00");
-        jtf_valor_total.setName("jtf_valor_total"); // NOI18N
-        jtf_valor_total.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_total_a_pagar.setEditable(false);
+        jtf_total_a_pagar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_total_a_pagar.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jtf_total_a_pagar.setText("R$ 0,00");
+        jtf_total_a_pagar.setName("jtf_total_a_pagar"); // NOI18N
+        jtf_total_a_pagar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_totalFocusGained(evt);
+                jtf_total_a_pagarFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_valor_totalFocusLost(evt);
+                jtf_total_a_pagarFocusLost(evt);
             }
         });
 
@@ -348,36 +398,36 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jl_debito_devolucao.setText("Débito Total:");
         jl_debito_devolucao.setName("jl_debito_devolucao"); // NOI18N
 
-        jtf_debito_total_devolucao.setEditable(false);
-        jtf_debito_total_devolucao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_debito_total_devolucao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jtf_debito_total_devolucao.setText("R$ 0,00");
-        jtf_debito_total_devolucao.setName("jtf_debito_total_devolucao"); // NOI18N
-        jtf_debito_total_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_debito_total_anterior.setEditable(false);
+        jtf_debito_total_anterior.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_debito_total_anterior.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jtf_debito_total_anterior.setText("R$ 0,00");
+        jtf_debito_total_anterior.setName("jtf_debito_total_anterior"); // NOI18N
+        jtf_debito_total_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_total_devolucaoFocusGained(evt);
+                jtf_debito_total_anteriorFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_debito_total_devolucaoFocusLost(evt);
+                jtf_debito_total_anteriorFocusLost(evt);
             }
         });
 
         jLabel35.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel35.setText("Multa:");
+        jLabel35.setText("Relocação:");
         jLabel35.setName("jLabel35"); // NOI18N
 
-        jtf_valor_multa.setEditable(false);
-        jtf_valor_multa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_valor_multa.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jtf_valor_multa.setText("R$ 0,00");
-        jtf_valor_multa.setName("jtf_valor_multa"); // NOI18N
-        jtf_valor_multa.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_valor_total_relocacao.setEditable(false);
+        jtf_valor_total_relocacao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_valor_total_relocacao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jtf_valor_total_relocacao.setText("R$ 0,00");
+        jtf_valor_total_relocacao.setName("jtf_valor_total_relocacao"); // NOI18N
+        jtf_valor_total_relocacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_multaFocusGained(evt);
+                jtf_valor_total_relocacaoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_valor_multaFocusLost(evt);
+                jtf_valor_total_relocacaoFocusLost(evt);
             }
         });
 
@@ -386,17 +436,17 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jLabel36.setText("Desconto Entr. Antecipada:");
         jLabel36.setName("jLabel36"); // NOI18N
 
-        jtf_valor_desconto_entrega_antecipada.setEditable(false);
-        jtf_valor_desconto_entrega_antecipada.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_valor_desconto_entrega_antecipada.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jtf_valor_desconto_entrega_antecipada.setText("R$ 0,00");
-        jtf_valor_desconto_entrega_antecipada.setName("jtf_valor_desconto_entrega_antecipada"); // NOI18N
-        jtf_valor_desconto_entrega_antecipada.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_total_desconto_entrega_antecipada.setEditable(false);
+        jtf_total_desconto_entrega_antecipada.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_total_desconto_entrega_antecipada.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jtf_total_desconto_entrega_antecipada.setText("R$ 0,00");
+        jtf_total_desconto_entrega_antecipada.setName("jtf_total_desconto_entrega_antecipada"); // NOI18N
+        jtf_total_desconto_entrega_antecipada.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_desconto_entrega_antecipadaFocusGained(evt);
+                jtf_total_desconto_entrega_antecipadaFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_valor_desconto_entrega_antecipadaFocusLost(evt);
+                jtf_total_desconto_entrega_antecipadaFocusLost(evt);
             }
         });
 
@@ -411,9 +461,9 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
         jb_limpar.setText("Limpar");
         jb_limpar.setName("jb_limpar"); // NOI18N
-        jb_limpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_limparActionPerformed(evt);
+        jb_limpar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_limparMouseClicked(evt);
             }
         });
         jb_limpar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -426,9 +476,9 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_finalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/ok.png"))); // NOI18N
         jb_finalizar.setText("Finalizar");
         jb_finalizar.setName("jb_finalizar"); // NOI18N
-        jb_finalizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_finalizarActionPerformed(evt);
+        jb_finalizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_finalizarMouseClicked(evt);
             }
         });
         jb_finalizar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -460,11 +510,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jb_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96))
+                .addGap(10, 10, 10)
+                .addComponent(jb_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,24 +544,26 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(80, 80, 80)
-                                .addComponent(jl_debito_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jtf_debito_total_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
-                                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jtf_valor_multa, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(jtf_valor_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jtf_total_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(140, 140, 140)
                                 .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(jtf_valor_total, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jtf_valor_total_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jl_debito_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jtf_debito_total_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20)
                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -535,19 +587,19 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jl_debito_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_debito_total_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtf_debito_total_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_valor_multa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtf_valor_total_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_valor_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jtf_total_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtf_valor_total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
@@ -558,13 +610,13 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jtf_codigo_barras_objeto.requestFocus();
 
-        if (jcb_codigo_barras_devolucao.isSelected() == true) {
+//        if (jcb_codigo_barras_devolucao.isSelected() == true) {
             jl_codigo_devolucao.setText("Código de Barras");
-            jtf_codigo_barras_objeto.requestFocus();
-        } else {
-            jl_codigo_devolucao.setText("Código dó Objeto");
-            jtf_codigo_barras_objeto.requestFocus();
-        }
+//            jtf_codigo_barras_objeto.requestFocus();
+//        } else {
+//            jl_codigo_devolucao.setText("Código dó Objeto");
+//            jtf_codigo_barras_objeto.requestFocus();
+//        }
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -601,43 +653,29 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
 }//GEN-LAST:event_jtf_nome_clienteFocusLost
 
-    private void jb_limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_limparActionPerformed
-        limparDados();
-    }//GEN-LAST:event_jb_limparActionPerformed
-
-    private void jtf_valor_totalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_totalFocusGained
+    private void jtf_total_a_pagarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_totalFocusGained
+    }//GEN-LAST:event_jtf_total_a_pagarFocusGained
 
-    private void jtf_valor_totalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_totalFocusLost
+    private void jtf_total_a_pagarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_totalFocusLost
+    }//GEN-LAST:event_jtf_total_a_pagarFocusLost
 
-    private void jtf_debito_total_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_total_devolucaoFocusGained
+    private void jtf_debito_total_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_total_devolucaoFocusGained
+    }//GEN-LAST:event_jtf_debito_total_anteriorFocusGained
 
-    private void jtf_debito_total_devolucaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_total_devolucaoFocusLost
+    private void jtf_debito_total_anteriorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_total_devolucaoFocusLost
+    }//GEN-LAST:event_jtf_debito_total_anteriorFocusLost
 
-    private void jb_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_finalizarActionPerformed
-        if (verificarCampos() == true) {
-            EntradaCaixaDevolucao entradaCaixaDevolucao = new EntradaCaixaDevolucao();
-            entradaCaixaDevolucao.janelapaiDevolucao = this;
-            entradaCaixaDevolucao.setVisible(true);
-            setStatusTela(false);
-        }
+    private void jtf_valor_total_relocacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_total_relocacaoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_finalizarActionPerformed
+    }//GEN-LAST:event_jtf_valor_total_relocacaoFocusGained
 
-    private void jtf_valor_multaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_multaFocusGained
+    private void jtf_valor_total_relocacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_total_relocacaoFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_multaFocusGained
-
-    private void jtf_valor_multaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_multaFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_multaFocusLost
+    }//GEN-LAST:event_jtf_valor_total_relocacaoFocusLost
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         retornaJanelaPai();
@@ -658,7 +696,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void jb_finalizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_finalizarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_finalizar.doClick();
+            abrirCaixa();
         }
         acionarAtalho(evt);
 
@@ -681,24 +719,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_limparKeyPressed
 
-    private void jtf_valor_desconto_entrega_antecipadaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_desconto_entrega_antecipadaFocusGained
+    private void jtf_total_desconto_entrega_antecipadaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_desconto_entrega_antecipadaFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_desconto_entrega_antecipadaFocusGained
+    }//GEN-LAST:event_jtf_total_desconto_entrega_antecipadaFocusGained
 
-    private void jtf_valor_desconto_entrega_antecipadaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_desconto_entrega_antecipadaFocusLost
+    private void jtf_total_desconto_entrega_antecipadaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_desconto_entrega_antecipadaFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_desconto_entrega_antecipadaFocusLost
-
-    private void jcb_codigo_barras_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_codigo_barras_devolucaoActionPerformed
-        if (jcb_codigo_barras_devolucao.isSelected() == true) {
-            jl_codigo_devolucao.setText("Código de Barras");
-            jtf_codigo_barras_objeto.requestFocus();
-        } else {
-            jl_codigo_devolucao.setText("Código do Objeto");
-            jtf_codigo_barras_objeto.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_codigo_barras_devolucaoActionPerformed
+    }//GEN-LAST:event_jtf_total_desconto_entrega_antecipadaFocusLost
 
     private void jb_pesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -712,27 +739,33 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }//GEN-LAST:event_jb_pesquisarKeyPressed
 
     private void jb_pesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisarActionPerformed
-        ConsultaCopiaDevolucao copiaDevolucao = new ConsultaCopiaDevolucao();
-        copiaDevolucao.janelapaiDevolucao = this;
-        copiaDevolucao.setVisible(true);
-        setStatusTela(false);
+        if(consultaCopiaDevolucao == null){
+            consultaCopiaDevolucao = new ConsultaCopiaDevolucao();
+            consultaCopiaDevolucao.janelapaiDevolucao = this;
+            consultaCopiaDevolucao.setVisible(true);
+            setStatusTela(false);            
+        } else {
+            consultaCopiaDevolucao.setVisible(true);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_pesquisarActionPerformed
 
     private void jtf_codigo_barras_objetoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_barras_objetoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (jcb_codigo_barras_devolucao.isSelected() == true) {
-                consultarCopiaLocada(jtf_codigo_barras_objeto.getText().trim());
-            }
+            consultarCopiaLocada(jtf_codigo_barras_objeto.getText().trim());
         }
         acionarAtalho(evt);
 
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            ConsultaCopiaDevolucao copiaDevolucao = new ConsultaCopiaDevolucao();
-            copiaDevolucao.janelapaiDevolucao = this;
-            copiaDevolucao.setVisible(true);
-            setStatusTela(false);
-        }
+            if(consultaCopiaDevolucao == null){
+                consultaCopiaDevolucao = new ConsultaCopiaDevolucao();
+                consultaCopiaDevolucao.janelapaiDevolucao = this;
+                consultaCopiaDevolucao.setVisible(true);
+                this.setVisible(false);
+            } else {
+                consultaCopiaDevolucao.setVisible(true);
+            }
+        } 
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_codigo_barras_objetoKeyPressed
 
@@ -747,6 +780,69 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_devolucaoKeyPressed
+
+    private void jb_finalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_finalizarMouseClicked
+        if(evt.getClickCount() == 1){
+            abrirCaixa();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_finalizarMouseClicked
+
+    private void jb_limparMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_limparMouseClicked
+        if(evt.getClickCount() == 1){
+            limparDados();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_limparMouseClicked
+
+    private void jb_adicionar_devolucaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_devolucaoMouseClicked
+        if (evt.getClickCount() == 1) {
+            try {
+                if (itemDevolucao != null) {
+                    adicionarItemDevolvido(itemDevolucao);
+                }
+                
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_devolucaoMouseClicked
+
+    private void jb_adicionar_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_devolucaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            try {
+                if (itemDevolucao != null) {
+                    adicionarItemDevolvido(itemDevolucao);
+                }
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
+            }
+        }
+    }//GEN-LAST:event_jb_adicionar_devolucaoKeyPressed
+
+    private void jb_remover_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_remover_locacaoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            removeObjeto(jtbl_devolucao);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_remover_locacaoKeyPressed
+
+    private void jb_remover_locacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_remover_locacaoMouseClicked
+        if(evt.getClickCount() == 1){
+            removeObjeto(jtbl_devolucao);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_remover_locacaoMouseClicked
+
+    private void jtf_nome_objeto_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_devolucaoFocusGained
+
+    }//GEN-LAST:event_jtf_nome_objeto_devolucaoFocusGained
+
+    private void jtf_nome_objeto_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_devolucaoKeyPressed
+        
+    }//GEN-LAST:event_jtf_nome_objeto_devolucaoKeyPressed
     public static boolean validaData(String dataString) throws java.text.ParseException {
         if (!dataString.equals("")) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -844,6 +940,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -851,31 +948,47 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     public static javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton jb_adicionar_devolucao;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_cliente;
     private javax.swing.JButton jb_finalizar;
     private javax.swing.JButton jb_limpar;
     private javax.swing.JButton jb_pesquisar;
-    private javax.swing.JCheckBox jcb_codigo_barras_devolucao;
+    private javax.swing.JButton jb_remover_locacao;
     private javax.swing.JLabel jl_codigo_devolucao;
     private javax.swing.JLabel jl_debito_devolucao;
     public static javax.swing.JTable jtbl_devolucao;
     public static javax.swing.JTextField jtf_codigo_barras_objeto;
     public static javax.swing.JTextField jtf_codigo_cliente;
-    public static javax.swing.JTextField jtf_debito_total_devolucao;
+    public static javax.swing.JTextField jtf_debito_total_anterior;
     public static javax.swing.JTextField jtf_nome_cliente;
-    public static javax.swing.JTextField jtf_valor_desconto_entrega_antecipada;
-    public static javax.swing.JTextField jtf_valor_multa;
-    public static javax.swing.JTextField jtf_valor_total;
+    public static javax.swing.JTextField jtf_nome_objeto_devolucao;
+    public static javax.swing.JTextField jtf_total_a_pagar;
+    public static javax.swing.JTextField jtf_total_desconto_entrega_antecipada;
+    public static javax.swing.JTextField jtf_valor_total_relocacao;
     // End of variables declaration//GEN-END:variables
 
+    public void abrirCaixa(){
+        if (verificarCampos() == true) {
+            EntradaCaixaDevolucao entradaCaixaDevolucao = new EntradaCaixaDevolucao();
+            entradaCaixaDevolucao.janelapaiDevolucao = this;
+            entradaCaixaDevolucao.setVisible(true);
+            setStatusTela(false);
+        }
+    }
+    
     public void removeObjeto(JTable tb) {
         if (tb != null) {
             DefaultTableModel row = (DefaultTableModel) jtbl_devolucao.getModel();
             if (tb.getSelectedRow() != -1) {
                 int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                    int index_remove = tb.getSelectedRow();
+                    System.out.println("Linha deletada: " + index_remove);
+                    
+                    itensDevolucao.remove(index_remove);
                     row.removeRow(tb.getSelectedRow());
+                    recalcularValores();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um Objeto");
@@ -1071,36 +1184,64 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     }
 
+    public void recalcularValores(){
+        moeda = new Moeda();
+        Double relocacao = 0.00;
+        Double descontos = 0.00;
+        Double valor_total;
+        Double debito_total_anterior = moeda.getPrecoFormato(jtf_debito_total_anterior.getText());
+        
+        for(int i = 0; i < jtbl_devolucao.getRowCount(); i++){
+            relocacao = relocacao + moeda.getPrecoFormato(jtbl_devolucao.getValueAt(i, 3).toString());
+            descontos = descontos + moeda.getPrecoFormato(jtbl_devolucao.getValueAt(i, 5).toString());
+        }
+        
+        valor_total = (debito_total_anterior + relocacao) - descontos;
+        
+        jtf_valor_total_relocacao.setText(moeda.setPrecoFormat(relocacao.toString()));
+        jtf_total_desconto_entrega_antecipada.setText(moeda.setPrecoFormat(descontos.toString()));
+        jtf_total_a_pagar.setText(moeda.setPrecoFormat(valor_total.toString()));
+        
+    }
+    
+    public void carregarCopiaDevolucao(ItemLocacao itemDevolucao){
+        if(itemDevolucao != null){
+            jtf_codigo_barras_objeto.setText(itemDevolucao.getCopia().getCodigo_barras());
+            jtf_nome_objeto_devolucao.setText(itemDevolucao.getCopia().getObjeto().getTitulo());
+            jb_adicionar_devolucao.requestFocus();
+        }
+        
+    }
+    
     public void adicionarItemDevolvido(ItemLocacao itemLocacao) {
 
-        Double multa;
+        moeda = new Moeda();
         DateFormat df_data_hora_locada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         if (itemLocacao != null) {
             if (verificaTabela(itemLocacao) == false) {
 
-                moeda = new Moeda();
-                multa = itemLocacao.getValor_multa();
-                Double desconto_entrega_antecipada = calcularDescontoEntregaAntecipado(itemLocacao);
-                adicionarMulta(multa);
-
-                if (desconto_entrega_antecipada != 0.00) {
-                    if (itemLocacao.getValor_locado() > desconto_entrega_antecipada) {
-                        adicionarDesconto(desconto_entrega_antecipada);
-                    } else {
-                        desconto_entrega_antecipada = 0.00;
-                    }
+                Double desconto_entrega_antecipada;
+                
+                if(itemLocacao.getValor_multa() > 0){
+                    desconto_entrega_antecipada = 0.00;
+                } else if (itemLocacao.getCopia().getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == 0){
+                    desconto_entrega_antecipada = calcularDescontoEntregaAntecipado(itemLocacao);                                        
+                }else {
+                    desconto_entrega_antecipada = 0.00;
                 }
-                adicionarValorTotal();
-
+                
                 DefaultTableModel row = (DefaultTableModel) jtbl_devolucao.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getTitulo());
                 row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), hashDbGrid, df_data_hora_locada.format(itemLocacao.getData_locacao()),
                     moeda.setPrecoFormat(itemLocacao.getValor_multa().toString()), itemLocacao.getDias_multa(),
                     moeda.setPrecoFormat(desconto_entrega_antecipada.toString())});
+                
+                recalcularValores();
                 itensDevolucao.add(itemLocacao);
                 limparItemDevolvido();
             } else {
                 JOptionPane.showMessageDialog(null, "Esta cópia já foi adicionada");
+                jtf_codigo_barras_objeto.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Objeto inválido para adicionar");
@@ -1110,6 +1251,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     public void limparItemDevolvido() {
         jtf_codigo_barras_objeto.setText("");
+        jtf_nome_objeto_devolucao.setText("");
         jtf_codigo_barras_objeto.requestFocus();
     }
 
@@ -1120,30 +1262,30 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         this.setEnabled(status);
     }
 
-    public void carregarCopiaDevolucao(ItemLocacao itemDev) {
-
-        if (itemDev != null) {
-            this.itemDevolucao = itemDev;
-            if (jcb_codigo_barras_devolucao.isSelected() == true) {
-                if (!itemDevolucao.getCopia().getCodigo_barras().equals("")) {
-                    jtf_codigo_barras_objeto.setText(itemDevolucao.getCopia().getCodigo_barras());
-                } else {
-                    System.out.println("Error ao carregar cópia");
-                }
-            } else {
-                jtf_codigo_barras_objeto.setText(String.valueOf(itemDevolucao.getCopia().getCodigo_copia()));
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Error grave no método carregarCopiaDevolucao");
-        }
-
-    }
+//    public void carregarCopiaDevolucao(ItemLocacao itemDev) {
+//
+//        if (itemDev != null) {
+//            this.itemDevolucao = itemDev;
+////            if (jcb_codigo_barras_devolucao.isSelected() == true) {
+//                if (!itemDevolucao.getCopia().getCodigo_barras().equals("")) {
+//                    jtf_codigo_barras_objeto.setText(itemDevolucao.getCopia().getCodigo_barras());
+//                } else {
+//                    System.out.println("Error ao carregar cópia");
+//                }
+////            } else {
+////                jtf_codigo_barras_objeto.setText(String.valueOf(itemDevolucao.getCopia().getCodigo_copia()));
+////            }
+//
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Error grave no método carregarCopiaDevolucao");
+//        }
+//
+//    }
 
     public void carregarClienteDependente(Dependente dependente) {
         if (dependente != null) {
             AtendimentoDevolucao.dependente = dependente;
-            jtf_debito_total_devolucao.setText("R$ 0,00");
+            jtf_debito_total_anterior.setText("R$ 0,00");
 
             jtf_nome_cliente.setText(dependente.getNome_dependente());
             setTitle("Atendimento Devolução - " + dependente.getNome_dependente());
@@ -1157,17 +1299,17 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
             if (lancamento.getSaldo() < 0) {
                 lancamento.setSaldo(lancamento.getSaldo() * (-1));
-                jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_debito_total_devolucao.setForeground(Color.black);
+                jtf_debito_total_anterior.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_debito_total_anterior.setForeground(Color.black);
                 jl_debito_devolucao.setText("Saldo Total:");
             } else if (lancamento.getSaldo() > 0) {
-                jtf_debito_total_devolucao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_debito_total_devolucao.setForeground(Color.red);
+                jtf_debito_total_anterior.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_debito_total_anterior.setForeground(Color.red);
                 jl_debito_devolucao.setText("Débito Total:");
             } else {
-                jtf_debito_total_devolucao.setText("R$ 0,00");
+                jtf_debito_total_anterior.setText("R$ 0,00");
                 jl_debito_devolucao.setText("Saldo:");
-                jtf_debito_total_devolucao.setForeground(Color.black);
+                jtf_debito_total_anterior.setForeground(Color.black);
             }
 
             jtf_codigo_barras_objeto.requestFocus();
@@ -1179,7 +1321,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 tb_devolucao.removeRow(i);
             }
 
-            jtf_valor_total.setText("R$ 0,00");
+            jtf_total_a_pagar.setText("R$ 0,00");
             itensDevolucao = new ArrayList<ItemLocacao>();
         }
     }
@@ -1195,19 +1337,22 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                     itemDevolucao = locacaoDAO.getLocacaoAberta(codigo_barras);
                     if (itemDevolucao != null) {
                         carregarClienteDependente(itemDevolucao.getDependente());
-                        adicionarItemDevolvido(itemDevolucao);
+                        carregarCopiaDevolucao(itemDevolucao);
+//                        adicionarItemDevolvido(itemDevolucao);
                     } else {
                         JOptionPane.showMessageDialog(null, "Código de Barra inválido");
                     }
                 } else {
                     itemDevolucao = locacaoDAO.getLocacaoAberta(dependente.getCodigo_dependente(), codigo_barras);
                     if (itemDevolucao != null) {
-                        adicionarItemDevolvido(itemDevolucao);
+                        carregarCopiaDevolucao(itemDevolucao);
+//                        adicionarItemDevolvido(itemDevolucao);
                     } else {
                         JOptionPane.showMessageDialog(null, "Código de Barra inválido para Cliente");
                     }
                 }
             } else {
+                JOptionPane.showMessageDialog(null, "Código de Barra inválido");
                 System.out.print("Código de barras vazio");
             }
 
@@ -1247,49 +1392,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
         return tabela;
     }
-
-    public void adicionarValorTotal() {
-        moeda = new Moeda();
-        Double valor_total;
-        Double valor_adicionar;
-        Double desconto_entrega_antecipada;
-        valor_adicionar = moeda.getPrecoFormato(jtf_valor_multa.getText());
-
-        valor_total = moeda.getPrecoFormato(jtf_debito_total_devolucao.getText());
-
-        desconto_entrega_antecipada = moeda.getPrecoFormato(jtf_valor_desconto_entrega_antecipada.getText());
-
-        valor_total = (valor_total + valor_adicionar) - desconto_entrega_antecipada;
-
-        jtf_valor_total.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
-    }
-
-    public void adicionarMulta(Double valor) {
-        moeda = new Moeda();
-        Double valor_total;
-        Double valor_adicionar;
-        valor_adicionar = valor;
-
-        valor_total = moeda.getPrecoFormato(jtf_valor_multa.getText());
-
-        valor_total = valor_total + valor_adicionar;
-
-        jtf_valor_multa.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
-    }
-
-    public void adicionarDesconto(Double valor) {
-        moeda = new Moeda();
-        Double valor_total;
-        Double valor_adicionar;
-        valor_adicionar = valor;
-
-        valor_total = moeda.getPrecoFormato(jtf_valor_desconto_entrega_antecipada.getText());
-
-        valor_total = valor_total + valor_adicionar;
-
-        jtf_valor_desconto_entrega_antecipada.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
-    }
-
+       
     private void retornaJanelaPai() {
         setVisible(false);
         if (janelapai != null) {
@@ -1299,7 +1402,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            jb_finalizar.doClick();
+            abrirCaixa();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
@@ -1309,9 +1412,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private void limparDados() {
         jtf_codigo_cliente.setText("");
         jtf_nome_cliente.setText("");
-        jtf_valor_total.setText("R$ 0,00");
-        jtf_valor_desconto_entrega_antecipada.setText("R$ 0,00");
-        jtf_debito_total_devolucao.setText("R$ 0,00");
+        jtf_total_a_pagar.setText("R$ 0,00");
+        jtf_total_desconto_entrega_antecipada.setText("R$ 0,00");
+        jtf_debito_total_anterior.setText("R$ 0,00");
 
         DefaultTableModel tb_devolucao = (DefaultTableModel) jtbl_devolucao.getModel();
         int rows = tb_devolucao.getRowCount();

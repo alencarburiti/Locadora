@@ -12,6 +12,7 @@ import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.Objeto;
+import br.com.locadora.model.bean.PromocaoLocacao;
 import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.CopiaDAO;
@@ -43,10 +44,10 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
     public AtendimentoLocacao janelapaiLocacao;
     public InterfacePool pool;
-    public SiscomController controller;
-    public String action;
-    public static List<ItemLocacao> itens;
+//    public SiscomController controller;
+    public String action;    
     public Moeda moeda;
+    public List<ItemLocacao> itensLocacaoSalvar;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -209,7 +210,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Caixa"));
         jPanel2.setName("jPanel2"); // NOI18N
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
         jtf_valor_total_locacao.setEditable(false);
@@ -235,17 +235,16 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jtf_valor_total_locacaoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_valor_total_locacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 170, -1));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Total Locação:");
         jLabel1.setName("jLabel1"); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Valor Desconto:");
         jLabel5.setName("jLabel5"); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
         jtf_desconto.setEditable(false);
@@ -274,12 +273,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jtf_descontoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_desconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Troco:");
         jLabel7.setName("jLabel7"); // NOI18N
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, -1, -1));
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
         jtf_troco.setEditable(false);
@@ -304,12 +302,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jtf_trocoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_troco, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 170, -1));
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Débito Anterior:");
         jLabel11.setName("jLabel11"); // NOI18N
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
         jtf_debito_anterior.setEditable(false);
@@ -335,12 +332,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jtf_debito_anteriorKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_debito_anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 170, -1));
 
         jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("Total à pagar:");
         jLabel12.setName("jLabel12"); // NOI18N
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
         jtf_valor_total_a_pagar.setEditable(false);
@@ -366,12 +362,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jtf_valor_total_a_pagarKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_valor_total_a_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 170, -1));
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Débito Atual:");
         jLabel8.setName("jLabel8"); // NOI18N
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
         jtf_debito_atual.setEditable(false);
@@ -399,12 +394,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jtf_debito_atualKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_debito_atual, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 170, -1));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Valor Pago:");
         jLabel6.setName("jLabel6"); // NOI18N
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
         jtf_valor_pago.setEditable(false);
@@ -433,7 +427,82 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 jtf_valor_pagoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_valor_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 170, -1));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jtf_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtf_valor_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(20, 20, 20))
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jtf_debito_anterior, jtf_debito_atual, jtf_desconto, jtf_troco, jtf_valor_pago, jtf_valor_total_a_pagar, jtf_valor_total_locacao});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1))
+                    .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jtf_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel12))
+                    .addComponent(jtf_valor_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel6))
+                    .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(10, 10, 10))
+        );
 
         jb_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/printer.png"))); // NOI18N
         jb_imprimir.setText("Imprimir");
@@ -486,20 +555,19 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jb_salvar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jb_salvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar1, jb_imprimir, jb_salvar});
@@ -510,7 +578,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -532,19 +600,13 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jpf_senha.requestFocus();
-        if (janelapaiLocacao != null) {
-            action = "ENTRADA_CAIXA_LOCACAO";
-            jtf_valor_total_locacao.setText(AtendimentoLocacao.jtf_valor_total_locacao.getText());
-            jtf_debito_anterior.setText(AtendimentoLocacao.jtf_debito_total_locacao.getText());
-            Moeda moeda = new Moeda();
-            Double total_a_pagar;
-            total_a_pagar = (moeda.getPrecoFormato(AtendimentoLocacao.jtf_valor_total_locacao.getText()) + moeda.getPrecoFormato(AtendimentoLocacao.jtf_debito_total_locacao.getText()));
-            jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(String.valueOf(total_a_pagar)));
+        if (janelapaiLocacao != null) {            
+            carregarValorPagar();
         }
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+        String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiLocacao.dependente.getNome_dependente() + ".txt";
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
@@ -756,7 +818,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void jb_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelar1ActionPerformed
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+        String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiLocacao.dependente.getNome_dependente() + ".txt";
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
@@ -893,13 +955,13 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
-    public void setTela(String permissao) {
-        if (permissao.equals("usuario")) {
-//            jb_novo.setEnabled(false);
-//            jb_alterar1.setEnabled(false);
-//            jb_excluir1.setEnabled(false);
-        } else {
-        }
+    public void carregarValorPagar(){
+        jtf_valor_total_locacao.setText(janelapaiLocacao.jtf_valor_total_locacao.getText());
+            jtf_debito_anterior.setText(janelapaiLocacao.jtf_debito_total_locacao.getText());
+            Moeda moeda = new Moeda();
+            Double total_a_pagar;
+            total_a_pagar = (moeda.getPrecoFormato(janelapaiLocacao.jtf_valor_total_locacao.getText()) + moeda.getPrecoFormato(janelapaiLocacao.jtf_debito_total_locacao.getText()));
+            jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(String.valueOf(total_a_pagar)));
     }
 
     public void setStatusTela(boolean status) {
@@ -1007,7 +1069,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                     if (verificaLogin()) {
                         if (janelapaiLocacao != null) {
 
-                            itens = new ArrayList<ItemLocacao>();
                             fecharAtendimento();
                             
                             jpf_senha.setEnabled(false);
@@ -1023,11 +1084,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                             for (int i = rows - 1; i >= 0; i--) {
                                 tb_locacao.removeRow(i);
                             }
-                            AtendimentoLocacao.jtf_codigo_cliente.setText("");
-                            AtendimentoLocacao.jtf_nome_cliente.setText("");
+                            janelapaiLocacao.jtf_codigo_cliente.setText("");
+                            janelapaiLocacao.jtf_nome_cliente.setText("");
 
-                            AtendimentoLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
-                            AtendimentoLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
+                            janelapaiLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
+                            janelapaiLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
                         }
                     }
                 }
@@ -1046,7 +1107,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
 
-            String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+            String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiLocacao.dependente.getNome_dependente() + ".txt";
             File arquivo = new File(nome_arquivo);
             arquivo.deleteOnExit();
             arquivo.delete();
@@ -1060,8 +1121,8 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             //Pegar usuario logado na tela do caixa
             Usuario usuario = acesso.getUsuario();
             Printer imprimir = new Printer();
-            imprimir.comprovanteLocacao(itens, AtendimentoLocacao.dependente, usuario);
-            String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+            imprimir.comprovanteLocacao(itensLocacaoSalvar, janelapaiLocacao.dependente, usuario);
+            String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiLocacao.dependente.getNome_dependente() + ".txt";
             if (imprimir.imprimirArquivo(nome_arquivo)) {
                 //Desabilita para não haver mais alteração
                 jtf_valor_pago.setEditable(false);
@@ -1081,15 +1142,17 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     List<Diaria> promocoes;
 
     public void checarPagamento() {
-        pool = new Pool();
         Double valor_pagamento_a_vista = 0.0;
-        DiariaDAO diDAO = new DiariaDAO(pool);
+        
 
         for (int j = 0; j < janelapaiLocacao.copiasLocacao.size(); j++) {
-            if(janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getPagamento_a_vista() == true){
-                valor_pagamento_a_vista = valor_pagamento_a_vista + janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao();
-                break;                
-            }            
+            System.out.println("Pagamento a vista Sem promoção: "+ janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getPagamento_a_vista());
+            if(janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getPagamento_a_vista() != null){
+                if(janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getPagamento_a_vista() == true){
+                    valor_pagamento_a_vista = valor_pagamento_a_vista + janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao();
+                    break;                
+                }                            
+            }
         }
         Double valor_pago;
         Moeda moeda = new Moeda();
@@ -1098,24 +1161,32 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         System.out.println("Valor para pagamento a vista: "+ valor_pagamento_a_vista);
         System.out.println("Valor pago: "+ valor_pago);
         
-        if (valor_pagamento_a_vista <= valor_pago) {
-            for (int j = 0; j < AtendimentoLocacao.copiasLocacao.size(); j++) {
-                promocoes = diDAO.getDiariaPromocao(AtendimentoLocacao.copiasLocacao.get(j).getObjeto().getDiaria());
+        pool = new Pool();
+        DiariaDAO diDAO = new DiariaDAO(pool);
+        promocoes = diDAO.getDiariaPromocao();
+        if (valor_pago < valor_pagamento_a_vista) {
+            for (int j = 0; j < janelapaiLocacao.copiasLocacao.size(); j++) {
+                System.out.println("Size promocoes: "+ promocoes.size());
                 for (int x = 0; x < promocoes.size(); x++) {
                     if (janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == promocoes.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()) {
                         if (promocoes.get(x).getPromocaoLocacao().getPagamento_a_vista() == true) {
-                            valor_pagamento_a_vista = valor_pagamento_a_vista + promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao();
+                            System.out.println("Debug 1 - Valor Pagamento a Vista: "+ valor_pagamento_a_vista);
+                            System.out.println("Debug 2 - Valor Pago: "+ valor_pago);
+//                            valor_pagamento_a_vista = valor_pagamento_a_vista + promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao();
                             if (valor_pago >= promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao()) {
                                 valor_pago = valor_pago - promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao();
                                 break;
                             } else if( valor_pago < promocoes.get(x).getPromocaoLocacao().getValor_promocao_locacao()){
-                                int selectedOption = JOptionPane.showConfirmDialog(this, "Autorizar promoção sem pagamento?", "Atenção", JOptionPane.YES_NO_OPTION);
+                                int selectedOption = JOptionPane.showConfirmDialog(this, "Autorizar promoção sem pagamento para " + janelapaiLocacao.copiasLocacao.get(j).getCodigo_barras()+"?", "Atenção", JOptionPane.YES_NO_OPTION);
                                 if (selectedOption == JOptionPane.YES_NO_OPTION) {
-//                                    AtendimentoLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(promocoes.get(x).getPromocao().getValor_promocao())), j, 2);
-//                                    AtendimentoLocacao.jtbl_locacao.setValueAt("", j, 5);                                    
+                                    //Não toma nenhuma ação
                                 } else {
-                                    AtendimentoLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(AtendimentoLocacao.copiasLocacao.get(x).getObjeto().getDiaria().getValor())), j, 2);
-                                    AtendimentoLocacao.jtbl_locacao.setValueAt("", j, 5);                                    
+                                    PromocaoLocacao promocaoNull = new PromocaoLocacao();
+                                    janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().setPromocaoLocacao(promocaoNull);
+                                    janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getValor())), j, 2);
+                                    janelapaiLocacao.jtbl_locacao.setValueAt("", j, 5);      
+                                    janelapaiLocacao.recalcularValorTotal();
+                                    carregarValorPagar();
                                 }
                                 break;
                             }
@@ -1124,58 +1195,59 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 }
                 
             }
-        }
+        } 
     }
 
     
     public void fecharAtendimento() {
         
         try {
+            itensLocacaoSalvar = new ArrayList<>();
             LocacaoDAO locacaoDAO;
-            Dependente dependente = new Dependente();
-            Cliente cliente = new Cliente();
-            Usuario usuario = new Usuario();
+            //Dependente que esta locando o filme
+            Dependente dependente = janelapaiLocacao.dependente;
+            //Cliente titular
+            Cliente cliente = janelapaiLocacao.dependente.getCliente();
+            
+            //Pega o usuario questa fazendo a transacao para salvar no banco
+            Usuario usuario = acesso.getUsuario();
+            
             Locacao locacao = new Locacao();
 
-            //Dependente que esta locando o filme
-            dependente.setCodigo_dependente(janelapaiLocacao.dependente.getCodigo_dependente());
-            //Cliente titular
-            cliente.setCodigo_cliente(Integer.parseInt(janelapaiLocacao.jtf_codigo_cliente.getText()));
-
+            //Passa o Cliente e o Dependente para a locacao
             locacao.setCliente(cliente);
             locacao.setDependente(dependente);
-            usuario.setCodigo_usuario(acesso.getUsuario().getCodigo_usuario());
             locacao.setUsuario(usuario);
-
-            Double valor_pago;
-            Double troco;
-            Double valor_desconto;
-            Moeda moeda = new Moeda();
-
-            valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
-            valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText());
-            troco = moeda.getPrecoFormato(jtf_troco.getText());
-
-            valor_pago = valor_pago - troco;
-            Lancamento lancamento = new Lancamento();
-            lancamento.setUsuario(usuario);
-            lancamento.setDependente(dependente);
-            TipoServico tipoServico = new TipoServico();
-
-            ArquivoConfiguracao conf = new ArquivoConfiguracao();
-
+            
             //Envia a gravação da locação e envia o lancamento de caixa
             pool = new Pool();
             locacaoDAO = new LocacaoDAO(pool);
             locacao = locacaoDAO.salvar(locacao);
+            
+            moeda = new Moeda();
+
+            Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
+            Double troco = moeda.getPrecoFormato(jtf_troco.getText());
+            Double valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText());
+            //
+            valor_pago = valor_pago - troco;
+            
+            ArquivoConfiguracao conf = new ArquivoConfiguracao();
+            Lancamento lancamento = new Lancamento();
+            
+            lancamento.setDependente(dependente);
+            lancamento.setUsuario(usuario);
             lancamento.setLocacao(locacao);
             lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+            
+            TipoServico tipoServico = new TipoServico();
+
 
             //Lançamento de crédito e de débito
             if (valor_pago > 0) {
                 //Lançamento de débito primeiro
                 tipoServico.setCodigo_tipo_servico(1);
-                lancamento.setValor(moeda.getPrecoFormato(EntradaCaixaLocacao.jtf_valor_total_locacao.getText()));
+                lancamento.setValor(moeda.getPrecoFormato(jtf_valor_total_locacao.getText()));
 
                 lancamento.setTipoServico(tipoServico);
                 locacaoDAO.salvarLancamento(lancamento);
@@ -1188,7 +1260,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
             } else {
                 tipoServico.setCodigo_tipo_servico(1);
-                lancamento.setValor(moeda.getPrecoFormato(EntradaCaixaLocacao.jtf_valor_total_locacao.getText()));
+                lancamento.setValor(moeda.getPrecoFormato(jtf_valor_total_locacao.getText()));
 
                 lancamento.setTipoServico(tipoServico);
                 locacaoDAO.salvarLancamento(lancamento);
@@ -1202,53 +1274,67 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 lancamento.setTipoServico(tipoServico);
                 locacaoDAO.salvarLancamento(lancamento);
             }
-
-            List<ItemLocacao> itens = new ArrayList();
-            List<Diaria> dias = new ArrayList<Diaria>();
+            
+            List<Diaria> diariasAcumulativas = new ArrayList<Diaria>();
             pool = new Pool();
             DiariaDAO diaDAO = new DiariaDAO(pool);
-            dias = diaDAO.getTodasDiarias();
+            diariasAcumulativas = diaDAO.getTodasDiarias();
             for (int i = 0; i < janelapaiLocacao.jtbl_locacao.getRowCount(); i++) {
+                System.out.println("==================================================");
                 System.out.println("Inciar Verificação: "+ janelapaiLocacao.copiasLocacao.get(i).getObjeto().getTitulo());
                 System.out.println("Acumulativo: "+janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo());
                 if (janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo() == true) {
-                    for (int j = 0; j < dias.size(); j++) {
-                        if (dias.size() > 0) {
-                            System.out.println("CODIGO DIARIA - DIARIA: "+dias.get(j).getCodigo_diaria()+ " CODIGO DIARIA - COPIA: "+janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
-                            if (dias.get(j).getCodigo_diaria() == janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria()) {
-
-                                if ((dias.get(j).getQuantidade_filme() * AtendimentoLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getDias()) < janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getMaximo_dias()) {
-                                    dias.get(j).setQuantidade_filme(dias.get(j).getQuantidade_filme() + 1);
-                                    dias.get(j).setDias_previsto(dias.get(j).getDias_previsto() + 1);
-                                    System.out.println("Quantidade de filme: " + dias.get(j).getQuantidade_filme() + " Dias Previsto: " + dias.get(j).getDias_previsto());
+                    for (int j = 0; j < diariasAcumulativas.size(); j++) {
+                        if (diariasAcumulativas.size() > 0) {
+                            System.out.println("CODIGO DIARIA - DIARIA: " + diariasAcumulativas.get(j).getCodigo_diaria()+ " CODIGO DIARIA - COPIA: "+janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
+                            if (diariasAcumulativas.get(j).getCodigo_diaria().equals(janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria())) {
+                                System.out.println("Debug 1 - Quantidade de Dias: "+janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getDias());
+                                System.out.println("Debug 2 - Quantidade de Dias Máximo: "+janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getMaximo_dias());
+                                if ((diariasAcumulativas.get(j).getQuantidade_filme() * janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getDias()) < janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getMaximo_dias()) {
+                                    diariasAcumulativas.get(j).setQuantidade_filme(diariasAcumulativas.get(j).getQuantidade_filme() + 1);
+                                    diariasAcumulativas.get(j).setDias_previsto(diariasAcumulativas.get(j).getDias_previsto() + 1);
+                                    System.out.println("Quantidade de filme: " + diariasAcumulativas.get(j).getQuantidade_filme() + " Dias Previsto: " + diariasAcumulativas.get(j).getDias_previsto());
                                 } else {
-                                    dias.get(j).setQuantidade_filme(dias.get(j).getQuantidade_filme() + 1);
-                                    System.out.println("Quantidade de filme: " + dias.get(j).getQuantidade_filme() + " Dias Previsto: " + dias.get(j).getDias_previsto());
+                                    diariasAcumulativas.get(j).setQuantidade_filme(diariasAcumulativas.get(j).getQuantidade_filme() + 1);
+                                    System.out.println("Quantidade de filme: " + diariasAcumulativas.get(j).getQuantidade_filme() + " Dias Previsto: " + diariasAcumulativas.get(j).getDias_previsto());
                                 }
 
                             }
                         } 
                     }
+                } else {                    
+                    for (int j = 0; j < diariasAcumulativas.size(); j++) {
+                        if (diariasAcumulativas.size() > 0) {
+                            System.out.println("CODIGO DIARIA - DIARIA: " + diariasAcumulativas.get(j).getCodigo_diaria()+ " CODIGO DIARIA - COPIA: "+janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
+                            if (diariasAcumulativas.get(j).getCodigo_diaria().equals(janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria())) {
+                                diariasAcumulativas.get(j).setDias_previsto(diariasAcumulativas.get(j).getDias());                                
+                            }
+                        } 
+                    }
                 }
+                System.out.println("==================================================");
             }
-
+            
             for (int i = 0; i < janelapaiLocacao.jtbl_locacao.getRowCount(); i++) {
                 ItemLocacao itemLocacao = new ItemLocacao();
-                Objeto objeto = new Objeto();
-                objeto.setCodigo_objeto(janelapaiLocacao.copiasLocacao.get(i).getObjeto().getCodigo_objeto());
-                objeto.setTitulo(janelapaiLocacao.copiasLocacao.get(i).getObjeto().getTitulo());
-
-                Diaria diaria = new Diaria();
-                diaria.setValor(janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getValor());
-
+                
+                PromocaoLocacao promocaoLocacao = janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getPromocaoLocacao();
+                Diaria diaria = janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria();
+                diaria.setPromocaoLocacao(promocaoLocacao);
+                Objeto objeto = janelapaiLocacao.copiasLocacao.get(i).getObjeto();                
                 objeto.setDiaria(diaria);
 
-                Copia copia = new Copia();
-                copia.setObjeto(objeto);
-                copia.setCodigo_copia(janelapaiLocacao.copiasLocacao.get(i).getCodigo_copia());
+                Copia copia = janelapaiLocacao.copiasLocacao.get(i);
+                copia.setObjeto(objeto);                
                 copia.setStatus("1");
-
-                itemLocacao.setValor_locado(janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getValor());
+                System.out.println("");
+                if(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao() != null){
+                    itemLocacao.setValor_locado(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao());                    
+                    System.out.println("Valor Locado da Promoção: " + copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
+                } else {
+                    itemLocacao.setValor_locado(copia.getObjeto().getDiaria().getValor());
+                    System.out.println("Valor Locado Normal: " + copia.getObjeto().getDiaria().getValor());
+                }
                 if (valor_pago > 0) {
                     if (valor_pago < itemLocacao.getValor_locado()) {
                         itemLocacao.setValor_pago(valor_pago);
@@ -1266,27 +1352,26 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 //conforme quantidade e regra de negócio
                 Calendar cal = Calendar.getInstance();
                 
-                for (int d = 0; d < dias.size(); d++) {
-                    if (dias.get(d).getCodigo_diaria() == janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria()) {
-                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + dias.get(d).getDias_previsto());
-//                        data.setDate(data.getDate() + dias.get(d).getDias_previsto());
-                        System.out.println("Dias: " + dias.get(d).getDias_previsto());
+                for (int d = 0; d < diariasAcumulativas.size(); d++) {
+                    if (diariasAcumulativas.get(d).getCodigo_diaria() == janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria()) {
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + diariasAcumulativas.get(d).getDias_previsto());
+                        System.out.println("Dias: " + diariasAcumulativas.get(d).getDias_previsto());
                         System.out.println("Day Month: " + cal.get(Calendar.DAY_OF_MONTH));
                         System.out.println("Data prevista: " + cal.getTime());
                     }
                 }
 
                 itemLocacao.setData_prevista(cal.getTime());
-                itens.add(itemLocacao);
+                itensLocacaoSalvar.add(itemLocacao);
                 pool = new Pool();
                 CopiaDAO copiaDAO = new CopiaDAO(pool);
                 copiaDAO.alterarStatusFilme(copia);
             }
-            EntradaCaixaLocacao.itens = itens;
+
             pool = new Pool();
             
             locacaoDAO = new LocacaoDAO(pool);
-            locacaoDAO.salvarItem(itens);
+            locacaoDAO.salvarItem(itensLocacaoSalvar);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a gravação: ");

@@ -292,9 +292,11 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
             if ((janelapai != null) && (diaria != null)) {
                 janelapai.setStatusTela(true);
                 janelapai.carregaDiaria(diaria);
+                janelapai.consultaDiaria = null;
             } else if ((janelapai2 != null) && (diaria != null)) {
                 janelapai2.setStatusTela(true);
                 janelapai2.carregaDiaria(diaria);
+                janelapai2.consultaDiaria = null;
             }
 
         } else {

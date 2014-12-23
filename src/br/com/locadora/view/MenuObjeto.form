@@ -135,7 +135,7 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="14" style="0"/>
+              <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
             <Property name="name" type="java.lang.String" value="jrb_codigo" noResource="true"/>
@@ -153,7 +153,7 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="14" style="0"/>
+              <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Elenco"/>
             <Property name="name" type="java.lang.String" value="jrb_ator" noResource="true"/>
@@ -171,7 +171,7 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="14" style="0"/>
+              <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="T&#xed;tulo"/>
@@ -187,7 +187,7 @@
         <Component class="javax.swing.JLabel" name="jl_pesquisar_destino">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="14" style="0"/>
+              <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Par&#xe2;metro"/>
             <Property name="name" type="java.lang.String" value="jl_pesquisar_destino" noResource="true"/>

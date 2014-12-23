@@ -89,7 +89,7 @@ public class MenuProduto extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Produto"));
         jPanel5.setName("jPanel5"); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel1.setText("Parâmetro");
         jLabel1.setName("jLabel1"); // NOI18N
 
@@ -111,12 +111,12 @@ public class MenuProduto extends javax.swing.JFrame {
         });
 
         buttonGroup2.add(jrb_apresentação);
-        jrb_apresentação.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_apresentação.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_apresentação.setText("Código");
         jrb_apresentação.setName("jrb_apresentação"); // NOI18N
 
         buttonGroup2.add(jrb_nome);
-        jrb_nome.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_nome.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_nome.setSelected(true);
         jrb_nome.setText("Descrição");
         jrb_nome.setName("jrb_nome"); // NOI18N

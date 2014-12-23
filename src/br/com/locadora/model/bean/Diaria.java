@@ -22,6 +22,8 @@ public class Diaria {
     private Integer dias_previsto = 0;
     private Boolean acumulativo;
     private Integer quantidade_filme = 0;
+    private Integer ganhados = 0;
+    private Integer ganhar = 0;
     private List<PromocaoLocacao> listPromocao;
     private PromocaoLocacao promocaoLocacao;
     private PromocaoDevolucao promocaoDevolucao;
@@ -128,6 +130,22 @@ public class Diaria {
 
     public void setPromocaoDevolucao(PromocaoDevolucao promocaoDevolucao) {
         this.promocaoDevolucao = promocaoDevolucao;
+    }
+
+    public Integer getGanhados() {
+        return ganhados;
+    }
+
+    public void setGanhados(Integer ganhados) {
+        this.ganhados = ganhados;
+    }
+
+    public Integer getGanhar() {
+        return ganhar;
+    }
+
+    public void setGanhar(Integer ganhar) {
+        this.ganhar = ganhar;
     }
 
 }

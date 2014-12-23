@@ -84,9 +84,9 @@ public class RelatorioLocacaoAberta {
                     + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                     + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
                     + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                    + "        AND D.DEL_FLAG = 0\n"
+                    + "        AND D.DEL_FLAG = 1\n"
                     + "        AND A.TIPO_MOVIMENTO = 'LOCACAO' \n"
-                    + "        AND D.DATA_LOCACAO BETWEEN ? AND ? AND A.TITULO LIKE ?\n";
+                    + "        AND D.DATA_LOCACAO BETWEEN ? AND ? AND A.TITULO LIKE ? ORDER BY DATA_PREVISTA \n";
 
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, dataInicial);
@@ -180,7 +180,7 @@ public class RelatorioLocacaoAberta {
             if (totalRegistro > 0) {
                 JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
                 Map parametros = new HashMap();
-                JasperPrint jasperPrint = JasperFillManager.fillReport("jasper/rel_qtd_locacao_relocacao.jasper", parametros, jrRS);
+                JasperPrint jasperPrint = JasperFillManager.fillReport("jasper/rel_locacao_aberta.jasper", parametros, jrRS);
                 
                 JRXlsExporter exporter = new JRXlsExporter();
                 exporter.setExporterInput(new SimpleExporterInput(jasperPrint));

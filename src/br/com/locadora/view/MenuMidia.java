@@ -101,17 +101,17 @@ public class MenuMidia extends javax.swing.JFrame {
         jPanel1.setName("jPanel1"); // NOI18N
 
         buttonGroup1.add(jrb_codigo_diaria);
-        jrb_codigo_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_codigo_diaria.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_codigo_diaria.setText("Código");
         jrb_codigo_diaria.setName("jrb_codigo_diaria"); // NOI18N
 
         buttonGroup1.add(jrb_descricao);
-        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
 

@@ -1579,9 +1579,9 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             msgERRO = msgERRO + " *Nome\n";
         }
         if (jtf_data_nascimento.getForeground().equals(Color.red)) {
-            msgERRO = msgERRO + " *Data de Nascimento\n";
+            msgERRO = msgERRO + " *Data de Nascimento inválida\n";
         } else if (jtf_data_nascimento.getText().trim().length() < 10) {
-            msgERRO = msgERRO + " *Data de Nascimento\n";
+            msgERRO = msgERRO + " *Data de Nascimento inválida\n";
         }
 
         if (jtf_cpf_cliente.getForeground().equals(Color.red)) {

@@ -361,17 +361,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        try {
-            if (jrb_titulo.isSelected() == true) {
-                listaCopia_titulo(jtf_consulta.getText().trim());
-            } else if (jrb_codigo_barras.isSelected() == true) {
-                listaCopia_codigo_barras(jtf_consulta.getText().trim());
-            } else {
-                listaCopia_ator(jtf_consulta.getText().trim());
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaCopiaLocacao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jtbl_copiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_copiaMouseClicked
@@ -391,17 +381,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                if (jrb_titulo.isSelected() == true) {
-                    listaCopia_titulo(jtf_consulta.getText().trim());
-                } else if (jrb_codigo_barras.isSelected() == true) {
-                    listaCopia_codigo_barras(jtf_consulta.getText().trim());
-                } else {
-                    listaCopia_ator(jtf_consulta.getText().trim());
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ConsultaCopiaLocacao.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            buscarDados();
         }
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
@@ -611,6 +591,20 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         if(janelapai != null){
             janelapai.setStatusTela(true);
         }            
+    }
+    
+    public void buscarDados(){
+                try {
+            if (jrb_titulo.isSelected() == true) {
+                listaCopia_titulo(jtf_consulta.getText().trim());
+            } else if (jrb_codigo_barras.isSelected() == true) {
+                listaCopia_codigo_barras(jtf_consulta.getText().trim());
+            } else {
+                listaCopia_ator(jtf_consulta.getText().trim());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaCopiaLocacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

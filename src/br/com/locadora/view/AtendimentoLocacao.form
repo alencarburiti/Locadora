@@ -98,7 +98,7 @@
                           <Component id="jl_debito_locacao" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jtf_debito_total_locacao" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel27" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jtf_valor_total_locacao" min="-2" pref="30" max="-2" attributes="0"/>
@@ -303,7 +303,7 @@
                       </Group>
                       <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -626,10 +626,6 @@
             <Property name="name" type="java.lang.String" value="jcb_promocao" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jcb_promocaoMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcb_promocaoActionPerformed"/>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jcb_promocaoFocusGained"/>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jcb_promocaoFocusLost"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcb_promocaoKeyPressed"/>
           </Events>
         </Component>
@@ -705,13 +701,13 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="146" max="-2" attributes="0"/>
-                  <Component id="jb_finalizar" min="-2" pref="100" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="jb_finalizar" min="-2" pref="110" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jb_limpar" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="jb_limpar" min="-2" pref="111" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jb_cancelar" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jb_cancelar" min="-2" pref="110" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

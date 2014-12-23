@@ -94,7 +94,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         jPanel1.setName("jPanel1"); // NOI18N
 
         buttonGroup1.add(jrb_codigo);
-        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
         jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +104,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(jrb_ator);
-        jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_ator.setText("Elenco");
         jrb_ator.setName("jrb_ator"); // NOI18N
         jrb_ator.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +114,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(jrb_titulo);
-        jrb_titulo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_titulo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_titulo.setSelected(true);
         jrb_titulo.setText("Título");
         jrb_titulo.setName("jrb_titulo"); // NOI18N
@@ -124,7 +124,7 @@ public class MenuObjeto extends javax.swing.JFrame {
             }
         });
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
 

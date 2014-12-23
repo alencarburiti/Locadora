@@ -16,8 +16,11 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.dao.LocacaoDAO;
+import br.com.locadora.relatorios.RelatorioClientePendente;
+import br.com.locadora.relatorios.RelatorioFluxoCaixaDetalhado;
 import br.com.locadora.relatorios.RelatorioLocacaoAberta;
 import br.com.locadora.relatorios.RelatorioLocacaoRelocacao;
+import br.com.locadora.relatorios.RelatorioMaisLocados;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.TemaInterface;
 import static br.com.locadora.view.CadastroObjeto.jtf_data_aquisicao;
@@ -98,12 +101,10 @@ public class MenuRelatorio extends javax.swing.JFrame {
         jtf_data_final = new JFormattedTextField(formatoData);
         jPanel4 = new javax.swing.JPanel();
         jrb_quantidade_locacao_relocacao = new javax.swing.JRadioButton();
-        jrb_retorno_financeiro = new javax.swing.JRadioButton();
         jrb_locacao_em_aberto = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
+        jrb_fluxo_caixa_detalhado = new javax.swing.JRadioButton();
+        jrb_clientes_pendentes = new javax.swing.JRadioButton();
+        jrb_mais_locado = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatório");
@@ -171,6 +172,11 @@ public class MenuRelatorio extends javax.swing.JFrame {
         jb_gerar_relatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_gerar_relatorioActionPerformed(evt);
+            }
+        });
+        jb_gerar_relatorio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_gerar_relatorioKeyPressed(evt);
             }
         });
 
@@ -288,7 +294,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
 
         buttonGroup1.add(jrb_quantidade_locacao_relocacao);
         jrb_quantidade_locacao_relocacao.setSelected(true);
-        jrb_quantidade_locacao_relocacao.setText("Quantidade de Locação | Relocação - OK");
+        jrb_quantidade_locacao_relocacao.setText("Quantidade de Locação | Relocação");
         jrb_quantidade_locacao_relocacao.setName("jrb_quantidade_locacao_relocacao"); // NOI18N
         jrb_quantidade_locacao_relocacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,34 +302,41 @@ public class MenuRelatorio extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(jrb_retorno_financeiro);
-        jrb_retorno_financeiro.setText("Retorno financeiro por filme");
-        jrb_retorno_financeiro.setName("jrb_retorno_financeiro"); // NOI18N
-        jrb_retorno_financeiro.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jrb_locacao_em_aberto);
+        jrb_locacao_em_aberto.setText("Locacões em Aberto");
+        jrb_locacao_em_aberto.setName("jrb_locacao_em_aberto"); // NOI18N
+        jrb_locacao_em_aberto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrb_retorno_financeiroActionPerformed(evt);
+                jrb_locacao_em_abertoActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jrb_locacao_em_aberto);
-        jrb_locacao_em_aberto.setText("Locacões em Aberto - OK");
-        jrb_locacao_em_aberto.setName("jrb_locacao_em_aberto"); // NOI18N
+        buttonGroup1.add(jrb_fluxo_caixa_detalhado);
+        jrb_fluxo_caixa_detalhado.setText("Fluxo de Caixa Detalhado");
+        jrb_fluxo_caixa_detalhado.setName("jrb_fluxo_caixa_detalhado"); // NOI18N
+        jrb_fluxo_caixa_detalhado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_fluxo_caixa_detalhadoActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setText("Fechamento de Caixa ");
-        jRadioButton4.setName("jRadioButton4"); // NOI18N
+        buttonGroup1.add(jrb_clientes_pendentes);
+        jrb_clientes_pendentes.setText("Clientes Pendentes");
+        jrb_clientes_pendentes.setName("jrb_clientes_pendentes"); // NOI18N
+        jrb_clientes_pendentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_clientes_pendentesActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton5);
-        jRadioButton5.setText("Fechamento de Caixa Detalhado");
-        jRadioButton5.setName("jRadioButton5"); // NOI18N
-
-        buttonGroup1.add(jRadioButton6);
-        jRadioButton6.setText("Clientes Devedores");
-        jRadioButton6.setName("jRadioButton6"); // NOI18N
-
-        buttonGroup1.add(jRadioButton7);
-        jRadioButton7.setText("Filmes Inativos");
-        jRadioButton7.setName("jRadioButton7"); // NOI18N
+        buttonGroup1.add(jrb_mais_locado);
+        jrb_mais_locado.setText("Mais Locados");
+        jrb_mais_locado.setName("jrb_mais_locado"); // NOI18N
+        jrb_mais_locado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_mais_locadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -337,12 +350,10 @@ public class MenuRelatorio extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jrb_retorno_financeiro)
                             .addComponent(jrb_locacao_em_aberto)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton5)
-                            .addComponent(jRadioButton6)
-                            .addComponent(jRadioButton7))
+                            .addComponent(jrb_fluxo_caixa_detalhado)
+                            .addComponent(jrb_clientes_pendentes)
+                            .addComponent(jrb_mais_locado))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -351,17 +362,13 @@ public class MenuRelatorio extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jrb_quantidade_locacao_relocacao)
                 .addGap(10, 10, 10)
-                .addComponent(jrb_retorno_financeiro)
-                .addGap(10, 10, 10)
                 .addComponent(jrb_locacao_em_aberto)
                 .addGap(10, 10, 10)
-                .addComponent(jRadioButton4)
+                .addComponent(jrb_fluxo_caixa_detalhado)
                 .addGap(10, 10, 10)
-                .addComponent(jRadioButton5)
+                .addComponent(jrb_clientes_pendentes)
                 .addGap(10, 10, 10)
-                .addComponent(jRadioButton6)
-                .addGap(10, 10, 10)
-                .addComponent(jRadioButton7)
+                .addComponent(jrb_mais_locado)
                 .addGap(10, 10, 10))
         );
 
@@ -415,7 +422,9 @@ public class MenuRelatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowDeactivated
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
-
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_data_inicial.requestFocus();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_consultaKeyPressed
 
@@ -428,10 +437,10 @@ public class MenuRelatorio extends javax.swing.JFrame {
 
             if (jtf_data_inicial.getText().trim().length() < 10) {
                 jtf_data_inicial.setForeground(Color.red);
-                jtf_data_inicial.requestFocus();
+//                jtf_data_inicial.requestFocus();
             } else if (jtf_data_inicial.getText().equals("  /  /    ")) {
                 jtf_data_inicial.setForeground(Color.red);
-                jtf_data_inicial.requestFocus();
+//                jtf_data_inicial.requestFocus();
             } else {
                 if (validaData(jtf_data_inicial.getText())) {
 
@@ -439,14 +448,14 @@ public class MenuRelatorio extends javax.swing.JFrame {
 
                 } else {
                     jtf_data_inicial.setForeground(Color.red);
-                    jtf_data_inicial.requestFocus();
+//                    jtf_data_inicial.requestFocus();
                 }
 
             }
         } catch (NumberFormatException ex) {
             jtf_data_inicial.setText("  /  /    ");
             jtf_data_inicial.setForeground(Color.red);
-            jtf_data_inicial.requestFocus();
+//            jtf_data_inicial.requestFocus();
         } catch (ParseException ex) {
             Logger.getLogger(MenuRelatorio.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -470,10 +479,10 @@ public class MenuRelatorio extends javax.swing.JFrame {
 
             if (jtf_data_final.getText().trim().length() < 10) {
                 jtf_data_final.setForeground(Color.red);
-                jtf_data_final.requestFocus();
+//                jtf_data_final.requestFocus();
             } else if (jtf_data_final.getText().equals("  /  /    ")) {
                 jtf_data_final.setForeground(Color.red);
-                jtf_data_final.requestFocus();
+//                jtf_data_final.requestFocus();
             } else {
                 if (validaData(jtf_data_final.getText())) {
 
@@ -481,32 +490,35 @@ public class MenuRelatorio extends javax.swing.JFrame {
 
                 } else {
                     jtf_data_final.setForeground(Color.red);
-                    jtf_data_final.requestFocus();
+//                    jtf_data_final.requestFocus();
                 }
 
             }
         } catch (ParseException ex) {
             jtf_data_final.setForeground(Color.red);
-            jtf_data_final.requestFocus();
+//            jtf_data_final.requestFocus();
         } catch (NumberFormatException ex) {
             jtf_data_final.setText("  /  /    ");
             jtf_data_final.setForeground(Color.red);
-            jtf_data_final.requestFocus();
+//            jtf_data_final.requestFocus();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_data_finalFocusLost
 
     private void jtf_data_finalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_finalKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_gerar_relatorio.requestFocus();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_data_finalKeyPressed
 
     private void jrb_quantidade_locacao_relocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_quantidade_locacao_relocacaoActionPerformed
+        jtf_consulta.setEnabled(true);
+        jtf_consulta.requestFocus();
+        jtf_data_inicial.setEnabled(true);
+        jtf_data_final.setEnabled(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_quantidade_locacao_relocacaoActionPerformed
-
-    private void jrb_retorno_financeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_retorno_financeiroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_retorno_financeiroActionPerformed
 
     private void jb_gerar_relatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gerar_relatorioActionPerformed
 
@@ -519,7 +531,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
             dataInicial = out.format(in.parse(jtf_data_inicial.getText()));
             dataFinal = out.format(in.parse(jtf_data_final.getText()));
         } catch (ParseException ex) {
-            Logger.getLogger(MenuRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(MenuRelatorio.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         String titulo = jtf_consulta.getText().trim();
@@ -529,10 +541,17 @@ public class MenuRelatorio extends javax.swing.JFrame {
         if (jrb_quantidade_locacao_relocacao.isSelected() == true) {
             RelatorioLocacaoRelocacao rel = new RelatorioLocacaoRelocacao(pool);
             rel.gerarRelatorio(dataInicial, dataFinal, titulo);
-        } else if (jrb_retorno_financeiro.isSelected() == true) {
-
         } else if (jrb_locacao_em_aberto.isSelected() == true) {
             RelatorioLocacaoAberta rel = new RelatorioLocacaoAberta(pool);
+            rel.gerarRelatorio(dataInicial, dataFinal, titulo);
+        } else if (jrb_fluxo_caixa_detalhado.isSelected() == true) {
+            RelatorioFluxoCaixaDetalhado rel = new RelatorioFluxoCaixaDetalhado(pool);
+            rel.gerarRelatorio(dataInicial, dataFinal);
+        } else if (jrb_clientes_pendentes.isSelected() == true) {
+            RelatorioClientePendente rel = new RelatorioClientePendente(pool);
+            rel.gerarRelatorio();
+        } else if (jrb_mais_locado.isSelected() == true) {
+            RelatorioMaisLocados rel = new RelatorioMaisLocados(pool);
             rel.gerarRelatorio(dataInicial, dataFinal, titulo);
         }
         // TODO add your handling code here:
@@ -570,8 +589,6 @@ public class MenuRelatorio extends javax.swing.JFrame {
         if (jrb_quantidade_locacao_relocacao.isSelected() == true) {
             RelatorioLocacaoRelocacao rel = new RelatorioLocacaoRelocacao(pool);
             rel.gerarRelatorioExcel(dataInicial, dataFinal, titulo, file);
-        } else if (jrb_retorno_financeiro.isSelected() == true) {
-
         } else if (jrb_locacao_em_aberto.isSelected() == true) {
             RelatorioLocacaoAberta rel = new RelatorioLocacaoAberta(pool);
             rel.gerarRelatorioExcel(dataInicial, dataFinal, titulo, file);
@@ -583,6 +600,44 @@ public class MenuRelatorio extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jrb_fluxo_caixa_detalhadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_fluxo_caixa_detalhadoActionPerformed
+        jtf_consulta.setEnabled(false);
+        jtf_data_final.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_fluxo_caixa_detalhadoActionPerformed
+
+    private void jrb_locacao_em_abertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_locacao_em_abertoActionPerformed
+        jtf_consulta.setEnabled(true);
+        jtf_consulta.requestFocus();
+        jtf_data_inicial.setEnabled(true);
+        jtf_data_final.setEnabled(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_locacao_em_abertoActionPerformed
+
+    private void jrb_clientes_pendentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_clientes_pendentesActionPerformed
+        jtf_consulta.setEnabled(false);
+        jtf_data_inicial.setEnabled(false);
+        jtf_data_final.setEnabled(false);
+        jb_gerar_relatorio.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_clientes_pendentesActionPerformed
+
+    private void jrb_mais_locadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_mais_locadoActionPerformed
+        jtf_consulta.setEnabled(true);
+        jtf_consulta.requestFocus();
+        jtf_data_inicial.setEnabled(true);
+        jtf_data_final.setEnabled(true);
+// TODO add your handling code here:
+    }//GEN-LAST:event_jrb_mais_locadoActionPerformed
+
+    private void jb_gerar_relatorioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_gerar_relatorioKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_gerar_relatorio.doClick();
+        }  
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_gerar_relatorioKeyPressed
 
     /**
      * @param args the command line arguments
@@ -606,15 +661,13 @@ public class MenuRelatorio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JButton jb_gerar_relatorio;
     private javax.swing.JButton jb_gerar_relatorio1;
+    private javax.swing.JRadioButton jrb_clientes_pendentes;
+    private javax.swing.JRadioButton jrb_fluxo_caixa_detalhado;
     private javax.swing.JRadioButton jrb_locacao_em_aberto;
+    private javax.swing.JRadioButton jrb_mais_locado;
     private javax.swing.JRadioButton jrb_quantidade_locacao_relocacao;
-    private javax.swing.JRadioButton jrb_retorno_financeiro;
     private javax.swing.JTextField jtf_consulta;
     public static javax.swing.JFormattedTextField jtf_data_final;
     public static javax.swing.JFormattedTextField jtf_data_inicial;

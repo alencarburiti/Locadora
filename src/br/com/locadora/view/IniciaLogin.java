@@ -88,7 +88,7 @@ public class IniciaLogin extends javax.swing.JFrame {
         });
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.gif"))); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setName("jb_cancelar"); // NOI18N
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -122,24 +122,23 @@ public class IniciaLogin extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jb_logar, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jb_limpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtf_login, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(jpf_senha))))
+                .addGap(50, 50, 50)
+                .addComponent(jb_logar, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(jb_limpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                 .addGap(50, 50, 50))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtf_login)
+                    .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +187,7 @@ public class IniciaLogin extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        setSize(new java.awt.Dimension(450, 322));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

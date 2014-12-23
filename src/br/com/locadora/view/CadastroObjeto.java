@@ -55,6 +55,8 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     public ObjetoDAO objetoDAO;
     public InterfacePool pool;
     public List<Copia> copias;
+    public ConsultaGeneroObjeto consultaGenero;
+    public ConsultaDiariaObjeto consultaDiaria;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -351,7 +353,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
         jrb_inativo.setName("jrb_inativo"); // NOI18N
 
         jcb_midia.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jcb_midia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu Ray", "CD", "DVD", "Playstation", "VHs", "Xbox", " " }));
+        jcb_midia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu-Ray", "CD", "DVD", "Playstation", "VHs", "Xbox" }));
         jcb_midia.setName("jcb_midia"); // NOI18N
         jcb_midia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -406,6 +408,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
 
             }
         });
+        jtf_censura.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_censura.setName("jtf_censura"); // NOI18N
         jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -969,22 +972,30 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_duracaoKeyPressed
 
     private void jb_generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_generoActionPerformed
-        ConsultaGeneroObjeto consultaGenero = new ConsultaGeneroObjeto();
-        consultaGenero.janelapai = this;
-        consultaGenero.listaTodasGeneros();
-        consultaGenero.setVisible(true);
-        setStatusTela(false);
+        if (consultaGenero == null) {
+            consultaGenero = new ConsultaGeneroObjeto();
+            consultaGenero.janelapai = this;
+            consultaGenero.listaTodasGeneros();
+            consultaGenero.setVisible(true);
+            setStatusTela(false);
+        } else {
+            consultaGenero.setVisible(true);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_generoActionPerformed
 
     private void jb_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_generoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            ConsultaGeneroObjeto consultaGenero = new ConsultaGeneroObjeto();
-            consultaGenero.janelapai = this;
-            consultaGenero.listaTodasGeneros();
-            consultaGenero.setVisible(true);
-            setStatusTela(false);
+            if (consultaGenero == null) {
+                consultaGenero = new ConsultaGeneroObjeto();
+                consultaGenero.janelapai = this;
+                consultaGenero.listaTodasGeneros();
+                consultaGenero.setVisible(true);
+                setStatusTela(false);
+            } else {
+                consultaGenero.setVisible(true);
+            }
 
         }
         // TODO add your handling code here:
@@ -1003,22 +1014,30 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_diaria_diasActionPerformed
 
     private void jb_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_diariaActionPerformed
-        ConsultaDiariaObjeto consulta = new ConsultaDiariaObjeto();
-        consulta.janelapai = this;
-        consulta.listaTodasDiarias();
-        consulta.setVisible(true);
+        if (consultaDiaria == null) {
+            consultaDiaria = new ConsultaDiariaObjeto();
+            consultaDiaria.janelapai = this;
+            consultaDiaria.listaTodasDiarias();
+            consultaDiaria.setVisible(true);
+            setStatusTela(false);
+        } else {
+            consultaDiaria.setVisible(true);
+        }
         //    setStatusTela(false);
     }//GEN-LAST:event_jb_diariaActionPerformed
 
     private void jb_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_diariaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            ConsultaDiariaObjeto consulta = new ConsultaDiariaObjeto();
-            consulta.janelapai = this;
-            consulta.listaTodasDiarias();
-            consulta.setVisible(true);
-
-            setStatusTela(false);
+            if (consultaDiaria == null) {
+                consultaDiaria = new ConsultaDiariaObjeto();
+                consultaDiaria.janelapai = this;
+                consultaDiaria.listaTodasDiarias();
+                consultaDiaria.setVisible(true);
+                setStatusTela(false);
+            } else {
+                consultaDiaria.setVisible(true);
+            }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_diariaKeyPressed
@@ -1058,7 +1077,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descricao_generoActionPerformed
 
     private void jb_adicionar_copiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaActionPerformed
-        
+
     }//GEN-LAST:event_jb_adicionar_copiaActionPerformed
 
     private void jb_adicionar_copiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaKeyPressed
@@ -1187,7 +1206,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_censuraKeyPressed
 
     private void jb_adicionar_copiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_copiaMouseClicked
-        if(evt.getClickCount() == 1){
+        if (evt.getClickCount() == 1) {
             cadastrarCopia();
         }
         // TODO add your handling code here:
@@ -1345,12 +1364,11 @@ public final class CadastroObjeto extends javax.swing.JFrame {
             jtf_data_aquisicao.setForeground(Color.red);
             msgERRO = msgERRO + " *Data de Aquisição inválida\n";
         }
-        
+
 //        if (jtf_data_aquisicao.getForeground().equals(Color.RED) || jtf_data_aquisicao.getText().trim().length() != 10) {
 //            System.out.println("Tamanho data_aquisicao: "+jtf_data_aquisicao.getText().trim().length());
 //            msgERRO = msgERRO + " *Data de Aquisição inválida\n";
 //        }
-
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
 
@@ -1639,13 +1657,12 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                     copia.setData_aquisicao(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_aquisicao.getText()));
                     copiaDAO.salvar(copia);
                     carregaCopia(objeto.getCodigo_objeto());
-                    
+
                     jtf_data_aquisicao.setText("");
                     jtf_preco_custo.setText("R$ 0,00");
                     jcb_idioma.requestFocus();
                 }
             }
-
 
         } catch (NumberFormatException e) {
             System.out.println("Valor inválido: " + e.getMessage());

@@ -184,6 +184,11 @@ public final class ControleAcesso extends javax.swing.JFrame {
                 jcb_interfaceMouseClicked(evt);
             }
         });
+        jcb_interface.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_interfaceActionPerformed(evt);
+            }
+        });
         jcb_interface.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jcb_interfaceKeyPressed(evt);
@@ -460,10 +465,15 @@ public final class ControleAcesso extends javax.swing.JFrame {
 
     private void jcb_interfaceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcb_interfaceMouseClicked
         if(evt.getClickCount() == 1){
-            checkBoxSelecionado();
+            
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jcb_interfaceMouseClicked
+
+    private void jcb_interfaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_interfaceActionPerformed
+        checkBoxSelecionado();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_interfaceActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -592,10 +602,7 @@ public final class ControleAcesso extends javax.swing.JFrame {
 
         //Limpa tabela depois de selecionar novo cliente
         DefaultTableModel tb_locacao = (DefaultTableModel) jtbl_permissoes.getModel();
-        int rows = tb_locacao.getRowCount();
-        for (int i = rows - 1; i >= 0; i--) {
-            tb_locacao.removeRow(i);
-        }
+        tb_locacao.setRowCount(0);        
 
         pool = new Pool();
         AcessoUsuarioDAO acessoDAO = new AcessoUsuarioDAO(pool);
@@ -712,7 +719,7 @@ public final class ControleAcesso extends javax.swing.JFrame {
                 checkBoxSelecionado();
             }
         }
-
+//        permissaoSelecionado();
     }
 
     public AcessoUsuario checarCadastroExistente(AcessoUsuario acessoUsuario) {
@@ -722,11 +729,13 @@ public final class ControleAcesso extends javax.swing.JFrame {
             tabela = false;
         } else {
             for (int i = 0; i < acessos.size(); i++) {
-                tabela = acessoUsuario.getInterfaceAcesso().getCodigo_interface() == acessos.get(i).getInterfaceAcesso().getCodigo_interface();
+                tabela = acessoUsuario.getInterfaceAcesso().getCodigo_interface().equals(acessos.get(i).getInterfaceAcesso().getCodigo_interface());
                 System.out.println("Index: " + i + " Size: " + jtbl_permissoes.getRowCount() + " Valor: " + jtbl_permissoes.getValueAt(i, 0).toString());
                 if (tabela == true) {
                     acessoUsuario.setCodigo_acesso(acessos.get(i).getCodigo_acesso());
                     break;
+                } else {
+                    tabela = false;
                 }
             }
 

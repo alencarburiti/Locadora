@@ -12,11 +12,11 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
+import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Genero;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.TemaInterface;
-import static br.com.locadora.view.AtendimentoLocacao.acesso;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -36,6 +36,7 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
     public TelaPrincipal janelapai;
     List<Genero> generos;
     public InterfacePool pool;
+    public AcessoUsuario acesso;
 
     /**
      * Creates new form DestinoGUI

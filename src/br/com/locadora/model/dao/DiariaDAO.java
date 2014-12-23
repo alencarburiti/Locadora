@@ -341,6 +341,7 @@ public class DiariaDAO implements InterfaceDiariaDAO {
             diaria.setValor(rs.getDouble("VALOR"));
             diaria.setMultas(rs.getDouble("MULTAS"));
             diaria.setDias(rs.getInt("DIAS"));
+            diaria.setMaximo_dias(rs.getInt("MAXIMO_DIAS"));
             if (rs.getInt("ACUMULATIVO") == 0) {
                 diaria.setAcumulativo(true);
             } else {

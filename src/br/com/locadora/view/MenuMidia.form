@@ -139,7 +139,7 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="14" style="0"/>
+              <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
             <Property name="name" type="java.lang.String" value="jrb_codigo_diaria" noResource="true"/>
@@ -154,7 +154,7 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="14" style="0"/>
+              <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
@@ -167,7 +167,7 @@
         <Component class="javax.swing.JLabel" name="jl_pesquisar_destino">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="14" style="0"/>
+              <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Par&#xe2;metro"/>
             <Property name="name" type="java.lang.String" value="jl_pesquisar_destino" noResource="true"/>

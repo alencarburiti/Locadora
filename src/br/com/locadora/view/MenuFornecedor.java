@@ -140,18 +140,18 @@ public class MenuFornecedor extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(jrb_codigo);
-        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
 
         buttonGroup1.add(jrb_descricao);
-        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_descricao.setSelected(true);
         jrb_descricao.setText("Descrição");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
 
         buttonGroup1.add(jrb_detalhamento);
-        jrb_detalhamento.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jrb_detalhamento.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_detalhamento.setText("Específica");
         jrb_detalhamento.setName("jrb_detalhamento"); // NOI18N
 

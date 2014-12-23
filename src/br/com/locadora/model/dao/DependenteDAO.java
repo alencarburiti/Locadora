@@ -173,7 +173,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             "                DEPENDENTE\n" +
             "            WHERE\n" +
             "                CLIENTE_CODIGO_CLIENTE = ?\n" +
-            "                    AND tipo_servico_codigo_tipo_servico IN (1 , 2, 5))) AS DEBITO,\n" +
+            "                    AND TIPO = 'D')) AS DEBITO,\n" +
             "    (SELECT \n" +
             "        (CASE\n" +
             "                WHEN SUM(VALOR) IS NULL THEN 0\n" +
@@ -189,7 +189,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             "                DEPENDENTE\n" +
             "            WHERE\n" +
             "                CLIENTE_CODIGO_CLIENTE = ?\n" +
-            "                    AND tipo_servico_codigo_tipo_servico IN (3 , 4, 6, 7, 8))) AS CREDITO;";            
+            "                    AND TIPO = 'C')) AS CREDITO;";            
 
         try {
             ps = con.prepareStatement(sqlSelect);

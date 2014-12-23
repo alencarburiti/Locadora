@@ -123,115 +123,115 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
 
         jScrollPane6.setName("jScrollPane6"); // NOI18N
 
-        jtbl_locacao_aberto.setUpdateSelectionOnSort(false);
-        jtbl_locacao_aberto.setVerifyInputWhenFocusTarget(false);
-        jtbl_locacao_aberto.setDefaultEditor(Object.class, null);
-        jtbl_locacao_aberto.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e){
-                if(e.getClickCount() == 2){
-                    botaoOK(jtbl_locacao_aberto);
+        jtbl_locacao_aberto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtbl_locacao_aberto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-                }}});
-                jtbl_locacao_aberto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jtbl_locacao_aberto.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
+            },
+            new String [] {
+                "Código Barras", "Cliente/Dependente", "Objeto", "Data Locação", "Data Prevista", "Valor Multa", "Dia atraso"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false, false, false, false
+            };
 
-                    },
-                    new String [] {
-                        "Código Barras", "Cliente/Dependente", "Objeto", "Data Locação", "Data Devolução", "Valor Multa", "Dia atraso"
-                    }
-                ) {
-                    Class[] types = new Class [] {
-                        java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-                    };
-                    boolean[] canEdit = new boolean [] {
-                        false, true, false, false, false, false, false
-                    };
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-                    public Class getColumnClass(int columnIndex) {
-                        return types [columnIndex];
-                    }
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtbl_locacao_aberto.setName("jtbl_locacao_aberto"); // NOI18N
+        jtbl_locacao_aberto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbl_locacao_abertoMouseClicked(evt);
+            }
+        });
+        jtbl_locacao_aberto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_locacao_abertoKeyPressed(evt);
+            }
+        });
+        jScrollPane6.setViewportView(jtbl_locacao_aberto);
+        if (jtbl_locacao_aberto.getColumnModel().getColumnCount() > 0) {
+            jtbl_locacao_aberto.getColumnModel().getColumn(0).setPreferredWidth(20);
+            jtbl_locacao_aberto.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jtbl_locacao_aberto.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jtbl_locacao_aberto.getColumnModel().getColumn(3).setPreferredWidth(30);
+            jtbl_locacao_aberto.getColumnModel().getColumn(4).setPreferredWidth(20);
+            jtbl_locacao_aberto.getColumnModel().getColumn(5).setPreferredWidth(20);
+            jtbl_locacao_aberto.getColumnModel().getColumn(6).setPreferredWidth(20);
+        }
 
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {
-                        return canEdit [columnIndex];
-                    }
-                });
-                jtbl_locacao_aberto.setName("jtbl_locacao_aberto"); // NOI18N
-                jtbl_locacao_aberto.addKeyListener(new java.awt.event.KeyAdapter() {
-                    public void keyPressed(java.awt.event.KeyEvent evt) {
-                        jtbl_locacao_abertoKeyPressed(evt);
-                    }
-                });
-                jScrollPane6.setViewportView(jtbl_locacao_aberto);
-                if (jtbl_locacao_aberto.getColumnModel().getColumnCount() > 0) {
-                    jtbl_locacao_aberto.getColumnModel().getColumn(0).setPreferredWidth(20);
-                    jtbl_locacao_aberto.getColumnModel().getColumn(1).setPreferredWidth(100);
-                    jtbl_locacao_aberto.getColumnModel().getColumn(2).setPreferredWidth(100);
-                    jtbl_locacao_aberto.getColumnModel().getColumn(3).setPreferredWidth(30);
-                    jtbl_locacao_aberto.getColumnModel().getColumn(4).setPreferredWidth(20);
-                    jtbl_locacao_aberto.getColumnModel().getColumn(5).setPreferredWidth(20);
-                    jtbl_locacao_aberto.getColumnModel().getColumn(6).setPreferredWidth(20);
-                }
+        buttonGroup1.add(jrb_ator);
+        jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jrb_ator.setText("Ator");
+        jrb_ator.setName("jrb_ator"); // NOI18N
+        jrb_ator.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_atorActionPerformed(evt);
+            }
+        });
 
-                buttonGroup1.add(jrb_ator);
-                jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jrb_ator.setText("Ator");
-                jrb_ator.setName("jrb_ator"); // NOI18N
-                jrb_ator.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_atorActionPerformed(evt);
-                    }
-                });
+        buttonGroup1.add(jrb_codigo_barras);
+        jrb_codigo_barras.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jrb_codigo_barras.setText("Código de Barras");
+        jrb_codigo_barras.setName("jrb_codigo_barras"); // NOI18N
+        jrb_codigo_barras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_codigo_barrasActionPerformed(evt);
+            }
+        });
 
-                buttonGroup1.add(jrb_codigo_barras);
-                jrb_codigo_barras.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jrb_codigo_barras.setText("Código de Barras");
-                jrb_codigo_barras.setName("jrb_codigo_barras"); // NOI18N
-                jrb_codigo_barras.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_codigo_barrasActionPerformed(evt);
-                    }
-                });
+        buttonGroup1.add(jrb_codigo);
+        jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jrb_codigo.setText("Código Objeto");
+        jrb_codigo.setName("jrb_codigo"); // NOI18N
+        jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_codigoActionPerformed(evt);
+            }
+        });
 
-                buttonGroup1.add(jrb_codigo);
-                jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jrb_codigo.setText("Código Objeto");
-                jrb_codigo.setName("jrb_codigo"); // NOI18N
-                jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_codigoActionPerformed(evt);
-                    }
-                });
+        buttonGroup1.add(jrb_titulo);
+        jrb_titulo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jrb_titulo.setSelected(true);
+        jrb_titulo.setText("Título");
+        jrb_titulo.setName("jrb_titulo"); // NOI18N
+        jrb_titulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_tituloActionPerformed(evt);
+            }
+        });
 
-                buttonGroup1.add(jrb_titulo);
-                jrb_titulo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jrb_titulo.setSelected(true);
-                jrb_titulo.setText("Título");
-                jrb_titulo.setName("jrb_titulo"); // NOI18N
-                jrb_titulo.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_tituloActionPerformed(evt);
-                    }
-                });
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel1.setText("Parâmetro");
+        jLabel1.setName("jLabel1"); // NOI18N
 
-                jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jLabel1.setText("Parâmetro");
-                jLabel1.setName("jLabel1"); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/fornecedor.gif"))); // NOI18N
+        jButton1.setText("Verificar Cliente");
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-                jButton1.setText("Verificar Cliente");
-                jButton1.setName("jButton1"); // NOI18N
-                jButton1.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jButton1ActionPerformed(evt);
-                    }
-                });
-
-                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-                jPanel1.setLayout(jPanel1Layout);
-                jPanel1Layout.setHorizontalGroup(
-                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 974, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jrb_titulo)
@@ -241,91 +241,93 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
                                 .addComponent(jrb_codigo_barras)
                                 .addGap(8, 8, 8)
                                 .addComponent(jrb_codigo))
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 974, Short.MAX_VALUE)
+                            .addComponent(jLabel1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(jb_buscar)
-                                .addGap(57, 57, 57)
-                                .addComponent(jButton1))
-                            .addComponent(jLabel1))
-                        .addGap(10, 10, 10))
-                );
-                jPanel1Layout.setVerticalGroup(
-                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jrb_titulo)
-                            .addComponent(jrb_ator)
-                            .addComponent(jrb_codigo_barras)
-                            .addComponent(jrb_codigo))
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jb_buscar))
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                );
+                                .addGap(10, 10, 10)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(10, 10, 10))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jrb_titulo)
+                    .addComponent(jrb_ator)
+                    .addComponent(jrb_codigo_barras)
+                    .addComponent(jrb_codigo))
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addGap(0, 0, 0)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_buscar))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
 
-                jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
-                jPanel2.setName("jPanel2"); // NOI18N
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jb_buscar, jtf_consulta});
 
-                jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-                jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
-                jb_cancelar.setText("Sair");
-                jb_cancelar.setName("jb_cancelar"); // NOI18N
-                jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jb_cancelarActionPerformed(evt);
-                    }
-                });
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        jPanel2.setName("jPanel2"); // NOI18N
 
-                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-                jPanel2.setLayout(jPanel2Layout);
-                jPanel2Layout.setHorizontalGroup(
-                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(450, 450, 450)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                );
-                jPanel2Layout.setVerticalGroup(
-                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                );
+        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+        jb_cancelar.setText("Sair");
+        jb_cancelar.setName("jb_cancelar"); // NOI18N
+        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_cancelarActionPerformed(evt);
+            }
+        });
 
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                getContentPane().setLayout(layout);
-                layout.setHorizontalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(20, 20, 20))
-                );
-                layout.setVerticalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
-                );
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(450, 450, 450)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+        );
 
-                pack();
-                setLocationRelativeTo(null);
-            }// </editor-fold>//GEN-END:initComponents
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         setVisible(false);
@@ -432,7 +434,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
         }
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            botaoOK(jtbl_locacao_aberto);
+            verificarCliente();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_locacao_abertoKeyPressed
@@ -443,9 +445,16 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
     }//GEN-LAST:event_jrb_atorActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        verificarCliente();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jtbl_locacao_abertoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_locacao_abertoMouseClicked
+        if(evt.getClickCount() > 1){
+            verificarCliente();
+        }
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_locacao_abertoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -577,15 +586,14 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
                     SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                     SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
 
-//                    String data_locacao;
-//                    data_locacao = out.format(in.parse(itemLocacoes.get(i).getData_locacao().toString()));
-                    String data_devolucao = out.format(in.parse(itemLocacoes.get(i).getData_devolucao().toString()));
+                    String data_prevista = out.format(in.parse(itemLocacoes.get(i).getData_prevista().toString()));
 
                     Moeda moeda = new Moeda();
 
                     DefaultTableModel row = (DefaultTableModel) LocacaoEmAberto.jtbl_locacao_aberto.getModel();
                     ItemDbGrid hashDbGrid = new ItemDbGrid(itemLocacao, itemLocacao.getCopia().getObjeto().getTitulo());
-                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), itemLocacao.getDependente().getNome_dependente(), hashDbGrid, df_data_hora_locada.format(itemLocacao.getData_locacao()), data_devolucao,
+                    row.addRow(new Object[]{itemLocacao.getCopia().getCodigo_barras(), itemLocacao.getDependente().getNome_dependente(), 
+                        hashDbGrid, df_data_hora_locada.format(itemLocacao.getData_locacao()), data_prevista,
                         moeda.setPrecoFormat(String.valueOf(itemLocacao.getValor_multa())), itemLocacao.getDias_multa()});
 
                 }
@@ -609,7 +617,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
         }
     }
     
-    public void alterar() {
+    public void verificarCliente() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();

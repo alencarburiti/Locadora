@@ -177,6 +177,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_gerar_relatorioActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_gerar_relatorioKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jb_gerar_relatorio1">
@@ -324,12 +325,10 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jrb_retorno_financeiro" min="-2" max="-2" attributes="0"/>
                               <Component id="jrb_locacao_em_aberto" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButton4" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButton5" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButton6" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButton7" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jrb_fluxo_caixa_detalhado" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jrb_clientes_pendentes" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jrb_mais_locado" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -343,17 +342,13 @@
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="jrb_quantidade_locacao_relocacao" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jrb_retorno_financeiro" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="jrb_locacao_em_aberto" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
+                  <Component id="jrb_fluxo_caixa_detalhado" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jRadioButton5" min="-2" max="-2" attributes="0"/>
+                  <Component id="jrb_clientes_pendentes" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jRadioButton7" min="-2" max="-2" attributes="0"/>
+                  <Component id="jrb_mais_locado" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -366,23 +361,11 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Quantidade de Loca&#xe7;&#xe3;o | Reloca&#xe7;&#xe3;o - OK"/>
+            <Property name="text" type="java.lang.String" value="Quantidade de Loca&#xe7;&#xe3;o | Reloca&#xe7;&#xe3;o"/>
             <Property name="name" type="java.lang.String" value="jrb_quantidade_locacao_relocacao" noResource="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_quantidade_locacao_relocacaoActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="jrb_retorno_financeiro">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="buttonGroup1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Retorno financeiro por filme"/>
-            <Property name="name" type="java.lang.String" value="jrb_retorno_financeiro" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_retorno_financeiroActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrb_locacao_em_aberto">
@@ -390,45 +373,48 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Locac&#xf5;es em Aberto - OK"/>
+            <Property name="text" type="java.lang.String" value="Locac&#xf5;es em Aberto"/>
             <Property name="name" type="java.lang.String" value="jrb_locacao_em_aberto" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_locacao_em_abertoActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton4">
+        <Component class="javax.swing.JRadioButton" name="jrb_fluxo_caixa_detalhado">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Fechamento de Caixa "/>
-            <Property name="name" type="java.lang.String" value="jRadioButton4" noResource="true"/>
+            <Property name="text" type="java.lang.String" value="Fluxo de Caixa Detalhado"/>
+            <Property name="name" type="java.lang.String" value="jrb_fluxo_caixa_detalhado" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_fluxo_caixa_detalhadoActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton5">
+        <Component class="javax.swing.JRadioButton" name="jrb_clientes_pendentes">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Fechamento de Caixa Detalhado"/>
-            <Property name="name" type="java.lang.String" value="jRadioButton5" noResource="true"/>
+            <Property name="text" type="java.lang.String" value="Clientes Pendentes"/>
+            <Property name="name" type="java.lang.String" value="jrb_clientes_pendentes" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_clientes_pendentesActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton6">
+        <Component class="javax.swing.JRadioButton" name="jrb_mais_locado">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Clientes Devedores"/>
-            <Property name="name" type="java.lang.String" value="jRadioButton6" noResource="true"/>
+            <Property name="text" type="java.lang.String" value="Mais Locados"/>
+            <Property name="name" type="java.lang.String" value="jrb_mais_locado" noResource="true"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton7">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="buttonGroup1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Filmes Inativos"/>
-            <Property name="name" type="java.lang.String" value="jRadioButton7" noResource="true"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_mais_locadoActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

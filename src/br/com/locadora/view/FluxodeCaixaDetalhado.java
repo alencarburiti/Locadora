@@ -17,7 +17,6 @@ import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -79,7 +78,7 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Dependente", "Tipo Serviço", "Caixa", "Data Lançamento", "Valor", "Usuário"
+                "Cliente/Dependente", "Tipo Serviço", "Caixa", "Data Lançamento", "Valor", "Usuário"
             }
         ) {
             Class[] types = new Class [] {
@@ -106,9 +105,12 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jtbl_lancamento_caixa);
         if (jtbl_lancamento_caixa.getColumnModel().getColumnCount() > 0) {
-            jtbl_lancamento_caixa.getColumnModel().getColumn(2).setPreferredWidth(20);
+            jtbl_lancamento_caixa.getColumnModel().getColumn(0).setPreferredWidth(130);
+            jtbl_lancamento_caixa.getColumnModel().getColumn(1).setPreferredWidth(120);
+            jtbl_lancamento_caixa.getColumnModel().getColumn(2).setPreferredWidth(10);
             jtbl_lancamento_caixa.getColumnModel().getColumn(3).setPreferredWidth(30);
-            jtbl_lancamento_caixa.getColumnModel().getColumn(4).setPreferredWidth(50);
+            jtbl_lancamento_caixa.getColumnModel().getColumn(4).setPreferredWidth(30);
+            jtbl_lancamento_caixa.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
@@ -129,9 +131,9 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(320, 320, 320)
+                .addGap(360, 360, 360)
                 .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(373, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,9 +150,9 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +169,7 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
-        buscarDados();
+        
 }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
@@ -214,11 +216,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     private javax.swing.JButton jb_sair;
     public static javax.swing.JTable jtbl_lancamento_caixa;
     // End of variables declaration//GEN-END:variables
-
-    public void buscarDados() {
-        controller = new SiscomController();
-        controller.processarRequisicao("consultarCliente");
-    }
 
     public void lancamentoCaixa() {
         pool = new Pool();

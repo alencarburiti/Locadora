@@ -75,24 +75,29 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jrb_titulo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="jrb_ator" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
-                          <Component id="jrb_codigo_barras" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
-                          <Component id="jrb_codigo" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane6" alignment="0" pref="974" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jtf_consulta" min="-2" pref="300" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="jb_buscar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jrb_titulo" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <Component id="jrb_ator" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
+                                  <Component id="jrb_codigo_barras" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
+                                  <Component id="jrb_codigo" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jtf_consulta" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <Component id="jb_buscar" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <Component id="jButton1" min="-2" pref="141" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               </Group>
@@ -112,9 +117,9 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jtf_consulta" min="-2" max="-2" attributes="0"/>
-                      <Component id="jb_buscar" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtf_consulta" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jb_buscar" linkSize="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="jScrollPane6" min="-2" pref="230" max="-2" attributes="0"/>
@@ -170,7 +175,7 @@
                     <Column editable="true" title="Cliente/Dependente" type="java.lang.Object"/>
                     <Column editable="false" title="Objeto" type="java.lang.Object"/>
                     <Column editable="false" title="Data Loca&#xe7;&#xe3;o" type="java.lang.String"/>
-                    <Column editable="false" title="Data Devolu&#xe7;&#xe3;o" type="java.lang.String"/>
+                    <Column editable="false" title="Data Prevista" type="java.lang.String"/>
                     <Column editable="false" title="Valor Multa" type="java.lang.String"/>
                     <Column editable="false" title="Dia atraso" type="java.lang.String"/>
                   </Table>
@@ -220,10 +225,10 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtbl_locacao_abertoMouseClicked"/>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtbl_locacao_abertoKeyPressed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtbl_locacao_aberto.setUpdateSelectionOnSort(false);&#xa;jtbl_locacao_aberto.setVerifyInputWhenFocusTarget(false);&#xa;jtbl_locacao_aberto.setDefaultEditor(Object.class, null);&#xa;jtbl_locacao_aberto.addMouseListener(new MouseAdapter() {&#xa;public void mouseClicked(MouseEvent e){&#xa;if(e.getClickCount() == 2){&#xa;    botaoOK(jtbl_locacao_aberto);&#xa;&#xa;}}});"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
             </Component>
@@ -301,6 +306,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/com/locadora/image/fornecedor.gif"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Verificar Cliente"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>

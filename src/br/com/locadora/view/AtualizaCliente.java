@@ -92,6 +92,7 @@ public final class AtualizaCliente extends javax.swing.JFrame {
             jtf_cidade.setText(cliente.getCidade());
             jtf_estado.setText(cliente.getEstado());
             jtf_email.setText(cliente.getEmail());
+            jta_observacao.setText(cliente.getObservacao());
             System.out.println("Status: " + cliente.getStatus());
             if (cliente.getStatus() == true) {
                 jrb_ativo.setSelected(true);
@@ -260,11 +261,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_salvarMouseClicked(evt);
-            }
-        });
-        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_salvarActionPerformed(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -976,16 +972,12 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(691, 691, 691)
-                .addComponent(jrb_ativo_dependente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(15, 15, 15)
-                .addComponent(jrb_inativo_dependente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtf_nome_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1008,22 +1000,27 @@ public final class AtualizaCliente extends javax.swing.JFrame {
                                 .addComponent(jLabel5)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(14, 14, 14)))))
-                .addGap(14, 14, 14))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jrb_ativo_dependente)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jrb_inativo_dependente))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(28, 28, 28))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jrb_ativo_dependente)
                     .addComponent(jrb_inativo_dependente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1583,10 +1580,6 @@ public final class AtualizaCliente extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
-
-    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

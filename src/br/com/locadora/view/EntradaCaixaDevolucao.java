@@ -4,8 +4,15 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
+import br.com.locadora.model.bean.Copia;
+import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Lancamento;
+import br.com.locadora.model.bean.Locacao;
+import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.model.dao.CopiaDAO;
+import br.com.locadora.model.dao.DevolucaoDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
@@ -17,8 +24,12 @@ import br.com.locadora.util.UnaccentedDocument;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.print.PrintException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -65,22 +76,22 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jtf_debito_devolucao = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_total_relocacao = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jtf_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel7 = new javax.swing.JLabel();
         jtf_troco = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel11 = new javax.swing.JLabel();
-        jtf_debito_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtf_total_a_pagar = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel6 = new javax.swing.JLabel();
         jtf_valor_pago = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel8 = new javax.swing.JLabel();
         jtf_desconto_entrega_antecipada = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel8 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jtf_debito_total_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel5 = new javax.swing.JLabel();
+        jtf_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jb_cancelar1 = new javax.swing.JButton();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -188,11 +199,15 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtf_login, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addGap(10, 10, 10)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel9)
+                        .addGap(119, 119, 119))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jb_logar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
         );
@@ -207,89 +222,54 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(jtf_login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jb_logar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jb_logar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jpf_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(10, 10, 10))
         );
 
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jpf_senha, jtf_login});
+
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Caixa"));
         jPanel2.setName("jPanel2"); // NOI18N
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
-        jtf_debito_devolucao.setEditable(false);
-        jtf_debito_devolucao.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_debito_devolucao.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_debito_devolucao.setText("R$ 0,00");
-        jtf_debito_devolucao.setName("jtf_debito_devolucao");
-        jtf_debito_devolucao.addActionListener(new java.awt.event.ActionListener() {
+        jtf_total_relocacao.setDocument(new UnaccentedDocument());
+        jtf_total_relocacao.setEditable(false);
+        jtf_total_relocacao.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_total_relocacao.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_total_relocacao.setText("R$ 0,00");
+        jtf_total_relocacao.setName("jtf_total_relocacao");
+        jtf_total_relocacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_debito_devolucaoActionPerformed(evt);
+                jtf_total_relocacaoActionPerformed(evt);
             }
         });
-        jtf_debito_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_total_relocacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_devolucaoFocusGained(evt);
+                jtf_total_relocacaoFocusGained(evt);
             }
         });
-        jtf_debito_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_total_relocacao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_debito_devolucaoKeyPressed(evt);
+                jtf_total_relocacaoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_debito_devolucaoKeyReleased(evt);
+                jtf_total_relocacaoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_debito_devolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 170, -1));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel1.setText("Total de Débito Devolução:");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Total de Relocação:");
         jLabel1.setName("jLabel1"); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
-
-        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel5.setText("Valor Desconto:");
-        jLabel5.setName("jLabel5"); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, -1, -1));
-
-        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
-        jtf_desconto.setEditable(false);
-        jtf_desconto.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_desconto.setText("R$ 0,00");
-        jtf_desconto.setEnabled(false);
-        jtf_desconto.setName("jtf_desconto"); // NOI18N
-        jtf_desconto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_descontoActionPerformed(evt);
-            }
-        });
-        jtf_desconto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_descontoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_descontoFocusLost(evt);
-            }
-        });
-        jtf_desconto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_descontoKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_descontoKeyReleased(evt);
-            }
-        });
-        jPanel2.add(jtf_desconto, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Troco:");
         jLabel7.setName("jLabel7"); // NOI18N
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
 
-        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
+        jtf_total_relocacao.setDocument(new UnaccentedDocument());
         jtf_troco.setEditable(false);
         jtf_troco.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_troco.setText("R$ 0,00");
@@ -312,9 +292,8 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_trocoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_troco, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 170, -1));
 
-        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
+        jtf_total_relocacao.setDocument(new UnaccentedDocument());
         jtf_debito_atual.setEditable(false);
         jtf_debito_atual.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_debito_atual.setForeground(new java.awt.Color(204, 0, 0));
@@ -338,50 +317,18 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_debito_atualKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_debito_atual, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 170, -1));
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Débito Atual:");
         jLabel11.setName("jLabel11"); // NOI18N
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, -1, -1));
-
-        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
-        jtf_debito_anterior.setEditable(false);
-        jtf_debito_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_debito_anterior.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_debito_anterior.setText("R$ 0,00");
-        jtf_debito_anterior.setName("jtf_debito_anterior"); // NOI18N
-        jtf_debito_anterior.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_debito_anteriorActionPerformed(evt);
-            }
-        });
-        jtf_debito_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_anteriorFocusGained(evt);
-            }
-        });
-        jtf_debito_anterior.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_debito_anteriorKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_debito_anteriorKeyReleased(evt);
-            }
-        });
-        jPanel2.add(jtf_debito_anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 170, -1));
-
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel2.setText("Débito Anterior Total:");
-        jLabel2.setName("jLabel2"); // NOI18N
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Total Á Pagar:");
         jLabel3.setName("jLabel3"); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, -1, -1));
 
-        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
+        jtf_total_relocacao.setDocument(new UnaccentedDocument());
         jtf_total_a_pagar.setEditable(false);
         jtf_total_a_pagar.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_total_a_pagar.setForeground(new java.awt.Color(204, 0, 0));
@@ -405,14 +352,13 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_total_a_pagarKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_total_a_pagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 170, -1));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Valor Pago:");
         jLabel6.setName("jLabel6"); // NOI18N
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
 
-        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
+        jtf_total_relocacao.setDocument(new UnaccentedDocument());
         jtf_valor_pago.setEditable(false);
         jtf_valor_pago.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_valor_pago.setText("R$ 0,00");
@@ -439,14 +385,8 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_valor_pagoKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_valor_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 170, -1));
 
-        jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel8.setText("Desconto Entrega Antecipada:");
-        jLabel8.setName("jLabel8"); // NOI18N
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
-
-        jtf_debito_devolucao.setDocument(new UnaccentedDocument());
+        jtf_total_relocacao.setDocument(new UnaccentedDocument());
         jtf_desconto_entrega_antecipada.setEditable(false);
         jtf_desconto_entrega_antecipada.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jtf_desconto_entrega_antecipada.setText("R$ 0,00");
@@ -473,7 +413,157 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 jtf_desconto_entrega_antecipadaKeyReleased(evt);
             }
         });
-        jPanel2.add(jtf_desconto_entrega_antecipada, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 170, -1));
+
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Desconto Entrega Antecipada:");
+        jLabel8.setName("jLabel8"); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Débito Total Anterior:");
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jtf_total_relocacao.setDocument(new UnaccentedDocument());
+        jtf_debito_total_anterior.setEditable(false);
+        jtf_debito_total_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_debito_total_anterior.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_debito_total_anterior.setText("R$ 0,00");
+        jtf_debito_total_anterior.setName("jtf_debito_total_anterior"); // NOI18N
+        jtf_debito_total_anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_debito_total_anteriorActionPerformed(evt);
+            }
+        });
+        jtf_debito_total_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_debito_total_anteriorFocusGained(evt);
+            }
+        });
+        jtf_debito_total_anterior.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_debito_total_anteriorKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_debito_total_anteriorKeyReleased(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Valor Desconto:");
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        jtf_total_relocacao.setDocument(new UnaccentedDocument());
+        jtf_desconto.setEditable(false);
+        jtf_desconto.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_desconto.setText("R$ 0,00");
+        jtf_desconto.setEnabled(false);
+        jtf_desconto.setName("jtf_desconto"); // NOI18N
+        jtf_desconto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_descontoActionPerformed(evt);
+            }
+        });
+        jtf_desconto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_descontoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_descontoFocusLost(evt);
+            }
+        });
+        jtf_desconto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_descontoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_descontoKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jtf_total_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jtf_debito_total_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jtf_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_debito_total_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_total_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(10, 10, 10))
+        );
 
         jb_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
         jb_cancelar1.setText("Sair");
@@ -494,22 +584,19 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
                         .addComponent(jb_salvar)
                         .addGap(10, 10, 10)
                         .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -517,7 +604,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -533,17 +620,12 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jpf_senha.requestFocus();
         if (janelapaiDevolucao != null) {
-            action = "ENTRADA_CAIXA_DEVOLUCAO";
-            jtf_debito_devolucao.setText(AtendimentoDevolucao.jtf_valor_multa.getText());
-            jtf_debito_anterior.setText(AtendimentoDevolucao.jtf_debito_total_devolucao.getText());
-            jtf_total_a_pagar.setText(AtendimentoDevolucao.jtf_valor_total.getText());
-            jtf_desconto_entrega_antecipada.setText(AtendimentoDevolucao.jtf_valor_desconto_entrega_antecipada.getText());
-//            jtf_debito_atual.setText(AtendimentoDevolucao.jtf_debito_total_devolucao.getText());
+            recalcularValores();
         }
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+        String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiDevolucao.dependente.getNome_dependente() + ".txt";
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
@@ -551,22 +633,22 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
-    private void jtf_debito_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoKeyPressed
+    private void jtf_total_relocacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_total_relocacaoKeyPressed
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_devolucaoKeyPressed
-    private void jtf_debito_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoFocusGained
+    }//GEN-LAST:event_jtf_total_relocacaoKeyPressed
+    private void jtf_total_relocacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_relocacaoFocusGained
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_devolucaoFocusGained
+    }//GEN-LAST:event_jtf_total_relocacaoFocusGained
 
-    private void jtf_debito_devolucaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoKeyReleased
+    private void jtf_total_relocacaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_total_relocacaoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_devolucaoKeyReleased
+    }//GEN-LAST:event_jtf_total_relocacaoKeyReleased
 
-    private void jtf_debito_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_devolucaoActionPerformed
+    private void jtf_total_relocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_relocacaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_devolucaoActionPerformed
+    }//GEN-LAST:event_jtf_total_relocacaoActionPerformed
 
     private void jtf_descontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_descontoActionPerformed
         // TODO add your handling code here:
@@ -646,53 +728,12 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_debito_atualKeyReleased
 
     private void jtf_valor_pagoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_pagoFocusLost
-
-        if (!jtf_valor_pago.getText().equals("")) {
-            Moeda moeda = new Moeda();
-            if (jtf_desconto.getText().equals("")) {
-                jtf_desconto.setText("R$ 0,00");
-            }
-            jtf_desconto.setText(moeda.setPrecoFormat(String.valueOf(jtf_desconto.getText())));
-
-            Double total_devolucao;
-            Double debito_anterior;
-            Double valor_pago;
-            Double troco;
-            Double desconto;
-
-            total_devolucao = moeda.getPrecoFormato(jtf_debito_devolucao.getText());
-            debito_anterior = moeda.getPrecoFormato(jtf_debito_anterior.getText());
-            desconto = moeda.getPrecoFormato(jtf_desconto.getText());
-            valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
-
-            troco = valor_pago - ((total_devolucao + debito_anterior) - desconto);
-
-            jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
-            if (troco > 0) {
-                jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
-                jtf_debito_atual.setText("R$ 0,00");
-                jtf_debito_atual.setCaretColor(Color.black);
-            } else if (troco < 0) {
-                jtf_troco.setText("R$ 0,00");
-                troco = troco * (-1);
-                jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
-                jtf_debito_atual.setCaretColor(Color.red);
-            } else {
-                jtf_troco.setText("R$ 0,00");
-                jtf_debito_atual.setText("R$ 0,00");
-                jtf_debito_atual.setCaretColor(Color.black);
-            }
-        } else {
-            jtf_valor_pago.setText("R$ 0,00");
-        }
+        recalcularValores();        
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_pagoFocusLost
 
     private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_loginKeyPressed
         acionarAtalho(evt);
-//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            jpf_senha.requestFocus();
-//        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_loginKeyPressed
 
@@ -708,40 +749,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_logarActionPerformed
 
     private void jtf_descontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusLost
-        Moeda moeda = new Moeda();
-        if (jtf_desconto.getText().equals("")) {
-            jtf_desconto.setText("R$ 0,00");
-        }
-        jtf_desconto.setText(moeda.setPrecoFormat(String.valueOf(jtf_desconto.getText())));
-
-        Double total_devolucao;
-        Double debito_anterior;
-        Double valor_pago;
-        Double troco;
-        Double desconto;
-
-        total_devolucao = moeda.getPrecoFormato(jtf_debito_devolucao.getText());
-        debito_anterior = moeda.getPrecoFormato(jtf_debito_anterior.getText());
-        desconto = moeda.getPrecoFormato(jtf_desconto.getText());
-        valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
-
-        troco = valor_pago - ((total_devolucao + debito_anterior) - desconto);
-
-        if (troco > 0) {
-            jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
-            jtf_debito_atual.setText("R$ 0,00");
-            jtf_debito_atual.setCaretColor(Color.black);
-        } else if (troco < 0) {
-            jtf_troco.setText("R$ 0,00");
-            troco = troco * (-1);
-            jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
-            jtf_debito_atual.setCaretColor(Color.red);
-        } else {
-            jtf_troco.setText("R$ 0,00");
-            jtf_debito_atual.setText("R$ 0,00");
-            jtf_debito_atual.setCaretColor(Color.black);
-        }
-        jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
+        recalcularValores();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descontoFocusLost
 
@@ -751,7 +759,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void jb_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelar1ActionPerformed
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+        String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiDevolucao.dependente.getNome_dependente() + ".txt";
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
@@ -760,22 +768,22 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1ActionPerformed
 
-    private void jtf_debito_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorActionPerformed
+    private void jtf_debito_total_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_anteriorActionPerformed
+    }//GEN-LAST:event_jtf_debito_total_anteriorActionPerformed
 
-    private void jtf_debito_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorFocusGained
+    private void jtf_debito_total_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_anteriorFocusGained
+    }//GEN-LAST:event_jtf_debito_total_anteriorFocusGained
 
-    private void jtf_debito_anteriorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorKeyPressed
+    private void jtf_debito_total_anteriorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorKeyPressed
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_anteriorKeyPressed
+    }//GEN-LAST:event_jtf_debito_total_anteriorKeyPressed
 
-    private void jtf_debito_anteriorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorKeyReleased
+    private void jtf_debito_total_anteriorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_anteriorKeyReleased
+    }//GEN-LAST:event_jtf_debito_total_anteriorKeyReleased
 
     private void jtf_total_a_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarActionPerformed
         // TODO add your handling code here:
@@ -796,7 +804,6 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            itens = new ArrayList<ItemLocacao>();
             finalizarCaixa();
         }
         acionarAtalho(evt);
@@ -882,13 +889,13 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     private javax.swing.JButton jb_logar;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JPasswordField jpf_senha;
-    public static javax.swing.JTextField jtf_debito_anterior;
     public static javax.swing.JTextField jtf_debito_atual;
-    public static javax.swing.JTextField jtf_debito_devolucao;
+    public static javax.swing.JTextField jtf_debito_total_anterior;
     public static javax.swing.JTextField jtf_desconto;
     public static javax.swing.JTextField jtf_desconto_entrega_antecipada;
     private javax.swing.JTextField jtf_login;
     public static javax.swing.JTextField jtf_total_a_pagar;
+    public static javax.swing.JTextField jtf_total_relocacao;
     public static javax.swing.JTextField jtf_troco;
     public static javax.swing.JTextField jtf_valor_pago;
     private javax.swing.JTextArea tfa_similar;
@@ -1009,10 +1016,8 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                         if (janelapaiDevolucao != null) {
 
                             calculaRelocacao();
-
-                            controller = new SiscomController();
-                            controller.processarRequisicao("cadastrarDevolucao");
-
+                            cadastrarDevolucao();
+                                                        
                             jpf_senha.setEnabled(false);
                             jb_logar.setEnabled(false);
                             jtf_valor_pago.setEnabled(false);
@@ -1026,11 +1031,13 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                             for (int i = rows - 1; i >= 0; i--) {
                                 tb_devolucao.removeRow(i);
                             }
-                            AtendimentoDevolucao.jtf_codigo_cliente.setText("");
-                            AtendimentoDevolucao.jtf_nome_cliente.setText("");
+                            janelapaiDevolucao.jtf_codigo_cliente.setText("");
+                            janelapaiDevolucao.jtf_nome_cliente.setText("");
 
-                            AtendimentoDevolucao.jtf_valor_total.setText("R$ 0,00");
-                            AtendimentoDevolucao.jtf_debito_total_devolucao.setText("R$ 0,00");
+                            janelapaiDevolucao.jtf_total_a_pagar.setText("R$ 0,00");
+                            janelapaiDevolucao.jtf_debito_total_anterior.setText("R$ 0,00");
+                            janelapaiDevolucao.jtf_total_desconto_entrega_antecipada.setText("R$ 0,00");
+
                         }
                     }
                 }
@@ -1061,7 +1068,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             finalizarCaixa();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            String nome_arquivo = "Imprimir/comprovanteLocacao_" + AtendimentoLocacao.dependente.getNome_dependente() + ".txt";
+            String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiDevolucao.dependente.getNome_dependente() + ".txt";
             File arquivo = new File(nome_arquivo);
             arquivo.deleteOnExit();
             arquivo.delete();
@@ -1101,5 +1108,164 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             janelapaiDevolucao.setStatusTela(true);
             janelapaiDevolucao.jtf_codigo_barras_objeto.requestFocus();
         }
+    }
+
+    public void recalcularValores() {
+        Moeda moeda = new Moeda();
+        Double debito_total_anterior = moeda.getPrecoFormato(janelapaiDevolucao.jtf_debito_total_anterior.getText());
+        Double total_relocacao = moeda.getPrecoFormato(janelapaiDevolucao.jtf_valor_total_relocacao.getText());
+        Double desconto_entrega_antecipada = moeda.getPrecoFormato(janelapaiDevolucao.jtf_total_desconto_entrega_antecipada.getText());
+        Double descontos = moeda.getPrecoFormato(jtf_desconto.getText());
+        Double valor_total_a_pagar = (debito_total_anterior + total_relocacao) - (desconto_entrega_antecipada + descontos);
+        Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
+        Double troco = valor_pago - valor_total_a_pagar;
+        
+        System.out.println("Total a pagar: "+ valor_total_a_pagar);
+        System.out.println("Valor pago: "+ valor_pago);
+        System.out.println("Troco: "+ troco);
+
+        jtf_debito_total_anterior.setText(moeda.setPrecoFormat(debito_total_anterior.toString()));
+        jtf_total_relocacao.setText(moeda.setPrecoFormat(total_relocacao.toString()));
+        jtf_desconto_entrega_antecipada.setText(moeda.setPrecoFormat(desconto_entrega_antecipada.toString()));
+        jtf_desconto.setText(moeda.setPrecoFormat(descontos.toString()));
+        jtf_total_a_pagar.setText(moeda.setPrecoFormat(valor_total_a_pagar.toString()));
+        jtf_valor_pago.setText(moeda.setPrecoFormat(valor_pago.toString()));
+
+        if (troco > 0) {
+            jtf_troco.setText(moeda.setPrecoFormat(troco.toString()));
+            jtf_debito_atual.setText("R$ 0,00");
+            jtf_debito_atual.setForeground(Color.black);
+        } else if (troco < 0) {
+            jtf_troco.setText("R$ 0,00");
+            troco = troco * (-1);
+            jtf_debito_atual.setText(moeda.setPrecoFormat(troco.toString()));
+            jtf_debito_atual.setForeground(Color.red);
+        } else {
+            jtf_troco.setText("R$ 0,00");
+            jtf_debito_atual.setText("R$ 0,00");
+            jtf_debito_atual.setForeground(Color.black);
+        }
+
+    }
+    
+    public void cadastrarDevolucao() {
+
+        try {            
+            pool = new Pool();
+            DevolucaoDAO devolucaoDAO = new DevolucaoDAO(pool);
+            Dependente dependente = new Dependente();            
+            
+            dependente.setCodigo_dependente(janelapaiDevolucao.dependente.getCodigo_dependente());
+            
+            Locacao locacao = new Locacao();  
+            
+            locacao.setDependente(dependente);
+            
+            Usuario usuario = new Usuario();
+            usuario.setCodigo_usuario(acesso.getUsuario().getCodigo_usuario());
+            
+            locacao.setUsuario(usuario);
+            
+            Double valor_pago;
+            Double valor_desconto;
+            Double multa;
+            Double troco;
+            Double desconto_entrega_antecipada;
+            Moeda moeda = new Moeda();
+            
+            valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
+            valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText()); 
+            multa = moeda.getPrecoFormato(jtf_total_relocacao.getText());
+            desconto_entrega_antecipada = moeda.getPrecoFormato(jtf_desconto_entrega_antecipada.getText());
+                    
+            troco = moeda.getPrecoFormato(jtf_troco.getText());
+            
+            valor_pago = valor_pago - troco;
+            
+            ArquivoConfiguracao conf = new ArquivoConfiguracao();
+            Lancamento lancamento = new Lancamento();
+            lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+            lancamento.setUsuario(usuario);
+            lancamento.setDependente(dependente);
+            TipoServico tipoServico = new TipoServico();
+            
+            lancamento.setLocacao(locacao);
+            
+            if(valor_pago > 0 ){
+                tipoServico.setCodigo_tipo_servico(7);
+                lancamento.setValor(valor_pago);
+            
+                lancamento.setTipoServico(tipoServico);
+                pool = new Pool();
+                devolucaoDAO = new DevolucaoDAO(pool);
+                devolucaoDAO.salvarLancamento(lancamento);            
+            }     
+            
+            if(desconto_entrega_antecipada > 0 ){
+                tipoServico.setCodigo_tipo_servico(9);
+                lancamento.setValor(desconto_entrega_antecipada);
+            
+                lancamento.setTipoServico(tipoServico);
+                pool = new Pool();
+                devolucaoDAO = new DevolucaoDAO(pool);
+                devolucaoDAO.salvarLancamento(lancamento);            
+            }   
+            
+            if(valor_desconto > 0 ){
+                tipoServico.setCodigo_tipo_servico(8);
+                lancamento.setValor(valor_desconto);
+                
+                lancamento.setTipoServico(tipoServico);
+                pool = new Pool();
+                devolucaoDAO = new DevolucaoDAO(pool);
+                devolucaoDAO.salvarLancamento(lancamento);
+            }
+            
+            if(multa > 0 ){
+                tipoServico.setCodigo_tipo_servico(2);
+                lancamento.setValor(multa);
+                
+                lancamento.setTipoServico(tipoServico);
+                pool = new Pool();
+                devolucaoDAO = new DevolucaoDAO(pool);
+                devolucaoDAO.salvarLancamento(lancamento);
+            }
+            
+            List<ItemLocacao> itens = new ArrayList();
+            ItemLocacao itemDevolve;
+            Copia copia;
+            for (int i = 0; i < AtendimentoDevolucao.jtbl_devolucao.getRowCount(); i++) {
+
+                itemDevolve = new ItemLocacao();
+                copia = new Copia();
+                copia.setCodigo_copia(AtendimentoDevolucao.itensDevolucao.get(i).getCopia().getCodigo_copia());
+                copia.setStatus("0");
+                itemDevolve.setCopia(copia);
+                itemDevolve.setCodigo_item_locacao(AtendimentoDevolucao.itensDevolucao.get(i).getCodigo_item_locacao());                
+                
+                Date data = new Date();          
+                data.setDate(data.getDate());                         
+                
+                
+                AtendimentoDevolucao.itensDevolucao.get(i).setData_devolucao(data);                        
+                System.out.println("Data Prevista: "+ AtendimentoDevolucao.itensDevolucao.get(i).getData_prevista());
+                itens.add(itemDevolve);
+                
+                pool = new Pool();
+                CopiaDAO copiaDAO = new CopiaDAO(pool);
+                copiaDAO.alterarStatusFilme(itemDevolve.getCopia());
+                pool = new Pool();
+                LocacaoDAO locacaoDAO = new LocacaoDAO(pool);
+                locacaoDAO.salvarDevolucao(itens);
+
+            }
+                EntradaCaixaDevolucao.itens = AtendimentoDevolucao.itensDevolucao;
+        } catch (NumberFormatException e) {
+            System.out.println("Valor inválido: " + e.getMessage());
+
+            e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(EntradaCaixaDevolucao.class.getName()).log(Level.SEVERE, null, ex);
+        }         
     }
 }

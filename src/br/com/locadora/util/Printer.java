@@ -8,7 +8,6 @@ package br.com.locadora.util;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Usuario;
-import br.com.locadora.view.AtendimentoLocacao;
 import br.com.locadora.view.EntradaCaixaLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
 import java.io.ByteArrayInputStream;
@@ -22,8 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -88,7 +85,8 @@ public class Printer {
                         linhasTxt.print(String.format("%-21s", descricao_objeto));
                     }
                     linhasTxt.print(String.format("%-7s", data_formatada));
-                    linhasTxt.print(moeda.setPrecoFormat(String.valueOf(AtendimentoLocacao.jtbl_locacao.getValueAt(x, 2).toString())));
+                    
+                    linhasTxt.print(moeda.setPrecoFormat(String.valueOf(itens.get(x).getValor_locado())));
                     linhasTxt.println();
                 }
                 Double total_locacao = moeda.getPrecoFormato(EntradaCaixaLocacao.jtf_valor_total_a_pagar.getText());
@@ -178,8 +176,15 @@ public class Printer {
 
                     String data_devolucao = dateFormat.format(itens.get(x).getData_devolucao());
                     data_devolucao = data_devolucao.substring(0, 5);
-
-                    linhasTxt.print(String.format("%-21s", itens.get(x).getCopia().getObjeto().getTitulo()));
+                    
+                    String descricao_objeto = itens.get(x).getCopia().getObjeto().getTitulo();
+                    try {
+                        linhasTxt.print(String.format("%-21s", descricao_objeto.substring(0, 19)));
+                    } catch (Exception e) {
+                        linhasTxt.print(String.format("%-21s", descricao_objeto));
+                    }
+                    
+//                    linhasTxt.print(String.format("%-21s", itens.get(x).getCopia().getObjeto().getTitulo()));
                     linhasTxt.print(String.format("%-7s", data_prevista));
                     linhasTxt.print(data_devolucao);
                     linhasTxt.println();
@@ -190,8 +195,8 @@ public class Printer {
                 Double subTotal = total_devolucao - (desconto );
 
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_debito_anterior.getText());
-                linhasTxt.println("Débito Devolução (-):       " + EntradaCaixaDevolucao.jtf_debito_devolucao.getText());
+                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_debito_total_anterior.getText());
+                linhasTxt.println("Débito Devolução (-):       " + EntradaCaixaDevolucao.jtf_total_relocacao.getText());
                 linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaDevolucao.jtf_desconto.getText());
                 linhasTxt.println("Valor Desc. Dev. Antec. (+):" + EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
@@ -347,7 +352,7 @@ public class Printer {
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return false;
 
         }

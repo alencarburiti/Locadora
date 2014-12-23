@@ -4,14 +4,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/CopiaDAO.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/util/Moeda.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/DiariaDAO.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/LocacaoDAO.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/EntradaCaixaDevolucao.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/TelaPrincipal.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/MenuRelatorio.java</file>
             <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/AtendimentoLocacao.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/EntradaCaixaLocacao.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/command/CadastrarDevolucao.java</file>
         </group>
     </open-files>
 </project-private>

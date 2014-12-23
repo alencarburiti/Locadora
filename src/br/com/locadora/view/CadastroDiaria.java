@@ -275,6 +275,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_dias.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_dias.setName("jtf_dias"); // NOI18N
         jtf_dias.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -296,6 +297,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_dias_maximo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_dias_maximo.setName("jtf_dias_maximo"); // NOI18N
         jtf_dias_maximo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -483,6 +485,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_locar_quantidade.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_locar_quantidade.setName("jtf_locar_quantidade"); // NOI18N
         jtf_locar_quantidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -498,6 +501,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_ganhar_quantidade.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_ganhar_quantidade.setName("jtf_ganhar_quantidade"); // NOI18N
         jtf_ganhar_quantidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -513,6 +517,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_ordem.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_ordem.setName("jtf_ordem"); // NOI18N
         jtf_ordem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -708,7 +713,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -1214,6 +1219,7 @@ public class CadastroDiaria extends javax.swing.JFrame {
     private void jtf_descricao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtf_horario_locacao.requestFocus();
+            jtf_horario_locacao.select(0, 0);
         }
         acionarAtalho(evt);
 

@@ -106,7 +106,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
             "WHERE\n" +
             "    A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
             "        AND A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n" +
-            "        AND CLIENTE_CODIGO_CLIENTE = ?\n" +
+            "        AND C.CLIENTE_CODIGO_CLIENTE = ?\n" +
             "        AND B.TIPO = 'C';";
         ResultSet rs = null;
         Lancamento lancamento = new Lancamento();

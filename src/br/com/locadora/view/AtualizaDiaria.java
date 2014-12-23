@@ -72,6 +72,11 @@ public class AtualizaDiaria extends javax.swing.JFrame {
             moeda = new Moeda();
             jtf_valor.setText(moeda.setPrecoFormat(this.diaria.getValor().toString()));
             jtf_relocacao.setText(moeda.setPrecoFormat(this.diaria.getMultas().toString()));
+            if(diaria.getAcumulativo() == true){
+                jcb_acumulativo.setSelected(true);
+            }else {
+                jcb_acumulativo.setSelected(false);
+            }
             carregarPromocoesLocacao(diaria);
             carregarPromocoesDevolucao(diaria);            
         }
@@ -413,6 +418,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_locar_quantidade.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_locar_quantidade.setName("jtf_locar_quantidade"); // NOI18N
         jtf_locar_quantidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -428,6 +434,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_ganhar_quantidade.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_ganhar_quantidade.setName("jtf_ganhar_quantidade"); // NOI18N
         jtf_ganhar_quantidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -443,6 +450,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_ordem.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_ordem.setName("jtf_ordem"); // NOI18N
         jtf_ordem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -542,7 +550,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jp_dias_promoca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addGap(14, 14, 14))
@@ -916,6 +924,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_dias.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_dias.setName("jtf_dias"); // NOI18N
         jtf_dias.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -937,6 +946,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
 
             }
         });
+        jtf_dias_maximo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_dias_maximo.setName("jtf_dias_maximo"); // NOI18N
         jtf_dias_maximo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -1032,7 +1042,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_salvar});

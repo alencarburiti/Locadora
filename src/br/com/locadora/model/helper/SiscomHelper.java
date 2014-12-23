@@ -2,28 +2,18 @@ package br.com.locadora.model.helper;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.command.AtualizarGenero;
-
-
-
-import br.com.locadora.model.command.CadastrarDevolucao;
-
 import br.com.locadora.model.command.CadastrarGenero;
-
-
 import br.com.locadora.model.command.ConsultarCliente;
 import br.com.locadora.model.command.ConsultarDiaria;
 import br.com.locadora.model.command.ConsultarGenero;
-import br.com.locadora.model.command.ConsultarLocacao;
 import br.com.locadora.model.command.ConsultarObjeto;
 import br.com.locadora.model.command.InterfaceCommand;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.CopiaDAO;
-import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.GeneroDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.model.dao.ObjetoDAO;
-import br.com.locadora.model.dao.TelefoneDAO;
 import java.util.HashMap;
 
 public class SiscomHelper {
@@ -43,10 +33,8 @@ public class SiscomHelper {
         mapaComandos.put("cadastrarGenero", new CadastrarGenero(new GeneroDAO(pool)));
         mapaComandos.put("atualizarGenero", new AtualizarGenero(new GeneroDAO(pool)));
 
-        mapaComandos.put("consultarLocacao", new ConsultarLocacao(new LocacaoDAO(pool), new ClienteDAO(pool), new CopiaDAO(pool)));
         
 
-        mapaComandos.put("cadastrarDevolucao", new CadastrarDevolucao(new LocacaoDAO(pool), new ClienteDAO(pool), new CopiaDAO(pool)));
 //                mapaComandos.put("consultarDevolucao", new ConsultarDevolucao(new LocacaoDAO(pool)));
 
         mapaComandos.put("consultarDiaria", new ConsultarDiaria(new DiariaDAO(pool)));
