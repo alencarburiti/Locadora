@@ -161,12 +161,13 @@
                   <Font name="Helvetica Neue" size="13" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="8" rowCount="0">
+                  <Table columnCount="9" rowCount="0">
                     <Column editable="false" title="C&#xf3;digo" type="java.lang.Integer"/>
                     <Column editable="false" title="C&#xf3;digo de Barras" type="java.lang.String"/>
                     <Column editable="false" title="T&#xed;tulo" type="java.lang.Object"/>
                     <Column editable="false" title="Idioma" type="java.lang.String"/>
                     <Column editable="false" title="Legenda" type="java.lang.String"/>
+                    <Column editable="false" title="M&#xed;dia" type="java.lang.Object"/>
                     <Column editable="false" title="Tipo M&#xed;dia" type="java.lang.String"/>
                     <Column editable="false" title="Livre" type="java.lang.String"/>
                     <Column editable="false" title="Data Prevista" type="java.lang.Object"/>
@@ -185,6 +186,11 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="150" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

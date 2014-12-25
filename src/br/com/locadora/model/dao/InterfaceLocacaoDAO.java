@@ -10,7 +10,7 @@ public interface InterfaceLocacaoDAO {
 
     public abstract void excluir(Integer codigo) throws SQLException;
     public abstract Locacao salvar(Locacao locacao) throws SQLException;
-    public abstract void salvarLancamento(Lancamento lancamento) throws SQLException;
+    public abstract void salvarLancamento(List<Lancamento> lancamentos) throws SQLException;
     public abstract void salvarItem(List<ItemLocacao> itemLocacao) throws SQLException;    
     public abstract void salvarDevolucao(List<ItemLocacao> itemLocacao) throws SQLException;
     public abstract void atualizar(Locacao locacao) throws SQLException;

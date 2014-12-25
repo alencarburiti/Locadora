@@ -42,6 +42,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         TemaInterface.getInterface(this);
         this.setExtendedState(this.MAXIMIZED_BOTH);
+        atendimentoLocacao = null;
+        atendimentoDevolucao = null;
     }
 
     /**
@@ -642,13 +644,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if(acesso.getEscrever() == null){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             } else if (acesso.getEscrever() == 0) {
-                atendimentoLocacao = new AtendimentoLocacao();
-                atendimentoLocacao.acesso = acesso;
-                atendimentoLocacao.setVisible(true);
-                atendimentoLocacao.janelapai = this;
-//                setStatusTela(false);
-                System.out.println("Nome da classe: " + getClass().getName());
-                System.out.println("Login: " + acesso.getUsuario().getLogin());
+                if(atendimentoLocacao == null){
+                    atendimentoLocacao = new AtendimentoLocacao();
+                    atendimentoLocacao.acesso = acesso;
+                    atendimentoLocacao.setVisible(true);
+                    atendimentoLocacao.janelapai = this;
+    //                setStatusTela(false);
+                    System.out.println("Nome da classe: " + getClass().getName());
+                    System.out.println("Login: " + acesso.getUsuario().getLogin());
+                } else {
+                    atendimentoLocacao.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -1007,11 +1013,15 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             if(acesso.getEscrever() == null){
                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
             } else if (acesso.getEscrever() == 0) {
-                atendimentoDevolucao = new AtendimentoDevolucao();
-                atendimentoDevolucao.janelapai = this;
-                atendimentoDevolucao.setVisible(true);
-//                setStatusTela(false);
-                atendimentoDevolucao.acesso = acesso;
+                if(atendimentoDevolucao == null){
+                    atendimentoDevolucao = new AtendimentoDevolucao();
+                    atendimentoDevolucao.janelapai = this;
+                    atendimentoDevolucao.setVisible(true);
+    //                setStatusTela(false);
+                    atendimentoDevolucao.acesso = acesso;
+                } else {
+                    atendimentoDevolucao.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
             }

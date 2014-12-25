@@ -124,14 +124,14 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Código de Barras", "Título", "Idioma", "Legenda", "Tipo Mídia", "Livre", "Data Prevista"
+                        "Código", "Código de Barras", "Título", "Idioma", "Legenda", "Mídia", "Tipo Mídia", "Livre", "Data Prevista"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                        java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false, false, false
+                        false, false, false, false, false, false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -159,7 +159,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                     jtbl_copia.getColumnModel().getColumn(0).setPreferredWidth(40);
                     jtbl_copia.getColumnModel().getColumn(1).setPreferredWidth(100);
                     jtbl_copia.getColumnModel().getColumn(2).setPreferredWidth(150);
-                    jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(40);
+                    jtbl_copia.getColumnModel().getColumn(7).setPreferredWidth(40);
                 }
 
                 buttonGroup1.add(jrb_titulo);
@@ -361,7 +361,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-
+        buscarDados();
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
     private void jtbl_copiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_copiaMouseClicked
@@ -529,6 +529,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 copia.setCodigo_barras(copias.get(i).getCodigo_barras());
                 copia.setStatus(copias.get(i).getStatus());
                 copia.setData_prevista(copias.get(i).getData_prevista());
+                
                 System.out.println("Data Prevista adicionada na tabela: "+ copias.get(i).getData_prevista());
                 
                 SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
@@ -545,7 +546,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
                 row.addRow(new Object[]{copia.getCodigo_copia(), copia.getCodigo_barras(),
-                    hashDbGrid, copia.getIdioma(), copia.getLegenda(),
+                    hashDbGrid, copia.getIdioma(), copia.getLegenda(), copia.getObjeto().getMidia(),
                     copia.getObjeto().getTipo_midia(), copia.getStatus(), data_prevista});
 
             }

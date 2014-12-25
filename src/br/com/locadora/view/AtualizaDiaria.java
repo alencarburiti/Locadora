@@ -1089,6 +1089,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_promocao_locacaoMouseClicked
 
     private void jtbl_promocao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_promocao_locacaoKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jcb_domingo.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getDomingo());
             jcb_segunda.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSegunda());
@@ -1209,6 +1210,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_promocao_devolucaoMouseClicked
 
     private void jtbl_promocao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_promocao_devolucaoKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_promocao_devolucaoKeyPressed
 

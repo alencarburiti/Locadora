@@ -507,7 +507,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return locacao;
     }
 
-    public void salvarLancamento(Lancamento lancamento) throws SQLException {
+    public void salvarLancamento(List<Lancamento> lancamentos) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
@@ -520,9 +520,17 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
             ps = con.prepareStatement(sqlLancamento);
 
-            setPreparedStatementLancamento(lancamento, ps);
+            for(int i = 0; i < lancamentos.size(); i++){
+                ps.setDouble(1, lancamentos.get(i).getValor());
+                ps.setInt(2, lancamentos.get(i).getDependente().getCodigo_dependente());
+                ps.setInt(3, lancamentos.get(i).getTipoServico().getCodigo_tipo_servico());
+                ps.setInt(4, lancamentos.get(i).getUsuario().getCodigo_usuario());
+                ps.setInt(5, lancamentos.get(i).getLocacao().getCodigo_locacao());
+                ps.setInt(6, lancamentos.get(i).getCaixa());
+                ps.setInt(7, lancamentos.get(i).getDependente().getCliente().getCodigo_cliente());
+                ps.executeUpdate();
+            }
 
-            ps.executeUpdate();
 
             ps.close();
         } finally {

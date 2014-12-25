@@ -884,7 +884,7 @@ public final class CadastroObjeto extends javax.swing.JFrame {
                         .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
-                .addGap(10, 10, 10))
+                .addGap(20, 20, 20))
         );
 
         pack();

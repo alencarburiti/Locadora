@@ -830,12 +830,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
                 if (jcb_codigo_barras_locacao.isSelected() == true) {
-
-//                    if (consultarCodigoDeBarras(jtf_codigo_consulta_locacao.getText().trim()) == true) {
                         if (copiaAtendimento != null) {                            
                             adicionarItemLocado(copiaAtendimento);
                         }
-//                    }
                 } else {
                     locar_consulta_codigo_objeto(Integer.parseInt(jtf_codigo_consulta_locacao.getText().trim()));
                     if (copiaAtendimento != null) {
@@ -1777,6 +1774,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         setVisible(false);
         if (janelapai != null) {
             janelapai.setStatusTela(true);
+            janelapai.atendimentoLocacao = null;
         }
     }
 

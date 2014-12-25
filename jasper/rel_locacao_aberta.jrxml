@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rel_locacao_aberta" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c87c63f-d40f-4d38-bee9-b08247c77c07">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
@@ -50,7 +50,7 @@ WHERE
         AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO
         AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA
         AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA
-        AND D.DEL_FLAG = 0
+        AND D.DEL_FLAG = 1
         AND A.TIPO_MOVIMENTO = 'LOCACAO']]>
 	</queryString>
 	<field name="CODIGO_LOCACAO" class="java.lang.Integer">

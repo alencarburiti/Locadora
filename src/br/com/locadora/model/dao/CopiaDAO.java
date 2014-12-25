@@ -257,6 +257,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             "            B.TITULO AS TITULO,\n" +
             "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n" +
             "            B.TIPO_MIDIA AS TIPO_MIDIA,\n" +
+                "            B.MIDIA AS MIDIA,\n" +
             "            B.CENSURA AS CENSURA,\n" +
             "            A.IDIOMA AS IDIOMA,\n" +
             "            A.LEGENDA AS LEGENDA,\n" +
@@ -324,6 +325,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             "    B.CODIGO_OBJETO,\n" +
             "    B.TIPO_MOVIMENTO,\n" +
             "    B.TIPO_MIDIA,\n" +
+                "            B.MIDIA AS MIDIA,\n" +
             "    B.CENSURA,\n" +
             "    A.IDIOMA,\n" +
             "    A.LEGENDA,\n" +
@@ -370,6 +372,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             "    B.CODIGO_OBJETO,\n" +
             "    B.TIPO_MOVIMENTO,\n" +
             "    B.TIPO_MIDIA,\n" +
+                "            B.MIDIA AS MIDIA,\n" +
             "    B.CENSURA,\n" +
             "    C.CODIGO_DIARIA,\n" +
             "    C.DIAS,\n" +
@@ -469,6 +472,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             "            B.TITULO AS TITULO,\n" +
             "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n" +
             "            B.TIPO_MIDIA AS TIPO_MIDIA,\n" +
+                "            B.MIDIA AS MIDIA,\n" +
             "            B.CENSURA AS CENSURA,\n" +
             "            A.IDIOMA AS IDIOMA,\n" +
             "            A.LEGENDA AS LEGENDA,\n" +
@@ -529,6 +533,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
             "            A.NUMERO_COPIA AS NUMERO_COPIA,\n" +
             "            B.TITULO AS TITULO,\n" +
             "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n" +
+            "            B.MIDIA AS MIDIA,\n" +
             "            B.TIPO_MIDIA AS TIPO_MIDIA,\n" +
             "            B.CENSURA AS CENSURA,\n" +
             "            A.IDIOMA AS IDIOMA,\n" +
@@ -680,6 +685,7 @@ public class CopiaDAO implements InterfaceCopiaDAO {
 
             objeto.setTitulo(rs.getString("TITULO"));
             objeto.setTipo_movimento(rs.getString("TIPO_MOVIMENTO"));
+            objeto.setMidia(rs.getString("MIDIA"));
             objeto.setTipo_midia(rs.getString("TIPO_MIDIA"));
             objeto.setCodigo_objeto(rs.getInt("OBJETO_CODIGO_OBJETO"));
             objeto.setCensura(rs.getInt("CENSURA"));
