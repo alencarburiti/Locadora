@@ -490,14 +490,14 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
             itemSelecionada.setValor_pago(itensDevolucao.get(tb.getSelectedRow()).getValor_pago());
 
             Diaria diaria = new Diaria();
-            diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDiaria().getDias());
-            diaria.setCodigo_diaria(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDiaria().getCodigo_diaria());
+            diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getDias());
+            diaria.setCodigo_diaria(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getCodigo_diaria());
 
             Objeto objeto = new Objeto();
-            objeto.setDiaria(diaria);
             objeto.setTitulo(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getTitulo());
 
             Copia copia = new Copia();
+            copia.setDiaria(diaria);
             copia.setObjeto(objeto);
             copia.setCodigo_copia(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_copia());
             copia.setCodigo_barras(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_barras());
@@ -562,13 +562,13 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                     itemLocacao.setData_devolucao(itemLocacoes.get(i).getData_devolucao());
 
                     Diaria diaria = new Diaria();
-                    diaria.setDias(itemLocacoes.get(i).getCopia().getObjeto().getDiaria().getDias());
+                    diaria.setDias(itemLocacoes.get(i).getCopia().getDiaria().getDias());
 
                     Objeto objeto = new Objeto();
-                    objeto.setDiaria(diaria);
                     objeto.setTitulo(itemLocacoes.get(i).getCopia().getObjeto().getTitulo());
 
                     Copia copia = new Copia();
+                    copia.setDiaria(diaria);
                     copia.setObjeto(objeto);
                     copia.setCodigo_barras(itemLocacoes.get(i).getCopia().getCodigo_barras());
 

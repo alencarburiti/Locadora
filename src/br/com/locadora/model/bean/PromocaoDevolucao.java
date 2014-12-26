@@ -19,6 +19,7 @@ public class PromocaoDevolucao {
     private String hora_antecipada;
     private String horario_locacao;
     private String horario_devolucao;
+    private boolean status;
 
     public Integer getCodigo_promocao_devolucao() {
         return codigo_promocao_devolucao;
@@ -82,6 +83,14 @@ public class PromocaoDevolucao {
 
     public void setHorario_devolucao(String horario_devolucao) {
         this.horario_devolucao = horario_devolucao;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 }

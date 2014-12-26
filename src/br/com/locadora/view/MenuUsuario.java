@@ -335,7 +335,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuUsuario");
         try {
-            if (acesso.getSuper_usuario()== 0) {
+            if (acesso.getSuper_usuario()== true) {
                 CadastroUsuario cadastroUsuario = new CadastroUsuario();
                 cadastroUsuario.janelapai = this;
                 cadastroUsuario.setVisible(true);
@@ -537,7 +537,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
 
         try {
-            if (acesso.getSuper_usuario() == 0) {
+            if (acesso.getSuper_usuario() == true) {
                 DefaultTableModel row = (DefaultTableModel) jtbl_usuario.getModel();
                 if (jtbl_usuario.getSelectedRow() != -1) {
                     int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
@@ -596,7 +596,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuUsuario");
         try {
             System.out.println("Escrever: " + acesso.getEscrever());
-            if (acesso.getSuper_usuario()== 0) {
+            if (acesso.getSuper_usuario()== true) {
                 Usuario usu = tbUsuarioLinhaSelecionada(jtbl_usuario);
                 if (usu != null) {
                     if(atualizaUsuario == null){

@@ -923,7 +923,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             if (verificaLogin()) {
                 jtf_login.setText(acesso.getUsuario().getLogin());
                 jb_salvar.setEnabled(true);
-                if (acesso.getEscrever() == 0) {
+                if (acesso.getEscrever() == true) {
                     jtf_valor_pago.setEditable(true);
                     jtf_valor_pago.setEnabled(true);
                     jtf_desconto.setEditable(true);

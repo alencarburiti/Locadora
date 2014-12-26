@@ -297,7 +297,7 @@ public class MenuProduto extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         AcessoUsuario acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuProduto");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroProduto prod = new CadastroProduto();
                 prod.setVisible(true);
                 prod.janelapai = this;
@@ -318,7 +318,7 @@ public class MenuProduto extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         AcessoUsuario acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuProduto");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
 //                CadastroProduto prod = new CadastroProduto();
 //                prod.setVisible(true);
 //                prod.janelapai = this;

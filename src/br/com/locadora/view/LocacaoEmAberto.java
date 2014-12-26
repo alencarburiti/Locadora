@@ -16,7 +16,6 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
-import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Objeto;
@@ -28,8 +27,6 @@ import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -498,14 +495,14 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
             itemSelecionada.setValor_pago(itensDevolucao.get(tb.getSelectedRow()).getValor_pago());
 
             Diaria diaria = new Diaria();
-            diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDiaria().getDias());
-            diaria.setCodigo_diaria(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getDiaria().getCodigo_diaria());
+            diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getDias());
+            diaria.setCodigo_diaria(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getCodigo_diaria());
 
             Objeto objeto = new Objeto();
-            objeto.setDiaria(diaria);
             objeto.setTitulo(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getTitulo());
 
             Copia copia = new Copia();
+            copia.setDiaria(diaria);
             copia.setObjeto(objeto);
             copia.setCodigo_copia(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_copia());
             copia.setCodigo_barras(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_barras());
@@ -571,13 +568,13 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
                     itemLocacao.setDependente(itemLocacoes.get(i).getDependente());
                     
                     Diaria diaria = new Diaria();
-                    diaria.setDias(itemLocacoes.get(i).getCopia().getObjeto().getDiaria().getDias());
+                    diaria.setDias(itemLocacoes.get(i).getCopia().getDiaria().getDias());
 
                     Objeto objeto = new Objeto();
-                    objeto.setDiaria(diaria);
                     objeto.setTitulo(itemLocacoes.get(i).getCopia().getObjeto().getTitulo());
 
                     Copia copia = new Copia();
+                    copia.setDiaria(diaria);
                     copia.setObjeto(objeto);
                     copia.setCodigo_barras(itemLocacoes.get(i).getCopia().getCodigo_barras());
 
@@ -625,7 +622,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuCliente");
         try {
             System.out.println("Escrever: " + acesso.getEscrever());
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 if(jtbl_locacao_aberto.getSelectedRow() != -1){
                     pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);

@@ -342,7 +342,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroFornecedor cadastroFornecedor = new CadastroFornecedor();
                 cadastroFornecedor.janelapai = this;
                 cadastroFornecedor.setVisible(true);
@@ -363,7 +363,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 alterar();                
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
@@ -380,7 +380,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 excluiFornecedor();               
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
@@ -552,7 +552,7 @@ if(evt.getClickCount() == 2){
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
-            if (acesso.getLer() == 0 || acesso.getEscrever() == 0) {
+            if (acesso.getLer() == true || acesso.getEscrever() == true) {
                 FornecedorModel forn = tbFornecedorLinhaSelecionada(jt_pesquisar);
                 if (forn != null) {
                     if(atualizaFornecedor == null){

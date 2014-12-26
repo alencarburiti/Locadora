@@ -456,6 +456,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
             copiaSelecionada.setCodigo_barras(copias.get(tb.getSelectedRow()).getCodigo_barras());
             copiaSelecionada.setIdioma(copias.get(tb.getSelectedRow()).getIdioma());
             copiaSelecionada.setLegenda(copias.get(tb.getSelectedRow()).getLegenda());
+            copiaSelecionada.setDiaria(copias.get(tb.getSelectedRow()).getDiaria());
             copiaSelecionada.setObjeto(copias.get(tb.getSelectedRow()).getObjeto());
         }
         return copiaSelecionada;
@@ -501,14 +502,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         copias = copiaDAO.getCopia_codigo_barras(codigo_barras);
         mostraCopia(copias);
     }
-
-    public void listaTodasCopias() throws SQLException {
-        pool = new Pool();
-        CopiaDAO copiaDAO = new CopiaDAO(pool);
-//        copias = copiaDAO.getTodasCopias();
-//        mostraCopia(copias);
-    }
-
+    
     public void mostraCopia(List<Copia> copias) {
         ((DefaultTableModel) jtbl_copia.getModel()).setRowCount(0);
         jtbl_copia.updateUI();
@@ -519,35 +513,24 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
         } else {
             for (int i = 0; i < copias.size(); i++) {
-                Copia copia = new Copia();
-
-                copia.setCodigo_copia(copias.get(i).getCodigo_copia());
-
-                copia.setIdioma(copias.get(i).getIdioma());
-                copia.setLegenda(copias.get(i).getLegenda());
-                copia.setObjeto(copias.get(i).getObjeto());
-                copia.setCodigo_barras(copias.get(i).getCodigo_barras());
-                copia.setStatus(copias.get(i).getStatus());
-                copia.setData_prevista(copias.get(i).getData_prevista());
-                
                 System.out.println("Data Prevista adicionada na tabela: "+ copias.get(i).getData_prevista());
                 
                 SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
                 String data_prevista = "";
                 try {
-                    if(copia.getData_prevista() != null){
-                        data_prevista = out.format(in.parse(copia.getData_prevista().toString()));                        
+                    if(copias.get(i).getData_prevista() != null){
+                        data_prevista = out.format(in.parse(copias.get(i).getData_prevista().toString()));                        
                     }
                 } catch (ParseException ex) {
 //                    data_prevista = "";
                 }
                 
                 DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
-                ItemDbGrid hashDbGrid = new ItemDbGrid(copia, copia.getObjeto().getTitulo());
-                row.addRow(new Object[]{copia.getCodigo_copia(), copia.getCodigo_barras(),
-                    hashDbGrid, copia.getIdioma(), copia.getLegenda(), copia.getObjeto().getMidia(),
-                    copia.getObjeto().getTipo_midia(), copia.getStatus(), data_prevista});
+                ItemDbGrid hashDbGrid = new ItemDbGrid(copias.get(i), copias.get(i).getObjeto().getTitulo());
+                row.addRow(new Object[]{copias.get(i).getCodigo_copia(), copias.get(i).getCodigo_barras(),
+                    hashDbGrid, copias.get(i).getIdioma(), copias.get(i).getLegenda(), copias.get(i).getMidia(),
+                    copias.get(i).getObjeto().getTipo_midia(), copias.get(i).getStatus(), data_prevista});
 
             }
             jtbl_copia.requestFocus();

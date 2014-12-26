@@ -121,6 +121,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jm_acesso = new javax.swing.JMenuItem();
         jm_conf_impressora = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         menu_relatórios2 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -551,6 +552,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jm_caixa.add(jMenuItem17);
 
+        jMenuItem5.setText("Controle de Licenças");
+        jMenuItem5.setName("jMenuItem5"); // NOI18N
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jm_caixa.add(jMenuItem5);
+
         jMenuItem1.setText("Trocar de usuário");
         jMenuItem1.setName("jMenuItem1"); // NOI18N
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -616,9 +626,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
         try {
-            if(acesso.getLer() == null){
+            if(acesso.getLer() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getLer() == 0) {
+            } else if (acesso.getLer() == true) {
                 menuProduto = new MenuProduto();
                 menuProduto.janelapai = this;
                 menuProduto.setVisible(true);
@@ -641,9 +651,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
 
         try {
-            if(acesso.getEscrever() == null){
+            if(acesso.getEscrever() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getEscrever() == 0) {
+            } else if (acesso.getEscrever() == true) {
                 if(atendimentoLocacao == null){
                     atendimentoLocacao = new AtendimentoLocacao();
                     atendimentoLocacao.acesso = acesso;
@@ -676,9 +686,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
 
         try {
-            if(acesso.getLer() == null){
+            if(acesso.getLer() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getLer() == 0) {
+            } else if (acesso.getLer() == true) {
                 menuGenero = new MenuGenero();
                 menuGenero.janelapai = this;
                 menuGenero.setVisible(true);
@@ -709,9 +719,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
-            if(acesso.getLer() == null){
+            if(acesso.getLer() == false){
                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
-            } else if (acesso.getLer() == 0 ) {
+            } else if (acesso.getLer() == true ) {
                 menuFornecedor = new MenuFornecedor();
                 menuFornecedor.janelapai = this;
                 menuFornecedor.setVisible(true);
@@ -752,9 +762,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.ControleAcesso");
         try {
-            if(acesso.getSuper_usuario() == null){
+            if(acesso.getSuper_usuario() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getSuper_usuario() == 0) {
+            } else if (acesso.getSuper_usuario() == true) {
                 acessoInterface = new ControleAcesso();
                 acessoInterface.janelapai = this;
                 acessoInterface.setVisible(true);
@@ -819,9 +829,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         ArquivoConfiguracao conf = new ArquivoConfiguracao();        
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
         try {
-            if(acesso.getLer() == null){
+            if(acesso.getLer() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getLer() == 0) {
+            } else if (acesso.getLer() == true) {
                 clienteInterface = new MenuCliente();
                 clienteInterface.janelapai = this;
                 clienteInterface.setVisible(true);
@@ -842,9 +852,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
 
         try {
-            if (acesso.getLer() == null){
+            if (acesso.getLer() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getLer() == 0 ) {
+            } else if (acesso.getLer() == true ) {
                 menuDiaria = new MenuDiaria();
                 menuDiaria.janelapai = this;
                 menuDiaria.setVisible(true);
@@ -865,9 +875,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
         try {
-            if(acesso.getLer() == null){
+            if(acesso.getLer() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getLer() == 0) {
+            } else if (acesso.getLer() == true) {
                 menuObjeto = new MenuObjeto();
                 menuObjeto.janelapai = this;
                 menuObjeto.setVisible(true);
@@ -887,9 +897,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuIdioma");
         try {
-            if(acesso.getLer() == null){
+            if(acesso.getLer() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getLer() == 0) {
+            } else if (acesso.getLer() == true) {
                 menuIdioma = new MenuIdioma();
                 menuIdioma.janelapai = this;
                 menuIdioma.setVisible(true);
@@ -911,9 +921,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuLegenda");
         try {
-            if(acesso.getLer() == null){
+            if(acesso.getLer() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getLer() == 0) {
+            } else if (acesso.getLer() == true) {
                 menuLegenda = new MenuLegenda();
                 menuLegenda.janelapai = this;
                 menuLegenda.setVisible(true);
@@ -960,9 +970,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.Recebimento");
 
         try {
-            if(acesso.getEscrever() == null){
+            if(acesso.getEscrever() == false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getEscrever() == 0) {
+            } else if (acesso.getEscrever() == true) {
                 recebimento = new Recebimento();
                 recebimento.janelapai = this;
                 recebimento.setVisible(true);
@@ -985,9 +995,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuUsuario");
 
         try {
-            if(acesso.getSuper_usuario()== null){
+            if(acesso.getSuper_usuario()== false){
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getSuper_usuario() == 0) {
+            } else if (acesso.getSuper_usuario() == true) {
                 menuUsuario = new MenuUsuario();
                 menuUsuario.janelapai = this;
                 menuUsuario.setVisible(true);
@@ -1010,9 +1020,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoDevolucao");
 
         try {
-            if(acesso.getEscrever() == null){
+            if(acesso.getEscrever() == false){
                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
-            } else if (acesso.getEscrever() == 0) {
+            } else if (acesso.getEscrever() == true) {
                 if(atendimentoDevolucao == null){
                     atendimentoDevolucao = new AtendimentoDevolucao();
                     atendimentoDevolucao.janelapai = this;
@@ -1056,9 +1066,9 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoDevolucao");
 
         try {
-            if(acesso.getSuper_usuario()== null){
+            if(acesso.getSuper_usuario()== false){
                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador"); 
-            } else if (acesso.getSuper_usuario() == 0) {
+            } else if (acesso.getSuper_usuario() == true) {
                 ConfiguraCaixa caixa = new ConfiguraCaixa();
                 caixa.setVisible(true);
                 setStatusTela(false);
@@ -1094,6 +1104,10 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         menuRelatorio.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1146,6 +1160,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator4;

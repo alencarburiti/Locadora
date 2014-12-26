@@ -355,7 +355,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroCliente cadastroCliente = new CadastroCliente();
                 cadastroCliente.janelapai2 = this;
                 cadastroCliente.setVisible(true);

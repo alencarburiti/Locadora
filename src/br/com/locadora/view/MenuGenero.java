@@ -296,7 +296,7 @@ public class MenuGenero extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuGenero");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroGenero cadastroGenero = new CadastroGenero();
                 cadastroGenero.janelapai = this;
                 cadastroGenero.setVisible(true);
@@ -436,7 +436,7 @@ public class MenuGenero extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
 
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 genero = tbGeneroLinhaSelecionada(jtbl_genero);
                 if (genero != null) {
                     if(atualizaGenero == null){
@@ -469,7 +469,7 @@ public class MenuGenero extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
 
         try {
-            if (acesso.getDeletar() == 0) {
+            if (acesso.getDeletar() == true) {
                 DefaultTableModel row = (DefaultTableModel) jtbl_genero.getModel();
                 if (jtbl_genero.getSelectedRow() != -1) {
                     int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);

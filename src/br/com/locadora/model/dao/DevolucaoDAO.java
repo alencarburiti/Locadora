@@ -341,10 +341,10 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
             diaria.setDias(rs.getInt("DIARIA"));
 
             Objeto objeto = new Objeto();
-            objeto.setDiaria(diaria);
             objeto.setTitulo(rs.getString("TITULO"));
 
             Copia copia = new Copia();
+            copia.setDiaria(diaria);
             copia.setObjeto(objeto);
 
             Dependente dependente = new Dependente();

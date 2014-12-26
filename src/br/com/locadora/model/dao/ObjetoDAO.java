@@ -29,14 +29,12 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
             "`TITULO_ORIGINAL` = ?,\n" +
             "`TIPO_MOVIMENTO` = ?,\n" +
             "`PRODUCAO` = ?,\n" +
-            "`DURACAO` = ?,\n" +
-            "`MIDIA` = ?,\n" +
+            "`DURACAO` = ?,\n" +            
             "`TIPO_MIDIA` = ?,\n" +
             "`ELENCO` = ?,\n" +
             "`SINOPSE` = ?,\n" +
             "`CENSURA` = ?,\n" +
-            "`GENERO_CODIGO_GENERO` = ?,\n" +
-            "`DIARIA_CODIGO_DIARIA` = ?,\n" +
+            "`GENERO_CODIGO_GENERO` = ?,\n" +            
             "`DEL_FLAG` = ?\n" +
             "WHERE `CODIGO_OBJETO` = ?;";
         try {
@@ -76,12 +74,10 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         String sqlSelect = "SELECT \n"
                 + "    *\n"
                 + "FROM\n"
-                + "    OBJETO A,\n"
-                + "    DIARIA B,\n"
+                + "    OBJETO A,\n"                
                 + "    GENERO C\n"
-                + "WHERE\n"
-                + "    A.DIARIA_CODIGO_DIARIA = B.CODIGO_DIARIA\n"
-                + "        AND A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
+                + "WHERE\n"                
+                + "        A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
                 + "        AND A.TITULO LIKE ?\n"                
                 + "GROUP BY A.CODIGO_OBJETO , A.TITULO LIMIT 0, 50;";
         
@@ -109,12 +105,10 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         String sqlSelect = "SELECT \n"
                 + "    *\n"
                 + "FROM\n"
-                + "    OBJETO A,\n"
-                + "    DIARIA B,\n"
+                + "    OBJETO A,\n"                
                 + "    GENERO C\n"
-                + "WHERE\n"
-                + "    A.DIARIA_CODIGO_DIARIA = B.CODIGO_DIARIA\n"
-                + "        AND A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
+                + "WHERE\n"                
+                + "        A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
                 + "        AND A.ELENCO LIKE ? LIMIT 0, 50;";
         
         try {
@@ -141,12 +135,10 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         String sqlSelect = "SELECT \n"
                 + "    *\n"
                 + "FROM\n"
-                + "    OBJETO A,\n"
-                + "    DIARIA B,\n"
+                + "    OBJETO A,\n"                
                 + "    GENERO C\n"
-                + "WHERE\n"
-                + "    A.DIARIA_CODIGO_DIARIA = B.CODIGO_DIARIA\n"
-                + "        AND A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
+                + "WHERE\n"                
+                + "         A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
                 + "        AND A.CODIGO_OBJETO = ? LIMIT 0, 50;";
         
         try {
@@ -196,24 +188,18 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
             objeto.setTipo_movimento(rs.getString("TIPO_MOVIMENTO"));
             objeto.setProducao(rs.getString("PRODUCAO"));
             objeto.setDuracao(rs.getString("DURACAO"));
-            objeto.setMidia(rs.getString("MIDIA"));
             objeto.setTipo_midia(rs.getString("TIPO_MIDIA"));
             objeto.setElenco(rs.getString("ELENCO"));
             objeto.setSinopse(rs.getString("SINOPSE"));
             objeto.setCensura(rs.getInt("CENSURA"));
             
-            Diaria diaria = new Diaria();
-            diaria.setCodigo_diaria(rs.getInt("DIARIA_CODIGO_DIARIA"));
-            diaria.setDias(rs.getInt("DIAS"));
-            diaria.setNome_diaria(rs.getString("NOME_DIARIA"));
-            diaria.setValor(rs.getDouble("VALOR"));
+            
             
             Genero genero = new Genero();
             genero.setCodigo_genero(rs.getInt("CODIGO_GENERO"));
             genero.setNome_genero(rs.getString("NOME_GENERO"));
             
-            objeto.setGenero(genero);
-            objeto.setDiaria(diaria);
+            objeto.setGenero(genero);            
             resultado.add(objeto);
         }
         return resultado;
@@ -225,8 +211,8 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         PreparedStatement ps;
         
         String sqlInsert = "INSERT INTO `locadora`.`OBJETO`(`TITULO`,`TITULO_ORIGINAL`,"
-                + "`TIPO_MOVIMENTO`,`PRODUCAO`,`DURACAO`,`MIDIA`,`TIPO_MIDIA`,`DIARIA_CODIGO_DIARIA`,`GENERO_CODIGO_GENERO`,`ELENCO`,"
-                + "`SINOPSE`, CENSURA)VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
+                + "`TIPO_MOVIMENTO`,`PRODUCAO`,`DURACAO`,`TIPO_MIDIA`,`GENERO_CODIGO_GENERO`,`ELENCO`,"
+                + "`SINOPSE`, CENSURA)VALUES(?,?,?,?,?,?,?,?,?,?);";
         
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -260,17 +246,15 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         ps.setString(3, objeto.getTipo_movimento());
         ps.setString(4, objeto.getProducao());
         ps.setString(5, objeto.getDuracao());
-        ps.setString(6, objeto.getMidia());
-        ps.setString(7, objeto.getTipo_midia());
-        ps.setString(8, objeto.getElenco());
-        ps.setString(9, objeto.getSinopse());
-        ps.setInt(10, objeto.getCensura());
-        ps.setInt(11, objeto.getGenero().getCodigo_genero());
-        ps.setInt(12, objeto.getDiaria().getCodigo_diaria());
-        ps.setInt(13, Integer.parseInt(objeto.getStatus()));
-        ps.setInt(14, objeto.getCodigo_objeto());
-        System.out.println("6 - Diária alterar código: "+objeto.getDiaria().getCodigo_diaria());
-        System.out.println("6 - Diária alterar descrição: "+objeto.getDiaria().getNome_diaria());
+//        ps.setString(6, objeto.getMidia());
+        ps.setString(6, objeto.getTipo_midia());
+        ps.setString(7, objeto.getElenco());
+        ps.setString(8, objeto.getSinopse());
+        ps.setInt(9, objeto.getCensura());
+        ps.setInt(10, objeto.getGenero().getCodigo_genero());
+//        ps.setInt(12, objeto.getDiaria().getCodigo_diaria());
+        ps.setInt(11, Integer.parseInt(objeto.getStatus()));
+        ps.setInt(12, objeto.getCodigo_objeto());        
     }
     
     private void setPreparedStatement1(Objeto objeto, PreparedStatement ps)
@@ -281,13 +265,13 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         ps.setString(3, objeto.getTipo_movimento());
         ps.setString(4, objeto.getProducao());
         ps.setString(5, objeto.getDuracao());
-        ps.setString(6, objeto.getMidia());
-        ps.setString(7, objeto.getTipo_midia());
-        ps.setInt(8, objeto.getDiaria().getCodigo_diaria());
-        ps.setInt(9, objeto.getGenero().getCodigo_genero());
-        ps.setString(10, objeto.getElenco());
-        ps.setString(11, objeto.getSinopse());
-        ps.setInt(12, objeto.getCensura());
+//        ps.setString(6, objeto.getMidia());
+        ps.setString(6, objeto.getTipo_midia());
+//        ps.setInt(8, objeto.getDiaria().getCodigo_diaria());
+        ps.setInt(7, objeto.getGenero().getCodigo_genero());
+        ps.setString(8, objeto.getElenco());
+        ps.setString(9, objeto.getSinopse());
+        ps.setInt(10, objeto.getCensura());
     }
     
 }

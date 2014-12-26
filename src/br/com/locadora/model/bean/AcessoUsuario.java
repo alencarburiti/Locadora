@@ -13,10 +13,10 @@ public class AcessoUsuario {
 
     private Integer codigo_acesso;
     private String action;
-    private Integer ler;
-    private Integer escrever;
-    private Integer deletar;
-    private Integer super_usuario;
+    private boolean ler;
+    private boolean escrever;
+    private boolean deletar;
+    private boolean super_usuario;
     private Usuario usuario;
     private InterfaceAcesso interfaceAcesso;
 
@@ -36,28 +36,36 @@ public class AcessoUsuario {
         this.action = action;
     }
 
-    public Integer getLer() {
+    public boolean getLer() {
         return ler;
     }
 
-    public void setLer(Integer ler) {
+    public void setLer(boolean ler) {
         this.ler = ler;
     }
 
-    public Integer getEscrever() {
+    public boolean getEscrever() {
         return escrever;
     }
 
-    public void setEscrever(Integer escrever) {
+    public void setEscrever(boolean escrever) {
         this.escrever = escrever;
     }
 
-    public Integer getDeletar() {
+    public boolean getDeletar() {
         return deletar;
     }
 
-    public void setDeletar(Integer deletar) {
+    public void setDeletar(boolean deletar) {
         this.deletar = deletar;
+    }
+
+    public boolean getSuper_usuario() {
+        return super_usuario;
+    }
+
+    public void setSuper_usuario(boolean super_usuario) {
+        this.super_usuario = super_usuario;
     }
 
     public Usuario getUsuario() {
@@ -68,14 +76,6 @@ public class AcessoUsuario {
         this.usuario = usuario;
     }
 
-    public Integer getSuper_usuario() {
-        return super_usuario;
-    }
-
-    public void setSuper_usuario(Integer super_usuario) {
-        this.super_usuario = super_usuario;
-    }
-
     public InterfaceAcesso getInterfaceAcesso() {
         return interfaceAcesso;
     }
@@ -84,4 +84,5 @@ public class AcessoUsuario {
         this.interfaceAcesso = interfaceAcesso;
     }
 
+    
 }

@@ -324,7 +324,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroObjeto cadastroObjeto = new CadastroObjeto();
                 cadastroObjeto.janelapai = this;
                 cadastroObjeto.setVisible(true);
@@ -447,16 +447,12 @@ public class MenuObjeto extends javax.swing.JFrame {
             objeto.setTitulo_original(objetos.get(tb.getSelectedRow()).getTitulo_original());
             objeto.setTipo_movimento(objetos.get(tb.getSelectedRow()).getTipo_movimento());
             objeto.setProducao(objetos.get(tb.getSelectedRow()).getProducao());
-            objeto.setDuracao(objetos.get(tb.getSelectedRow()).getDuracao());
-            objeto.setMidia(objetos.get(tb.getSelectedRow()).getMidia());
-            objeto.setTipo_midia(objetos.get(tb.getSelectedRow()).getTipo_midia());
-            objeto.setDiaria(objetos.get(tb.getSelectedRow()).getDiaria());
+            objeto.setDuracao(objetos.get(tb.getSelectedRow()).getDuracao());            
+            objeto.setTipo_midia(objetos.get(tb.getSelectedRow()).getTipo_midia());            
             objeto.setGenero(objetos.get(tb.getSelectedRow()).getGenero());
             objeto.setElenco(objetos.get(tb.getSelectedRow()).getElenco());
             objeto.setSinopse(objetos.get(tb.getSelectedRow()).getSinopse());
             objeto.setCensura(objetos.get(tb.getSelectedRow()).getCensura());
-            System.out.println("1 - Diária alterar código: " + objetos.get(tb.getSelectedRow()).getDiaria().getCodigo_diaria());
-            System.out.println("1 - Diária alterar descrição: " + objetos.get(tb.getSelectedRow()).getDiaria().getNome_diaria());
         } else {
             objeto = null;
         }
@@ -484,7 +480,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
 
         try {
-            if (acesso.getDeletar() == 0) {
+            if (acesso.getDeletar() == true) {
                 DefaultTableModel row = (DefaultTableModel) jtbl_objeto.getModel();
                 if (jtbl_objeto.getSelectedRow() != -1) {
                     int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
@@ -534,7 +530,7 @@ public class MenuObjeto extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
 
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
                 if (objeto != null) {
                     if(atualizaObjeto == null){

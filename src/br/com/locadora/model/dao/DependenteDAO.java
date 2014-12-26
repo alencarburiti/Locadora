@@ -28,9 +28,8 @@ public class DependenteDAO implements InterfaceDependenteDAO {
     public void atualizar(Dependente dependente) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlAtualizar = " UPDATE dependente SET bairro=?, celular=?, cep=?, "
-                + " cidade=?, cpf_cnpj=?, email=?, endereco=?, estado=?,"
-                + " dependente=?, nome=? WHERE codigo = ? ;";
+        String sqlAtualizar = " UPDATE `locadora`.`dependente`SET`NOME_DEPENDENTE` = ?,`PARENTESCO` = ?,`CPF` = ?,\n"
+                + "`DATA_NASCIMENTO` = ?,`DEL_FLAG` = ?,`TELEFONE` = ? WHERE `CODIGO_DEPENDENTE` = ?;";
 
         try {
             ps = con.prepareStatement(sqlAtualizar);
@@ -59,10 +58,10 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
             return false;
-        }finally {
+        } finally {
             pool.liberarConnection(con);
-        } 
-        
+        }
+
     }
 
     @Override
@@ -95,43 +94,43 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT \n" +
-            "    CLIENTE_CODIGO_CLIENTE,\n" +
-            "    NOME_DEPENDENTE,\n" +
-            "    DATA_NASCIMENTO,\n" +
-            "    TIPO_DEPENDENTE,\n" +
-            "    (CASE\n" +
-            "        WHEN (TIPO_DEPENDENTE = 0) THEN 'Cliente'\n" +
-            "        ELSE 'Dependente'\n" +
-            "    END) AS TIPO,\n" +
-            "    DEL_FLAG,\n" +
-            "    CODIGO_DEPENDENTE,\n" +
-            "    (SELECT \n" +
-            "            DEL_FLAG\n" +
-            "        FROM\n" +
-            "            CLIENTE\n" +
-            "        WHERE\n" +
-            "            A.CLIENTE_CODIGO_CLIENTE = CODIGO_CLIENTE) AS STATUS_TITULAR\n" +
-            "FROM\n" +
-            "    DEPENDENTE A\n" +
-            "WHERE\n" +
-            "    CODIGO_DEPENDENTE IN (SELECT \n" +
-            "            CODIGO_DEPENDENTE\n" +
-            "        FROM\n" +
-            "            DEPENDENTE\n" +
-            "        WHERE\n" +
-            "            CLIENTE_CODIGO_CLIENTE IN (SELECT \n" +
-            "                    B.CLIENTE_CODIGO_CLIENTE\n" +
-            "                FROM\n" +
-            "                    CLIENTE A,\n" +
-            "                    DEPENDENTE B\n" +
-            "                WHERE\n" +
-            "                    A.CODIGO_CLIENTE = B.CLIENTE_CODIGO_CLIENTE\n" +
-            "                        AND B.NOME_DEPENDENTE LIKE ?)); ";
+        String sqlSelect = "SELECT \n"
+                + "    CLIENTE_CODIGO_CLIENTE,\n"
+                + "    NOME_DEPENDENTE,\n"
+                + "    DATA_NASCIMENTO,\n"
+                + "    TIPO_DEPENDENTE,\n"
+                + "    (CASE\n"
+                + "        WHEN (TIPO_DEPENDENTE = 0) THEN 'Cliente'\n"
+                + "        ELSE 'Dependente'\n"
+                + "    END) AS TIPO,\n"
+                + "    DEL_FLAG,\n"
+                + "    CODIGO_DEPENDENTE,\n"
+                + "    (SELECT \n"
+                + "            DEL_FLAG\n"
+                + "        FROM\n"
+                + "            CLIENTE\n"
+                + "        WHERE\n"
+                + "            A.CLIENTE_CODIGO_CLIENTE = CODIGO_CLIENTE) AS STATUS_TITULAR\n"
+                + "FROM\n"
+                + "    DEPENDENTE A\n"
+                + "WHERE\n"
+                + "    CODIGO_DEPENDENTE IN (SELECT \n"
+                + "            CODIGO_DEPENDENTE\n"
+                + "        FROM\n"
+                + "            DEPENDENTE\n"
+                + "        WHERE\n"
+                + "            CLIENTE_CODIGO_CLIENTE IN (SELECT \n"
+                + "                    B.CLIENTE_CODIGO_CLIENTE\n"
+                + "                FROM\n"
+                + "                    CLIENTE A,\n"
+                + "                    DEPENDENTE B\n"
+                + "                WHERE\n"
+                + "                    A.CODIGO_CLIENTE = B.CLIENTE_CODIGO_CLIENTE\n"
+                + "                        AND B.NOME_DEPENDENTE LIKE ?)); ";
 
         try {
             ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, "%" + nome_cliente_dependente + "%");            
+            ps.setString(1, "%" + nome_cliente_dependente + "%");
 
             rs = ps.executeQuery();
 
@@ -143,53 +142,53 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         }
         return resultado;
     }
-    
+
     public Lancamento getClienteDependente(Integer codigo_cliente) {
         List<Lancamento> resultado = new ArrayList<Lancamento>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
         String devedor = null;
-        String sqlSelect = "SELECT \n" +
-            "    (CASE\n" +
-            "        WHEN (DEBITO.VALOR - CREDITO.VALOR) IS NULL THEN 0\n" +
-            "        ELSE (DEBITO.VALOR - CREDITO.VALOR)\n" +
-            "    END) AS SALDO,\n" +
-            "    SUM(DEBITO.VALOR) AS DEBITO,\n" +
-            "    SUM(CREDITO.VALOR) AS CREDITO\n" +
-            "FROM\n" +
-            "    (SELECT \n" +
-            "        (CASE\n" +
-            "                WHEN SUM(VALOR) IS NULL THEN 0\n" +
-            "                ELSE SUM(VALOR)\n" +
-            "            END) AS VALOR\n" +
-            "    FROM\n" +
-            "        LANCAMENTO A, TIPO_SERVICO B\n" +
-            "    WHERE\n" +
-            "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
-            "            AND A.DEPENDENTE_CODIGO_DEPENDENTE IN (SELECT \n" +
-            "                CODIGO_DEPENDENTE\n" +
-            "            FROM\n" +
-            "                DEPENDENTE\n" +
-            "            WHERE\n" +
-            "                CLIENTE_CODIGO_CLIENTE = ?\n" +
-            "                    AND TIPO = 'D')) AS DEBITO,\n" +
-            "    (SELECT \n" +
-            "        (CASE\n" +
-            "                WHEN SUM(VALOR) IS NULL THEN 0\n" +
-            "                ELSE SUM(VALOR)\n" +
-            "            END) AS VALOR\n" +
-            "    FROM\n" +
-            "        LANCAMENTO A, TIPO_SERVICO B\n" +
-            "    WHERE\n" +
-            "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
-            "            AND A.DEPENDENTE_CODIGO_DEPENDENTE IN (SELECT \n" +
-            "                CODIGO_DEPENDENTE\n" +
-            "            FROM\n" +
-            "                DEPENDENTE\n" +
-            "            WHERE\n" +
-            "                CLIENTE_CODIGO_CLIENTE = ?\n" +
-            "                    AND TIPO = 'C')) AS CREDITO;";            
+        String sqlSelect = "SELECT \n"
+                + "    (CASE\n"
+                + "        WHEN (DEBITO.VALOR - CREDITO.VALOR) IS NULL THEN 0\n"
+                + "        ELSE (DEBITO.VALOR - CREDITO.VALOR)\n"
+                + "    END) AS SALDO,\n"
+                + "    SUM(DEBITO.VALOR) AS DEBITO,\n"
+                + "    SUM(CREDITO.VALOR) AS CREDITO\n"
+                + "FROM\n"
+                + "    (SELECT \n"
+                + "        (CASE\n"
+                + "                WHEN SUM(VALOR) IS NULL THEN 0\n"
+                + "                ELSE SUM(VALOR)\n"
+                + "            END) AS VALOR\n"
+                + "    FROM\n"
+                + "        LANCAMENTO A, TIPO_SERVICO B\n"
+                + "    WHERE\n"
+                + "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n"
+                + "            AND A.DEPENDENTE_CODIGO_DEPENDENTE IN (SELECT \n"
+                + "                CODIGO_DEPENDENTE\n"
+                + "            FROM\n"
+                + "                DEPENDENTE\n"
+                + "            WHERE\n"
+                + "                CLIENTE_CODIGO_CLIENTE = ?\n"
+                + "                    AND TIPO = 'D')) AS DEBITO,\n"
+                + "    (SELECT \n"
+                + "        (CASE\n"
+                + "                WHEN SUM(VALOR) IS NULL THEN 0\n"
+                + "                ELSE SUM(VALOR)\n"
+                + "            END) AS VALOR\n"
+                + "    FROM\n"
+                + "        LANCAMENTO A, TIPO_SERVICO B\n"
+                + "    WHERE\n"
+                + "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n"
+                + "            AND A.DEPENDENTE_CODIGO_DEPENDENTE IN (SELECT \n"
+                + "                CODIGO_DEPENDENTE\n"
+                + "            FROM\n"
+                + "                DEPENDENTE\n"
+                + "            WHERE\n"
+                + "                CLIENTE_CODIGO_CLIENTE = ?\n"
+                + "                    AND TIPO = 'C')) AS CREDITO;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -197,15 +196,13 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             ps.setInt(2, codigo_cliente);
 
             rs = ps.executeQuery();
-            
+
             resultado = getLancamentosSaldos(rs);
             if (resultado.size() > 0) {
                 return resultado.get(0);
-            }  
-            
-//            devedor = rs.getString("DEVEDOR");
-            
+            }
 
+//            devedor = rs.getString("DEVEDOR");
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(DependenteDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -294,10 +291,10 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             dependente.setParentesco(rs.getString("PARENTESCO"));
             dependente.setTelefone(rs.getString("TELEFONE"));
             dependente.setCPF(rs.getString("CPF"));
-            if(rs.getInt("DEL_FLAG")==0){
-                dependente.setStatus(true);                
+            if (rs.getInt("DEL_FLAG") == 0) {
+                dependente.setStatus(true);
             } else {
-                dependente.setStatus(false);                
+                dependente.setStatus(false);
             }
             Cliente cliente = new Cliente();
             cliente.setCodigo_cliente(rs.getInt("CLIENTE_CODIGO_CLIENTE"));
@@ -322,8 +319,8 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             } else {
                 dependente.setTipo_dependente("Dependente");
             }
-            
-            if(rs.getInt("DEL_FLAG") == 0){
+
+            if (rs.getInt("DEL_FLAG") == 0) {
                 dependente.setStatus(true);
             } else {
                 dependente.setStatus(false);
@@ -338,14 +335,14 @@ public class DependenteDAO implements InterfaceDependenteDAO {
             } else {
                 cliente.setStatus(false);
             }
-            
+
             dependente.setCliente(cliente);
 
             resultado.add(dependente);
         }
         return resultado;
     }
-    
+
     private List<Lancamento> getLancamentosSaldos(ResultSet rs) throws SQLException {
         List<Lancamento> resultado = new ArrayList<Lancamento>();
         while (rs.next()) {
@@ -371,29 +368,28 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         try {
             ps = con.prepareStatement(sqlInsert);
             Date data_nascimento = null;
-            
-                if (dependente.getData_nascimento() != null) {
-                    data_nascimento = new Date(dependente.getData_nascimento().getTime());
-                }
-                ps.setString(1, dependente.getNome_dependente());
-                ps.setInt(2, cliente.getCodigo_cliente());
-                ps.setInt(3, Integer.parseInt(dependente.getTipo_dependente()));
-                ps.setDate(4, data_nascimento);
-                ps.setString(5, dependente.getCPF());
-                ps.setString(6, dependente.getTelefone());
-                ps.setString(7, dependente.getParentesco());
-                
-                ArquivoConfiguracao conf = new ArquivoConfiguracao();
-                ps.setInt(8, Integer.parseInt(conf.readPropertie("codigo_usuario")));
-                
-                if(dependente.getStatus() == true){
-                    ps.setInt(9, 0);
-                } else {
-                    ps.setInt(9, 1);
-                }
-                ps.executeUpdate();
-        
-            
+
+            if (dependente.getData_nascimento() != null) {
+                data_nascimento = new Date(dependente.getData_nascimento().getTime());
+            }
+            ps.setString(1, dependente.getNome_dependente());
+            ps.setInt(2, cliente.getCodigo_cliente());
+            ps.setInt(3, Integer.parseInt(dependente.getTipo_dependente()));
+            ps.setDate(4, data_nascimento);
+            ps.setString(5, dependente.getCPF());
+            ps.setString(6, dependente.getTelefone());
+            ps.setString(7, dependente.getParentesco());
+
+            ArquivoConfiguracao conf = new ArquivoConfiguracao();
+            ps.setInt(8, Integer.parseInt(conf.readPropertie("codigo_usuario")));
+
+            if (dependente.getStatus() == true) {
+                ps.setInt(9, 0);
+            } else {
+                ps.setInt(9, 1);
+            }
+            ps.executeUpdate();
+
             ps.close();
         } finally {
             pool.liberarConnection(con);
@@ -403,21 +399,22 @@ public class DependenteDAO implements InterfaceDependenteDAO {
 
     private void setPreparedStatement(Dependente dependente, PreparedStatement ps)
             throws SQLException {
-//		ps.setString(1, dependente.getNome_dependente());
-//		ps.setString(2, dependente.getNome_empresa_trabalho());
-//		ps.setString(3, dependente.getProfissao());
-//		ps.setString(4, dependente.getCpf());
-//                ps.setString(5, dependente.getData_nascimento());
-//		ps.setString(7, dependente.getEndereco());
-//		ps.setString(9, dependente.getBairro());
-//                ps.setString(8, dependente.getComplemento());
-//		ps.setString(10, dependente.getCidade());
-//		ps.setString(12, dependente.getEstado());
-//		ps.setString(11, dependente.getEmail());
-//                ps.setString(13, dependente.getLogin());
-//		ps.setString(14, dependente.getSenha());
-//		ps.setString(15, dependente.getObservacao());
-//		ps.setString(16, dependente.getStatus());
-    }
 
+        Date data_nascimento = null;
+
+        if (dependente.getData_nascimento() != null) {
+            data_nascimento = new Date(dependente.getData_nascimento().getTime());
+        }
+        ps.setString(1, dependente.getNome_dependente());
+        ps.setString(2, dependente.getParentesco());
+        ps.setString(3, dependente.getCPF());
+        ps.setDate(4, data_nascimento);
+        if (dependente.getStatus() == true) {
+            ps.setInt(5, 0);
+        } else {
+            ps.setInt(5, 1);
+        }
+        ps.setString(6, dependente.getTelefone());
+        ps.setInt(7, dependente.getCodigo_dependente());
+    }
 }

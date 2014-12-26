@@ -21,7 +21,7 @@ public class AcessoUsuarioDAO {
         this.pool = pool;
     }
     
-    public void atualizar(AcessoUsuario acessoUsuario) {
+    public void atualizar(List<AcessoUsuario> acessos) {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlAtualizar = " UPDATE `locadora`.`acesso` SET `LER` = ?,`ESCREVER` = ?,`DELETAR` = ?, `SUPER_USUARIO` = ? \n" +        
@@ -30,9 +30,10 @@ public class AcessoUsuarioDAO {
         try {
             ps = con.prepareStatement(sqlAtualizar);
 
-            setPreparedStatement(acessoUsuario, ps);
-
-            ps.executeUpdate();
+            for(int i = 0; i < acessos.size(); i++){
+                setPreparedStatement(acessos.get(i), ps);
+                ps.executeUpdate();                
+            }
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(AcessoUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -182,10 +183,30 @@ public class AcessoUsuarioDAO {
         while (rs.next()) {
             AcessoUsuario acessoUsuario = new AcessoUsuario();
             acessoUsuario.setCodigo_acesso(rs.getInt("CODIGO_ACESSO"));
-            acessoUsuario.setLer(rs.getInt("LER"));
-            acessoUsuario.setEscrever(rs.getInt("ESCREVER"));
-            acessoUsuario.setDeletar(rs.getInt("DELETAR"));
-            acessoUsuario.setSuper_usuario(rs.getInt("SUPER_USUARIO"));
+            if(rs.getInt("LER") == 0){
+                acessoUsuario.setLer(true);                
+            } else {
+                acessoUsuario.setLer(false);                
+            }
+            
+            if(rs.getInt("ESCREVER") == 0){
+                acessoUsuario.setEscrever(true);                
+            } else {
+                acessoUsuario.setEscrever(false);                
+            }
+            
+            if(rs.getInt("DELETAR") == 0){
+                acessoUsuario.setDeletar(true);                
+            } else {
+                acessoUsuario.setDeletar(false);                
+            }
+            
+            if(rs.getInt("SUPER_USUARIO") == 0){
+                acessoUsuario.setSuper_usuario(true);                
+            } else {
+                acessoUsuario.setSuper_usuario(false);                
+            }
+            
             
             InterfaceAcesso inter = new InterfaceAcesso();
             inter.setDescricao(rs.getString("DESCRICAO"));
@@ -204,7 +225,6 @@ public class AcessoUsuarioDAO {
             interfaceAcesso.setCodigo_interface(rs.getInt("CODIGO_INTERFACE"));
             interfaceAcesso.setDescricao(rs.getString("DESCRICAO"));
             interfaceAcesso.setNome_classe(rs.getString("NOME_CLASSE"));
-            interfaceAcesso.setTipo(rs.getString("TIPO"));
             interfaceAcesso.setDel_flag(rs.getInt("DEL_FLAG"));
             
             resultado.add(interfaceAcesso);
@@ -236,11 +256,30 @@ public class AcessoUsuarioDAO {
 
     private void setPreparedStatement(AcessoUsuario acessoUsuario, PreparedStatement ps)
             throws SQLException {
+        if(acessoUsuario.getLer() == true){
+            ps.setInt(1, 0);            
+        } else {
+            ps.setInt(1, 1);            
+        }
         
-        ps.setInt(1, acessoUsuario.getLer());
-        ps.setInt(2, acessoUsuario.getEscrever());
-        ps.setInt(3, acessoUsuario.getDeletar());
-        ps.setInt(4, acessoUsuario.getSuper_usuario());
+        if(acessoUsuario.getEscrever()== true){
+            ps.setInt(2, 0);            
+        } else {
+            ps.setInt(2, 1);            
+        }
+        
+        if(acessoUsuario.getDeletar()== true){
+            ps.setInt(3, 0);            
+        } else {
+            ps.setInt(3, 1);            
+        }
+        
+        if(acessoUsuario.getSuper_usuario()== true){
+            ps.setInt(4, 0);            
+        } else {
+            ps.setInt(4, 1);            
+        }
+        
         ps.setInt(5, acessoUsuario.getCodigo_acesso());
         
     }
@@ -248,10 +287,30 @@ public class AcessoUsuarioDAO {
     private void setPreparedStatement1(AcessoUsuario acessoUsuario, PreparedStatement ps)
             throws SQLException {
         
-        ps.setInt(1, acessoUsuario.getLer());
-        ps.setInt(2, acessoUsuario.getEscrever());
-        ps.setInt(3, acessoUsuario.getDeletar());
-        ps.setInt(4, acessoUsuario.getSuper_usuario());
+        if(acessoUsuario.getLer() == true){
+            ps.setInt(1, 0);            
+        } else {
+            ps.setInt(1, 1);            
+        }
+        
+        if(acessoUsuario.getEscrever()== true){
+            ps.setInt(2, 0);            
+        } else {
+            ps.setInt(2, 1);            
+        }
+        
+        if(acessoUsuario.getDeletar()== true){
+            ps.setInt(3, 0);            
+        } else {
+            ps.setInt(3, 1);            
+        }
+        
+        if(acessoUsuario.getSuper_usuario()== true){
+            ps.setInt(4, 0);            
+        } else {
+            ps.setInt(4, 1);            
+        }
+                
         ps.setInt(5, acessoUsuario.getUsuario().getCodigo_usuario());
         ps.setInt(6, acessoUsuario.getInterfaceAcesso().getCodigo_interface());
         

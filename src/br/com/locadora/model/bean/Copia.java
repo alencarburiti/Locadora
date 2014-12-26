@@ -23,6 +23,9 @@ public class Copia {
     private String status;
     private String codigo_barras;
     private Integer numero_copia;
+    private Diaria diaria;
+    private String midia;
+    private boolean defect_flag;
 
     public Integer getCodigo_copia() {
         return codigo_copia;
@@ -102,6 +105,30 @@ public class Copia {
 
     public void setData_prevista(Date data_prevista) {
         this.data_prevista = data_prevista;
+    }
+
+    public Diaria getDiaria() {
+        return diaria;
+    }
+
+    public void setDiaria(Diaria diaria) {
+        this.diaria = diaria;
+    }
+
+    public String getMidia() {
+        return midia;
+    }
+
+    public void setMidia(String midia) {
+        this.midia = midia;
+    }
+
+    public boolean getDefect_flag() {
+        return defect_flag;
+    }
+
+    public void setDefect_flag(boolean defect_flag) {
+        this.defect_flag = defect_flag;
     }
 
 }

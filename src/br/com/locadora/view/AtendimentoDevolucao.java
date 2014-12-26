@@ -1037,7 +1037,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             pool = new Pool();
             diariaDAO = new DiariaDAO(pool);
             promocoesDevolucao = null;
-            promocoesDevolucao = diariaDAO.getDiariaPromocaoDevolucao(itemLocacao.getCopia().getObjeto().getDiaria());
+            promocoesDevolucao = diariaDAO.getDiariaPromocaoDevolucao(itemLocacao.getCopia().getDiaria());
 
             DateFormat df_data_hora_locada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             DateFormat df_data = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -1224,7 +1224,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 
                 if(itemLocacao.getValor_multa() > 0){
                     desconto_entrega_antecipada = 0.00;
-                } else if (itemLocacao.getCopia().getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == 0){
+                } else if (itemLocacao.getCopia().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == 0){
                     desconto_entrega_antecipada = calcularDescontoEntregaAntecipado(itemLocacao);                                        
                 }else {
                     desconto_entrega_antecipada = 0.00;

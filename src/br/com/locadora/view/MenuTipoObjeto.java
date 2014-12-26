@@ -294,7 +294,7 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuTipoObjeto");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroTipoObjeto cadastroTipoGenero = new CadastroTipoObjeto();
                 cadastroTipoGenero.janelapai = this;
                 cadastroTipoGenero.setVisible(true);

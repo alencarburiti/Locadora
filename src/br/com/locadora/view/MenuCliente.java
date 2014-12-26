@@ -350,7 +350,7 @@ public class MenuCliente extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroCliente cadastroCliente = new CadastroCliente();
                 cadastroCliente.janelapai = this;
                 cadastroCliente.setVisible(true);
@@ -520,7 +520,7 @@ public class MenuCliente extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuCliente");
         try {
             System.out.println("Escrever: " + acesso.getEscrever());
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
 
                 cliente = tbClienteLinhaSelecionada(jtbl_cliente);
                 if (cliente != null) {
@@ -572,7 +572,7 @@ public class MenuCliente extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
 
         try {
-            if (acesso.getDeletar() == 0) {
+            if (acesso.getDeletar() == true) {
                 DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
                 if (jtbl_cliente.getSelectedRow() != -1) {
                     int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);

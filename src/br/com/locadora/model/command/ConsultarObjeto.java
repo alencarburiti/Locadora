@@ -63,10 +63,7 @@ public class ConsultarObjeto implements InterfaceCommand {
             for (Objeto objeto1 : objetos) {
                 DefaultTableModel row = (DefaultTableModel) MenuObjeto.jtbl_objeto.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(objeto1, objeto1.getTitulo());
-                row.addRow(new Object[]{objeto1.getCodigo_objeto(), hashDbGrid, objeto1.getTitulo_original(), objeto1.getElenco()});
-                
-                System.out.println("0 - Diária alterar código: "+objeto1.getDiaria().getCodigo_diaria());
-                System.out.println("0 - Diária alterar descrição: "+objeto1.getDiaria().getNome_diaria());
+                row.addRow(new Object[]{objeto1.getCodigo_objeto(), hashDbGrid, objeto1.getTitulo_original(), objeto1.getElenco()});                                
             }
             MenuObjeto.objetos = objetos;
             

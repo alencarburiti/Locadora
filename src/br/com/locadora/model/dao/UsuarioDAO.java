@@ -55,12 +55,111 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             pstm.setString(2, usuario.getLogin());
             pstm.setString(3, usuario.getSenha());
             pstm.executeUpdate();
-            
-            
+            inserirAcessos();
             conexao.desconecta();
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Não foi possivel gravar");
 
+        }
+    }
+
+    public void inserirAcessos() {
+        Conexao conexao = new Conexao();
+        try {
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement("SELECT MAX(CODIGO_USUARIO) FROM USUARIO");
+
+            ResultSet rs = pstm.executeQuery();
+            rs.next();
+            int codigo_usuario = rs.getInt("MAX(CODIGO_USUARIO)");
+
+            String acesso1 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,1);\n";
+            String acesso2 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,2);\n";
+            String acesso3 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,3);\n";
+            String acesso4 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,4);\n";
+            String acesso5 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,5);\n";
+            String acesso6 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,6);\n";
+            String acesso7 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,7);\n";
+            String acesso8 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,8);\n";
+            String acesso9 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,9);\n";
+            String acesso10 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,10);\n";
+            String acesso11 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,11);\n";
+            String acesso12 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,12);\n";
+            String acesso13 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,13);\n";
+            String acesso14 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,14);\n";
+            String acesso15 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,15);\n";
+            String acesso16 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,16);\n";
+            String acesso17 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,17);";
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso1);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso2);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso3);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso4);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso5);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso6);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso7);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso8);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso9);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso10);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso11);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso12);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso13);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso14);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso15);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso16);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso17);
+            pstm.setInt(1, codigo_usuario);
+            pstm.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -81,7 +180,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         }
     }
 
-    public boolean excluiUsuario(Usuario usuario)  throws SQLException{
+    public boolean excluiUsuario(Usuario usuario) throws SQLException {
         try {
 
             Conexao conexao = new Conexao();
@@ -120,7 +219,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         }
         return resultado;
     }
-        
+
     public List<Usuario> getUsuarios() {
         List<Usuario> resultado = new ArrayList<Usuario>();
         Connection con = pool.getConnection();
@@ -181,7 +280,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
                 usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
                 usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
-                usua.setSenha(rs.getString("SENHA"));                
+                usua.setSenha(rs.getString("SENHA"));
                 usuario.add(usua);
 
             }
@@ -206,7 +305,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
                 usua.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
                 usua.setNome_usuario(rs.getString("NOME_USUARIO"));
                 usua.setLogin(rs.getString("LOGIN"));
-                usua.setSenha(rs.getString("SENHA"));                
+                usua.setSenha(rs.getString("SENHA"));
                 usuario.add(usua);
 
             }
@@ -216,8 +315,6 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         }
         return usuario;
     }
-    
-    
 
     public List<Usuario> consultarLogin(String login) {
         List<Usuario> usuario = new ArrayList();
@@ -245,13 +342,13 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Error: "+ ex);
+            System.out.println("Error: " + ex);
         } finally {
             pool.liberarConnection(con);
         }
         return usuario;
     }
-    
+
     public List<Usuario> consultarSenha(String senha) {
         List<Usuario> usuario = new ArrayList();
         Connection con = pool.getConnection();
@@ -264,7 +361,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
 
             ps.setString(1, senha);
             rs = ps.executeQuery();
-            
+
             Usuario usua;
             while (rs.next()) {
                 usua = new Usuario();
@@ -278,7 +375,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Error: "+ ex);
+            System.out.println("Error: " + ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -321,9 +418,29 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
 
             acesso.setUsuario(usuario);
 
-            acesso.setLer(rs.getInt("LER"));
-            acesso.setEscrever(rs.getInt("ESCREVER"));
-            acesso.setDeletar(rs.getInt("DELETAR"));
+            if (rs.getInt("LER") == 0) {
+                acesso.setLer(true);
+            } else {
+                acesso.setLer(false);
+            }
+
+            if (rs.getInt("ESCREVER") == 0) {
+                acesso.setEscrever(true);
+            } else {
+                acesso.setEscrever(false);
+            }
+
+            if (rs.getInt("DELETAR") == 0) {
+                acesso.setDeletar(true);
+            } else {
+                acesso.setDeletar(false);
+            }
+
+            if (rs.getInt("SUPER_USUARIO") == 0) {
+                acesso.setSuper_usuario(true);
+            } else {
+                acesso.setSuper_usuario(false);
+            }
 
             pstm.close();
             rs.close();
@@ -332,20 +449,20 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         } catch (Exception e) {
             //e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Senha incorreta");
-                    
+
         }
         return acesso;
     }
-    
+
     public AcessoUsuario permissaoInterface(String login, String nome_classe) {
-        
+
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         AcessoUsuario acesso = new AcessoUsuario();
         Usuario usuario = new Usuario();
-            
+
         String sqlSelect = "SELECT \n"
                 + "    * \n"
                 + "FROM\n"
@@ -363,36 +480,56 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, nome_classe);
             ps.setString(2, login);
-            rs = ps.executeQuery();            
-            
-            while(rs.next()){
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
                 System.out.println("=======Início Permissão=========");
-                System.out.println("Nome da Classe:"+nome_classe);
-                System.out.println("Código do Usuário: "+rs.getInt("CODIGO_USUARIO"));
-                System.out.println("Senha: "+rs.getString("SENHA"));
-                System.out.println("Login: "+rs.getString("LOGIN"));
-                
-                System.out.println("LER: "+rs.getInt("LER"));
-                System.out.println("ESCREVER: "+rs.getInt("ESCREVER"));
-                System.out.println("DELETAR: "+rs.getInt("DELETAR"));
-                System.out.println("SUPER: "+rs.getInt("SUPER_USUARIO"));
+                System.out.println("Nome da Classe:" + nome_classe);
+                System.out.println("Código do Usuário: " + rs.getInt("CODIGO_USUARIO"));
+                System.out.println("Senha: " + rs.getString("SENHA"));
+                System.out.println("Login: " + rs.getString("LOGIN"));
+
+                System.out.println("LER: " + rs.getInt("LER"));
+                System.out.println("ESCREVER: " + rs.getInt("ESCREVER"));
+                System.out.println("DELETAR: " + rs.getInt("DELETAR"));
+                System.out.println("SUPER: " + rs.getInt("SUPER_USUARIO"));
                 System.out.println("==========Fim Permissão==========");
-                
+
                 usuario.setCodigo_usuario(rs.getInt("CODIGO_USUARIO"));
                 usuario.setLogin(rs.getString("LOGIN"));
                 usuario.setSenha(rs.getString("SENHA"));
 
                 acesso.setUsuario(usuario);
 
-                acesso.setLer(rs.getInt("LER"));
-                acesso.setEscrever(rs.getInt("ESCREVER"));
-                acesso.setDeletar(rs.getInt("DELETAR"));   
-                acesso.setSuper_usuario(rs.getInt("SUPER_USUARIO"));
+                if (rs.getInt("LER") == 0) {
+                    acesso.setLer(true);
+                } else {
+                    acesso.setLer(false);
+                }
+
+                if (rs.getInt("ESCREVER") == 0) {
+                    acesso.setEscrever(true);
+                } else {
+                    acesso.setEscrever(false);
+                }
+
+                if (rs.getInt("DELETAR") == 0) {
+                    acesso.setDeletar(true);
+                } else {
+                    acesso.setDeletar(false);
+                }
+
+                if (rs.getInt("SUPER_USUARIO") == 0) {
+                    acesso.setSuper_usuario(true);
+                } else {
+                    acesso.setSuper_usuario(false);
+                }
+
             }
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());            
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         } finally {
             pool.liberarConnection(con);
         }
@@ -407,8 +544,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
 
         AcessoUsuario acesso = new AcessoUsuario();
         Usuario usuario = new Usuario();
-            
-            
+
         String sqlInsert = "INSERT INTO `locadora`.`CAIXA`(`IP`,`NAME`,`NUMERO`)VALUES(?,?,?);";
 
         try {
@@ -417,9 +553,9 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             ps.setString(1, ip);
             ps.setString(2, name);
             ps.setInt(3, numero_caixa);
-            
-            ps.executeUpdate();            
-            
+
+            ps.executeUpdate();
+
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -430,7 +566,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         }
 
     }
-    
+
     public void excluir(Integer codigo) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -447,7 +583,6 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
     private List<Usuario> getListaUsuario(ResultSet rs) throws SQLException {
         List<Usuario> resultado = new ArrayList<Usuario>();
         while (rs.next()) {

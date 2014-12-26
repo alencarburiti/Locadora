@@ -2,9 +2,7 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
-import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
-import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
@@ -978,7 +976,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             if (verificaLogin()) {
                 jtf_login.setText(acesso.getUsuario().getLogin());
                 jb_salvar.setEnabled(true);
-                if (acesso.getEscrever() == 0) {
+                if (acesso.getEscrever() == true) {
                     jtf_valor_pago.setEditable(true);
                     jtf_valor_pago.setEnabled(true);
                     jtf_desconto.setEditable(true);
@@ -1148,10 +1146,10 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         Double valor_pago = moeda.getPrecoFormato(moeda.setPrecoFormat(jtf_valor_pago.getText()));
 
         for (int j = 0; j < janelapaiLocacao.copiasLocacao.size(); j++) {
-            System.out.println("Pagamento a vista Sem promoção: " + janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getPagamento_a_vista());
-            if (janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getPagamento_a_vista() != null) {
-                if (janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getPagamento_a_vista() == true) {
-                    valor_pagamento_a_vista = valor_pagamento_a_vista + janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao();
+            System.out.println("Pagamento a vista Sem promoção: " + janelapaiLocacao.copiasLocacao.get(j).getDiaria().getPromocaoLocacao().getPagamento_a_vista());
+            if (janelapaiLocacao.copiasLocacao.get(j).getDiaria().getPromocaoLocacao().getPagamento_a_vista() != null) {
+                if (janelapaiLocacao.copiasLocacao.get(j).getDiaria().getPromocaoLocacao().getPagamento_a_vista() == true) {
+                    valor_pagamento_a_vista = valor_pagamento_a_vista + janelapaiLocacao.copiasLocacao.get(j).getDiaria().getPromocaoLocacao().getValor_promocao_locacao();
                     break;
                 }
             }
@@ -1170,15 +1168,15 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 UsuarioDAO usuarioControl = new UsuarioDAO(pool);
                 acesso = usuarioControl.permissaoInterface(acesso.getUsuario().getLogin(), "br.com.locadora.view.EntradaCaixaLocacao");
                 try {
-                    if (acesso.getSuper_usuario() == null) {
+                    if (acesso.getSuper_usuario() == false) {
                         for (int j = 0; j < janelapaiLocacao.copiasLocacao.size(); j++) {
                             System.out.println("Size promocoes: " + promocoes.size());
                             for (int x = 0; x < promocoes.size(); x++) {
-                                if (janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == promocoes.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()) {
+                                if (janelapaiLocacao.copiasLocacao.get(j).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == promocoes.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()) {
                                     if (promocoes.get(x).getPromocaoLocacao().getPagamento_a_vista() == true) {
                                         PromocaoLocacao promocaoNull = new PromocaoLocacao();
-                                        janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().setPromocaoLocacao(promocaoNull);
-                                        janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getValor())), j, 2);
+                                        janelapaiLocacao.copiasLocacao.get(j).getDiaria().setPromocaoLocacao(promocaoNull);
+                                        janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getDiaria().getValor())), j, 2);
                                         janelapaiLocacao.jtbl_locacao.setValueAt("", j, 5);
                                         janelapaiLocacao.recalcularValorTotal();
                                         carregarValorPagar();
@@ -1188,15 +1186,15 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                         }
                         JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
 
-                    } else if (acesso.getSuper_usuario() == 1) {
+                    } else if (acesso.getSuper_usuario() == false) {
                         for (int j = 0; j < janelapaiLocacao.copiasLocacao.size(); j++) {
                             System.out.println("Size promocoes: " + promocoes.size());
                             for (int x = 0; x < promocoes.size(); x++) {
-                                if (janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == promocoes.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()) {
+                                if (janelapaiLocacao.copiasLocacao.get(j).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == promocoes.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()) {
                                     if (promocoes.get(x).getPromocaoLocacao().getPagamento_a_vista() == true) {
                                         PromocaoLocacao promocaoNull = new PromocaoLocacao();
-                                        janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().setPromocaoLocacao(promocaoNull);
-                                        janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getValor())), j, 2);
+                                        janelapaiLocacao.copiasLocacao.get(j).getDiaria().setPromocaoLocacao(promocaoNull);
+                                        janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getDiaria().getValor())), j, 2);
                                         janelapaiLocacao.jtbl_locacao.setValueAt("", j, 5);
                                         janelapaiLocacao.recalcularValorTotal();
                                         carregarValorPagar();
@@ -1214,11 +1212,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 for (int j = 0; j < janelapaiLocacao.copiasLocacao.size(); j++) {
                     System.out.println("Size promocoes: " + promocoes.size());
                     for (int x = 0; x < promocoes.size(); x++) {
-                        if (janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == promocoes.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()) {
+                        if (janelapaiLocacao.copiasLocacao.get(j).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() == promocoes.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()) {
                             if (promocoes.get(x).getPromocaoLocacao().getPagamento_a_vista() == true) {
                                 PromocaoLocacao promocaoNull = new PromocaoLocacao();
-                                janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().setPromocaoLocacao(promocaoNull);
-                                janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getObjeto().getDiaria().getValor())), j, 2);
+                                janelapaiLocacao.copiasLocacao.get(j).getDiaria().setPromocaoLocacao(promocaoNull);
+                                janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getDiaria().getValor())), j, 2);
                                 janelapaiLocacao.jtbl_locacao.setValueAt("", j, 5);
                                 janelapaiLocacao.recalcularValorTotal();
                                 carregarValorPagar();
@@ -1338,15 +1336,15 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             for (int i = 0; i < janelapaiLocacao.jtbl_locacao.getRowCount(); i++) {
                 System.out.println("==================================================");
                 System.out.println("Inciar Verificação: " + janelapaiLocacao.copiasLocacao.get(i).getObjeto().getTitulo());
-                System.out.println("Acumulativo: " + janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo());
-                if (janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getAcumulativo() == true) {
+                System.out.println("Acumulativo: " + janelapaiLocacao.copiasLocacao.get(i).getDiaria().getAcumulativo());
+                if (janelapaiLocacao.copiasLocacao.get(i).getDiaria().getAcumulativo() == true) {
                     for (int j = 0; j < diariasAcumulativas.size(); j++) {
                         if (diariasAcumulativas.size() > 0) {
-                            System.out.println("CODIGO DIARIA - DIARIA: " + diariasAcumulativas.get(j).getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
-                            if (diariasAcumulativas.get(j).getCodigo_diaria().equals(janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria())) {
-                                System.out.println("Debug 1 - Quantidade de Dias: " + janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getDias());
-                                System.out.println("Debug 2 - Quantidade de Dias Máximo: " + janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getMaximo_dias());
-                                if ((diariasAcumulativas.get(j).getQuantidade_filme() * janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getDias()) < janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getMaximo_dias()) {
+                            System.out.println("CODIGO DIARIA - DIARIA: " + diariasAcumulativas.get(j).getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + janelapaiLocacao.copiasLocacao.get(i).getDiaria().getCodigo_diaria());
+                            if (diariasAcumulativas.get(j).getCodigo_diaria().equals(janelapaiLocacao.copiasLocacao.get(i).getDiaria().getCodigo_diaria())) {
+                                System.out.println("Debug 1 - Quantidade de Dias: " + janelapaiLocacao.copiasLocacao.get(i).getDiaria().getDias());
+                                System.out.println("Debug 2 - Quantidade de Dias Máximo: " + janelapaiLocacao.copiasLocacao.get(i).getDiaria().getMaximo_dias());
+                                if ((diariasAcumulativas.get(j).getQuantidade_filme() * janelapaiLocacao.copiasLocacao.get(i).getDiaria().getDias()) < janelapaiLocacao.copiasLocacao.get(i).getDiaria().getMaximo_dias()) {
                                     diariasAcumulativas.get(j).setQuantidade_filme(diariasAcumulativas.get(j).getQuantidade_filme() + 1);
                                     diariasAcumulativas.get(j).setDias_previsto(diariasAcumulativas.get(j).getDias_previsto() + 1);
                                     System.out.println("Quantidade de filme: " + diariasAcumulativas.get(j).getQuantidade_filme() + " Dias Previsto: " + diariasAcumulativas.get(j).getDias_previsto());
@@ -1361,8 +1359,8 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 } else {
                     for (int j = 0; j < diariasAcumulativas.size(); j++) {
                         if (diariasAcumulativas.size() > 0) {
-                            System.out.println("CODIGO DIARIA - DIARIA: " + diariasAcumulativas.get(j).getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria());
-                            if (diariasAcumulativas.get(j).getCodigo_diaria().equals(janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria())) {
+                            System.out.println("CODIGO DIARIA - DIARIA: " + diariasAcumulativas.get(j).getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + janelapaiLocacao.copiasLocacao.get(i).getDiaria().getCodigo_diaria());
+                            if (diariasAcumulativas.get(j).getCodigo_diaria().equals(janelapaiLocacao.copiasLocacao.get(i).getDiaria().getCodigo_diaria())) {
                                 diariasAcumulativas.get(j).setDias_previsto(diariasAcumulativas.get(j).getDias());
                             }
                         }
@@ -1374,22 +1372,22 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             for (int i = 0; i < janelapaiLocacao.jtbl_locacao.getRowCount(); i++) {
                 ItemLocacao itemLocacao = new ItemLocacao();
 
-                PromocaoLocacao promocaoLocacao = janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getPromocaoLocacao();
-                Diaria diaria = janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria();
+                PromocaoLocacao promocaoLocacao = janelapaiLocacao.copiasLocacao.get(i).getDiaria().getPromocaoLocacao();
+                Diaria diaria = janelapaiLocacao.copiasLocacao.get(i).getDiaria();
                 diaria.setPromocaoLocacao(promocaoLocacao);
                 Objeto objeto = janelapaiLocacao.copiasLocacao.get(i).getObjeto();
-                objeto.setDiaria(diaria);
 
                 Copia copia = janelapaiLocacao.copiasLocacao.get(i);
+                copia.setDiaria(diaria);
                 copia.setObjeto(objeto);
                 copia.setStatus("1");
                 System.out.println("");
-                if (copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao() != null) {
-                    itemLocacao.setValor_locado(copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
-                    System.out.println("Valor Locado da Promoção: " + copia.getObjeto().getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
+                if (copia.getDiaria().getPromocaoLocacao().getValor_promocao_locacao() != null) {
+                    itemLocacao.setValor_locado(copia.getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
+                    System.out.println("Valor Locado da Promoção: " + copia.getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
                 } else {
-                    itemLocacao.setValor_locado(copia.getObjeto().getDiaria().getValor());
-                    System.out.println("Valor Locado Normal: " + copia.getObjeto().getDiaria().getValor());
+                    itemLocacao.setValor_locado(copia.getDiaria().getValor());
+                    System.out.println("Valor Locado Normal: " + copia.getDiaria().getValor());
                 }
                 if (valor_pago > 0) {
                     if (valor_pago < itemLocacao.getValor_locado()) {
@@ -1409,7 +1407,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 Calendar cal = Calendar.getInstance();
 
                 for (int d = 0; d < diariasAcumulativas.size(); d++) {
-                    if (diariasAcumulativas.get(d).getCodigo_diaria() == janelapaiLocacao.copiasLocacao.get(i).getObjeto().getDiaria().getCodigo_diaria()) {
+                    if (diariasAcumulativas.get(d).getCodigo_diaria() == janelapaiLocacao.copiasLocacao.get(i).getDiaria().getCodigo_diaria()) {
                         cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + diariasAcumulativas.get(d).getDias_previsto());
                         System.out.println("Dias: " + diariasAcumulativas.get(d).getDias_previsto());
                         System.out.println("Day Month: " + cal.get(Calendar.DAY_OF_MONTH));

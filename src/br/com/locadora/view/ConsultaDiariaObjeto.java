@@ -326,7 +326,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroDiaria cadastroDiaria = new CadastroDiaria();
                 cadastroDiaria.janelapai2 = this;
                 cadastroDiaria.setVisible(true);

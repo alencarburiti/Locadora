@@ -286,6 +286,11 @@ public class DiariaDAO implements InterfaceDiariaDAO {
             promocao.setValor_promocao_locacao(rs.getDouble("VALOR_PROMOCAO"));
             promocao.setLocar_quantidade(rs.getInt("LOCAR_QUANTIDADE"));
             promocao.setGanhar_quantidade(rs.getInt("GANHAR_QUANTIDADE"));
+            if (rs.getString("DEL_FLAG").equals("0")) {                
+                promocao.setStatus(true);
+            } else {
+                promocao.setStatus(false);
+            }
             if (rs.getString("PAGAMENTO_A_VISTA").equals("0")) {
                 System.out.println("Pagamento a vista: " + true);
                 promocao.setPagamento_a_vista(true);
@@ -364,7 +369,12 @@ public class DiariaDAO implements InterfaceDiariaDAO {
             promocaoDevolucao.setHorario_locacao(rs.getString("HORARIO_LOCACAO"));
             promocaoDevolucao.setHorario_devolucao(rs.getString("HORARIO_DEVOLUCAO"));
             promocaoDevolucao.setHora_antecipada(rs.getString("HORAS_ANTECIPADA"));
-
+            if (rs.getString("DEL_FLAG").equals("0")) {                
+                promocaoDevolucao.setStatus(true);
+            } else {
+                promocaoDevolucao.setStatus(false);
+            }
+            
             if (rs.getString("PAGAMENTO_A_VISTA").equals("0")) {
                 System.out.println("Pagamento a vista: " + true);
                 promocaoDevolucao.setPagamento_a_vista(true);
@@ -426,8 +436,8 @@ public class DiariaDAO implements InterfaceDiariaDAO {
 
         String sqlInsert = "INSERT INTO PROMOCAO_LOCACAO(`descricao_promocao`,`valor_promocao`, \n"
                 + " `ordem`,`diaria_codigo_diaria`,pagamento_a_vista, "
-                + " `domingo`, segunda, terca, quarta, quinta, sexta, sabado, locar_quantidade, ganhar_quantidade)\n"
-                + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+                + " `domingo`, segunda, terca, quarta, quinta, sexta, sabado, locar_quantidade, ganhar_quantidade, DEL_FLAG)\n"
+                + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -486,6 +496,104 @@ public class DiariaDAO implements InterfaceDiariaDAO {
 
             ps.setInt(13, diaria.getPromocaoLocacao().getLocar_quantidade());
             ps.setInt(14, diaria.getPromocaoLocacao().getGanhar_quantidade());
+            if(diaria.getPromocaoLocacao().getStatus()==true){
+                ps.setInt(15, 0);                
+            } else {
+                ps.setInt(15, 1);                
+            }
+
+            ps.executeUpdate();
+
+            ResultSet res;
+            Integer codigo_max;
+            String sql_max = "SELECT MAX(CODIGO_PROMOCAO) FROM PROMOCAO_LOCACAO";
+
+            ps = con.prepareStatement(sql_max);
+            res = ps.executeQuery();
+            res.next();
+            codigo_max = res.getInt("MAX(CODIGO_PROMOCAO)");
+            PromocaoLocacao promo = new PromocaoLocacao();
+            promo.setCodigo_promocao_locacao(codigo_max);
+            diariaRetorno.setPromocaoLocacao(promo);
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DiariaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return diariaRetorno;
+    }
+    
+    public Diaria atualizarPromocaoLocacao(Diaria diaria) {
+        Connection con = pool.getConnection();
+        PreparedStatement ps;
+        Diaria diariaRetorno = new Diaria();
+
+        String sqlInsert = "UPDATE `locadora`.`promocao_locacao`SET`DESCRICAO_PROMOCAO` = ?,`VALOR_PROMOCAO` = ?,\n" +
+        "`LOCAR_QUANTIDADE` = ?,`GANHAR_QUANTIDADE` = ?,`PAGAMENTO_A_VISTA` = ?,`ORDEM` = ?,`DOMINGO` = ?,`SEGUNDA` = ?,`TERCA` = ?,`QUARTA` = ?,\n" +
+        "`QUINTA` = ?,`SEXTA` = ?,`SABADO` = ?, DEL_FLAG = ? WHERE `CODIGO_PROMOCAO` = ?;";
+
+        try {
+            ps = con.prepareStatement(sqlInsert);
+
+            ps.setString(1, diaria.getPromocaoLocacao().getDescricao());
+            ps.setDouble(2, diaria.getPromocaoLocacao().getValor_promocao_locacao());
+            ps.setInt(3, diaria.getPromocaoLocacao().getLocar_quantidade());
+            ps.setInt(4, diaria.getPromocaoLocacao().getGanhar_quantidade());
+            if (diaria.getPromocaoLocacao().getPagamento_a_vista() == true) {
+                ps.setString(5, "0");
+            } else {
+                ps.setString(5, "1");
+            }
+            ps.setInt(6, diaria.getPromocaoLocacao().getOrderm());
+
+            if (diaria.getPromocaoLocacao().getDomingo() == true) {
+                ps.setInt(7, 0);
+            } else {
+                ps.setInt(7, 1);
+            }
+
+            if (diaria.getPromocaoLocacao().getSegunda() == true) {
+                ps.setInt(8, 0);
+            } else {
+                ps.setInt(8, 1);
+            }
+
+            if (diaria.getPromocaoLocacao().getTerca() == true) {
+                ps.setInt(9, 0);
+            } else {
+                ps.setInt(9, 1);
+            }
+
+            if (diaria.getPromocaoLocacao().getQuarta() == true) {
+                ps.setInt(10, 0);
+            } else {
+                ps.setInt(10, 1);
+            }
+
+            if (diaria.getPromocaoLocacao().getQuinta() == true) {
+                ps.setInt(11, 0);
+            } else {
+                ps.setInt(11, 1);
+            }
+
+            if (diaria.getPromocaoLocacao().getSexta() == true) {
+                ps.setInt(12, 0);
+            } else {
+                ps.setInt(12, 1);
+            }
+
+            if (diaria.getPromocaoLocacao().getSabado() == true) {
+                ps.setInt(13, 0);
+            } else {
+                ps.setInt(13, 1);
+            }
+            if(diaria.getPromocaoLocacao().getStatus()==true){
+                ps.setInt(14, 0);                
+            } else {
+                ps.setInt(14, 1);                
+            }
+            ps.setInt(15, diaria.getPromocaoLocacao().getCodigo_promocao_locacao());
 
             ps.executeUpdate();
 
@@ -515,8 +623,8 @@ public class DiariaDAO implements InterfaceDiariaDAO {
         Diaria diariaRetorno = new Diaria();
 
         String sqlInsert = "INSERT INTO promocao_devolucao(descricao, valor_promocao, \n"
-                + " `horario_locacao`,`horario_devolucao`,`horas_antecipada`,pagamento_a_vista, diaria_codigo_diaria )\n"
-                + "VALUES(?,?,?,?,?,?,?);";
+                + " `horario_locacao`,`horario_devolucao`,`horas_antecipada`,pagamento_a_vista, diaria_codigo_diaria, del_flag)\n"
+                + "VALUES(?,?,?,?,?,?,?,?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -532,7 +640,65 @@ public class DiariaDAO implements InterfaceDiariaDAO {
                 ps.setString(6, "1");
             }
             ps.setInt(7, diaria.getPromocaoDevolucao().getDiaria().getCodigo_diaria());
+            
+            if(diaria.getPromocaoDevolucao().getStatus()==true){
+                ps.setInt(8, 0);                
+            } else {
+                ps.setInt(8, 1);                
+            }
 
+            ps.executeUpdate();
+
+            ResultSet res;
+            Integer codigo_max;
+            String sql_max = "SELECT MAX(codigo_promocao_devolucao) FROM PROMOCAO_DEVOLUCAO";
+
+            ps = con.prepareStatement(sql_max);
+            res = ps.executeQuery();
+            res.next();
+            codigo_max = res.getInt("MAX(codigo_promocao_devolucao)");
+            PromocaoDevolucao promoDevolucao = new PromocaoDevolucao();
+            promoDevolucao.setCodigo_promocao_devolucao(codigo_max);
+            diariaRetorno.setPromocaoDevolucao(promoDevolucao);
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DiariaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return diariaRetorno;
+    }
+    
+    public Diaria atualizaPromocaoDevolucao(Diaria diaria) {
+        Connection con = pool.getConnection();
+        PreparedStatement ps;
+        Diaria diariaRetorno = new Diaria();
+
+        String sqlInsert = "UPDATE `locadora`.`promocao_devolucao`SET\n" +
+            "`DESCRICAO` = ?,`HORARIO_LOCACAO` = ?,`HORARIO_DEVOLUCAO` = ?,`HORAS_ANTECIPADA` = ?,\n" +
+            "`VALOR_PROMOCAO` = ?,`PAGAMENTO_A_VISTA` = ?, DEL_FLAG = ? WHERE `CODIGO_PROMOCAO_DEVOLUCAO` = ?;";
+
+        try {
+            ps = con.prepareStatement(sqlInsert);
+
+            ps.setString(1, diaria.getPromocaoDevolucao().getDescricao());
+            ps.setString(2, diaria.getPromocaoDevolucao().getHorario_locacao());
+            ps.setString(3, diaria.getPromocaoDevolucao().getHorario_devolucao());
+            ps.setString(4, diaria.getPromocaoDevolucao().getHora_antecipada());
+            ps.setDouble(5, diaria.getPromocaoDevolucao().getValor_promocao_devolucao());
+            if (diaria.getPromocaoDevolucao().getPagamento_a_vista() == true) {
+                ps.setString(6, "0");
+            } else {
+                ps.setString(6, "1");
+            }
+            if(diaria.getPromocaoDevolucao().getStatus()==true){
+                ps.setInt(7, 0);                
+            } else {
+                ps.setInt(7, 1);                
+            }
+            ps.setInt(8, diaria.getPromocaoDevolucao().getCodigo_promocao_devolucao());
+
+            
             ps.executeUpdate();
 
             ResultSet res;

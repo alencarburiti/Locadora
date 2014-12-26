@@ -17,10 +17,10 @@ public class Objeto {
     private String titulo_original;
     private String producao;
     private String duracao;
-    private String midia;
+//    private String midia;
     private Integer censura;
     private String tipo_midia;
-    private Diaria diaria;
+//    private Diaria diaria;
     private Genero genero;
     private Integer saldo;
     private Integer disponivel;
@@ -76,13 +76,13 @@ public class Objeto {
         this.duracao = duracao;
     }
 
-    public String getMidia() {
-        return midia;
-    }
-
-    public void setMidia(String midia) {
-        this.midia = midia;
-    }
+//    public String getMidia() {
+//        return midia;
+//    }
+//
+//    public void setMidia(String midia) {
+//        this.midia = midia;
+//    }
 
     public String getTipo_midia() {
         return tipo_midia;
@@ -92,13 +92,13 @@ public class Objeto {
         this.tipo_midia = tipo_midia;
     }
 
-    public Diaria getDiaria() {
-        return diaria;
-    }
-
-    public void setDiaria(Diaria diaria) {
-        this.diaria = diaria;
-    }
+//    public Diaria getDiaria() {
+//        return diaria;
+//    }
+//
+//    public void setDiaria(Diaria diaria) {
+//        this.diaria = diaria;
+//    }
 
     public Genero getGenero() {
         return genero;

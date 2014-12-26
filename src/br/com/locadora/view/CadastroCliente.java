@@ -15,7 +15,6 @@ import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.ValidaCPF;
-import static br.com.locadora.view.MenuCliente.jtf_consulta;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -53,6 +52,8 @@ public final class CadastroCliente extends javax.swing.JFrame {
     public MaskFormatter formatoData, formatoCPF, formatoTelefone;
     public AcessoUsuario acesso;
     public TelefoneDAO telefoneDAO;
+    public String action;
+    public Dependente dependenteAlterar;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -62,6 +63,7 @@ public final class CadastroCliente extends javax.swing.JFrame {
         TemaInterface.getInterface(this);
         janelapai = null;
         janelapai2 = null;
+        action = "salvar";
     }
 
     //public ProdutoConsultarGUI janelapaim;
@@ -830,6 +832,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
             }
         });
         jtbl_dependente.setName("jtbl_dependente"); // NOI18N
+        jtbl_dependente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbl_dependenteMouseClicked(evt);
+            }
+        });
         jtbl_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtbl_dependenteKeyPressed(evt);
@@ -881,8 +888,8 @@ public final class CadastroCliente extends javax.swing.JFrame {
                         .addGap(20, 20, 20))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_nome_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel22))
+                            .addComponent(jLabel22)
+                            .addComponent(jtf_nome_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -899,11 +906,11 @@ public final class CadastroCliente extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jb_adicionar_dependente)
                         .addGap(10, 10, 10)
                         .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(10, 10, 10))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1423,7 +1430,7 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cadastrarCliente();            
+            cadastrarCliente();
         }
 
         // TODO add your handling code here:
@@ -1496,6 +1503,13 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jtbl_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_dependenteMouseClicked
+        if (evt.getClickCount() > 1) {
+            alteraDependente();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_dependenteMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1747,11 +1761,10 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             jtf_data_nascimento_dependente.setForeground(Color.red);
             msgERRO = msgERRO + " *Data de Nascimento inválida\n";
         }
-        
+
 //        if (jtf_data_nascimento_dependente.getText().trim().length() != 10) {
 //            msgERRO = msgERRO + " *Data Inválida\n";
 //        }
-
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
             jtf_nome_dependente.requestFocus();
@@ -1805,23 +1818,22 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
     }
 
-    public void alterarDependente() {
-
-        Dependente dependente = tbDependenteLinhaSelecionada(jtbl_dependente);
-        if (dependente != null) {
-            jtf_nome_dependente.setText(dependente.getNome_dependente());
-            if (dependente.getStatus() == true) {
-                jrb_ativo_dependente.setSelected(true);
-            } else {
-                jrb_inativo_dependente.setSelected(true);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um cliente");
-            jtf_consulta.requestFocus();
-        }
-    }
-
+//    public void alterarDependente() {
+//
+//        Dependente dependente = tbDependenteLinhaSelecionada(jtbl_dependente);
+//        if (dependente != null) {
+//            jtf_nome_dependente.setText(dependente.getNome_dependente());
+//            if (dependente.getStatus() == true) {
+//                jrb_ativo_dependente.setSelected(true);
+//            } else {
+//                jrb_inativo_dependente.setSelected(true);
+//            }
+//
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Selecione um cliente");
+//            jtf_consulta.requestFocus();
+//        }
+//    }
     public Dependente tbDependenteLinhaSelecionada(JTable tb) {
         try {
             Dependente dependenteSelecionado = new Dependente();
@@ -1918,8 +1930,18 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
                         dependente.setStatus(false);
                     }
 
-                    DependenteDAO dependenteDAO = new DependenteDAO(pool);
-                    dependenteDAO.salvar(dependente, cliente);
+                    if (action.equals("salvar")) {
+                        DependenteDAO dependenteDAO = new DependenteDAO(pool);
+                        dependenteDAO.salvar(dependente, cliente);
+                    } else if (action.equals("alterar")) {
+                        dependente.setCodigo_dependente(dependenteAlterar.getCodigo_dependente());
+                        DependenteDAO dependenteDAO = new DependenteDAO(pool);
+                        dependenteDAO.atualizar(dependente);
+
+                        jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N                        
+                        jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+                        action = "salvar";
+                    }
 
                     carregaDependente(cliente.getCodigo_cliente());
                     jtf_nome_dependente.setText("");
@@ -2101,5 +2123,37 @@ private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             janelapai2.setStatusTela(true);
             janelapai2.listaClienteDependente();
         }
+    }
+
+    public void alteraDependente() {
+        if (jtbl_dependente.getRowCount() != -1) {
+            dependenteAlterar = dependentes.get(jtbl_dependente.getSelectedRow());
+            jtf_nome_dependente.setText(dependentes.get(jtbl_dependente.getSelectedRow()).getNome_dependente());
+
+            SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+            String data_nascimento = null;
+            try {
+                data_nascimento = out.format(in.parse(dependentes.get(jtbl_dependente.getSelectedRow()).getData_nascimento().toString()));
+            } catch (ParseException ex) {
+                Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            jtf_data_nascimento_dependente.setText(data_nascimento);
+            jtf_telefone_dependente.setText(dependentes.get(jtbl_dependente.getSelectedRow()).getTelefone());
+
+            for (int i = 0; i < jcb_parentesco.getItemCount(); i++) {
+                if (jcb_parentesco.getItemAt(i).toString().equals(dependentes.get(jtbl_dependente.getSelectedRow()).getParentesco())) {
+                    jcb_parentesco.setSelectedIndex(i);
+                    break;
+                }
+            }
+            jtf_cpf_dependente.setText(dependentes.get(jtbl_dependente.getSelectedRow()).getCPF());
+
+            jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
+            jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+            action = "alterar";
+            jtf_nome_dependente.requestFocus();
+        }
+
     }
 }

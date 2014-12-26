@@ -30,6 +30,8 @@ public class PromocaoLocacao {
     private Integer ganhar_quantidade;
 
     private String hora_antecipada;
+    
+    private boolean status;
 
     public Integer getCodigo_promocao_locacao() {
         return codigo_promocao_locacao;
@@ -157,6 +159,14 @@ public class PromocaoLocacao {
 
     public void setHora_antecipada(String hora_antecipada) {
         this.hora_antecipada = hora_antecipada;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 }

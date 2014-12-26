@@ -83,7 +83,7 @@ public class RelatorioLocacaoAberta {
                     + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
                     + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                     + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
-                    + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
+                    + "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
                     + "        AND D.DEL_FLAG = 1\n"
                     + "        AND A.TIPO_MOVIMENTO = 'LOCACAO' \n"
                     + "        AND D.DATA_LOCACAO BETWEEN ? AND ? AND A.TITULO LIKE ? ORDER BY DATA_PREVISTA \n";

@@ -190,7 +190,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
-                + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
+                + "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
                 + "        AND D.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
                 + "        AND E.CODIGO_DEPENDENTE IN (SELECT \n"
@@ -273,7 +273,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
-                + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
+                + "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
                 + "        AND D.DEL_FLAG = 1\n"
                 + "        AND B.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
@@ -351,7 +351,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
                 + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
                 + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
-                + "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
+                + "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
                 + "        AND D.DEL_FLAG = 1\n"
                 + "        AND B.DEL_FLAG = 1\n"
                 + "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n"
@@ -440,11 +440,11 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             diaria.setPromocaoLocacao(promocaoLocacao);
 
             Objeto objeto = new Objeto();            
-            objeto.setDiaria(diaria);
             objeto.setCodigo_objeto(rs.getInt("CODIGO_OBJETO"));
             objeto.setTitulo(rs.getString("TITULO"));
 
             Copia copia = new Copia();
+            copia.setDiaria(diaria);
             copia.setObjeto(objeto);
 
             Dependente dependente = new Dependente();
@@ -562,9 +562,9 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 ps.setDouble(4, itemLocacao.get(i).getValor_pago());
                 ps.setDate(5, (java.sql.Date) data_prevista);
                 ps.setInt(6, 1);
-                if(itemLocacao.get(i).getCopia().getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() != null){
-                    System.out.println("Código da Promoção locação: "+ itemLocacao.get(i).getCopia().getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
-                    ps.setInt(7, itemLocacao.get(i).getCopia().getObjeto().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());                    
+                if(itemLocacao.get(i).getCopia().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() != null){
+                    System.out.println("Código da Promoção locação: "+ itemLocacao.get(i).getCopia().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
+                    ps.setInt(7, itemLocacao.get(i).getCopia().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());                    
                 } else {
                     ps.setInt(7, 0);
                 }
@@ -661,11 +661,11 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             diaria.setPromocaoLocacao(promocaoLocacao);
             
             Objeto objeto = new Objeto();
-            objeto.setDiaria(diaria);
             objeto.setTitulo(rs.getString("TITULO"));
             objeto.setCodigo_objeto(rs.getInt("CODIGO_OBJETO"));
 
             Copia copia = new Copia();
+            copia.setDiaria(diaria);
             copia.setObjeto(objeto);
 
             Dependente dependente = new Dependente();
@@ -736,7 +736,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
             "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
             "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
-            "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
             "        AND D.DEL_FLAG = 1\n" +
             "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
             "        AND A.CODIGO_OBJETO = ?;\n" +
@@ -810,7 +810,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
             "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
             "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
-            "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
             "        AND D.DEL_FLAG = 1\n" +
             "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
             "        AND B.CODIGO_BARRAS = ?;\n" +
@@ -887,7 +887,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
             "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
             "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
-            "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
             "        AND D.DEL_FLAG = 1\n" +
             "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
             "        AND A.TITULO LIKE ?;\n" +
@@ -961,7 +961,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
             "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
             "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
-            "        AND A.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
             "        AND D.DEL_FLAG = 1\n" +
             "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
             "        AND A.ELENCO LIKE ?;\n" +

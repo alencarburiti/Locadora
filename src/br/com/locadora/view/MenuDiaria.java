@@ -320,7 +320,7 @@ public class MenuDiaria extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroDiaria cadastroDiaria = new CadastroDiaria();
                 cadastroDiaria.janelapai = this;
                 cadastroDiaria.setVisible(true);
@@ -458,7 +458,7 @@ public class MenuDiaria extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
 
         try {
-            if (acesso.getDeletar() == 0) {
+            if (acesso.getDeletar() == true) {
                 DefaultTableModel row = (DefaultTableModel) jtbl_diaria.getModel();
                 if (jtbl_diaria.getSelectedRow() != -1) {
                     int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
@@ -502,7 +502,7 @@ public class MenuDiaria extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
 
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
 
                 diaria = tbDiariaLinhaSelecionada(jtbl_diaria);
                 System.out.println("Objeto: " + (diaria == null));

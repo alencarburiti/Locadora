@@ -322,7 +322,7 @@ public class ConsultaGeneroObjeto extends javax.swing.JFrame {
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuGenero");
         try {
-            if (acesso.getEscrever() == 0) {
+            if (acesso.getEscrever() == true) {
                 CadastroGenero cadastroGenero = new CadastroGenero();
                 cadastroGenero.janelapai2 = this;
                 cadastroGenero.setVisible(true);
