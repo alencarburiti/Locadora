@@ -11,7 +11,6 @@ import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.AutoCompletion;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
-import static br.com.locadora.view.AtualizaObjeto.jtf_titulo_original;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -309,7 +308,7 @@ public final class ControleAcesso extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
                 acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_titulo_original.requestFocus();
+//            jtf_titulo_original.requestFocus();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed

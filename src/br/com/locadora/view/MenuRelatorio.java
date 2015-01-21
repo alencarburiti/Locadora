@@ -23,7 +23,7 @@ import br.com.locadora.relatorios.RelatorioLocacaoRelocacao;
 import br.com.locadora.relatorios.RelatorioMaisLocados;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.TemaInterface;
-import static br.com.locadora.view.CadastroObjeto.jtf_data_aquisicao;
+import static br.com.locadora.view.CadastraAlteraObjeto.jtf_data_aquisicao;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.File;

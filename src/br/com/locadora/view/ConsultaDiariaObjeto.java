@@ -38,8 +38,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaDiariaObjeto extends javax.swing.JFrame {
 
-    public CadastroObjeto janelapai;
-    public AtualizaObjeto janelapai2;
+    public CadastraAlteraObjeto janelapai;
     public List<Diaria> diarias;
     public Moeda moeda;
     public InterfacePool pool;
@@ -49,8 +48,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
     public ConsultaDiariaObjeto() {
         initComponents();
         TemaInterface.getInterface(this);
-        janelapai = null;
-        janelapai2 = null;
+        janelapai = null;        
     }
 
     /**
@@ -275,9 +273,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
         setVisible(false);
         if ((janelapai != null)) {
             janelapai.setStatusTela(true);
-        } else if ((janelapai2 != null)) {
-            janelapai2.setStatusTela(true);
-        }
+        } 
 
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
@@ -293,11 +289,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
                 janelapai.setStatusTela(true);
                 janelapai.carregaDiaria(diaria);
                 janelapai.consultaDiaria = null;
-            } else if ((janelapai2 != null) && (diaria != null)) {
-                janelapai2.setStatusTela(true);
-                janelapai2.carregaDiaria(diaria);
-                janelapai2.consultaDiaria = null;
-            }
+            } 
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma Diária");
@@ -310,12 +302,7 @@ public class ConsultaDiariaObjeto extends javax.swing.JFrame {
             janelapai.setEnabled(true);
             janelapai.setVisible(true);
             janelapai.setStatusTela(true);
-        }
-        if ((janelapai2 != null)) {
-            janelapai2.setEnabled(true);
-            janelapai2.setVisible(true);
-            janelapai2.setStatusTela(true);
-        }
+        }        
 
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
@@ -358,9 +345,7 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         setVisible(false);
         if (janelapai != null) {
             janelapai.setStatusTela(true);
-        } else if (janelapai2 != null) {
-            janelapai2.setStatusTela(true);
-        }
+        } 
     }
 
     // TODO add your handling code here:

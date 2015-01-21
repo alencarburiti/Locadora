@@ -35,17 +35,16 @@ public class MenuObjeto extends javax.swing.JFrame {
     public String permissao;
     public InterfacePool pool;
     public SiscomController controller;
-
     public static List<Objeto> objetos = new ArrayList<Objeto>();
     public TelaPrincipal janelapai;
     public static Objeto objeto;
     public AcessoUsuario acesso;
-    public AtualizaObjeto atualizaObjeto;
-    
+    public CadastraAlteraObjeto cadastraAlteraObjeto;
+
     public MenuObjeto() {
         initComponents();
         TemaInterface.getInterface(this);
-        atualizaObjeto = null;
+        cadastraAlteraObjeto = null;
     }
 
     /**
@@ -325,10 +324,15 @@ public class MenuObjeto extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuObjeto");
         try {
             if (acesso.getEscrever() == true) {
-                CadastroObjeto cadastroObjeto = new CadastroObjeto();
-                cadastroObjeto.janelapai = this;
-                cadastroObjeto.setVisible(true);
-                setStatusTela(false);
+                if (cadastraAlteraObjeto == null) {
+                    cadastraAlteraObjeto = new CadastraAlteraObjeto();
+                    cadastraAlteraObjeto.janelapai = this;
+                    cadastraAlteraObjeto.setVisible(true);
+                    this.setStatusTela(false);
+                    cadastraAlteraObjeto.setTitle("Cadastrando Objeto");
+                } else {
+                    cadastraAlteraObjeto.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -447,8 +451,8 @@ public class MenuObjeto extends javax.swing.JFrame {
             objeto.setTitulo_original(objetos.get(tb.getSelectedRow()).getTitulo_original());
             objeto.setTipo_movimento(objetos.get(tb.getSelectedRow()).getTipo_movimento());
             objeto.setProducao(objetos.get(tb.getSelectedRow()).getProducao());
-            objeto.setDuracao(objetos.get(tb.getSelectedRow()).getDuracao());            
-            objeto.setTipo_midia(objetos.get(tb.getSelectedRow()).getTipo_midia());            
+            objeto.setDuracao(objetos.get(tb.getSelectedRow()).getDuracao());
+            objeto.setTipo_midia(objetos.get(tb.getSelectedRow()).getTipo_midia());
             objeto.setGenero(objetos.get(tb.getSelectedRow()).getGenero());
             objeto.setElenco(objetos.get(tb.getSelectedRow()).getElenco());
             objeto.setSinopse(objetos.get(tb.getSelectedRow()).getSinopse());
@@ -533,14 +537,17 @@ public class MenuObjeto extends javax.swing.JFrame {
             if (acesso.getEscrever() == true) {
                 objeto = tbObjetoLinhaSelecionada(jtbl_objeto);
                 if (objeto != null) {
-                    if(atualizaObjeto == null){
-                        atualizaObjeto = new AtualizaObjeto(objeto);
-                        atualizaObjeto.janelapai = this;
-                        atualizaObjeto.setVisible(true);
-                        this.setEnabled(false);                        
+
+                    if (cadastraAlteraObjeto == null) {
+                        cadastraAlteraObjeto = new CadastraAlteraObjeto(objeto);
+                        cadastraAlteraObjeto.janelapai = this;
+                        cadastraAlteraObjeto.setVisible(true);
+                        this.setStatusTela(false);
+                        cadastraAlteraObjeto.setTitle("Alterando Objeto");
                     } else {
-                        atualizaObjeto.setVisible(true);
+                        cadastraAlteraObjeto.setVisible(true);
                     }
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um objeto");
                     jtf_consulta.requestFocus();

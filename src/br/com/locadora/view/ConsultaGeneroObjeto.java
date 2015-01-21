@@ -34,15 +34,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ConsultaGeneroObjeto extends javax.swing.JFrame {
 
-    public CadastroObjeto janelapai;
-    public AtualizaObjeto janelapai2;
+    public CadastraAlteraObjeto janelapai;
     public AcessoUsuario acesso;
 
     public ConsultaGeneroObjeto() {
         initComponents();
         TemaInterface.getInterface(this);
-        janelapai = null;
-        janelapai2 = null;
+        janelapai = null;        
     }
     List<Genero> generos;
 
@@ -288,28 +286,14 @@ public class ConsultaGeneroObjeto extends javax.swing.JFrame {
                 janelapai.setStatusTela(true);
                 janelapai.carregaGenero(genero);
                 janelapai.consultaGenero = null;
-            } else if ((janelapai2 != null) && (genero != null)) {
-                janelapai2.setStatusTela(true);
-                janelapai2.carregaGenero(genero);
-                janelapai2.consultaGenero = null;
-            }
-
+            } 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Gênero");
         }
     }
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        setVisible(false);
-        if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            janelapai.setStatusTela(false);
-        } else if ((janelapai2 != null)) {
-            janelapai2.setEnabled(true);
-            janelapai2.setVisible(true);
-            janelapai2.setStatusTela(false);
-        }
+        retornaJanelaPai();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
@@ -348,12 +332,7 @@ private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         jtf_consulta.requestFocus();
     }
     if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-        setVisible(false);
-        if (janelapai != null) {
-            janelapai.setStatusTela(true);
-        } else if (janelapai2 != null) {
-            janelapai2.setStatusTela(true);
-        }
+        retornaJanelaPai();
     }
 
     // TODO add your handling code here:
@@ -371,12 +350,7 @@ private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             jtf_consulta.requestFocus();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            if (janelapai != null) {
-                janelapai.setStatusTela(true);
-            } else if (janelapai2 != null) {
-                janelapai2.setStatusTela(true);
-            }
+            retornaJanelaPai();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_consultaKeyPressed
@@ -475,5 +449,11 @@ private void jtbl_generoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
         }
         this.setEnabled(status);
 
+    }
+    private void retornaJanelaPai() {
+        setVisible(false);
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);            
+        } 
     }
 }

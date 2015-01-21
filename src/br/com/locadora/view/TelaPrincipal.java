@@ -1,6 +1,5 @@
 package br.com.locadora.view;
 
-import br.com.locadora.barcode.Bar;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
