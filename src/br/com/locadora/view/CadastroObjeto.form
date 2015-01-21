@@ -256,50 +256,49 @@
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                       <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jb_genero" linkSize="4" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                                          <Component id="jtf_descricao_genero" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                              <Component id="jtf_descricao_genero" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jcb_tipo_midia" linkSize="1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="jtf_duracao" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jcb_tipo" linkSize="1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                              <Component id="jtf_censura" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jcb_producao" linkSize="1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel39" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                          </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jtf_duracao" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jcb_tipo" linkSize="1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="jtf_censura" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jcb_producao" linkSize="1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jcb_tipo_midia" linkSize="1" min="-2" pref="30" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -768,7 +767,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="10" pref="21" max="32767" attributes="0"/>
+                              <EmptySpace min="10" pref="18" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jScrollPane5" max="32767" attributes="0"/>
@@ -803,10 +802,10 @@
                               </Group>
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jtf_descricao_diaria" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jb_diaria" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jtf_diaria_dias" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jtf_valor" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jtf_descricao_diaria" linkSize="5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jb_diaria" linkSize="5" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jtf_diaria_dias" linkSize="5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jtf_valor" linkSize="5" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
@@ -818,7 +817,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel36" min="-2" pref="20" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Component id="jcb_midia" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jcb_midia" linkSize="5" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
@@ -1101,13 +1100,14 @@
                   <Font name="Helvetica Neue" size="13" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="6">
+                  <StringArray count="7">
                     <StringItem index="0" value="Blu-Ray"/>
-                    <StringItem index="1" value="CD"/>
-                    <StringItem index="2" value="DVD"/>
-                    <StringItem index="3" value="Playstation"/>
-                    <StringItem index="4" value="VHs"/>
-                    <StringItem index="5" value="Xbox"/>
+                    <StringItem index="1" value="Blu-Ray 3D"/>
+                    <StringItem index="2" value="CD"/>
+                    <StringItem index="3" value="DVD"/>
+                    <StringItem index="4" value="Playstation"/>
+                    <StringItem index="5" value="VHs"/>
+                    <StringItem index="6" value="Xbox"/>
                   </StringArray>
                 </Property>
                 <Property name="name" type="java.lang.String" value="jcb_midia" noResource="true"/>

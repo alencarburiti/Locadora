@@ -41,7 +41,8 @@ public class MenuDiaria extends javax.swing.JFrame {
     public SiscomController controller;
     public Diaria diaria;
     public AcessoUsuario acesso;
-    public AtualizaDiaria atualizaDiaria;
+//    public AtualizaDiaria atualizaDiaria;
+    public CadastraAlteraDiaria cadastraAlteraDiaria;
 
     /**
      * Creates new form DiariaGUI
@@ -49,7 +50,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     public MenuDiaria() {
         initComponents();
         TemaInterface.getInterface(this);
-        atualizaDiaria = null;
+        cadastraAlteraDiaria = null;
     }
 
     public void setTela(String permissao) {
@@ -321,11 +322,16 @@ public class MenuDiaria extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
         try {
             if (acesso.getEscrever() == true) {
-                CadastroDiaria cadastroDiaria = new CadastroDiaria();
-                cadastroDiaria.janelapai = this;
-                cadastroDiaria.setVisible(true);
-                setStatusTela(false);
-                cadastroDiaria.acesso = acesso;
+                if (cadastraAlteraDiaria == null) {
+                    cadastraAlteraDiaria = new CadastraAlteraDiaria();
+                    cadastraAlteraDiaria.janelapai = this;
+                    cadastraAlteraDiaria.setVisible(true);
+                    setStatusTela(false);
+                    cadastraAlteraDiaria.acesso = acesso;
+                    cadastraAlteraDiaria.setTitle("Cadastrando Diária");
+                } else {
+                    cadastraAlteraDiaria.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -349,7 +355,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        
+
         setVisible(false);
         janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
@@ -376,8 +382,8 @@ public class MenuDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_diariaKeyPressed
 
     private void jtbl_diariaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_diariaMouseClicked
-        if(evt.getClickCount() > 1){
-            alterar(); 
+        if (evt.getClickCount() > 1) {
+            alterar();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_diariaMouseClicked
@@ -507,14 +513,17 @@ public class MenuDiaria extends javax.swing.JFrame {
                 diaria = tbDiariaLinhaSelecionada(jtbl_diaria);
                 System.out.println("Objeto: " + (diaria == null));
                 if (diaria != null) {
-                    if(atualizaDiaria == null){
-                        atualizaDiaria = new AtualizaDiaria(diaria);
-                        atualizaDiaria.janelapai = this;
-                        atualizaDiaria.setVisible(true);
-                        setEnabled(false);
+                    if (cadastraAlteraDiaria == null) {
+                        cadastraAlteraDiaria = new CadastraAlteraDiaria(diaria);
+                        cadastraAlteraDiaria.janelapai = this;
+                        cadastraAlteraDiaria.setVisible(true);
+                        setStatusTela(false);
+                        cadastraAlteraDiaria.acesso = acesso;
+                        cadastraAlteraDiaria.setTitle("Alterando Diária");
                     } else {
-                        atualizaDiaria.setVisible(true);
+                        cadastraAlteraDiaria.setVisible(true);
                     }
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione uma Diária");
                     jtf_consulta.requestFocus();

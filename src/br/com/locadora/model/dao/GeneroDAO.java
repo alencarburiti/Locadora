@@ -160,7 +160,7 @@ public class GeneroDAO implements InterfaceGeneroDAO {
     }
 
     @Override
-    public void salvar(Genero genero) throws SQLException {
+    public Genero salvar(Genero genero) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
@@ -172,10 +172,22 @@ public class GeneroDAO implements InterfaceGeneroDAO {
             setPreparedStatement1(genero, ps);
 
             ps.executeUpdate();
+            
+            ResultSet res;
+            Integer codigo_max;
+            String sql_max = "SELECT MAX(CODIGO_GENERO) FROM GENERO";
+
+            ps = con.prepareStatement(sql_max);
+            res = ps.executeQuery();
+            res.next();
+            codigo_max = res.getInt("MAX(CODIGO_GENERO)");
+            genero.setCodigo_genero(codigo_max);
+            
             ps.close();
         } finally {
             pool.liberarConnection(con);
         }
+        return genero;
     }
 
     private void setPreparedStatement(Genero genero, PreparedStatement ps)

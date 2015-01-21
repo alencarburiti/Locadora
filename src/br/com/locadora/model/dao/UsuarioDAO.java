@@ -390,7 +390,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             Conexao conexao = new Conexao();
 
             String sqlSelect = "SELECT \n"
-                    + "    A.CODIGO_USUARIO, A.NOME_USUARIO, A.LOGIN, A.SENHA, B.LER, B.ESCREVER, B.DELETAR\n"
+                    + "    A.CODIGO_USUARIO, A.NOME_USUARIO, A.LOGIN, A.SENHA, B.LER, B.ESCREVER, B.DELETAR, B.SUPER_USUARIO \n"
                     + "FROM\n"
                     + "    USUARIO A,\n"
                     + "    ACESSO B,\n"
@@ -447,7 +447,7 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             conexao.desconecta();
 
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Senha incorreta");
 
         }

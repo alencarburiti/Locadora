@@ -61,9 +61,9 @@
                               <Component id="jtf_total_desconto_entrega_antecipada" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="140" pref="140" max="-2" attributes="0"/>
-                              <Component id="jLabel32" min="-2" pref="50" max="-2" attributes="0"/>
-                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                              <Component id="jLabel32" min="-2" pref="122" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Component id="jtf_total_a_pagar" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -78,7 +78,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jl_debito_devolucao" min="-2" pref="110" max="-2" attributes="0"/>
                                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                                      <Component id="jtf_debito_total_anterior" min="-2" pref="110" max="-2" attributes="0"/>
+                                      <Component id="jtf_saldo_debito_total" min="-2" pref="110" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -114,7 +114,7 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jl_debito_devolucao" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jtf_debito_total_anterior" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jtf_saldo_debito_total" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel35" min="-2" pref="30" max="-2" attributes="0"/>
@@ -509,7 +509,7 @@
           <Font name="Dialog" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Total:"/>
+        <Property name="text" type="java.lang.String" value="Total &#xc0; Pagar:"/>
         <Property name="name" type="java.lang.String" value="jLabel32" noResource="true"/>
       </Properties>
     </Component>
@@ -540,8 +540,11 @@
         <Property name="text" type="java.lang.String" value="D&#xe9;bito Total:"/>
         <Property name="name" type="java.lang.String" value="jl_debito_devolucao" noResource="true"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="jtf_debito_total_anterior">
+    <Component class="javax.swing.JTextField" name="jtf_saldo_debito_total">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -549,11 +552,11 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="R$ 0,00"/>
-        <Property name="name" type="java.lang.String" value="jtf_debito_total_anterior" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="jtf_saldo_debito_total" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_debito_total_anteriorFocusGained"/>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_debito_total_anteriorFocusLost"/>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_saldo_debito_totalFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_saldo_debito_totalFocusLost"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

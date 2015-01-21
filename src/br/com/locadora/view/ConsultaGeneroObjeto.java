@@ -20,8 +20,6 @@ import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -323,7 +321,7 @@ public class ConsultaGeneroObjeto extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuGenero");
         try {
             if (acesso.getEscrever() == true) {
-                CadastroGenero cadastroGenero = new CadastroGenero();
+                CadastraAlteraGenero cadastroGenero = new CadastraAlteraGenero();
                 cadastroGenero.janelapai2 = this;
                 cadastroGenero.setVisible(true);
                 setStatusTela(false);

@@ -35,12 +35,12 @@ public class MenuCliente extends javax.swing.JFrame {
     public SiscomController controller;
     public AcessoUsuario acesso;
     public Cliente cliente;
-    public AtualizaCliente atualizaCliente;
+    public CadastraAlteraCliente cadastraAlteraCliente;
 
     public MenuCliente() {
         initComponents();
         TemaInterface.getInterface(this);
-        atualizaCliente = null;
+        cadastraAlteraCliente = null;
     }
 
     /**
@@ -351,11 +351,16 @@ public class MenuCliente extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
         try {
             if (acesso.getEscrever() == true) {
-                CadastroCliente cadastroCliente = new CadastroCliente();
-                cadastroCliente.janelapai = this;
-                cadastroCliente.setVisible(true);
-                setStatusTela(false);
-                cadastroCliente.acesso = acesso;
+                if(cadastraAlteraCliente == null ){
+                    cadastraAlteraCliente = new CadastraAlteraCliente();
+                    cadastraAlteraCliente.janelapai = this;
+                    cadastraAlteraCliente.setVisible(true);
+                    setEnabled(false);
+                    cadastraAlteraCliente.acesso = acesso;
+                    cadastraAlteraCliente.setTitle("Cadastrando Cliente");
+                } else {
+                    cadastraAlteraCliente.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -524,13 +529,14 @@ public class MenuCliente extends javax.swing.JFrame {
 
                 cliente = tbClienteLinhaSelecionada(jtbl_cliente);
                 if (cliente != null) {
-                    if(atualizaCliente == null ){
-                        atualizaCliente = new AtualizaCliente(cliente);
-                        atualizaCliente.janelapai = this;
-                        atualizaCliente.setVisible(true);
-                        setEnabled(false);
+                    if(cadastraAlteraCliente == null ){
+                        cadastraAlteraCliente = new CadastraAlteraCliente(cliente);
+                        cadastraAlteraCliente.janelapai = this;
+                        cadastraAlteraCliente.setVisible(true);
+                        this.setEnabled(false);
+                        cadastraAlteraCliente.setTitle("Alterando Cliente");
                     } else {
-                        atualizaCliente.setVisible(true);
+                        cadastraAlteraCliente.setVisible(true);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um cliente");

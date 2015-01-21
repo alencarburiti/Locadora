@@ -50,7 +50,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
     public SiscomController controller;
     public static List<ItemLocacao> itensDevolucao;
     public LocacaoDAO locacaoDAO;
-    public AtualizaCliente atualizaCliente;
+    public CadastraAlteraCliente cadastraAlteraCliente;
 
     public LocacaoEmAberto() {
         initComponents();
@@ -629,13 +629,13 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
                     Cliente cliente = clienteDAO.getCliente_codigo(itensDevolucao.get(jtbl_locacao_aberto.getSelectedRow()).getDependente().getCliente().getCodigo_cliente());
 
                     if (cliente != null) {
-                        if(atualizaCliente == null ){
-                            atualizaCliente = new AtualizaCliente(cliente);
-                            atualizaCliente.janelapai2 = this;
-                            atualizaCliente.setVisible(true);
+                        if(cadastraAlteraCliente == null ){
+                            cadastraAlteraCliente = new CadastraAlteraCliente(cliente);
+                            cadastraAlteraCliente.janelapai3 = this;
+                            cadastraAlteraCliente.setVisible(true);
                             setEnabled(false);
                         } else {
-                            atualizaCliente.setVisible(true);
+                            cadastraAlteraCliente.setVisible(true);
                         }
                     }
                 }

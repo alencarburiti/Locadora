@@ -7,9 +7,11 @@ package br.com.locadora.util;
 
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.view.EntradaCaixaLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
+import br.com.locadora.view.EntradaCaixaVenda;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -94,7 +96,7 @@ public class Printer {
                 Double subTotal = total_locacao - desconto;
 
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaLocacao.jtf_debito_anterior.getText());
+                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaLocacao.jtf_saldo_debito_anterior.getText());
                 linhasTxt.println("Valor Locação (-):          " + EntradaCaixaLocacao.jtf_valor_total_locacao.getText());
                 linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaLocacao.jtf_desconto.getText());
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
@@ -195,13 +197,103 @@ public class Printer {
                 Double subTotal = total_devolucao - (desconto );
 
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_debito_total_anterior.getText());
+                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_saldo_debito_anterior.getText());
                 linhasTxt.println("Débito Devolução (-):       " + EntradaCaixaDevolucao.jtf_total_relocacao.getText());
                 linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaDevolucao.jtf_desconto.getText());
                 linhasTxt.println("Valor Desc. Dev. Antec. (+):" + EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
                 linhasTxt.println("Valor Pago (+):             " + EntradaCaixaDevolucao.jtf_valor_pago.getText());
                 linhasTxt.println("Troco (-):                  " + EntradaCaixaDevolucao.jtf_troco.getText());
+                linhasTxt.println("===========================================");
+                linhasTxt.println("Usuário: " + usuario.getNome_usuario());
+                linhasTxt.println("===========================================");
+                linhasTxt.println("Termo de Responsabilidade: Estou ciente que");
+                linhasTxt.println("os DVD’s que foram por mim alugados, ou com");
+                linhasTxt.println("minha autorização, deverão ser devolvidos no");
+                linhasTxt.println("mesmo estado de conservação, e que qualquer ");
+                linhasTxt.println("dano ou perda, eu me comprometo a pagar o ");
+                linhasTxt.println("valor da Nota Fiscal do Filme. ");
+                linhasTxt.println("De acordo:                                 ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("___________________________________________");
+                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
+                linhasTxt.println("===========================================");
+                linhasTxt.println("        OBRIGADO PELA PREFERÊNCIA          ");
+                linhasTxt.println("   INFORMACOES PARA FECHAMENTO DE CONTA    ");
+
+                int i = 0;
+                while (i < 10) {
+                    i++;
+                    linhasTxt.println();
+                }
+                arquivoTxt.close();
+            } else {
+                //se naum existir
+                arquivo.createNewFile();
+            }
+        } catch (IOException error) {
+            JOptionPane.showMessageDialog(null, "Arquivo não encontradao");
+        }
+    }
+    
+    public void comprovanteVenda(List<Produto> itens, Dependente dependente, Usuario usuario) {
+        //ESCREVER TXT    
+        String nome_arquivo = "Imprimir/comprovanteVenda_" + dependente.getNome_dependente() + ".txt";
+        try {
+            arquivo = new File(nome_arquivo);
+            arquivo.delete();
+            arquivo.deleteOnExit();
+            arquivo.createNewFile();
+            if (arquivo.exists()) {
+                //se existir
+                FileWriter arquivoTxt = new FileWriter(arquivo, true);
+                PrintWriter linhasTxt = new PrintWriter(arquivoTxt);
+                //ACREDITO QUE SO PODE TER 42 CARACTERES
+                linhasTxt.println("===========================================");
+                linhasTxt.println("          Broadway Video Locadora          ");
+                linhasTxt.println("===========================================");
+                linhasTxt.println("********** CNPJ 73.411.457/0001-62 ********");
+                linhasTxt.println("               R. 18 Qd, 164               ");
+                linhasTxt.println("  Setor Central, Goianésia - GO, 76380-000 ");
+                linhasTxt.println("               (62) 3353-4030              ");
+                linhasTxt.println("===========================================");
+                linhasTxt.println("********** NAO É DOCUMENTO FISCAL *********");
+                linhasTxt.println("===========================================");
+                linhasTxt.println("********* Comprovante de Devolução ********");
+                linhasTxt.println("===========================================");
+                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
+                linhasTxt.println("===========================================");
+                linhasTxt.println(String.format("%-6s", "Cód    Descrição          P. Unt.  P. Total"));
+                //dados da tabela
+
+                Moeda moeda = new Moeda();
+
+                for (int x = 0; x < itens.size(); x++) {
+                    linhasTxt.print(String.format("%05d  ", itens.get(x).getCodigo_produto()));
+                    
+                    String nome_produto = itens.get(x).getQuantidade()+ "x"+itens.get(x).getNome_produto();
+                    try {
+                        linhasTxt.print(String.format("%-19s", nome_produto.substring(0, 17)));
+                    } catch (Exception e) {
+                        linhasTxt.print(String.format("%-19s", nome_produto));
+                    }
+                    
+                    linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getPreco_venda().toString())));
+                    linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getPreco_total().toString())));
+//                    linhasTxt.print(data_devolucao);
+                    linhasTxt.println();
+                }
+                Double total_venda = moeda.getPrecoFormato(EntradaCaixaVenda.jtf_valor_total_a_pagar.getText());
+                Double desconto = moeda.getPrecoFormato(EntradaCaixaVenda.jtf_desconto.getText());                
+                Double subTotal = total_venda - (desconto );
+
+                linhasTxt.println("===========================================");
+                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaVenda.jtf_saldo_debito_anterior.getText());
+                linhasTxt.println("Total Venda (-):            " + EntradaCaixaVenda.jtf_valor_total_venda.getText());
+                linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaVenda.jtf_desconto.getText());                
+                linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
+                linhasTxt.println("Valor Pago (+):             " + EntradaCaixaVenda.jtf_valor_pago.getText());
+                linhasTxt.println("Troco (-):                  " + EntradaCaixaVenda.jtf_troco.getText());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Usuário: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");

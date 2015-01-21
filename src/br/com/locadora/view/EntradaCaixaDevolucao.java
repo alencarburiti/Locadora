@@ -81,15 +81,15 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jtf_troco = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel11 = new javax.swing.JLabel();
+        jl_saldo_debito_atual = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtf_total_a_pagar = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel6 = new javax.swing.JLabel();
         jtf_valor_pago = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jtf_desconto_entrega_antecipada = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel8 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jtf_debito_total_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jl_saldo_debito_anterior = new javax.swing.JLabel();
+        jtf_saldo_debito_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel5 = new javax.swing.JLabel();
         jtf_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jb_cancelar1 = new javax.swing.JButton();
@@ -141,6 +141,11 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_salvarMouseClicked(evt);
+            }
+        });
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -261,12 +266,12 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Total de Relocação:");
+        jLabel1.setText("Total de Relocação (-)");
         jLabel1.setName("jLabel1"); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Troco:");
+        jLabel7.setText("Troco (+)");
         jLabel7.setName("jLabel7"); // NOI18N
 
         jtf_total_relocacao.setDocument(new UnaccentedDocument());
@@ -318,14 +323,14 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Débito Atual:");
-        jLabel11.setName("jLabel11"); // NOI18N
+        jl_saldo_debito_atual.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jl_saldo_debito_atual.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jl_saldo_debito_atual.setText("Débito Atual (-)");
+        jl_saldo_debito_atual.setName("jl_saldo_debito_atual"); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Total Á Pagar:");
+        jLabel3.setText("Total Á Pagar (=)");
         jLabel3.setName("jLabel3"); // NOI18N
 
         jtf_total_relocacao.setDocument(new UnaccentedDocument());
@@ -355,7 +360,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Valor Pago:");
+        jLabel6.setText("Valor Pago (+)");
         jLabel6.setName("jLabel6"); // NOI18N
 
         jtf_total_relocacao.setDocument(new UnaccentedDocument());
@@ -416,42 +421,42 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText("Desconto Entrega Antecipada:");
+        jLabel8.setText("Desconto Entrega Antecipada (+)");
         jLabel8.setName("jLabel8"); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Débito Total Anterior:");
-        jLabel2.setName("jLabel2"); // NOI18N
+        jl_saldo_debito_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jl_saldo_debito_anterior.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jl_saldo_debito_anterior.setText("Débito Anterior (-)");
+        jl_saldo_debito_anterior.setName("jl_saldo_debito_anterior"); // NOI18N
 
         jtf_total_relocacao.setDocument(new UnaccentedDocument());
-        jtf_debito_total_anterior.setEditable(false);
-        jtf_debito_total_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_debito_total_anterior.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_debito_total_anterior.setText("R$ 0,00");
-        jtf_debito_total_anterior.setName("jtf_debito_total_anterior"); // NOI18N
-        jtf_debito_total_anterior.addActionListener(new java.awt.event.ActionListener() {
+        jtf_saldo_debito_anterior.setEditable(false);
+        jtf_saldo_debito_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_saldo_debito_anterior.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_saldo_debito_anterior.setText("R$ 0,00");
+        jtf_saldo_debito_anterior.setName("jtf_saldo_debito_anterior"); // NOI18N
+        jtf_saldo_debito_anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_debito_total_anteriorActionPerformed(evt);
+                jtf_saldo_debito_anteriorActionPerformed(evt);
             }
         });
-        jtf_debito_total_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_saldo_debito_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_total_anteriorFocusGained(evt);
+                jtf_saldo_debito_anteriorFocusGained(evt);
             }
         });
-        jtf_debito_total_anterior.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_saldo_debito_anterior.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_debito_total_anteriorKeyPressed(evt);
+                jtf_saldo_debito_anteriorKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_debito_total_anteriorKeyReleased(evt);
+                jtf_saldo_debito_anteriorKeyReleased(evt);
             }
         });
 
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Valor Desconto:");
+        jLabel5.setText("Valor Desconto (+)");
         jLabel5.setName("jLabel5"); // NOI18N
 
         jtf_total_relocacao.setDocument(new UnaccentedDocument());
@@ -487,44 +492,45 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jtf_total_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jtf_debito_total_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jtf_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jl_saldo_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jtf_total_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGap(73, 73, 73)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jl_saldo_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jtf_saldo_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(10, 10, 10)
+                            .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel8)
+                            .addGap(10, 10, 10)
+                            .addComponent(jtf_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -532,8 +538,8 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtf_debito_total_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jtf_saldo_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jl_saldo_debito_anterior))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtf_total_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -561,7 +567,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
+                    .addComponent(jl_saldo_debito_atual))
                 .addGap(10, 10, 10))
         );
 
@@ -768,22 +774,22 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1ActionPerformed
 
-    private void jtf_debito_total_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorActionPerformed
+    private void jtf_saldo_debito_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_total_anteriorActionPerformed
+    }//GEN-LAST:event_jtf_saldo_debito_anteriorActionPerformed
 
-    private void jtf_debito_total_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorFocusGained
+    private void jtf_saldo_debito_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_total_anteriorFocusGained
+    }//GEN-LAST:event_jtf_saldo_debito_anteriorFocusGained
 
-    private void jtf_debito_total_anteriorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorKeyPressed
+    private void jtf_saldo_debito_anteriorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorKeyPressed
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_total_anteriorKeyPressed
+    }//GEN-LAST:event_jtf_saldo_debito_anteriorKeyPressed
 
-    private void jtf_debito_total_anteriorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_total_anteriorKeyReleased
+    private void jtf_saldo_debito_anteriorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_total_anteriorKeyReleased
+    }//GEN-LAST:event_jtf_saldo_debito_anteriorKeyReleased
 
     private void jtf_total_a_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarActionPerformed
         // TODO add your handling code here:
@@ -862,6 +868,10 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_loginActionPerformed
 
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -872,8 +882,6 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -888,12 +896,14 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     private javax.swing.JButton jb_imprimir;
     private javax.swing.JButton jb_logar;
     private javax.swing.JButton jb_salvar;
+    private javax.swing.JLabel jl_saldo_debito_anterior;
+    private javax.swing.JLabel jl_saldo_debito_atual;
     private javax.swing.JPasswordField jpf_senha;
     public static javax.swing.JTextField jtf_debito_atual;
-    public static javax.swing.JTextField jtf_debito_total_anterior;
     public static javax.swing.JTextField jtf_desconto;
     public static javax.swing.JTextField jtf_desconto_entrega_antecipada;
     private javax.swing.JTextField jtf_login;
+    public static javax.swing.JTextField jtf_saldo_debito_anterior;
     public static javax.swing.JTextField jtf_total_a_pagar;
     public static javax.swing.JTextField jtf_total_relocacao;
     public static javax.swing.JTextField jtf_troco;
@@ -1035,8 +1045,9 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                             janelapaiDevolucao.jtf_nome_cliente.setText("");
 
                             janelapaiDevolucao.jtf_total_a_pagar.setText("R$ 0,00");
-                            janelapaiDevolucao.jtf_debito_total_anterior.setText("R$ 0,00");
+                            janelapaiDevolucao.jtf_saldo_debito_total.setText("R$ 0,00");
                             janelapaiDevolucao.jtf_total_desconto_entrega_antecipada.setText("R$ 0,00");
+                            
 
                         }
                     }
@@ -1112,11 +1123,53 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
 
     public void recalcularValores() {
         Moeda moeda = new Moeda();
-        Double debito_total_anterior = moeda.getPrecoFormato(janelapaiDevolucao.jtf_debito_total_anterior.getText());
+        
+        Double saldo_debito_total_anterior = moeda.getPrecoFormato(janelapaiDevolucao.jtf_saldo_debito_total.getText());
         Double total_relocacao = moeda.getPrecoFormato(janelapaiDevolucao.jtf_valor_total_relocacao.getText());
         Double desconto_entrega_antecipada = moeda.getPrecoFormato(janelapaiDevolucao.jtf_total_desconto_entrega_antecipada.getText());
         Double descontos = moeda.getPrecoFormato(jtf_desconto.getText());
-        Double valor_total_a_pagar = (debito_total_anterior + total_relocacao) - (desconto_entrega_antecipada + descontos);
+        Double valor_total_a_pagar = moeda.getPrecoFormato(janelapaiDevolucao.jtf_total_a_pagar.getText());
+        
+        jtf_saldo_debito_anterior.setText(moeda.setPrecoFormat(saldo_debito_total_anterior.toString()));
+        if (janelapaiDevolucao.jtf_saldo_debito_total.getForeground().equals(Color.BLACK)) {
+            jl_saldo_debito_anterior.setText("Saldo Anterior (+)");
+            jtf_saldo_debito_anterior.setForeground(Color.BLACK);
+        } else {
+            jl_saldo_debito_anterior.setText("Débito Anterior (-)");
+            jtf_saldo_debito_anterior.setForeground(Color.RED);
+        }
+        
+        jtf_total_relocacao.setText(moeda.setPrecoFormat(total_relocacao.toString()));
+        jtf_desconto_entrega_antecipada.setText(moeda.setPrecoFormat(desconto_entrega_antecipada.toString()));
+        jtf_desconto.setText(moeda.setPrecoFormat(descontos.toString()));
+
+//        Double saldo_debito_anterior;
+        
+        if(jtf_saldo_debito_anterior.getForeground().equals(Color.RED)){
+//            saldo_debito_anterior = moeda.getPrecoFormato(jtf_saldo_debito_anterior.getText());
+//            saldo_debito_anterior = saldo_debito_anterior * (-1);
+            System.out.println("valor_total_a_pagar: "+ valor_total_a_pagar);
+            
+            valor_total_a_pagar = valor_total_a_pagar - descontos;
+            
+            System.out.println("valor_total_a_pagar: "+ valor_total_a_pagar);
+            if(valor_total_a_pagar > 0){
+                jtf_total_a_pagar.setText(moeda.setPrecoFormat(valor_total_a_pagar.toString()));
+            } else {
+                jtf_total_a_pagar.setText("R$ 0,00");
+                valor_total_a_pagar = 0.00;
+            }
+        } else {
+//            saldo_debito_anterior = moeda.getPrecoFormato(jtf_saldo_debito_anterior.getText());
+            valor_total_a_pagar = (valor_total_a_pagar - descontos);
+            if(valor_total_a_pagar > 0){                
+                jtf_total_a_pagar.setText(moeda.setPrecoFormat(valor_total_a_pagar.toString()));            
+            } else {
+                jtf_total_a_pagar.setText("R$ 0,00");
+                valor_total_a_pagar = 0.00;                
+            }
+        }
+        
         Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
         Double troco = valor_pago - valor_total_a_pagar;
         
@@ -1124,13 +1177,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
         System.out.println("Valor pago: "+ valor_pago);
         System.out.println("Troco: "+ troco);
 
-        jtf_debito_total_anterior.setText(moeda.setPrecoFormat(debito_total_anterior.toString()));
-        jtf_total_relocacao.setText(moeda.setPrecoFormat(total_relocacao.toString()));
-        jtf_desconto_entrega_antecipada.setText(moeda.setPrecoFormat(desconto_entrega_antecipada.toString()));
-        jtf_desconto.setText(moeda.setPrecoFormat(descontos.toString()));
-        jtf_total_a_pagar.setText(moeda.setPrecoFormat(valor_total_a_pagar.toString()));
         jtf_valor_pago.setText(moeda.setPrecoFormat(valor_pago.toString()));
-
         if (troco > 0) {
             jtf_troco.setText(moeda.setPrecoFormat(troco.toString()));
             jtf_debito_atual.setText("R$ 0,00");
@@ -1139,7 +1186,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             jtf_troco.setText("R$ 0,00");
             troco = troco * (-1);
             jtf_debito_atual.setText(moeda.setPrecoFormat(troco.toString()));
-            jtf_debito_atual.setForeground(Color.red);
+            jtf_debito_atual.setForeground(Color.RED);
         } else {
             jtf_troco.setText("R$ 0,00");
             jtf_debito_atual.setText("R$ 0,00");

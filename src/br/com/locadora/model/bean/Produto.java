@@ -12,107 +12,68 @@ import java.util.Date;
  */
 public class Produto {
 
-    private Integer cod_produto;
+    private Integer codigo_produto;
     private String nome_produto;
-    private String concentraçao;
-    private Integer estoque_ideal;
-    private Integer estoque_minimo;
-    private Double ultimo_preco;
-    private Integer estoque;
-    private Date data;
+    private String codigo_barras;
+    private Double preco_compra;
+    private Double preco_venda;
+    private Integer quantidade;
+    private Double preco_total;
 
-    public Produto(Integer cod_produto, String nome_produto, String concentraçao) {
-        this.cod_produto = cod_produto;
-        this.nome_produto = nome_produto;
-        this.concentraçao = concentraçao;
+    public Integer getCodigo_produto() {
+        return codigo_produto;
     }
 
-    public Produto(Integer cod_produto) {
-        this.cod_produto = cod_produto;
-    }
-
-    public Produto() {
-    }
-
-    public Integer getEstoque() {
-        return estoque;
-    }
-
-    public String getConcentraçao() {
-        return concentraçao;
-    }
-
-    public void setConcentraçao(String concentraçao) {
-        this.concentraçao = concentraçao;
-    }
-
-    public void setEstoque(Integer estoque) {
-        this.estoque = estoque;
-    }
-
-    public void setCod_produto(Integer cod_produto) {
-        this.cod_produto = cod_produto;
-    }
-
-    public void setNome_produto(String nome_produto) {
-        this.nome_produto = nome_produto;
-    }
-
-    public void setEstoque_ideal(Integer estoque_ideal) {
-        this.estoque_ideal = estoque_ideal;
-    }
-
-    public void setEstoque_minimo(Integer estoque_minimo) {
-        this.estoque_minimo = estoque_minimo;
-    }
-
-    public Integer getCod_produto() {
-        return cod_produto;
+    public void setCodigo_produto(Integer codigo_produto) {
+        this.codigo_produto = codigo_produto;
     }
 
     public String getNome_produto() {
         return nome_produto;
     }
 
-    public Integer getEstoque_ideal() {
-        return estoque_ideal;
+    public void setNome_produto(String nome_produto) {
+        this.nome_produto = nome_produto;
     }
 
-    public Integer getEstoque_minimo() {
-        return estoque_minimo;
+    public String getCodigo_barras() {
+        return codigo_barras;
     }
 
-
-    /**
-     * @return the ultimo_preco
-     */
-    public Double getUltimo_preco() {
-        return ultimo_preco;
+    public void setCodigo_barras(String codigo_barras) {
+        this.codigo_barras = codigo_barras;
     }
 
-    /**
-     * @param ultimo_preco the ultimo_preco to set
-     */
-    public void setUltimo_preco(Double ultimo_preco) {
-        this.ultimo_preco = ultimo_preco;
+    public Double getPreco_compra() {
+        return preco_compra;
     }
 
-    /**
-     * @return the data
-     */
-    public Date getData() {
-        return data;
+    public void setPreco_compra(Double preco_compra) {
+        this.preco_compra = preco_compra;
     }
 
-    /**
-     * @param data the data to set
-     */
-    public void setData(Date data) {
-        this.data = data;
+    public Double getPreco_venda() {
+        return preco_venda;
     }
 
-    /**
-     * @return the subGrupo
-     */
+    public void setPreco_venda(Double preco_venda) {
+        this.preco_venda = preco_venda;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Double getPreco_total() {
+        return preco_total;
+    }
+
+    public void setPreco_total(Double preco_total) {
+        this.preco_total = preco_total;
+    }
 
 }

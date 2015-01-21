@@ -124,14 +124,14 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Código de Barras", "Título", "Idioma", "Legenda", "Mídia", "Tipo Mídia", "Livre", "Data Prevista"
+                        "Código de Barras", "Título", "Idioma", "Legenda", "Mídia", "Tipo Mídia", "Livre", "Data Prevista"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                        java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
                     };
                     boolean[] canEdit = new boolean [] {
-                        false, false, false, false, false, false, false, false, false
+                        false, false, false, false, false, false, false, false
                     };
 
                     public Class getColumnClass(int columnIndex) {
@@ -156,10 +156,9 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 });
                 jScrollPane3.setViewportView(jtbl_copia);
                 if (jtbl_copia.getColumnModel().getColumnCount() > 0) {
-                    jtbl_copia.getColumnModel().getColumn(0).setPreferredWidth(40);
-                    jtbl_copia.getColumnModel().getColumn(1).setPreferredWidth(100);
-                    jtbl_copia.getColumnModel().getColumn(2).setPreferredWidth(150);
-                    jtbl_copia.getColumnModel().getColumn(7).setPreferredWidth(40);
+                    jtbl_copia.getColumnModel().getColumn(0).setPreferredWidth(100);
+                    jtbl_copia.getColumnModel().getColumn(1).setPreferredWidth(150);
+                    jtbl_copia.getColumnModel().getColumn(6).setPreferredWidth(40);
                 }
 
                 buttonGroup1.add(jrb_titulo);
@@ -205,18 +204,22 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jb_buscar))
+                                .addComponent(jScrollPane3)
+                                .addGap(10, 10, 10))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrb_titulo)
-                                .addGap(10, 10, 10)
-                                .addComponent(jrb_ator)
-                                .addGap(10, 10, 10)
-                                .addComponent(jrb_codigo_barras))
-                            .addComponent(jLabel2)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jb_buscar))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jrb_titulo)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jrb_ator)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jrb_codigo_barras))
+                                    .addComponent(jLabel2))
+                                .addGap(501, 501, 501))))
                 );
                 jPanel1Layout.setVerticalGroup(
                     jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,7 +531,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                 
                 DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(copias.get(i), copias.get(i).getObjeto().getTitulo());
-                row.addRow(new Object[]{copias.get(i).getCodigo_copia(), copias.get(i).getCodigo_barras(),
+                row.addRow(new Object[]{ copias.get(i).getCodigo_barras(),
                     hashDbGrid, copias.get(i).getIdioma(), copias.get(i).getLegenda(), copias.get(i).getMidia(),
                     copias.get(i).getObjeto().getTipo_midia(), copias.get(i).getStatus(), data_prevista});
 

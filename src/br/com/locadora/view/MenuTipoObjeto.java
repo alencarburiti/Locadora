@@ -316,7 +316,7 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
     public void alterar() {
         Genero desti = tbDestinoLinhaSelecionada(jt_pesquisar);
         if (desti != null) {
-            AtualizaGenero generoAltera = new AtualizaGenero(desti);
+            CadastraAlteraGenero generoAltera = new CadastraAlteraGenero(desti);
 //            generoAltera.janelapai = this;
             generoAltera.setVisible(true);
             this.setEnabled(false);
@@ -377,7 +377,7 @@ public class MenuTipoObjeto extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Genero desti = tbDestinoLinhaSelecionada(jt_pesquisar);
             if (desti != null) {
-                AtualizaGenero generoAltera = new AtualizaGenero(desti);
+                CadastraAlteraGenero generoAltera = new CadastraAlteraGenero(desti);
 //                generoAltera.janelapai = this;
                 generoAltera.setVisible(true);
             }

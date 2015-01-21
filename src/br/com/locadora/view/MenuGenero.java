@@ -24,7 +24,6 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,14 +39,14 @@ public class MenuGenero extends javax.swing.JFrame {
     public Genero genero;
     public InterfacePool pool;
     public AcessoUsuario acesso;
-    public AtualizaGenero atualizaGenero;
+    public CadastraAlteraGenero cadastraAlteraGenero;
     /**
      * Creates new form DestinoGUI
      */
     public MenuGenero() {
         initComponents();
         TemaInterface.getInterface(this);
-        atualizaGenero = null;
+        cadastraAlteraGenero = null;
     }
     
     /**
@@ -297,10 +296,14 @@ public class MenuGenero extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuGenero");
         try {
             if (acesso.getEscrever() == true) {
-                CadastroGenero cadastroGenero = new CadastroGenero();
-                cadastroGenero.janelapai = this;
-                cadastroGenero.setVisible(true);
-                setStatusTela(false);
+                if(cadastraAlteraGenero == null){
+                    cadastraAlteraGenero = new CadastraAlteraGenero();
+                    cadastraAlteraGenero.janelapai = this;
+                    cadastraAlteraGenero.setVisible(true);
+                    this.setStatusTela(false);                    
+                } else {
+                    cadastraAlteraGenero.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -439,13 +442,13 @@ public class MenuGenero extends javax.swing.JFrame {
             if (acesso.getEscrever() == true) {
                 genero = tbGeneroLinhaSelecionada(jtbl_genero);
                 if (genero != null) {
-                    if(atualizaGenero == null){
-                        atualizaGenero = new AtualizaGenero(genero);
-                        atualizaGenero.janelapai = this;
-                        atualizaGenero.setVisible(true);
+                    if(cadastraAlteraGenero == null){
+                        cadastraAlteraGenero = new CadastraAlteraGenero(genero);
+                        cadastraAlteraGenero.janelapai = this;
+                        cadastraAlteraGenero.setVisible(true);
                         setEnabled(false);                     
                     } else {
-                        atualizaGenero.setVisible(true);
+                        cadastraAlteraGenero.setVisible(true);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um Gênero");

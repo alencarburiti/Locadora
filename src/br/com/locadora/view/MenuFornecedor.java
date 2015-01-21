@@ -14,17 +14,15 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.dao.FornecedorDAO;
-import br.com.locadora.model.bean.FornecedorModel;
+import br.com.locadora.model.bean.Fornecedor;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,7 +34,9 @@ public class MenuFornecedor extends javax.swing.JFrame {
     public TelaPrincipal janelapai;
     public static AcessoUsuario acesso = new AcessoUsuario();
     public InterfacePool pool;
-    public AtualizaFornecedor atualizaFornecedor;
+    public CadastraAlteraFornecedor cadastra_altera_fornecedor;
+    public FornecedorDAO fornecedorDAO;
+    public List<Fornecedor> fornecedores;
 
     /**
      * Creates new form Cad_Fornecedor
@@ -44,14 +44,10 @@ public class MenuFornecedor extends javax.swing.JFrame {
     public MenuFornecedor() {
         initComponents();
         TemaInterface.getInterface(this);
-        listarFornecedor();
-        atualizaFornecedor = null;
+        cadastra_altera_fornecedor = null;
+        getFornecedores();
     }
-    
-    List<FornecedorModel> fornecedores;
-    DefaultTableModel tmFornecedor = new DefaultTableModel(null, new String[]{"CÓDIGO", "RAZÃO SOCIAL", "NOME FANTASIA", "ENDEREÇO",
-        "CNPJ", "TELEFONE", "FAX", "VENDEDOR", "TELEFONE VENDEDOR"});
-    ListSelectionModel lsmFornecedor;
+
     String tipoCadastro;
 
     /**
@@ -65,14 +61,13 @@ public class MenuFornecedor extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jt_pesquisar = new javax.swing.JTable();
+        jtbl_fornecedor = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jl_pesquisar = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jrb_codigo = new javax.swing.JRadioButton();
         jrb_descricao = new javax.swing.JRadioButton();
-        jrb_detalhamento = new javax.swing.JRadioButton();
         jtf_pesquisar = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jb_novo = new javax.swing.JButton();
@@ -99,26 +94,45 @@ public class MenuFornecedor extends javax.swing.JFrame {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jt_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jt_pesquisar.setModel(tmFornecedor);
-        jt_pesquisar.setName("jt_pesquisar"); // NOI18N
-        jt_pesquisar.getTableHeader().setReorderingAllowed(false);
-        jt_pesquisar.setModel(tmFornecedor);
-        jt_pesquisar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lsmFornecedor = jt_pesquisar.getSelectionModel();
-        lsmFornecedor.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e){
-                if (! e.getValueIsAdjusting()){
-                    tbFornecedorLinhaSelecionada(jt_pesquisar);
-                }
+        jtbl_fornecedor.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtbl_fornecedor.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome Fantasia", "CNPJ", "Vendedor", "Telefone"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jt_pesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtbl_fornecedor.setName("jtbl_fornecedor"); // NOI18N
+        jtbl_fornecedor.getTableHeader().setReorderingAllowed(false);
+        jtbl_fornecedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jt_pesquisarMouseClicked(evt);
+                jtbl_fornecedorMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jt_pesquisar);
+        jScrollPane1.setViewportView(jtbl_fornecedor);
+        if (jtbl_fornecedor.getColumnModel().getColumnCount() > 0) {
+            jtbl_fornecedor.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jtbl_fornecedor.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jtbl_fornecedor.getColumnModel().getColumn(2).setPreferredWidth(50);
+            jtbl_fornecedor.getColumnModel().getColumn(3).setPreferredWidth(50);
+            jtbl_fornecedor.getColumnModel().getColumn(4).setPreferredWidth(40);
+        }
 
         jPanel2.setName("jPanel2"); // NOI18N
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
@@ -147,13 +161,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
         buttonGroup1.add(jrb_descricao);
         jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_descricao.setSelected(true);
-        jrb_descricao.setText("Descrição");
+        jrb_descricao.setText("Nome Fantasia");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
-
-        buttonGroup1.add(jrb_detalhamento);
-        jrb_detalhamento.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jrb_detalhamento.setText("Específica");
-        jrb_detalhamento.setName("jrb_detalhamento"); // NOI18N
 
         jtf_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_pesquisar.setName("jtf_pesquisar"); // NOI18N
@@ -168,8 +177,6 @@ public class MenuFornecedor extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jrb_descricao)
                         .addGap(10, 10, 10)
-                        .addComponent(jrb_detalhamento)
-                        .addGap(11, 11, 11)
                         .addComponent(jrb_codigo))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -187,7 +194,6 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jrb_descricao)
-                    .addComponent(jrb_detalhamento)
                     .addComponent(jrb_codigo))
                 .addGap(10, 10, 10)
                 .addComponent(jl_pesquisar)
@@ -246,18 +252,19 @@ public class MenuFornecedor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(279, 279, 279)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,9 +277,9 @@ public class MenuFornecedor extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -282,57 +289,15 @@ public class MenuFornecedor extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jtf_pesquisar.requestFocus();
 
-        jt_pesquisar.getColumnModel().getColumn(0).setMaxWidth(70);
-        jt_pesquisar.getColumnModel().getColumn(0).setMinWidth(70);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(70);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(0).setMinWidth(70);
-
-        jt_pesquisar.getColumnModel().getColumn(1).setMaxWidth(230);
-        jt_pesquisar.getColumnModel().getColumn(1).setMinWidth(230);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(230);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(1).setMinWidth(230);
-
-        jt_pesquisar.getColumnModel().getColumn(2).setMaxWidth(200);
-        jt_pesquisar.getColumnModel().getColumn(2).setMinWidth(200);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(200);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(2).setMinWidth(200);
-
-        jt_pesquisar.getColumnModel().getColumn(3).setMaxWidth(150);
-        jt_pesquisar.getColumnModel().getColumn(3).setMinWidth(150);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(3).setMaxWidth(150);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(3).setMinWidth(150);
-
-        jt_pesquisar.getColumnModel().getColumn(4).setMaxWidth(120);
-        jt_pesquisar.getColumnModel().getColumn(4).setMinWidth(120);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(4).setMaxWidth(120);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(4).setMinWidth(120);
-
-        jt_pesquisar.getColumnModel().getColumn(5).setMaxWidth(100);
-        jt_pesquisar.getColumnModel().getColumn(5).setMinWidth(100);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(100);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(5).setMinWidth(100);
-
-        jt_pesquisar.getColumnModel().getColumn(6).setMaxWidth(100);
-        jt_pesquisar.getColumnModel().getColumn(6).setMinWidth(100);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(6).setMaxWidth(100);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(6).setMinWidth(100);
-
-        jt_pesquisar.getColumnModel().getColumn(7).setMaxWidth(100);
-        jt_pesquisar.getColumnModel().getColumn(7).setMinWidth(100);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(7).setMaxWidth(100);
-        jt_pesquisar.getTableHeader().getColumnModel().getColumn(7).setMinWidth(100);
-
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jrb_codigo.isSelected() == true) {
-            listarFornecedorCodigo();
+            getFornecedorCodigo();
         } else if (jrb_descricao.isSelected() == true) {
-            listarFornecedorDescricao();
-        } else if (jrb_detalhamento.isSelected() == true) {
-            listarFornecedor();
+            getFornecededorNomeFantasia();
         } else {
-            listarFornecedor();
+            getFornecedores();
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -343,7 +308,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
             if (acesso.getEscrever() == true) {
-                CadastroFornecedor cadastroFornecedor = new CadastroFornecedor();
+                CadastraAlteraFornecedor cadastroFornecedor = new CadastraAlteraFornecedor();
                 cadastroFornecedor.janelapai = this;
                 cadastroFornecedor.setVisible(true);
                 setStatusTela(false);
@@ -358,20 +323,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
-        pool = new Pool();
-        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
-        try {
-            if (acesso.getEscrever() == true) {
-                alterar();                
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-        }
-        
+        alterar();
+
 }//GEN-LAST:event_jb_alterarActionPerformed
 
     private void jb_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_excluirActionPerformed
@@ -381,14 +334,14 @@ public class MenuFornecedor extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
             if (acesso.getEscrever() == true) {
-                excluiFornecedor();               
+                excluiFornecedor();
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_excluirActionPerformed
 
@@ -397,12 +350,12 @@ public class MenuFornecedor extends javax.swing.JFrame {
         janelapai.setStatusTela(true);
     }//GEN-LAST:event_formWindowClosed
 
-    private void jt_pesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_pesquisarMouseClicked
-if(evt.getClickCount() == 2){
-     alterar();
-}
+    private void jtbl_fornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_fornecedorMouseClicked
+        if (evt.getClickCount() == 2) {
+            alterar();
+        }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jt_pesquisarMouseClicked
+    }//GEN-LAST:event_jtbl_fornecedorMouseClicked
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         acionarAtalho(evt);
@@ -434,8 +387,7 @@ if(evt.getClickCount() == 2){
     private javax.swing.JLabel jl_pesquisar;
     private javax.swing.JRadioButton jrb_codigo;
     private javax.swing.JRadioButton jrb_descricao;
-    private javax.swing.JRadioButton jrb_detalhamento;
-    private javax.swing.JTable jt_pesquisar;
+    private javax.swing.JTable jtbl_fornecedor;
     private javax.swing.JTextField jtf_pesquisar;
     // End of variables declaration//GEN-END:variables
 
@@ -443,74 +395,53 @@ if(evt.getClickCount() == 2){
         jtf_pesquisar.requestFocus();
     }
 
-    public void listarFornecedor() {
-        FornecedorDAO forn = new FornecedorDAO();
-        fornecedores = forn.listarForncedor("%" + jtf_pesquisar.getText().trim() + "%");
+    public void getFornecedores() {
+        pool = new Pool();
+        fornecedorDAO = new FornecedorDAO(pool);
+        fornecedores = fornecedorDAO.getFornecedores();
         mostraForncedor(fornecedores);
     }
 
-    private void listarFornecedorCodigo() {
-        FornecedorDAO forn = new FornecedorDAO();
-        fornecedores = forn.listarForncedorCodigo(jtf_pesquisar.getText().trim());
+    private void getFornecedorCodigo() {
+        pool = new Pool();
+        fornecedorDAO = new FornecedorDAO(pool);
+        fornecedores = fornecedorDAO.getFornecedorCodigo(Integer.parseInt(jtf_pesquisar.getText().trim()));
         mostraForncedor(fornecedores);
     }
 
-    private void listarFornecedorDescricao() {
-        FornecedorDAO forn = new FornecedorDAO();
-        fornecedores = forn.listarForncedorDescricao(jtf_pesquisar.getText().trim() + "%");
+    public void getFornecededorNomeFantasia() {
+        pool = new Pool();
+        fornecedorDAO = new FornecedorDAO(pool);
+        fornecedores = fornecedorDAO.getFornecedorNomeFantasia(jtf_pesquisar.getText().trim() + "%");
         mostraForncedor(fornecedores);
     }
 
-    public void mostraForncedor(List<FornecedorModel> fornecedor) {
-        while (tmFornecedor.getRowCount() > 0) {
-            tmFornecedor.removeRow(0);
-        }
+    public void mostraForncedor(List<Fornecedor> fornecedores) {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_fornecedor.getModel();
+        tableModel.setNumRows(0);
 
-        if (fornecedor.size() == 0) {
+        if (fornecedores.size() == 0) {
             JOptionPane.showMessageDialog(null, "Nenhum fornecedor encontrado");
 
         } else {
 
-            String[] campos = new String[]{null, null};
-            for (int i = 0; i < fornecedor.size(); i++) {
+            for (int i = 0; i < fornecedores.size(); i++) {
 
-                tmFornecedor.addRow(campos);
-
-                jt_pesquisar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);//comando para criar a barra de rolagem
-
-                tmFornecedor.setValueAt(fornecedor.get(i).getCod_fornecedor(), i, 0);
-                tmFornecedor.setValueAt(fornecedor.get(i).getRazao_social(), i, 1);
-                tmFornecedor.setValueAt(fornecedor.get(i).getNome_fantasia(), i, 2);
-                tmFornecedor.setValueAt(fornecedor.get(i).getEndereço(), i, 3);
-                tmFornecedor.setValueAt(fornecedor.get(i).getCNPJ(), i, 4);
-                tmFornecedor.setValueAt(fornecedor.get(i).getTelefone(), i, 5);
-                tmFornecedor.setValueAt(fornecedor.get(i).getFax(), i, 6);
-                tmFornecedor.setValueAt(fornecedor.get(i).getNome_vendedor(), i, 7);
-                tmFornecedor.setValueAt(fornecedor.get(i).getTel_vendedor(), i, 8);
+                DefaultTableModel row = (DefaultTableModel) jtbl_fornecedor.getModel();
+//                ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
+                row.addRow(new Object[]{fornecedores.get(i).getCodigo_fornecedor(), fornecedores.get(i).getNome_fantasia(), fornecedores.get(i).getCnpj(),
+                    fornecedores.get(i).getNome_vendedor(), fornecedores.get(i).getTelefone()});
 
             }
         }
 
     }
 
-    public FornecedorModel tbFornecedorLinhaSelecionada(JTable tb) {
+    public Fornecedor tbFornecedorLinhaSelecionada(JTable tb) {
 
         if (tb.getSelectedRow() != -1) {
-            fornecedor = new FornecedorModel();
-            fornecedor.setCod_fornecedor(fornecedores.get(tb.getSelectedRow()).getCod_fornecedor());
-            fornecedor.setRazao_social(fornecedores.get(tb.getSelectedRow()).getRazao_social());
-            fornecedor.setNome_fantasia(fornecedores.get(tb.getSelectedRow()).getNome_fantasia());
-            fornecedor.setEndereço(fornecedores.get(tb.getSelectedRow()).getEndereço());
-            fornecedor.setCNPJ(fornecedores.get(tb.getSelectedRow()).getCNPJ());
-            fornecedor.setTelefone(fornecedores.get(tb.getSelectedRow()).getTelefone());
-            fornecedor.setFax(fornecedores.get(tb.getSelectedRow()).getFax());
-            fornecedor.setCidade(fornecedores.get(tb.getSelectedRow()).getCidade());
-            fornecedor.setCEP(fornecedores.get(tb.getSelectedRow()).getCEP());
-            fornecedor.setEstado(fornecedores.get(tb.getSelectedRow()).getEstado());
-            fornecedor.setInsc_municipal(fornecedores.get(tb.getSelectedRow()).getInsc_municipal());
-            fornecedor.setInsc_estadual(fornecedores.get(tb.getSelectedRow()).getInsc_estadual());
-            fornecedor.setNome_vendedor(fornecedores.get(tb.getSelectedRow()).getNome_vendedor());
-            fornecedor.setTel_vendedor(fornecedores.get(tb.getSelectedRow()).getTel_vendedor());
+            fornecedor = new Fornecedor();
+            fornecedor = fornecedores.get(tb.getSelectedRow());
         } else {
             fornecedor = null;
         }
@@ -518,20 +449,26 @@ if(evt.getClickCount() == 2){
     }
 
     private void excluiFornecedor() {
-        removeFornecedor(jt_pesquisar);
+        removeFornecedor(jtbl_fornecedor);
 
     }
-    FornecedorModel fornecedor = new FornecedorModel();
+    Fornecedor fornecedor = new Fornecedor();
 
-    public FornecedorModel removeFornecedor(JTable tb) {
+    public Fornecedor removeFornecedor(JTable tb) {
         if (tb.getSelectedRow() != -1) {
             int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
             if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                FornecedorDAO fornecedorControl = new FornecedorDAO();
-                fornecedor.setCod_fornecedor(fornecedores.get(tb.getSelectedRow()).getCod_fornecedor());
-                if (fornecedorControl.excluiFornecedor(fornecedor)) {
-                    tmFornecedor.removeRow(tb.getSelectedRow());
+                DefaultTableModel row = (DefaultTableModel) jtbl_fornecedor.getModel();
+                pool = new Pool();
+                fornecedorDAO = new FornecedorDAO(pool);
+                fornecedor.setCodigo_fornecedor(fornecedores.get(tb.getSelectedRow()).getCodigo_fornecedor());
+                try {
+                    fornecedorDAO.excluir(fornecedor.getCodigo_fornecedor());
+                    row.removeRow(jtbl_fornecedor.getSelectedRow());
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
                 }
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um destino");
@@ -547,21 +484,21 @@ if(evt.getClickCount() == 2){
     }
 
     private void alterar() {
-                pool = new Pool();
+        pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuFornecedor");
         try {
             if (acesso.getLer() == true || acesso.getEscrever() == true) {
-                FornecedorModel forn = tbFornecedorLinhaSelecionada(jt_pesquisar);
+                Fornecedor forn = tbFornecedorLinhaSelecionada(jtbl_fornecedor);
                 if (forn != null) {
-                    if(atualizaFornecedor == null){
-                        atualizaFornecedor = new AtualizaFornecedor(forn);
-                        atualizaFornecedor.janelapai = this;
-                        atualizaFornecedor.setVisible(true);
+                    if (cadastra_altera_fornecedor == null) {
+                        cadastra_altera_fornecedor = new CadastraAlteraFornecedor(forn);
+                        cadastra_altera_fornecedor.janelapai = this;
+                        cadastra_altera_fornecedor.setVisible(true);
                         setEnabled(false);
                     } else {
-                        atualizaFornecedor.setVisible(true);
+                        cadastra_altera_fornecedor.setVisible(true);
                     }
                 } else {
 
@@ -573,14 +510,14 @@ if(evt.getClickCount() == 2){
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
-    
+
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
             janelapai.setStatusTela(true);
         }
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             jtf_pesquisar.requestFocus();
         }

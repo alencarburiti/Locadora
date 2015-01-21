@@ -1638,7 +1638,7 @@ public class AtualizaDiaria extends javax.swing.JFrame {
         this.setVisible(false);
         if (janelapai != null) {
             janelapai.setStatusTela(true);
-            janelapai.atualizaDiaria = null;
+//            janelapai.atualizaDiaria = null;
             janelapai.buscarDados();
         }
     }
@@ -2006,7 +2006,12 @@ public class AtualizaDiaria extends javax.swing.JFrame {
             jtf_ganhar_quantidade.setText(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getGanhar_quantidade().toString());
             jtf_ordem.setText(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getOrderm().toString());
 
-            jrb_ativo_locacao.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getStatus());
+            if(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getStatus() == true){
+                jrb_ativo_locacao.setSelected(true);
+            } else {
+                jrb_inativo_locacao.setSelected(true);
+            }
+            
             jcb_a_vista_locacao.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getPagamento_a_vista());
 
             jcb_domingo.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getDomingo());
@@ -2034,7 +2039,12 @@ public class AtualizaDiaria extends javax.swing.JFrame {
             jtf_horas_antecipada.setText(itensPromocaoDevolucao.get(jtbl_promocao_devolucao.getSelectedRow()).getPromocaoDevolucao().getHora_antecipada());
             jtf_valor_promocao_devolucao.setText(moeda.setPrecoFormat(itensPromocaoDevolucao.get(jtbl_promocao_devolucao.getSelectedRow()).getPromocaoDevolucao().getValor_promocao_devolucao().toString()));
 
-            jrb_ativo_devolucao.setSelected(itensPromocaoDevolucao.get(jtbl_promocao_devolucao.getSelectedRow()).getPromocaoDevolucao().getStatus());
+            if(itensPromocaoDevolucao.get(jtbl_promocao_devolucao.getSelectedRow()).getPromocaoDevolucao().getStatus() == true){
+                jrb_ativo_devolucao.setSelected(true);
+            } else {
+                jrb_inativo_devolucao.setSelected(true);
+            }
+            
             jcb_a_vista_locacao.setSelected(itensPromocaoDevolucao.get(jtbl_promocao_devolucao.getSelectedRow()).getPromocaoDevolucao().getPagamento_a_vista());
 
             jb_adicionar_promocao_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N

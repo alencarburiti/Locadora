@@ -41,16 +41,19 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
     public AtendimentoLocacao janelapaiLocacao;
     public AtendimentoDevolucao janelapaiDevolucao;
-    public Recebimento janelapaiRecebimento;
+    public AtendimentoVenda janelapaiVenda;
+    public FinanceiroReceber janelapaiRecebimento;
     public List<Cliente> clientes;
     public List<Dependente> dependentes;
     public AcessoUsuario acesso;
+    public CadastraAlteraCliente cadastraAlteraCliente;
 
     public ConsultaClienteAtendimento() {
         initComponents();
         TemaInterface.getInterface(this);
         janelapaiLocacao = null;
         janelapaiDevolucao = null;
+        janelapaiVenda = null; 
         janelapaiRecebimento = null;
     }
 
@@ -290,15 +293,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
             }// </editor-fold>//GEN-END:initComponents
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        setVisible(false);
-        if ((janelapaiLocacao != null)) {
-            janelapaiLocacao.setStatusTela(true);
-        } else if ((janelapaiDevolucao != null)) {
-            janelapaiDevolucao.setStatusTela(true);
-        } else if ((janelapaiRecebimento != null)) {
-            janelapaiRecebimento.setStatusTela(true);
-        }
-
+        retornaJanelaPai();
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
@@ -325,6 +320,10 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 setVisible(false);
                 janelapaiDevolucao.carregarClienteDependente(dependente);
                 retornaJanelaPai();
+            }else if ((janelapaiVenda != null) && (dependente != null)) {
+                setVisible(false);
+                janelapaiVenda.carregarClienteDependente(dependente);
+                retornaJanelaPai();            
             } else if ((janelapaiRecebimento != null) && (dependente != null)) {
                 setVisible(false);
                 janelapaiRecebimento.carregarClienteDependente(dependente);
@@ -337,15 +336,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        setVisible(false);
-        if ((janelapaiLocacao != null)) {
-            janelapaiLocacao.setStatusTela(true);
-        } else if ((janelapaiDevolucao != null)) {
-            janelapaiDevolucao.setStatusTela(true);
-        } else if ((janelapaiRecebimento != null)) {
-            janelapaiRecebimento.setStatusTela(true);
-        }
-
+        retornaJanelaPai();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -356,11 +347,15 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
         try {
             if (acesso.getEscrever() == true) {
-                CadastroCliente cadastroCliente = new CadastroCliente();
-                cadastroCliente.janelapai2 = this;
-                cadastroCliente.setVisible(true);
-                setStatusTela(false);
-                cadastroCliente.acesso = acesso;
+                if(cadastraAlteraCliente == null){
+                    cadastraAlteraCliente = new CadastraAlteraCliente();
+                    cadastraAlteraCliente.janelapai2 = this;
+                    cadastraAlteraCliente.setVisible(true);
+                    this.setStatusTela(false);
+                    cadastraAlteraCliente.acesso = acesso;                    
+                } else {
+                    cadastraAlteraCliente.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -373,18 +368,15 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         if (janelapaiLocacao != null) {
             AtendimentoLocacao.jtf_codigo_cliente.setText("");
             listaClienteDependente();
-//            jtbl_cliente.requestFocus();
-//            jtbl_cliente.setSelectionMode(1);
         } else if (janelapaiDevolucao != null) {
             AtendimentoDevolucao.jtf_codigo_cliente.setText("");
             listaClienteDependente();
-//            jtbl_cliente.requestFocus();
-//            jtbl_cliente.setSelectionMode(1);
         } else if (janelapaiRecebimento != null) {
-            Recebimento.jtf_codigo_cliente.setText("");
+            FinanceiroReceber.jtf_codigo_cliente.setText("");
+            listaClienteDependente();        
+        } else if (janelapaiVenda != null) {
+            AtendimentoVenda.jtf_codigo_cliente.setText("");
             listaClienteDependente();
-//            jtbl_cliente.requestFocus();
-//            jtbl_cliente.setSelectionMode(1);
         }
 
     }//GEN-LAST:event_formWindowOpened
@@ -557,12 +549,14 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
     private void retornaJanelaPai() {
         setVisible(false);
-        if(janelapaiLocacao != null){
+        if ((janelapaiLocacao != null)) {
             janelapaiLocacao.setStatusTela(true);
-        } else if (janelapaiDevolucao != null){
+        } else if ((janelapaiDevolucao != null)) {
             janelapaiDevolucao.setStatusTela(true);
-        } else if (janelapaiRecebimento != null){
+        } else if ((janelapaiRecebimento != null)) {
             janelapaiRecebimento.setStatusTela(true);
+        } else if((janelapaiVenda != null)){
+            janelapaiVenda.setStatusTela(true);
         }            
     }
 }

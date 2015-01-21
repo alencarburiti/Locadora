@@ -8,7 +8,6 @@ import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Lancamento;
-import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.PromocaoLocacao;
 import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.model.dao.DependenteDAO;
@@ -98,15 +97,18 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jcb_codigo_barras_locacao = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         jcb_promocao = new javax.swing.JComboBox();
+        jl_total_filmes = new javax.swing.JLabel();
         jl_debito_locacao = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jtf_debito_total_locacao = new javax.swing.JTextField();
-        jtf_valor_total_locacao = new javax.swing.JTextField();
+        jtf_saldo_debito_total = new javax.swing.JTextField();
+        jtf_total_locacao = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jb_finalizar = new javax.swing.JButton();
         jb_limpar = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jtf_total_a_pagar = new javax.swing.JTextField();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -407,52 +409,60 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
             }
         });
 
+        jl_total_filmes.setText("Total de Objetos: 0");
+        jl_total_filmes.setName("jl_total_filmes"); // NOI18N
+
         javax.swing.GroupLayout jp_locacaoLayout = new javax.swing.GroupLayout(jp_locacao);
         jp_locacao.setLayout(jp_locacaoLayout);
         jp_locacaoLayout.setHorizontalGroup(
             jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jp_locacaoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_locacaoLayout.createSequentialGroup()
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jp_locacaoLayout.createSequentialGroup()
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_valor_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jp_locacaoLayout.createSequentialGroup()
-                                .addComponent(jtf_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jtf_tipo_midia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jp_locacaoLayout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10)
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jp_locacaoLayout.createSequentialGroup()
-                                .addComponent(jcb_promocao, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jl_total_filmes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jp_locacaoLayout.createSequentialGroup()
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_codigo_consulta_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jl_codigo_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jp_locacaoLayout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(280, 280, 280))
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_valor_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(10, 10, 10)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jtf_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jtf_tipo_midia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(10, 10, 10)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jcb_promocao, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jp_locacaoLayout.createSequentialGroup()
-                                .addComponent(jtf_nome_objeto_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtf_codigo_consulta_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jl_codigo_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(10, 10, 10)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jcb_codigo_barras_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane2))
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(280, 280, 280))
+                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                        .addComponent(jtf_nome_objeto_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jcb_codigo_barras_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane2))))
                 .addGap(10, 10, 10))
         );
         jp_locacaoLayout.setVerticalGroup(
@@ -489,8 +499,10 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                                 .addComponent(jtf_valor_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jcb_codigo_barras_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jl_total_filmes)
+                .addContainerGap())
         );
 
         jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_locacao, jb_remover_locacao, jcb_promocao, jtf_diaria, jtf_tipo_midia});
@@ -504,32 +516,33 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
 
         jLabel27.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel27.setText("Total:");
+        jLabel27.setText("Total Locação:");
         jLabel27.setName("jLabel27"); // NOI18N
 
-        jtf_debito_total_locacao.setEditable(false);
-        jtf_debito_total_locacao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_debito_total_locacao.setText("R$ 0,00");
-        jtf_debito_total_locacao.setName("jtf_debito_total_locacao"); // NOI18N
-        jtf_debito_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_saldo_debito_total.setEditable(false);
+        jtf_saldo_debito_total.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_saldo_debito_total.setText("R$ 0,00");
+        jtf_saldo_debito_total.setName("jtf_saldo_debito_total"); // NOI18N
+        jtf_saldo_debito_total.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_total_locacaoFocusGained(evt);
+                jtf_saldo_debito_totalFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_debito_total_locacaoFocusLost(evt);
+                jtf_saldo_debito_totalFocusLost(evt);
             }
         });
 
-        jtf_valor_total_locacao.setEditable(false);
-        jtf_valor_total_locacao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtf_valor_total_locacao.setText("R$ 0,00");
-        jtf_valor_total_locacao.setName("jtf_valor_total_locacao"); // NOI18N
-        jtf_valor_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_total_locacao.setEditable(false);
+        jtf_total_locacao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_total_locacao.setForeground(new java.awt.Color(255, 51, 51));
+        jtf_total_locacao.setText("R$ 0,00");
+        jtf_total_locacao.setName("jtf_total_locacao"); // NOI18N
+        jtf_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_total_locacaoFocusGained(evt);
+                jtf_total_locacaoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_valor_total_locacaoFocusLost(evt);
+                jtf_total_locacaoFocusLost(evt);
             }
         });
 
@@ -543,6 +556,11 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jb_finalizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_finalizarMouseClicked(evt);
+            }
+        });
+        jb_finalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_finalizarActionPerformed(evt);
             }
         });
         jb_finalizar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -611,6 +629,24 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
+        jLabel28.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel28.setText("Total À Pagar:");
+        jLabel28.setName("jLabel28"); // NOI18N
+
+        jtf_total_a_pagar.setEditable(false);
+        jtf_total_a_pagar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_total_a_pagar.setText("R$ 0,00");
+        jtf_total_a_pagar.setName("jtf_total_a_pagar"); // NOI18N
+        jtf_total_a_pagar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_total_a_pagarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_total_a_pagarFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -620,17 +656,23 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jl_debito_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(jtf_debito_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jtf_saldo_debito_total, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jtf_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addComponent(jp_locacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(747, 747, 747)
@@ -640,7 +682,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(20, 20, 20))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -653,17 +695,23 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jp_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jl_debito_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_debito_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtf_saldo_debito_total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtf_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
@@ -674,10 +722,10 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
         System.out.println("Escrever: " + acesso.getEscrever());
-        if (acesso.getEscrever() == true) {
+        if (acesso.getEscrever() == false) {
             jtf_codigo_cliente.setEnabled(false);
             jtf_codigo_consulta_locacao.setEnabled(false);
-            jtf_debito_total_locacao.setEnabled(false);
+            jtf_saldo_debito_total.setEnabled(false);
             jtf_diaria.setEnabled(false);
             jtf_nome_cliente.setEnabled(false);
             jtf_nome_objeto_locacao.setEnabled(false);
@@ -686,8 +734,9 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         if (jcb_codigo_barras_locacao.isSelected() == true) {
             jl_codigo_locacao.setText("Código de Barras");
         } else {
-            jl_codigo_locacao.setText("Código dó Objeto");
+            jl_codigo_locacao.setText("Código do Objeto");
         }
+        recalcularValorTotal();
         jtf_nome_cliente.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
@@ -728,21 +777,21 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     jtf_codigo_consulta_locacao.requestFocus();
 }//GEN-LAST:event_jtf_nome_clienteFocusLost
 
-    private void jtf_debito_total_locacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_total_locacaoFocusLost
+    private void jtf_saldo_debito_totalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_totalFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_total_locacaoFocusLost
+    }//GEN-LAST:event_jtf_saldo_debito_totalFocusLost
 
-    private void jtf_debito_total_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_total_locacaoFocusGained
+    private void jtf_saldo_debito_totalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_totalFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_total_locacaoFocusGained
+    }//GEN-LAST:event_jtf_saldo_debito_totalFocusGained
 
-    private void jtf_valor_total_locacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_total_locacaoFocusLost
+    private void jtf_total_locacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_locacaoFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_total_locacaoFocusLost
+    }//GEN-LAST:event_jtf_total_locacaoFocusLost
 
-    private void jtf_valor_total_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_total_locacaoFocusGained
+    private void jtf_total_locacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_locacaoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_total_locacaoFocusGained
+    }//GEN-LAST:event_jtf_total_locacaoFocusGained
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jtf_codigo_cliente.getText().isEmpty()) {
@@ -961,6 +1010,18 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_locacaoMouseClicked
 
+    private void jb_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_finalizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_finalizarActionPerformed
+
+    private void jtf_total_a_pagarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_total_a_pagarFocusGained
+
+    private void jtf_total_a_pagarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_total_a_pagarFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -981,6 +1042,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -998,17 +1060,19 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JComboBox jcb_promocao;
     private javax.swing.JLabel jl_codigo_locacao;
     private javax.swing.JLabel jl_debito_locacao;
+    public static javax.swing.JLabel jl_total_filmes;
     public static javax.swing.JPanel jp_locacao;
     public static javax.swing.JTable jtbl_locacao;
     public static javax.swing.JTextField jtf_codigo_cliente;
     private javax.swing.JTextField jtf_codigo_consulta_locacao;
-    public static javax.swing.JTextField jtf_debito_total_locacao;
     private javax.swing.JFormattedTextField jtf_diaria;
     public static javax.swing.JTextField jtf_nome_cliente;
     public static javax.swing.JTextField jtf_nome_objeto_locacao;
+    public static javax.swing.JTextField jtf_saldo_debito_total;
     private javax.swing.JTextField jtf_tipo_midia;
+    public static javax.swing.JTextField jtf_total_a_pagar;
+    public static javax.swing.JTextField jtf_total_locacao;
     private javax.swing.JTextField jtf_valor_locacao;
-    public static javax.swing.JTextField jtf_valor_total_locacao;
     // End of variables declaration//GEN-END:variables
 
     public void consultarObjeto() {
@@ -1363,28 +1427,45 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public void recalcularValorTotal() {
 
         moeda = new Moeda();
-        Double valor_total = 0.00;
+        Double total_locacao = 0.00;
+        Double total_a_pagar = 0.00;
+        Double saldo_debito_total = moeda.getPrecoFormato(jtf_saldo_debito_total.getText());
         for (int i = 0; i < jtbl_locacao.getRowCount(); i++) {
             Double valor_adicionar = moeda.getPrecoFormato(jtbl_locacao.getValueAt(i, 2).toString());
-            valor_total = valor_total + valor_adicionar;
+            total_locacao = total_locacao + valor_adicionar;
         }
-        jtf_valor_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
+        if(jtf_saldo_debito_total.getForeground() == Color.BLACK){
+            if(saldo_debito_total > total_locacao){
+                total_a_pagar = 0.00;
+            } else {
+                total_a_pagar = saldo_debito_total - total_locacao;
+                if(total_a_pagar < 0){
+                    total_a_pagar = total_a_pagar * (-1);
+                }                
+            }
+        } else {
+            total_a_pagar = total_locacao + saldo_debito_total;
+        }
+        jtf_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(total_locacao)));
+        jtf_total_a_pagar.setText(moeda.setPrecoFormat(String.valueOf(total_a_pagar)));
+        
+        jl_total_filmes.setText("Total de Objetos: "+ jtbl_locacao.getRowCount());
 
     }
 
-    public void retirarValordoTotal(String valor) {
-        moeda = new Moeda();
-        Double valor_total;
-        Double valor_remover;
-        valor_remover = moeda.getPrecoFormato(valor);
-
-        valor_total = moeda.getPrecoFormato(jtf_valor_total_locacao.getText());
-
-        valor_total = valor_total - valor_remover;
-
-        jtf_valor_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
-
-    }
+//    public void retirarValordoTotal(String valor) {
+//        moeda = new Moeda();
+//        Double valor_total;
+//        Double valor_remover;
+//        valor_remover = moeda.getPrecoFormato(valor);
+//
+//        valor_total = moeda.getPrecoFormato(jtf_total_locacao.getText());
+//
+//        valor_total = valor_total - valor_remover;
+//
+//        jtf_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(valor_total)));
+//
+//    }
 
     public void limparItemLocado() {
         jtf_valor_locacao.setText("R$ 0,00");
@@ -1487,7 +1568,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         if (dependente != null) {
             copiasLocacao = new ArrayList<>();
             this.dependente = dependente;
-            jtf_debito_total_locacao.setText("R$ 0,00");
+            jtf_saldo_debito_total.setText("R$ 0,00");
 
             jtf_nome_cliente.setText(dependente.getNome_dependente());
             setTitle("Atendimento Locação - " + dependente.getNome_dependente());
@@ -1501,18 +1582,18 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
             if (lancamento.getSaldo() < 0) {
                 lancamento.setSaldo(lancamento.getSaldo() * (-1));
-                jtf_debito_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_debito_total_locacao.setForeground(Color.black);
+                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_saldo_debito_total.setForeground(Color.black);
                 jl_debito_locacao.setText("Saldo:");
                 jtf_codigo_consulta_locacao.setEnabled(true);
             } else if (lancamento.getSaldo() > 0) {
-                jtf_debito_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_debito_total_locacao.setForeground(Color.red);
+                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
+                jtf_saldo_debito_total.setForeground(Color.red);
                 jl_debito_locacao.setText("Devedor:");
                 verificarDebito(dependente.getCliente());
             } else {
-                jtf_debito_total_locacao.setText("R$ 0,00");
-                jtf_debito_total_locacao.setForeground(Color.black);
+                jtf_saldo_debito_total.setText("R$ 0,00");
+                jtf_saldo_debito_total.setForeground(Color.black);
                 jl_debito_locacao.setText("Saldo:");
                 jtf_codigo_consulta_locacao.setEnabled(true);
             }
@@ -1526,7 +1607,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 tb_locacao.removeRow(i);
             }
 
-            jtf_valor_total_locacao.setText("R$ 0,00");
+            jtf_total_locacao.setText("R$ 0,00");
 
         }
     }
@@ -1770,6 +1851,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         if (janelapai != null) {
             janelapai.setStatusTela(true);
             janelapai.atendimentoLocacao = null;
+            janelapai = null;
         }
     }
 

@@ -75,20 +75,20 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jtf_valor_total_locacao = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jtf_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel7 = new javax.swing.JLabel();
-        jtf_troco = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel11 = new javax.swing.JLabel();
-        jtf_debito_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jl_saldo_debito_anterior = new javax.swing.JLabel();
+        jtf_saldo_debito_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel12 = new javax.swing.JLabel();
         jtf_valor_total_a_pagar = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jLabel8 = new javax.swing.JLabel();
-        jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel6 = new javax.swing.JLabel();
         jtf_valor_pago = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel1 = new javax.swing.JLabel();
+        jtf_valor_total_locacao = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel7 = new javax.swing.JLabel();
+        jtf_troco = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jLabel8 = new javax.swing.JLabel();
+        jtf_debito_atual = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jb_imprimir = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
         jb_cancelar1 = new javax.swing.JButton();
@@ -209,39 +209,9 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Caixa"));
         jPanel2.setName("jPanel2"); // NOI18N
 
-        jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_valor_total_locacao.setEditable(false);
-        jtf_valor_total_locacao.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_valor_total_locacao.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_valor_total_locacao.setText("R$ 0,00");
-        jtf_valor_total_locacao.setName("jtf_valor_total_locacao");
-        jtf_valor_total_locacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_valor_total_locacaoActionPerformed(evt);
-            }
-        });
-        jtf_valor_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_valor_total_locacaoFocusGained(evt);
-            }
-        });
-        jtf_valor_total_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_valor_total_locacaoKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_valor_total_locacaoKeyReleased(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Total Locação:");
-        jLabel1.setName("jLabel1"); // NOI18N
-
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Valor Desconto:");
+        jLabel5.setText("Valor Desconto (+)");
         jLabel5.setName("jLabel5"); // NOI18N
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
@@ -272,68 +242,39 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Troco:");
-        jLabel7.setName("jLabel7"); // NOI18N
+        jl_saldo_debito_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jl_saldo_debito_anterior.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jl_saldo_debito_anterior.setText("Débito Anterior (-)");
+        jl_saldo_debito_anterior.setName("jl_saldo_debito_anterior"); // NOI18N
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_troco.setEditable(false);
-        jtf_troco.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_troco.setText("R$ 0,00");
-        jtf_troco.setName("jtf_troco"); // NOI18N
-        jtf_troco.addActionListener(new java.awt.event.ActionListener() {
+        jtf_saldo_debito_anterior.setEditable(false);
+        jtf_saldo_debito_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_saldo_debito_anterior.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_saldo_debito_anterior.setText("R$ 0,00");
+        jtf_saldo_debito_anterior.setName("jtf_saldo_debito_anterior"); // NOI18N
+        jtf_saldo_debito_anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_trocoActionPerformed(evt);
+                jtf_saldo_debito_anteriorActionPerformed(evt);
             }
         });
-        jtf_troco.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_saldo_debito_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_trocoFocusGained(evt);
+                jtf_saldo_debito_anteriorFocusGained(evt);
             }
         });
-        jtf_troco.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_saldo_debito_anterior.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_trocoKeyPressed(evt);
+                jtf_saldo_debito_anteriorKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_trocoKeyReleased(evt);
-            }
-        });
-
-        jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Débito Anterior:");
-        jLabel11.setName("jLabel11"); // NOI18N
-
-        jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_debito_anterior.setEditable(false);
-        jtf_debito_anterior.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_debito_anterior.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_debito_anterior.setText("R$ 0,00");
-        jtf_debito_anterior.setName("jtf_debito_anterior"); // NOI18N
-        jtf_debito_anterior.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_debito_anteriorActionPerformed(evt);
-            }
-        });
-        jtf_debito_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_anteriorFocusGained(evt);
-            }
-        });
-        jtf_debito_anterior.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_debito_anteriorKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_debito_anteriorKeyReleased(evt);
+                jtf_saldo_debito_anteriorKeyReleased(evt);
             }
         });
 
         jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel12.setText("Total à pagar:");
+        jLabel12.setText("Total à pagar (=)");
         jLabel12.setName("jLabel12"); // NOI18N
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
@@ -361,41 +302,9 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText("Débito Atual:");
-        jLabel8.setName("jLabel8"); // NOI18N
-
-        jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
-        jtf_debito_atual.setEditable(false);
-        jtf_debito_atual.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jtf_debito_atual.setText("R$ 0,00");
-        jtf_debito_atual.setName("jtf_debito_atual"); // NOI18N
-        jtf_debito_atual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_debito_atualActionPerformed(evt);
-            }
-        });
-        jtf_debito_atual.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_debito_atualFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_debito_atualFocusLost(evt);
-            }
-        });
-        jtf_debito_atual.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_debito_atualKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_debito_atualKeyReleased(evt);
-            }
-        });
-
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Valor Pago:");
+        jLabel6.setText("Valor Pago (+)");
         jLabel6.setName("jLabel6"); // NOI18N
 
         jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
@@ -426,80 +335,169 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Total Locação (-)");
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_valor_total_locacao.setEditable(false);
+        jtf_valor_total_locacao.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_valor_total_locacao.setForeground(new java.awt.Color(204, 0, 0));
+        jtf_valor_total_locacao.setText("R$ 0,00");
+        jtf_valor_total_locacao.setName("jtf_valor_total_locacao");
+        jtf_valor_total_locacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_valor_total_locacaoActionPerformed(evt);
+            }
+        });
+        jtf_valor_total_locacao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_valor_total_locacaoFocusGained(evt);
+            }
+        });
+        jtf_valor_total_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_valor_total_locacaoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_valor_total_locacaoKeyReleased(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel7.setText("Troco (+)");
+        jLabel7.setName("jLabel7"); // NOI18N
+
+        jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_troco.setEditable(false);
+        jtf_troco.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_troco.setText("R$ 0,00");
+        jtf_troco.setName("jtf_troco"); // NOI18N
+        jtf_troco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_trocoActionPerformed(evt);
+            }
+        });
+        jtf_troco.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_trocoFocusGained(evt);
+            }
+        });
+        jtf_troco.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_trocoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_trocoKeyReleased(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Débito Atual (-)");
+        jLabel8.setName("jLabel8"); // NOI18N
+
+        jtf_valor_total_locacao.setDocument(new UnaccentedDocument());
+        jtf_debito_atual.setEditable(false);
+        jtf_debito_atual.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jtf_debito_atual.setText("R$ 0,00");
+        jtf_debito_atual.setName("jtf_debito_atual"); // NOI18N
+        jtf_debito_atual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_debito_atualActionPerformed(evt);
+            }
+        });
+        jtf_debito_atual.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_debito_atualFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_debito_atualFocusLost(evt);
+            }
+        });
+        jtf_debito_atual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_debito_atualKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf_debito_atualKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(10, 10, 10)
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jtf_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtf_valor_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(20, 20, 20))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jl_saldo_debito_anterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtf_saldo_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_valor_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jtf_debito_anterior, jtf_debito_atual, jtf_desconto, jtf_troco, jtf_valor_pago, jtf_valor_total_a_pagar, jtf_valor_total_locacao});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jtf_debito_atual, jtf_desconto, jtf_saldo_debito_anterior, jtf_troco, jtf_valor_pago, jtf_valor_total_a_pagar, jtf_valor_total_locacao});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1))
-                    .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jl_saldo_debito_anterior)
+                    .addComponent(jtf_saldo_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jtf_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtf_valor_total_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_valor_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel12))
-                    .addComponent(jtf_valor_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel6))
-                    .addComponent(jtf_valor_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtf_troco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(10, 10, 10))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtf_debito_atual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jb_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/printer.png"))); // NOI18N
@@ -525,6 +523,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_salvarMouseClicked(evt);
+            }
+        });
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -553,19 +556,20 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jb_salvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jb_salvar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar1, jb_imprimir, jb_salvar});
@@ -577,7 +581,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -599,7 +603,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jpf_senha.requestFocus();
         if (janelapaiLocacao != null) {
-            carregarValorPagar();
+            recalcularValores();
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -633,11 +637,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private void jtf_descontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_descontoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descontoActionPerformed
-
-    private void jtf_descontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusGained
-        jtf_desconto.selectAll();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_descontoFocusGained
 
     private void jtf_descontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descontoKeyPressed
         acionarAtalho(evt);
@@ -696,60 +695,24 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_trocoKeyReleased
 
-    private void jtf_debito_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorActionPerformed
+    private void jtf_saldo_debito_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_anteriorActionPerformed
+    }//GEN-LAST:event_jtf_saldo_debito_anteriorActionPerformed
 
-    private void jtf_debito_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorFocusGained
+    private void jtf_saldo_debito_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_anteriorFocusGained
+    }//GEN-LAST:event_jtf_saldo_debito_anteriorFocusGained
 
-    private void jtf_debito_anteriorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorKeyPressed
+    private void jtf_saldo_debito_anteriorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_anteriorKeyPressed
+    }//GEN-LAST:event_jtf_saldo_debito_anteriorKeyPressed
 
-    private void jtf_debito_anteriorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_debito_anteriorKeyReleased
+    private void jtf_saldo_debito_anteriorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_debito_anteriorKeyReleased
+    }//GEN-LAST:event_jtf_saldo_debito_anteriorKeyReleased
 
     private void jtf_valor_pagoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_pagoFocusLost
-
-        if (!jtf_valor_pago.getText().equals("")) {
-
-            Moeda moeda = new Moeda();
-
-            Double troco;
-            Double desconto;
-            Double total_locacao;
-            Double valor_pago;
-            Double debito_atual;
-            Double valor_final;
-
-            total_locacao = moeda.getPrecoFormato(jtf_valor_total_locacao.getText());
-            desconto = moeda.getPrecoFormato(jtf_desconto.getText());
-            valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
-            debito_atual = moeda.getPrecoFormato(jtf_debito_anterior.getText());
-
-            troco = valor_pago - ((total_locacao + debito_atual) - desconto);
-
-            if (troco > 0) {
-                jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
-                jtf_debito_atual.setCaretColor(Color.black);
-                jtf_debito_atual.setText("R$ 0,00");
-            } else if (troco < 0) {
-                jtf_troco.setText("R$ 0,00");
-                jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
-                jtf_debito_atual.setCaretColor(Color.red);
-            } else {
-                jtf_troco.setText("R$ 0,00");
-                jtf_debito_atual.setText("R$ 0,00");
-                jtf_debito_atual.setCaretColor(Color.black);
-            }
-            jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
-        } else if (jtf_valor_pago.getText().equals("")) {
-            jtf_valor_pago.setText("R$ 0,00");
-        }
-
+        recalcularValores();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_pagoFocusLost
 
@@ -771,43 +734,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private void jb_logarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_logarActionPerformed
         entrar();
     }//GEN-LAST:event_jb_logarActionPerformed
-
-    private void jtf_descontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusLost
-        Moeda moeda = new Moeda();
-        if (jtf_desconto.getText().equals("")) {
-            jtf_desconto.setText("R$ 0,00");
-        }
-        jtf_desconto.setText(moeda.setPrecoFormat(String.valueOf(jtf_desconto.getText())));
-
-        Double troco;
-        Double desconto;
-        Double total_locacao;
-        Double valor_pago;
-        Double debito_anterior;
-
-        total_locacao = moeda.getPrecoFormato(jtf_valor_total_locacao.getText());
-        desconto = moeda.getPrecoFormato(jtf_desconto.getText());
-        valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
-        debito_anterior = moeda.getPrecoFormato(jtf_debito_anterior.getText());
-
-        troco = valor_pago - ((total_locacao + debito_anterior) - desconto);
-
-        if (troco > 0) {
-            jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
-            jtf_debito_atual.setCaretColor(Color.black);
-        } else if (troco < 0) {
-            jtf_troco.setText("R$ 0,00");
-            troco = troco * (-1);
-            jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
-            jtf_debito_atual.setCaretColor(Color.red);
-        } else {
-            jtf_troco.setText("R$ 0,00");
-            jtf_debito_atual.setText("R$ 0,00");
-            jtf_debito_atual.setCaretColor(Color.black);
-        }
-        jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_descontoFocusLost
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         acionarAtalho(evt);
@@ -869,6 +795,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (jb_salvar.isEnabled()) {
+                recalcularValores();
                 checarPagamento();
                 finalizarCaixa();
             }
@@ -910,12 +837,27 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
         if (evt.getClickCount() == 1) {
             if (jb_salvar.isEnabled()) {
+                recalcularValores();
                 checarPagamento();
                 finalizarCaixa();
             }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarMouseClicked
+
+    private void jtf_descontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusGained
+        jtf_desconto.selectAll();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_descontoFocusGained
+
+    private void jtf_descontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusLost
+        recalcularValores();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_descontoFocusLost
+
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -927,7 +869,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -942,11 +883,12 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private javax.swing.JButton jb_imprimir;
     private javax.swing.JButton jb_logar;
     private javax.swing.JButton jb_salvar;
+    private javax.swing.JLabel jl_saldo_debito_anterior;
     private javax.swing.JPasswordField jpf_senha;
-    public static javax.swing.JTextField jtf_debito_anterior;
     public static javax.swing.JTextField jtf_debito_atual;
     public static javax.swing.JTextField jtf_desconto;
     private javax.swing.JTextField jtf_login;
+    public static javax.swing.JTextField jtf_saldo_debito_anterior;
     public static javax.swing.JTextField jtf_troco;
     public static javax.swing.JTextField jtf_valor_pago;
     public static javax.swing.JTextField jtf_valor_total_a_pagar;
@@ -954,13 +896,50 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
-    public void carregarValorPagar() {
-        jtf_valor_total_locacao.setText(janelapaiLocacao.jtf_valor_total_locacao.getText());
-        jtf_debito_anterior.setText(janelapaiLocacao.jtf_debito_total_locacao.getText());
-        Moeda moeda = new Moeda();
-        Double total_a_pagar;
-        total_a_pagar = (moeda.getPrecoFormato(janelapaiLocacao.jtf_valor_total_locacao.getText()) + moeda.getPrecoFormato(janelapaiLocacao.jtf_debito_total_locacao.getText()));
-        jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(String.valueOf(total_a_pagar)));
+    public void recalcularValores() {
+        if (janelapaiLocacao.jtf_saldo_debito_total.getForeground() != Color.RED) {
+            jl_saldo_debito_anterior.setText("Saldo Anterior (+)");
+            jtf_saldo_debito_anterior.setForeground(Color.BLACK);
+        }
+        jtf_saldo_debito_anterior.setText(janelapaiLocacao.jtf_saldo_debito_total.getText());
+        jtf_valor_total_locacao.setText(janelapaiLocacao.jtf_total_locacao.getText());
+        jtf_valor_total_a_pagar.setText(janelapaiLocacao.jtf_total_a_pagar.getText());
+
+        if (!jtf_valor_pago.getText().equals("")) {
+
+            Moeda moeda = new Moeda();
+
+            Double troco;
+            Double desconto = moeda.getPrecoFormato(jtf_desconto.getText());
+            jtf_desconto.setText(moeda.setPrecoFormat(jtf_desconto.getText().toString()));
+//            Double total_locacao = moeda.getPrecoFormato(jtf_valor_total_locacao.getText());
+//            Double saldo_debito_atual = moeda.getPrecoFormato(jtf_saldo_debito_anterior.getText());
+            Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
+            Double total_a_pagar = moeda.getPrecoFormato(jtf_valor_total_a_pagar.getText());
+
+            troco = valor_pago - (total_a_pagar - desconto);
+
+            if (troco > 0) {
+                jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
+                jtf_debito_atual.setCaretColor(Color.black);
+                jtf_debito_atual.setText("R$ 0,00");
+            } else if (troco < 0) {
+                jtf_troco.setText("R$ 0,00");
+                troco = troco * (-1);
+                jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
+                jtf_debito_atual.setCaretColor(Color.red);
+            } else {
+                jtf_troco.setText("R$ 0,00");
+                jtf_debito_atual.setText("R$ 0,00");
+                jtf_debito_atual.setCaretColor(Color.black);
+            }
+            
+            jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
+            
+        } else if (jtf_valor_pago.getText().equals("")) {
+            jtf_valor_pago.setText("R$ 0,00");
+        }
+
     }
 
     public void setStatusTela(boolean status) {
@@ -1029,7 +1008,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     public boolean verificaLogin() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), "br.com.locadora.view.EntradaCaixa");
+        acesso = usuarioControl.verificarPermissao(jpf_senha.getText().trim(), "br.com.locadora.view.EntradaCaixaLocacao");
         try {
             //verifica a senha
             char[] senha = jpf_senha.getPassword();
@@ -1037,12 +1016,12 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
             // verifica o tamanho da senha
             if (senha.length != senhaDoBanco.length) {
-                JOptionPane.showMessageDialog(null, "Senha incorreta");
+                JOptionPane.showMessageDialog(null, "Senha incorreta 1");
                 return false; // se for diferente, retorna falso
             } else {
                 for (int i = 0; i < senha.length; i++) {
                     if (senha[i] != senhaDoBanco[i]) {
-                        JOptionPane.showMessageDialog(null, "Senha incorreta");
+                        JOptionPane.showMessageDialog(null, "Senha incorreta 2");
                         return false; // se for diferente, retorna falso
                     }
                 }
@@ -1051,6 +1030,8 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             return true;
 
         } catch (Exception e) {
+            e.printStackTrace();
+
             System.out.println("Senha incorreta na Entrada de Caixa");
             return false;
         }
@@ -1086,8 +1067,10 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                             janelapaiLocacao.jtf_codigo_cliente.setText("");
                             janelapaiLocacao.jtf_nome_cliente.setText("");
 
-                            janelapaiLocacao.jtf_valor_total_locacao.setText("R$ 0,00");
-                            janelapaiLocacao.jtf_debito_total_locacao.setText("R$ 0,00");
+                            janelapaiLocacao.jtf_total_locacao.setText("R$ 0,00");
+                            janelapaiLocacao.jtf_total_a_pagar.setText("R$ 0,00");
+                            janelapaiLocacao.jtf_saldo_debito_total.setText("R$ 0,00");
+                            janelapaiLocacao.jl_total_filmes.setText("Total de Objetos: 0");
                         }
                     }
                 }
@@ -1179,7 +1162,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                                         janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getDiaria().getValor())), j, 2);
                                         janelapaiLocacao.jtbl_locacao.setValueAt("", j, 5);
                                         janelapaiLocacao.recalcularValorTotal();
-                                        carregarValorPagar();
+                                        recalcularValores();
                                     }
                                 }
                             }
@@ -1197,7 +1180,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                                         janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getDiaria().getValor())), j, 2);
                                         janelapaiLocacao.jtbl_locacao.setValueAt("", j, 5);
                                         janelapaiLocacao.recalcularValorTotal();
-                                        carregarValorPagar();
+                                        recalcularValores();
                                     }
                                 }
                             }
@@ -1219,7 +1202,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                                 janelapaiLocacao.jtbl_locacao.setValueAt(moeda.setPrecoFormat(String.valueOf(janelapaiLocacao.copiasLocacao.get(j).getDiaria().getValor())), j, 2);
                                 janelapaiLocacao.jtbl_locacao.setValueAt("", j, 5);
                                 janelapaiLocacao.recalcularValorTotal();
-                                carregarValorPagar();
+                                recalcularValores();
                             }
                         }
                     }
@@ -1352,8 +1335,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                                     diariasAcumulativas.get(j).setQuantidade_filme(diariasAcumulativas.get(j).getQuantidade_filme() + 1);
                                     System.out.println("Quantidade de filme: " + diariasAcumulativas.get(j).getQuantidade_filme() + " Dias Previsto: " + diariasAcumulativas.get(j).getDias_previsto());
                                 }
-
-                            }
+                            }  
                         }
                     }
                 } else {

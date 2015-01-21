@@ -17,7 +17,7 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
-import static br.com.locadora.view.AtualizaCliente.jtbl_telefone;
+import static br.com.locadora.view.CadastraAlteraCliente.jtbl_telefone;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -86,6 +86,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
 
             carregaGenero(objeto.getGenero());
             carregaCopia(objeto.getCodigo_objeto());
+            action = "salvar";
         }
     }
 
@@ -101,6 +102,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tfa_similar = new javax.swing.JTextArea();
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jb_cancelar = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -327,7 +329,9 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(jrb_ativo);
         jrb_ativo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jrb_ativo.setSelected(true);
         jrb_ativo.setText("Ativo");
         jrb_ativo.setName("jrb_ativo"); // NOI18N
         jrb_ativo.addActionListener(new java.awt.event.ActionListener() {
@@ -336,6 +340,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(jrb_inativo);
         jrb_inativo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_inativo.setText("Inativo");
         jrb_inativo.setName("jrb_inativo"); // NOI18N
@@ -514,35 +519,35 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(jtf_titulo_original, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(jcb_tipo_midia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel24)
+                                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jcb_producao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel23)
-                            .addGap(0, 0, 0)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jb_genero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtf_descricao_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel15)
-                            .addGap(0, 0, 0)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jtf_duracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jcb_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtf_censura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jcb_tipo_midia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel24)
+                                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, 0)
+                                .addComponent(jcb_producao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel23)
+                                .addGap(0, 0, 0)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jb_genero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_descricao_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel14)
-                            .addGap(29, 29, 29))))
+                            .addGap(29, 29, 29)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtf_duracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcb_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_censura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
@@ -553,6 +558,8 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
                     .addComponent(jScrollPane6))
                 .addGap(14, 14, 14))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_genero, jcb_producao, jcb_tipo, jcb_tipo_midia, jtf_censura, jtf_descricao_genero, jtf_duracao});
 
         jtp_menu.addTab("Cadastro", jPanel1);
 
@@ -713,7 +720,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
         jLabel36.setName("jLabel36"); // NOI18N
 
         jcb_midia.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jcb_midia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu-Ray", "CD", "DVD", "Playstation", "VHs", "Xbox" }));
+        jcb_midia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blu-Ray", "Blu-Ray 3D", "CD", "DVD", "Playstation", "VHs", "Xbox" }));
         jcb_midia.setName("jcb_midia"); // NOI18N
         jcb_midia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -770,6 +777,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup2.add(jrb_ativo_copia);
         jrb_ativo_copia.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_ativo_copia.setSelected(true);
         jrb_ativo_copia.setText("Ativo");
@@ -780,6 +788,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup2.add(jrb_inativo_copia);
         jrb_inativo_copia.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_inativo_copia.setText("Inativo");
         jrb_inativo_copia.setName("jrb_inativo_copia"); // NOI18N
@@ -843,7 +852,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
                 .addComponent(jrb_ativo_copia)
                 .addGap(10, 10, 10)
                 .addComponent(jrb_inativo_copia)
-                .addContainerGap())
+                .addGap(10, 10, 10))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -894,6 +903,10 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_copia, jb_eliminar_copia, jtf_data_aquisicao, jtf_preco_custo});
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_diaria, jcb_idioma, jcb_legenda, jcb_midia, jtf_descricao_diaria, jtf_diaria_dias, jtf_valor});
 
         jtp_menu.addTab("Cópias", jPanel2);
 
@@ -1296,6 +1309,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
@@ -1392,11 +1406,7 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
 
         if (jtf_duracao.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Duração\n";
-        }
-
-        if (jtf_diaria_dias.getText().trim().equals("")) {
-            msgERRO = msgERRO + " *Diária\n";
-        }
+        }        
 
         if (jtf_descricao_genero.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Gênero\n";
@@ -1757,22 +1767,21 @@ public final class AtualizaObjeto extends javax.swing.JFrame {
                         copia.setDefect_flag(false);
                     }
 
-                    if (jb_adicionar_copia.getText().equals("Salvar")) {
+                    if (action.equals("salvar")) {
                         pool = new Pool();
                         CopiaDAO copiaDAO = new CopiaDAO(pool);
                         copiaDAO.salvar(copia);
                         carregaCopia(objeto.getCodigo_objeto());
-                    } else if (jb_adicionar_copia.getText().equals("Alterar")) {
+                    } else if (action.equals("alterar")) {
                         copia.setCodigo_copia(copiaAlterar.getCodigo_copia());
                         pool = new Pool();
                         CopiaDAO copiaDAO = new CopiaDAO(pool);
                         copiaDAO.atualizar(copia);
                         carregaCopia(objeto.getCodigo_objeto());
 
-                        jb_adicionar_copia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
-                        jb_adicionar_copia.setText("Salvar");
+                        jb_adicionar_copia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N                        
                         jb_eliminar_copia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
-                        jb_eliminar_copia.setText("Remover");
+                        action = "salvar";
                     }
 
                     jrb_ativo_copia.setSelected(true);
