@@ -109,10 +109,11 @@ public class FluxodeCaixaDiario extends javax.swing.JFrame {
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
         jb_sair.setText("Sair");
         jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_sairActionPerformed(evt);
@@ -135,7 +136,7 @@ public class FluxodeCaixaDiario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

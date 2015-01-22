@@ -76,6 +76,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jb_novo = new javax.swing.JButton();
         jb_alterar = new javax.swing.JButton();
         jb_excluir = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -155,6 +156,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setPreferredSize(new java.awt.Dimension(28, 28));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -174,6 +176,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
 
         jtf_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_pesquisar.setName("jtf_pesquisar"); // NOI18N
+        jtf_pesquisar.setPreferredSize(new java.awt.Dimension(300, 30));
         jtf_pesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_pesquisarKeyPressed(evt);
@@ -192,10 +195,10 @@ public class MenuFornecedor extends javax.swing.JFrame {
                         .addComponent(jrb_codigo))
                     .addComponent(jl_pesquisar)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jtf_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jButton1)))
-                .addGap(0, 0, 0))
+                        .addComponent(jtf_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +212,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtf_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -217,40 +220,83 @@ public class MenuFornecedor extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.png"))); // NOI18N
         jb_novo.setText("Novo");
         jb_novo.setName("jb_novo"); // NOI18N
+        jb_novo.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_novo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_novoActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_novo, new java.awt.GridBagConstraints());
 
-        jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
         jb_alterar.setText("Alterar");
         jb_alterar.setName("jb_alterar"); // NOI18N
+        jb_alterar.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_alterarActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_alterar, new java.awt.GridBagConstraints());
 
-        jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete 16.png"))); // NOI18N
         jb_excluir.setText("Excluir");
         jb_excluir.setName("jb_excluir"); // NOI18N
+        jb_excluir.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_excluirActionPerformed(evt);
             }
         });
-        jPanel1.add(jb_excluir, new java.awt.GridBagConstraints());
+
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_sairActionPerformed(evt);
+            }
+        });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jb_novo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jb_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jb_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(150, 150, 150))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_novo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_sair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
@@ -261,14 +307,14 @@ public class MenuFornecedor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
@@ -278,7 +324,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -370,15 +416,25 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             consultarFornecedor();
         }
+                acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_pesquisarKeyPressed
 
     private void jtbl_fornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_fornecedorKeyPressed
-                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             alterar();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_fornecedorKeyPressed
+
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
+        retornarJanelaPai();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairActionPerformed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
 
     /**
      * @param args the command line arguments
@@ -402,6 +458,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
     private javax.swing.JButton jb_alterar;
     private javax.swing.JButton jb_excluir;
     private javax.swing.JButton jb_novo;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar;
     private javax.swing.JRadioButton jrb_codigo;
     private javax.swing.JRadioButton jrb_descricao;
@@ -533,8 +590,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornarJanelaPai();
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
@@ -550,5 +606,11 @@ public class MenuFornecedor extends javax.swing.JFrame {
         } else {
             getFornecedores();
         }    
+    }
+    public void retornarJanelaPai(){
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);            
+        }
     }
 }

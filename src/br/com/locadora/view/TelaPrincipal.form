@@ -492,6 +492,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jm_usuario">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/user.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Usu&#xe1;rio"/>
                 <Property name="name" type="java.lang.String" value="jm_usuario" noResource="true"/>
               </Properties>
@@ -501,6 +504,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jm_acesso">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/acesso.gif"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Controle de Acessos"/>
                 <Property name="name" type="java.lang.String" value="jm_acesso" noResource="true"/>
               </Properties>
@@ -522,6 +528,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem17">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/caixa.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Configurar Caixa"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem17" noResource="true"/>
               </Properties>
@@ -540,6 +549,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/change.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Trocar de usu&#xe1;rio"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
               </Properties>

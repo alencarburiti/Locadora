@@ -78,6 +78,7 @@ public class MenuUsuario extends javax.swing.JFrame {
         jb_novo = new javax.swing.JButton();
         jb_alterar1 = new javax.swing.JButton();
         jb_excluir1 = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -192,9 +193,10 @@ public class MenuUsuario extends javax.swing.JFrame {
                 jLabel1.setText("Parâmetro");
                 jLabel1.setName("jLabel1"); // NOI18N
 
-                jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 10)); // NOI18N
+                jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
                 jButton1.setName("jButton1"); // NOI18N
+                jButton1.setPreferredSize(new java.awt.Dimension(28, 28));
                 jButton1.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jButton1ActionPerformed(evt);
@@ -230,14 +232,13 @@ public class MenuUsuario extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jtf_consultar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jButton1)))
-                        .addGap(0, 0, 0))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap())
                 );
                 jPanel3Layout.setVerticalGroup(
                     jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jrb_nome)
                             .addComponent(jrb_login)
@@ -245,50 +246,88 @@ public class MenuUsuario extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(jLabel1)
                         .addGap(0, 0, 0)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_consultar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
-                        .addGap(0, 0, 0))
+                        .addComponent(jtf_consultar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 28, Short.MAX_VALUE)
+                        .addGap(1, 1, 1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 );
-
-                jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jtf_consultar_usuario});
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
                 jPanel1.setName("jPanel1"); // NOI18N
-                jPanel1.setLayout(new java.awt.GridBagLayout());
 
-                jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.png"))); // NOI18N
                 jb_novo.setText("Novo");
                 jb_novo.setName("jb_novo"); // NOI18N
+                jb_novo.setPreferredSize(new java.awt.Dimension(100, 40));
                 jb_novo.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jb_novoActionPerformed(evt);
                     }
                 });
-                jPanel1.add(jb_novo, new java.awt.GridBagConstraints());
 
-                jb_alterar1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_alterar1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jb_alterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
                 jb_alterar1.setText("Alterar");
                 jb_alterar1.setName("jb_alterar1"); // NOI18N
+                jb_alterar1.setPreferredSize(new java.awt.Dimension(100, 40));
                 jb_alterar1.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jb_alterar1ActionPerformed(evt);
                     }
                 });
-                jPanel1.add(jb_alterar1, new java.awt.GridBagConstraints());
 
-                jb_excluir1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+                jb_excluir1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jb_excluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete 16.png"))); // NOI18N
                 jb_excluir1.setText("Excluir");
                 jb_excluir1.setName("jb_excluir1"); // NOI18N
+                jb_excluir1.setPreferredSize(new java.awt.Dimension(100, 40));
                 jb_excluir1.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jb_excluir1ActionPerformed(evt);
                     }
                 });
-                jPanel1.add(jb_excluir1, new java.awt.GridBagConstraints());
+
+                jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+                jb_sair.setText("Sair");
+                jb_sair.setName("jb_sair"); // NOI18N
+                jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+                jb_sair.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jb_sairActionPerformed(evt);
+                    }
+                });
+                jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        jb_sairKeyPressed(evt);
+                    }
+                });
+
+                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                jPanel1.setLayout(jPanel1Layout);
+                jPanel1Layout.setHorizontalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jb_novo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_alterar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_excluir1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80))
+                );
+                jPanel1Layout.setVerticalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jb_novo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_excluir1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_alterar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                );
 
                 jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/BROADWAY-LOGIN.png"))); // NOI18N
@@ -305,7 +344,7 @@ public class MenuUsuario extends javax.swing.JFrame {
                             .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(20, 20, 20)
+                                .addGap(0, 0, 0)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(10, 10, 10))
                 );
@@ -437,6 +476,15 @@ public class MenuUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
+        retornarJanelaPai();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairActionPerformed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -461,6 +509,7 @@ public class MenuUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jb_alterar1;
     private javax.swing.JButton jb_excluir1;
     private javax.swing.JButton jb_novo;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JRadioButton jrb_codigo;
     private javax.swing.JRadioButton jrb_login;
     private javax.swing.JRadioButton jrb_nome;
@@ -620,6 +669,13 @@ public class MenuUsuario extends javax.swing.JFrame {
     }  catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+    }
+    
+    public void retornarJanelaPai(){
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);            
         }
     }
 }

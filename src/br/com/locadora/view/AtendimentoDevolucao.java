@@ -68,7 +68,6 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jDesktopPane2 = new javax.swing.JDesktopPane();
@@ -158,6 +157,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_cliente.setName("jb_cliente"); // NOI18N
+        jb_cliente.setPreferredSize(new java.awt.Dimension(28, 28));
         jb_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_clienteActionPerformed(evt);
@@ -176,16 +176,16 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jtf_nome_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +198,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtf_nome_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_cliente))
+                    .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -269,6 +269,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_pesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_pesquisar.setName("jb_pesquisar"); // NOI18N
+        jb_pesquisar.setPreferredSize(new java.awt.Dimension(28, 28));
         jb_pesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_pesquisarActionPerformed(evt);
@@ -284,9 +285,15 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_adicionar_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/adicionar_item.png"))); // NOI18N
         jb_adicionar_devolucao.setToolTipText("Incluir");
         jb_adicionar_devolucao.setName("jb_adicionar_devolucao"); // NOI18N
+        jb_adicionar_devolucao.setPreferredSize(new java.awt.Dimension(28, 28));
         jb_adicionar_devolucao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_adicionar_devolucaoMouseClicked(evt);
+            }
+        });
+        jb_adicionar_devolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_adicionar_devolucaoActionPerformed(evt);
             }
         });
         jb_adicionar_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -299,6 +306,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_remover_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
         jb_remover_locacao.setToolTipText("Excluir");
         jb_remover_locacao.setName("jb_remover_locacao"); // NOI18N
+        jb_remover_locacao.setPreferredSize(new java.awt.Dimension(28, 28));
         jb_remover_locacao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_remover_locacaoMouseClicked(evt);
@@ -338,18 +346,19 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_codigo_barras_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jl_codigo_devolucao))
-                        .addGap(0, 0, 0)
+                            .addComponent(jl_codigo_devolucao)
+                            .addComponent(jtf_codigo_barras_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jtf_nome_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
+                        .addGap(5, 5, 5)
                         .addComponent(jb_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
+                        .addGap(5, 5, 5)
                         .addComponent(jb_adicionar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(5, 5, 5)
+                        .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,10 +369,10 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                             .addComponent(jl_codigo_devolucao)
                             .addGap(0, 0, 0)
                             .addComponent(jtf_codigo_barras_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jb_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jb_adicionar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, 0)
@@ -373,15 +382,15 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_pesquisar, jtf_codigo_barras_objeto});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_devolucao, jb_pesquisar, jb_remover_locacao, jtf_codigo_barras_objeto, jtf_nome_objeto_devolucao});
 
-        jLabel32.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel32.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel32.setText("Total À Pagar:");
         jLabel32.setName("jLabel32"); // NOI18N
 
         jtf_total_a_pagar.setEditable(false);
-        jtf_total_a_pagar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_total_a_pagar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_total_a_pagar.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtf_total_a_pagar.setText("R$ 0,00");
         jtf_total_a_pagar.setName("jtf_total_a_pagar"); // NOI18N
@@ -399,13 +408,13 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             }
         });
 
-        jl_debito_devolucao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jl_debito_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jl_debito_devolucao.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jl_debito_devolucao.setText("Débito Total:");
         jl_debito_devolucao.setName("jl_debito_devolucao"); // NOI18N
 
         jtf_saldo_debito_total.setEditable(false);
-        jtf_saldo_debito_total.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_saldo_debito_total.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_saldo_debito_total.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtf_saldo_debito_total.setText("R$ 0,00");
         jtf_saldo_debito_total.setName("jtf_saldo_debito_total"); // NOI18N
@@ -418,13 +427,13 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             }
         });
 
-        jLabel35.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel35.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel35.setText("Relocação:");
         jLabel35.setName("jLabel35"); // NOI18N
 
         jtf_valor_total_relocacao.setEditable(false);
-        jtf_valor_total_relocacao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_valor_total_relocacao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_valor_total_relocacao.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtf_valor_total_relocacao.setText("R$ 0,00");
         jtf_valor_total_relocacao.setName("jtf_valor_total_relocacao"); // NOI18N
@@ -437,13 +446,13 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             }
         });
 
-        jLabel36.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel36.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel36.setText("Desconto Entr. Antecipada:");
         jLabel36.setName("jLabel36"); // NOI18N
 
         jtf_total_desconto_entrega_antecipada.setEditable(false);
-        jtf_total_desconto_entrega_antecipada.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtf_total_desconto_entrega_antecipada.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_total_desconto_entrega_antecipada.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtf_total_desconto_entrega_antecipada.setText("R$ 0,00");
         jtf_total_desconto_entrega_antecipada.setName("jtf_total_desconto_entrega_antecipada"); // NOI18N
@@ -462,12 +471,12 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel2.setName("jPanel2"); // NOI18N
-        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jb_limpar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
         jb_limpar.setText("Limpar");
         jb_limpar.setName("jb_limpar"); // NOI18N
+        jb_limpar.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_limpar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_limparMouseClicked(evt);
@@ -478,19 +487,12 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 jb_limparKeyPressed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 14;
-        gridBagConstraints.ipady = 20;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 5, 7, 0);
-        jPanel2.add(jb_limpar, gridBagConstraints);
 
         jb_finalizar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_finalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finalizar.png"))); // NOI18N
-        jb_finalizar.setText("Finalizar");
+        jb_finalizar.setText("OK");
         jb_finalizar.setName("jb_finalizar"); // NOI18N
+        jb_finalizar.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_finalizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_finalizarMouseClicked(evt);
@@ -501,20 +503,13 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 jb_finalizarKeyPressed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 21;
-        gridBagConstraints.ipady = 20;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 118, 7, 0);
-        jPanel2.add(jb_finalizar, gridBagConstraints);
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
         jb_cancelar.setName("jb_cancelar"); // NOI18N
+        jb_cancelar.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_cancelarActionPerformed(evt);
@@ -525,14 +520,30 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 jb_cancelarKeyPressed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 44;
-        gridBagConstraints.ipady = 20;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 5, 7, 99);
-        jPanel2.add(jb_cancelar, gridBagConstraints);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jb_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -552,12 +563,12 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
+                                .addGap(5, 5, 5)
                                 .addComponent(jtf_total_desconto_entrega_antecipada, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(68, 68, 68)
                                 .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
+                                .addGap(5, 5, 5)
                                 .addComponent(jtf_total_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(80, 80, 80)
@@ -565,11 +576,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(10, 10, 10)
+                                        .addGap(5, 5, 5)
                                         .addComponent(jtf_valor_total_relocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jl_debito_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
+                                        .addGap(5, 5, 5)
                                         .addComponent(jtf_saldo_debito_total, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
@@ -584,10 +595,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                         .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(0, 0, 0)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -846,6 +858,10 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private void jtf_total_a_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_total_a_pagarActionPerformed
+
+    private void jb_adicionar_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_devolucaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_devolucaoActionPerformed
     public static boolean validaData(String dataString) throws java.text.ParseException {
         if (!dataString.equals("")) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");

@@ -66,6 +66,8 @@ public class MenuLegenda extends javax.swing.JFrame {
         jtf_consulta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbl_legenda = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jb_sair1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento de Legendas");
@@ -94,6 +96,7 @@ public class MenuLegenda extends javax.swing.JFrame {
         jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jb_buscar.setName("jb_buscar"); // NOI18N
+        jb_buscar.setPreferredSize(new java.awt.Dimension(28, 28));
         jb_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_buscarActionPerformed(evt);
@@ -118,9 +121,9 @@ public class MenuLegenda extends javax.swing.JFrame {
                     .addComponent(jl_pesquisar_destino)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,13 +180,48 @@ public class MenuLegenda extends javax.swing.JFrame {
             jtbl_legenda.getColumnModel().getColumn(1).setPreferredWidth(180);
         }
 
+        jPanel3.setName("jPanel3"); // NOI18N
+
+        jb_sair1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair1.setText("Sair");
+        jb_sair1.setName("jb_sair1"); // NOI18N
+        jb_sair1.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_sair1ActionPerformed(evt);
+            }
+        });
+        jb_sair1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sair1KeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(jb_sair1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jb_sair1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
@@ -195,6 +233,8 @@ public class MenuLegenda extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
         );
 
@@ -231,6 +271,15 @@ public class MenuLegenda extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jb_sair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sair1ActionPerformed
+        retornarJanelaPai();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sair1ActionPerformed
+
+    private void jb_sair1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sair1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sair1KeyPressed
     /**
      * @param args the command line arguments
      */
@@ -245,8 +294,10 @@ public class MenuLegenda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JButton jb_buscar;
+    private javax.swing.JButton jb_sair1;
     private javax.swing.JLabel jl_pesquisar_destino;
     public static javax.swing.JTable jtbl_legenda;
     public static javax.swing.JTextField jtf_consulta;
@@ -301,6 +352,12 @@ public class MenuLegenda extends javax.swing.JFrame {
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             jtf_consulta.requestFocus();
+        }
+    }
+    public void retornarJanelaPai(){
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);            
         }
     }
 }

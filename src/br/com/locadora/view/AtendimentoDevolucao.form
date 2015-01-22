@@ -57,13 +57,13 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel36" min="-2" pref="190" max="-2" attributes="0"/>
-                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Component id="jtf_total_desconto_entrega_antecipada" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                               <Component id="jLabel32" min="-2" pref="122" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Component id="jtf_total_a_pagar" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -72,12 +72,12 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                                       <Component id="jLabel35" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                       <Component id="jtf_valor_total_relocacao" min="-2" pref="110" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jl_debito_devolucao" min="-2" pref="110" max="-2" attributes="0"/>
-                                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                       <Component id="jtf_saldo_debito_total" min="-2" pref="110" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -101,13 +101,14 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel2" pref="0" max="32767" attributes="0"/>
-                          <Component id="jPanel1" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" pref="85" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jPanel3" max="32767" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -159,19 +160,19 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jtf_codigo_cliente" min="-2" pref="64" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="56" max="-2" attributes="0"/>
+                      <Component id="jtf_codigo_cliente" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jtf_nome_cliente" min="-2" pref="302" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="jb_cliente" min="-2" pref="30" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jb_cliente" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -249,6 +250,9 @@
               <Image iconType="3" name="/br/com/locadora/image/pesquisar.png"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jb_cliente" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[28, 28]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_clienteActionPerformed"/>
@@ -276,20 +280,21 @@
                       <Component id="jScrollPane3" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jtf_codigo_barras_objeto" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                              <Component id="jl_codigo_devolucao" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jl_codigo_devolucao" min="-2" max="-2" attributes="0"/>
+                              <Component id="jtf_codigo_barras_objeto" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                               <Component id="jtf_nome_objeto_devolucao" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Component id="jb_pesquisar" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Component id="jb_adicionar_devolucao" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Component id="jb_remover_locacao" min="-2" pref="30" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -305,16 +310,16 @@
                               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Component id="jtf_codigo_barras_objeto" linkSize="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jb_pesquisar" linkSize="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jb_adicionar_devolucao" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jb_remover_locacao" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jb_adicionar_devolucao" linkSize="3" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jb_remover_locacao" linkSize="3" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jb_pesquisar" linkSize="3" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="jtf_nome_objeto_devolucao" min="-2" max="-2" attributes="0"/>
+                          <Component id="jtf_nome_objeto_devolucao" linkSize="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -432,6 +437,9 @@
               <Image iconType="3" name="/br/com/locadora/image/pesquisar.png"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jb_pesquisar" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[28, 28]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_pesquisarActionPerformed"/>
@@ -448,9 +456,13 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Incluir"/>
             <Property name="name" type="java.lang.String" value="jb_adicionar_devolucao" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[28, 28]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_adicionar_devolucaoMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_adicionar_devolucaoActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_adicionar_devolucaoKeyPressed"/>
           </Events>
         </Component>
@@ -464,6 +476,9 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Excluir"/>
             <Property name="name" type="java.lang.String" value="jb_remover_locacao" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[28, 28]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_remover_locacaoMouseClicked"/>
@@ -500,7 +515,7 @@
     <Component class="javax.swing.JLabel" name="jLabel32">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="0"/>
+          <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Total &#xc0; Pagar:"/>
@@ -511,7 +526,7 @@
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="0"/>
+          <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="R$ 0,00"/>
@@ -529,7 +544,7 @@
     <Component class="javax.swing.JLabel" name="jl_debito_devolucao">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="0"/>
+          <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="D&#xe9;bito Total:"/>
@@ -543,7 +558,7 @@
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="0"/>
+          <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="R$ 0,00"/>
@@ -560,7 +575,7 @@
     <Component class="javax.swing.JLabel" name="jLabel35">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="0"/>
+          <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Reloca&#xe7;&#xe3;o:"/>
@@ -571,7 +586,7 @@
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="0"/>
+          <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="R$ 0,00"/>
@@ -588,7 +603,7 @@
     <Component class="javax.swing.JLabel" name="jLabel36">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="0"/>
+          <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Desconto Entr. Antecipada:"/>
@@ -599,7 +614,7 @@
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="0"/>
+          <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="R$ 0,00"/>
@@ -634,7 +649,35 @@
         <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
       </Properties>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="116" pref="116" max="-2" attributes="0"/>
+                  <Component id="jb_finalizar" min="-2" pref="101" max="-2" attributes="0"/>
+                  <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                  <Component id="jb_limpar" min="-2" pref="99" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                  <Component id="jb_cancelar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jb_finalizar" min="-2" pref="49" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jb_limpar" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                          <Component id="jb_cancelar" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
       <SubComponents>
         <Component class="javax.swing.JButton" name="jb_limpar">
           <Properties>
@@ -646,16 +689,14 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Limpar"/>
             <Property name="name" type="java.lang.String" value="jb_limpar" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 40]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_limparMouseClicked"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_limparKeyPressed"/>
           </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="14" ipadY="20" insetsTop="2" insetsLeft="5" insetsBottom="7" insetsRight="0" anchor="18" weightX="0.0" weightY="0.0"/>
-            </Constraint>
-          </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="jb_finalizar">
           <Properties>
@@ -665,18 +706,16 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/br/com/locadora/image/finalizar.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Finalizar"/>
+            <Property name="text" type="java.lang.String" value="OK"/>
             <Property name="name" type="java.lang.String" value="jb_finalizar" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 40]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_finalizarMouseClicked"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_finalizarKeyPressed"/>
           </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="21" ipadY="20" insetsTop="2" insetsLeft="118" insetsBottom="7" insetsRight="0" anchor="18" weightX="0.0" weightY="0.0"/>
-            </Constraint>
-          </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="jb_cancelar">
           <Properties>
@@ -691,16 +730,14 @@
               <Dimension value="[101, 33]"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jb_cancelar" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 40]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_cancelarActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_cancelarKeyPressed"/>
           </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="2" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="44" ipadY="20" insetsTop="2" insetsLeft="5" insetsBottom="7" insetsRight="99" anchor="18" weightX="0.0" weightY="0.0"/>
-            </Constraint>
-          </Constraints>
         </Component>
       </SubComponents>
     </Container>

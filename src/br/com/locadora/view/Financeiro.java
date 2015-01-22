@@ -82,6 +82,7 @@ public class Financeiro extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jb_altera_lancamento = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -89,7 +90,7 @@ public class Financeiro extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -135,9 +136,11 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel2.setText("Data Inicial");
         jLabel2.setName("jLabel2"); // NOI18N
 
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel3.setText("Data Final");
         jLabel3.setName("jLabel3"); // NOI18N
 
@@ -158,14 +161,17 @@ public class Financeiro extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(jrb_recebidos);
+        jrb_recebidos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_recebidos.setText("Recebidos");
         jrb_recebidos.setName("jrb_recebidos"); // NOI18N
 
         buttonGroup1.add(jrb_pagos);
+        jrb_pagos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_pagos.setText("Pagos");
         jrb_pagos.setName("jrb_pagos"); // NOI18N
 
         buttonGroup1.add(jrb_todos);
+        jrb_todos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_todos.setSelected(true);
         jrb_todos.setText("Todos");
         jrb_todos.setName("jrb_todos"); // NOI18N
@@ -176,15 +182,19 @@ public class Financeiro extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(jrb_vencidos);
+        jrb_vencidos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_vencidos.setText("Vencidos");
         jrb_vencidos.setName("jrb_vencidos"); // NOI18N
 
         buttonGroup1.add(jrb_a_pagar);
+        jrb_a_pagar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_a_pagar.setText("À Pagar");
         jrb_a_pagar.setName("jrb_a_pagar"); // NOI18N
 
+        jButton3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.setPreferredSize(new java.awt.Dimension(28, 28));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -198,12 +208,12 @@ public class Financeiro extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtf_data_inicial, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(0, 0, 0)
+                    .addComponent(jLabel2)
+                    .addComponent(jtf_data_inicial, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtf_data_final, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jtf_data_final, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(jrb_recebidos)
                 .addGap(0, 0, 0)
@@ -214,9 +224,9 @@ public class Financeiro extends javax.swing.JFrame {
                 .addComponent(jrb_vencidos)
                 .addGap(0, 0, 0)
                 .addComponent(jrb_todos)
-                .addGap(0, 0, 0)
-                .addComponent(jButton3)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,6 +305,7 @@ public class Financeiro extends javax.swing.JFrame {
             jtbl_contas.getColumnModel().getColumn(9).setPreferredWidth(30);
         }
 
+        jl_rodape.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jl_rodape.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jl_rodape.setText("Total à pagar: R$ 0,00 - Total pago: R$ 0,00");
         jl_rodape.setName("jl_rodape"); // NOI18N
@@ -303,6 +314,7 @@ public class Financeiro extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.png"))); // NOI18N
         jButton1.setText("Nova Saída");
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setPreferredSize(new java.awt.Dimension(140, 40));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -313,6 +325,7 @@ public class Financeiro extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete 16.png"))); // NOI18N
         jButton2.setText("Excluir Saída");
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setPreferredSize(new java.awt.Dimension(140, 40));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -321,8 +334,9 @@ public class Financeiro extends javax.swing.JFrame {
 
         jb_altera_lancamento.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_altera_lancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
-        jb_altera_lancamento.setText("Atualizar Saída");
+        jb_altera_lancamento.setText("Alterar Saída");
         jb_altera_lancamento.setName("jb_altera_lancamento"); // NOI18N
+        jb_altera_lancamento.setPreferredSize(new java.awt.Dimension(140, 40));
         jb_altera_lancamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_altera_lancamentoActionPerformed(evt);
@@ -333,9 +347,21 @@ public class Financeiro extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finances_(add)_16x16.gif"))); // NOI18N
         jButton4.setText("Recebimentos");
         jButton4.setName("jButton4"); // NOI18N
+        jButton4.setPreferredSize(new java.awt.Dimension(140, 40));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_sairActionPerformed(evt);
             }
         });
 
@@ -344,6 +370,7 @@ public class Financeiro extends javax.swing.JFrame {
         jMenu3.setText("Cadastro");
         jMenu3.setName("jMenu3"); // NOI18N
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/fornecedor.png"))); // NOI18N
         jMenuItem3.setText("Fornecedor");
         jMenuItem3.setName("jMenuItem3"); // NOI18N
         jMenu3.add(jMenuItem3);
@@ -353,7 +380,8 @@ public class Financeiro extends javax.swing.JFrame {
         jMenu1.setText("Lançamento");
         jMenu1.setName("jMenu1"); // NOI18N
 
-        jMenuItem1.setText("Novo Lançamento");
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.png"))); // NOI18N
+        jMenuItem1.setText("Nova Saída");
         jMenuItem1.setName("jMenuItem1"); // NOI18N
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,7 +390,8 @@ public class Financeiro extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem4.setText("Alterar Lançamento");
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
+        jMenuItem4.setText("Alterar Saída");
         jMenuItem4.setName("jMenuItem4"); // NOI18N
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -371,7 +400,8 @@ public class Financeiro extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
-        jMenuItem2.setText("Excluir Lançamento");
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete 16.png"))); // NOI18N
+        jMenuItem2.setText("Excluir Saída");
         jMenuItem2.setName("jMenuItem2"); // NOI18N
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,11 +410,17 @@ public class Financeiro extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu1);
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finances_(add)_16x16.gif"))); // NOI18N
+        jMenuItem5.setText("Recebimentos");
+        jMenuItem5.setName("jMenuItem5"); // NOI18N
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
 
-        jMenu2.setText("Sair");
-        jMenu2.setName("jMenu2"); // NOI18N
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -401,16 +437,18 @@ public class Financeiro extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
                                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jb_altera_lancamento)
+                                .addComponent(jb_altera_lancamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jButton2)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jButton4)
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(175, 175, 175)))
                 .addGap(10, 10, 10))
@@ -421,10 +459,11 @@ public class Financeiro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_altera_lancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_altera_lancamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
@@ -591,6 +630,35 @@ public class Financeiro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_todosActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+                        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.FinanceiroReceber");
+
+        try {
+            if (acesso.getEscrever() == false) {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getEscrever() == true) {
+                financeiroReceber = new FinanceiroReceber();
+                financeiroReceber.janelapai = this;
+                financeiroReceber.setVisible(true);
+                setStatusTela(false);
+                financeiroReceber.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
+        retornaJanelaPai();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -613,16 +681,17 @@ public class Financeiro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jb_altera_lancamento;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_rodape;
     private javax.swing.JRadioButton jrb_a_pagar;
     private javax.swing.JRadioButton jrb_pagos;

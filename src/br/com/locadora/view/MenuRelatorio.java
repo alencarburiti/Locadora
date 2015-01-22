@@ -73,7 +73,6 @@ public class MenuRelatorio extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
@@ -84,6 +83,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jb_gerar_relatorio = new javax.swing.JButton();
         jb_gerar_relatorio1 = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         try  {
             formatoData = new MaskFormatter("##/##/####");
@@ -168,12 +168,12 @@ public class MenuRelatorio extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel2.setName("jPanel2"); // NOI18N
-        jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jb_gerar_relatorio.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_gerar_relatorio.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_gerar_relatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pdficon.jpg.png"))); // NOI18N
         jb_gerar_relatorio.setText("Gerar");
         jb_gerar_relatorio.setName("jb_gerar_relatorio"); // NOI18N
+        jb_gerar_relatorio.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_gerar_relatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_gerar_relatorioActionPerformed(evt);
@@ -184,32 +184,57 @@ public class MenuRelatorio extends javax.swing.JFrame {
                 jb_gerar_relatorioKeyPressed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 29;
-        gridBagConstraints.ipady = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 72, 1, 0);
-        jPanel2.add(jb_gerar_relatorio, gridBagConstraints);
 
-        jb_gerar_relatorio1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_gerar_relatorio1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_gerar_relatorio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/excel_icon.png"))); // NOI18N
         jb_gerar_relatorio1.setText("Gerar");
         jb_gerar_relatorio1.setName("jb_gerar_relatorio1"); // NOI18N
+        jb_gerar_relatorio1.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_gerar_relatorio1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_gerar_relatorio1ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 23;
-        gridBagConstraints.ipady = -2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 6, 1, 64);
-        jPanel2.add(jb_gerar_relatorio1, gridBagConstraints);
+
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_sairActionPerformed(evt);
+            }
+        });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jb_gerar_relatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(jb_gerar_relatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jb_gerar_relatorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_gerar_relatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro com Data"));
         jPanel3.setName("jPanel3"); // NOI18N
@@ -379,11 +404,10 @@ public class MenuRelatorio extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
@@ -640,6 +664,15 @@ public class MenuRelatorio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_gerar_relatorioKeyPressed
 
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
+        retornarJanelaPai();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairActionPerformed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -664,6 +697,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton jb_gerar_relatorio;
     private javax.swing.JButton jb_gerar_relatorio1;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JRadioButton jrb_clientes_pendentes;
     private javax.swing.JRadioButton jrb_fluxo_caixa_detalhado;
     private javax.swing.JRadioButton jrb_locacao_em_aberto;
@@ -749,5 +783,10 @@ public class MenuRelatorio extends javax.swing.JFrame {
         }
         return false;
     }
-
+public void retornarJanelaPai(){
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);            
+        }
+    }
 }

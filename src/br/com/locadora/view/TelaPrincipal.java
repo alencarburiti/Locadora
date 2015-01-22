@@ -503,6 +503,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jm_caixa.setText("Configurações");
         jm_caixa.setName("jm_caixa"); // NOI18N
 
+        jm_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/user.png"))); // NOI18N
         jm_usuario.setText("Usuário");
         jm_usuario.setName("jm_usuario"); // NOI18N
         jm_usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -512,6 +513,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jm_caixa.add(jm_usuario);
 
+        jm_acesso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/acesso.gif"))); // NOI18N
         jm_acesso.setText("Controle de Acessos");
         jm_acesso.setName("jm_acesso"); // NOI18N
         jm_acesso.addActionListener(new java.awt.event.ActionListener() {
@@ -531,6 +533,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jm_caixa.add(jm_conf_impressora);
 
+        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/caixa.png"))); // NOI18N
         jMenuItem17.setText("Configurar Caixa");
         jMenuItem17.setName("jMenuItem17"); // NOI18N
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
@@ -549,6 +552,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jm_caixa.add(jMenuItem5);
 
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/change.png"))); // NOI18N
         jMenuItem1.setText("Trocar de usuário");
         jMenuItem1.setName("jMenuItem1"); // NOI18N
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
