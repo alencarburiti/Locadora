@@ -19,9 +19,12 @@ import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.TemaInterface;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -50,7 +53,7 @@ public class MenuDiaria extends javax.swing.JFrame {
     public MenuDiaria() {
         initComponents();
         TemaInterface.getInterface(this);
-        cadastraAlteraDiaria = null;
+        cadastraAlteraDiaria = null;        
     }
 
     public void setTela(String permissao) {
@@ -153,34 +156,34 @@ public class MenuDiaria extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jrb_descricao)
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addComponent(jrb_codigo_diaria))
                     .addComponent(jl_pesquisar_destino)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(0, 0, 0)
                         .addComponent(jb_buscar)))
-                .addGap(10, 10, 10))
+                .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jb_buscar)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jrb_descricao)
                             .addComponent(jrb_codigo_diaria))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addComponent(jl_pesquisar_destino)
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10))
+                .addGap(0, 0, 0))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_consulta});
@@ -246,7 +249,7 @@ public class MenuDiaria extends javax.swing.JFrame {
                 jPanel2.setLayout(new java.awt.GridBagLayout());
 
                 jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-                jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
+                jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.png"))); // NOI18N
                 jb_novo.setText("Novo");
                 jb_novo.setName("jb_novo"); // NOI18N
                 jb_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -257,7 +260,7 @@ public class MenuDiaria extends javax.swing.JFrame {
                 jPanel2.add(jb_novo, new java.awt.GridBagConstraints());
 
                 jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-                jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
+                jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
                 jb_alterar.setText("Alterar");
                 jb_alterar.setName("jb_alterar"); // NOI18N
                 jb_alterar.addActionListener(new java.awt.event.ActionListener() {
@@ -268,7 +271,7 @@ public class MenuDiaria extends javax.swing.JFrame {
                 jPanel2.add(jb_alterar, new java.awt.GridBagConstraints());
 
                 jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
+                jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete 16.png"))); // NOI18N
                 jb_excluir.setText("Excluir");
                 jb_excluir.setName("jb_excluir"); // NOI18N
                 jb_excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -287,28 +290,28 @@ public class MenuDiaria extends javax.swing.JFrame {
                 layout.setHorizontalGroup(
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+                                .addGap(0, 0, 0)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
                             .addComponent(jScrollPane1)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18))
+                        .addGap(10, 10, 10))
                 );
                 layout.setVerticalGroup(
                     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(10, 10, 10)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
+                        .addGap(0, 0, 0)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(15, 15, 15)
+                        .addGap(0, 0, 0)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
+                        .addGap(10, 10, 10))
                 );
 
                 pack();

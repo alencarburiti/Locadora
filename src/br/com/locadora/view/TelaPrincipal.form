@@ -192,6 +192,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_cliente">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/cliente.png"/>
+                </Property>
                 <Property name="mnemonic" type="int" value="80"/>
                 <Property name="text" type="java.lang.String" value="Cliente"/>
                 <Property name="name" type="java.lang.String" value="jmi_cliente" noResource="true"/>
@@ -202,6 +205,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_produto">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/produto.png"/>
+                </Property>
                 <Property name="mnemonic" type="int" value="80"/>
                 <Property name="text" type="java.lang.String" value="Produto"/>
               </Properties>
@@ -211,6 +217,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_fornecedor">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/fornecedor.png"/>
+                </Property>
                 <Property name="mnemonic" type="int" value="70"/>
                 <Property name="text" type="java.lang.String" value="Fornecedor"/>
                 <Property name="name" type="java.lang.String" value="jmi_fornecedor" noResource="true"/>
@@ -233,6 +242,9 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="jmi_objeto">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/locadora/image/movies.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Objeto"/>
                     <Property name="name" type="java.lang.String" value="jmi_objeto" noResource="true"/>
                   </Properties>
@@ -242,6 +254,9 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jmi_genero">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/locadora/image/generos.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="G&#xea;nero"/>
                     <Property name="name" type="java.lang.String" value="jmi_genero" noResource="true"/>
                   </Properties>
@@ -251,6 +266,9 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jmi_diaria">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/locadora/image/calendario.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Di&#xe1;ria"/>
                     <Property name="name" type="java.lang.String" value="jmi_diaria" noResource="true"/>
                   </Properties>
@@ -258,17 +276,23 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_diariaActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+                <MenuItem class="javax.swing.JMenuItem" name="jmi_gerar_codigo_barras">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/locadora/image/barcode.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Gerar C&#xf3;digo de Barras"/>
-                    <Property name="name" type="java.lang.String" value="jMenuItem3" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="jmi_gerar_codigo_barras" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gerar_codigo_barrasActionPerformed"/>
                   </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jmi_idioma">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/locadora/image/language-16.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Idioma"/>
                     <Property name="name" type="java.lang.String" value="jmi_idioma" noResource="true"/>
                   </Properties>
@@ -278,6 +302,9 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jmi_legenda">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/locadora/image/Google-Buzz-16.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Legenda"/>
                     <Property name="name" type="java.lang.String" value="jmi_legenda" noResource="true"/>
                   </Properties>
@@ -295,7 +322,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="menuitem_sair">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/br/com/locadora/image/exit.png"/>
+                  <Image iconType="3" name="/br/com/locadora/image/sair.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sair"/>
                 <Property name="name" type="java.lang.String" value="menuitem_sair" noResource="true"/>
@@ -313,22 +340,16 @@
             <Property name="name" type="java.lang.String" value="menu_movimentos2" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmi_entrada1">
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_pagar_receber">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Contas &#xc0; Receber"/>
-                <Property name="name" type="java.lang.String" value="jmi_entrada1" noResource="true"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/finances_16x16.gif"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Pagar / Receber"/>
+                <Property name="name" type="java.lang.String" value="jmi_pagar_receber" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_entrada1ActionPerformed1"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmi_entrada4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Contas &#xc0; Pagar"/>
-                <Property name="name" type="java.lang.String" value="jmi_entrada4" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_entrada4ActionPerformed1"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_pagar_receberActionPerformed1"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -357,13 +378,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_atendimento_devolucaoActionPerformed1"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_atendimento_venda">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Venda"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem6" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jmi_atendimento_venda" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_atendimento_vendaActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -415,6 +436,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem19">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/report.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Gerar Relat&#xf3;rios"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem19" noResource="true"/>
               </Properties>
@@ -436,6 +460,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/calculadora.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Calculadora "/>
                 <Property name="name" type="java.lang.String" value="jMenuItem9" noResource="true"/>
               </Properties>
@@ -445,6 +472,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_backup">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/backup.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Backup"/>
                 <Property name="name" type="java.lang.String" value="jmi_backup" noResource="true"/>
               </Properties>
@@ -480,6 +510,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jm_conf_impressora">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/printer.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Configurar Impressora"/>
                 <Property name="name" type="java.lang.String" value="jm_conf_impressora" noResource="true"/>
               </Properties>

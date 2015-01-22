@@ -8,7 +8,10 @@ import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Backup;
 import br.com.locadora.util.TemaInterface;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
+import java.net.URL;
 import javax.swing.*;
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -22,7 +25,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public AtendimentoLocacao atendimentoLocacao;
     public AtendimentoDevolucao atendimentoDevolucao;
     public AtendimentoVenda atendimentoVenda;
-    public FinanceiroPagar financeiroConta;
+    public Financeiro financeiro;
     public MenuCliente menuCliente;
     public MenuDiaria menuDiaria;
     public MenuLegenda menuLegenda;
@@ -44,7 +47,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TemaInterface.getInterface(this);
         this.setExtendedState(this.MAXIMIZED_BOTH);
         atendimentoLocacao = null;
-        atendimentoDevolucao = null;
+        atendimentoDevolucao = null;                
     }
 
     /**
@@ -94,18 +97,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jmi_objeto = new javax.swing.JMenuItem();
         jmi_genero = new javax.swing.JMenuItem();
         jmi_diaria = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jmi_gerar_codigo_barras = new javax.swing.JMenuItem();
         jmi_idioma = new javax.swing.JMenuItem();
         jmi_legenda = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         menuitem_sair = new javax.swing.JMenuItem();
         menu_movimentos2 = new javax.swing.JMenu();
-        jmi_entrada1 = new javax.swing.JMenuItem();
-        jmi_entrada4 = new javax.swing.JMenuItem();
+        jmi_pagar_receber = new javax.swing.JMenuItem();
         menu_movimentos = new javax.swing.JMenu();
         jmi_atendimento_locacao = new javax.swing.JMenuItem();
         jmi_atendimento_devolucao = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jmi_atendimento_venda = new javax.swing.JMenuItem();
         jMenu17 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
@@ -242,6 +244,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jmi_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/cliente.png"))); // NOI18N
         jmi_cliente.setMnemonic('P');
         jmi_cliente.setText("Cliente");
         jmi_cliente.setName("jmi_cliente"); // NOI18N
@@ -252,6 +255,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menu_cadastros.add(jmi_cliente);
 
+        jmi_produto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/produto.png"))); // NOI18N
         jmi_produto.setMnemonic('P');
         jmi_produto.setText("Produto");
         jmi_produto.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +265,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menu_cadastros.add(jmi_produto);
 
+        jmi_fornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/fornecedor.png"))); // NOI18N
         jmi_fornecedor.setMnemonic('F');
         jmi_fornecedor.setText("Fornecedor");
         jmi_fornecedor.setName("jmi_fornecedor"); // NOI18N
@@ -286,6 +291,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu15.setText("Locadora");
         jMenu15.setName("jMenu15"); // NOI18N
 
+        jmi_objeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/movies.png"))); // NOI18N
         jmi_objeto.setText("Objeto");
         jmi_objeto.setName("jmi_objeto"); // NOI18N
         jmi_objeto.addActionListener(new java.awt.event.ActionListener() {
@@ -295,6 +301,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu15.add(jmi_objeto);
 
+        jmi_genero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/generos.png"))); // NOI18N
         jmi_genero.setText("Gênero");
         jmi_genero.setName("jmi_genero"); // NOI18N
         jmi_genero.addActionListener(new java.awt.event.ActionListener() {
@@ -304,6 +311,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu15.add(jmi_genero);
 
+        jmi_diaria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/calendario.png"))); // NOI18N
         jmi_diaria.setText("Diária");
         jmi_diaria.setName("jmi_diaria"); // NOI18N
         jmi_diaria.addActionListener(new java.awt.event.ActionListener() {
@@ -313,15 +321,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu15.add(jmi_diaria);
 
-        jMenuItem3.setText("Gerar Código de Barras");
-        jMenuItem3.setName("jMenuItem3"); // NOI18N
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jmi_gerar_codigo_barras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/barcode.png"))); // NOI18N
+        jmi_gerar_codigo_barras.setText("Gerar Código de Barras");
+        jmi_gerar_codigo_barras.setName("jmi_gerar_codigo_barras"); // NOI18N
+        jmi_gerar_codigo_barras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jmi_gerar_codigo_barrasActionPerformed(evt);
             }
         });
-        jMenu15.add(jMenuItem3);
+        jMenu15.add(jmi_gerar_codigo_barras);
 
+        jmi_idioma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/language-16.png"))); // NOI18N
         jmi_idioma.setText("Idioma");
         jmi_idioma.setName("jmi_idioma"); // NOI18N
         jmi_idioma.addActionListener(new java.awt.event.ActionListener() {
@@ -331,6 +341,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu15.add(jmi_idioma);
 
+        jmi_legenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/Google-Buzz-16.png"))); // NOI18N
         jmi_legenda.setText("Legenda");
         jmi_legenda.setName("jmi_legenda"); // NOI18N
         jmi_legenda.addActionListener(new java.awt.event.ActionListener() {
@@ -345,7 +356,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jSeparator2.setName("jSeparator2"); // NOI18N
         menu_cadastros.add(jSeparator2);
 
-        menuitem_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+        menuitem_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
         menuitem_sair.setText("Sair");
         menuitem_sair.setName("menuitem_sair"); // NOI18N
         menuitem_sair.addActionListener(new java.awt.event.ActionListener() {
@@ -361,23 +372,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menu_movimentos2.setText("Financeiro");
         menu_movimentos2.setName("menu_movimentos2"); // NOI18N
 
-        jmi_entrada1.setText("Contas À Receber");
-        jmi_entrada1.setName("jmi_entrada1"); // NOI18N
-        jmi_entrada1.addActionListener(new java.awt.event.ActionListener() {
+        jmi_pagar_receber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finances_16x16.gif"))); // NOI18N
+        jmi_pagar_receber.setText("Pagar / Receber");
+        jmi_pagar_receber.setName("jmi_pagar_receber"); // NOI18N
+        jmi_pagar_receber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_entrada1ActionPerformed1(evt);
+                jmi_pagar_receberActionPerformed1(evt);
             }
         });
-        menu_movimentos2.add(jmi_entrada1);
-
-        jmi_entrada4.setText("Contas À Pagar");
-        jmi_entrada4.setName("jmi_entrada4"); // NOI18N
-        jmi_entrada4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_entrada4ActionPerformed1(evt);
-            }
-        });
-        menu_movimentos2.add(jmi_entrada4);
+        menu_movimentos2.add(jmi_pagar_receber);
 
         jMB_Cadastro.add(menu_movimentos2);
 
@@ -402,14 +405,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menu_movimentos.add(jmi_atendimento_devolucao);
 
-        jMenuItem6.setText("Venda");
-        jMenuItem6.setName("jMenuItem6"); // NOI18N
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jmi_atendimento_venda.setText("Venda");
+        jmi_atendimento_venda.setName("jmi_atendimento_venda"); // NOI18N
+        jmi_atendimento_venda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jmi_atendimento_vendaActionPerformed(evt);
             }
         });
-        menu_movimentos.add(jMenuItem6);
+        menu_movimentos.add(jmi_atendimento_venda);
 
         jMB_Cadastro.add(menu_movimentos);
 
@@ -454,6 +457,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jMenuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/report.png"))); // NOI18N
         jMenuItem19.setText("Gerar Relatórios");
         jMenuItem19.setName("jMenuItem19"); // NOI18N
         jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
@@ -474,6 +478,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/calculadora.png"))); // NOI18N
         jMenuItem9.setText("Calculadora ");
         jMenuItem9.setName("jMenuItem9"); // NOI18N
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
@@ -483,6 +488,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menu_relatórios1.add(jMenuItem9);
 
+        jmi_backup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/backup.png"))); // NOI18N
         jmi_backup.setText("Backup");
         jmi_backup.setName("jmi_backup"); // NOI18N
         jmi_backup.addActionListener(new java.awt.event.ActionListener() {
@@ -515,6 +521,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jm_caixa.add(jm_acesso);
 
+        jm_conf_impressora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/printer.png"))); // NOI18N
         jm_conf_impressora.setText("Configurar Impressora");
         jm_conf_impressora.setName("jm_conf_impressora"); // NOI18N
         jm_conf_impressora.addActionListener(new java.awt.event.ActionListener() {
@@ -605,7 +612,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuProduto");
         try {
             if (acesso.getLer() == false) {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
@@ -661,7 +668,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoLocacao");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuGenero");
 
         try {
             if (acesso.getLer() == false) {
@@ -916,29 +923,29 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         // TODO add your handling code here:
     }//GEN-LAST:event_jmi_legendaActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jmi_gerar_codigo_barrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gerar_codigo_barrasActionPerformed
         Bar bar = new Bar();
         bar.setVisible(true);
         bar.janelapai = this;
         bar.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jmi_gerar_codigo_barrasActionPerformed
 
-    private void jmi_entrada4ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entrada4ActionPerformed1
+    private void jmi_pagar_receberActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_pagar_receberActionPerformed1
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.FinanceiroConta");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.Financeiro");
         try {
             if (acesso.getLer() == false) {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             } else if (acesso.getLer() == true) {
-                if (financeiroConta == null) {
-                    financeiroConta = new FinanceiroPagar();
-                    financeiroConta.janelapai = this;
-                    financeiroConta.setVisible(true);                    
-                    financeiroConta.acesso = acesso;
+                if (financeiro == null) {
+                    financeiro = new Financeiro();
+                    financeiro.janelapai = this;
+                    financeiro.setVisible(true);                    
+                    financeiro.acesso = acesso;
                 } else {
-                    financeiroConta.setVisible(true);
+                    financeiro.setVisible(true);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
@@ -949,32 +956,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jmi_entrada4ActionPerformed1
-
-    private void jmi_entrada1ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_entrada1ActionPerformed1
-        pool = new Pool();
-        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.Recebimento");
-
-        try {
-            if (acesso.getEscrever() == false) {
-                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            } else if (acesso.getEscrever() == true) {
-                recebimento = new FinanceiroReceber();
-                recebimento.janelapai = this;
-                recebimento.setVisible(true);
-                setStatusTela(false);
-                recebimento.acesso = acesso;
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
-        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jmi_entrada1ActionPerformed1
+    }//GEN-LAST:event_jmi_pagar_receberActionPerformed1
 
     private void jm_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_usuarioActionPerformed
         pool = new Pool();
@@ -1050,7 +1032,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.AtendimentoDevolucao");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.ConfiguraCaixa");
 
         try {
             if (acesso.getSuper_usuario() == false) {
@@ -1096,7 +1078,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jmi_atendimento_vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_atendimento_vendaActionPerformed
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
@@ -1121,7 +1103,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_jmi_atendimento_vendaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1171,10 +1153,8 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1186,16 +1166,17 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jm_usuario;
     private javax.swing.JMenuItem jmi_atendimento_devolucao;
     private javax.swing.JMenuItem jmi_atendimento_locacao;
+    private javax.swing.JMenuItem jmi_atendimento_venda;
     private javax.swing.JMenuItem jmi_backup;
     private javax.swing.JMenuItem jmi_cliente;
     private javax.swing.JMenuItem jmi_diaria;
-    private javax.swing.JMenuItem jmi_entrada1;
-    private javax.swing.JMenuItem jmi_entrada4;
     private javax.swing.JMenuItem jmi_fornecedor;
     private javax.swing.JMenuItem jmi_genero;
+    private javax.swing.JMenuItem jmi_gerar_codigo_barras;
     private javax.swing.JMenuItem jmi_idioma;
     private javax.swing.JMenuItem jmi_legenda;
     private javax.swing.JMenuItem jmi_objeto;
+    private javax.swing.JMenuItem jmi_pagar_receber;
     private javax.swing.JMenuItem jmi_produto;
     private javax.swing.JLabel label_data;
     private javax.swing.JMenu menu_cadastros;

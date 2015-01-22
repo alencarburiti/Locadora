@@ -5,7 +5,9 @@
  */
 package br.com.locadora.util;
 
-import javax.swing.JFrame;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -19,10 +21,14 @@ public class TemaInterface {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             SwingUtilities.updateComponentTreeUI(frame);
+
+            URL url = frame.getClass().getResource("/br/com/locadora/image/movies.png");
+            Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
+            frame.setIconImage(iconeTitulo);
         } catch (Exception erro) {
             System.out.println("Error: " + erro);
         }
-        
+
     }
-    
+
 }

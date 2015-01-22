@@ -49,35 +49,36 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jb_salvar" linkSize="2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jb_cancelar" linkSize="2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jPanel2" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane1" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jb_salvar" linkSize="3" min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="jb_cancelar" linkSize="3" min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -89,7 +90,7 @@
           <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/br/com/locadora/image/gravar_registro.gif"/>
+          <Image iconType="3" name="/br/com/locadora/image/save.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Salvar"/>
         <Property name="name" type="java.lang.String" value="jb_salvar" noResource="true"/>
@@ -105,7 +106,7 @@
           <Font name="Helvetica Neue" size="14" style="0"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/br/com/locadora/image/exit.png"/>
+          <Image iconType="3" name="/br/com/locadora/image/sair.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Sair"/>
         <Property name="name" type="java.lang.String" value="jb_cancelar" noResource="true"/>
@@ -129,41 +130,35 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jtf_codigo_diaria" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" pref="204" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jtf_nome_diaria" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel3" min="-2" pref="204" max="-2" attributes="0"/>
+                      <Component id="jtf_nome_diaria" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jtf_valor" min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="82" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jtf_relocacao" min="-2" pref="80" max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" pref="72" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jPanel7" min="-2" pref="409" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
@@ -189,7 +184,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -397,38 +392,34 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jrb_ativo_locacao" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="jrb_inativo_locacao" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jPanel1" max="32767" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel3" alignment="0" min="-2" pref="878" max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="377" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jPanel1" alignment="0" pref="868" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jPanel3" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jrb_ativo_locacao" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="jrb_inativo_locacao" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jrb_ativo_locacao" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jrb_inativo_locacao" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="162" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="200" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -451,23 +442,23 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jtf_descricao_locacao" alignment="0" min="-2" pref="329" max="-2" attributes="0"/>
-                                      <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel12" max="32767" attributes="0"/>
+                                      <Component id="jtf_descricao_locacao" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jtf_valor_promocao_locacao" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                           <Component id="jtf_locar_quantidade" min="-2" pref="80" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -477,30 +468,30 @@
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                               <Component id="jtf_ganhar_quantidade" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="jtf_ordem" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="jb_adicionar_promocao_locacao" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="jb_eliminar_promocao_locacao" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="453" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jb_adicionar_promocao_locacao" linkSize="1" min="-2" pref="30" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
@@ -579,7 +570,7 @@
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/locadora/image/edit_remove.png"/>
+                      <Image iconType="3" name="/br/com/locadora/image/remove_item.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Excluir"/>
                     <Property name="name" type="java.lang.String" value="jb_eliminar_promocao_locacao" noResource="true"/>
@@ -595,7 +586,7 @@
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/locadora/image/edit_add.png"/>
+                      <Image iconType="3" name="/br/com/locadora/image/adicionar_item.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Incluir"/>
                     <Property name="name" type="java.lang.String" value="jb_adicionar_promocao_locacao" noResource="true"/>
@@ -947,35 +938,34 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Component id="jScrollPane2" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jrb_ativo_devolucao" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                               <Component id="jrb_inativo_devolucao" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jPanel6" max="32767" attributes="0"/>
-                              <Component id="jScrollPane2" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jPanel6" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jrb_ativo_devolucao" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jrb_inativo_devolucao" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="244" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" pref="273" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -995,77 +985,66 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jcb_a_vista_devolucao" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jcb_a_vista_devolucao" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel14" min="-2" pref="207" max="-2" attributes="0"/>
                                       <Component id="jtf_descricao_devolucao" min="-2" pref="312" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="10" pref="6" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jtf_horario_locacao" min="-2" pref="98" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                          <Component id="jtf_horario_devolucao" min="-2" pref="107" max="-2" attributes="0"/>
-                                      </Group>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jtf_horario_locacao" min="-2" pref="98" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jtf_horario_devolucao" min="-2" pref="107" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel18" min="-2" pref="108" max="-2" attributes="0"/>
+                                          <Component id="jtf_horas_antecipada" min="-2" pref="108" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                          <Component id="jtf_valor_promocao_devolucao" min="-2" pref="104" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jLabel18" min="-2" pref="96" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="jLabel11" min="-2" pref="100" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jtf_horas_antecipada" min="-2" pref="108" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                          <Component id="jtf_valor_promocao_devolucao" min="-2" pref="104" max="-2" attributes="0"/>
-                                      </Group>
                                   </Group>
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="jb_adicionar_promocao_devolucao" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Component id="jb_eliminar_promocao_devolucao" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="67" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel9" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jtf_descricao_devolucao" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jtf_horario_locacao" linkSize="5" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel18" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                       <Component id="jLabel11" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                       <Component id="jLabel10" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Component id="jLabel9" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jtf_horario_devolucao" linkSize="5" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="jtf_horario_locacao" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jtf_horario_devolucao" linkSize="5" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <Component id="jtf_descricao_devolucao" linkSize="5" alignment="3" max="32767" attributes="0"/>
+                                      </Group>
                                       <Component id="jtf_horas_antecipada" linkSize="5" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jtf_valor_promocao_devolucao" linkSize="5" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jb_adicionar_promocao_devolucao" linkSize="5" min="-2" pref="30" max="-2" attributes="0"/>
@@ -1086,14 +1065,14 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Hor&#xe1;rio Loca&#xe7;&#xe3;o"/>
+                    <Property name="text" type="java.lang.String" value="Hor&#xe1;rio Loc."/>
                     <Property name="name" type="java.lang.String" value="jLabel9" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jb_eliminar_promocao_devolucao">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/locadora/image/edit_remove.png"/>
+                      <Image iconType="3" name="/br/com/locadora/image/remove_item.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Excluir"/>
                     <Property name="name" type="java.lang.String" value="jb_eliminar_promocao_devolucao" noResource="true"/>
@@ -1106,7 +1085,7 @@
                 <Component class="javax.swing.JButton" name="jb_adicionar_promocao_devolucao">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/locadora/image/edit_add.png"/>
+                      <Image iconType="3" name="/br/com/locadora/image/adicionar_item.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Incluir"/>
                     <Property name="name" type="java.lang.String" value="jb_adicionar_promocao_devolucao" noResource="true"/>
@@ -1155,7 +1134,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Horas antecipada"/>
+                    <Property name="text" type="java.lang.String" value="Horas Antec."/>
                     <Property name="name" type="java.lang.String" value="jLabel18" noResource="true"/>
                   </Properties>
                 </Component>
@@ -1164,7 +1143,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Hor&#xe1;rio Devolu&#xe7;&#xe3;o"/>
+                    <Property name="text" type="java.lang.String" value="Hor&#xe1;rio Dev."/>
                     <Property name="name" type="java.lang.String" value="jLabel10" noResource="true"/>
                   </Properties>
                 </Component>

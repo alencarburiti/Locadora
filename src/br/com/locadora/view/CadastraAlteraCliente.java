@@ -15,7 +15,10 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.ValidaCPF;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -127,7 +130,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jb_cancelar = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jtp_cliente = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jtf_codigo_cliente = new javax.swing.JTextField();
@@ -250,7 +252,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         });
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
         jb_cancelar.setText("Sair");
         jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
         jb_cancelar.setName("jb_cancelar"); // NOI18N
@@ -261,7 +263,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         });
 
         jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/gravar_registro.gif"))); // NOI18N
+        jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/save.png"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -274,9 +276,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                 jb_salvarKeyPressed(evt);
             }
         });
-
-        jLabel2.setText("Observação: Os campos com asteristico são obrigatórios ");
-        jLabel2.setName("jLabel2"); // NOI18N
 
         jtp_cliente.setName("jtp_cliente"); // NOI18N
         jtp_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -528,7 +527,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             }
         });
 
-        jb_adicionar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
+        jb_adicionar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/adicionar_item.png"))); // NOI18N
         jb_adicionar_telefone.setToolTipText("Incluir");
         jb_adicionar_telefone.setName("jb_adicionar_telefone"); // NOI18N
         jb_adicionar_telefone.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -542,7 +541,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             }
         });
 
-        jb_eliminar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_eliminar_telefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
         jb_eliminar_telefone.setToolTipText("Excluir");
         jb_eliminar_telefone.setName("jb_eliminar_telefone"); // NOI18N
         jb_eliminar_telefone.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -602,7 +601,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -610,28 +609,25 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jtf_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(10, 10, 10)
+                                .addGap(0, 0, 0)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jb_adicionar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jb_eliminar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(10, 10, 10))
+                                    .addComponent(jb_eliminar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jLabel17)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtf_endereco, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtf_bairro, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
                             .addComponent(jtf_complemento)))
@@ -639,19 +635,15 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtf_cidade, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel23))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtf_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel20))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
                                 .addComponent(jLabel11)
                                 .addGap(238, 238, 238))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtf_profissao, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(jtf_profissao, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jtf_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -661,15 +653,15 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jtf_nome_cliente))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
                             .addComponent(jtf_data_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jtf_cpf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
                             .addComponent(jtf_email, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -677,16 +669,16 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtf_codigo_cliente)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jrb_ativo)
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addComponent(jrb_inativo)))
-                .addGap(10, 10, 10))
+                .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jrb_ativo)
@@ -694,7 +686,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                     .addComponent(jrb_inativo))
                 .addGap(0, 0, 0)
                 .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -712,7 +704,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                         .addComponent(jLabel16)
                         .addGap(0, 0, 0)
                         .addComponent(jtf_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -723,7 +715,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                     .addComponent(jtf_endereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtf_bairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtf_complemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -741,22 +733,22 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addGap(0, 0, 0)
                         .addComponent(jtf_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
                     .addComponent(jLabel17))
                 .addGap(0, 0, 0)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jtf_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jb_adicionar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jb_eliminar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2))
-                .addGap(10, 10, 10))
+                        .addComponent(jb_eliminar_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 76, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jtf_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_bairro, jtf_cidade, jtf_complemento, jtf_cpf_cliente, jtf_data_nascimento, jtf_email, jtf_empresa, jtf_endereco, jtf_estado, jtf_nome_cliente, jtf_profissao});
@@ -771,7 +763,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             }
         });
 
-        jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N
+        jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/adicionar_item.png"))); // NOI18N
         jb_adicionar_dependente.setToolTipText("Incluir");
         jb_adicionar_dependente.setName("jb_adicionar_dependente"); // NOI18N
         jb_adicionar_dependente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -785,7 +777,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             }
         });
 
-        jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+        jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
         jb_eliminar_dependente.setToolTipText("Excluir");
         jb_eliminar_dependente.setName("jb_eliminar_dependente"); // NOI18N
         jb_eliminar_dependente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -984,54 +976,48 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 857, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtf_nome_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel22))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jtf_data_nascimento_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel25)
                             .addComponent(jtf_telefone_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel24)
                             .addComponent(jcb_parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jrb_ativo_dependente)
-                                        .addGap(10, 10, 10)
+                                        .addGap(0, 0, 0)
                                         .addComponent(jrb_inativo_dependente))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jtf_cpf_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(28, 28, 28))))))
+                                    .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jrb_ativo_dependente)
                     .addComponent(jrb_inativo_dependente))
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1055,9 +1041,9 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jb_adicionar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jcb_parentesco, jtf_cpf_dependente, jtf_data_nascimento_dependente, jtf_nome_dependente, jtf_telefone_dependente});
@@ -1071,16 +1057,14 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jb_salvar)
                         .addGap(10, 10, 10)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(10, 10, 10)
                         .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20))
+                .addGap(10, 10, 10))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
@@ -1088,15 +1072,13 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2))
-                .addGap(20, 20, 20))
+                .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
@@ -1499,8 +1481,8 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             if (action.equals("salvar")) {
                 removeDependente(jtbl_dependente);
             } else if (action.equals("alterar")) {
-                jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png")));
-                jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N            
+                jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/adicionar_item.png")));
+                jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N            
 
                 jtf_nome_dependente.setText("");
                 jtf_nome_dependente.requestFocus();
@@ -1629,7 +1611,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -2085,8 +2066,8 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                         DependenteDAO dependenteDAO = new DependenteDAO(pool);
                         dependenteDAO.atualizar(dependente);
 
-                        jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png"))); // NOI18N                        
-                        jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+                        jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/adicionar_item.png"))); // NOI18N                        
+                        jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
                         action = "salvar";
                     }
 
@@ -2153,52 +2134,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         }
         return false;
     }
-
-//    public void atualizarCliente() {
-//        if (verificarCampos()) {
-//
-//            try {
-//
-//                cliente = new Cliente();
-//                cliente.setCodigo_cliente(Integer.parseInt(jtf_codigo_cliente.getText()));
-//                cliente.setNome_cliente(jtf_nome_cliente.getText());
-//                cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
-//                cliente.setCpf(jtf_cpf_cliente.getText());
-//                cliente.setNome_empresa_trabalho(jtf_empresa.getText());
-//                cliente.setProfissao(jtf_profissao.getText());
-//                cliente.setEndereco(jtf_endereco.getText());
-//                cliente.setBairro(jtf_bairro.getText());
-//                cliente.setComplemento(jtf_complemento.getText());
-//                cliente.setCidade(jtf_cidade.getText());
-//                cliente.setEstado(jtf_estado.getText());
-//                cliente.setEmail(jtf_email.getText());
-//                cliente.setObservacao(jta_observacao.getText());
-//
-//                if (jrb_ativo.isSelected() == true) {
-//                    cliente.setStatus(true);
-//                } else {
-//                    cliente.setStatus(false);
-//                }
-//                pool = new Pool();
-//                clienteDAO = new ClienteDAO(pool);
-//                clienteDAO.atualizar(cliente);
-//                JOptionPane.showMessageDialog(null, "Atualizado com Sucesso!");
-//
-//                jtp_cliente.setSelectedIndex(1);
-//                jtf_nome_dependente.requestFocus();
-//            } catch (SQLException e) {
-//                System.out.println(e.getMessage() + "Problemas com a gravação: ");
-//
-//                e.printStackTrace();
-//            } catch (NumberFormatException e) {
-//                System.out.println("Valor inválido: " + e.getMessage());
-//
-//                e.printStackTrace();
-//            } catch (ParseException ex) {
-//
-//            }
-//        }
-//    }
     
     public void atualizarCliente() {
         if (verificarCampos()) {
@@ -2331,8 +2266,8 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             }
             jtf_cpf_dependente.setText(dependentes.get(jtbl_dependente.getSelectedRow()).getCPF());
 
-            jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
-            jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+            jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
+            jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
             action = "alterar";
             jtf_nome_dependente.requestFocus();
         }

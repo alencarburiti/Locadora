@@ -22,6 +22,8 @@ public class LancamentoConta {
     private Date data_lancamento;
     private Date data_pagamento;
     private Fornecedor fornecedor;
+    private Usuario usuario;
+    private Integer caixa;
 
     public Integer getCodigo_lancamento_contas() {
         return codigo_lancamento_contas;
@@ -88,11 +90,35 @@ public class LancamentoConta {
     }
 
     public Double getValorPago() {
-        return valor_pago;
+        return getValor_pago();
     }
 
     public void setValorPago(Double valor_pago) {
+        this.setValor_pago(valor_pago);
+    }
+
+    public Double getValor_pago() {
+        return valor_pago;
+    }
+
+    public void setValor_pago(Double valor_pago) {
         this.valor_pago = valor_pago;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Integer getCaixa() {
+        return caixa;
+    }
+
+    public void setCaixa(Integer caixa) {
+        this.caixa = caixa;
     }
 
 }

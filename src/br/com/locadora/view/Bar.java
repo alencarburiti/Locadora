@@ -11,6 +11,7 @@
 package br.com.locadora.view;
 
 import br.com.locadora.util.Printer;
+import br.com.locadora.util.TemaInterface;
 import br.com.locadora.view.TelaPrincipal;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -20,10 +21,12 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -52,7 +55,8 @@ public class Bar extends javax.swing.JFrame {
      */
     public Bar() {
         initComponents();
-
+        TemaInterface.getInterface(this);
+        
     }
 
     private String getCodigo(int selectedIndex) {
@@ -233,56 +237,57 @@ public class Bar extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(codigoEscolha, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(179, 179, 179))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(0, 0, 0)
                                         .addComponent(paletaCorTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(0, 0, 0)
                                         .addComponent(paletaCorBarra)))
-                                .addGap(18, 18, 18)
+                                .addGap(0, 0, 0)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(0, 0, 0)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(fonteSize, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(altura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addGap(0, 0, 0)
                                         .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(0, 0, 0)
                                         .addComponent(rotacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(0, 0, 0)
                                 .addComponent(jtf_codigo_1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(0, 0, 0)
                                 .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(0, 0, 0)
                                 .addComponent(jtf_codigo_2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(218, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtf_codigo_3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtf_codigo_4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(0, 0, 0)
+                                .addComponent(codigoEscolha, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(0, 0, 0)
+                                .addComponent(jtf_codigo_3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jLabel11)
+                                .addGap(0, 0, 0)
+                                .addComponent(jtf_codigo_4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 6, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,36 +297,33 @@ public class Bar extends javax.swing.JFrame {
                     .addComponent(jtf_codigo_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(jtf_codigo_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jtf_codigo_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jtf_codigo_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(codigoEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(paletaCorBarra))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(paletaCorTexto)
                             .addComponent(jLabel4)
                             .addComponent(fonteSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(altura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(rotacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(47, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(altura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addComponent(rotacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
@@ -330,6 +332,11 @@ public class Bar extends javax.swing.JFrame {
         jb_gerar_barra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_gerar_barraActionPerformed(evt);
+            }
+        });
+        jb_gerar_barra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_gerar_barraKeyPressed(evt);
             }
         });
         jPanel3.add(jb_gerar_barra);
@@ -356,26 +363,24 @@ public class Bar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(20, 20, 20))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(10, 10, 10))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -385,31 +390,7 @@ public class Bar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_gerar_barraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gerar_barraActionPerformed
-
-        imagem1 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_1.getText(),
-                new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
-                true, Barcode.ALIGN_CENTER, Font.ITALIC, corBarraSelecionada, corTextoSelecionada,
-                Integer.parseInt(rotacao.getValue().toString()));
-        imagemLabel1.setIcon(new ImageIcon(imagem1));
-
-        imagem2 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_2.getText(),
-                new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
-                true, Barcode.ALIGN_CENTER, Font.ITALIC, corBarraSelecionada, corTextoSelecionada,
-                Integer.parseInt(rotacao.getValue().toString()));
-        imagemLabel2.setIcon(new ImageIcon(imagem2));
-
-        imagem3 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_3.getText(),
-                new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
-                true, Barcode.ALIGN_CENTER, Font.ITALIC, corBarraSelecionada, corTextoSelecionada,
-                Integer.parseInt(rotacao.getValue().toString()));
-        imagemLabel3.setIcon(new ImageIcon(imagem3));
-
-        imagem4 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_4.getText(),
-                new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
-                true, Barcode.ALIGN_CENTER, Font.ITALIC, corBarraSelecionada, corTextoSelecionada,
-                Integer.parseInt(rotacao.getValue().toString()));
-        imagemLabel4.setIcon(new ImageIcon(imagem4));
-
+        gerarCodigoBarras();
     }//GEN-LAST:event_jb_gerar_barraActionPerformed
 
     private void paletaCorBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paletaCorBarraActionPerformed
@@ -434,7 +415,7 @@ public class Bar extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtf_codigo_2.requestFocus();
         }
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_codigo_1KeyPressed
 
@@ -470,14 +451,13 @@ public class Bar extends javax.swing.JFrame {
             com.itextpdf.text.Image imageEnvio3 = com.itextpdf.text.Image.getInstance(imagem3, null);
             com.itextpdf.text.Image imageEnvio4 = com.itextpdf.text.Image.getInstance(imagem4, null);
 
-            
             PdfWriter.getInstance(document, new FileOutputStream(file));
             document.open();
-            
+
             Paragraph p = new Paragraph();
             p.add(new Paragraph());
             p.add(new Paragraph());
-            
+
             p.add(new Chunk(imageEnvio1, 0, -40));
 
             p.add(new Chunk(imageEnvio2, 40, -40));
@@ -495,17 +475,17 @@ public class Bar extends javax.swing.JFrame {
             System.err.println(ioe.getMessage());
             System.out.println("Erro!");
         }
-        
+
         try {
             Printer printer = new Printer();
             printer.printPDF(file);
-            
+
 //            HPTPDFPrintService printService = new HPTPDFPrintService(arquivo);  
 //            printService.print();  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        } 
-        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_jb_imprimirActionPerformed
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
@@ -534,7 +514,7 @@ public class Bar extends javax.swing.JFrame {
             Paragraph p = new Paragraph();
             p.add(new Paragraph());
             p.add(new Paragraph());
-            
+
             p.add(new Chunk(imageEnvio1, 0, -40));
 
             p.add(new Chunk(imageEnvio2, 40, -40));
@@ -552,9 +532,16 @@ public class Bar extends javax.swing.JFrame {
             System.err.println(ioe.getMessage());
             System.out.println("Erro!");
         }
-        
+
 // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarActionPerformed
+
+    private void jb_gerar_barraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_gerar_barraKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            gerarCodigoBarras();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_gerar_barraKeyPressed
 
     /**
      * @param args the command line arguments
@@ -612,5 +599,31 @@ public class Bar extends javax.swing.JFrame {
     private javax.swing.JSpinner rotacao;
     // End of variables declaration//GEN-END:variables
 
+    public void gerarCodigoBarras() {
+        imagem1 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_1.getText(),
+                new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
+                true, Barcode.ALIGN_CENTER, Font.ITALIC, corBarraSelecionada, corTextoSelecionada,
+                Integer.parseInt(rotacao.getValue().toString()));
+        imagemLabel1.setIcon(new ImageIcon(imagem1));
+
+        imagem2 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_2.getText(),
+                new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
+                true, Barcode.ALIGN_CENTER, Font.ITALIC, corBarraSelecionada, corTextoSelecionada,
+                Integer.parseInt(rotacao.getValue().toString()));
+        imagemLabel2.setIcon(new ImageIcon(imagem2));
+
+        imagem3 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_3.getText(),
+                new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
+                true, Barcode.ALIGN_CENTER, Font.ITALIC, corBarraSelecionada, corTextoSelecionada,
+                Integer.parseInt(rotacao.getValue().toString()));
+        imagemLabel3.setIcon(new ImageIcon(imagem3));
+
+        imagem4 = Barcode.createImage(getCodigo(codigoEscolha.getSelectedIndex()), jtf_codigo_4.getText(),
+                new Float(altura.getValue().toString()), Font.SERIF, Integer.parseInt(fonteSize.getValue().toString()),
+                true, Barcode.ALIGN_CENTER, Font.ITALIC, corBarraSelecionada, corTextoSelecionada,
+                Integer.parseInt(rotacao.getValue().toString()));
+        imagemLabel4.setIcon(new ImageIcon(imagem4));
+
+    }
 
 }

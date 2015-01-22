@@ -4,11 +4,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/LancamentoFinanceiro.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/Financeiro.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/CadastroCliente.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/MenuFornecedor.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/CadastraAlteraFornecedor.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/util/TemaInterface.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/IniciaLogin.java</file>
         </group>
     </open-files>
 </project-private>

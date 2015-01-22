@@ -37,29 +37,25 @@ public class Colorir extends DefaultTableCellRenderer {
         Calendar cal = new GregorianCalendar();
         Date data_vencimento = null;
         try {
-            data_vencimento = new Date(df.parse(table.getValueAt(row, 4).toString()).getTime());
+            data_vencimento = new Date(df.parse(table.getValueAt(row, 5).toString()).getTime());
         } catch (ParseException ex) {
 
         }
         Date dataAtual = new Date(System.currentTimeMillis());
         if (isSelected == false) {
                 
-            if (data_vencimento.before(dataAtual) && table.getValueAt(row, 6).toString().equals("")) {
+            if (data_vencimento.before(dataAtual) && table.getValueAt(row, 7).toString().equals("")) {
                 System.out.println("Data de vencimento: "+ data_vencimento);
                 System.out.println("Data atual: "+ dataAtual);
-//                renderer.setBackground(Color.RED);
                 renderer.setForeground(Color.RED);
                 System.out.println("Vencido");
-            } else if (!table.getValueAt(row, 6).toString().equals("")) {
-//                renderer.setBackground(fDarkGreen);
+            } else if (!table.getValueAt(row, 7).toString().equals("")) {
                 renderer.setForeground(fDarkGreen);
                 System.out.println("Pago");
             } else if (data_vencimento.after(dataAtual)) {
-//                renderer.setBackground(Color.WHITE);
                 renderer.setForeground(Color.BLACK);
                 System.out.println("A vencer");
             } else {
-//                renderer.setBackground(Color.YELLOW);
                 renderer.setForeground(Color.red);
                 System.out.println("Não pagou");              
             }

@@ -18,7 +18,10 @@ import br.com.locadora.model.bean.Fornecedor;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.TemaInterface;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -125,13 +128,18 @@ public class MenuFornecedor extends javax.swing.JFrame {
                 jtbl_fornecedorMouseClicked(evt);
             }
         });
+        jtbl_fornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_fornecedorKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtbl_fornecedor);
         if (jtbl_fornecedor.getColumnModel().getColumnCount() > 0) {
             jtbl_fornecedor.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jtbl_fornecedor.getColumnModel().getColumn(1).setPreferredWidth(300);
-            jtbl_fornecedor.getColumnModel().getColumn(2).setPreferredWidth(50);
-            jtbl_fornecedor.getColumnModel().getColumn(3).setPreferredWidth(50);
-            jtbl_fornecedor.getColumnModel().getColumn(4).setPreferredWidth(40);
+            jtbl_fornecedor.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jtbl_fornecedor.getColumnModel().getColumn(2).setPreferredWidth(70);
+            jtbl_fornecedor.getColumnModel().getColumn(3).setPreferredWidth(80);
+            jtbl_fornecedor.getColumnModel().getColumn(4).setPreferredWidth(70);
         }
 
         jPanel2.setName("jPanel2"); // NOI18N
@@ -166,6 +174,11 @@ public class MenuFornecedor extends javax.swing.JFrame {
 
         jtf_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_pesquisar.setName("jtf_pesquisar"); // NOI18N
+        jtf_pesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_pesquisarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -174,34 +187,30 @@ public class MenuFornecedor extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addComponent(jrb_descricao)
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addComponent(jrb_codigo))
+                    .addComponent(jl_pesquisar)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jl_pesquisar))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addComponent(jtf_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addGap(0, 0, 0)
                         .addComponent(jButton1)))
-                .addGap(10, 10, 10))
+                .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jrb_descricao)
                     .addComponent(jrb_codigo))
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addComponent(jl_pesquisar)
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtf_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(10, 10, 10))
+                .addGap(0, 0, 0))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jtf_pesquisar});
@@ -211,7 +220,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jb_novo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.gif"))); // NOI18N
+        jb_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/novo_registro.png"))); // NOI18N
         jb_novo.setText("Novo");
         jb_novo.setName("jb_novo"); // NOI18N
         jb_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +231,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jPanel1.add(jb_novo, new java.awt.GridBagConstraints());
 
         jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
+        jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
         jb_alterar.setText("Alterar");
         jb_alterar.setName("jb_alterar"); // NOI18N
         jb_alterar.addActionListener(new java.awt.event.ActionListener() {
@@ -233,7 +242,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jPanel1.add(jb_alterar, new java.awt.GridBagConstraints());
 
         jb_excluir.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete.gif"))); // NOI18N
+        jb_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete 16.png"))); // NOI18N
         jb_excluir.setText("Excluir");
         jb_excluir.setName("jb_excluir"); // NOI18N
         jb_excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -252,34 +261,34 @@ public class MenuFornecedor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap(64, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(279, 279, 279)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(10, 10, 10))
         );
 
         pack();
@@ -292,13 +301,8 @@ public class MenuFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jrb_codigo.isSelected() == true) {
-            getFornecedorCodigo();
-        } else if (jrb_descricao.isSelected() == true) {
-            getFornecededorNomeFantasia();
-        } else {
-            getFornecedores();
-        }        // TODO add your handling code here:
+        consultarFornecedor();
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
@@ -361,6 +365,20 @@ public class MenuFornecedor extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jtf_pesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisarKeyPressed
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            consultarFornecedor();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_pesquisarKeyPressed
+
+    private void jtbl_fornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_fornecedorKeyPressed
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            alterar();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_fornecedorKeyPressed
 
     /**
      * @param args the command line arguments
@@ -428,11 +446,12 @@ public class MenuFornecedor extends javax.swing.JFrame {
             for (int i = 0; i < fornecedores.size(); i++) {
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_fornecedor.getModel();
-//                ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
                 row.addRow(new Object[]{fornecedores.get(i).getCodigo_fornecedor(), fornecedores.get(i).getNome_fantasia(), fornecedores.get(i).getCnpj(),
                     fornecedores.get(i).getNome_vendedor(), fornecedores.get(i).getTelefone()});
-
             }
+            
+            jtbl_fornecedor.requestFocus();
+            jtbl_fornecedor.setSelectionMode(1);
         }
 
     }
@@ -521,5 +540,15 @@ public class MenuFornecedor extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             jtf_pesquisar.requestFocus();
         }
+    }
+
+    private void consultarFornecedor() {
+                if (jrb_codigo.isSelected() == true) {
+            getFornecedorCodigo();
+        } else if (jrb_descricao.isSelected() == true) {
+            getFornecededorNomeFantasia();
+        } else {
+            getFornecedores();
+        }    
     }
 }
