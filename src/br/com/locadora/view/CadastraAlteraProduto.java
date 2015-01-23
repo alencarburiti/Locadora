@@ -484,6 +484,7 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
         if (janelapai != null) {
             janelapai.setStatusTela(true);            
             janelapai.consultarProduto();
+            janelapai.cadastraAlteraProduto = null;
         }
 
     }

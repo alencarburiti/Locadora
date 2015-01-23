@@ -654,8 +654,7 @@ public class MenuCliente extends javax.swing.JFrame {
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornarJanelaPai();
         }
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             excluirCliente();

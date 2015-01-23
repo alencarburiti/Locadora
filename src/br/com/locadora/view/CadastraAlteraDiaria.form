@@ -389,8 +389,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Promo&#xe7;&#xe3;o Loca&#xe7;&#xe3;o">
-                <Property name="tabTitle" type="java.lang.String" value="Promo&#xe7;&#xe3;o Loca&#xe7;&#xe3;o"/>
+              <JTabbedPaneConstraints tabName="Regras Loca&#xe7;&#xe3;o">
+                <Property name="tabTitle" type="java.lang.String" value="Regras Loca&#xe7;&#xe3;o"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -486,7 +486,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jcb_a_vista_locacao" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="534" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="563" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -555,7 +555,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Valor Promo&#xe7;&#xe3;o"/>
+                    <Property name="text" type="java.lang.String" value="Valor"/>
                     <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
                   </Properties>
                 </Component>
@@ -638,7 +638,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Aplicar esta promo&#xe7;&#xe3;o apenas para pagamentos &#xe0; vista."/>
+                    <Property name="text" type="java.lang.String" value="Aplicar esta regra apenas para pagamentos &#xe0; vista."/>
                     <Property name="name" type="java.lang.String" value="jcb_a_vista_locacao" noResource="true"/>
                   </Properties>
                 </Component>
@@ -724,7 +724,7 @@
                         <Column editable="false" title="Descri&#xe7;&#xe3;o" type="java.lang.Object"/>
                         <Column editable="false" title="Locar Qtd." type="java.lang.String"/>
                         <Column editable="false" title="Ganhar Qtd." type="java.lang.String"/>
-                        <Column editable="false" title="Valor Promo&#xe7;&#xe3;o" type="java.lang.String"/>
+                        <Column editable="false" title="Valor" type="java.lang.String"/>
                         <Column editable="false" title="&#xc0; vista" type="java.lang.Boolean"/>
                         <Column editable="false" title="Ordem" type="java.lang.String"/>
                         <Column editable="false" title="Status" type="java.lang.Boolean"/>
@@ -791,7 +791,7 @@
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Dias de Promo&#xe7;&#xe3;o"/>
+                    <TitledBorder title="Dias"/>
                   </Border>
                 </Property>
                 <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
@@ -938,8 +938,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Promo&#xe7;&#xe3;o Devolu&#xe7;&#xe3;o">
-                <Property name="tabTitle" type="java.lang.String" value="Promo&#xe7;&#xe3;o Devolu&#xe7;&#xe3;o"/>
+              <JTabbedPaneConstraints tabName="Regras Devolu&#xe7;&#xe3;o">
+                <Property name="tabTitle" type="java.lang.String" value="Regras Devolu&#xe7;&#xe3;o"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1155,7 +1155,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Aplicar esta promo&#xe7;&#xe3;o apenas para pagamentos &#xe0; vista."/>
+                    <Property name="text" type="java.lang.String" value="Aplicar esta regra apenas para pagamentos &#xe0; vista."/>
                     <Property name="name" type="java.lang.String" value="jcb_a_vista_devolucao" noResource="true"/>
                   </Properties>
                 </Component>
@@ -1182,7 +1182,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Helvetica Neue" size="13" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Valor Promo&#xe7;&#xe3;o"/>
+                    <Property name="text" type="java.lang.String" value="Valor"/>
                     <Property name="name" type="java.lang.String" value="jLabel11" noResource="true"/>
                   </Properties>
                 </Component>
@@ -1291,7 +1291,7 @@
                         <Column editable="false" title="Hor&#xe1;rio Loc." type="java.lang.String"/>
                         <Column editable="false" title="Hor&#xe1;rio Dev." type="java.lang.String"/>
                         <Column editable="false" title="Horas Antec." type="java.lang.String"/>
-                        <Column editable="false" title="Valor Promo&#xe7;&#xe3;o" type="java.lang.String"/>
+                        <Column editable="false" title="Valor" type="java.lang.String"/>
                         <Column editable="false" title="&#xc0; vista" type="java.lang.Boolean"/>
                         <Column editable="true" title="Status" type="java.lang.Boolean"/>
                       </Table>

@@ -1127,7 +1127,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             jtf_saldo_debito_total.setText("R$ 0,00");
 
             jtf_nome_cliente.setText(dependente.getNome_dependente());
-            setTitle("Atendimento Locação - " + dependente.getNome_dependente());
+            setTitle("Atendimento Venda - " + dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
             Moeda moeda = new Moeda();
 

@@ -1114,6 +1114,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
                             janelapaiVenda.jtf_total_venda.setText("R$ 0,00");
                             janelapaiVenda.jtf_total_a_pagar.setText("R$ 0,00");
                             janelapaiVenda.jtf_saldo_debito_total.setText("R$ 0,00");
+                            janelapaiVenda.setTitle("Atendimento Venda");
                         }
                     }
                 }

@@ -403,6 +403,7 @@ public class MenuProduto extends javax.swing.JFrame {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             alterar();
         }
+                acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_produtoKeyPressed
 

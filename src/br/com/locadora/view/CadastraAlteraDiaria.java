@@ -25,10 +25,7 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JFormattedTextField;
@@ -46,7 +43,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
     public Diaria diaria;
     public PromocaoLocacao promocaoLocacao;
     public PromocaoDevolucao promocaoDevolucao;
-    public ConsultaDiariaObjeto janelapai2;
+    public ConsultaDiaria janelapai2;
     public AcessoUsuario acesso;
     public List<Diaria> itensPromocaoLocacao;
     public List<Diaria> itensPromocaoDevolucao;
@@ -437,7 +434,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jLabel5.setText("Valor Promoção");
+        jLabel5.setText("Valor");
         jLabel5.setName("jLabel5"); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -504,7 +501,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jLabel12.setName("jLabel12"); // NOI18N
 
         jcb_a_vista_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jcb_a_vista_locacao.setText("Aplicar esta promoção apenas para pagamentos à vista.");
+        jcb_a_vista_locacao.setText("Aplicar esta regra apenas para pagamentos à vista.");
         jcb_a_vista_locacao.setName("jcb_a_vista_locacao"); // NOI18N
 
         jLabel16.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -598,7 +595,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jcb_a_vista_locacao)
-                        .addGap(0, 534, Short.MAX_VALUE))))
+                        .addGap(0, 563, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -639,7 +636,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Descrição", "Locar Qtd.", "Ganhar Qtd.", "Valor Promoção", "À vista", "Ordem", "Status"
+                "Descrição", "Locar Qtd.", "Ganhar Qtd.", "Valor", "À vista", "Ordem", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -682,7 +679,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jLabel1.setText("* Selecione item na Tabela para verificar dias de promoção");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias de Promoção"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         jcb_domingo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -780,7 +777,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        jTabbedPane1.addTab("Promoção Locação", jPanel4);
+        jTabbedPane1.addTab("Regras Locação", jPanel4);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel5.setName("jPanel5"); // NOI18N
@@ -841,7 +838,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jLabel14.setName("jLabel14"); // NOI18N
 
         jcb_a_vista_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jcb_a_vista_devolucao.setText("Aplicar esta promoção apenas para pagamentos à vista.");
+        jcb_a_vista_devolucao.setText("Aplicar esta regra apenas para pagamentos à vista.");
         jcb_a_vista_devolucao.setName("jcb_a_vista_devolucao"); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -853,7 +850,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jLabel10.setName("jLabel10"); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jLabel11.setText("Valor Promoção");
+        jLabel11.setText("Valor");
         jLabel11.setName("jLabel11"); // NOI18N
 
         jtf_valor_promocao_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -1010,7 +1007,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Descrição", "Horário Loc.", "Horário Dev.", "Horas Antec.", "Valor Promoção", "À vista", "Status"
+                "Descrição", "Horário Loc.", "Horário Dev.", "Horas Antec.", "Valor", "À vista", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -1092,7 +1089,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Promoção Devolução", jPanel5);
+        jTabbedPane1.addTab("Regras Devolução", jPanel5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1604,10 +1601,12 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         if (janelapai != null) {
             janelapai.setStatusTela(true);
             janelapai.buscarDados();
+            janelapai.cadastraAlteraDiaria = null;
         }
         if (janelapai2 != null) {
             janelapai2.setStatusTela(true);
             janelapai2.listaDiaria();
+            
         }
     }
 

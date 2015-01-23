@@ -312,6 +312,18 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_legendaActionPerformed"/>
                   </Events>
                 </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jmi_pacote_promocional">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/locadora/image/promotion.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Promo&#xe7;&#xf5;es"/>
+                    <Property name="name" type="java.lang.String" value="jmi_pacote_promocional" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_pacote_promocionalActionPerformed"/>
+                  </Events>
+                </MenuItem>
               </SubComponents>
             </Menu>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
@@ -540,6 +552,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/license-manager.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Controle de Licen&#xe7;as"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem5" noResource="true"/>
               </Properties>
@@ -573,6 +588,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/help.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Help!"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem10" noResource="true"/>
               </Properties>

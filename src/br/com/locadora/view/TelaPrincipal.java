@@ -8,10 +8,7 @@ import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Backup;
 import br.com.locadora.util.TemaInterface;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.IOException;
-import java.net.URL;
 import javax.swing.*;
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -35,6 +32,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public MenuUsuario menuUsuario;
     public MenuFornecedor menuFornecedor;
     public MenuGenero menuGenero;
+    public MenuPacotePromocional menuPacotePromocional;
     public FinanceiroReceber recebimento;
 
     public ControleAcesso acessoInterface;
@@ -100,6 +98,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jmi_gerar_codigo_barras = new javax.swing.JMenuItem();
         jmi_idioma = new javax.swing.JMenuItem();
         jmi_legenda = new javax.swing.JMenuItem();
+        jmi_pacote_promocional = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         menuitem_sair = new javax.swing.JMenuItem();
         menu_movimentos2 = new javax.swing.JMenu();
@@ -351,6 +350,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu15.add(jmi_legenda);
 
+        jmi_pacote_promocional.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/promotion.png"))); // NOI18N
+        jmi_pacote_promocional.setText("Promoções");
+        jmi_pacote_promocional.setName("jmi_pacote_promocional"); // NOI18N
+        jmi_pacote_promocional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_pacote_promocionalActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jmi_pacote_promocional);
+
         menu_cadastros.add(jMenu15);
 
         jSeparator2.setName("jSeparator2"); // NOI18N
@@ -543,6 +552,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jm_caixa.add(jMenuItem17);
 
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/license-manager.png"))); // NOI18N
         jMenuItem5.setText("Controle de Licenças");
         jMenuItem5.setName("jMenuItem5"); // NOI18N
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -573,6 +583,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/help.png"))); // NOI18N
         jMenuItem10.setText("Help!");
         jMenuItem10.setName("jMenuItem10"); // NOI18N
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
@@ -787,6 +798,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        JOptionPane.showMessageDialog(null, "Suporte de Desenvolvimento - Alencar Buriti (62) 8100-0456 - alencarburiti@gmail.com");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
@@ -1079,6 +1091,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        JOptionPane.showMessageDialog(null, "Em Construção");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -1108,6 +1121,33 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jmi_atendimento_vendaActionPerformed
+
+    private void jmi_pacote_promocionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_pacote_promocionalActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuPacotePromocional");
+
+        try {
+            if (acesso.getEscrever() == false) {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador 1");
+            } else if (acesso.getEscrever() == true) {
+                if (menuPacotePromocional == null) {
+                    menuPacotePromocional = new MenuPacotePromocional();
+                    menuPacotePromocional.acesso = acesso;
+                    menuPacotePromocional.setVisible(true);
+                    menuPacotePromocional.janelapai = this;
+                } else {
+                    menuPacotePromocional.setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador 2");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmi_pacote_promocionalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1180,6 +1220,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jmi_idioma;
     private javax.swing.JMenuItem jmi_legenda;
     private javax.swing.JMenuItem jmi_objeto;
+    private javax.swing.JMenuItem jmi_pacote_promocional;
     private javax.swing.JMenuItem jmi_pagar_receber;
     private javax.swing.JMenuItem jmi_produto;
     private javax.swing.JLabel label_data;

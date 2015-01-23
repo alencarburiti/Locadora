@@ -31,8 +31,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -57,7 +55,7 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
     public InterfacePool pool;
     public List<Copia> copias;
     public ConsultaGeneroObjeto consultaGenero;
-    public ConsultaDiariaObjeto consultaDiaria;
+    public ConsultaDiaria consultaDiaria;
     public String action;
 
     /**
@@ -1112,7 +1110,7 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
     private void jtbl_copiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_copiaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            excluirCopia();
+            alterarCopia();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_copiaKeyPressed
@@ -1228,7 +1226,7 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
 
     private void jb_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_diariaActionPerformed
         if (consultaDiaria == null) {
-            consultaDiaria = new ConsultaDiariaObjeto();
+            consultaDiaria = new ConsultaDiaria();
             consultaDiaria.janelapai = this;
             consultaDiaria.listaTodasDiarias();
             consultaDiaria.setVisible(true);
@@ -1243,7 +1241,7 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (consultaDiaria == null) {
-                consultaDiaria = new ConsultaDiariaObjeto();
+                consultaDiaria = new ConsultaDiaria();
                 consultaDiaria.janelapai = this;
                 consultaDiaria.listaTodasDiarias();
                 consultaDiaria.setVisible(true);
@@ -1514,9 +1512,7 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
             jtf_valor.setText(moeda.setPrecoFormat(diaria.getValor().toString()));
 
             jcb_midia.requestFocus();
-        } else {
-            JOptionPane.showMessageDialog(null, "Objeto diária nulo");
-        }
+        } 
     }
 
     public void carregaGenero(Genero genero) {
