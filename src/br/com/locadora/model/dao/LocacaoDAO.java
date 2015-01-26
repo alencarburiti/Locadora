@@ -544,7 +544,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         PreparedStatement ps;
 
         String sqlInsert = "INSERT INTO `locadora`.`ITEM_LOCACAO`(`COPIA_CODIGO_COPIA`, `LOCACAO_CODIGO_LOCACAO`, `DATA_LOCACAO`, `VALOR_LOCADO`,"
-                + " `VALOR_PAGO`, DATA_PREVISTA, DEL_FLAG, PROMOCAO_LOCACAO_CODIGO_PROMOCAO_LOCACAO  )VALUES( ?, ?, CURRENT_TIMESTAMP(), ?, ?, ?, ?, ? );";
+                + " `VALOR_PAGO`, DATA_PREVISTA, DEL_FLAG, PROMOCAO_LOCACAO_CODIGO_PROMOCAO_LOCACAO, "
+                + "ITEM_VENDA_CODIGO_ITEM_VENDA  )VALUES( ?, ?, CURRENT_TIMESTAMP(), ?, ?, ?, ?, ?, ? );";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -562,13 +563,18 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 ps.setDouble(4, itemLocacao.get(i).getValor_pago());
                 ps.setDate(5, (java.sql.Date) data_prevista);
                 ps.setInt(6, 1);
-                if(itemLocacao.get(i).getCopia().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() != null){
+                if(itemLocacao.get(i).getCopia().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao() != 0){
                     System.out.println("Código da Promoção locação: "+ itemLocacao.get(i).getCopia().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
                     ps.setInt(7, itemLocacao.get(i).getCopia().getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());                    
                 } else {
                     ps.setInt(7, 0);
                 }
-                
+                if(itemLocacao.get(i).getCopia().getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl()!= 0){
+                    System.out.println("Código do Pacote Promocional: "+ itemLocacao.get(i).getCopia().getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl());
+                    ps.setInt(8, itemLocacao.get(i).getCopia().getDiaria().getPacotePromocional().getItemVenda().getCodigo_item_venda());                    
+                } else {
+                    ps.setInt(8, 0);
+                }
                 ps.executeUpdate();
 
             }

@@ -291,11 +291,9 @@ public class DiariaDAO implements InterfaceDiariaDAO {
             } else {
                 promocao.setStatus(false);
             }
-            if (rs.getString("PAGAMENTO_A_VISTA").equals("0")) {
-                System.out.println("Pagamento a vista: " + true);
+            if (rs.getString("PAGAMENTO_A_VISTA").equals("0")) {                
                 promocao.setPagamento_a_vista(true);
-            } else {
-                System.out.println("Pagamento a vista: " + false);
+            } else {                
                 promocao.setPagamento_a_vista(false);
             }
 

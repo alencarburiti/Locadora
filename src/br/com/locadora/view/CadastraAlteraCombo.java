@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ALENCAR
  */
-public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
+public final class CadastraAlteraCombo extends javax.swing.JFrame {
 
     private PacotePromocional pacotePromocional;
     private List<ItemPacotePromocional> itensPacotePromocional;
@@ -42,18 +42,18 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
     /**
      * Creates new form ProdutoCadastroGUI
      */
-    public CadastraAlteraPacotePromocional() {
+    public CadastraAlteraCombo() {
         initComponents();
         TemaInterface.getInterface(this);
         janelapai = null;
         janelapai2 = null;        
         consultaDiaria = null;    
-        this.setTitle("Cadastrando Pacote Promocional");
+        this.setTitle("Cadastrando Combo");
     }
 
-    public CadastraAlteraPacotePromocional(PacotePromocional pacotePromocional) {
+    public CadastraAlteraCombo(PacotePromocional pacotePromocional) {
         initComponents();
-        this.setTitle("Alterando Pacote Promocional");
+        this.setTitle("Alterando Combo");
         if (pacotePromocional != null) {
             TemaInterface.getInterface(this);
             janelapai = null;
@@ -63,7 +63,7 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
             moeda = new Moeda();
             jtf_codigo_pacote_promocional.setText(pacotePromocional.getCodigo_pacote_promocioanl().toString());
             jtf_descricao_pacote.setText(pacotePromocional.getDescricao());
-            jtf_quantidade_vez.setText(pacotePromocional.getQuantidade_vez().toString());
+            jtf_quantidade_vez.setText(pacotePromocional.getQuantidade_troca().toString());
             
             if(pacotePromocional.getQuantidade_mes().equals(1)){
                 jcb_quantidade_mes.setSelectedIndex(0);                
@@ -176,7 +176,7 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
             }
         });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Pacote Promocional "));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Combo"));
         jPanel3.setName("jPanel3"); // NOI18N
 
         jtf_codigo_pacote_promocional.setEditable(false);
@@ -197,7 +197,7 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jLabel1.setText("Código Pacote");
+        jLabel1.setText("Código Combo");
         jLabel1.setName("jLabel1"); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -380,9 +380,7 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(0, 0, 0))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel41)
@@ -425,7 +423,6 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
                                 .addComponent(jLabel1)
                                 .addGap(0, 0, 0)
                                 .addComponent(jtf_codigo_pacote_promocional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -449,9 +446,7 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
                                         .addComponent(jtf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, 0)
                                 .addComponent(jLabel41))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jrb_inativo)
-                                .addGap(0, 0, 0)))
+                            .addComponent(jrb_inativo))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtf_descricao_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -651,7 +646,7 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new CadastraAlteraPacotePromocional().setVisible(true);
+                new CadastraAlteraCombo().setVisible(true);
             }
         });
     }
@@ -753,9 +748,9 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
                 mostrarItensPacotePromocional(itensPacotePromocional);
             }
         } catch (ParseException ex) {
-            Logger.getLogger(CadastraAlteraPacotePromocional.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastraAlteraCombo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(CadastraAlteraPacotePromocional.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastraAlteraCombo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
 
@@ -836,7 +831,7 @@ public final class CadastraAlteraPacotePromocional extends javax.swing.JFrame {
             try {
                 pacotePromocional = new PacotePromocional();
                 pacotePromocional.setDescricao(jtf_descricao_pacote.getText());
-                pacotePromocional.setQuantidade_vez(Integer.parseInt(jtf_quantidade_vez.getText()));
+                pacotePromocional.setQuantidade_troca(Integer.parseInt(jtf_quantidade_vez.getText()));
                 if(jcb_quantidade_mes.getSelectedIndex() == 0){
                     pacotePromocional.setQuantidade_mes(1);
                 } else if(jcb_quantidade_mes.getSelectedIndex() == 1){

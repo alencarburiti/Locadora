@@ -779,7 +779,7 @@ public class Financeiro extends javax.swing.JFrame {
 
         if (contas.size() == 0) {
             JOptionPane.showMessageDialog(null, "Nenhuma conta encontrada");
-
+            jtf_data_inicial.requestFocus();
         } else {
             moeda = new Moeda();
             Double total = 0.00;

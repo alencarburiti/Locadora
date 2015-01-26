@@ -26,6 +26,7 @@ public class Copia {
     private Diaria diaria;
     private String midia;
     private boolean defect_flag;
+    private PacotePromocional pacotePromocional;
 
     public Integer getCodigo_copia() {
         return codigo_copia;
@@ -124,11 +125,23 @@ public class Copia {
     }
 
     public boolean getDefect_flag() {
-        return defect_flag;
+        return isDefect_flag();
     }
 
     public void setDefect_flag(boolean defect_flag) {
         this.defect_flag = defect_flag;
+    }
+
+    public boolean isDefect_flag() {
+        return defect_flag;
+    }
+
+    public PacotePromocional getPacotePromocional() {
+        return pacotePromocional;
+    }
+
+    public void setPacotePromocional(PacotePromocional pacotePromocional) {
+        this.pacotePromocional = pacotePromocional;
     }
 
 }

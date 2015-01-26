@@ -14,17 +14,17 @@ public class Diaria {
 
     private Integer codigo_diaria;
     private String nome_diaria;
-    private Double valor;
-    private Double valor_promocao;
+    private Double valor = 0.00;    
     private Integer dias = 0;
     private Double multas;
     private Integer maximo_dias;
     private Integer dias_previsto = 0;
-    private Boolean acumulativo;
+    private Boolean acumulativo = false;
     private Integer quantidade_filme = 0;
     private Integer ganhados = 0;
     private Integer ganhar = 0;
     private List<PromocaoLocacao> listPromocao;
+    private PacotePromocional pacotePromocional;
     private PromocaoLocacao promocaoLocacao;
     private PromocaoDevolucao promocaoDevolucao;
 
@@ -51,15 +51,7 @@ public class Diaria {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-
-    public Double getValor_promocao() {
-        return valor_promocao;
-    }
-
-    public void setValor_promocao(Double valor_promocao) {
-        this.valor_promocao = valor_promocao;
-    }
-
+    
     public Integer getDias() {
         return dias;
     }
@@ -146,6 +138,14 @@ public class Diaria {
 
     public void setGanhar(Integer ganhar) {
         this.ganhar = ganhar;
+    }
+
+    public PacotePromocional getPacotePromocional() {
+        return pacotePromocional;
+    }
+
+    public void setPacotePromocional(PacotePromocional pacotePromocional) {
+        this.pacotePromocional = pacotePromocional;
     }
 
 }

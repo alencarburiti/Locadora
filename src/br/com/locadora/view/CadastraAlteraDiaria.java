@@ -2005,8 +2005,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
                 diariaDAO = new DiariaDAO(pool);
                 diaria = new Diaria();
                 diaria.setNome_diaria(jtf_nome_diaria.getText());
-                diaria.setValor(moeda.getPrecoFormato((String) jtf_valor.getText()));
-                diaria.setValor_promocao(moeda.getPrecoFormato((String) jtf_valor_promocao_locacao.getText()));
+                diaria.setValor(moeda.getPrecoFormato((String) jtf_valor.getText()));                
                 diaria.setMultas(moeda.getPrecoFormato((String) jtf_relocacao.getText()));
                 diaria.setDias(Integer.parseInt((String) jtf_dias.getText()));
                 diaria.setMaximo_dias(Integer.parseInt((String) jtf_dias_maximo.getText()));
@@ -2063,8 +2062,8 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
             jcb_sexta.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSexta());
             jcb_sabado.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSabado());
 
-            jb_adicionar_promocao_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
-            jb_eliminar_promocao_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/exit.png"))); // NOI18N
+            jb_adicionar_promocao_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
+            jb_eliminar_promocao_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
             actionLocacao = "alterar";
 
             jtf_descricao_locacao.requestFocus();
@@ -2088,7 +2087,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
             
             jcb_a_vista_locacao.setSelected(itensPromocaoDevolucao.get(jtbl_promocao_devolucao.getSelectedRow()).getPromocaoDevolucao().getPagamento_a_vista());
 
-            jb_adicionar_promocao_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.gif"))); // NOI18N
+            jb_adicionar_promocao_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
             jb_eliminar_promocao_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
             actionDevolucao = "alterar";
 

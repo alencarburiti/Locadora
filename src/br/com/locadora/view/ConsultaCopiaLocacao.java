@@ -332,11 +332,16 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_okActionPerformed
     public void botaoOK(JTable tb) {
         if (tb.getSelectedRow() != -1) {
-            setVisible(false);
+//            this.setVisible(false);
             Copia copiaLinha = tbCopiaLinhaSelecionada(jtbl_copia);
             if ((janelapai != null) && (copiaLinha != null)) {
-                janelapai.setStatusTela(true);
-                janelapai.carregarCopiaLocacao(copiaLinha);
+                if(copiaLinha.getStatus().equals("X")){
+                    JOptionPane.showMessageDialog(null, "Copia Indisponível!");
+                } else {
+//                    janelapai.setStatusTela(true);
+                    retornaJanelaPai();
+                    janelapai.carregarCopiaLocacao(copiaLinha);
+                }
             }
 
         } else {
@@ -449,13 +454,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     public Copia tbCopiaLinhaSelecionada(JTable tb) {
         Copia copiaSelecionada = null;
         if (tb.getSelectedRow() != -1) {
-            copiaSelecionada = new Copia();
-            copiaSelecionada.setCodigo_copia(copias.get(tb.getSelectedRow()).getCodigo_copia());
-            copiaSelecionada.setCodigo_barras(copias.get(tb.getSelectedRow()).getCodigo_barras());
-            copiaSelecionada.setIdioma(copias.get(tb.getSelectedRow()).getIdioma());
-            copiaSelecionada.setLegenda(copias.get(tb.getSelectedRow()).getLegenda());
-            copiaSelecionada.setDiaria(copias.get(tb.getSelectedRow()).getDiaria());
-            copiaSelecionada.setObjeto(copias.get(tb.getSelectedRow()).getObjeto());
+            copiaSelecionada = copias.get(tb.getSelectedRow());            
         }
         return copiaSelecionada;
     }
@@ -569,7 +568,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     }
 
     private void retornaJanelaPai() {
-        setVisible(false);
+        this.setVisible(false);
         if(janelapai != null){
             janelapai.setStatusTela(true);
         }            

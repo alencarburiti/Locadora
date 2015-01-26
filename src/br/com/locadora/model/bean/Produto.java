@@ -16,9 +16,8 @@ public class Produto {
     private String nome_produto;
     private String codigo_barras;
     private Double preco_compra;
-    private Double preco_venda;
-    private Integer quantidade;
-    private Double preco_total;
+    private Double preco_venda;    
+    private Boolean Status;
 
     public Integer getCodigo_produto() {
         return codigo_produto;
@@ -60,20 +59,13 @@ public class Produto {
         this.preco_venda = preco_venda;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
+    public Boolean getStatus() {
+        return Status;
     }
 
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
+    public void setStatus(Boolean Status) {
+        this.Status = Status;
     }
 
-    public Double getPreco_total() {
-        return preco_total;
-    }
-
-    public void setPreco_total(Double preco_total) {
-        this.preco_total = preco_total;
-    }
 
 }

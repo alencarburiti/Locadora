@@ -12,9 +12,10 @@ package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
-import br.com.locadora.model.bean.Copia;
+import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.dao.ProdutoDAO;
+import br.com.locadora.model.dao.VendaDAO;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
@@ -30,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ALENCAR
  */
-public class ConsultaProdutoVenda extends javax.swing.JFrame {
+public class ConsultaProdutoPacotePromocionalVenda extends javax.swing.JFrame {
 
     public AtendimentoVenda janelapai;
     public List<Produto> produtos;
@@ -38,8 +39,10 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
     public ProdutoDAO produtoDAO;
     private InterfacePool pool;
     public Moeda moeda;
+    public VendaDAO vendaDAO;
+    public List<ItemVenda> itensVenda;
 
-    public ConsultaProdutoVenda() {
+    public ConsultaProdutoPacotePromocionalVenda() {
         initComponents();
         TemaInterface.getInterface(this);
         janelapai = null;
@@ -60,8 +63,8 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
         jtf_pesquisa = new javax.swing.JTextField();
         jb_buscar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jtbl_produto = new javax.swing.JTable();
-        jrb_nome_produto = new javax.swing.JRadioButton();
+        jtbl_produto_pacote_promocional = new javax.swing.JTable();
+        jrb_descricao = new javax.swing.JRadioButton();
         jrb_codigo_barras = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -69,7 +72,7 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
         jb_ok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta Objeto/Cópias");
+        setTitle("Consulta Item Venda");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -85,7 +88,7 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Produto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Item"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         jtf_pesquisa.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -113,26 +116,26 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
-        jtbl_produto.setUpdateSelectionOnSort(false);
-        jtbl_produto.setVerifyInputWhenFocusTarget(false);
-        jtbl_produto.setDefaultEditor(Object.class, null);
-        jtbl_produto.addMouseListener(new MouseAdapter() {
+        jtbl_produto_pacote_promocional.setUpdateSelectionOnSort(false);
+        jtbl_produto_pacote_promocional.setVerifyInputWhenFocusTarget(false);
+        jtbl_produto_pacote_promocional.setDefaultEditor(Object.class, null);
+        jtbl_produto_pacote_promocional.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e){
                 if(e.getClickCount() == 2){
-                    botaoOK(jtbl_produto);
+                    botaoOK(jtbl_produto_pacote_promocional);
 
                 }}});
-                jtbl_produto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jtbl_produto.setModel(new javax.swing.table.DefaultTableModel(
+                jtbl_produto_pacote_promocional.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jtbl_produto_pacote_promocional.setModel(new javax.swing.table.DefaultTableModel(
                     new Object [][] {
 
                     },
                     new String [] {
-                        "Código de Barras", "Nome do Produto", "Preço de Compra", "Preço de Venda"
+                        "Código de Barras", "Descrição", "Preço", "Status"
                     }
                 ) {
                     Class[] types = new Class [] {
-                        java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                        java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
                     };
                     boolean[] canEdit = new boolean [] {
                         false, false, false, false
@@ -146,32 +149,34 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
                         return canEdit [columnIndex];
                     }
                 });
-                jtbl_produto.setName("jtbl_produto"); // NOI18N
-                jtbl_produto.getTableHeader().setReorderingAllowed(false);
-                jtbl_produto.addMouseListener(new java.awt.event.MouseAdapter() {
+                jtbl_produto_pacote_promocional.setName("jtbl_produto_pacote_promocional"); // NOI18N
+                jtbl_produto_pacote_promocional.getTableHeader().setReorderingAllowed(false);
+                jtbl_produto_pacote_promocional.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        jtbl_produtoMouseClicked(evt);
+                        jtbl_produto_pacote_promocionalMouseClicked(evt);
                     }
                 });
-                jtbl_produto.addKeyListener(new java.awt.event.KeyAdapter() {
+                jtbl_produto_pacote_promocional.addKeyListener(new java.awt.event.KeyAdapter() {
                     public void keyPressed(java.awt.event.KeyEvent evt) {
-                        jtbl_produtoKeyPressed(evt);
+                        jtbl_produto_pacote_promocionalKeyPressed(evt);
                     }
                 });
-                jScrollPane3.setViewportView(jtbl_produto);
-                if (jtbl_produto.getColumnModel().getColumnCount() > 0) {
-                    jtbl_produto.getColumnModel().getColumn(0).setPreferredWidth(100);
-                    jtbl_produto.getColumnModel().getColumn(1).setPreferredWidth(150);
+                jScrollPane3.setViewportView(jtbl_produto_pacote_promocional);
+                if (jtbl_produto_pacote_promocional.getColumnModel().getColumnCount() > 0) {
+                    jtbl_produto_pacote_promocional.getColumnModel().getColumn(0).setPreferredWidth(100);
+                    jtbl_produto_pacote_promocional.getColumnModel().getColumn(1).setPreferredWidth(200);
+                    jtbl_produto_pacote_promocional.getColumnModel().getColumn(2).setPreferredWidth(20);
+                    jtbl_produto_pacote_promocional.getColumnModel().getColumn(3).setPreferredWidth(20);
                 }
 
-                buttonGroup1.add(jrb_nome_produto);
-                jrb_nome_produto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jrb_nome_produto.setSelected(true);
-                jrb_nome_produto.setText("Nome do Produto");
-                jrb_nome_produto.setName("jrb_nome_produto"); // NOI18N
-                jrb_nome_produto.addActionListener(new java.awt.event.ActionListener() {
+                buttonGroup1.add(jrb_descricao);
+                jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jrb_descricao.setSelected(true);
+                jrb_descricao.setText("Descrição");
+                jrb_descricao.setName("jrb_descricao"); // NOI18N
+                jrb_descricao.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_nome_produtoActionPerformed(evt);
+                        jrb_descricaoActionPerformed(evt);
                     }
                 });
 
@@ -200,7 +205,7 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jrb_nome_produto)
+                                        .addComponent(jrb_descricao)
                                         .addGap(0, 0, 0)
                                         .addComponent(jrb_codigo_barras))
                                     .addComponent(jLabel2))
@@ -216,7 +221,7 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, 0)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jrb_nome_produto)
+                            .addComponent(jrb_descricao)
                             .addComponent(jrb_codigo_barras))
                         .addGap(0, 0, 0)
                         .addComponent(jLabel2)
@@ -308,25 +313,23 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
         setVisible(false);
         if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
+            retornaJanelaPai();
         }
 
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
-        if (jtbl_produto.getSelectedRow() == 1) {
-            botaoOK(jtbl_produto);
+        if (jtbl_produto_pacote_promocional.getSelectedRow() == 1) {
+            botaoOK(jtbl_produto_pacote_promocional);
         }
 }//GEN-LAST:event_jb_okActionPerformed
     public void botaoOK(JTable tb) {
         if (tb.getSelectedRow() != -1) {
             setVisible(false);
-            Produto produtoLinha = tbProdutoLinhaSelecionada(jtbl_produto);
-            if ((janelapai != null) && (produtoLinha != null)) {
+            ItemVenda itemVendaLinha = tbProdutoPacotePromocionalLinhaSelecionada(jtbl_produto_pacote_promocional);
+            if ((janelapai != null) && (itemVendaLinha != null)) {
                 janelapai.setStatusTela(true);
-                janelapai.carregarProdutoVenda(produtoLinha);
+                janelapai.carregarProdutoPacotePromocional(itemVendaLinha);
             }
 
         } else {
@@ -352,19 +355,19 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
         consultarProduto();
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
-    private void jtbl_produtoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_produtoMouseClicked
+    private void jtbl_produto_pacote_promocionalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_produto_pacote_promocionalMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_produtoMouseClicked
+    }//GEN-LAST:event_jtbl_produto_pacote_promocionalMouseClicked
 
     private void jrb_codigo_barrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigo_barrasActionPerformed
         jtf_pesquisa.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_codigo_barrasActionPerformed
 
-    private void jrb_nome_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_nome_produtoActionPerformed
+    private void jrb_descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_descricaoActionPerformed
         jtf_pesquisa.requestFocus();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_nome_produtoActionPerformed
+    }//GEN-LAST:event_jrb_descricaoActionPerformed
 
     private void jtf_pesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisaKeyPressed
         acionarAtalho(evt);
@@ -373,18 +376,17 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtf_pesquisaKeyPressed
 
-    private void jtbl_produtoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_produtoKeyPressed
+    private void jtbl_produto_pacote_promocionalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_produto_pacote_promocionalKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            botaoOK(jtbl_produto);
+            botaoOK(jtbl_produto_pacote_promocional);
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             jtf_pesquisa.requestFocus();
         }
-        
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_produtoKeyPressed
+    }//GEN-LAST:event_jtbl_produto_pacote_promocionalKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -414,7 +416,7 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new ConsultaProdutoVenda().setVisible(true);
+                new ConsultaProdutoPacotePromocionalVenda().setVisible(true);
             }
         });
     }
@@ -429,62 +431,67 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_ok;
     private javax.swing.JRadioButton jrb_codigo_barras;
-    private javax.swing.JRadioButton jrb_nome_produto;
-    public static javax.swing.JTable jtbl_produto;
+    private javax.swing.JRadioButton jrb_descricao;
+    public static javax.swing.JTable jtbl_produto_pacote_promocional;
     private javax.swing.JTextField jtf_pesquisa;
     // End of variables declaration//GEN-END:variables
 
-    public Produto tbProdutoLinhaSelecionada(JTable tb) {
-        Produto produtoSelecionada = null;
+    public ItemVenda tbProdutoPacotePromocionalLinhaSelecionada(JTable tb) {
+        ItemVenda itemVendaSelecionada = null;
         if (tb.getSelectedRow() != -1) {
-            produtoSelecionada = new Produto();
-            produtoSelecionada = produtos.get(tb.getSelectedRow());
+            itemVendaSelecionada = new ItemVenda();
+            itemVendaSelecionada = itensVenda.get(tb.getSelectedRow());
         }
-        return produtoSelecionada;
+        return itemVendaSelecionada;
     }
-    
-    
-    public void getProdutoNome() throws SQLException {
-        pool = new Pool();
-        produtoDAO = new ProdutoDAO(pool);
-        produtos = produtoDAO.getProdutoNome(jtf_pesquisa.getText());
-        mostrarProduto(produtos);
-    }
-        
-    public void getProdutoCodigoBarras(String codigo_barras) {
-        pool = new Pool();
-        produtoDAO = new ProdutoDAO(pool);
-        produtos = produtoDAO.getProdutoNome(jtf_pesquisa.getText());
-        mostrarProduto(produtos);
-    }
-    
-    public void mostrarProduto(List<Produto> produtos) {
-        ((DefaultTableModel) jtbl_produto.getModel()).setRowCount(0);
-        jtbl_produto.updateUI();
 
-        if (produtos.size() == 0) {
-            JOptionPane.showMessageDialog(this, "Nenhuma produto encontrado");
+    public void getProdutoPacotePromocionalDescricao(String descricao) throws SQLException {
+        pool = new Pool();
+        vendaDAO = new VendaDAO(pool);
+        itensVenda = vendaDAO.getProdutoPacoteDescricao(descricao);
+        mostrarProdutoPacotePromocional(itensVenda);
+    }
+
+    public void getProdutoPacotePromocionalCodigoBarras(String codigo_barras) {
+        pool = new Pool();
+        vendaDAO = new VendaDAO(pool);
+        itensVenda = vendaDAO.getProdutoPacoteCodigoBarras(codigo_barras);
+        mostrarProdutoPacotePromocional(itensVenda);
+    }
+
+    public void mostrarProdutoPacotePromocional(List<ItemVenda> itensVenda) {
+        ((DefaultTableModel) jtbl_produto_pacote_promocional.getModel()).setRowCount(0);
+        jtbl_produto_pacote_promocional.updateUI();
+
+        if (itensVenda.size() == 0) {
+            JOptionPane.showMessageDialog(this, "Nenhum item encontrado");
             jtf_pesquisa.requestFocus();
 
         } else {
             moeda = new Moeda();
-            for (int i = 0; i < produtos.size(); i++) {
-                
-                DefaultTableModel row = (DefaultTableModel) jtbl_produto.getModel();                
-                row.addRow(new Object[]{produtos.get(i).getCodigo_barras(),
-                    produtos.get(i).getNome_produto(), moeda.setPrecoFormat(produtos.get(i).getPreco_compra().toString()),
-                    moeda.setPrecoFormat(produtos.get(i).getPreco_venda().toString())});
-
+            for (int i = 0; i < itensVenda.size(); i++) {
+                if (itensVenda.get(i).getType_product() == 1) {
+                    DefaultTableModel row = (DefaultTableModel) jtbl_produto_pacote_promocional.getModel();
+                    row.addRow(new Object[]{itensVenda.get(i).getProduto().getCodigo_barras(),
+                        itensVenda.get(i).getProduto().getNome_produto(),
+                        moeda.setPrecoFormat(itensVenda.get(i).getProduto().getPreco_venda().toString()),
+                        itensVenda.get(i).getProduto().getStatus()});
+                } else if (itensVenda.get(i).getType_product() == 0) {
+                    DefaultTableModel row = (DefaultTableModel) jtbl_produto_pacote_promocional.getModel();
+                    row.addRow(new Object[]{itensVenda.get(i).getPacotePromocional().getCodigo_barras(),
+                        itensVenda.get(i).getPacotePromocional().getDescricao(),
+                        moeda.setPrecoFormat(itensVenda.get(i).getPacotePromocional().getValor().toString()),
+                        itensVenda.get(i).getPacotePromocional().getStatus()});
+                }
             }
-            jtbl_produto.requestFocus();
-            jtbl_produto.setSelectionMode(0);
+            jtbl_produto_pacote_promocional.requestFocus();
+            jtbl_produto_pacote_promocional.setSelectionMode(0);
         }
     }
 
-    
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            botaoOK(jtbl_produto);
+            botaoOK(jtbl_produto_pacote_promocional);
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
@@ -493,20 +500,20 @@ public class ConsultaProdutoVenda extends javax.swing.JFrame {
 
     private void retornaJanelaPai() {
         setVisible(false);
-        if(janelapai != null){
+        if (janelapai != null) {
             janelapai.setStatusTela(true);
-        }            
+        }
     }
-    
-    public void consultarProduto(){
-                try {
-            if (jrb_nome_produto.isSelected() == true) {
-                getProdutoNome();
+
+    public void consultarProduto() {
+        try {
+            if (jrb_descricao.isSelected() == true) {
+                getProdutoPacotePromocionalDescricao(jtf_pesquisa.getText());
             } else if (jrb_codigo_barras.isSelected() == true) {
-                getProdutoCodigoBarras(jtf_pesquisa.getText().trim());
-            } 
+                getProdutoPacotePromocionalCodigoBarras(jtf_pesquisa.getText().trim());
+            }
         } catch (SQLException ex) {
-            
+
         }
     }
 

@@ -1231,7 +1231,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             if(valor_total > 0){                
                 jtf_total_a_pagar.setText("R$ 0,00");
             } else {
-                valor_total = valor_total * (-1);
+//                valor_total = valor_total * (-1);
                 jtf_total_a_pagar.setText(moeda.setPrecoFormat(valor_total.toString()));            
             }
         }

@@ -96,8 +96,7 @@ public class ConsultarDiaria implements InterfaceCommand {
             String valor_promocao = null;
             String multa = null;
 
-            valor = String.valueOf(diaria.getValor());
-            valor_promocao = String.valueOf(diaria.getValor_promocao());
+            valor = String.valueOf(diaria.getValor());            
             multa = String.valueOf(diaria.getMultas());
 
             Moeda moeda = new Moeda();

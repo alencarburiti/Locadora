@@ -5,19 +5,18 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.ProdutoDAO;
+import br.com.locadora.model.dao.VendaDAO;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import static br.com.locadora.view.AtendimentoDevolucao.copiasLocacao;
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,11 +34,13 @@ public class AtendimentoVenda extends javax.swing.JFrame {
     public Moeda moeda;
     public Lancamento lancamento;
     public AcessoUsuario acesso;
-    public Produto produtoAtendimento;
+    public ItemVenda itemAtendimento;
     public ProdutoDAO produtoDAO;
     public List<Produto> produtos;
-    public List<Produto> produtosVenda;
+    public List<ItemVenda> itensVendaAtendimento;
+    public List<ItemVenda> itensVenda;
     public EntradaCaixaVenda entradaCaixaVenda;
+    public VendaDAO vendaDAO;
 
     public AtendimentoVenda() {
         initComponents();
@@ -74,14 +75,13 @@ public class AtendimentoVenda extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtbl_venda = new javax.swing.JTable();
-        jtf_nome_produto = new javax.swing.JTextField();
+        jtbl_itens_venda = new javax.swing.JTable();
+        jtf_descricao = new javax.swing.JTextField();
         jl_codigo_locacao = new javax.swing.JLabel();
-        jtf_codigo_produto = new javax.swing.JTextField();
+        jtf_codigo_item = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jb_adicionar_venda = new javax.swing.JButton();
         jb_remover_venda = new javax.swing.JButton();
-        jcb_codigo_barras_locacao = new javax.swing.JCheckBox();
         jl_debito_locacao = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jtf_saldo_debito_total = new javax.swing.JTextField();
@@ -253,8 +253,8 @@ public class AtendimentoVenda extends javax.swing.JFrame {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jtbl_venda.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jtbl_venda.setModel(new javax.swing.table.DefaultTableModel(
+        jtbl_itens_venda.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtbl_itens_venda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -277,31 +277,31 @@ public class AtendimentoVenda extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtbl_venda.setName("jtbl_venda"); // NOI18N
-        jtbl_venda.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtbl_itens_venda.setName("jtbl_itens_venda"); // NOI18N
+        jtbl_itens_venda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtbl_vendaKeyPressed(evt);
+                jtbl_itens_vendaKeyPressed(evt);
             }
         });
-        jScrollPane2.setViewportView(jtbl_venda);
-        if (jtbl_venda.getColumnModel().getColumnCount() > 0) {
-            jtbl_venda.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jtbl_venda.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jtbl_venda.getColumnModel().getColumn(3).setPreferredWidth(30);
-            jtbl_venda.getColumnModel().getColumn(4).setPreferredWidth(30);
+        jScrollPane2.setViewportView(jtbl_itens_venda);
+        if (jtbl_itens_venda.getColumnModel().getColumnCount() > 0) {
+            jtbl_itens_venda.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jtbl_itens_venda.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jtbl_itens_venda.getColumnModel().getColumn(3).setPreferredWidth(30);
+            jtbl_itens_venda.getColumnModel().getColumn(4).setPreferredWidth(30);
         }
 
-        jtf_nome_produto.setEditable(false);
-        jtf_nome_produto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jtf_nome_produto.setName("jtf_nome_produto"); // NOI18N
-        jtf_nome_produto.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_descricao.setEditable(false);
+        jtf_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_descricao.setName("jtf_descricao"); // NOI18N
+        jtf_descricao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_produtoFocusGained(evt);
+                jtf_descricaoFocusGained(evt);
             }
         });
-        jtf_nome_produto.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_descricao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_produtoKeyPressed(evt);
+                jtf_descricaoKeyPressed(evt);
             }
         });
 
@@ -309,11 +309,11 @@ public class AtendimentoVenda extends javax.swing.JFrame {
         jl_codigo_locacao.setText("Código de Barras");
         jl_codigo_locacao.setName("jl_codigo_locacao"); // NOI18N
 
-        jtf_codigo_produto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jtf_codigo_produto.setName("jtf_codigo_produto"); // NOI18N
-        jtf_codigo_produto.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_codigo_item.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_codigo_item.setName("jtf_codigo_item"); // NOI18N
+        jtf_codigo_item.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_codigo_produtoKeyPressed(evt);
+                jtf_codigo_itemKeyPressed(evt);
             }
         });
 
@@ -359,15 +359,6 @@ public class AtendimentoVenda extends javax.swing.JFrame {
             }
         });
 
-        jcb_codigo_barras_locacao.setSelected(true);
-        jcb_codigo_barras_locacao.setText("Usar Código de Barras");
-        jcb_codigo_barras_locacao.setName("jcb_codigo_barras_locacao"); // NOI18N
-        jcb_codigo_barras_locacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcb_codigo_barras_locacaoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jp_locacaoLayout = new javax.swing.GroupLayout(jp_locacao);
         jp_locacao.setLayout(jp_locacaoLayout);
         jp_locacaoLayout.setHorizontalGroup(
@@ -377,30 +368,27 @@ public class AtendimentoVenda extends javax.swing.JFrame {
                 .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jp_locacaoLayout.createSequentialGroup()
                         .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcb_codigo_barras_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jl_codigo_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_codigo_item, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_preco_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
                             .addGroup(jp_locacaoLayout.createSequentialGroup()
-                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jl_codigo_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtf_codigo_produto, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(5, 5, 5)
-                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtf_nome_produto, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jtf_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jb_adicionar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtf_preco_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(5, 5, 5)
-                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addGroup(jp_locacaoLayout.createSequentialGroup()
-                                        .addComponent(jtf_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jb_adicionar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jb_remover_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jb_remover_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
                     .addComponent(jScrollPane2)))
         );
@@ -415,8 +403,8 @@ public class AtendimentoVenda extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(0, 0, 0)
                         .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_codigo_produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_nome_produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_codigo_item, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jp_locacaoLayout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -430,15 +418,13 @@ public class AtendimentoVenda extends javax.swing.JFrame {
                         .addComponent(jb_adicionar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jb_remover_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0)
-                .addComponent(jcb_codigo_barras_locacao)
-                .addGap(0, 0, 0)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
         jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_venda, jb_remover_venda, jtf_quantidade});
 
-        jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jtf_codigo_produto, jtf_nome_produto, jtf_preco_venda});
+        jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jtf_codigo_item, jtf_descricao, jtf_preco_venda});
 
         jl_debito_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jl_debito_locacao.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -645,11 +631,11 @@ public class AtendimentoVenda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        if (jcb_codigo_barras_locacao.isSelected() == true) {
-            jl_codigo_locacao.setText("Código de Barras");
-        } else {
-            jl_codigo_locacao.setText("Código do Produto");
-        }
+//        if (jcb_codigo_barras_locacao.isSelected() == true) {
+//            jl_codigo_locacao.setText("Código de Barras");
+//        } else {
+//            jl_codigo_locacao.setText("Código do Produto");
+//        }
         jtf_nome_cliente.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
@@ -663,8 +649,8 @@ public class AtendimentoVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyReleased
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        ((DefaultTableModel) jtbl_venda.getModel()).setRowCount(0);
-        jtbl_venda.updateUI();
+        ((DefaultTableModel) jtbl_itens_venda.getModel()).setRowCount(0);
+        jtbl_itens_venda.updateUI();
         retornaJanelaPai();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
@@ -687,7 +673,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jtf_nome_clienteKeyPressed
 
 private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusLost
-    jtf_codigo_produto.requestFocus();
+    jtf_codigo_item.requestFocus();
 }//GEN-LAST:event_jtf_nome_clienteFocusLost
 
     private void jtf_saldo_debito_totalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_totalFocusLost
@@ -711,22 +697,22 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             JOptionPane.showMessageDialog(null, "Informe primeiro um cliente");
             jtf_nome_cliente.requestFocus();
         } else {
-            ConsultaProdutoVenda consultaProdutoVenda = new ConsultaProdutoVenda();
+            ConsultaProdutoPacotePromocionalVenda consultaProdutoVenda = new ConsultaProdutoPacotePromocionalVenda();
             consultaProdutoVenda.janelapai = this;
             consultaProdutoVenda.setVisible(true);
             setStatusTela(false);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jtf_nome_produtoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_produtoKeyPressed
+    private void jtf_descricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricaoKeyPressed
 
-    }//GEN-LAST:event_jtf_nome_produtoKeyPressed
+    }//GEN-LAST:event_jtf_descricaoKeyPressed
 
-    private void jtf_nome_produtoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_produtoFocusGained
-    }//GEN-LAST:event_jtf_nome_produtoFocusGained
+    private void jtf_descricaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descricaoFocusGained
+    }//GEN-LAST:event_jtf_descricaoFocusGained
 
     private void jb_remover_vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_remover_vendaActionPerformed
-        removeObjeto(jtbl_venda);
+        removeObjeto(jtbl_itens_venda);
     }//GEN-LAST:event_jb_remover_vendaActionPerformed
 
     private void jtf_preco_vendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_preco_vendaFocusLost
@@ -739,30 +725,30 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_preco_vendaFocusGained
 
-    private void jtf_codigo_produtoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_produtoKeyPressed
+    private void jtf_codigo_itemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_itemKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            consultarObjeto();
+            getProdutoPacotePromocionalCodigoBarras(jtf_codigo_item.getText());
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            consultarCliente();
+            consultarProdutoPacotePromocional();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_produtoKeyPressed
+    }//GEN-LAST:event_jtf_codigo_itemKeyPressed
 
     private void jb_adicionar_vendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_vendaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                if (jcb_codigo_barras_locacao.isSelected() == true) {
-                    if (produtoAtendimento != null) {
-                        adicionarItemVenda(produtoAtendimento);
+//                if (jcb_codigo_barras_locacao.isSelected() == true) {
+//                    if (itemAtendimento != null) {
+//                        adicionarItemVenda(itemAtendimento);
+//                    }
+//                } else {
+//                    consultarCodigoProduto(Integer.parseInt(jtf_codigo_item.getText().trim()));
+                    if (itemAtendimento != null) {
+                        adicionarItemVenda(itemAtendimento);
                     }
-                } else {
-                    consultarCodigoProduto(Integer.parseInt(jtf_codigo_produto.getText().trim()));
-                    if (produtoAtendimento != null) {
-                        adicionarItemVenda(produtoAtendimento);
-                    }
-                }
+//                }
 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
@@ -789,16 +775,6 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_finalizarKeyPressed
-
-    private void jcb_codigo_barras_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_codigo_barras_locacaoActionPerformed
-        if (jcb_codigo_barras_locacao.isSelected() == true) {
-            jl_codigo_locacao.setText("Código de Barras");
-        } else {
-            jl_codigo_locacao.setText("Código do Objeto");
-        }
-        jtf_codigo_produto.requestFocus();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_codigo_barras_locacaoActionPerformed
 
     private void jb_limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_limparActionPerformed
         limparCampos();
@@ -828,12 +804,12 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_remover_vendaKeyPressed
 
-    private void jtbl_vendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_vendaKeyPressed
+    private void jtbl_itens_vendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_itens_vendaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             jb_remover_venda.doClick();
         }
 // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_vendaKeyPressed
+    }//GEN-LAST:event_jtbl_itens_vendaKeyPressed
 
     private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -852,22 +828,22 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private void jb_adicionar_vendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_vendaMouseClicked
         if (evt.getClickCount() == 1) {
             try {
-                if (jcb_codigo_barras_locacao.isSelected() == true) {
-
-                    if (consultarCodigoDeBarras(jtf_codigo_produto.getText().trim()) == true) {
-                        if (produtoAtendimento != null) {
-                            adicionarItemVenda(produtoAtendimento);
+//                if (jcb_codigo_barras_locacao.isSelected() == true) {
+//
+//                    if (consultarCodigoDeBarras(jtf_codigo_item.getText().trim()) == true) {
+                        if (itemAtendimento != null) {
+                            adicionarItemVenda(itemAtendimento);
                         }
-                    }
-                } else {
-                    consultarCodigoProduto(Integer.parseInt(jtf_codigo_produto.getText().trim()));
-                    if (produtoAtendimento != null) {
-                        adicionarItemVenda(produtoAtendimento);
-                    }
-                }
+//                    }
+//                } else {
+//                    consultarCodigoProduto(Integer.parseInt(jtf_codigo_item.getText().trim()));
+//                    if (itemAtendimento != null) {
+//                            adicionarItemVenda(itemAtendimento);
+//                        }
+//                }
 
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
+                JOptionPane.showMessageDialog(null, "Informe um Código de Barras");
             }
         }
         // TODO add your handling code here:
@@ -921,15 +897,14 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JButton jb_finalizar;
     private javax.swing.JButton jb_limpar;
     private javax.swing.JButton jb_remover_venda;
-    private javax.swing.JCheckBox jcb_codigo_barras_locacao;
     private javax.swing.JLabel jl_codigo_locacao;
     private javax.swing.JLabel jl_debito_locacao;
     public static javax.swing.JPanel jp_locacao;
-    public static javax.swing.JTable jtbl_venda;
+    public static javax.swing.JTable jtbl_itens_venda;
     public static javax.swing.JTextField jtf_codigo_cliente;
-    private javax.swing.JTextField jtf_codigo_produto;
+    private javax.swing.JTextField jtf_codigo_item;
+    public static javax.swing.JTextField jtf_descricao;
     public static javax.swing.JTextField jtf_nome_cliente;
-    public static javax.swing.JTextField jtf_nome_produto;
     private javax.swing.JTextField jtf_preco_venda;
     private javax.swing.JFormattedTextField jtf_quantidade;
     public static javax.swing.JTextField jtf_saldo_debito_total;
@@ -937,26 +912,27 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public static javax.swing.JTextField jtf_total_venda;
     // End of variables declaration//GEN-END:variables
 
-    public void consultarObjeto() {
-        try {
-            if (!jtf_codigo_cliente.getText().equals("")) {
-                if (jcb_codigo_barras_locacao.isSelected() == true) {
-                    consultarCodigoDeBarras(jtf_codigo_produto.getText().trim());
-                } else {
-                    consultarCodigoProduto(Integer.parseInt(jtf_codigo_produto.getText().trim()));
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
-                jtf_codigo_cliente.requestFocus();
-            }
+//    public void consultarObjeto() {
+//        try {
+//            if (!jtf_codigo_cliente.getText().equals("")) {
+////                if (jcb_codigo_barras_locacao.isSelected()) {
+////                    (jtf_codigo_item.getText().trim());
+//                getProdutoPacotePromocionalCodigoBarras(jtf_codigo_item.getText());
+////                } else {
+////                    consultarCodigoProduto(Integer.parseInt(jtf_codigo_item.getText().trim()));
+////                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
+//                jtf_codigo_cliente.requestFocus();
+//            }
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Consulta por Código do Objeto inválida.");
+//        }
+//    }
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Consulta por Código do Objeto inválida.");
-        }
-    }
-
-    public void consultarCliente() {
-        ConsultaProdutoVenda consultaProdutoVenda = new ConsultaProdutoVenda();
+    public void consultarProdutoPacotePromocional() {
+        ConsultaProdutoPacotePromocionalVenda consultaProdutoVenda = new ConsultaProdutoPacotePromocionalVenda();
         consultaProdutoVenda.janelapai = this;
         consultaProdutoVenda.setVisible(true);
         setStatusTela(false);
@@ -964,11 +940,11 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     private void abrirCaixa() {
         if (verificarCampos() == true) {
-            if (jtbl_venda.getRowCount() > 0) {                
+            if (jtbl_itens_venda.getRowCount() > 0) {                
                 entradaCaixaVenda = new EntradaCaixaVenda();
                 entradaCaixaVenda.setVisible(true);
                 entradaCaixaVenda.janelapaiVenda = this;
-                setStatusTela(false);
+                this.setStatusTela(false);
             } else {
                 JOptionPane.showMessageDialog(null, "Insina um objeto no mínimo");
             }
@@ -981,14 +957,14 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     public void limparCampos() {
         jtf_codigo_cliente.setText("");
-        jtf_codigo_produto.setText("");
+        jtf_codigo_item.setText("");
         jtf_preco_venda.setText("");        
         jtf_quantidade.setText("");
     }
 
     public void removeObjeto(JTable tb) {
         if (tb != null) {
-            DefaultTableModel row = (DefaultTableModel) jtbl_venda.getModel();
+            DefaultTableModel row = (DefaultTableModel) jtbl_itens_venda.getModel();
             if (tb.getSelectedRow() != -1) {
                 int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (selectedOption == JOptionPane.YES_NO_OPTION) {
@@ -1031,7 +1007,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     public boolean verificarCamposItemVenda() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
-        if (jtf_codigo_produto.getText().equals("")) {
+        if (jtf_descricao.getText().equals("")) {
             msgERRO = msgERRO + " *Produto\n";
         }
         
@@ -1041,30 +1017,45 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-            jtf_codigo_produto.requestFocus();
+            jtf_codigo_item.requestFocus();
             return false;
         } else {
             return true;
         }
     }
 
-    public void adicionarItemVenda(Produto produto) {
+    public void adicionarItemVenda(ItemVenda itemAtendimento) {
 
         if (verificarCamposItemVenda() == true) {
             moeda = new Moeda();
-            DefaultTableModel row = (DefaultTableModel) jtbl_venda.getModel();
+            DefaultTableModel row = (DefaultTableModel) jtbl_itens_venda.getModel();
             Integer quantidade = Integer.parseInt(jtf_quantidade.getText());
-            Double preco_total = quantidade * produto.getPreco_venda();
-            produto.setPreco_total(preco_total);
-            produto.setQuantidade(quantidade);
-
-            row.addRow(new Object[]{produto.getCodigo_barras(), produto.getNome_produto(),produto.getQuantidade(),
-                moeda.setPrecoFormat(produto.getPreco_venda().toString()), moeda.setPrecoFormat(produto.getPreco_total().toString())});
-
-            produtosVenda.add(produto);
+            System.out.println("Type Product"+ itemAtendimento.getType_product());
+            if(itemAtendimento.getType_product() == 0){
+                Double preco_total = quantidade * itemAtendimento.getPacotePromocional().getValor();
+                itemAtendimento.setPreco_total(preco_total);
+                itemAtendimento.setQuantidade(quantidade);
+            
+                row.addRow(new Object[]{itemAtendimento.getPacotePromocional().getCodigo_barras(), 
+                    itemAtendimento.getPacotePromocional().getDescricao(),
+                    itemAtendimento.getQuantidade(),
+                    moeda.setPrecoFormat(itemAtendimento.getPacotePromocional().getValor().toString()),
+                    moeda.setPrecoFormat(itemAtendimento.getPreco_total().toString())});
+            } else if(itemAtendimento.getType_product() == 1){
+                Double preco_total = quantidade * itemAtendimento.getProduto().getPreco_venda();
+                itemAtendimento.setPreco_total(preco_total);
+                itemAtendimento.setQuantidade(quantidade);
+            
+                row.addRow(new Object[]{itemAtendimento.getProduto().getCodigo_barras(), 
+                    itemAtendimento.getProduto().getNome_produto(),
+                    itemAtendimento.getQuantidade(),
+                    moeda.setPrecoFormat(itemAtendimento.getProduto().getPreco_venda().toString()),
+                    moeda.setPrecoFormat(itemAtendimento.getPreco_total().toString())});
+            }
+            itensVendaAtendimento.add(itemAtendimento);
             recalcularValorTotal();
             limparItemLocado();
-            jtf_codigo_produto.requestFocus();
+            jtf_codigo_item.requestFocus();
         } 
     }
 
@@ -1074,8 +1065,8 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         Double total_venda = 0.00;
         Double total_a_pagar = 0.00;
         Double saldo_debito_total = moeda.getPrecoFormato(jtf_saldo_debito_total.getText());
-        for (int i = 0; i < jtbl_venda.getRowCount(); i++) {
-            Double valor_adicionar = moeda.getPrecoFormato(jtbl_venda.getValueAt(i, 4).toString());
+        for (int i = 0; i < jtbl_itens_venda.getRowCount(); i++) {
+            Double valor_adicionar = moeda.getPrecoFormato(jtbl_itens_venda.getValueAt(i, 4).toString());
             total_venda = total_venda + valor_adicionar;
         }
         if (jtf_saldo_debito_total.getForeground() == Color.BLACK) {
@@ -1096,8 +1087,8 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
 
     public void limparItemLocado() {
-        jtf_codigo_produto.setText("");
-        jtf_nome_produto.setText("");
+        jtf_codigo_item.setText("");
+        jtf_descricao.setText("");
         jtf_preco_venda.setText("R$ 0,00");
         jtf_quantidade.setText("");
     }
@@ -1109,20 +1100,31 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         this.setEnabled(status);
     }
 
-    public void carregarProdutoVenda(Produto produto) {
-        if (produto != null) {
-            this.produtoAtendimento = produto;
+    public void carregarProdutoPacotePromocional(ItemVenda itemVenda) {
+        if (itemVenda != null) {
+            this.itemAtendimento = itemVenda;
             moeda = new Moeda();
-            jtf_codigo_produto.setText(produto.getCodigo_barras());
-            jtf_nome_produto.setText(produto.getNome_produto());
-            jtf_preco_venda.setText(moeda.setPrecoFormat(produto.getPreco_venda().toString()));
-            jtf_quantidade.requestFocus();
+            if(itemAtendimento.getType_product() == 0){
+                jtf_codigo_item.setText(itemAtendimento.getPacotePromocional().getCodigo_barras());
+                jtf_descricao.setText(itemAtendimento.getPacotePromocional().getDescricao());
+                jtf_preco_venda.setText(moeda.setPrecoFormat(itemAtendimento.getPacotePromocional().getValor().toString()));
+                jtf_quantidade.setEditable(false);
+                jtf_quantidade.setText("1");
+                jb_adicionar_venda.requestFocus();                
+            } else if(itemAtendimento.getType_product() == 1){
+                jtf_codigo_item.setText(itemAtendimento.getProduto().getCodigo_barras());
+                jtf_descricao.setText(itemAtendimento.getProduto().getNome_produto());
+                jtf_preco_venda.setText(moeda.setPrecoFormat(itemAtendimento.getProduto().getPreco_venda().toString()));
+                jtf_quantidade.setEditable(true);
+                jtf_quantidade.setText("1");
+                jb_adicionar_venda.requestFocus();                
+            }
         }
     }
 
     public void carregarClienteDependente(Dependente dependente) {
         if (dependente != null) {
-            produtosVenda = new ArrayList<>();
+            itensVendaAtendimento = new ArrayList<>();
             this.dependente = dependente;
             jtf_saldo_debito_total.setText("R$ 0,00");
 
@@ -1141,7 +1143,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_saldo_debito_total.setForeground(Color.black);
                 jl_debito_locacao.setText("Saldo:");
-                jtf_codigo_produto.setEnabled(true);
+                jtf_codigo_item.setEnabled(true);
             } else if (lancamento.getSaldo() > 0) {
                 jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
                 jtf_saldo_debito_total.setForeground(Color.red);
@@ -1151,13 +1153,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 jtf_saldo_debito_total.setText("R$ 0,00");
                 jtf_saldo_debito_total.setForeground(Color.black);
                 jl_debito_locacao.setText("Saldo:");
-                jtf_codigo_produto.setEnabled(true);
+                jtf_codigo_item.setEnabled(true);
             }
 
-            jtf_codigo_produto.requestFocus();
+            jtf_codigo_item.requestFocus();
 
             //Limpa tabela depois de selecionar novo cliente
-            DefaultTableModel tb_locacao = (DefaultTableModel) jtbl_venda.getModel();
+            DefaultTableModel tb_locacao = (DefaultTableModel) jtbl_itens_venda.getModel();
             int rows = tb_locacao.getRowCount();
             for (int i = rows - 1; i >= 0; i--) {
                 tb_locacao.removeRow(i);
@@ -1206,41 +1208,31 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
             if (duracaoDebito > 3) {
                 JOptionPane.showMessageDialog(null, "Cliente com débito desde: " + df.format(lancamento.getData_lancamento()));
-                jtf_codigo_produto.setEnabled(false);
+                jtf_codigo_item.setEnabled(false);
             } else {
-                jtf_codigo_produto.setEnabled(true);
+                jtf_codigo_item.setEnabled(true);
             }
         }
     }
 
-    public boolean consultarCodigoDeBarras(String codigo_barras) {
-        boolean retorno = false;
+    public void getProdutoPacotePromocionalCodigoBarras(String codigo_barras) {
         pool = new Pool();
-        produtoDAO = new ProdutoDAO(pool);
-        produtos = produtoDAO.getProdutoCodigoBarras(jtf_codigo_produto.getText());
-        carregarProdutoVenda(produtos.get(0));
-        retorno = true;
-        return retorno;
-    }
-
-    public void consultarCodigoProduto(Integer codigo_objeto) {
-
-        pool = new Pool();
-        produtoDAO = new ProdutoDAO(pool);
-        if (codigo_objeto != null) {
-
-            produtos = produtoDAO.getProdutoCodigoBarras(jtf_codigo_produto.getText());
-
-            if (produtos.size() > 0) {
-                consultarCodigoDeBarras(produtos.get(0).getCodigo_barras());
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Produto não encontrado");
-            }
-
+        vendaDAO = new VendaDAO(pool);
+        itensVenda = vendaDAO.getProdutoPacoteCodigoBarras(codigo_barras);
+        if(!itensVenda.isEmpty()){
+            carregarProdutoPacotePromocional(itensVenda.get(0));            
         }
-
     }
+
+//    public void consultarCodigoProduto(Integer codigo_objeto) {
+//
+//        pool = new Pool();
+//        produtoDAO = new ProdutoDAO(pool);
+//        if (codigo_objeto != null) {
+//            getProdutoPacotePromocionalCodigoBarras(produtos.get(0).getCodigo_barras());
+//        }
+//
+//    }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 

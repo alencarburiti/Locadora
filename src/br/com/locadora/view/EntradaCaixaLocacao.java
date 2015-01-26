@@ -1250,18 +1250,15 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         try {
             itensLocacaoSalvar = new ArrayList<>();
             LocacaoDAO locacaoDAO;
-            //Dependente que esta locando o filme
+            
             Dependente dependente = janelapaiLocacao.dependente;
-            //Cliente titular
-//            Cliente cliente = janelapaiLocacao.dependente.getCliente();
-
+            
             //Pega o usuario questa fazendo a transacao para salvar no banco
             Usuario usuario = acesso.getUsuario();
 
             Locacao locacao = new Locacao();
 
             //Passa o Cliente e o Dependente para a locacao
-//            locacao.setCliente(cliente);
             locacao.setDependente(dependente);
             locacao.setUsuario(usuario);
 
@@ -1429,6 +1426,17 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                         System.out.println("Day Month: " + cal.get(Calendar.DAY_OF_MONTH));
                         System.out.println("Data prevista: " + cal.getTime());
                     }
+                }
+                
+                try {
+                    if(janelapaiLocacao.copiasLocacao.get(i).getDiaria().getPacotePromocional().getDias_restantes() > 0){
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + janelapaiLocacao.copiasLocacao.get(i).getDiaria().getPacotePromocional().getDias_restantes());
+                        itemLocacao.setData_prevista(cal.getTime());
+                    } else {
+                        itemLocacao.setData_prevista(cal.getTime());
+                    }
+                } catch (Exception e) {
+                    itemLocacao.setData_prevista(cal.getTime());
                 }
 
                 itemLocacao.setData_prevista(cal.getTime());

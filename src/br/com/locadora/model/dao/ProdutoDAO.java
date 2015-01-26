@@ -122,16 +122,16 @@ public class ProdutoDAO {
         return resultado;
     }
     
-    public List<Produto> getProdutoCodigoBarras(String nome_produto) {
+    public List<Produto> getProdutoCodigoBarras(String codigo_barras) {
         List<Produto> resultado = new ArrayList<Produto>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT * FROM PRODUTO WHERE CODIGO_BARRAS LIKE ? ORDER BY NOME_PRODUTO LIMIT 0, 50;";
+        String sqlSelect = "SELECT * FROM PRODUTO WHERE CODIGO_BARRAS = ? ORDER BY NOME_PRODUTO LIMIT 0, 50;";
 
         try {
             ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, "%" + nome_produto + "%");
+            ps.setString(1, codigo_barras);
 
             rs = ps.executeQuery();
 

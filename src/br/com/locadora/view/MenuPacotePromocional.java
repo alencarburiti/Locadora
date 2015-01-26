@@ -38,7 +38,7 @@ public class MenuPacotePromocional extends javax.swing.JFrame {
     public SiscomController controller;
     public AcessoUsuario acesso;
     public Cliente cliente;
-    public CadastraAlteraPacotePromocional cadastraAlteraPacotePromocional;
+    public CadastraAlteraCombo cadastraAlteraPacotePromocional;
     public PacotePromocional pacotePromocional;
     public PacotePromocionalDAO pacotePromocionalDAO;
     public List<PacotePromocional> itensPacotePromocional;
@@ -375,7 +375,7 @@ public class MenuPacotePromocional extends javax.swing.JFrame {
         try {
             if (acesso.getEscrever() == true) {
                 if(cadastraAlteraPacotePromocional == null ){
-                    cadastraAlteraPacotePromocional = new CadastraAlteraPacotePromocional();
+                    cadastraAlteraPacotePromocional = new CadastraAlteraCombo();
                     cadastraAlteraPacotePromocional.janelapai = this;
                     cadastraAlteraPacotePromocional.setVisible(true);
                     this.setEnabled(false);
@@ -529,7 +529,7 @@ public class MenuPacotePromocional extends javax.swing.JFrame {
                 pacotePromocional = tbPacotePromocionalSelecionado(jtbl_pacote_promocional);
                 if (pacotePromocional != null) {
                     if(cadastraAlteraPacotePromocional == null ){
-                        cadastraAlteraPacotePromocional = new CadastraAlteraPacotePromocional(pacotePromocional);
+                        cadastraAlteraPacotePromocional = new CadastraAlteraCombo(pacotePromocional);
                         cadastraAlteraPacotePromocional.janelapai = this;
                         cadastraAlteraPacotePromocional.setVisible(true);
                         this.setEnabled(false);
@@ -655,7 +655,7 @@ public class MenuPacotePromocional extends javax.swing.JFrame {
                 
                 DefaultTableModel row = (DefaultTableModel) jtbl_pacote_promocional.getModel();
                 row.addRow(new Object[]{itensPacotePromocional.get(i).getCodigo_pacote_promocioanl(),
-                    itensPacotePromocional.get(i).getDescricao(), itensPacotePromocional.get(i).getQuantidade_vez(),
+                    itensPacotePromocional.get(i).getDescricao(), itensPacotePromocional.get(i).getQuantidade_troca(),
                     tempo, moeda.setPrecoFormat(itensPacotePromocional.get(i).getValor().toString()), itensPacotePromocional.get(i).getStatus()});
             }
             jtbl_pacote_promocional.requestFocus();

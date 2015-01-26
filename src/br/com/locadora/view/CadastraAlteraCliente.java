@@ -5,20 +5,20 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.PacotePromocional;
 import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DependenteDAO;
+import br.com.locadora.model.dao.PacotePromocionalDAO;
 import br.com.locadora.model.dao.TelefoneDAO;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
+import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.ValidaCPF;
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -55,6 +55,9 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     public String action;
     public TelefoneDAO telefoneDAO;
     public AcessoUsuario acesso;
+    public PacotePromocionalDAO pacotePromocionalDAO;
+    public List<PacotePromocional> pacotesPromocionais;
+    public Moeda moeda;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -109,6 +112,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
 
             carregaTelefone(cliente.getCodigo_cliente());
             carregaDependente(cliente.getCodigo_cliente());
+            consultarPacotesAdquiridos(cliente.getCodigo_cliente());
             
             action = "salvar";
 
@@ -226,6 +230,11 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtbl_pacotes_adquiridos = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jtbl_pacotes_adquiridos1 = new javax.swing.JTable();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -879,6 +888,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             jtbl_dependente.getColumnModel().getColumn(0).setPreferredWidth(150);
             jtbl_dependente.getColumnModel().getColumn(1).setPreferredWidth(20);
             jtbl_dependente.getColumnModel().getColumn(2).setPreferredWidth(20);
+            jtbl_dependente.getColumnModel().getColumn(2).setHeaderValue("Tempo");
             jtbl_dependente.getColumnModel().getColumn(3).setPreferredWidth(20);
             jtbl_dependente.getColumnModel().getColumn(4).setPreferredWidth(20);
             jtbl_dependente.getColumnModel().getColumn(5).setPreferredWidth(10);
@@ -1075,6 +1085,123 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_dependente, jb_eliminar_dependente, jcb_parentesco, jtf_cpf_dependente, jtf_data_nascimento_dependente, jtf_nome_dependente, jtf_telefone_dependente});
 
         jtp_cliente.addTab("Dependentes", jPanel2);
+
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        jScrollPane6.setName("jScrollPane6"); // NOI18N
+
+        jtbl_pacotes_adquiridos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtbl_pacotes_adquiridos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Descrição", "Qtd. Troca/Mês", "Preço", "Data Aquisição", "Dias Corridos", "Dias Pacote", "Dias Restante", "Trocas Efetuadas", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtbl_pacotes_adquiridos.setName("jtbl_pacotes_adquiridos"); // NOI18N
+        jtbl_pacotes_adquiridos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbl_pacotes_adquiridosMouseClicked(evt);
+            }
+        });
+        jtbl_pacotes_adquiridos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_pacotes_adquiridosKeyPressed(evt);
+            }
+        });
+        jScrollPane6.setViewportView(jtbl_pacotes_adquiridos);
+        if (jtbl_pacotes_adquiridos.getColumnModel().getColumnCount() > 0) {
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(0).setPreferredWidth(130);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(1).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(2).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(3).setPreferredWidth(10);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(4).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(4).setHeaderValue("Dias Corridos");
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(5).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(5).setHeaderValue("Dias Pacote");
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(6).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(6).setHeaderValue("Dias Restante");
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(7).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(7).setHeaderValue("Trocas Efetuadas");
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(8).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos.getColumnModel().getColumn(8).setHeaderValue("Status");
+        }
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 863, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+        );
+
+        jtp_cliente.addTab("Combos Adquiridos", jPanel1);
+
+        jScrollPane7.setName("jScrollPane7"); // NOI18N
+
+        jtbl_pacotes_adquiridos1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtbl_pacotes_adquiridos1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome do Objeto", "Data Locação", "Data Devolução", "Valor Locado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtbl_pacotes_adquiridos1.setName("jtbl_pacotes_adquiridos1"); // NOI18N
+        jtbl_pacotes_adquiridos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbl_pacotes_adquiridos1MouseClicked(evt);
+            }
+        });
+        jtbl_pacotes_adquiridos1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_pacotes_adquiridos1KeyPressed(evt);
+            }
+        });
+        jScrollPane7.setViewportView(jtbl_pacotes_adquiridos1);
+        if (jtbl_pacotes_adquiridos1.getColumnModel().getColumnCount() > 0) {
+            jtbl_pacotes_adquiridos1.getColumnModel().getColumn(0).setPreferredWidth(130);
+            jtbl_pacotes_adquiridos1.getColumnModel().getColumn(1).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos1.getColumnModel().getColumn(2).setPreferredWidth(20);
+            jtbl_pacotes_adquiridos1.getColumnModel().getColumn(3).setPreferredWidth(10);
+        }
+
+        jtp_cliente.addTab("Histórico de Locações", jScrollPane7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1622,6 +1749,22 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
 
+    private void jtbl_pacotes_adquiridosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_pacotes_adquiridosMouseClicked
+
+    private void jtbl_pacotes_adquiridosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridosKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_pacotes_adquiridosKeyPressed
+
+    private void jtbl_pacotes_adquiridos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridos1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_pacotes_adquiridos1MouseClicked
+
+    private void jtbl_pacotes_adquiridos1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridos1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_pacotes_adquiridos1KeyPressed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1652,12 +1795,15 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JButton jb_adicionar_dependente;
     private javax.swing.JButton jb_adicionar_telefone;
     private javax.swing.JButton jb_cancelar;
@@ -1671,6 +1817,8 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     public static javax.swing.JRadioButton jrb_inativo_dependente;
     public static javax.swing.JTextArea jta_observacao;
     public static javax.swing.JTable jtbl_dependente;
+    public static javax.swing.JTable jtbl_pacotes_adquiridos;
+    public static javax.swing.JTable jtbl_pacotes_adquiridos1;
     public static javax.swing.JTable jtbl_telefone;
     public static javax.swing.JTextField jtf_bairro;
     public static javax.swing.JTextField jtf_cidade;
@@ -2304,4 +2452,45 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         }
 
     }
+    
+    public void consultarPacotesAdquiridos(Integer codigo_cliente){
+        if(!jtf_codigo_cliente.getText().equals("")){
+            pool = new Pool();
+            pacotePromocionalDAO = new PacotePromocionalDAO(pool);
+            pacotesPromocionais = pacotePromocionalDAO.getPacotePromocionalCliente(codigo_cliente);
+            mostrarPacotesAdquiridos(pacotesPromocionais);
+        }
+    }
+    
+    public void mostrarPacotesAdquiridos(List<PacotePromocional> pacotesPromocionais) {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_pacotes_adquiridos.getModel();
+        tableModel.setNumRows(0);
+
+        if (pacotesPromocionais != null) {
+            moeda = new Moeda();
+            for (int i = 0; i < pacotesPromocionais.size(); i++) {                
+                System.out.println("Linhas: "+pacotesPromocionais.size());
+                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                String data_aquisicao = null;
+                try {
+                    data_aquisicao = out.format(in.parse(pacotesPromocionais.get(i).getData_lancamento().toString()));
+                } catch (ParseException ex) {
+
+                }
+                
+                DefaultTableModel row = (DefaultTableModel) jtbl_pacotes_adquiridos.getModel();
+                
+                row.addRow(new Object[]{pacotesPromocionais.get(i).getDescricao(),
+                pacotesPromocionais.get(i).getQuantidade_troca(),
+                moeda.setPrecoFormat(pacotesPromocionais.get(i).getValor().toString()),
+                data_aquisicao,
+                pacotesPromocionais.get(i).getDias_corridos(),
+                pacotesPromocionais.get(i).getDias_pacote(),
+                pacotesPromocionais.get(i).getDias_restantes(),
+                pacotesPromocionais.get(i).getQuantidade_troca_efetuada()});
+            }
+        }
+    }
+    
 }

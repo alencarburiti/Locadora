@@ -7,6 +7,7 @@ package br.com.locadora.util;
 
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.view.EntradaCaixaLocacao;
@@ -236,7 +237,7 @@ public class Printer {
         }
     }
     
-    public void comprovanteVenda(List<Produto> itens, Dependente dependente, Usuario usuario) {
+    public void comprovanteVenda(List<ItemVenda> itens, Dependente dependente, Usuario usuario) {
         //ESCREVER TXT    
         String nome_arquivo = "Imprimir/comprovanteVenda_" + dependente.getNome_dependente() + ".txt";
         try {
@@ -269,16 +270,30 @@ public class Printer {
                 Moeda moeda = new Moeda();
 
                 for (int x = 0; x < itens.size(); x++) {
-                    linhasTxt.print(String.format("%05d  ", itens.get(x).getCodigo_produto()));
-                    
-                    String nome_produto = itens.get(x).getQuantidade()+ "x"+itens.get(x).getNome_produto();
-                    try {
-                        linhasTxt.print(String.format("%-19s", nome_produto.substring(0, 17)));
-                    } catch (Exception e) {
-                        linhasTxt.print(String.format("%-19s", nome_produto));
+                    if(itens.get(x).getType_product() == 0){
+                        linhasTxt.print(String.format("%05d  ", itens.get(x).getPacotePromocional().getCodigo_pacote_promocioanl()));
+
+                        String nome_produto = itens.get(x).getQuantidade()+ "x"+itens.get(x).getPacotePromocional().getDescricao();
+                        try {
+                            linhasTxt.print(String.format("%-19s", nome_produto.substring(0, 17)));
+                        } catch (Exception e) {
+                            linhasTxt.print(String.format("%-19s", nome_produto));
+                        }
+
+                        linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getPacotePromocional().getValor().toString())));
+                        
+                    } else if(itens.get(x).getType_product() == 1){
+                        linhasTxt.print(String.format("%05d  ", itens.get(x).getProduto().getCodigo_produto()));
+
+                        String nome_produto = itens.get(x).getQuantidade()+ "x"+itens.get(x).getProduto().getNome_produto();
+                        try {
+                            linhasTxt.print(String.format("%-19s", nome_produto.substring(0, 17)));
+                        } catch (Exception e) {
+                            linhasTxt.print(String.format("%-19s", nome_produto));
+                        }
+
+                        linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getProduto().getPreco_venda().toString())));
                     }
-                    
-                    linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getPreco_venda().toString())));
                     linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getPreco_total().toString())));
 //                    linhasTxt.print(data_devolucao);
                     linhasTxt.println();

@@ -5,14 +5,15 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Locacao;
-import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.model.bean.Venda;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.model.dao.VendaDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Printer;
 import br.com.locadora.util.LimitadorTexto;
@@ -39,7 +40,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     public InterfacePool pool;
     public String action;
     public Moeda moeda;
-    public List<Produto> itens;
+    public List<ItemVenda> itens;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -1104,7 +1105,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
                             jb_imprimir.setEnabled(true);
                             jb_imprimir.requestFocus();
 
-                            DefaultTableModel tb_locacao = (DefaultTableModel) janelapaiVenda.jtbl_venda.getModel();
+                            DefaultTableModel tb_locacao = (DefaultTableModel) janelapaiVenda.jtbl_itens_venda.getModel();
                             int rows = tb_locacao.getRowCount();
                             for (int i = rows - 1; i >= 0; i--) {
                                 tb_locacao.removeRow(i);
@@ -1170,12 +1171,9 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     public void fecharAtendimento() {
 
         try {
-//            itensLocacaoSalvar = new ArrayList<>();
+
             LocacaoDAO locacaoDAO;
-            //Dependente que esta locando o filme
             Dependente dependente = janelapaiVenda.dependente;
-            //Cliente titular
-//            Cliente cliente = janelapaiVenda.dependente.getCliente();
 
             //Pega o usuario questa fazendo a transacao para salvar no banco
             Usuario usuario = acesso.getUsuario();
@@ -1183,7 +1181,6 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
             Locacao locacao = new Locacao();
 
             //Passa o Cliente e o Dependente para a locacao
-//            locacao.setCliente(cliente);
             locacao.setDependente(dependente);
             locacao.setUsuario(usuario);
 
@@ -1267,7 +1264,17 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
             locacaoDAO = new LocacaoDAO(pool);
             locacaoDAO.salvarLancamento(lancamentos);
                         
-            itens = janelapaiVenda.produtosVenda;
+            itens = janelapaiVenda.itensVendaAtendimento;
+            Venda venda = new Venda();
+            venda.setDependente(dependente);
+            venda.setUsuario(usuario);
+            
+            pool = new Pool();
+            VendaDAO vendaDAO = new VendaDAO(pool);
+            venda = vendaDAO.salvar(venda);
+            System.out.println("Codigo da venda:");;
+            vendaDAO.salvarItens(itens, venda);
+            
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a gravação: ");
 

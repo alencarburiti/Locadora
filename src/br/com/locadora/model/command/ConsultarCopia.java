@@ -65,8 +65,7 @@ public class ConsultarCopia implements InterfaceCommand {
                 String valor_promocao = null;
                 String multa = null;
 
-                valor = String.valueOf(diarias.get(i).getValor());
-                valor_promocao = String.valueOf(diarias.get(i).getValor_promocao());
+                valor = String.valueOf(diarias.get(i).getValor());                
                 multa = String.valueOf(diarias.get(i).getMultas());
 
                 Moeda moeda = new Moeda();
@@ -94,8 +93,7 @@ public class ConsultarCopia implements InterfaceCommand {
             String valor_promocao = null;
             String multa = null;
 
-            valor = String.valueOf(diaria.getValor());
-            valor_promocao = String.valueOf(diaria.getValor_promocao());
+            valor = String.valueOf(diaria.getValor());            
             multa = String.valueOf(diaria.getMultas());
 
             Moeda moeda = new Moeda();

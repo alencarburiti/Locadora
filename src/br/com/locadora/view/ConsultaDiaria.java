@@ -39,7 +39,7 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultaDiaria extends javax.swing.JFrame {
 
     public CadastraAlteraObjeto janelapai;
-    public CadastraAlteraPacotePromocional janelapai2;
+    public CadastraAlteraCombo janelapai2;
     public List<Diaria> diarias;
     public Moeda moeda;
     public InterfacePool pool;
@@ -407,8 +407,7 @@ private void jtbl_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:eve
             diaria.setCodigo_diaria(diarias.get(tb.getSelectedRow()).getCodigo_diaria());
             diaria.setNome_diaria(diarias.get(tb.getSelectedRow()).getNome_diaria());
             diaria.setDias(diarias.get(tb.getSelectedRow()).getDias());
-            diaria.setValor(diarias.get(tb.getSelectedRow()).getValor());
-            diaria.setValor_promocao(diarias.get(tb.getSelectedRow()).getValor_promocao());
+            diaria.setValor(diarias.get(tb.getSelectedRow()).getValor());            
             diaria.setMultas(diarias.get(tb.getSelectedRow()).getMultas());
         }
         return diaria;

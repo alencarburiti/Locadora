@@ -11,23 +11,23 @@ package br.com.locadora.model.bean;
  */
 public class PromocaoLocacao {
 
-    private Integer codigo_promocao_locacao;
-    private String descricao;
-    private Double valor_promocao_locacao;
+    private Integer codigo_promocao_locacao = 0;
+    private String descricao = "";
+    private Double valor_promocao_locacao = 0.00;
 
     private Boolean pagamento_a_vista;
     private Integer orderm;
     private Diaria diaria;
 
-    private Boolean domingo;
-    private Boolean segunda;
-    private Boolean terca;
-    private Boolean quarta;
-    private Boolean quinta;
-    private Boolean sexta;
-    private Boolean sabado;
-    private Integer locar_quantidade;
-    private Integer ganhar_quantidade;
+    private Boolean domingo = false;
+    private Boolean segunda = false;
+    private Boolean terca = false;
+    private Boolean quarta = false;
+    private Boolean quinta = false;
+    private Boolean sexta = false;
+    private Boolean sabado = false;
+    private Integer locar_quantidade = 0;
+    private Integer ganhar_quantidade = 0;
 
     private String hora_antecipada;
     
