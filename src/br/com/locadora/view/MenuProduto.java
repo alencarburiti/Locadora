@@ -38,7 +38,7 @@ public class MenuProduto extends javax.swing.JFrame {
         initComponents();
         TemaInterface.getInterface(this);
         janelapai = null;
-    }    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,14 +57,14 @@ public class MenuProduto extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtf_pesquisa = new javax.swing.JTextField();
-        jb_buscar = new javax.swing.JButton();
+        jb_pesquisa = new javax.swing.JButton();
         jrb_codigo = new javax.swing.JRadioButton();
         jrb_nome_produto = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbl_produto = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jb_novo = new javax.swing.JButton();
-        jb_alterar1 = new javax.swing.JButton();
+        jb_alterar = new javax.swing.JButton();
         jb_excluir = new javax.swing.JButton();
         jb_sair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -80,6 +80,11 @@ public class MenuProduto extends javax.swing.JFrame {
             }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -104,13 +109,18 @@ public class MenuProduto extends javax.swing.JFrame {
             }
         });
 
-        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jb_buscar.setName("jb_buscar"); // NOI18N
-        jb_buscar.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_buscar.addActionListener(new java.awt.event.ActionListener() {
+        jb_pesquisa.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_pesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_pesquisa.setName("jb_pesquisa"); // NOI18N
+        jb_pesquisa.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_pesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_buscarActionPerformed(evt);
+                jb_pesquisaActionPerformed(evt);
+            }
+        });
+        jb_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_pesquisaKeyPressed(evt);
             }
         });
 
@@ -141,7 +151,7 @@ public class MenuProduto extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -156,11 +166,11 @@ public class MenuProduto extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
-        jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_pesquisa});
+        jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_pesquisa, jtf_pesquisa});
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -223,14 +233,14 @@ public class MenuProduto extends javax.swing.JFrame {
             }
         });
 
-        jb_alterar1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_alterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
-        jb_alterar1.setText("Alterar");
-        jb_alterar1.setName("jb_alterar1"); // NOI18N
-        jb_alterar1.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_alterar1.addActionListener(new java.awt.event.ActionListener() {
+        jb_alterar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/alterar_registro.png"))); // NOI18N
+        jb_alterar.setText("Alterar");
+        jb_alterar.setName("jb_alterar"); // NOI18N
+        jb_alterar.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_alterar1ActionPerformed(evt);
+                jb_alterarActionPerformed(evt);
             }
         });
 
@@ -269,7 +279,7 @@ public class MenuProduto extends javax.swing.JFrame {
                 .addGap(150, 150, 150)
                 .addComponent(jb_novo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jb_alterar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -282,7 +292,7 @@ public class MenuProduto extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jb_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jb_alterar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jb_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -338,10 +348,9 @@ public class MenuProduto extends javax.swing.JFrame {
         jtf_pesquisa.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
-    private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
+    private void jb_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisaActionPerformed
         consultarProduto();
-        
-    }//GEN-LAST:event_jb_buscarActionPerformed
+    }//GEN-LAST:event_jb_pesquisaActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
 
@@ -351,16 +360,16 @@ public class MenuProduto extends javax.swing.JFrame {
         AcessoUsuario acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuProduto");
         try {
             if (acesso.getEscrever() == true) {
-                if(cadastraAlteraProduto == null){
+                if (cadastraAlteraProduto == null) {
                     cadastraAlteraProduto = new CadastraAlteraProduto();
                     cadastraAlteraProduto.janelapai = this;
                     cadastraAlteraProduto.setVisible(true);
-                    setStatusTela(false);                    
+                    setStatusTela(false);
                     cadastraAlteraProduto.setTitle("Cadastrando Produto");
                 } else {
                     cadastraAlteraProduto.setVisible(true);
                 }
-                       
+
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -371,10 +380,10 @@ public class MenuProduto extends javax.swing.JFrame {
 
 }//GEN-LAST:event_jb_novoActionPerformed
 
-    private void jb_alterar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterar1ActionPerformed
+    private void jb_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_alterarActionPerformed
         alterar();
         // TODO add your handling code here:
-}//GEN-LAST:event_jb_alterar1ActionPerformed
+}//GEN-LAST:event_jb_alterarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         retornarJanelaPai();
@@ -387,23 +396,23 @@ public class MenuProduto extends javax.swing.JFrame {
 
     private void jtf_pesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            consultarProduto();
+            jb_pesquisa.doClick();
         }
         acionarAtalho(evt);
     }//GEN-LAST:event_jtf_pesquisaKeyPressed
 
     private void jtbl_produtoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_produtoMouseClicked
-        if(evt.getClickCount() > 1){
-            alterar();
+        if (evt.getClickCount() > 1) {
+            jb_alterar.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_produtoMouseClicked
 
     private void jtbl_produtoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_produtoKeyPressed
-                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            alterar();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_alterar.doClick();
         }
-                acionarAtalho(evt);
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_produtoKeyPressed
 
@@ -415,6 +424,19 @@ public class MenuProduto extends javax.swing.JFrame {
     private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jb_pesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_pesquisa.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_pesquisaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -437,10 +459,10 @@ public class MenuProduto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jb_alterar1;
-    private javax.swing.JButton jb_buscar;
+    private javax.swing.JButton jb_alterar;
     private javax.swing.JButton jb_excluir;
     private javax.swing.JButton jb_novo;
+    private javax.swing.JButton jb_pesquisa;
     private javax.swing.JButton jb_sair;
     private javax.swing.JRadioButton jrb_codigo;
     private javax.swing.JRadioButton jrb_nome_produto;
@@ -449,25 +471,25 @@ public class MenuProduto extends javax.swing.JFrame {
     private java.awt.TextField tf_codigo;
     // End of variables declaration//GEN-END:variables
 
-    public void consultarProduto(){
+    public void consultarProduto() {
         if (jrb_codigo.isSelected() == true) {
             getProdutoCodigo();
         } else {
             getProdutoNome();
-        }  
+        }
     }
-    
+
     public void setStatusTela(boolean status) {
         if (status) {
             this.setVisible(status);
         }
         this.setEnabled(status);
     }
-    
-    public void retornarJanelaPai(){
+
+    public void retornarJanelaPai() {
         this.setStatusTela(false);
-        if(janelapai != null){
-            janelapai.setStatusTela(true);            
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
         }
     }
 
@@ -490,23 +512,23 @@ public class MenuProduto extends javax.swing.JFrame {
         tableModel.setNumRows(0);
 
         if (produtos.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhum fornecedor encontrado");
+            JOptionPane.showMessageDialog(null, "Nenhum Produto encontrado");
 
         } else {
             moeda = new Moeda();
             for (int i = 0; i < produtos.size(); i++) {
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_produto.getModel();
-                row.addRow(new Object[]{produtos.get(i).getCodigo_produto(), produtos.get(i).getNome_produto(), 
+                row.addRow(new Object[]{produtos.get(i).getCodigo_produto(), produtos.get(i).getNome_produto(),
                     produtos.get(i).getCodigo_barras(), moeda.setPrecoFormat(produtos.get(i).getPreco_compra().toString()),
-                    moeda.setPrecoFormat(produtos.get(i).getPreco_venda().toString()) });
+                    moeda.setPrecoFormat(produtos.get(i).getPreco_venda().toString())});
             }
             jtbl_produto.requestFocus();
             jtbl_produto.setSelectionMode(1);
         }
 
     }
-    
+
     public Produto tbProdutoLinhaSelecionada(JTable tb) {
 
         if (tb.getSelectedRow() != -1) {
@@ -517,30 +539,30 @@ public class MenuProduto extends javax.swing.JFrame {
         }
         return produto;
     }
-    
-    public void alterar(){
+
+    public void alterar() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         AcessoUsuario acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuProduto");
         try {
             if (acesso.getEscrever() == true) {
-                    Produto prod = tbProdutoLinhaSelecionada(jtbl_produto);
+                Produto prod = tbProdutoLinhaSelecionada(jtbl_produto);
                 if (prod != null) {
-                    if(cadastraAlteraProduto == null){
+                    if (cadastraAlteraProduto == null) {
                         cadastraAlteraProduto = new CadastraAlteraProduto(prod);
                         cadastraAlteraProduto.janelapai = this;
                         cadastraAlteraProduto.setVisible(true);
-                        setStatusTela(false);                    
+                        setStatusTela(false);
                         cadastraAlteraProduto.setTitle("Alterando Produto");
                     } else {
                         cadastraAlteraProduto.setVisible(true);
-                    }                    
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um produto");
+                    JOptionPane.showMessageDialog(null, "Selecione um Produto");
                     jtf_pesquisa.requestFocus();
                 }
-                       
+
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -548,19 +570,23 @@ public class MenuProduto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
+
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornarJanelaPai();
         }
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-         excluirProduto();   
+            jb_excluir.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
             jtf_pesquisa.requestFocus();
         }
+        if (evt.getKeyCode() == KeyEvent.VK_F2) {
+            jb_novo.doClick();
+        }
     }
-    
+
     private void excluirProduto() {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
@@ -587,7 +613,7 @@ public class MenuProduto extends javax.swing.JFrame {
 
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um produto");
+                    JOptionPane.showMessageDialog(null, "Selecione um Produto");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");

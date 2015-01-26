@@ -4,7 +4,7 @@ import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.dao.InterfaceClienteDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.view.MenuCliente;
-import static br.com.locadora.view.MenuCliente.jtf_consulta;
+import static br.com.locadora.view.MenuCliente.jtf_pesquisa;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,19 +33,19 @@ public class ConsultarCliente implements InterfaceCommand {
 
             if (MenuCliente.jrb_codigo_cliente.isSelected() == true) {                
                     cliente = null;
-                    cliente = clienteDAO.getCliente_codigo(Integer.parseInt(jtf_consulta.getText().trim()));
+                    cliente = clienteDAO.getCliente_codigo(Integer.parseInt(jtf_pesquisa.getText().trim()));
                     mostrar_clientes(cliente);                
             } else if (MenuCliente.jrb_cpf.isSelected() == true) {
-                if (!MenuCliente.jtf_consulta.getText().equals("")) {
+                if (!MenuCliente.jtf_pesquisa.getText().equals("")) {
                     cliente = null;
-                    cliente = clienteDAO.getCliente_cpf(jtf_consulta.getText().trim());
+                    cliente = clienteDAO.getCliente_cpf(jtf_pesquisa.getText().trim());
                     mostrar_clientes(cliente);
                 } else {
                     JOptionPane.showMessageDialog(null, "Informe o CPF");
                 }
             } else {
                 clientes = null;
-                clientes = clienteDAO.getCliente_nome(jtf_consulta.getText().trim());
+                clientes = clienteDAO.getCliente_nome(jtf_pesquisa.getText().trim());
                 mostrar_clientes(clientes);
 
             }

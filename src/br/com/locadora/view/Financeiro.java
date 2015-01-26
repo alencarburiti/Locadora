@@ -502,9 +502,7 @@ public class Financeiro extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_F10) {
-//            abrirCaixa();
-        }
+        acionarAtalho(evt);
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
@@ -755,10 +753,6 @@ public class Financeiro extends javax.swing.JFrame {
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
-
-        if (evt.getKeyCode() == KeyEvent.VK_F10) {
-//            abrirCaixa();
-        }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
         }

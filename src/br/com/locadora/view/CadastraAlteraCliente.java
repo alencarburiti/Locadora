@@ -5,7 +5,7 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
-import br.com.locadora.model.bean.PacotePromocional;
+import br.com.locadora.model.bean.Combo;
 import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DependenteDAO;
@@ -56,7 +56,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     public TelefoneDAO telefoneDAO;
     public AcessoUsuario acesso;
     public PacotePromocionalDAO pacotePromocionalDAO;
-    public List<PacotePromocional> pacotesPromocionais;
+    public List<Combo> pacotesPromocionais;
     public Moeda moeda;
 
     /**
@@ -65,6 +65,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     public CadastraAlteraCliente() {
         initComponents();
         TemaInterface.getInterface(this);
+        this.setTitle("Cadastrando Cliente");
         janelapai = null;
         janelapai2 = null;
         janelapai3 = null;
@@ -75,6 +76,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         initComponents();
         if (cliente != null) {
             TemaInterface.getInterface(this);
+            this.setTitle("Alterando Cliente");
             janelapai = null;
             janelapai2 = null;
             this.cliente = cliente;
@@ -271,15 +273,20 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                 jb_cancelarActionPerformed(evt);
             }
         });
+        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelarKeyPressed(evt);
+            }
+        });
 
         jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/save.png"))); // NOI18N
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_salvarMouseClicked(evt);
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -612,6 +619,11 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jta_observacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jta_observacao.setRows(5);
         jta_observacao.setName("jta_observacao"); // NOI18N
+        jta_observacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jta_observacaoKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jta_observacao);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1269,7 +1281,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2FocusGained
 
     private void jb_adicionar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteKeyPressed
-
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             adicionarDependente();
@@ -1614,8 +1625,9 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_adicionar_telefoneKeyPressed
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            atualizarCliente();
+            jb_salvar.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarKeyPressed
@@ -1675,6 +1687,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_adicionar_telefoneMouseClicked
 
     private void jb_eliminar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
             removeTelefone(jtbl_telefone);
         }
@@ -1706,13 +1719,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_eliminar_dependenteMouseClicked
-
-    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
-        if (evt.getClickCount() == 1) {
-            atualizarCliente();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarMouseClicked
 
     private void jcb_parentescoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_parentescoActionPerformed
         // TODO add your handling code here:
@@ -1754,6 +1760,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_pacotes_adquiridosMouseClicked
 
     private void jtbl_pacotes_adquiridosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridosKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_pacotes_adquiridosKeyPressed
 
@@ -1761,9 +1768,26 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_pacotes_adquiridos1MouseClicked
 
+
     private void jtbl_pacotes_adquiridos1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridos1KeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_pacotes_adquiridos1KeyPressed
+
+    private void jta_observacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jta_observacaoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jta_observacaoKeyPressed
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
+
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        cadastrarAlterarCliente();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -2203,7 +2227,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            jb_salvar.doClick(1);
+            jb_salvar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
@@ -2314,11 +2338,10 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         return false;
     }
     
-    public void atualizarCliente() {
+    public void cadastrarAlterarCliente() {
         if (verificarCampos()) {
 
             try {
-//                Cliente cliente;
                 cliente = new Cliente();
                 cliente.setNome_cliente(jtf_nome_cliente.getText());
                 cliente.setData_nascimento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
@@ -2462,7 +2485,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         }
     }
     
-    public void mostrarPacotesAdquiridos(List<PacotePromocional> pacotesPromocionais) {
+    public void mostrarPacotesAdquiridos(List<Combo> pacotesPromocionais) {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_pacotes_adquiridos.getModel();
         tableModel.setNumRows(0);
 

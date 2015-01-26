@@ -42,10 +42,10 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
     public AtendimentoLocacao janelapaiLocacao;
     public InterfacePool pool;
-//    public SiscomController controller;
     public String action;
     public Moeda moeda;
     public List<ItemLocacao> itensLocacaoSalvar;
+    private int salvar = 0;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -140,11 +140,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
         jpf_senha.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jpf_senha.setName("jpf_senha"); // NOI18N
-        jpf_senha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jpf_senhaActionPerformed(evt);
-            }
-        });
         jpf_senha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jpf_senhaKeyPressed(evt);
@@ -231,11 +226,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jtf_desconto.setEnabled(false);
         jtf_desconto.setName("jtf_desconto"); // NOI18N
         jtf_desconto.setPreferredSize(new java.awt.Dimension(120, 29));
-        jtf_desconto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_descontoActionPerformed(evt);
-            }
-        });
         jtf_desconto.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jtf_descontoFocusGained(evt);
@@ -327,11 +317,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jtf_valor_pago.setEnabled(false);
         jtf_valor_pago.setName("jtf_valor_pago"); // NOI18N
         jtf_valor_pago.setPreferredSize(new java.awt.Dimension(120, 29));
-        jtf_valor_pago.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_valor_pagoActionPerformed(evt);
-            }
-        });
         jtf_valor_pago.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jtf_valor_pagoFocusGained(evt);
@@ -343,9 +328,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jtf_valor_pago.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_valor_pagoKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_valor_pagoKeyReleased(evt);
             }
         });
 
@@ -522,11 +504,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         jb_salvar.setEnabled(false);
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_salvarMouseClicked(evt);
-            }
-        });
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_salvarActionPerformed(evt);
@@ -629,7 +606,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
     private void jb_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_imprimirActionPerformed
         imprimir();
-
 }//GEN-LAST:event_jb_imprimirActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -666,10 +642,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_total_locacaoActionPerformed
 
-    private void jtf_descontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_descontoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_descontoActionPerformed
-
     private void jtf_descontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descontoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -681,10 +653,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     private void jtf_descontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descontoKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descontoKeyReleased
-
-    private void jtf_valor_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_pagoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_pagoActionPerformed
 
     private void jtf_valor_pagoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_pagoFocusGained
         jtf_valor_pago.selectAll();
@@ -702,13 +670,8 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
         }
         acionarAtalho(evt);
-
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_pagoKeyPressed
-
-    private void jtf_valor_pagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valor_pagoKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_valor_pagoKeyReleased
 
     private void jtf_trocoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_trocoActionPerformed
         // TODO add your handling code here:
@@ -758,7 +721,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            entrar();
+            jb_logar.doClick();
         }
         acionarAtalho(evt);
     }//GEN-LAST:event_jpf_senhaKeyPressed
@@ -826,11 +789,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (jb_salvar.isEnabled()) {
-                recalcularValores();
-                checarPagamento();
-                finalizarCaixa();
-            }
+            jb_salvar.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -838,6 +797,9 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
     private void jb_logarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_logarKeyPressed
         acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_logar.doClick();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_logarKeyPressed
 
@@ -862,21 +824,6 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_cancelar1KeyPressed
 
-    private void jpf_senhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpf_senhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jpf_senhaActionPerformed
-
-    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
-        if (evt.getClickCount() == 1) {
-            if (jb_salvar.isEnabled()) {
-                recalcularValores();
-                checarPagamento();
-                finalizarCaixa();
-            }
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarMouseClicked
-
     private void jtf_descontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusGained
         jtf_desconto.selectAll();
         // TODO add your handling code here:
@@ -888,6 +835,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descontoFocusLost
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        if (jb_salvar.isEnabled()) {
+                recalcularValores();
+                checarPagamento();
+                finalizarCaixa();
+            }            
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarActionPerformed
 
@@ -1119,15 +1071,9 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            finalizarCaixa();
+            jb_salvar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-
-            String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiLocacao.dependente.getNome_dependente() + ".txt";
-            File arquivo = new File(nome_arquivo);
-            arquivo.deleteOnExit();
-            arquivo.delete();
-
             retornaJanelaPai();
         }
     }
@@ -1465,6 +1411,11 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     public void retornaJanelaPai() {
         this.setVisible(false);
         if (janelapaiLocacao != null) {
+            String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiLocacao.dependente.getNome_dependente() + ".txt";
+            File arquivo = new File(nome_arquivo);
+            arquivo.deleteOnExit();
+            arquivo.delete();
+            
             janelapaiLocacao.setStatusTela(true);
             janelapaiLocacao.jtf_nome_cliente.requestFocus();
         }

@@ -18,10 +18,7 @@ import br.com.locadora.model.bean.Idioma;
 import br.com.locadora.model.dao.IdiomaDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -63,8 +60,8 @@ public class MenuIdioma extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jl_pesquisar_destino = new javax.swing.JLabel();
-        jb_buscar = new javax.swing.JButton();
-        jtf_consulta = new javax.swing.JTextField();
+        jb_pesquisa = new javax.swing.JButton();
+        jtf_pesquisa = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbl_idioma = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -94,21 +91,26 @@ public class MenuIdioma extends javax.swing.JFrame {
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
 
-        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jb_buscar.setName("jb_buscar"); // NOI18N
-        jb_buscar.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_buscar.addActionListener(new java.awt.event.ActionListener() {
+        jb_pesquisa.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_pesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_pesquisa.setName("jb_pesquisa"); // NOI18N
+        jb_pesquisa.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_pesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_buscarActionPerformed(evt);
+                jb_pesquisaActionPerformed(evt);
+            }
+        });
+        jb_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_pesquisaKeyPressed(evt);
             }
         });
 
-        jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jtf_consulta.setName("jtf_consulta"); // NOI18N
-        jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_pesquisa.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jtf_pesquisa.setName("jtf_pesquisa"); // NOI18N
+        jtf_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_consultaKeyPressed(evt);
+                jtf_pesquisaKeyPressed(evt);
             }
         });
 
@@ -123,9 +125,9 @@ public class MenuIdioma extends javax.swing.JFrame {
                         .addComponent(jl_pesquisar_destino)
                         .addGap(28, 28, 28))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,12 +137,12 @@ public class MenuIdioma extends javax.swing.JFrame {
                 .addComponent(jl_pesquisar_destino)
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_consulta});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_pesquisa, jtf_pesquisa});
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -245,27 +247,26 @@ public class MenuIdioma extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
-        consultaIdioma();
-    }//GEN-LAST:event_jb_buscarActionPerformed
+    private void jb_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisaActionPerformed
+        getIdioma();
+    }//GEN-LAST:event_jb_pesquisaActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        setVisible(false);
-        janelapai.setStatusTela(true);
+        retornarJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jtf_consulta.requestFocus();
+        jtf_pesquisa.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
-    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+    private void jtf_pesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            consultaIdioma();
+            jb_pesquisa.doClick();
         }
 
-    }//GEN-LAST:event_jtf_consultaKeyPressed
+    }//GEN-LAST:event_jtf_pesquisaKeyPressed
 
     private void jtbl_idiomaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_idiomaKeyPressed
         acionarAtalho(evt);        
@@ -284,6 +285,14 @@ public class MenuIdioma extends javax.swing.JFrame {
     private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void jb_pesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_pesquisa.doClick();
+        }        
+// TODO add your handling code here:
+    }//GEN-LAST:event_jb_pesquisaKeyPressed
     /**
      * @param args the command line arguments
      */
@@ -300,19 +309,19 @@ public class MenuIdioma extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JButton jb_buscar;
+    public static javax.swing.JButton jb_pesquisa;
     private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar_destino;
     public static javax.swing.JTable jtbl_idioma;
-    public static javax.swing.JTextField jtf_consulta;
+    public static javax.swing.JTextField jtf_pesquisa;
     // End of variables declaration//GEN-END:variables
 
-    public void consultaIdioma() {
+    public void getIdioma() {
         try {
             pool = new Pool();
             IdiomaDAO idiomaDAO = new IdiomaDAO(pool);
             idiomas = null;
-            idiomas = idiomaDAO.getIdioma_nome(jtf_consulta.getText().trim());
+            idiomas = idiomaDAO.getIdioma_nome(jtf_pesquisa.getText().trim());
             mostrarIdiomas(idiomas);
         } catch (SQLException ex) {
             Logger.getLogger(MenuIdioma.class.getName()).log(Level.SEVERE, null, ex);
@@ -345,7 +354,7 @@ public class MenuIdioma extends javax.swing.JFrame {
             janelapai.setStatusTela(true);
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            jtf_consulta.requestFocus();
+            jtf_pesquisa.requestFocus();
         }
     }
     public void retornarJanelaPai(){

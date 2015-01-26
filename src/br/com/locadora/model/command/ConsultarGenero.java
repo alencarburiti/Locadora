@@ -27,7 +27,7 @@ public class ConsultarGenero implements InterfaceCommand {
         try {
             if (MenuGenero.jrb_codigo.isSelected() == true) {
                 genero = null;
-                genero = generoDAO.getGenero_codigo(Integer.parseInt(MenuGenero.jtf_consulta.getText().trim()));
+                genero = generoDAO.getGenero_codigo(Integer.parseInt(MenuGenero.jtf_pesquisa.getText().trim()));
 
                 mostrar_Genero(genero);
 
@@ -35,7 +35,7 @@ public class ConsultarGenero implements InterfaceCommand {
 
                 generos = null;
 
-                generos = generoDAO.getGenero_nome(MenuGenero.jtf_consulta.getText().trim());
+                generos = generoDAO.getGenero_nome(MenuGenero.jtf_pesquisa.getText().trim());
 
                 mostrar_Generos(generos);
             }

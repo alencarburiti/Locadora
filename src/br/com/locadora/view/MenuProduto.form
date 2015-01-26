@@ -31,6 +31,7 @@
   <Events>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
     <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
   </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -140,7 +141,7 @@
                               <Component id="jtf_pesquisa" min="-2" pref="300" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jb_buscar" min="-2" max="-2" attributes="0"/>
+                          <Component id="jb_pesquisa" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -160,7 +161,7 @@
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jtf_pesquisa" linkSize="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jb_buscar" linkSize="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jb_pesquisa" linkSize="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
@@ -188,7 +189,7 @@
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_pesquisaKeyPressed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jb_buscar">
+        <Component class="javax.swing.JButton" name="jb_pesquisa">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="14" style="0"/>
@@ -196,13 +197,14 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/br/com/locadora/image/pesquisar.png"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="jb_buscar" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jb_pesquisa" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[28, 28]"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_buscarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_pesquisaActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_pesquisaKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrb_codigo">
@@ -316,7 +318,7 @@
                   <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                   <Component id="jb_novo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jb_alterar1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jb_alterar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jb_excluir" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -331,7 +333,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jb_excluir" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jb_sair" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jb_alterar1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jb_alterar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -355,7 +357,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_novoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jb_alterar1">
+        <Component class="javax.swing.JButton" name="jb_alterar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="13" style="0"/>
@@ -364,13 +366,13 @@
               <Image iconType="3" name="/br/com/locadora/image/alterar_registro.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Alterar"/>
-            <Property name="name" type="java.lang.String" value="jb_alterar1" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jb_alterar" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 40]"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_alterar1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_alterarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jb_excluir">

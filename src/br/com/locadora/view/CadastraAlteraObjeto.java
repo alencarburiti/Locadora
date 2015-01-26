@@ -64,6 +64,7 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
     public CadastraAlteraObjeto() {
         initComponents();
         TemaInterface.getInterface(this);
+        this.setTitle("Cadastrando Objeto");
         janelapai = null;
         action = "salvar";
     }
@@ -72,6 +73,7 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
         initComponents();
         if (objeto != null) {
             TemaInterface.getInterface(this);
+            this.setTitle("Alterando Objeto");
             janelapai = null;
 
             jtf_codigo_objeto.setText(String.valueOf(objeto.getCodigo_objeto()));
@@ -1847,7 +1849,7 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
         if (janelapai != null) {
             janelapai.setStatusTela(true);
             janelapai.buscarDados();
-            janelapai.jtf_consulta.requestFocus();
+            janelapai.jtf_pesquisa.requestFocus();
             janelapai.cadastraAlteraObjeto = null;
         }
 

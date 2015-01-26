@@ -26,7 +26,7 @@ public class Copia {
     private Diaria diaria;
     private String midia;
     private boolean defect_flag;
-    private PacotePromocional pacotePromocional;
+    private Combo pacotePromocional;
 
     public Integer getCodigo_copia() {
         return codigo_copia;
@@ -136,11 +136,11 @@ public class Copia {
         return defect_flag;
     }
 
-    public PacotePromocional getPacotePromocional() {
+    public Combo getPacotePromocional() {
         return pacotePromocional;
     }
 
-    public void setPacotePromocional(PacotePromocional pacotePromocional) {
+    public void setPacotePromocional(Combo pacotePromocional) {
         this.pacotePromocional = pacotePromocional;
     }
 

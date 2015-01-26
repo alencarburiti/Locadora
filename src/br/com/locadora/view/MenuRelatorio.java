@@ -447,6 +447,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowDeactivated
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtf_data_inicial.requestFocus();
         }
@@ -490,7 +491,8 @@ public class MenuRelatorio extends javax.swing.JFrame {
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtf_data_final.requestFocus();
-        }        // TODO add your handling code here:
+        }        
+    // TODO add your handling code here:
     }//GEN-LAST:event_jtf_data_inicialKeyPressed
 
     private void jtf_data_finalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_data_finalActionPerformed
@@ -531,6 +533,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_data_finalFocusLost
 
     private void jtf_data_finalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_finalKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jb_gerar_relatorio.requestFocus();
         }
@@ -709,10 +712,15 @@ public class MenuRelatorio extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
-
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+           retornarJanelaPai();
+        }
+    }
+    
+    public void retornarJanelaPai(){
+        setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);            
         }
     }
 
@@ -782,11 +790,5 @@ public class MenuRelatorio extends javax.swing.JFrame {
             return (true);
         }
         return false;
-    }
-public void retornarJanelaPai(){
-        setVisible(false);
-        if(janelapai != null){
-            janelapai.setStatusTela(true);            
-        }
     }
 }

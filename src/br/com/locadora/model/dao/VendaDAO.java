@@ -9,9 +9,9 @@ import java.util.List;
 
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.bean.ItemPacotePromocional;
+import br.com.locadora.model.bean.ItemCombo;
 import br.com.locadora.model.bean.ItemVenda;
-import br.com.locadora.model.bean.PacotePromocional;
+import br.com.locadora.model.bean.Combo;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Venda;
 import java.util.logging.Level;
@@ -136,8 +136,8 @@ public class VendaDAO {
 //        return resultado;
 //    }
     
-    public List<ItemPacotePromocional> getItensPacotePromocional(Integer codigo_pacote_promocional) throws SQLException {        
-        List<ItemPacotePromocional> resultado = new ArrayList<ItemPacotePromocional>();
+    public List<ItemCombo> getItensPacotePromocional(Integer codigo_pacote_promocional) throws SQLException {        
+        List<ItemCombo> resultado = new ArrayList<ItemCombo>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT * FROM PACOTE_PROMOCIONAL A, ITEM_PACOTE_PROMOCIONAL B, DIARIA C "
@@ -162,10 +162,10 @@ public class VendaDAO {
         return resultado;
     }
 
-    private List<PacotePromocional> getListaPacotePromocional(ResultSet rs) throws SQLException {
-        List<PacotePromocional> resultado = new ArrayList<PacotePromocional>();
+    private List<Combo> getListaPacotePromocional(ResultSet rs) throws SQLException {
+        List<Combo> resultado = new ArrayList<Combo>();
         while (rs.next()) {
-            PacotePromocional pacotePromocional = new PacotePromocional();
+            Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
             pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_VEZ"));
@@ -190,7 +190,7 @@ public class VendaDAO {
             itemVenda.setType_product(Integer.parseInt(rs.getString("TYPE_PRODUCT")));
             System.out.println("Type Product: "+ rs.getString("TYPE_PRODUCT"));
             if(rs.getInt("TYPE_PRODUCT") == 0){      
-                PacotePromocional pacotePromocional = new PacotePromocional();
+                Combo pacotePromocional = new Combo();
                 pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO"));
                 pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
                 pacotePromocional.setCodigo_barras(rs.getString("CODIGO_BARRAS"));                
@@ -219,12 +219,12 @@ public class VendaDAO {
         return resultado;
     }
     
-    private List<ItemPacotePromocional> getListaItemPacotePromocional(ResultSet rs) throws SQLException {
-        List<ItemPacotePromocional> resultado = new ArrayList<ItemPacotePromocional>();
+    private List<ItemCombo> getListaItemPacotePromocional(ResultSet rs) throws SQLException {
+        List<ItemCombo> resultado = new ArrayList<ItemCombo>();
         while (rs.next()) {
-            ItemPacotePromocional itemPacotePromocional = new ItemPacotePromocional();
+            ItemCombo itemPacotePromocional = new ItemCombo();
             itemPacotePromocional.setCodigo_item_pacote_promocional(rs.getInt("CODIGO_ITEM_PACOTE_PROMOCIONAL"));
-            PacotePromocional pacotePromocional = new PacotePromocional();
+            Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             
             Diaria diaria = new Diaria();
@@ -306,7 +306,7 @@ public class VendaDAO {
         return venda;
     }
     
-//    public void salvarItem(ItemPacotePromocional itemPacotePromocional) throws SQLException {
+//    public void salvarItem(ItemCombo itemPacotePromocional) throws SQLException {
 //        Connection con = pool.getConnection();
 //        PreparedStatement ps;
 //
@@ -336,7 +336,7 @@ public class VendaDAO {
 
     }
 
-//    private void setPreparedStatement1(PacotePromocional pacotePromocional, PreparedStatement ps)
+//    private void setPreparedStatement1(Combo pacotePromocional, PreparedStatement ps)
 //            throws SQLException {
 //        ps.setString(1, pacotePromocional.getDescricao());
 //        ps.setInt(2, pacotePromocional.getQuantidade_troca());

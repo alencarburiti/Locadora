@@ -24,7 +24,7 @@ public class Diaria {
     private Integer ganhados = 0;
     private Integer ganhar = 0;
     private List<PromocaoLocacao> listPromocao;
-    private PacotePromocional pacotePromocional;
+    private Combo pacotePromocional;
     private PromocaoLocacao promocaoLocacao;
     private PromocaoDevolucao promocaoDevolucao;
 
@@ -140,11 +140,11 @@ public class Diaria {
         this.ganhar = ganhar;
     }
 
-    public PacotePromocional getPacotePromocional() {
+    public Combo getPacotePromocional() {
         return pacotePromocional;
     }
 
-    public void setPacotePromocional(PacotePromocional pacotePromocional) {
+    public void setPacotePromocional(Combo pacotePromocional) {
         this.pacotePromocional = pacotePromocional;
     }
 

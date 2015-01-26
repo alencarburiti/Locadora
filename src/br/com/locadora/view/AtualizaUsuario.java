@@ -45,11 +45,6 @@ public class AtualizaUsuario extends javax.swing.JFrame {
 
     public AtualizaUsuario(Usuario usu) {
         initComponents();
-        
-        URL url = this.getClass().getResource("/br/com/locadora/image/BroadWay-Icone.ico");    
-        Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);    
-        this.setIconImage(iconeTitulo);         
-        
         if(usu != null){
             TemaInterface.getInterface(this);
             janelapai = null;
@@ -448,9 +443,9 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         setVisible(false);
         if(janelapai != null){
             janelapai.setStatusTela(true);
-            janelapai.jtf_consultar_usuario.requestFocus();
+            janelapai.jtf_pesquisa.requestFocus();
             janelapai.atualizaUsuario = null;
-            janelapai.listarUsuário();            
+            janelapai.getUsuarios();            
         }
     }
 

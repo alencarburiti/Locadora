@@ -19,10 +19,7 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.ValidaCnpj;
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -48,14 +45,15 @@ public class CadastraAlteraFornecedor extends javax.swing.JFrame {
     public CadastraAlteraFornecedor() {
         initComponents();
         TemaInterface.getInterface(this);
-        janelapai = null;
         this.setTitle("Cadastrando Fornecedor");
+        janelapai = null;
     }
 
     public CadastraAlteraFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
         initComponents();
         TemaInterface.getInterface(this);
+        this.setTitle("Alterando Fornecedor");                
         jtf_codigo_fornecedor.setText(String.valueOf(fornecedor.getCodigo_fornecedor()));
         jtf_razao_social.setText(fornecedor.getRazao_social());
         jtf_nome_fantasia.setText(fornecedor.getNome_fantasia());
@@ -70,7 +68,6 @@ public class CadastraAlteraFornecedor extends javax.swing.JFrame {
         jtf_nome_vendedor.setText(fornecedor.getNome_vendedor());
         jftf_tel_vendedor.setText(fornecedor.getTel_vendedor());
         
-        this.setTitle("Alterando Fornecedor");                
     }
     
     /**

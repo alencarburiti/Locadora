@@ -33,7 +33,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public MenuUsuario menuUsuario;
     public MenuFornecedor menuFornecedor;
     public MenuGenero menuGenero;
-    public MenuPacotePromocional menuPacotePromocional;
+    public MenuCombo menuPacotePromocional;
     public FinanceiroReceber recebimento;
     
     public ControleAcesso acessoInterface;
@@ -357,7 +357,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu15.add(jmi_legenda);
 
         jmi_pacote_promocional.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/promotion.png"))); // NOI18N
-        jmi_pacote_promocional.setText("Combo Promocional");
+        jmi_pacote_promocional.setText("Combo");
         jmi_pacote_promocional.setName("jmi_pacote_promocional"); // NOI18N
         jmi_pacote_promocional.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1139,7 +1139,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador 1");
             } else if (acesso.getEscrever() == true) {
                 if (menuPacotePromocional == null) {
-                    menuPacotePromocional = new MenuPacotePromocional();
+                    menuPacotePromocional = new MenuCombo();
                     menuPacotePromocional.acesso = acesso;
                     menuPacotePromocional.setVisible(true);
                     menuPacotePromocional.janelapai = this;
@@ -1156,9 +1156,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jmi_pacote_promocionalActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            System.exit(0);
-        }
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 

@@ -172,6 +172,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_logarActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_logarKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
@@ -470,7 +471,6 @@
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_pagoFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_valor_pagoFocusLost"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_valor_pagoKeyPressed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_valor_pagoKeyReleased"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
@@ -603,7 +603,7 @@
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Component id="jb_imprimir" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="jb_cancelar1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jb_sair" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -615,7 +615,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jb_salvar" max="32767" attributes="0"/>
                       <Component id="jb_imprimir" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jb_cancelar1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jb_sair" alignment="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -638,7 +638,6 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_salvarMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_salvarActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_salvarKeyPressed"/>
           </Events>
@@ -662,11 +661,11 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_imprimirMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_imprimirActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_imprimirKeyPressed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jb_cancelar1">
+        <Component class="javax.swing.JButton" name="jb_sair">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="13" style="0"/>
@@ -678,14 +677,14 @@
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[101, 33]"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="jb_cancelar1" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jb_sair" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 40]"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_cancelar1ActionPerformed"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_cancelar1KeyPressed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_sairActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_sairKeyPressed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -19,13 +19,10 @@ import br.com.locadora.model.dao.ObjetoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.TemaInterface;
-import static br.com.locadora.view.MenuObjeto.jtf_consulta;
-import java.awt.Image;
-import java.awt.Toolkit;
+import static br.com.locadora.view.MenuObjeto.jtf_pesquisa;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +62,8 @@ public class MenuObjeto extends javax.swing.JFrame {
         jrb_ator = new javax.swing.JRadioButton();
         jrb_titulo = new javax.swing.JRadioButton();
         jl_pesquisar_destino = new javax.swing.JLabel();
-        jb_buscar = new javax.swing.JButton();
-        jtf_consulta = new javax.swing.JTextField();
+        jb_pesquisa = new javax.swing.JButton();
+        jtf_pesquisa = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_objeto = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -131,21 +128,26 @@ public class MenuObjeto extends javax.swing.JFrame {
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
 
-        jb_buscar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jb_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jb_buscar.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_buscar.addActionListener(new java.awt.event.ActionListener() {
+        jb_pesquisa.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jb_pesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_pesquisa.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_pesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_buscarActionPerformed1(evt);
+                jb_pesquisaActionPerformed1(evt);
+            }
+        });
+        jb_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_pesquisaKeyPressed(evt);
             }
         });
 
-        jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jtf_consulta.setName("jtf_consulta"); // NOI18N
-        jtf_consulta.setPreferredSize(new java.awt.Dimension(300, 30));
-        jtf_consulta.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_pesquisa.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jtf_pesquisa.setName("jtf_pesquisa"); // NOI18N
+        jtf_pesquisa.setPreferredSize(new java.awt.Dimension(300, 30));
+        jtf_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_consultaKeyPressed(evt);
+                jtf_pesquisaKeyPressed(evt);
             }
         });
 
@@ -165,9 +167,9 @@ public class MenuObjeto extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(jrb_codigo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 6, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -183,12 +185,12 @@ public class MenuObjeto extends javax.swing.JFrame {
                             .addComponent(jrb_ator)
                             .addComponent(jrb_codigo))
                         .addGap(0, 0, 0)
-                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_buscar, jtf_consulta});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_pesquisa, jtf_pesquisa});
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -388,18 +390,15 @@ public class MenuObjeto extends javax.swing.JFrame {
 }//GEN-LAST:event_jb_novoActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        setVisible(false);
-        if (janelapai != null) {
-            janelapai.setStatusTela(true);
-        }
+        retornarJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
-    private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
+    private void jb_pesquisaActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisaActionPerformed1
         buscarDados();
-    }//GEN-LAST:event_jb_buscarActionPerformed1
+    }//GEN-LAST:event_jb_pesquisaActionPerformed1
 
     private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
-        jtf_consulta.requestFocus();
+        jtf_pesquisa.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_codigoActionPerformed
 
@@ -415,40 +414,39 @@ public class MenuObjeto extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_excluirActionPerformed
 
     private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
-        jtf_consulta.requestFocus();
+        jtf_pesquisa.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_tituloActionPerformed
 
-    private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
+    private void jtf_pesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_pesquisaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            buscarDados();
+            jb_pesquisa.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_consultaKeyPressed
+    }//GEN-LAST:event_jtf_pesquisaKeyPressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jtf_consulta.requestFocus();
+        jtf_pesquisa.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     private void jrb_atorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_atorActionPerformed
-        jtf_consulta.requestFocus();
+        jtf_pesquisa.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_atorActionPerformed
 
     private void jtbl_objetoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_objetoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            alterar();
+            jb_alterar.doClick();
         }
-
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_objetoKeyPressed
 
     private void jtbl_objetoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_objetoMouseClicked
         if (evt.getClickCount() > 1) {
-            alterar();
+            jb_alterar.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_objetoMouseClicked
@@ -466,6 +464,14 @@ public class MenuObjeto extends javax.swing.JFrame {
     private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void jb_pesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarDados();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_pesquisaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -485,32 +491,21 @@ public class MenuObjeto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_alterar;
-    private javax.swing.JButton jb_buscar;
     private javax.swing.JButton jb_excluir;
     private javax.swing.JButton jb_novo;
+    private javax.swing.JButton jb_pesquisa;
     private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar_destino;
     public static javax.swing.JRadioButton jrb_ator;
     public static javax.swing.JRadioButton jrb_codigo;
     public static javax.swing.JRadioButton jrb_titulo;
     public static javax.swing.JTable jtbl_objeto;
-    public static javax.swing.JTextField jtf_consulta;
+    public static javax.swing.JTextField jtf_pesquisa;
     // End of variables declaration//GEN-END:variables
 
     public Objeto tbObjetoLinhaSelecionada(JTable tb) {
         if (tb != null && tb.getSelectedRow() != -1) {
-            objeto = new Objeto();
-            objeto.setCodigo_objeto(objetos.get(tb.getSelectedRow()).getCodigo_objeto());
-            objeto.setTitulo(objetos.get(tb.getSelectedRow()).getTitulo());
-            objeto.setTitulo_original(objetos.get(tb.getSelectedRow()).getTitulo_original());
-            objeto.setTipo_movimento(objetos.get(tb.getSelectedRow()).getTipo_movimento());
-            objeto.setProducao(objetos.get(tb.getSelectedRow()).getProducao());
-            objeto.setDuracao(objetos.get(tb.getSelectedRow()).getDuracao());
-            objeto.setTipo_midia(objetos.get(tb.getSelectedRow()).getTipo_midia());
-            objeto.setGenero(objetos.get(tb.getSelectedRow()).getGenero());
-            objeto.setElenco(objetos.get(tb.getSelectedRow()).getElenco());
-            objeto.setSinopse(objetos.get(tb.getSelectedRow()).getSinopse());
-            objeto.setCensura(objetos.get(tb.getSelectedRow()).getCensura());
+            objeto = objetos.get(tb.getSelectedRow());
         } else {
             objeto = null;
         }
@@ -557,7 +552,7 @@ public class MenuObjeto extends javax.swing.JFrame {
 
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um objeto");
+                    JOptionPane.showMessageDialog(null, "Selecione um Objeto");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
@@ -570,14 +565,16 @@ public class MenuObjeto extends javax.swing.JFrame {
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            janelapai.setStatusTela(true);
+            retornarJanelaPai();
         }
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            excluirObjeto();
+            jb_excluir.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            jtf_consulta.requestFocus();
+            jtf_pesquisa.requestFocus();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F2) {
+            jb_novo.doClick();
         }
     }
 
@@ -603,8 +600,8 @@ public class MenuObjeto extends javax.swing.JFrame {
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um objeto");
-                    jtf_consulta.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Selecione um Objeto");
+                    jtf_pesquisa.requestFocus();
                 }
 
             } else {
@@ -615,10 +612,11 @@ public class MenuObjeto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }
-    public void retornarJanelaPai(){
+
+    public void retornarJanelaPai() {
         setVisible(false);
-        if(janelapai != null){
-            janelapai.setStatusTela(true);            
+        if (janelapai != null) {
+            janelapai.setStatusTela(true);
         }
     }
 }

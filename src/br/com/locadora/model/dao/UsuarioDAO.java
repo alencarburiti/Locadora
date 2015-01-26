@@ -405,9 +405,9 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             pstm.setString(1, nome_classe);
             pstm.setString(2, senha);
             rs = pstm.executeQuery();
-            rs.absolute(1);
+//            rs.absolute(1);
 
-            //            rs.next();
+                        rs.next();
             acesso = new AcessoUsuario();
             usuario = new Usuario();
 
@@ -447,9 +447,8 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             conexao.desconecta();
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Senha incorreta");
-
         }
         return acesso;
     }

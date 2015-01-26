@@ -633,7 +633,7 @@ public class FinanceiroPagar extends javax.swing.JFrame {
     }//GEN-LAST:event_jcb_fornecedorKeyReleased
 
     private void jcb_fornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_fornecedorKeyPressed
-            acionarAtalho(evt);
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jtf_descricao.requestFocus();
         }

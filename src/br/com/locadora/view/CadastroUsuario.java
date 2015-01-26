@@ -425,7 +425,7 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         setVisible(false);
         if(janelapai != null){
             janelapai.setStatusTela(true);                    
-            janelapai.listarUsuário();            
+            janelapai.getUsuarios();            
         }
     }
 

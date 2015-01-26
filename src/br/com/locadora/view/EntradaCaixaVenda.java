@@ -87,7 +87,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jb_imprimir = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
-        jb_cancelar1 = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -529,11 +529,6 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
         jb_salvar.setEnabled(false);
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_salvarMouseClicked(evt);
-            }
-        });
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_salvarActionPerformed(evt);
@@ -545,20 +540,20 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
             }
         });
 
-        jb_cancelar1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_cancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
-        jb_cancelar1.setText("Sair");
-        jb_cancelar1.setMaximumSize(new java.awt.Dimension(101, 33));
-        jb_cancelar1.setName("jb_cancelar1"); // NOI18N
-        jb_cancelar1.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_cancelar1.addActionListener(new java.awt.event.ActionListener() {
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setMaximumSize(new java.awt.Dimension(101, 33));
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelar1ActionPerformed(evt);
+                jb_sairActionPerformed(evt);
             }
         });
-        jb_cancelar1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_cancelar1KeyPressed(evt);
+                jb_sairKeyPressed(evt);
             }
         });
 
@@ -572,11 +567,11 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar1, jb_imprimir, jb_salvar});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_imprimir, jb_sair, jb_salvar});
 
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -584,12 +579,12 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cancelar1, jb_imprimir, jb_salvar});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_imprimir, jb_sair, jb_salvar});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -750,7 +745,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
 
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            entrar();
+            jb_logar.doClick();
         }
         acionarAtalho(evt);
     }//GEN-LAST:event_jpf_senhaKeyPressed
@@ -764,15 +759,10 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
-    private void jb_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelar1ActionPerformed
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
-        File arquivo = new File(nome_arquivo);
-        arquivo.deleteOnExit();
-        arquivo.delete();
-
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         retornaJanelaPai();
 // TODO add your handling code here:
-    }//GEN-LAST:event_jb_cancelar1ActionPerformed
+    }//GEN-LAST:event_jb_sairActionPerformed
 
     private void jtf_valor_total_a_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_total_a_pagarActionPerformed
         // TODO add your handling code here:
@@ -818,10 +808,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (jb_salvar.isEnabled()) {
-                recalcularValores();                
-                finalizarCaixa();
-            }
+            jb_salvar.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
@@ -829,6 +816,9 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
 
     private void jb_logarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_logarKeyPressed
         acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_logar.doClick();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_logarKeyPressed
 
@@ -845,27 +835,17 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formFocusGained
 
-    private void jb_cancelar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelar1KeyPressed
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_cancelar1.doClick();
+            jb_sair.doClick();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_cancelar1KeyPressed
+    }//GEN-LAST:event_jb_sairKeyPressed
 
     private void jpf_senhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpf_senhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jpf_senhaActionPerformed
-
-    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
-        if (evt.getClickCount() == 1) {
-            if (jb_salvar.isEnabled()) {
-                recalcularValores();
-                finalizarCaixa();
-            }
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarMouseClicked
 
     private void jtf_descontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_descontoFocusGained
         jtf_desconto.selectAll();
@@ -878,6 +858,10 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descontoFocusLost
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        if (jb_salvar.isEnabled()) {
+                recalcularValores();                
+                finalizarCaixa();
+            }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarActionPerformed
 
@@ -902,9 +886,9 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jb_cancelar1;
     private javax.swing.JButton jb_imprimir;
     private javax.swing.JButton jb_logar;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JLabel jl_saldo_debito_anterior;
     private javax.swing.JPasswordField jpf_senha;
@@ -1287,6 +1271,11 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     }
 
     public void retornaJanelaPai() {
+        String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
+        File arquivo = new File(nome_arquivo);
+        arquivo.deleteOnExit();
+        arquivo.delete();
+        
         this.setVisible(false);
         if (janelapaiVenda != null) {
             janelapaiVenda.setStatusTela(true);

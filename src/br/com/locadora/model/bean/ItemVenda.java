@@ -13,7 +13,7 @@ public class ItemVenda {
 
     private Integer codigo_item_venda;
     private Produto produto;
-    private PacotePromocional pacotePromocional;
+    private Combo pacotePromocional;
     private Integer quantidade;
     private Double preco_total;
     private Integer type_product;
@@ -34,11 +34,11 @@ public class ItemVenda {
         this.produto = produto;
     }
 
-    public PacotePromocional getPacotePromocional() {
+    public Combo getPacotePromocional() {
         return pacotePromocional;
     }
 
-    public void setPacotePromocional(PacotePromocional pacotePromocional) {
+    public void setPacotePromocional(Combo pacotePromocional) {
         this.pacotePromocional = pacotePromocional;
     }
 

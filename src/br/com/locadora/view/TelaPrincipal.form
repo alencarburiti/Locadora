@@ -317,7 +317,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/br/com/locadora/image/promotion.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Combo Promocional"/>
+                    <Property name="text" type="java.lang.String" value="Combo"/>
                     <Property name="name" type="java.lang.String" value="jmi_pacote_promocional" noResource="true"/>
                   </Properties>
                   <Events>

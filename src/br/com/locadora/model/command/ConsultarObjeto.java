@@ -31,9 +31,9 @@ public class ConsultarObjeto implements InterfaceCommand {
     public String execute() {
         try {
             if (MenuObjeto.jrb_codigo.isSelected() == true) {
-                if (!MenuObjeto.jtf_consulta.getText().equals("")) {
+                if (!MenuObjeto.jtf_pesquisa.getText().equals("")) {
                     objetos = null;
-                    objetos = objetoDAO.getObjeto_codigo(Integer.parseInt(MenuObjeto.jtf_consulta.getText().trim()));
+                    objetos = objetoDAO.getObjeto_codigo(Integer.parseInt(MenuObjeto.jtf_pesquisa.getText().trim()));
                     
                     mostrar_Objeto(objetos);
                 } else {
@@ -41,11 +41,11 @@ public class ConsultarObjeto implements InterfaceCommand {
                 }
             } else if (MenuObjeto.jrb_titulo.isSelected() == true) {
                 objetos = null;
-                objetos = objetoDAO.getObjeto_objeto(MenuObjeto.jtf_consulta.getText().trim());
+                objetos = objetoDAO.getObjeto_objeto(MenuObjeto.jtf_pesquisa.getText().trim());
                 mostrar_Objeto(objetos);
             } else {
                 objetos = null;
-                objetos = objetoDAO.getObjeto_ator(MenuObjeto.jtf_consulta.getText().trim());
+                objetos = objetoDAO.getObjeto_ator(MenuObjeto.jtf_pesquisa.getText().trim());
                 mostrar_Objeto(objetos);
             }
         } catch (SQLException ex) {

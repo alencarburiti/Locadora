@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.bean.ItemPacotePromocional;
+import br.com.locadora.model.bean.ItemCombo;
 import br.com.locadora.model.bean.ItemVenda;
-import br.com.locadora.model.bean.PacotePromocional;
+import br.com.locadora.model.bean.Combo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +22,7 @@ public class PacotePromocionalDAO {
         this.pool = pool;
     }
     
-    public void atualizar(PacotePromocional pacotePromocional) throws SQLException {
+    public void atualizar(Combo pacotePromocional) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlAtualizar = "UPDATE `locadora`.`pacote_promocional` SET `DESCRICAO` = ?, `QUANTIDADE_VEZ` = ?,\n" +
@@ -82,8 +82,8 @@ public class PacotePromocionalDAO {
         } 
     }  
     
-    public List<PacotePromocional> getPacotePromocionalCodigo(Integer codigo_pacote_promocional) {        
-        List<PacotePromocional> resultado = new ArrayList<PacotePromocional>();
+    public List<Combo> getPacotePromocionalCodigo(Integer codigo_pacote_promocional) {        
+        List<Combo> resultado = new ArrayList<Combo>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT * FROM PACOTE_PROMOCIONAL WHERE CODIGO_PACOTE_PROMOCIONAL = ? ORDER BY DESCRICAO LIMIT 0, 50;";
@@ -107,8 +107,8 @@ public class PacotePromocionalDAO {
         return resultado;
     }
 
-    public List<PacotePromocional> getPacotePromocionalDescricao(String descricao) {        
-        List<PacotePromocional> resultado = new ArrayList<PacotePromocional>();
+    public List<Combo> getPacotePromocionalDescricao(String descricao) {        
+        List<Combo> resultado = new ArrayList<Combo>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT * FROM PACOTE_PROMOCIONAL WHERE DESCRICAO LIKE ? ORDER BY DESCRICAO LIMIT 0, 50;";
@@ -132,8 +132,8 @@ public class PacotePromocionalDAO {
         return resultado;
     }
     
-    public List<ItemPacotePromocional> getItensPacotePromocional(Integer codigo_pacote_promocional) throws SQLException {        
-        List<ItemPacotePromocional> resultado = new ArrayList<ItemPacotePromocional>();
+    public List<ItemCombo> getItensPacotePromocional(Integer codigo_pacote_promocional) throws SQLException {        
+        List<ItemCombo> resultado = new ArrayList<ItemCombo>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT * FROM PACOTE_PROMOCIONAL A, ITEM_PACOTE_PROMOCIONAL B, DIARIA C "
@@ -158,8 +158,8 @@ public class PacotePromocionalDAO {
         return resultado;
     }
     
-    public List<PacotePromocional> getPacotePromocionalCliente(Integer codigo_cliente) {        
-        List<PacotePromocional> resultado = new ArrayList<PacotePromocional>();
+    public List<Combo> getPacotePromocionalCliente(Integer codigo_cliente) {        
+        List<Combo> resultado = new ArrayList<Combo>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT \n" +
@@ -227,8 +227,8 @@ public class PacotePromocionalDAO {
         return resultado;
     }
     
-    public List<PacotePromocional> getPacotePromocionalClienteDiaria(Integer codigo_cliente, Integer codigo_diaria) {        
-        List<PacotePromocional> resultado = new ArrayList<PacotePromocional>();
+    public List<Combo> getPacotePromocionalClienteDiaria(Integer codigo_cliente, Integer codigo_diaria) {        
+        List<Combo> resultado = new ArrayList<Combo>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT \n" +
@@ -302,10 +302,10 @@ public class PacotePromocionalDAO {
         }
     }
 
-    private List<PacotePromocional> getListaPacotePromocional(ResultSet rs) throws SQLException {
-        List<PacotePromocional> resultado = new ArrayList<PacotePromocional>();
+    private List<Combo> getListaPacotePromocional(ResultSet rs) throws SQLException {
+        List<Combo> resultado = new ArrayList<Combo>();
         while (rs.next()) {
-            PacotePromocional pacotePromocional = new PacotePromocional();
+            Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
             pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_VEZ"));
@@ -323,10 +323,10 @@ public class PacotePromocionalDAO {
         return resultado;
     }
     
-    private List<PacotePromocional> getListaPacotePromocionalCliente(ResultSet rs) throws SQLException {
-        List<PacotePromocional> resultado = new ArrayList<PacotePromocional>();
+    private List<Combo> getListaPacotePromocionalCliente(ResultSet rs) throws SQLException {
+        List<Combo> resultado = new ArrayList<Combo>();
         while (rs.next()) {
-            PacotePromocional pacotePromocional = new PacotePromocional();
+            Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
             pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_VEZ"));
@@ -349,10 +349,10 @@ public class PacotePromocionalDAO {
         return resultado;
     }
     
-    private List<PacotePromocional> getListaPacotePromocionalClienteDiaria(ResultSet rs) throws SQLException {
-        List<PacotePromocional> resultado = new ArrayList<PacotePromocional>();
+    private List<Combo> getListaPacotePromocionalClienteDiaria(ResultSet rs) throws SQLException {
+        List<Combo> resultado = new ArrayList<Combo>();
         while (rs.next()) {
-            PacotePromocional pacotePromocional = new PacotePromocional();
+            Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
             pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_VEZ"));
@@ -375,12 +375,12 @@ public class PacotePromocionalDAO {
         return resultado;
     }
     
-    private List<ItemPacotePromocional> getListaItemPacotePromocional(ResultSet rs) throws SQLException {
-        List<ItemPacotePromocional> resultado = new ArrayList<ItemPacotePromocional>();
+    private List<ItemCombo> getListaItemPacotePromocional(ResultSet rs) throws SQLException {
+        List<ItemCombo> resultado = new ArrayList<ItemCombo>();
         while (rs.next()) {
-            ItemPacotePromocional itemPacotePromocional = new ItemPacotePromocional();
+            ItemCombo itemPacotePromocional = new ItemCombo();
             itemPacotePromocional.setCodigo_item_pacote_promocional(rs.getInt("CODIGO_ITEM_PACOTE_PROMOCIONAL"));
-            PacotePromocional pacotePromocional = new PacotePromocional();
+            Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             
             Diaria diaria = new Diaria();
@@ -399,7 +399,7 @@ public class PacotePromocionalDAO {
     
 
     
-    public PacotePromocional salvar(PacotePromocional pacotePromocional) throws SQLException {
+    public Combo salvar(Combo pacotePromocional) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
@@ -429,7 +429,7 @@ public class PacotePromocionalDAO {
         return pacotePromocional;
     }
     
-    public void salvarItem(ItemPacotePromocional itemPacotePromocional) throws SQLException {
+    public void salvarItem(ItemCombo itemPacotePromocional) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
@@ -451,7 +451,7 @@ public class PacotePromocionalDAO {
         
     }
 
-    private void setPreparedStatement(PacotePromocional pacotePromocional, PreparedStatement ps)
+    private void setPreparedStatement(Combo pacotePromocional, PreparedStatement ps)
             throws SQLException {
 
         ps.setString(1, pacotePromocional.getDescricao());
@@ -466,7 +466,7 @@ public class PacotePromocionalDAO {
 
     }
 
-    private void setPreparedStatement1(PacotePromocional pacotePromocional, PreparedStatement ps)
+    private void setPreparedStatement1(Combo pacotePromocional, PreparedStatement ps)
             throws SQLException {
         ps.setString(1, pacotePromocional.getDescricao());
         ps.setInt(2, pacotePromocional.getQuantidade_troca());

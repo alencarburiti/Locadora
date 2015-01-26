@@ -4,8 +4,8 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Diaria;
-import br.com.locadora.model.bean.ItemPacotePromocional;
-import br.com.locadora.model.bean.PacotePromocional;
+import br.com.locadora.model.bean.ItemCombo;
+import br.com.locadora.model.bean.Combo;
 import br.com.locadora.model.dao.PacotePromocionalDAO;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
@@ -26,10 +26,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class CadastraAlteraCombo extends javax.swing.JFrame {
 
-    private PacotePromocional pacotePromocional;
-    private List<ItemPacotePromocional> itensPacotePromocional;
-    private ItemPacotePromocional itemPacotePromocional;
-    public MenuPacotePromocional janelapai;
+    private Combo pacotePromocional;
+    private List<ItemCombo> itensPacotePromocional;
+    private ItemCombo itemPacotePromocional;
+    public MenuCombo janelapai;
     public ConsultaDiaria janelapai2;    
     private InterfacePool pool;     
     public String action;
@@ -45,17 +45,17 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     public CadastraAlteraCombo() {
         initComponents();
         TemaInterface.getInterface(this);
+        this.setTitle("Cadastrando Combo");
         janelapai = null;
         janelapai2 = null;        
         consultaDiaria = null;    
-        this.setTitle("Cadastrando Combo");
     }
 
-    public CadastraAlteraCombo(PacotePromocional pacotePromocional) {
+    public CadastraAlteraCombo(Combo pacotePromocional) {
         initComponents();
-        this.setTitle("Alterando Combo");
         if (pacotePromocional != null) {
             TemaInterface.getInterface(this);
+            this.setTitle("Alterando Combo");
             janelapai = null;
             janelapai2 = null;
             consultaDiaria = null;
@@ -101,7 +101,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         tfa_similar = new javax.swing.JTextArea();
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
-        jb_cancelar = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jtf_codigo_pacote_promocional = new javax.swing.JTextField();
@@ -113,7 +113,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         jrb_inativo = new javax.swing.JRadioButton();
         jLabel18 = new javax.swing.JLabel();
         jb_adicionar = new javax.swing.JButton();
-        jb_eliminar = new javax.swing.JButton();
+        jb_remover = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         jtbl_diarias_pacote = new javax.swing.JTable();
         jLabel41 = new javax.swing.JLabel();
@@ -148,15 +148,20 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
             }
         });
 
-        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
-        jb_cancelar.setText("Sair");
-        jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
-        jb_cancelar.setName("jb_cancelar"); // NOI18N
-        jb_cancelar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setMaximumSize(new java.awt.Dimension(101, 33));
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
+                jb_sairActionPerformed(evt);
+            }
+        });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
             }
         });
 
@@ -165,9 +170,9 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_salvarMouseClicked(evt);
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -232,11 +237,6 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         jb_adicionar.setToolTipText("Incluir");
         jb_adicionar.setName("jb_adicionar"); // NOI18N
         jb_adicionar.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_adicionar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_adicionarMouseClicked(evt);
-            }
-        });
         jb_adicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_adicionarActionPerformed(evt);
@@ -248,13 +248,18 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
             }
         });
 
-        jb_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
-        jb_eliminar.setToolTipText("Excluir");
-        jb_eliminar.setName("jb_eliminar"); // NOI18N
-        jb_eliminar.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_eliminar.addActionListener(new java.awt.event.ActionListener() {
+        jb_remover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
+        jb_remover.setToolTipText("Excluir");
+        jb_remover.setName("jb_remover"); // NOI18N
+        jb_remover.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_remover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_eliminarActionPerformed(evt);
+                jb_removerActionPerformed(evt);
+            }
+        });
+        jb_remover.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_removerKeyPressed(evt);
             }
         });
 
@@ -412,7 +417,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jb_adicionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jb_remover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(5, 5, 5))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -448,7 +453,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                                 .addComponent(jLabel41))
                             .addComponent(jrb_inativo))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_remover, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtf_descricao_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jb_adicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jb_pesquisa_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -466,12 +471,12 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_cancelar, jb_salvar});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_sair, jb_salvar});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,7 +486,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jb_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -489,9 +494,9 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         retornaJanelaPai();
-}//GEN-LAST:event_jb_cancelarActionPerformed
+}//GEN-LAST:event_jb_sairActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jtf_descricao_pacote.requestFocus();
@@ -520,17 +525,10 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cadastrarAlterarPacotePromocional();
+            jb_salvar.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarKeyPressed
-
-    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
-        if (evt.getClickCount() == 1) {
-            cadastrarAlterarPacotePromocional();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarMouseClicked
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         acionarAtalho(evt);
@@ -545,25 +543,18 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_quantidade_vezKeyPressed
 
-    private void jb_adicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionarMouseClicked
-        if (evt.getClickCount() == 1) {
-            carregarItensPacotePromocional(HIDE_ON_CLOSE);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionarMouseClicked
-
     private void jb_adicionarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionarKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            adicionarItemPacotePromocional();
+            jb_adicionar.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionarKeyPressed
 
-    private void jb_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminarActionPerformed
+    private void jb_removerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_removerActionPerformed
         removeItemPacotePromocional(jtbl_diarias_pacote);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminarActionPerformed
+    }//GEN-LAST:event_jb_removerActionPerformed
 
     private void jtbl_diarias_pacoteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_diarias_pacoteMouseClicked
         // TODO add your handling code here:
@@ -590,16 +581,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     private void jb_pesquisa_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisa_diariaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (consultaDiaria == null) {
-                consultaDiaria = new ConsultaDiaria();
-                consultaDiaria.janelapai2 = this;
-                consultaDiaria.listaTodasDiarias();
-                consultaDiaria.setVisible(true);
-                setStatusTela(false);
-            } else {
-                consultaDiaria.setVisible(true);
-            }
-
+            jb_pesquisa_diaria.doClick();            
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_pesquisa_diariaKeyPressed
@@ -635,12 +617,34 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     }//GEN-LAST:event_jcb_quantidade_mesKeyPressed
 
     private void jb_adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionarActionPerformed
+        adicionarItemDiariaCombo();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionarActionPerformed
 
     private void jtf_descricao_diariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_descricao_diariaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descricao_diariaActionPerformed
+
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        cadastrarAlterarCombo();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_sair.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void jb_removerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_removerKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_remover.doClick();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_removerKeyPressed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -663,9 +667,9 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JButton jb_adicionar;
-    private javax.swing.JButton jb_cancelar;
-    private javax.swing.JButton jb_eliminar;
     private javax.swing.JButton jb_pesquisa_diaria;
+    private javax.swing.JButton jb_remover;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JButton jb_salvar;
     private javax.swing.JComboBox jcb_quantidade_mes;
     public static javax.swing.JRadioButton jrb_ativo;
@@ -754,7 +758,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         }
     }    
 
-    public void mostrarItensPacotePromocional(List<ItemPacotePromocional> itensPacotePromocional) throws ParseException {
+    public void mostrarItensPacotePromocional(List<ItemCombo> itensPacotePromocional) throws ParseException {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_diarias_pacote.getModel();
         tableModel.setNumRows(0);
 
@@ -770,21 +774,21 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            cadastrarAlterarPacotePromocional();
+            jb_salvar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
         }
     }
 
-    private void adicionarItemPacotePromocional() {
+    private void adicionarItemDiariaCombo() {
         try {            
             if (!jtf_codigo_pacote_promocional.getText().equals("")) {
                 if (verificarCampoDiaria() == true) {
-                    pacotePromocional = new PacotePromocional();
+                    pacotePromocional = new Combo();
                     pacotePromocional.setCodigo_pacote_promocioanl(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
                     
-                    itemPacotePromocional = new ItemPacotePromocional();
+                    itemPacotePromocional = new ItemCombo();
                     itemPacotePromocional.setPacotePromocional(pacotePromocional);
                     itemPacotePromocional.setDiaria(diaria);
                     
@@ -821,15 +825,15 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Selecione um Dependente");
+                JOptionPane.showMessageDialog(null, "Selecione um Combo");
             }
         }
     }    
     
-    public void cadastrarAlterarPacotePromocional() {
+    public void cadastrarAlterarCombo() {
         if (verificarCampos()) {
             try {
-                pacotePromocional = new PacotePromocional();
+                pacotePromocional = new Combo();
                 pacotePromocional.setDescricao(jtf_descricao_pacote.getText());
                 pacotePromocional.setQuantidade_troca(Integer.parseInt(jtf_quantidade_vez.getText()));
                 if(jcb_quantidade_mes.getSelectedIndex() == 0){

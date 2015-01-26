@@ -17,10 +17,7 @@ import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -76,15 +73,15 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jtf_codigo_cliente = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jtf_nome_cliente = new javax.swing.JTextField();
-        jb_cliente = new javax.swing.JButton();
+        jb_pesquisa_cliente = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_devolucao = new javax.swing.JTable();
         jl_codigo_devolucao = new javax.swing.JLabel();
-        jtf_codigo_barras_objeto = new javax.swing.JTextField();
-        jb_pesquisar = new javax.swing.JButton();
+        jtf_codigo_objeto_devolucao = new javax.swing.JTextField();
+        jb_pesquisa_devolucao = new javax.swing.JButton();
         jb_adicionar_devolucao = new javax.swing.JButton();
-        jb_remover_locacao = new javax.swing.JButton();
+        jb_remover_devolucao = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jtf_nome_objeto_devolucao = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
@@ -97,9 +94,9 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jtf_total_desconto_entrega_antecipada = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jb_limpar = new javax.swing.JButton();
-        jb_finalizar = new javax.swing.JButton();
-        jb_cancelar = new javax.swing.JButton();
+        jb_limpar_devolucao = new javax.swing.JButton();
+        jb_finalizar_devolucao = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -118,9 +115,6 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                formKeyReleased(evt);
             }
         });
 
@@ -143,29 +137,24 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
 
         jtf_nome_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_cliente.setName("jtf_nome_cliente"); // NOI18N
-        jtf_nome_cliente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_nome_clienteFocusLost(evt);
-            }
-        });
         jtf_nome_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtf_nome_clienteKeyPressed(evt);
             }
         });
 
-        jb_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jb_cliente.setName("jb_cliente"); // NOI18N
-        jb_cliente.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_cliente.addActionListener(new java.awt.event.ActionListener() {
+        jb_pesquisa_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_pesquisa_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_pesquisa_cliente.setName("jb_pesquisa_cliente"); // NOI18N
+        jb_pesquisa_cliente.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_pesquisa_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_clienteActionPerformed(evt);
+                jb_pesquisa_clienteActionPerformed(evt);
             }
         });
-        jb_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+        jb_pesquisa_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_clienteKeyPressed(evt);
+                jb_pesquisa_clienteKeyPressed(evt);
             }
         });
 
@@ -184,7 +173,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jtf_nome_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jb_pesquisa_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -198,11 +187,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtf_nome_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jb_pesquisa_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_cliente, jtf_codigo_cliente, jtf_nome_cliente});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_pesquisa_cliente, jtf_codigo_cliente, jtf_nome_cliente});
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Itens"));
         jPanel3.setName("jPanel3"); // NOI18N
@@ -253,31 +242,26 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jl_codigo_devolucao.setText("Código do Objeto");
         jl_codigo_devolucao.setName("jl_codigo_devolucao"); // NOI18N
 
-        jtf_codigo_barras_objeto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jtf_codigo_barras_objeto.setName("jtf_codigo_barras_objeto"); // NOI18N
-        jtf_codigo_barras_objeto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_codigo_barras_objetoFocusGained(evt);
-            }
-        });
-        jtf_codigo_barras_objeto.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_codigo_objeto_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_codigo_objeto_devolucao.setName("jtf_codigo_objeto_devolucao"); // NOI18N
+        jtf_codigo_objeto_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_codigo_barras_objetoKeyPressed(evt);
+                jtf_codigo_objeto_devolucaoKeyPressed(evt);
             }
         });
 
-        jb_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_pesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jb_pesquisar.setName("jb_pesquisar"); // NOI18N
-        jb_pesquisar.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_pesquisar.addActionListener(new java.awt.event.ActionListener() {
+        jb_pesquisa_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_pesquisa_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_pesquisa_devolucao.setName("jb_pesquisa_devolucao"); // NOI18N
+        jb_pesquisa_devolucao.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_pesquisa_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_pesquisarActionPerformed(evt);
+                jb_pesquisa_devolucaoActionPerformed(evt);
             }
         });
-        jb_pesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+        jb_pesquisa_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_pesquisarKeyPressed(evt);
+                jb_pesquisa_devolucaoKeyPressed(evt);
             }
         });
 
@@ -286,11 +270,6 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_adicionar_devolucao.setToolTipText("Incluir");
         jb_adicionar_devolucao.setName("jb_adicionar_devolucao"); // NOI18N
         jb_adicionar_devolucao.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_adicionar_devolucao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_adicionar_devolucaoMouseClicked(evt);
-            }
-        });
         jb_adicionar_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_adicionar_devolucaoActionPerformed(evt);
@@ -302,19 +281,19 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             }
         });
 
-        jb_remover_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_remover_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
-        jb_remover_locacao.setToolTipText("Excluir");
-        jb_remover_locacao.setName("jb_remover_locacao"); // NOI18N
-        jb_remover_locacao.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_remover_locacao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_remover_locacaoMouseClicked(evt);
+        jb_remover_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_remover_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
+        jb_remover_devolucao.setToolTipText("Excluir");
+        jb_remover_devolucao.setName("jb_remover_devolucao"); // NOI18N
+        jb_remover_devolucao.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_remover_devolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_remover_devolucaoActionPerformed(evt);
             }
         });
-        jb_remover_locacao.addKeyListener(new java.awt.event.KeyAdapter() {
+        jb_remover_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_remover_locacaoKeyPressed(evt);
+                jb_remover_devolucaoKeyPressed(evt);
             }
         });
 
@@ -325,16 +304,6 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jtf_nome_objeto_devolucao.setEditable(false);
         jtf_nome_objeto_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_objeto_devolucao.setName("jtf_nome_objeto_devolucao"); // NOI18N
-        jtf_nome_objeto_devolucao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_nome_objeto_devolucaoFocusGained(evt);
-            }
-        });
-        jtf_nome_objeto_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_nome_objeto_devolucaoKeyPressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -347,17 +316,17 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jl_codigo_devolucao)
-                            .addComponent(jtf_codigo_barras_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtf_codigo_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jtf_nome_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(5, 5, 5)
-                        .addComponent(jb_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_pesquisa_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(jb_adicionar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_remover_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -368,11 +337,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jl_codigo_devolucao)
                             .addGap(0, 0, 0)
-                            .addComponent(jtf_codigo_barras_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtf_codigo_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jb_adicionar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jb_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jb_remover_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_pesquisa_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, 0)
@@ -382,7 +351,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_devolucao, jb_pesquisar, jb_remover_locacao, jtf_codigo_barras_objeto, jtf_nome_objeto_devolucao});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_devolucao, jb_pesquisa_devolucao, jb_remover_devolucao, jtf_codigo_objeto_devolucao, jtf_nome_objeto_devolucao});
 
         jLabel32.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -472,52 +441,52 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
         jPanel2.setName("jPanel2"); // NOI18N
 
-        jb_limpar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
-        jb_limpar.setText("Limpar");
-        jb_limpar.setName("jb_limpar"); // NOI18N
-        jb_limpar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_limpar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_limparMouseClicked(evt);
-            }
-        });
-        jb_limpar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_limparKeyPressed(evt);
-            }
-        });
-
-        jb_finalizar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_finalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finalizar.png"))); // NOI18N
-        jb_finalizar.setText("OK");
-        jb_finalizar.setName("jb_finalizar"); // NOI18N
-        jb_finalizar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_finalizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_finalizarMouseClicked(evt);
-            }
-        });
-        jb_finalizar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_finalizarKeyPressed(evt);
-            }
-        });
-
-        jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
-        jb_cancelar.setText("Sair");
-        jb_cancelar.setMaximumSize(new java.awt.Dimension(101, 33));
-        jb_cancelar.setName("jb_cancelar"); // NOI18N
-        jb_cancelar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
+        jb_limpar_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_limpar_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/limpar.png"))); // NOI18N
+        jb_limpar_devolucao.setText("Limpar");
+        jb_limpar_devolucao.setName("jb_limpar_devolucao"); // NOI18N
+        jb_limpar_devolucao.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_limpar_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
+                jb_limpar_devolucaoActionPerformed(evt);
             }
         });
-        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+        jb_limpar_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_cancelarKeyPressed(evt);
+                jb_limpar_devolucaoKeyPressed(evt);
+            }
+        });
+
+        jb_finalizar_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_finalizar_devolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finalizar.png"))); // NOI18N
+        jb_finalizar_devolucao.setText("OK");
+        jb_finalizar_devolucao.setName("jb_finalizar_devolucao"); // NOI18N
+        jb_finalizar_devolucao.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_finalizar_devolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_finalizar_devolucaoActionPerformed(evt);
+            }
+        });
+        jb_finalizar_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_finalizar_devolucaoKeyPressed(evt);
+            }
+        });
+
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setMaximumSize(new java.awt.Dimension(101, 33));
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_sairActionPerformed(evt);
+            }
+        });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
             }
         });
 
@@ -527,11 +496,11 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(116, 116, 116)
-                .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_finalizar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(jb_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_limpar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(115, 115, 115))
         );
         jPanel2Layout.setVerticalGroup(
@@ -539,10 +508,10 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_finalizar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jb_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jb_limpar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -626,7 +595,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jtf_codigo_barras_objeto.requestFocus();
+        jtf_codigo_objeto_devolucao.requestFocus();
         jl_codigo_devolucao.setText("Código de Barras");
     }//GEN-LAST:event_formWindowOpened
 
@@ -634,35 +603,27 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         acionarAtalho(evt);
     }//GEN-LAST:event_formKeyPressed
 
-    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-    }//GEN-LAST:event_formKeyReleased
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
-private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_clienteActionPerformed
+private void jb_pesquisa_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisa_clienteActionPerformed
     ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
     consultaCliente.janelapaiDevolucao = this;
-    consultaCliente.setVisible(true);
-    jtf_codigo_cliente.setText("");
-    setStatusTela(false);
+    consultaCliente.setVisible(true);    
+    this.setStatusTela(false);
     // TODO add your handling code here:
-}//GEN-LAST:event_jb_clienteActionPerformed
+}//GEN-LAST:event_jb_pesquisa_clienteActionPerformed
 
 private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
     if (evt.getKeyCode() == KeyEvent.VK_F5) {
-        jb_cliente.doClick();
+        jb_pesquisa_cliente.doClick();
     }
     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-        jtf_codigo_barras_objeto.requestFocus();
+        jb_pesquisa_cliente.doClick();
     }
     acionarAtalho(evt);
 }//GEN-LAST:event_jtf_nome_clienteKeyPressed
-
-private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_clienteFocusLost
-
-}//GEN-LAST:event_jtf_nome_clienteFocusLost
 
     private void jtf_total_a_pagarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarFocusGained
         // TODO add your handling code here:
@@ -688,47 +649,42 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_total_relocacaoFocusLost
 
-    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         retornaJanelaPai();
-    }//GEN-LAST:event_jb_cancelarActionPerformed
+    }//GEN-LAST:event_jb_sairActionPerformed
 
-    private void jb_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_clienteKeyPressed
+    private void jb_pesquisa_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisa_clienteKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
-            consultaCliente.janelapaiDevolucao = this;
-            consultaCliente.setVisible(true);
-            jtf_codigo_cliente.setText("");
-            consultaCliente.jtf_consulta.setText(jtf_nome_cliente.getText().trim());
-            setStatusTela(false);
+            jb_pesquisa_cliente.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_clienteKeyPressed
+    }//GEN-LAST:event_jb_pesquisa_clienteKeyPressed
 
-    private void jb_finalizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_finalizarKeyPressed
+    private void jb_finalizar_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_finalizar_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            abrirCaixa();
+            jb_finalizar_devolucao.doClick();
         }
         acionarAtalho(evt);
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_finalizarKeyPressed
+    }//GEN-LAST:event_jb_finalizar_devolucaoKeyPressed
 
-    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_cancelar.doClick();
+            jb_sair.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_cancelarKeyPressed
+    }//GEN-LAST:event_jb_sairKeyPressed
 
-    private void jb_limparKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_limparKeyPressed
+    private void jb_limpar_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_limpar_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_limpar.doClick();
+            jb_limpar_devolucao.doClick();
         }
         acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_limparKeyPressed
+    }//GEN-LAST:event_jb_limpar_devolucaoKeyPressed
 
     private void jtf_total_desconto_entrega_antecipadaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_desconto_entrega_antecipadaFocusGained
         // TODO add your handling code here:
@@ -738,18 +694,15 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_total_desconto_entrega_antecipadaFocusLost
 
-    private void jb_pesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisarKeyPressed
+    private void jb_pesquisa_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisa_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_finalizar.requestFocus();
+            jb_pesquisa_devolucao.doClick();
         }
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            jb_pesquisar.doClick();
-        }
+        acionarAtalho(evt);        
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_pesquisarKeyPressed
+    }//GEN-LAST:event_jb_pesquisa_devolucaoKeyPressed
 
-    private void jb_pesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisarActionPerformed
+    private void jb_pesquisa_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisa_devolucaoActionPerformed
         if(consultaCopiaDevolucao == null){
             consultaCopiaDevolucao = new ConsultaCopiaDevolucao();
             consultaCopiaDevolucao.janelapaiDevolucao = this;
@@ -759,31 +712,18 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             consultaCopiaDevolucao.setVisible(true);
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_pesquisarActionPerformed
+    }//GEN-LAST:event_jb_pesquisa_devolucaoActionPerformed
 
-    private void jtf_codigo_barras_objetoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_barras_objetoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            consultarCopiaLocada(jtf_codigo_barras_objeto.getText().trim());
-        }
+    private void jtf_codigo_objeto_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_codigo_objeto_devolucaoKeyPressed
         acionarAtalho(evt);
-
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            consultarCopiaLocada(jtf_codigo_objeto_devolucao.getText().trim());
+        }
         if (evt.getKeyCode() == KeyEvent.VK_F5) {
-            if(consultaCopiaDevolucao == null){
-                consultaCopiaDevolucao = new ConsultaCopiaDevolucao();
-                consultaCopiaDevolucao.janelapaiDevolucao = this;
-                consultaCopiaDevolucao.setVisible(true);
-                this.setVisible(false);
-            } else {
-                consultaCopiaDevolucao.setVisible(true);
-            }
+            jb_pesquisa_devolucao.doClick();
         } 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_barras_objetoKeyPressed
-
-    private void jtf_codigo_barras_objetoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_codigo_barras_objetoFocusGained
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_codigo_barras_objetoFocusGained
+    }//GEN-LAST:event_jtf_codigo_objeto_devolucaoKeyPressed
 
     private void jtbl_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
@@ -792,76 +732,49 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_devolucaoKeyPressed
 
-    private void jb_finalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_finalizarMouseClicked
-        if(evt.getClickCount() == 1){
-            abrirCaixa();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_finalizarMouseClicked
-
-    private void jb_limparMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_limparMouseClicked
-        if(evt.getClickCount() == 1){
-            limparDados();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_limparMouseClicked
-
-    private void jb_adicionar_devolucaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_devolucaoMouseClicked
-        if (evt.getClickCount() == 1) {
-            try {
-                if (itemDevolucao != null) {
-                    adicionarItemDevolvido(itemDevolucao);
-                }
-                
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
-            }
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_devolucaoMouseClicked
-
     private void jb_adicionar_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                if (itemDevolucao != null) {
-                    adicionarItemDevolvido(itemDevolucao);
-                }
-
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
-            }
+            jb_adicionar_devolucao.doClick();
         }
     }//GEN-LAST:event_jb_adicionar_devolucaoKeyPressed
 
-    private void jb_remover_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_remover_locacaoKeyPressed
+    private void jb_remover_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_remover_devolucaoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            removeObjeto(jtbl_devolucao);
+            jb_remover_devolucao.doClick();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_remover_locacaoKeyPressed
-
-    private void jb_remover_locacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_remover_locacaoMouseClicked
-        if(evt.getClickCount() == 1){
-            removeObjeto(jtbl_devolucao);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_remover_locacaoMouseClicked
-
-    private void jtf_nome_objeto_devolucaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_devolucaoFocusGained
-
-    }//GEN-LAST:event_jtf_nome_objeto_devolucaoFocusGained
-
-    private void jtf_nome_objeto_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_objeto_devolucaoKeyPressed
-        
-    }//GEN-LAST:event_jtf_nome_objeto_devolucaoKeyPressed
+    }//GEN-LAST:event_jb_remover_devolucaoKeyPressed
 
     private void jtf_total_a_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_total_a_pagarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_total_a_pagarActionPerformed
 
     private void jb_adicionar_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_devolucaoActionPerformed
+        try {
+                if (itemDevolucao != null) {
+                    adicionarItemDevolvido(itemDevolucao);
+                }
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
+            }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_devolucaoActionPerformed
+
+    private void jb_remover_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_remover_devolucaoActionPerformed
+        removeObjeto(jtbl_devolucao);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_remover_devolucaoActionPerformed
+
+    private void jb_finalizar_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_finalizar_devolucaoActionPerformed
+        abrirCaixa();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_finalizar_devolucaoActionPerformed
+
+    private void jb_limpar_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_limpar_devolucaoActionPerformed
+        limparDados();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_limpar_devolucaoActionPerformed
     public static boolean validaData(String dataString) throws java.text.ParseException {
         if (!dataString.equals("")) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -968,17 +881,17 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JPanel jPanel3;
     public static javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_adicionar_devolucao;
-    private javax.swing.JButton jb_cancelar;
-    private javax.swing.JButton jb_cliente;
-    private javax.swing.JButton jb_finalizar;
-    private javax.swing.JButton jb_limpar;
-    private javax.swing.JButton jb_pesquisar;
-    private javax.swing.JButton jb_remover_locacao;
+    private javax.swing.JButton jb_finalizar_devolucao;
+    private javax.swing.JButton jb_limpar_devolucao;
+    private javax.swing.JButton jb_pesquisa_cliente;
+    private javax.swing.JButton jb_pesquisa_devolucao;
+    private javax.swing.JButton jb_remover_devolucao;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_codigo_devolucao;
     public static javax.swing.JLabel jl_debito_devolucao;
     public static javax.swing.JTable jtbl_devolucao;
-    public static javax.swing.JTextField jtf_codigo_barras_objeto;
     public static javax.swing.JTextField jtf_codigo_cliente;
+    public static javax.swing.JTextField jtf_codigo_objeto_devolucao;
     public static javax.swing.JTextField jtf_nome_cliente;
     public static javax.swing.JTextField jtf_nome_objeto_devolucao;
     public static javax.swing.JTextField jtf_saldo_debito_total;
@@ -1026,7 +939,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-            jtf_codigo_barras_objeto.requestFocus();
+            jtf_codigo_objeto_devolucao.requestFocus();
             return false;
         } else {
             return true;
@@ -1243,7 +1156,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     
     public void carregarCopiaDevolucao(ItemLocacao itemDevolucao){
         if(itemDevolucao != null){
-            jtf_codigo_barras_objeto.setText(itemDevolucao.getCopia().getCodigo_barras());
+            jtf_codigo_objeto_devolucao.setText(itemDevolucao.getCopia().getCodigo_barras());
             jtf_nome_objeto_devolucao.setText(itemDevolucao.getCopia().getObjeto().getTitulo());
             jb_adicionar_devolucao.requestFocus();
         }
@@ -1278,7 +1191,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 limparItemDevolvido();
             } else {
                 JOptionPane.showMessageDialog(null, "Esta cópia já foi adicionada");
-                jtf_codigo_barras_objeto.requestFocus();
+                jtf_codigo_objeto_devolucao.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Objeto inválido para adicionar");
@@ -1287,9 +1200,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
 
     public void limparItemDevolvido() {
-        jtf_codigo_barras_objeto.setText("");
+        jtf_codigo_objeto_devolucao.setText("");
         jtf_nome_objeto_devolucao.setText("");
-        jtf_codigo_barras_objeto.requestFocus();
+        jtf_codigo_objeto_devolucao.requestFocus();
     }
 
     public void setStatusTela(boolean status) {
@@ -1329,7 +1242,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                 jtf_saldo_debito_total.setForeground(Color.black);
             }
 
-            jtf_codigo_barras_objeto.requestFocus();
+            jtf_codigo_objeto_devolucao.requestFocus();
 
             //Limpa tabela depois de selecionar novo cliente
             DefaultTableModel tb_devolucao = (DefaultTableModel) jtbl_devolucao.getModel();
@@ -1421,10 +1334,13 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            abrirCaixa();
+            jb_finalizar_devolucao.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            jb_remover_devolucao.doClick();
         }
     }
 
@@ -1440,8 +1356,8 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         for (int i = rows - 1; i >= 0; i--) {
             tb_devolucao.removeRow(i);
         }
-        jtf_codigo_barras_objeto.setText("");
-        jtf_codigo_barras_objeto.requestFocus();
+        jtf_codigo_objeto_devolucao.setText("");
+        jtf_codigo_objeto_devolucao.requestFocus();
     }
 
 }

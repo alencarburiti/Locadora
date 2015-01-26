@@ -27,13 +27,13 @@ public class ConsultarCopia implements InterfaceCommand {
     public String execute() {
 
         try {
-            if (MenuDiaria.jtf_consulta.getText().equals("")) {
+            if (MenuDiaria.jtf_pesquisa.getText().equals("")) {
                 if (MenuDiaria.jrb_codigo_diaria.isSelected() == true) {
                     diaria = null;
-                    diaria = diariaDAO.getDiaria_codigo(Integer.parseInt(MenuDiaria.jtf_consulta.getText().trim()));
+                    diaria = diariaDAO.getDiaria_codigo(Integer.parseInt(MenuDiaria.jtf_pesquisa.getText().trim()));
                 } else {
                     diarias = null;
-                    diarias = diariaDAO.getDiaria_nome(MenuDiaria.jtf_consulta.getText().trim());
+                    diarias = diariaDAO.getDiaria_nome(MenuDiaria.jtf_pesquisa.getText().trim());
                     mostrar_Diarias(diarias);
                 }
             } else {

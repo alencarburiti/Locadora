@@ -40,6 +40,7 @@ public class CadastraAlteraGenero extends javax.swing.JFrame {
     public CadastraAlteraGenero() {
         initComponents();
         TemaInterface.getInterface(this);
+        this.setTitle("Cadastrando Gênero");
         janelapai = null;
     }
 
@@ -47,6 +48,7 @@ public class CadastraAlteraGenero extends javax.swing.JFrame {
         initComponents();
         if(genero != null){
             TemaInterface.getInterface(this);
+            this.setTitle("Alterando Gênero");
             janelapai = null;
             this.genero = genero;
             jtf_codigo_genero.setText(String.valueOf(genero.getCodigo_genero()));

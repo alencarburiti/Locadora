@@ -58,6 +58,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
     public CadastraAlteraDiaria() {
         initComponents();
         TemaInterface.getInterface(this);
+        this.setTitle("Cadastrando Diária");
         janelapai = null;
         janelapai2 = null;
         actionLocacao = "salvar";
@@ -68,6 +69,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         initComponents();
         if (diaria != null) {
             TemaInterface.getInterface(this);
+            this.setTitle("Alterando Diária");
             janelapai = null;
             this.diaria = diaria;
             System.out.println("Código Diária: " + this.diaria.getCodigo_diaria());
@@ -210,9 +212,9 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_salvarMouseClicked(evt);
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -434,7 +436,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jLabel5.setText("Valor");
+        jLabel5.setText("Valor Cada Item Ganhado");
         jLabel5.setName("jLabel5"); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -572,9 +574,9 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jtf_descricao_locacao))
                         .addGap(5, 5, 5)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jtf_valor_promocao_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jtf_valor_promocao_locacao))
                         .addGap(5, 5, 5)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
@@ -1247,7 +1249,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cadastrarAlterarDiaria();
+            jb_salvar.doClick();
         }
         acionarAtalho(evt);
 
@@ -1255,6 +1257,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_salvarKeyPressed
 
     private void jtbl_promocao_locacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_promocao_locacaoKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jcb_domingo.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getDomingo());
             jcb_segunda.setSelected(itensPromocaoLocacao.get(jtbl_promocao_locacao.getSelectedRow()).getPromocaoLocacao().getSegunda());
@@ -1320,6 +1323,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_promocao_devolucaoMouseClicked
 
     private void jtbl_promocao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_promocao_devolucaoKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_promocao_devolucaoKeyPressed
 
@@ -1485,13 +1489,6 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
-    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
-        if (evt.getClickCount() == 1) {
-            cadastrarAlterarDiaria();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarMouseClicked
-
     private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             retornaJanelaPai();
@@ -1517,6 +1514,11 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
     private void jtf_valor_promocao_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_valor_promocao_devolucaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_promocao_devolucaoActionPerformed
+
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        cadastrarAlterarDiaria();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -1644,7 +1646,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
-            cadastrarAlterarDiaria();
+            jb_salvar.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
@@ -1657,7 +1659,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         if (jtf_descricao_locacao.getText().equals("")) {
             msgERRO = msgERRO + " *Descrição Promoção\n";
         }
-        if (jtf_valor_promocao_locacao.getText().equals("") || jtf_valor_promocao_locacao.getText().equals("R$ 0,00")) {
+        if (jtf_valor_promocao_locacao.getText().equals("") ) {
             msgERRO = msgERRO + " *Valor Promoção\n";
         }
         if (jtf_locar_quantidade.getText().equals("") || Integer.parseInt(jtf_locar_quantidade.getText()) < 0) {

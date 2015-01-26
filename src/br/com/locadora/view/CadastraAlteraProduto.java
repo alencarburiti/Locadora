@@ -42,6 +42,7 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
     public CadastraAlteraProduto() {
         initComponents();
         TemaInterface.getInterface(this);
+        this.setTitle("Cadastrando Produto");
         janelapai = null;
     }
 
@@ -49,6 +50,7 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
         this.produto = produto;
         initComponents();
         TemaInterface.getInterface(this);
+        this.setTitle("Alterando Produto");
         janelapai = null;
         moeda = new Moeda();
         jtf_codigo_produto.setText(produto.getCodigo_produto().toString());
