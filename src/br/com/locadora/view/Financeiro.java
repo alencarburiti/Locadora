@@ -83,6 +83,7 @@ public class Financeiro extends javax.swing.JFrame {
         jb_altera_lancamento = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jb_sair = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -365,6 +366,9 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Tipo de Movimento: E = Entrada; S = Saída");
+        jLabel1.setName("jLabel1"); // NOI18N
+
         jMenuBar1.setName("jMenuBar1"); // NOI18N
 
         jMenu3.setText("Cadastro");
@@ -432,6 +436,8 @@ public class Financeiro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jl_rodape, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -471,9 +477,12 @@ public class Financeiro extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jl_rodape)
-                .addGap(10, 10, 10))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jl_rodape)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabel1)))
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -601,7 +610,7 @@ public class Financeiro extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-                pool = new Pool();
+        pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.FinanceiroReceber");
@@ -629,7 +638,7 @@ public class Financeiro extends javax.swing.JFrame {
     }//GEN-LAST:event_jrb_todosActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-                        pool = new Pool();
+        pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.FinanceiroReceber");
@@ -676,6 +685,7 @@ public class Financeiro extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
@@ -704,11 +714,11 @@ public class Financeiro extends javax.swing.JFrame {
     public LancamentoConta tbFornecedorLinhaSelecionada(JTable tb) {
 
         if (tb.getSelectedRow() != -1) {
-            if(contas.get(tb.getSelectedRow()).getFornecedor().getCodigo_fornecedor().equals(0)){
+            if (contas.get(tb.getSelectedRow()).getFornecedor().getCodigo_fornecedor().equals(0)) {
                 JOptionPane.showMessageDialog(null, "Recebimentos não pode ser Alterado/Excluido");
                 lancamentoConta = null;
             } else {
-                lancamentoConta = contas.get(tb.getSelectedRow());                
+                lancamentoConta = contas.get(tb.getSelectedRow());
             }
         } else {
             lancamentoConta = null;
@@ -726,15 +736,15 @@ public class Financeiro extends javax.swing.JFrame {
             if (acesso.getEscrever() == true) {
                 lancamentoConta = tbFornecedorLinhaSelecionada(jtbl_contas);
                 if (lancamentoConta != null) {
-                    if(financeiroPagar == null){
+                    if (financeiroPagar == null) {
                         financeiroPagar = new FinanceiroPagar(lancamentoConta);
                         financeiroPagar.janelapai = this;
                         financeiroPagar.setVisible(true);
-                        financeiroPagar.acesso = acesso;                        
+                        financeiroPagar.acesso = acesso;
                     } else {
-                        financeiroPagar.setVisible(true);                        
+                        financeiroPagar.setVisible(true);
                     }
-                } 
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
@@ -772,7 +782,7 @@ public class Financeiro extends javax.swing.JFrame {
         tableModel.setNumRows(0);
 
         if (contas.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhuma conta encontrada");
+            JOptionPane.showMessageDialog(null, "Nenhuma Conta encontrada");
             jtf_data_inicial.requestFocus();
         } else {
             moeda = new Moeda();
@@ -811,7 +821,7 @@ public class Financeiro extends javax.swing.JFrame {
                     data_pagamento, contas.get(i).getCaixa(), contas.get(i).getUsuario().getNome_usuario()});
             }
 
-            TableCellRenderer tcr = new Colorir();
+            TableCellRenderer tcr = new Colorir(this, null);            
             TableColumn column = jtbl_contas.getColumnModel().getColumn(0);
             column.setCellRenderer(tcr);
             column = jtbl_contas.getColumnModel().getColumn(1);
@@ -902,13 +912,17 @@ public class Financeiro extends javax.swing.JFrame {
         acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
         try {
             if (acesso.getDeletar() == true) {
-
                 lancamentoConta = tbFornecedorLinhaSelecionada(jtbl_contas);
                 if (lancamentoConta != null) {
-                    pool = new Pool();
-                    LancamentoContaDAO lancamentoDAO = new LancamentoContaDAO(pool);
-                    lancamentoDAO.excluir(lancamentoConta.getCodigo_lancamento_contas());
-                    consultarContas();
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+
+                        pool = new Pool();
+                        LancamentoContaDAO lancamentoDAO = new LancamentoContaDAO(pool);
+                        lancamentoDAO.excluir(lancamentoConta.getCodigo_lancamento_contas());
+                        consultarContas();
+                    }
+
                 }
 
             } else {

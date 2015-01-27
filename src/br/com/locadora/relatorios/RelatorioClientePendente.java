@@ -7,6 +7,7 @@ package br.com.locadora.relatorios;
 import br.com.locadora.conexao.InterfacePool;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,11 +96,11 @@ public class RelatorioClientePendente {
             rs.beforeFirst();//retornar ao primeiro resultado
             System.out.println("Total de Registro:"+totalRegistro);
             if (totalRegistro > 0) {
+                InputStream caminho = getClass().getResourceAsStream("rel_cliente_pendente.jasper");                                
+                
                 JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
                 Map parametros = new HashMap();
-                JasperPrint jasperPrint = JasperFillManager.fillReport("jasper/rel_cliente_pendente.jasper", parametros, jrRS);
-//                JasperViewer jrviewer = new JasperViewer(jasperPrint); 
-//                jrviewer.setVisible(true);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(caminho, parametros, jrRS);
                 JasperViewer.viewReport(jasperPrint, false);
             } else {
                 JOptionPane.showMessageDialog(null, "Registro não encontrado para o filtro informado.");

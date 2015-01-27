@@ -8,7 +8,6 @@ package br.com.locadora.util;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.ItemVenda;
-import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.view.EntradaCaixaLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
@@ -451,15 +450,17 @@ public class Printer {
 
         try {
             DocPrintJob dpj = impressora.createPrintJob();
-            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes("UTF-8"));
-            System.out.println(stream);
+//            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes("UTF-8"));
+            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes()); 
+            System.out.println(texto);
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
             Doc doc = new SimpleDoc(stream, flavor, null);
             dpj.print(doc, null);
             return true;
 
         } catch (Exception e) {
-//            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
             return false;
 
         }

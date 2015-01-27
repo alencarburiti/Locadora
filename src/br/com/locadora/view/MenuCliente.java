@@ -626,7 +626,6 @@ public class MenuCliente extends javax.swing.JFrame {
                         } catch (SQLException ex) {
                             JOptionPane.showMessageDialog(null, "Este registro não pode ser excluído pois está referenciado em outra tabela");
                         }
-
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um Cliente");

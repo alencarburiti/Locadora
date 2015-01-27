@@ -112,6 +112,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         menu_relatórios = new javax.swing.JMenu();
         jMenuItem19 = new javax.swing.JMenuItem();
         menu_relatórios1 = new javax.swing.JMenu();
@@ -431,7 +432,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMB_Cadastro.add(menu_movimentos);
 
-        jMenu17.setText("Consultas");
+        jMenu17.setText("Consulta");
         jMenu17.setName("jMenu17"); // NOI18N
 
         jMenuItem16.setText("Fluxo de Caixa Diário");
@@ -461,6 +462,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu17.add(jMenuItem4);
 
+        jMenuItem3.setText("Histórico de Locação");
+        jMenuItem3.setName("jMenuItem3"); // NOI18N
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu17.add(jMenuItem3);
+
         jMB_Cadastro.add(jMenu17);
 
         menu_relatórios.setMnemonic('R');
@@ -485,7 +495,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMB_Cadastro.add(menu_relatórios);
 
         menu_relatórios1.setMnemonic('R');
-        menu_relatórios1.setText("Utilitários");
+        menu_relatórios1.setText("Utilitário");
         menu_relatórios1.setName("menu_relatórios1"); // NOI18N
         menu_relatórios1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -515,7 +525,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMB_Cadastro.add(menu_relatórios1);
 
-        jm_caixa.setText("Configurações");
+        jm_caixa.setText("Configuração");
         jm_caixa.setName("jm_caixa"); // NOI18N
 
         jm_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/user.png"))); // NOI18N
@@ -1160,6 +1170,14 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        HistoricoLocacao historicoLocacao = new HistoricoLocacao();
+        historicoLocacao.janelapai = this;
+        historicoLocacao.setVisible(true);
+        setStatusTela(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1208,6 +1226,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem9;

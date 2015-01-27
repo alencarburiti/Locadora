@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rel_cliente_pendente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dfe8ee28-9294-48ba-9ffe-618f80860f31">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+    *
+FROM
+    (SELECT
+        *,
+            (CASE
+                WHEN (DEBITO - CREDITO) < 0 THEN 0
+                ELSE (DEBITO - CREDITO)
+            END) AS DEVEDOR
+    FROM
+        (SELECT
+        A.CLIENTE_CODIGO_CLIENTE,
+            C.NOME_DEPENDENTE,
+            (SELECT
+                    SUM(VALOR)
+                FROM
+                    LANCAMENTO LC_A, TIPO_SERVICO B
+                WHERE
+                    LC_A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO
+                        AND B.TIPO = 'C'
+                        AND LC_A.CLIENTE_CODIGO_CLIENTE = A.CLIENTE_CODIGO_CLIENTE) AS CREDITO,
+            (SELECT
+                    SUM(VALOR)
+                FROM
+                    LANCAMENTO LD_A, TIPO_SERVICO B
+                WHERE
+                    LD_A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO
+                        AND B.TIPO = 'D'
+                        AND LD_A.CLIENTE_CODIGO_CLIENTE = A.CLIENTE_CODIGO_CLIENTE) AS DEBITO,
+            (SELECT
+                    MAX(DATA_LANCAMENTO)
+                FROM
+                    LANCAMENTO L_DATA, TIPO_SERVICO B
+                WHERE
+                    L_DATA.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO
+                        AND B.TIPO = 'C'
+                        AND L_DATA.CLIENTE_CODIGO_CLIENTE = A.CLIENTE_CODIGO_CLIENTE) AS DATA_LANCAMENTO
+    FROM
+        LANCAMENTO A, TIPO_SERVICO B, DEPENDENTE C
+    WHERE
+        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO
+            AND A.CLIENTE_CODIGO_CLIENTE = C.CLIENTE_CODIGO_CLIENTE
+            AND C.TIPO_DEPENDENTE = '0'
+    GROUP BY 1) AS LANC) AS L_DEVE
+WHERE
+    DEVEDOR > 0 ORDER BY DATA_LANCAMENTO DESC]]>
+	</queryString>
+	<field name="CLIENTE_CODIGO_CLIENTE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOME_DEPENDENTE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CREDITO" class="java.lang.Double"/>
+	<field name="DEBITO" class="java.lang.Double"/>
+	<field name="DATA_LANCAMENTO" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEVEDOR" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="0" width="218" height="79" uuid="a7e9371b-60e4-483e-a583-0b3bc78c6d2a"/>
+				<imageExpression><![CDATA["br/com/locadora/relatorios/logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="218" y="0" width="337" height="79" uuid="8e458204-401c-412d-992b-4b8964b1dc7a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="14"/>
+				</textElement>
+				<text><![CDATA[Relatório de Cliente Pendente]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="264" height="20" uuid="2dfe8df6-ca0f-41d1-b91f-1ea9cf734aaa"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Cliente/Dependente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="1" width="132" height="20" uuid="7a09ae72-af9a-4ac9-a720-43a289ba76c9"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Data Último Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="1" width="75" height="20" uuid="10d256e0-9432-4e29-b16b-5827f60231c1"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Devedor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="348" height="20" uuid="ba9ad3be-94e4-464a-83c6-5b245e1f891a"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME_DEPENDENTE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="348" y="0" width="132" height="20" uuid="035b00af-3ad1-4d4c-a1ac-9fbf3ec2853d"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATA_LANCAMENTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="480" y="0" width="75" height="20" uuid="7a4b695b-e014-4bc6-b676-40bcc498dcdc"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEVEDOR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

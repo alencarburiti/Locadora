@@ -7,6 +7,8 @@ package br.com.locadora.relatorios;
 import br.com.locadora.conexao.InterfacePool;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +17,9 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
@@ -99,9 +103,11 @@ public class RelatorioLocacaoAberta {
             int totalRegistro = rs.getRow();//valor da ultima linha"numero de dados registrados"
             rs.beforeFirst();//retornar ao primeiro resultado
             if (totalRegistro > 0) {
+                InputStream caminho = getClass().getResourceAsStream("rel_locacao_aberta.jasper");                                
+                
                 JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
                 Map parametros = new HashMap();
-                JasperPrint jasperPrint = JasperFillManager.fillReport("jasper/rel_locacao_aberta.jasper", new HashMap(), jrRS);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(caminho, new HashMap(), jrRS);
                 JasperViewer.viewReport(jasperPrint, false);
             } else {
                 JOptionPane.showMessageDialog(null, "Registro não encontrado para o filtro informado.");

@@ -217,7 +217,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
         return resultado;
     }
 
-    public List<Lancamento> getLancamentoDetalhado() {
+    public List<Lancamento> getLancamentoDetalhadoLocacaoDevolucao() {
         List<Lancamento> resultado = new ArrayList<Lancamento>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -240,6 +240,7 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
                 + "        AND A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n"
                 + "        AND A.DATA_LANCAMENTO = CURDATE()\n"
                 + "        AND B.TIPO = 'C'\n"
+                + "        AND B.MOVIMENTO IN ('L','D')\n"
                 + "ORDER BY A.CODIGO_LANCAMENTO DESC;";
         ResultSet rs = null;
 
@@ -258,6 +259,92 @@ public class LancamentoDAO implements InterfaceLancamentoDAO {
         }
         return resultado;
     }
+    
+    public List<Lancamento> getLancamentoDetalhadoVenda() {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT \n"
+                + "    C.NOME_DEPENDENTE,\n"
+                + "    B.DESCRICAO,\n"
+                + "    B.TIPO,\n"
+                + "    A.VALOR,\n"
+                + "    A.DATA_LANCAMENTO,\n"
+                + "    A.CAIXA_CODIGO_CAIXA,\n"
+                + "    D.NOME_USUARIO\n"
+                + "FROM\n"
+                + "    LANCAMENTO A,\n"
+                + "    TIPO_SERVICO B,\n"
+                + "    DEPENDENTE C,\n"
+                + "    USUARIO D\n"
+                + "WHERE\n"
+                + "    A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n"
+                + "        AND D.CODIGO_USUARIO = A.USUARIO_CODIGO_USUARIO\n"
+                + "        AND A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n"
+                + "        AND A.DATA_LANCAMENTO = CURDATE()\n"
+                + "        AND B.TIPO = 'C' \n"
+                + "        AND B.MOVIMENTO = 'V' \n"
+                + "ORDER BY A.CODIGO_LANCAMENTO DESC;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            rs = ps.executeQuery();
+
+            resultado = getListaLancamentoDetalhado(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
+    public List<Lancamento> getLancamentoDetalhadoTodos() {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT \n"
+                + "    C.NOME_DEPENDENTE,\n"
+                + "    B.DESCRICAO,\n"
+                + "    B.TIPO,\n"
+                + "    A.VALOR,\n"
+                + "    A.DATA_LANCAMENTO,\n"
+                + "    A.CAIXA_CODIGO_CAIXA,\n"
+                + "    D.NOME_USUARIO\n"
+                + "FROM\n"
+                + "    LANCAMENTO A,\n"
+                + "    TIPO_SERVICO B,\n"
+                + "    DEPENDENTE C,\n"
+                + "    USUARIO D\n"
+                + "WHERE\n"
+                + "    A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n"
+                + "        AND D.CODIGO_USUARIO = A.USUARIO_CODIGO_USUARIO\n"
+                + "        AND A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n"
+                + "        AND A.DATA_LANCAMENTO = CURDATE()\n"
+                + "        AND B.TIPO = 'C' \n"                
+                + "ORDER BY A.CODIGO_LANCAMENTO DESC;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            rs = ps.executeQuery();
+
+            resultado = getListaLancamentoDetalhado(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+
 
     private List<Lancamento> getListaLancamento(ResultSet rs) throws SQLException {
         List<Lancamento> resultado = new ArrayList<Lancamento>();

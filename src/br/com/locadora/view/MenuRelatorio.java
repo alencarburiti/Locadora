@@ -24,12 +24,11 @@ import br.com.locadora.relatorios.RelatorioMaisLocados;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.TemaInterface;
 import static br.com.locadora.view.CadastraAlteraObjeto.jtf_data_aquisicao;
+import static br.com.locadora.view.Financeiro.jtf_data_final;
+import static br.com.locadora.view.Financeiro.jtf_data_inicial;
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -438,6 +437,24 @@ public class MenuRelatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+                Calendar primeiroDia = Calendar.getInstance();
+        primeiroDia.set(Calendar.DAY_OF_MONTH, 1);
+
+        Calendar ultimoDia = Calendar.getInstance();
+        ultimoDia.add(Calendar.MONTH, 1);
+        ultimoDia.set(Calendar.DAY_OF_MONTH, 1);
+        ultimoDia.add(Calendar.DAY_OF_MONTH, -1);
+
+        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+
+        String data_inicial = out.format(primeiroDia.getTime());
+        String data_final = out.format(ultimoDia.getTime());
+
+        jtf_data_inicial.setText(data_inicial);
+        jtf_data_final.setText(data_final);
+
+        
         jtf_consulta.requestFocus();
 
     }//GEN-LAST:event_formWindowOpened
@@ -782,11 +799,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
                 // ano nao casou
 
                 return (false);
-            }
-            if (dataDigitada.after(dataAtual)) {
-                // data maior que atual
-                return (false);
-            }
+            }            
             return (true);
         }
         return false;

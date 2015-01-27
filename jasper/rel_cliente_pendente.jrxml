@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rel_cliente_pendente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dfe8ee28-9294-48ba-9ffe-618f80860f31">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="339"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
     *
@@ -70,7 +70,7 @@ WHERE
 		<band height="79" splitType="Stretch">
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="218" height="79" uuid="a7e9371b-60e4-483e-a583-0b3bc78c6d2a"/>
-				<imageExpression><![CDATA["/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/jasper/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["/br/com/locadora/jasper/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="218" y="0" width="337" height="79" uuid="8e458204-401c-412d-992b-4b8964b1dc7a"/>

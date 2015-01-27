@@ -927,8 +927,6 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private void jb_adicionar_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_locacaoActionPerformed
         ItemDbGrid hashDbGrid = (ItemDbGrid) jcb_promocao.getSelectedItem();
         diariaCombo = (Diaria) hashDbGrid.getObjeto();
-//        JOptionPane.showMessageDialog(null, diariaCombo.getPromocaoLocacao().getDescricao());
-
         try {
             adicionarItemLocado(copiaAtendimento, diariaCombo);
         } catch (NumberFormatException e) {
@@ -1295,16 +1293,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     ItemDbGrid hashDbGrid = new ItemDbGrid(promocoes.get(i), promocoes.get(i).getPromocaoLocacao().getDescricao());
                     jcb_promocao.addItem(hashDbGrid);
                 }
-            } else {
-                PromocaoLocacao semPromocao = new PromocaoLocacao();
-                Combo semPacotePromocional = new Combo();
-                Diaria diaria = new Diaria();
-                diaria.setPromocaoLocacao(semPromocao);
-                diaria.setPacotePromocional(semPacotePromocional);
-
-                ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, "Sem promoção");
-                jcb_promocao.addItem(hashDbGrid);
-            }
+            } 
             Date d = new Date();
             Calendar c = new GregorianCalendar();
             c.setTime(d);
@@ -1353,6 +1342,14 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     }
                 }
             }
+            PromocaoLocacao semPromocao = new PromocaoLocacao();
+            Combo semPacotePromocional = new Combo();
+            Diaria diaria = new Diaria();
+            diaria.setPromocaoLocacao(semPromocao);
+            diaria.setPacotePromocional(semPacotePromocional);
+
+            ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, "Sem promoção");
+            jcb_promocao.addItem(hashDbGrid);
 
             jb_adicionar_locacao.requestFocus();
         }
@@ -1660,95 +1657,82 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         }
     }    
 
-    public void calcularPromocao() {
-        pool = new Pool();
-        diariaDAO = new DiariaDAO(pool);
-
-        List<Diaria> dias = diariaDAO.getDiariaPromocao();
-
-        System.out.println("Tamanho do Array Copias Locação: " + copiasLocacao.size());
-        System.out.println("Tamanho da Tabela Locação: " + jtbl_locacao.getRowCount());
-        System.out.println("Tamanho do Array Diária: " + dias.size());
-
-        for (int i = 0; i < copiasLocacao.size(); i++) {
-            System.out.println("=============Inicio de Verificacao no Array " + i + "=============");
-            System.out.println("Iniciar Verificação na Linha: " + i);
-            System.out.println("Código da Promoção: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
-            System.out.println("================Fim de Verificacao no Array " + i + "=============");
-        }
-        for (int i = 0; i < copiasLocacao.size(); i++) {
-            System.out.println("=============Inicio de Teste Debug 1 =============");
-            for (int x = 0; x < dias.size(); x++) {
-                System.out.println("Código Promoção - Diária: " + dias.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()
-                        + " Código Promoção - Cópia: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
-                System.out.println("Posição: " + i + " Locar: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getLocar_quantidade());
-                System.out.println("Posição: " + i + " Ganhar: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getGanhar_quantidade());
-                System.out.println("Posição: " + i + " Preço Promoção: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
-                System.out.println("Posição: " + i + " Preço da Tabela: " + jtbl_locacao.getValueAt(i, 2));
-                if (dias.get(x).getPromocaoLocacao().getCodigo_promocao_locacao().equals(
-                        copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao())) {
-                    dias.get(x).setQuantidade_filme(dias.get(x).getQuantidade_filme() + 1);
-                    System.out.println("Quantidade de filme: " + dias.get(x).getQuantidade_filme());
-                     if (jtbl_locacao.getValueAt(i, 2).equals("R$ 0,00")) {
-                        dias.get(x).setGanhados(dias.get(x).getGanhados() + 1);
-                        System.out.println("Quantidade de filme ganhados: " + dias.get(x).getGanhados());
-                    }
-                }
-            }
-            System.out.println("=============Fim de Teste Debug 1 =============");
-        }
-        for (int i = 0; i < dias.size(); i++) {
-            System.out.println("=============Inicio de Verificacao no Array Dias Após Verificações =============");
-            System.out.println("Iniciar Verificação na Linha: " + i);
-            System.out.println("Código da Promoção: " + dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao());
-            System.out.println("Nome da Promoção: " + dias.get(i).getPromocaoLocacao().getDescricao());
-            System.out.println("Quantidade de filme: " + dias.get(i).getQuantidade_filme());
-            System.out.println("Posição: " + i + " Locar: " + dias.get(i).getPromocaoLocacao().getLocar_quantidade());
-            System.out.println("Posição: " + i + " Ganhar: " + dias.get(i).getPromocaoLocacao().getGanhar_quantidade());
-            System.out.println("================Fim de Verificacao no Array Dias Após Verificações=============");
-
-            if (dias.get(i).getPromocaoLocacao().getGanhar_quantidade() > 0) {
-                int ganhar;
-                int locar_quantidade = (dias.get(i).getPromocaoLocacao().getLocar_quantidade() + 1);
-                ganhar = (dias.get(i).getQuantidade_filme() / locar_quantidade);
-                for (int z = 0; z < copiasLocacao.size(); z++) {
-                    if (ganhar > 0) {
-                        if (dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao().equals(
-                                copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao())) {
-                            copiasLocacao.get(z).getDiaria().getPromocaoLocacao().setValor_promocao_locacao(0.0);
-                            jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), z, 2);
-                            System.out.println("Colocar promocação na Linha: " + z);
-                            System.out.println("Promoção adicionada: " + moeda.setPrecoFormat(copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()));
-                            ganhar = ganhar - 1;
-                        }
-                    } 
-                }
-            } else if (dias.get(i).getPromocaoLocacao().getGanhar_quantidade() == 0) {
-                    if (!jtbl_locacao.getValueAt((jtbl_locacao.getRowCount()-1), 2).equals("R$ 0,00")) {                            
-                            jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get((jtbl_locacao.getRowCount()-1)).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), (jtbl_locacao.getRowCount()-1), 2);
-                        }
-            }
-
-//            if (dias.get(i).getQuantidade_filme() > 0 && dias.get(i).getPromocaoLocacao().getLocar_quantidade() > 0) {
+//    public void calcularPromocao() {
+//        pool = new Pool();
+//        diariaDAO = new DiariaDAO(pool);
 //
-//                if (dias.get(i).getQuantidade_filme() > dias.get(i).getPromocaoLocacao().getLocar_quantidade()) {
+//        List<Diaria> dias = diariaDAO.getDiariaPromocao();
 //
-//                }
-//            } else {
-//                for (int y = 0; y < jtbl_locacao.getRowCount(); y++) {
-//                    if (dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao() == copiasLocacao.get(y).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao()) {
-//                        if (jtbl_locacao.getValueAt(y, 2).equals("R$ 0,00")) {
-//                            copiasLocacao.get(y).getDiaria().getPromocaoLocacao().setValor_promocao_locacao(dias.get(i).getPromocaoLocacao().getValor_promocao_locacao());
-//                            jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get(y).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), y, 2);
-//                            break;
-//                        }
+//        System.out.println("Tamanho do Array Copias Locação: " + copiasLocacao.size());
+//        System.out.println("Tamanho da Tabela Locação: " + jtbl_locacao.getRowCount());
+//        System.out.println("Tamanho do Array Diária: " + dias.size());
+//
+//        for (int i = 0; i < copiasLocacao.size(); i++) {
+//            System.out.println("=============Inicio de Verificacao no Array " + i + "=============");
+//            System.out.println("Iniciar Verificação na Linha: " + i);
+//            System.out.println("Código da Promoção: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
+//            System.out.println("================Fim de Verificacao no Array " + i + "=============");
+//        }
+//        for (int i = 0; i < copiasLocacao.size(); i++) {
+//            System.out.println("=============Inicio de Teste Debug 1 =============");
+//            for (int x = 0; x < dias.size(); x++) {
+//                System.out.println("Código Promoção - Diária: " + dias.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()
+//                        + " Código Promoção - Cópia: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
+//                System.out.println("Posição: " + i + " Locar: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getLocar_quantidade());
+//                System.out.println("Posição: " + i + " Ganhar: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getGanhar_quantidade());
+//                System.out.println("Posição: " + i + " Preço Promoção: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
+//                System.out.println("Posição: " + i + " Preço da Tabela: " + jtbl_locacao.getValueAt(i, 2));
+//                if (dias.get(x).getPromocaoLocacao().getCodigo_promocao_locacao().equals(
+//                        copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao())) {
+//                    dias.get(x).setQuantidade_filme(dias.get(x).getQuantidade_filme() + 1);
+//                    System.out.println("Quantidade de filme: " + dias.get(x).getQuantidade_filme());
+//                     if (jtbl_locacao.getValueAt(i, 2).equals("R$ 0,00")) {
+//                        dias.get(x).setGanhados(dias.get(x).getGanhados() + 1);
+//                        System.out.println("Quantidade de filme ganhados: " + dias.get(x).getGanhados());
 //                    }
 //                }
 //            }
-        }
-    }
+//            System.out.println("=============Fim de Teste Debug 1 =============");
+//        }
+//        for (int i = 0; i < dias.size(); i++) {
+//            System.out.println("=============Inicio de Verificacao no Array Dias Após Verificações =============");
+//            System.out.println("Iniciar Verificação na Linha: " + i);
+//            System.out.println("Código da Promoção: " + dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao());
+//            System.out.println("Nome da Promoção: " + dias.get(i).getPromocaoLocacao().getDescricao());
+//            System.out.println("Quantidade de filme: " + dias.get(i).getQuantidade_filme());
+//            System.out.println("Posição: " + i + " Locar: " + dias.get(i).getPromocaoLocacao().getLocar_quantidade());
+//            System.out.println("Posição: " + i + " Ganhar: " + dias.get(i).getPromocaoLocacao().getGanhar_quantidade());
+//            System.out.println("================Fim de Verificacao no Array Dias Após Verificações=============");
+//
+//            if (dias.get(i).getPromocaoLocacao().getGanhar_quantidade() > 0) {
+//                int ganhar;
+//                int locar_quantidade = (dias.get(i).getPromocaoLocacao().getLocar_quantidade() + 1);
+//                ganhar = (dias.get(i).getQuantidade_filme() / locar_quantidade);
+//                for (int z = 0; z < copiasLocacao.size(); z++) {
+//                    if (ganhar > 0) {
+//                        if (dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao().equals(
+//                                copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao())) {
+//                            copiasLocacao.get(z).getDiaria().getPromocaoLocacao().setValor_promocao_locacao(0.0);
+//                            jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), z, 2);
+//                            System.out.println("Colocar promocação na Linha: " + z);
+//                            System.out.println("Promoção adicionada: " + moeda.setPrecoFormat(copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()));
+//                            ganhar = ganhar - 1;
+//                        }
+//                    } 
+//                }
+//            } else if (dias.get(i).getPromocaoLocacao().getGanhar_quantidade() == 0) {
+//                    if (!jtbl_locacao.getValueAt((jtbl_locacao.getRowCount()-1), 2).equals("R$ 0,00")) {                            
+//                            jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get((jtbl_locacao.getRowCount()-1)).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), (jtbl_locacao.getRowCount()-1), 2);
+//                        }
+//            }
+//
+//        }
+//    }
     
     public void calcularPromocaoLocacao() {
+        try {
+            
+        
         pool = new Pool();
         diariaDAO = new DiariaDAO(pool);
         moeda = new Moeda();
@@ -1796,16 +1780,15 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             System.out.println("Posição: " + i + " Ganhar: " + dias.get(i).getPromocaoLocacao().getGanhar_quantidade());
             System.out.println("================Fim de Verificacao no Array Dias Após Verificações=============");
 
-//            if (dias.get(i).getPromocaoLocacao().getGanhar_quantidade() > 0) {
                 int ganhar;
                 int locar_quantidade = (dias.get(i).getPromocaoLocacao().getLocar_quantidade() + 1);
                 ganhar = (dias.get(i).getQuantidade_filme() / locar_quantidade);
+                
                 for (int z = 0; z < copiasLocacao.size(); z++) {
                     if (ganhar > 0) {
                         if (dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao().equals(
                                 copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao())) {
                             
-//                            copiasLocacao.get(z).getDiaria().getPromocaoLocacao().setValor_promocao_locacao(0.0);
                             jtbl_locacao.setValueAt(moeda.setPrecoFormat(dias.get(i).getPromocaoLocacao().getValor_promocao_locacao().toString()), z, 2);
                             copiasLocacao.get(z).getDiaria().getPromocaoLocacao().setValor_promocao_locacao(dias.get(i).getPromocaoLocacao().getValor_promocao_locacao());
                             System.out.println("Colocar promocação na Linha: " + z);
@@ -1814,28 +1797,9 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                         }
                     } 
                 }
-//            } else if (dias.get(i).getPromocaoLocacao().getGanhar_quantidade() == 0) {
-//                    if (!jtbl_locacao.getValueAt((jtbl_locacao.getRowCount()-1), 2).equals("R$ 0,00")) {                            
-//                            jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get((jtbl_locacao.getRowCount()-1)).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), (jtbl_locacao.getRowCount()-1), 2);
-//                        }
-//            }
-
-//            if (dias.get(i).getQuantidade_filme() > 0 && dias.get(i).getPromocaoLocacao().getLocar_quantidade() > 0) {
-//
-//                if (dias.get(i).getQuantidade_filme() > dias.get(i).getPromocaoLocacao().getLocar_quantidade()) {
-//
-//                }
-//            } else {
-//                for (int y = 0; y < jtbl_locacao.getRowCount(); y++) {
-//                    if (dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao() == copiasLocacao.get(y).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao()) {
-//                        if (jtbl_locacao.getValueAt(y, 2).equals("R$ 0,00")) {
-//                            copiasLocacao.get(y).getDiaria().getPromocaoLocacao().setValor_promocao_locacao(dias.get(i).getPromocaoLocacao().getValor_promocao_locacao());
-//                            jtbl_locacao.setValueAt(moeda.setPrecoFormat(copiasLocacao.get(y).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()), y, 2);
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

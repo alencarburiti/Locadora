@@ -14,7 +14,6 @@ import br.com.locadora.model.dao.ProdutoDAO;
 import br.com.locadora.model.dao.VendaDAO;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
-import static br.com.locadora.view.AtendimentoDevolucao.copiasLocacao;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
@@ -636,8 +635,6 @@ public class AtendimentoVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        ((DefaultTableModel) jtbl_itens_venda.getModel()).setRowCount(0);
-        jtbl_itens_venda.updateUI();
         retornaJanelaPai();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
@@ -912,22 +909,16 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             if (tb.getSelectedRow() != -1) {
                 int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                    for (int i = 0; i < copiasLocacao.size(); i++) {
-                        System.out.println("Antes de deletar: " + copiasLocacao.get(i).getCodigo_barras());
-                    }
-
+                    
                     int index_remove = tb.getSelectedRow();
                     System.out.println("Linha deletada: " + index_remove);
                     row.removeRow(tb.getSelectedRow());
-                    copiasLocacao.remove(index_remove);
-
-                    for (int i = 0; i < copiasLocacao.size(); i++) {
-                        System.out.println("Depois de deletar: " + copiasLocacao.get(i).getCodigo_barras());
-                    }                    
+                    itensVendaAtendimento.remove(index_remove);
+                    
                     recalcularValorTotal();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Selecione um Objeto");
+                JOptionPane.showMessageDialog(null, "Selecione um Item");
             }
         }
     }
@@ -997,6 +988,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                     moeda.setPrecoFormat(itemAtendimento.getPreco_total().toString())});
             }
             itensVendaAtendimento.add(itemAtendimento);
+            this.itemAtendimento = null;
             recalcularValorTotal();
             limparItemLocado();
             jtf_codigo_item_venda.requestFocus();
@@ -1184,7 +1176,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         setVisible(false);
         if (janelapai != null) {
             janelapai.setStatusTela(true);
-            janelapai.atendimentoLocacao = null;
+            janelapai.atendimentoVenda = null;
             janelapai = null;
         }
     }

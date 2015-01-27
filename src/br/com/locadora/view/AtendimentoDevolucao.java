@@ -754,7 +754,6 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                 if (itemDevolucao != null) {
                     adicionarItemDevolvido(itemDevolucao);
                 }
-
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
             }
@@ -1188,15 +1187,13 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                 
                 recalcularValores();
                 itensDevolucao.add(itemLocacao);
+                itemDevolucao = null;
                 limparItemDevolvido();
             } else {
                 JOptionPane.showMessageDialog(null, "Esta cópia já foi adicionada");
                 jtf_codigo_objeto_devolucao.requestFocus();
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Objeto inválido para adicionar");
-        }
-
+        } 
     }
 
     public void limparItemDevolvido() {
@@ -1268,7 +1265,6 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     if (itemDevolucao != null) {
                         carregarClienteDependente(itemDevolucao.getDependente());
                         carregarCopiaDevolucao(itemDevolucao);
-//                        adicionarItemDevolvido(itemDevolucao);
                     } else {
                         JOptionPane.showMessageDialog(null, "Código de Barra inválido");
                     }
@@ -1276,7 +1272,6 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     itemDevolucao = locacaoDAO.getLocacaoAberta(dependente.getCodigo_dependente(), codigo_barras);
                     if (itemDevolucao != null) {
                         carregarCopiaDevolucao(itemDevolucao);
-//                        adicionarItemDevolvido(itemDevolucao);
                     } else {
                         JOptionPane.showMessageDialog(null, "Código de Barra inválido para Cliente");
                     }

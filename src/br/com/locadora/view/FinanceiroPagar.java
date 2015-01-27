@@ -6,10 +6,8 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Fornecedor;
 import br.com.locadora.model.bean.LancamentoConta;
 import br.com.locadora.model.bean.Usuario;
-import br.com.locadora.model.dao.FornecedorDAO;
 import br.com.locadora.model.dao.LancamentoContaDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
-import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import java.awt.Color;
@@ -26,7 +24,6 @@ import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class FinanceiroPagar extends javax.swing.JFrame {
 
@@ -37,19 +34,30 @@ public class FinanceiroPagar extends javax.swing.JFrame {
     public Financeiro financeiro;
     public MaskFormatter formatoData;
     public List<Fornecedor> fornecedores;
+    public Fornecedor fornecedorSaida;
 
     public FinanceiroPagar() {
         initComponents();
         TemaInterface.getInterface(this);
-        AutoCompleteDecorator.decorate(jcb_fornecedor);
-        meuCombo();
+        
+        Calendar primeiroDia = Calendar.getInstance();
+
+        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+
+        String data_inicial = out.format(primeiroDia.getTime());
+
+        jtf_data_vencimento.setText(data_inicial);        
+
+//        AutoCompleteDecorator.decorate(jcb_fornecedor);
+//        meuCombo();
     }
 
     public FinanceiroPagar(LancamentoConta lancamentoConta){
         initComponents();
         TemaInterface.getInterface(this);
-        AutoCompleteDecorator.decorate(jcb_fornecedor);
-        meuCombo();
+//        AutoCompleteDecorator.decorate(jcb_fornecedor);
+//        meuCombo();
         moeda = new Moeda();
         
         SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
@@ -73,32 +81,25 @@ public class FinanceiroPagar extends javax.swing.JFrame {
         jtf_data_vencimento.setText(data_vencimento);
         jtf_valor_pago.setText(moeda.setPrecoFormat(lancamentoConta.getValorPago().toString()));
         jtf_data_pagamento.setText(data_pagamento);
-        
-        for(int i =0; i < jcb_fornecedor.getItemCount(); i++){
-            ItemDbGrid hashDbGrid1 = (ItemDbGrid) jcb_fornecedor.getItemAt(i);
-            Fornecedor compareCombo = (Fornecedor) hashDbGrid1.getObjeto();
-            
-            if(compareCombo.getCodigo_fornecedor().equals(lancamentoConta.getFornecedor().getCodigo_fornecedor())){
-                jcb_fornecedor.setSelectedIndex(i);
-                break;
-            }
-        }
+        jtf_codigo_fornecedor.setText(lancamentoConta.getFornecedor().getCodigo_fornecedor().toString());
+        jtf_nome_fantasia.setText(lancamentoConta.getFornecedor().getNome_fantasia());   
+        fornecedorSaida = lancamentoConta.getFornecedor();
         
     }
     
-    public void meuCombo() {
-//        jcb_fornecedor.setMaximumRowCount(10);
-        pool = new Pool();
-        FornecedorDAO fornecedorDAO = new FornecedorDAO(pool);
-        List<Fornecedor> lista = fornecedorDAO.getFornecedores();
-
-        for (int i = 0; i < lista.size(); i++) {
-            ItemDbGrid hashDbGrid = new ItemDbGrid(lista.get(i), lista.get(i).getNome_fantasia());
-            jcb_fornecedor.addItem(hashDbGrid);
-        }
-//        AbstractComboBoxModel model = new AbstractComboBoxModel(lista);
-//        jcb_fornecedor.setModel(model);
-    }
+//    public void meuCombo() {
+////        jcb_fornecedor.setMaximumRowCount(10);
+//        pool = new Pool();
+//        FornecedorDAO fornecedorDAO = new FornecedorDAO(pool);
+//        List<Fornecedor> lista = fornecedorDAO.getFornecedores();
+//
+//        for (int i = 0; i < lista.size(); i++) {
+//            ItemDbGrid hashDbGrid = new ItemDbGrid(lista.get(i), lista.get(i).getNome_fantasia());
+//            jcb_fornecedor.addItem(hashDbGrid);
+//        }
+////        AbstractComboBoxModel model = new AbstractComboBoxModel(lista);
+////        jcb_fornecedor.setModel(model);
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -152,9 +153,12 @@ public class FinanceiroPagar extends javax.swing.JFrame {
         }
         jtf_data_vencimento = new JFormattedTextField(formatoData);
         jLabel10 = new javax.swing.JLabel();
-        jcb_fornecedor = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jtf_codigo_lancamento_conta = new javax.swing.JTextField();
+        jtf_codigo_fornecedor = new javax.swing.JTextField();
+        jtf_nome_fantasia = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jb_pesquisa_fornecedor = new javax.swing.JButton();
         jb_salvar = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
 
@@ -297,26 +301,8 @@ public class FinanceiroPagar extends javax.swing.JFrame {
         });
 
         jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jLabel10.setText("Fornecedor*");
+        jLabel10.setText("Código Fornecedor");
         jLabel10.setName("jLabel10"); // NOI18N
-
-        jcb_fornecedor.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jcb_fornecedor.setMaximumRowCount(5);
-        jcb_fornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jcb_fornecedor.setName("jcb_fornecedor"); // NOI18N
-        jcb_fornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcb_fornecedorActionPerformed(evt);
-            }
-        });
-        jcb_fornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jcb_fornecedorKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jcb_fornecedorKeyReleased(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel1.setText("Código Lançamento");
@@ -326,42 +312,90 @@ public class FinanceiroPagar extends javax.swing.JFrame {
         jtf_codigo_lancamento_conta.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_codigo_lancamento_conta.setName("jtf_codigo_lancamento_conta"); // NOI18N
 
+        jtf_codigo_fornecedor.setEditable(false);
+        jtf_codigo_fornecedor.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_codigo_fornecedor.setName("jtf_codigo_fornecedor"); // NOI18N
+
+        jtf_nome_fantasia.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_nome_fantasia.setName("jtf_nome_fantasia"); // NOI18N
+        jtf_nome_fantasia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtf_nome_fantasiaFocusLost(evt);
+            }
+        });
+        jtf_nome_fantasia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_nome_fantasiaKeyPressed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jLabel12.setText("Nome Fantasia");
+        jLabel12.setName("jLabel12"); // NOI18N
+
+        jb_pesquisa_fornecedor.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_pesquisa_fornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_pesquisa_fornecedor.setName("jb_pesquisa_fornecedor"); // NOI18N
+        jb_pesquisa_fornecedor.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_pesquisa_fornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_pesquisa_fornecedorActionPerformed(evt);
+            }
+        });
+        jb_pesquisa_fornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_pesquisa_fornecedorKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jp_locacaoLayout = new javax.swing.GroupLayout(jp_locacao);
         jp_locacao.setLayout(jp_locacaoLayout);
         jp_locacaoLayout.setHorizontalGroup(
             jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp_locacaoLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel10)
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jtf_codigo_fornecedor))
+                        .addGap(5, 5, 5)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addComponent(jtf_nome_fantasia, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jb_pesquisa_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jl_codigo_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(5, 5, 5)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jl_codigo_locacao1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_documento, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jp_locacaoLayout.createSequentialGroup()
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                                    .addComponent(jtf_valor))
+                                .addGap(5, 5, 5)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_data_vencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, 0)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                                    .addComponent(jtf_valor_pago))
+                                .addGap(5, 5, 5)
+                                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtf_data_pagamento)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jtf_codigo_lancamento_conta)
-                    .addComponent(jLabel1)
-                    .addGroup(jp_locacaoLayout.createSequentialGroup()
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jl_codigo_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(5, 5, 5)
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jl_codigo_locacao1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_documento, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jp_locacaoLayout.createSequentialGroup()
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                            .addComponent(jtf_valor))
-                        .addGap(5, 5, 5)
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_data_vencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                            .addComponent(jtf_valor_pago))
-                        .addGap(5, 5, 5)
-                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtf_data_pagamento)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jcb_fornecedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jp_locacaoLayout.setVerticalGroup(
             jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,10 +404,18 @@ public class FinanceiroPagar extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(0, 0, 0)
                 .addComponent(jtf_codigo_lancamento_conta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel10)
-                .addGap(0, 0, 0)
-                .addComponent(jcb_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(2, 2, 2)
+                        .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtf_codigo_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtf_nome_fantasia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jp_locacaoLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(0, 0, 0)
+                        .addComponent(jb_pesquisa_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0)
                 .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jp_locacaoLayout.createSequentialGroup()
@@ -409,6 +451,8 @@ public class FinanceiroPagar extends javax.swing.JFrame {
         );
 
         jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jtf_descricao, jtf_valor});
+
+        jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_pesquisa_fornecedor, jtf_codigo_fornecedor, jtf_nome_fantasia});
 
         jb_salvar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/save.png"))); // NOI18N
@@ -479,7 +523,7 @@ public class FinanceiroPagar extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-        jcb_fornecedor.requestFocus();
+        jtf_nome_fantasia.requestFocus();
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -627,19 +671,6 @@ public class FinanceiroPagar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_data_vencimentoKeyPressed
 
-    private void jcb_fornecedorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_fornecedorKeyReleased
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_fornecedorKeyReleased
-
-    private void jcb_fornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_fornecedorKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_descricao.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_fornecedorKeyPressed
-
     private void jtf_valorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_valorKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -656,9 +687,32 @@ public class FinanceiroPagar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valor_pagoKeyPressed
 
-    private void jcb_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_fornecedorActionPerformed
+    private void jtf_nome_fantasiaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_fantasiaFocusLost
+        
+    }//GEN-LAST:event_jtf_nome_fantasiaFocusLost
+
+    private void jtf_nome_fantasiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_fantasiaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_pesquisa_fornecedor.doClick();
+        }
+    }//GEN-LAST:event_jtf_nome_fantasiaKeyPressed
+
+    private void jb_pesquisa_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisa_fornecedorActionPerformed
+        ConsultaFornecedorSaida consultaFornecedor = new ConsultaFornecedorSaida();
+        consultaFornecedor.janelapai = this;
+        consultaFornecedor.setVisible(true);
+        consultaFornecedor.jtf_consulta.setText(jtf_nome_fantasia.getText().trim());
+        setStatusTela(false);
+    }//GEN-LAST:event_jb_pesquisa_fornecedorActionPerformed
+
+    private void jb_pesquisa_fornecedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisa_fornecedorKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_pesquisa_fornecedor.doClick();
+        }
+        acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_fornecedorActionPerformed
+    }//GEN-LAST:event_jb_pesquisa_fornecedorKeyPressed
 
     /**
      * @param args the command line arguments
@@ -677,20 +731,23 @@ public class FinanceiroPagar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JButton jb_cancelar;
+    private javax.swing.JButton jb_pesquisa_fornecedor;
     private javax.swing.JButton jb_salvar;
-    private javax.swing.JComboBox jcb_fornecedor;
     private javax.swing.JLabel jl_codigo_locacao;
     private javax.swing.JLabel jl_codigo_locacao1;
     public static javax.swing.JPanel jp_locacao;
+    public static javax.swing.JTextField jtf_codigo_fornecedor;
     public javax.swing.JTextField jtf_codigo_lancamento_conta;
     public static javax.swing.JFormattedTextField jtf_data_pagamento;
     public static javax.swing.JFormattedTextField jtf_data_vencimento;
     private javax.swing.JTextField jtf_descricao;
     private javax.swing.JTextField jtf_documento;
+    public static javax.swing.JTextField jtf_nome_fantasia;
     private javax.swing.JTextField jtf_valor;
     private javax.swing.JTextField jtf_valor_pago;
     // End of variables declaration//GEN-END:variables
@@ -712,6 +769,9 @@ public class FinanceiroPagar extends javax.swing.JFrame {
         }
 
         try {
+            if(jtf_codigo_fornecedor.getText().length() == 0){
+                msgERRO = msgERRO + " *Fornecedor\n";
+            }
             if (jtf_data_vencimento.getForeground().equals(Color.red)) {
                 msgERRO = msgERRO + " *Data de Vencimento inválida\n";
             } else if (jtf_data_vencimento.getText().trim().length() < 10) {
@@ -735,7 +795,7 @@ public class FinanceiroPagar extends javax.swing.JFrame {
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
-            jcb_fornecedor.requestFocus();
+            jtf_nome_fantasia.requestFocus();
             return false;
         } else {
             return true;
@@ -770,9 +830,7 @@ public class FinanceiroPagar extends javax.swing.JFrame {
     }
 
     private void cadastrarLancamento() {
-        Fornecedor fornecedorCombo;
-        ItemDbGrid hashDbGrid1 = (ItemDbGrid) jcb_fornecedor.getSelectedItem();
-        fornecedorCombo = (Fornecedor) hashDbGrid1.getObjeto();
+                
         try {
             if (verificarCampos() == true) {
                 moeda = new Moeda();
@@ -787,7 +845,7 @@ public class FinanceiroPagar extends javax.swing.JFrame {
                 if(jtf_data_pagamento.getForeground().equals(Color.BLACK)){
                     lancamentoContas.setData_pagamento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_pagamento.getText()));
                 }
-                lancamentoContas.setFornecedor(fornecedorCombo);
+                lancamentoContas.setFornecedor(fornecedorSaida);
                 
                 ArquivoConfiguracao conf = new ArquivoConfiguracao();
 
@@ -796,7 +854,7 @@ public class FinanceiroPagar extends javax.swing.JFrame {
             lancamentoContas.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
             lancamentoContas.setUsuario(usuario);
                 
-                System.out.println("Código Fornecedor: " + fornecedorCombo.getCodigo_fornecedor());
+                
                 pool = new Pool();
                 LancamentoContaDAO lancamDAO = new LancamentoContaDAO(pool);
                 if(jtf_codigo_lancamento_conta.getText().equals("")){
@@ -852,5 +910,17 @@ public class FinanceiroPagar extends javax.swing.JFrame {
             return (true);
         }
         return false;
+    }
+    
+    public void carregarFornecedor(Fornecedor fornecedor) {
+        if (fornecedor != null) {
+            fornecedorSaida = fornecedor;
+            
+            jtf_codigo_fornecedor.setText(fornecedor.getCodigo_fornecedor().toString());
+            jtf_nome_fantasia.setText(fornecedor.getNome_fantasia());
+            
+            jtf_descricao.requestFocus();
+
+        }
     }
 }

@@ -18,8 +18,10 @@ import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.Colorir;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
+import static br.com.locadora.view.Financeiro.jtbl_contas;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,6 +34,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -467,7 +471,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
 
             Cliente cliente = new Cliente();
             cliente.setCodigo_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getCodigo_cliente());
-
+            cliente.setNome_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getNome_cliente());
             dependente.setCliente(cliente);
         }
         return dependente;
@@ -527,6 +531,22 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 ItemDbGrid hashDbGrid = new ItemDbGrid(dependente, dependente.getNome_dependente());
                 row.addRow(new Object[]{dependente.getCliente().getCodigo_cliente(), hashDbGrid, data_nascimento, dependente.getTipo_dependente(), status, dependente.getCodigo_dependente()});
             }
+            
+            TableCellRenderer tcr = new Colorir(null, this);            
+            TableColumn column = jtbl_cliente.getColumnModel().getColumn(0);
+            column.setCellRenderer(tcr);            
+            column = jtbl_cliente.getColumnModel().getColumn(1);
+            column.setCellRenderer(tcr);
+            column = jtbl_cliente.getColumnModel().getColumn(2);
+            column.setCellRenderer(tcr);
+            column = jtbl_cliente.getColumnModel().getColumn(3);
+            column.setCellRenderer(tcr);
+            column = jtbl_cliente.getColumnModel().getColumn(4);
+            column.setCellRenderer(tcr);
+            column = jtbl_cliente.getColumnModel().getColumn(5);
+            column.setCellRenderer(tcr);
+            
+            
             jtbl_cliente.requestFocus();
             jtbl_cliente.setSelectionMode(0);
 //            jtbl_cliente.requestFocus();

@@ -525,7 +525,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
         pool = new Pool();
         locacaoDAO = new LocacaoDAO(pool);
         itens = null;
-        itens = locacaoDAO.getCopiaDevolucaoTitulo(titulo);
+        itens = locacaoDAO.getCopiaDevolucaoTitulo(titulo,0);
         mostrar_locacoes(itens);
     }
 
@@ -533,7 +533,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
         pool = new Pool();
         locacaoDAO = new LocacaoDAO(pool);
         itens = null;
-        itens = locacaoDAO.getCopiaDevolucaoAtor(ator);
+        itens = locacaoDAO.getCopiaDevolucaoAtor(ator,0);
         mostrar_locacoes(itens);
     }
 
@@ -541,7 +541,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
         pool = new Pool();
         locacaoDAO = new LocacaoDAO(pool);
         itens = null;
-        itens = locacaoDAO.getCopiaDevolucaoCodigoBarras(codigo_barras);
+        itens = locacaoDAO.getCopiaDevolucaoCodigoBarras(codigo_barras,0);
         mostrar_locacoes(itens);
     }
 

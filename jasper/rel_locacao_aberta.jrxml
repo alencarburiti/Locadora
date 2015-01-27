@@ -113,7 +113,7 @@ WHERE
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="218" height="79" uuid="680badf0-a2ee-4227-ab26-71b4da7ffb8a"/>
-				<imageExpression><![CDATA["/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/jasper/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["/br/com/locadora/jasper/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

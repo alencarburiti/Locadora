@@ -10,6 +10,7 @@ import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.PromocaoLocacao;
+import br.com.locadora.model.bean.Usuario;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.PreparedStatement;
@@ -767,7 +768,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return resultado;
     }
 
-    public List<ItemLocacao> getCopiaDevolucaoCodigoBarras(String codigo_barras) {
+    public List<ItemLocacao> getCopiaDevolucaoCodigoBarras(String codigo_barras, Integer codigo_cliente) {
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -819,12 +820,70 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
             "        AND D.DEL_FLAG = 1\n" +
             "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
+            "        AND E.CLIENTE_CODIGO_CLIENTE = ? \n" +
+            "        AND B.CODIGO_BARRAS = ?;\n" +
+            "        ";
+        
+        String sqlSelect1 = "SELECT \n" +
+            "    C.CODIGO_LOCACAO,\n" +
+            "    D.CODIGO_ITEM_LOCACAO,\n" +
+            "    D.VALOR_LOCADO,\n" +
+            "    D.DATA_PREVISTA,\n" +
+            "    D.VALOR_PAGO,\n" +
+            "    E.CODIGO_DEPENDENTE,\n" +
+            "    E.NOME_DEPENDENTE,\n" +
+            "    E.CLIENTE_CODIGO_CLIENTE,\n" +
+            "    A.TITULO AS TITULO,\n" +
+            "    A.CODIGO_OBJETO,\n" +
+            "    F.DIAS AS DIARIA,\n" +
+            "    B.CODIGO_BARRAS,\n" +
+            "    B.CODIGO_COPIA,\n" +
+            "    F.MULTAS AS VALOR_MULTA_DIA,\n" +
+            "    F.CODIGO_DIARIA,\n" +
+            "    D.DATA_LOCACAO AS DATA_LOCACAO,\n" +
+            "    DATA_PREVISTA,\n" +
+            "    CURRENT_DATE AS DATA_ATUAL,\n" +
+            "    (CASE\n" +
+            "        WHEN (CURRENT_DATE - DATE(DATA_LOCACAO)) <= (DATA_PREVISTA - DATE(DATA_LOCACAO)) THEN 0\n" +
+            "        ELSE (CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO))\n" +
+            "    END) AS DIAS_MULTA,\n" +
+            "    CASE\n" +
+            "        WHEN\n" +
+            "            ((CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO)) * F.MULTAS) IS NULL\n" +
+            "                OR ((CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO)) * F.MULTAS < 0)\n" +
+            "        THEN\n" +
+            "            0\n" +
+            "        ELSE (CURRENT_DATE - DATE(DATA_LOCACAO) - (DATA_PREVISTA - DATE(DATA_LOCACAO))) * F.MULTAS\n" +
+            "    END AS VALOR_MULTA,\n" +
+            "    F.MULTAS\n" +
+            "FROM\n" +
+            "    OBJETO A,\n" +
+            "    COPIA B,\n" +
+            "    LOCACAO C,\n" +
+            "    ITEM_LOCACAO D,\n" +
+            "    DEPENDENTE E,\n" +
+            "    DIARIA F\n" +
+            "WHERE\n" +
+            "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n" +
+            "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
+            "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
+            "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND D.DEL_FLAG = 1\n" +
+            "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +                
             "        AND B.CODIGO_BARRAS = ?;\n" +
             "        ";
 
         try {
-            ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, codigo_barras);
+            
+            if(codigo_cliente == 0){
+                ps = con.prepareStatement(sqlSelect1);                
+                ps.setString(1, codigo_barras);
+            }else {
+                ps = con.prepareStatement(sqlSelect);
+                ps.setInt(1, codigo_cliente);                
+                ps.setString(2, codigo_barras);
+            }
 
             rs = ps.executeQuery();
 
@@ -843,7 +902,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
 
     }
 
-    public List<ItemLocacao> getCopiaDevolucaoTitulo(String titulo) {
+    public List<ItemLocacao> getCopiaDevolucaoTitulo(String titulo, Integer codigo_cliente) {
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -896,13 +955,70 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
             "        AND D.DEL_FLAG = 1\n" +
             "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
+            "        AND E.CLIENTE_CODIGO_CLIENTE = ? \n" +
+            "        AND A.TITULO LIKE ?;\n" +
+            "        ";
+        
+        String sqlSelect1 = "SELECT \n" +
+            "    C.CODIGO_LOCACAO,\n" +
+            "    D.CODIGO_ITEM_LOCACAO,\n" +
+            "    D.VALOR_LOCADO,\n" +
+            "    D.DATA_PREVISTA,\n" +
+            "    D.VALOR_PAGO,\n" +
+            "    D.PROMOCAO_LOCACAO_CODIGO_PROMOCAO_LOCACAO,\n" +
+            "    E.CODIGO_DEPENDENTE,\n" +
+            "    E.NOME_DEPENDENTE,\n" +
+            "    E.CLIENTE_CODIGO_CLIENTE,\n" +
+            "    A.TITULO AS TITULO,\n" +
+            "    A.CODIGO_OBJETO,\n" +
+            "    F.DIAS AS DIARIA,\n" +
+            "    B.CODIGO_BARRAS,\n" +
+            "    B.CODIGO_COPIA,\n" +
+            "    F.MULTAS AS VALOR_MULTA_DIA,\n" +
+            "    F.CODIGO_DIARIA,\n" +
+            "    D.DATA_LOCACAO AS DATA_LOCACAO,\n" +
+            "    DATA_PREVISTA,\n" +
+            "    CURRENT_DATE AS DATA_ATUAL,\n" +
+            "    (CASE\n" +
+            "        WHEN (CURRENT_DATE - DATE(DATA_LOCACAO)) <= (DATA_PREVISTA - DATE(DATA_LOCACAO)) THEN 0\n" +
+            "        ELSE (CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO))\n" +
+            "    END) AS DIAS_MULTA,\n" +
+            "    CASE\n" +
+            "        WHEN\n" +
+            "            ((CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO)) * F.MULTAS) IS NULL\n" +
+            "                OR ((CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO)) * F.MULTAS < 0)\n" +
+            "        THEN\n" +
+            "            0\n" +
+            "        ELSE (CURRENT_DATE - DATE(DATA_LOCACAO) - (DATA_PREVISTA - DATE(DATA_LOCACAO))) * F.MULTAS\n" +
+            "    END AS VALOR_MULTA,\n" +
+            "    F.MULTAS\n" +
+            "FROM\n" +
+            "    OBJETO A,\n" +
+            "    COPIA B,\n" +
+            "    LOCACAO C,\n" +
+            "    ITEM_LOCACAO D,\n" +
+            "    DEPENDENTE E,\n" +
+            "    DIARIA F\n" +
+            "WHERE\n" +
+            "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n" +
+            "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
+            "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
+            "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND D.DEL_FLAG = 1\n" +
+            "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +            
             "        AND A.TITULO LIKE ?;\n" +
             "        ";
 
         try {
-            ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, "%" + titulo + "%");
-
+            if(codigo_cliente == 0){
+                ps = con.prepareStatement(sqlSelect1);                
+                ps.setString(1, "%" + titulo + "%");                
+            }else {
+                ps = con.prepareStatement(sqlSelect);
+                ps.setInt(1, codigo_cliente);                
+                ps.setString(2, "%" + titulo + "%");                
+            }
             rs = ps.executeQuery();
 
             resultado = getListaLocacoes(rs);
@@ -917,7 +1033,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return resultado;
     }
 
-    public List<ItemLocacao> getCopiaDevolucaoAtor(String ator) {
+    public List<ItemLocacao> getCopiaDevolucaoAtor(String ator, Integer codigo_cliente) {
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -970,12 +1086,70 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
             "        AND D.DEL_FLAG = 1\n" +
             "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
+            "        AND E.CLIENTE_CODIGO_CLIENTE = ? \n" +
+            "        AND A.ELENCO LIKE ?;\n" +
+            "        ";
+        
+        String sqlSelect1 = "SELECT \n" +
+            "    C.CODIGO_LOCACAO,\n" +
+            "    D.CODIGO_ITEM_LOCACAO,\n" +
+            "    D.VALOR_LOCADO,\n" +
+            "    D.DATA_PREVISTA,\n" +
+            "    D.VALOR_PAGO,\n" +
+            "    D.PROMOCAO_LOCACAO_CODIGO_PROMOCAO_LOCACAO,\n" +                
+            "    E.CODIGO_DEPENDENTE,\n" +
+            "    E.NOME_DEPENDENTE,\n" +
+            "    E.CLIENTE_CODIGO_CLIENTE,\n" +
+            "    A.TITULO AS TITULO,\n" +
+                "    A.CODIGO_OBJETO,\n" +
+            "    F.DIAS AS DIARIA,\n" +
+            "    B.CODIGO_BARRAS,\n" +
+            "    B.CODIGO_COPIA,\n" +
+            "    F.MULTAS AS VALOR_MULTA_DIA,\n" +
+            "    F.CODIGO_DIARIA,\n" +
+            "    D.DATA_LOCACAO AS DATA_LOCACAO,\n" +
+            "    DATA_PREVISTA,\n" +
+            "    CURRENT_DATE AS DATA_ATUAL,\n" +
+            "    (CASE\n" +
+            "        WHEN (CURRENT_DATE - DATE(DATA_LOCACAO)) <= (DATA_PREVISTA - DATE(DATA_LOCACAO)) THEN 0\n" +
+            "        ELSE (CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO))\n" +
+            "    END) AS DIAS_MULTA,\n" +
+            "    CASE\n" +
+            "        WHEN\n" +
+            "            ((CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO)) * F.MULTAS) IS NULL\n" +
+            "                OR ((CURRENT_DATE - DATE(DATA_LOCACAO)) - (DATA_PREVISTA - DATE(DATA_LOCACAO)) * F.MULTAS < 0)\n" +
+            "        THEN\n" +
+            "            0\n" +
+            "        ELSE (CURRENT_DATE - DATE(DATA_LOCACAO) - (DATA_PREVISTA - DATE(DATA_LOCACAO))) * F.MULTAS\n" +
+            "    END AS VALOR_MULTA,\n" +
+            "    F.MULTAS\n" +
+            "FROM\n" +
+            "    OBJETO A,\n" +
+            "    COPIA B,\n" +
+            "    LOCACAO C,\n" +
+            "    ITEM_LOCACAO D,\n" +
+            "    DEPENDENTE E,\n" +
+            "    DIARIA F\n" +
+            "WHERE\n" +
+            "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n" +
+            "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
+            "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
+            "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND D.DEL_FLAG = 1\n" +
+            "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
             "        AND A.ELENCO LIKE ?;\n" +
             "        ";
 
         try {
-            ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, "%" + ator + "%");
+            if(codigo_cliente == 0){
+                ps = con.prepareStatement(sqlSelect1);                
+                ps.setString(1, "%"+ator+"%");
+            }else {
+                ps = con.prepareStatement(sqlSelect);
+                ps.setInt(1, codigo_cliente);                
+                ps.setString(2, "%"+ator+"%");
+            }
 
             rs = ps.executeQuery();
 
@@ -987,6 +1161,74 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    public List<ItemLocacao> getObjetoHistoricoLocacaoes(String nome_cliente, String nome_objeto) {
+        List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT DATA_LOCACAO, DATA_PREVISTA, DATA_DEVOLUCAO, VALOR_LOCADO, TITULO, NOME_DEPENDENTE, NOME_USUARIO FROM LOCACAO E, ITEM_LOCACAO A, COPIA B, OBJETO C, DEPENDENTE D,\n" +
+            "USUARIO F\n" +
+            "WHERE A.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "AND B.OBJETO_CODIGO_OBJETO = C.CODIGO_OBJETO\n" +
+            "AND A.LOCACAO_CODIGO_LOCACAO = E.CODIGO_LOCACAO\n" +
+            "AND E.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
+            "AND E.USUARIO_CODIGO_USUARIO = F.CODIGO_USUARIO\n" +
+            "AND NOME_DEPENDENTE LIKE ?\n" +
+            "AND TITULO LIKE ? ORDER BY DATA_LOCACAO, TITULO DESC LIMIT 0, 200;";
+        
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, "%"+nome_cliente+"%");
+            ps.setString(2, "%"+nome_objeto+"%");
+            
+            rs = ps.executeQuery();
+            
+            resultado = getListaHistoricoLocacoes(rs);
+            
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
+    private List<ItemLocacao> getListaHistoricoLocacoes(ResultSet rs) throws SQLException, ParseException {
+        List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        while (rs.next()) {
+            Copia copia = new Copia();
+            Objeto objeto = new Objeto();
+            objeto.setTitulo(rs.getString("TITULO"));
+            copia.setObjeto(objeto);
+            Usuario usuario = new Usuario();
+            usuario.setNome_usuario(rs.getString("NOME_USUARIO"));
+            
+            ItemLocacao itemLocacao = new ItemLocacao();
+            itemLocacao.setCopia(copia);            
+            
+            String dataString = rs.getString("DATA_LOCACAO");
+            Date dataLocacao = format.parse(dataString);
+            itemLocacao.setData_locacao(dataLocacao);
+                        
+            itemLocacao.setData_prevista(rs.getDate("DATA_PREVISTA"));
+            itemLocacao.setData_devolucao(rs.getDate("DATA_DEVOLUCAO"));
+            itemLocacao.setValor_locado(rs.getDouble("VALOR_LOCADO"));
+            
+            Locacao locacao = new Locacao();
+            Dependente dependente = new Dependente();
+            dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
+            locacao.setDependente(dependente);
+            locacao.setUsuario(usuario);
+            itemLocacao.setLocacao(locacao);
+                        
+            resultado.add(itemLocacao);
         }
         return resultado;
     }

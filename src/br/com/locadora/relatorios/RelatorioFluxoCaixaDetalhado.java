@@ -7,6 +7,8 @@ package br.com.locadora.relatorios;
 import br.com.locadora.conexao.InterfacePool;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +17,9 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
@@ -83,9 +87,11 @@ public class RelatorioFluxoCaixaDetalhado {
             rs.beforeFirst();//retornar ao primeiro resultado
             System.out.println("Total de Registro:"+totalRegistro);
             if (totalRegistro > 0) {
+                InputStream caminho = getClass().getResourceAsStream("rel_fluxo_caixa_detalhado.jasper");                                
+                
                 JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
                 Map parametros = new HashMap();
-                JasperPrint jasperPrint = JasperFillManager.fillReport("jasper/rel_fluxo_caixa_detalhado.jasper", parametros, jrRS);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(caminho, parametros, jrRS);
 //                JasperViewer jrviewer = new JasperViewer(jasperPrint); 
 //                jrviewer.setVisible(true);
                 JasperViewer.viewReport(jasperPrint, false);

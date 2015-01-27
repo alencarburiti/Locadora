@@ -17,7 +17,6 @@ import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Objeto;
-import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
@@ -74,7 +73,6 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         jtbl_locacao_aberto = new javax.swing.JTable();
         jrb_ator = new javax.swing.JRadioButton();
         jrb_codigo_barras = new javax.swing.JRadioButton();
-        jrb_codigo = new javax.swing.JRadioButton();
         jrb_titulo = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -188,16 +186,6 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                     }
                 });
 
-                buttonGroup1.add(jrb_codigo);
-                jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-                jrb_codigo.setText("Código Objeto");
-                jrb_codigo.setName("jrb_codigo"); // NOI18N
-                jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jrb_codigoActionPerformed(evt);
-                    }
-                });
-
                 buttonGroup1.add(jrb_titulo);
                 jrb_titulo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_titulo.setSelected(true);
@@ -228,15 +216,13 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                                         .addGap(0, 0, 0)
                                         .addComponent(jrb_ator)
                                         .addGap(0, 0, 0)
-                                        .addComponent(jrb_codigo_barras)
-                                        .addGap(0, 0, 0)
-                                        .addComponent(jrb_codigo))
+                                        .addComponent(jrb_codigo_barras))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel1))
-                                .addGap(402, 402, 402))))
+                                .addGap(436, 436, 436))))
                 );
                 jPanel1Layout.setVerticalGroup(
                     jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,8 +231,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jrb_titulo)
                             .addComponent(jrb_ator)
-                            .addComponent(jrb_codigo_barras)
-                            .addComponent(jrb_codigo))
+                            .addComponent(jrb_codigo_barras))
                         .addGap(0, 0, 0)
                         .addComponent(jLabel1)
                         .addGap(0, 0, 0)
@@ -349,29 +334,23 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         if (!janelapaiDevolucao.jtf_codigo_cliente.getText().equals("")) {
-            listaCopia_titulo("");
+            jb_buscar.doClick();
         } else {
             jtf_consulta.requestFocus();
         }
     }//GEN-LAST:event_formWindowOpened
 
     private void jb_buscarActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed1
-        try {
-            if (jrb_codigo.isSelected() == true) {
-                if (jtf_consulta.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Informe um código");
-                } else {
-                    listaCopia_codigo_objeto(Integer.parseInt(jtf_consulta.getText().trim()));
-                }
-            } else if (jrb_titulo.isSelected() == true) {
-                listaCopia_titulo(jtf_consulta.getText().trim());
-            } else if (jrb_codigo_barras.isSelected() == true) {
-                listaCopia_codigo_barras(jtf_consulta.getText().trim());
-            } else {
-                listaCopia_ator(jtf_consulta.getText().trim());
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultaCopiaDevolucao.class.getName()).log(Level.SEVERE, null, ex);
+        int codigo_cliente = 0;
+        if(janelapaiDevolucao.jtf_codigo_cliente.getText().length() != 0){
+            codigo_cliente = Integer.parseInt(janelapaiDevolucao.jtf_codigo_cliente.getText());
+        }
+        if (jrb_titulo.isSelected() == true) {
+            listaCopia_titulo(jtf_consulta.getText(), codigo_cliente);
+        } else if (jrb_codigo_barras.isSelected() == true) {
+            listaCopia_codigo_barras(jtf_consulta.getText(), codigo_cliente);
+        } else {
+            listaCopia_ator(jtf_consulta.getText(), codigo_cliente);
         }
     }//GEN-LAST:event_jb_buscarActionPerformed1
 
@@ -379,11 +358,6 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         jtf_consulta.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_codigo_barrasActionPerformed
-
-    private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
-        jtf_consulta.requestFocus();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_codigoActionPerformed
 
     private void jrb_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_tituloActionPerformed
         jtf_consulta.requestFocus();
@@ -396,24 +370,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
 
     private void jtf_consultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_consultaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            try {
-                if (jrb_codigo.isSelected() == true) {
-                    if (jtf_consulta.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Informe um código");
-                    } else {
-                        listaCopia_codigo_objeto(Integer.parseInt(jtf_consulta.getText().trim()));
-                    }
-                } else if (jrb_titulo.isSelected() == true) {
-                    listaCopia_titulo(jtf_consulta.getText().trim());
-                } else if (jrb_codigo_barras.isSelected() == true) {
-                    listaCopia_codigo_barras(jtf_consulta.getText().trim());
-                } else {
-                    listaCopia_ator(jtf_consulta.getText().trim());
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ConsultaCopiaDevolucao.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            jb_buscar.doClick();
         }
 
         acionarAtalho(evt);
@@ -458,7 +415,6 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JButton jb_ok;
     private javax.swing.JRadioButton jrb_ator;
-    private javax.swing.JRadioButton jrb_codigo;
     private javax.swing.JRadioButton jrb_codigo_barras;
     private javax.swing.JRadioButton jrb_titulo;
     public static javax.swing.JTable jtbl_locacao_aberto;
@@ -510,7 +466,8 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         return itemSelecionada;
     }
 
-    public void listaCopia_codigo_objeto(Integer codigo_objeto) throws SQLException {
+    public void listaCopia_codigo_objeto(Integer codigo_objeto, Integer codigo_cliente) throws SQLException {
+        
         pool = new Pool();
         locacaoDAO = new LocacaoDAO(pool);
         itens = null;
@@ -518,27 +475,27 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         mostrar_locacoes(itens);
     }
 
-    public void listaCopia_titulo(String titulo) {
+    public void listaCopia_titulo(String titulo, Integer codigo_cliente) {
         pool = new Pool();
         locacaoDAO = new LocacaoDAO(pool);
         itens = null;
-        itens = locacaoDAO.getCopiaDevolucaoTitulo(titulo);
+        itens = locacaoDAO.getCopiaDevolucaoTitulo(titulo, codigo_cliente);
         mostrar_locacoes(itens);
     }
 
-    public void listaCopia_ator(String ator) {
+    public void listaCopia_ator(String ator, Integer codigo_cliente) {
         pool = new Pool();
         locacaoDAO = new LocacaoDAO(pool);
         itens = null;
-        itens = locacaoDAO.getCopiaDevolucaoAtor(ator);
+        itens = locacaoDAO.getCopiaDevolucaoAtor(ator,codigo_cliente);
         mostrar_locacoes(itens);
     }
 
-    public void listaCopia_codigo_barras(String codigo_barras) {
+    public void listaCopia_codigo_barras(String codigo_barras, Integer codigo_cliente) {
         pool = new Pool();
         locacaoDAO = new LocacaoDAO(pool);
         itens = null;
-        itens = locacaoDAO.getCopiaDevolucaoCodigoBarras(codigo_barras);
+        itens = locacaoDAO.getCopiaDevolucaoCodigoBarras(codigo_barras,codigo_cliente);
         mostrar_locacoes(itens);
     }    
 

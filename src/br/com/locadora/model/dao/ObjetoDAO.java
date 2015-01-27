@@ -1,9 +1,13 @@
 package br.com.locadora.model.dao;
 
 import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.model.bean.Diaria;
+import br.com.locadora.model.bean.Copia;
+import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Genero;
+import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.Objeto;
+import br.com.locadora.model.bean.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -95,6 +99,8 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         }
         return resultado;
     }
+    
+    
     
     @Override
     public List<Objeto> getObjeto_ator(String ator) throws SQLException {
@@ -204,6 +210,8 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         }
         return resultado;
     }
+    
+    
     
     @Override
     public Objeto salvar(Objeto objeto) throws SQLException {

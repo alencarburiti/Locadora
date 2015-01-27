@@ -235,8 +235,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jtbl_pacotes_adquiridos = new javax.swing.JTable();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jtbl_pacotes_adquiridos1 = new javax.swing.JTable();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -667,7 +665,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                             .addComponent(jtf_complemento)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jtf_codigo_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(756, Short.MAX_VALUE))
+                        .addContainerGap(748, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -1052,7 +1050,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jb_eliminar_dependente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 861, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
 
@@ -1159,7 +1157,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 863, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1167,53 +1165,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         );
 
         jtp_cliente.addTab("Combos Adquiridos", jPanel1);
-
-        jScrollPane7.setName("jScrollPane7"); // NOI18N
-
-        jtbl_pacotes_adquiridos1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jtbl_pacotes_adquiridos1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nome do Objeto", "Data Locação", "Data Devolução", "Valor Locado"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jtbl_pacotes_adquiridos1.setName("jtbl_pacotes_adquiridos1"); // NOI18N
-        jtbl_pacotes_adquiridos1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtbl_pacotes_adquiridos1MouseClicked(evt);
-            }
-        });
-        jtbl_pacotes_adquiridos1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtbl_pacotes_adquiridos1KeyPressed(evt);
-            }
-        });
-        jScrollPane7.setViewportView(jtbl_pacotes_adquiridos1);
-        if (jtbl_pacotes_adquiridos1.getColumnModel().getColumnCount() > 0) {
-            jtbl_pacotes_adquiridos1.getColumnModel().getColumn(0).setPreferredWidth(130);
-            jtbl_pacotes_adquiridos1.getColumnModel().getColumn(1).setPreferredWidth(20);
-            jtbl_pacotes_adquiridos1.getColumnModel().getColumn(2).setPreferredWidth(20);
-            jtbl_pacotes_adquiridos1.getColumnModel().getColumn(3).setPreferredWidth(10);
-        }
-
-        jtp_cliente.addTab("Histórico de Locações", jScrollPane7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1227,7 +1178,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jtp_cliente)
+                .addComponent(jtp_cliente, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
 
@@ -1262,44 +1213,150 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         retornaJanelaPai();
     }//GEN-LAST:event_formWindowClosed
 
-    private void jb_eliminar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteActionPerformed
-        removeDependente(jtbl_dependente);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar_dependenteActionPerformed
-
-    private void jrb_ativo_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_ativo_dependenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_ativo_dependenteActionPerformed
-
-    private void jrb_inativo_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_inativo_dependenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_inativo_dependenteActionPerformed
-
-    private void jPanel2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel2FocusGained
-        jtf_nome_dependente.requestFocus();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel2FocusGained
-
-    private void jb_adicionar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteKeyPressed
+    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            adicionarDependente();
+            jb_salvar.doClick();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_dependenteKeyPressed
+    }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
+
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        cadastrarAlterarCliente();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void jtp_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtp_clienteMouseClicked
         jtf_nome_dependente.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_jtp_clienteMouseClicked
 
-    private void jtf_cpf_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteActionPerformed
+    private void jtbl_pacotes_adquiridosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridosKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_cpf_dependenteActionPerformed
+    }//GEN-LAST:event_jtbl_pacotes_adquiridosKeyPressed
 
-    private void jtf_cpf_dependenteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteFocusGained
+    private void jtbl_pacotes_adquiridosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridosMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_cpf_dependenteFocusGained
+    }//GEN-LAST:event_jtbl_pacotes_adquiridosMouseClicked
+
+    private void jPanel2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel2FocusGained
+        jtf_nome_dependente.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2FocusGained
+
+    private void jtf_data_nascimento_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_nascimento_dependenteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_telefone_dependente.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_data_nascimento_dependenteKeyPressed
+
+    private void jtf_data_nascimento_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_data_nascimento_dependenteFocusLost
+        try {
+            Data data = new Data();
+            int idade;
+
+            if (jtf_data_nascimento_dependente.getText().trim().length() < 10) {
+                jtf_data_nascimento_dependente.setForeground(Color.red);
+                //                jtf_data_nascimento_dependente.requestFocus();
+            } else if (jtf_data_nascimento_dependente.getText().equals("  /  /    ")) {
+                jtf_data_nascimento_dependente.setForeground(Color.red);
+                //                jtf_data_nascimento_dependente.requestFocus();
+            } else {
+                if (validaData(jtf_data_nascimento_dependente.getText())) {
+                    jtf_data_nascimento_dependente.setForeground(Color.black);
+
+                } else {
+                    jtf_data_nascimento_dependente.setForeground(Color.red);
+                    //                    jtf_data_nascimento_dependente.requestFocus();
+                }
+
+            }
+        } catch (ParseException ex) {
+            jtf_data_nascimento_dependente.setForeground(Color.red);
+        } catch (NumberFormatException ex) {
+            jtf_data_nascimento_dependente.setText("  /  /    ");
+            jtf_data_nascimento_dependente.setForeground(Color.red);
+        }
+    }//GEN-LAST:event_jtf_data_nascimento_dependenteFocusLost
+
+    private void jtf_nome_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_data_nascimento_dependente.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_dependenteKeyPressed
+
+    private void jtf_nome_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteFocusLost
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_dependenteFocusLost
+
+    private void jtf_nome_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_dependenteActionPerformed
+
+    private void jtf_telefone_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jcb_parentesco.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefone_dependenteKeyPressed
+
+    private void jtf_telefone_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusLost
+        System.out.println(jtf_telefone_dependente.getText().trim().length());
+        if (jtf_telefone_dependente.getText().trim().length() != 14) {
+            jtf_telefone_dependente.setForeground(Color.red);
+            //            jtf_telefone_dependente.requestFocus();
+        } else {
+            jtf_telefone_dependente.setForeground(Color.black);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefone_dependenteFocusLost
+
+    private void jcb_parentescoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_parentescoKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_cpf_dependente.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_parentescoKeyPressed
+
+    private void jcb_parentescoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_parentescoFocusGained
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_parentescoFocusGained
+
+    private void jcb_parentescoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_parentescoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_parentescoActionPerformed
+
+    private void jtf_cpf_dependenteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteKeyReleased
+
+    private void jtf_cpf_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jb_adicionar_dependente.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteKeyPressed
 
     private void jtf_cpf_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteFocusLost
         try {
@@ -1321,187 +1378,217 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtf_cpf_dependenteFocusLost
 
-    private void jtf_cpf_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteKeyPressed
+    private void jtf_cpf_dependenteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteFocusGained
+
+    private void jtf_cpf_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cpf_dependenteActionPerformed
+
+    private void jtbl_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_dependenteKeyPressed
         acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_adicionar_dependente.requestFocus();
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            jb_eliminar_dependente.doClick();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_cpf_dependenteKeyPressed
+    }//GEN-LAST:event_jtbl_dependenteKeyPressed
 
-    private void jtf_cpf_dependenteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_dependenteKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_cpf_dependenteKeyReleased
-
-    private void jcb_parentescoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_parentescoKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_cpf_dependente.requestFocus();
+    private void jtbl_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_dependenteMouseClicked
+        if (evt.getClickCount() > 1) {
+            alteraDependente();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_parentescoKeyPressed
+    }//GEN-LAST:event_jtbl_dependenteMouseClicked
 
-    private void jtf_telefone_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteKeyPressed
+    private void jrb_inativo_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_inativo_dependenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_inativo_dependenteActionPerformed
+
+    private void jrb_ativo_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_ativo_dependenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_ativo_dependenteActionPerformed
+
+    private void jb_eliminar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jcb_parentesco.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteKeyPressed
+            if (action.equals("salvar")) {
+                removeDependente(jtbl_dependente);
+            } else if (action.equals("alterar")) {
+                jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/adicionar_item.png")));
+                jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N
 
-    private void jtf_nome_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_dependenteActionPerformed
-
-    private void jtf_nome_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteFocusLost
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_dependenteFocusLost
-
-    private void jtf_nome_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_dependenteKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_data_nascimento_dependente.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_dependenteKeyPressed
-
-    private void jtf_data_nascimento_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_data_nascimento_dependenteFocusLost
-        try {
-            Data data = new Data();
-            int idade;
-
-            if (jtf_data_nascimento_dependente.getText().trim().length() < 10) {
-                jtf_data_nascimento_dependente.setForeground(Color.red);
-//                jtf_data_nascimento_dependente.requestFocus();
-            } else if (jtf_data_nascimento_dependente.getText().equals("  /  /    ")) {
-                jtf_data_nascimento_dependente.setForeground(Color.red);
-//                jtf_data_nascimento_dependente.requestFocus();
-            } else {
-                if (validaData(jtf_data_nascimento_dependente.getText())) {
-                    jtf_data_nascimento_dependente.setForeground(Color.black);
-
-                } else {
-                    jtf_data_nascimento_dependente.setForeground(Color.red);
-//                    jtf_data_nascimento_dependente.requestFocus();
-                }
-
+                jtf_nome_dependente.setText("");
+                jtf_nome_dependente.requestFocus();
+                jtf_data_nascimento_dependente.setText("");
+                jtf_cpf_dependente.setText("");
+                jtf_telefone_dependente.setText("");
+                jcb_parentesco.setSelectedIndex(0);
             }
-        } catch (ParseException ex) {
-            jtf_data_nascimento_dependente.setForeground(Color.red);
-        } catch (NumberFormatException ex) {            
-            jtf_data_nascimento_dependente.setText("  /  /    ");
-            jtf_data_nascimento_dependente.setForeground(Color.red);
         }
-    }//GEN-LAST:event_jtf_data_nascimento_dependenteFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_dependenteKeyPressed
 
-    private void jtf_data_nascimento_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_nascimento_dependenteKeyPressed
+    private void jb_eliminar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteActionPerformed
+        removeDependente(jtbl_dependente);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_dependenteActionPerformed
+
+    private void jb_eliminar_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteMouseClicked
+        if (evt.getClickCount() == 1) {
+            if (action.equals("salvar")) {
+                removeDependente(jtbl_dependente);
+            } else if (action.equals("alterar")) {
+                jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png")));
+                jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N
+
+                jtf_nome_dependente.setText("");
+                jtf_nome_dependente.requestFocus();
+                jtf_data_nascimento_dependente.setText("");
+                jtf_cpf_dependente.setText("");
+                jtf_telefone_dependente.setText("");
+                jcb_parentesco.setSelectedIndex(0);
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_dependenteMouseClicked
+
+    private void jb_adicionar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_telefone_dependente.requestFocus();
+            adicionarDependente();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_data_nascimento_dependenteKeyPressed
+    }//GEN-LAST:event_jb_adicionar_dependenteKeyPressed
 
-    private void jtf_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_empresaActionPerformed
+    private void jb_adicionar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_empresaActionPerformed
+    }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
 
-    private void jtf_empresaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_empresaFocusGained
+    private void jb_adicionar_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteMouseClicked
+        if (evt.getClickCount() == 1) {
+            adicionarDependente();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_adicionar_dependenteMouseClicked
 
-    }//GEN-LAST:event_jtf_empresaFocusGained
+    private void jta_observacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jta_observacaoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jta_observacaoKeyPressed
 
-    private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_empresaKeyPressed
+    private void jtbl_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_telefoneKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            removeTelefone(jtbl_telefone);
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_telefoneKeyPressed
+
+    private void jb_eliminar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            removeTelefone(jtbl_telefone);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_telefoneKeyPressed
+
+    private void jb_eliminar_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_eliminar_telefoneActionPerformed
+
+    private void jb_adicionar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_telefone.requestFocus();
+            alimentarTelefone();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_empresaKeyPressed
+    }//GEN-LAST:event_jb_adicionar_telefoneKeyPressed
 
-    private void jtf_nome_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_clienteActionPerformed
+    private void jb_adicionar_telefoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneMouseClicked
+        if (evt.getClickCount() == 1) {
+            alimentarTelefone();
+        }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteActionPerformed
+    }//GEN-LAST:event_jb_adicionar_telefoneMouseClicked
 
-    private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
+    private void jtf_telefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefoneKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefoneKeyReleased
+
+    private void jtf_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefoneKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_data_nascimento.requestFocus();
+            jb_adicionar_telefone.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_nome_clienteKeyPressed
+    }//GEN-LAST:event_jtf_telefoneKeyPressed
 
-    private void jtf_profissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_profissaoActionPerformed
+    private void jtf_telefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefoneFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_profissaoActionPerformed
+    }//GEN-LAST:event_jtf_telefoneFocusLost
 
-    private void jtf_profissaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_profissaoKeyPressed
+    private void jtf_telefoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefoneFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefoneFocusGained
+
+    private void jtf_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_telefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_telefoneActionPerformed
+
+    private void jtf_cpf_clienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteKeyReleased
+
+    }//GEN-LAST:event_jtf_cpf_clienteKeyReleased
+
+    private void jtf_cpf_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_empresa.requestFocus();
+            jtf_email.requestFocus();
         }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_profissaoKeyPressed
+    }//GEN-LAST:event_jtf_cpf_clienteKeyPressed
 
-    private void jtf_enderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_enderecoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_enderecoActionPerformed
+    private void jtf_cpf_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusLost
+        try {
 
-    private void jtf_enderecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_enderecoKeyPressed
+            ValidaCPF valida = new ValidaCPF();
+            if (jtf_cpf_cliente.getText().trim().length() == 14) {
+                if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
+                    if (verificaCadastro(jtf_cpf_cliente.getText()) == true) {
+                        jtf_cpf_cliente.setForeground(Color.black);
+                    } else {
+                        jtf_cpf_cliente.setForeground(Color.red);
+                        //                        jtf_cpf_cliente.requestFocus();
+                    }
+                } else {
+                    jtf_cpf_cliente.setForeground(Color.red);
+                    //                    jtf_cpf_cliente.requestFocus();
+                }
+            } else {
+                jtf_cpf_cliente.setForeground(Color.red);
+                //                jtf_cpf_cliente.requestFocus();
+            }
+        } catch (Exception e) {
+            jtf_cpf_cliente.setForeground(Color.red);
+            //            jtf_cpf_cliente.requestFocus();
+        }
+    }//GEN-LAST:event_jtf_cpf_clienteFocusLost
+
+    private void jtf_cpf_clienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusGained
+
+    }//GEN-LAST:event_jtf_cpf_clienteFocusGained
+
+    private void jtf_cpf_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteActionPerformed
+
+    }//GEN-LAST:event_jtf_cpf_clienteActionPerformed
+
+    private void jtf_data_nascimentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_nascimentoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_bairro.requestFocus();
+            jtf_cpf_cliente.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_enderecoKeyPressed
-
-    private void jtf_bairroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_bairroKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_complemento.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_bairroKeyPressed
-
-    private void jtf_complementoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_complementoKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_cidade.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_complementoKeyPressed
-
-    private void jtf_emailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_emailKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_endereco.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_emailKeyPressed
-
-    private void jrb_ativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_ativoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_ativoActionPerformed
-
-    private void jtf_estadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_estadoKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_profissao.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_estadoKeyPressed
-
-    private void jtf_cidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_cidadeActionPerformed
-
-    private void jtf_cidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cidadeKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_estado.requestFocus();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_cidadeKeyPressed
+    }//GEN-LAST:event_jtf_data_nascimentoKeyPressed
 
     private void jtf_data_nascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_data_nascimentoFocusLost
         try {
@@ -1514,16 +1601,16 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                 jtf_data_nascimento.setForeground(Color.red);
             } else {
                 if (validaData(jtf_data_nascimento.getText())) {
-                    idade = data.calcularIdade(new SimpleDateFormat("dd/MM/yyyy").parse((String) CadastraAlteraCliente.jtf_data_nascimento.getText()));
+                    idade = data.calcularIdade(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_nascimento.getText()));
                     if (idade < 18) {
                         int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente menor de Idade, Desejar continuar?", "Atenção", JOptionPane.YES_NO_OPTION);
                         if (selectedOption == JOptionPane.YES_NO_OPTION) {
-                            jtf_data_nascimento.setForeground(Color.black);                            
+                            jtf_data_nascimento.setForeground(Color.black);
                         } else {
                             jtf_data_nascimento.setForeground(Color.red);
                         }
                     } else {
-                        jtf_data_nascimento.setForeground(Color.black);                        
+                        jtf_data_nascimento.setForeground(Color.black);
                     }
                 } else {
                     jtf_data_nascimento.setForeground(Color.red);
@@ -1538,256 +1625,110 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtf_data_nascimentoFocusLost
 
-    private void jtf_data_nascimentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_nascimentoKeyPressed
+    private void jtf_cidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cidadeKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_cpf_cliente.requestFocus();
+            jtf_estado.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_data_nascimentoKeyPressed
+    }//GEN-LAST:event_jtf_cidadeKeyPressed
 
-    private void jtf_cpf_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteActionPerformed
+    private void jtf_cidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_cidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_cidadeActionPerformed
 
-    }//GEN-LAST:event_jtf_cpf_clienteActionPerformed
-
-    private void jtf_cpf_clienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusGained
-
-    }//GEN-LAST:event_jtf_cpf_clienteFocusGained
-
-    private void jtf_cpf_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteFocusLost
-        try {
-
-            ValidaCPF valida = new ValidaCPF();
-            if (jtf_cpf_cliente.getText().trim().length() == 14) {
-                if (valida.isCPF(jtf_cpf_cliente.getText()) == true) {
-                    if (verificaCadastro(jtf_cpf_cliente.getText()) == true) {
-                        jtf_cpf_cliente.setForeground(Color.black);
-                    } else {
-                        jtf_cpf_cliente.setForeground(Color.red);
-//                        jtf_cpf_cliente.requestFocus();
-                    }
-                } else {
-                    jtf_cpf_cliente.setForeground(Color.red);
-//                    jtf_cpf_cliente.requestFocus();
-                }
-            } else {
-                jtf_cpf_cliente.setForeground(Color.red);
-//                jtf_cpf_cliente.requestFocus();
-            }
-        } catch (Exception e) {
-            jtf_cpf_cliente.setForeground(Color.red);
-//            jtf_cpf_cliente.requestFocus();
-        }
-
-    }//GEN-LAST:event_jtf_cpf_clienteFocusLost
-
-    private void jtf_cpf_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteKeyPressed
+    private void jtf_estadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_estadoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_email.requestFocus();
+            jtf_profissao.requestFocus();
         }
-    }//GEN-LAST:event_jtf_cpf_clienteKeyPressed
-
-    private void jtf_cpf_clienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_cpf_clienteKeyReleased
-
-    }//GEN-LAST:event_jtf_cpf_clienteKeyReleased
-
-    private void jtf_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_telefoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneActionPerformed
+    }//GEN-LAST:event_jtf_estadoKeyPressed
 
-    private void jtf_telefoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefoneFocusGained
+    private void jrb_ativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_ativoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneFocusGained
+    }//GEN-LAST:event_jrb_ativoActionPerformed
 
-    private void jtf_telefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefoneFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneFocusLost
-
-    private void jtf_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefoneKeyPressed
+    private void jtf_emailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_emailKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_adicionar_telefone.requestFocus();
+            jtf_endereco.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneKeyPressed
-
-    private void jtf_telefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_telefoneKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefoneKeyReleased
-
-    private void jb_adicionar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            alimentarTelefone();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_telefoneKeyPressed
-
-    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
-        acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_salvar.doClick();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarKeyPressed
+    }//GEN-LAST:event_jtf_emailKeyPressed
 
     private void jtf_emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_emailFocusGained
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_emailFocusGained
 
-    private void jb_eliminar_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteKeyPressed
+    private void jtf_complementoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_complementoKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (action.equals("salvar")) {
-                removeDependente(jtbl_dependente);
-            } else if (action.equals("alterar")) {
-                jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/adicionar_item.png")));
-                jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/remove_item.png"))); // NOI18N            
-
-                jtf_nome_dependente.setText("");
-                jtf_nome_dependente.requestFocus();
-                jtf_data_nascimento_dependente.setText("");
-                jtf_cpf_dependente.setText("");
-                jtf_telefone_dependente.setText("");
-                jcb_parentesco.setSelectedIndex(0);
-            }
+            jtf_cidade.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar_dependenteKeyPressed
+    }//GEN-LAST:event_jtf_complementoKeyPressed
 
-    private void jtbl_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_dependenteKeyPressed
+    private void jtf_bairroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_bairroKeyPressed
         acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            jb_eliminar_dependente.doClick();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_complemento.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_dependenteKeyPressed
+    }//GEN-LAST:event_jtf_bairroKeyPressed
 
-    private void jcb_parentescoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jcb_parentescoFocusGained
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_parentescoFocusGained
-
-    private void jtbl_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_telefoneKeyPressed
+    private void jtf_enderecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_enderecoKeyPressed
         acionarAtalho(evt);
-        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            removeTelefone(jtbl_telefone);
-        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_telefoneKeyPressed
-
-    private void jb_adicionar_telefoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_telefoneMouseClicked
-        if (evt.getClickCount() == 1) {
-            alimentarTelefone();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_bairro.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_telefoneMouseClicked
+    }//GEN-LAST:event_jtf_enderecoKeyPressed
 
-    private void jb_eliminar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneKeyPressed
+    private void jtf_enderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_enderecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_enderecoActionPerformed
+
+    private void jtf_profissaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_profissaoKeyPressed
         acionarAtalho(evt);
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            removeTelefone(jtbl_telefone);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_empresa.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar_telefoneKeyPressed
+    }//GEN-LAST:event_jtf_profissaoKeyPressed
 
-    private void jb_adicionar_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteMouseClicked
-        if (evt.getClickCount() == 1) {
-            adicionarDependente();
+    private void jtf_profissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_profissaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_profissaoActionPerformed
+
+    private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_nome_clienteKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_data_nascimento.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_dependenteMouseClicked
+    }//GEN-LAST:event_jtf_nome_clienteKeyPressed
 
-    private void jb_eliminar_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_eliminar_dependenteMouseClicked
-        if (evt.getClickCount() == 1) {
-            if (action.equals("salvar")) {
-                removeDependente(jtbl_dependente);
-            } else if (action.equals("alterar")) {
-                jb_adicionar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_add.png")));
-                jb_eliminar_dependente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/edit_remove.png"))); // NOI18N            
+    private void jtf_nome_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_nome_clienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_nome_clienteActionPerformed
 
-                jtf_nome_dependente.setText("");
-                jtf_nome_dependente.requestFocus();
-                jtf_data_nascimento_dependente.setText("");
-                jtf_cpf_dependente.setText("");
-                jtf_telefone_dependente.setText("");
-                jcb_parentesco.setSelectedIndex(0);
-            }
+    private void jtf_empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_empresaKeyPressed
+        acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_telefone.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar_dependenteMouseClicked
+    }//GEN-LAST:event_jtf_empresaKeyPressed
 
-    private void jcb_parentescoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_parentescoActionPerformed
+    private void jtf_empresaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_empresaFocusGained
+
+    }//GEN-LAST:event_jtf_empresaFocusGained
+
+    private void jtf_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_empresaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_parentescoActionPerformed
-
-    private void jtf_telefone_dependenteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_telefone_dependenteFocusLost
-        System.out.println(jtf_telefone_dependente.getText().trim().length());
-        if (jtf_telefone_dependente.getText().trim().length() != 14) {
-            jtf_telefone_dependente.setForeground(Color.red);
-//            jtf_telefone_dependente.requestFocus();
-        } else {
-            jtf_telefone_dependente.setForeground(Color.black);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_telefone_dependenteFocusLost
-
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        acionarAtalho(evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formKeyPressed
-
-    private void jtbl_dependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_dependenteMouseClicked
-        if (evt.getClickCount() > 1) {
-            alteraDependente();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_dependenteMouseClicked
-
-    private void jb_eliminar_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_eliminar_telefoneActionPerformed
-
-    private void jb_adicionar_dependenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_dependenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_adicionar_dependenteActionPerformed
-
-    private void jtbl_pacotes_adquiridosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridosMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_pacotes_adquiridosMouseClicked
-
-    private void jtbl_pacotes_adquiridosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridosKeyPressed
-        acionarAtalho(evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_pacotes_adquiridosKeyPressed
-
-    private void jtbl_pacotes_adquiridos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridos1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_pacotes_adquiridos1MouseClicked
-
-
-    private void jtbl_pacotes_adquiridos1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_pacotes_adquiridos1KeyPressed
-        acionarAtalho(evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtbl_pacotes_adquiridos1KeyPressed
-
-    private void jta_observacaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jta_observacaoKeyPressed
-        acionarAtalho(evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jta_observacaoKeyPressed
-
-    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
-        acionarAtalho(evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_cancelarKeyPressed
-
-    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
-        cadastrarAlterarCliente();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarActionPerformed
+    }//GEN-LAST:event_jtf_empresaActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1827,7 +1768,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JButton jb_adicionar_dependente;
     private javax.swing.JButton jb_adicionar_telefone;
     private javax.swing.JButton jb_cancelar;
@@ -1842,7 +1782,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     public static javax.swing.JTextArea jta_observacao;
     public static javax.swing.JTable jtbl_dependente;
     public static javax.swing.JTable jtbl_pacotes_adquiridos;
-    public static javax.swing.JTable jtbl_pacotes_adquiridos1;
     public static javax.swing.JTable jtbl_telefone;
     public static javax.swing.JTextField jtf_bairro;
     public static javax.swing.JTextField jtf_cidade;

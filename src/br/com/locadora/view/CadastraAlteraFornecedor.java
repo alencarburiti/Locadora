@@ -32,7 +32,7 @@ import javax.swing.text.MaskFormatter;
 public class CadastraAlteraFornecedor extends javax.swing.JFrame {
 
     public MenuFornecedor janelapai;
-
+    public ConsultaFornecedorSaida janelapai2;
     public MaskFormatter formatoCNPJ, formatoTelefone, telefoneVendedor;
     public AcessoUsuario acesso;
     public FornecedorDAO fornecedorDAO;
@@ -874,6 +874,9 @@ public class CadastraAlteraFornecedor extends javax.swing.JFrame {
             janelapai.setStatusTela(true);
             janelapai.getFornecedores();
             janelapai.cadastra_altera_fornecedor = null;
+        } else if(janelapai2 != null){
+            janelapai2.setStatusTela(true);            
+            janelapai2.cadastraAlteraFornecedor = null;
         }
     }
 }

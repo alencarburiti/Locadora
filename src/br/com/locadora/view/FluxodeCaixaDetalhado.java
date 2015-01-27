@@ -17,6 +17,7 @@ import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -48,10 +49,17 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jtbl_lancamento_caixa = new javax.swing.JTable();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jb_sair = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jl_total = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtbl_lancamento_caixa = new javax.swing.JTable();
+        jrb_locacao_devolucao = new javax.swing.JRadioButton();
+        jrb_venda = new javax.swing.JRadioButton();
+        jrb_todos = new javax.swing.JRadioButton();
+        jb_cliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Fluxo de Caixa Detalhado");
@@ -69,6 +77,48 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
                 formKeyPressed(evt);
             }
         });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_sairActionPerformed(evt);
+            }
+        });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(350, 350, 350)
+                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(427, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Fluxo Detalhado"));
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        jl_total.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jl_total.setText("Total: ");
+        jl_total.setName("jl_total"); // NOI18N
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -103,6 +153,11 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
                 jtbl_lancamento_caixaMouseClicked(evt);
             }
         });
+        jtbl_lancamento_caixa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_lancamento_caixaKeyPressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtbl_lancamento_caixa);
         if (jtbl_lancamento_caixa.getColumnModel().getColumnCount() > 0) {
             jtbl_lancamento_caixa.getColumnModel().getColumn(0).setPreferredWidth(130);
@@ -113,34 +168,90 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
             jtbl_lancamento_caixa.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
-        jPanel1.setName("jPanel1"); // NOI18N
-
-        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
-        jb_sair.setText("Sair");
-        jb_sair.setName("jb_sair"); // NOI18N
-        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_sair.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jrb_locacao_devolucao);
+        jrb_locacao_devolucao.setSelected(true);
+        jrb_locacao_devolucao.setText("Locação / Devolução");
+        jrb_locacao_devolucao.setName("jrb_locacao_devolucao"); // NOI18N
+        jrb_locacao_devolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_sairActionPerformed(evt);
+                jrb_locacao_devolucaoActionPerformed(evt);
+            }
+        });
+        jrb_locacao_devolucao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_locacao_devolucaoKeyPressed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(350, 350, 350)
-                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(346, Short.MAX_VALUE))
+        buttonGroup1.add(jrb_venda);
+        jrb_venda.setText("Venda");
+        jrb_venda.setName("jrb_venda"); // NOI18N
+        jrb_venda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_vendaActionPerformed(evt);
+            }
+        });
+        jrb_venda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_vendaKeyPressed(evt);
+            }
+        });
+
+        buttonGroup1.add(jrb_todos);
+        jrb_todos.setText("Todos");
+        jrb_todos.setName("jrb_todos"); // NOI18N
+        jrb_todos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_todosActionPerformed(evt);
+            }
+        });
+
+        jb_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
+        jb_cliente.setName("jb_cliente"); // NOI18N
+        jb_cliente.setPreferredSize(new java.awt.Dimension(28, 28));
+        jb_cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_clienteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jrb_locacao_devolucao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jrb_venda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jrb_todos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jrb_locacao_devolucao)
+                        .addComponent(jrb_venda))
+                    .addComponent(jrb_todos)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jl_total))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -149,17 +260,19 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10))
         );
@@ -192,8 +305,49 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
+
+    private void jrb_locacao_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_locacao_devolucaoActionPerformed
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_locacao_devolucaoActionPerformed
+
+    private void jrb_vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_vendaActionPerformed
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_vendaActionPerformed
+
+    private void jrb_locacao_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_locacao_devolucaoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_locacao_devolucaoKeyPressed
+
+    private void jrb_vendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_vendaKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_vendaKeyPressed
+
+    private void jtbl_lancamento_caixaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_lancamento_caixaKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_lancamento_caixaKeyPressed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void jrb_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_todosActionPerformed
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_todosActionPerformed
+
+    private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_clienteActionPerformed
+        lancamentoCaixa();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_clienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,17 +362,32 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton jb_cliente;
     private javax.swing.JButton jb_sair;
+    private javax.swing.JLabel jl_total;
+    private javax.swing.JRadioButton jrb_locacao_devolucao;
+    private javax.swing.JRadioButton jrb_todos;
+    private javax.swing.JRadioButton jrb_venda;
     public static javax.swing.JTable jtbl_lancamento_caixa;
     // End of variables declaration//GEN-END:variables
 
     public void lancamentoCaixa() {
         pool = new Pool();
         LancamentoDAO lancDAO = new LancamentoDAO(pool);
-        lancamentos = lancDAO.getLancamentoDetalhado();
-        mostrarLancamentoCaixa(lancamentos);
+        if(jrb_locacao_devolucao.isSelected()){
+            lancamentos = lancDAO.getLancamentoDetalhadoLocacaoDevolucao();
+            mostrarLancamentoCaixa(lancamentos);            
+        } else if(jrb_venda.isSelected()){
+            lancamentos = lancDAO.getLancamentoDetalhadoVenda();
+            mostrarLancamentoCaixa(lancamentos);            
+        } else {
+            lancamentos = lancDAO.getLancamentoDetalhadoTodos();
+            mostrarLancamentoCaixa(lancamentos);            
+        }
     }
 
     public void mostrarLancamentoCaixa(List<Lancamento> lancamentos) {
@@ -227,18 +396,19 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
 
         if (lancamentos.size() == 0) {
             JOptionPane.showMessageDialog(null, "Nenhuma Lançamento encontrado");
-
+            jl_total.setText("Total: R$ 0,00");
         } else {
+            Double valor_total =0.00;
+            Moeda moeda = new Moeda();
             for (int i = 0; i < lancamentos.size(); i++) {
 
                 String valor = null;
 
                 valor = String.valueOf(lancamentos.get(i).getValor());
 
-                Moeda moeda = new Moeda();
 
                 valor = moeda.setPrecoFormat(valor);
-
+                valor_total = valor_total + moeda.getPrecoFormato(valor);
                 SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -253,7 +423,9 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
 //                ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
                 row.addRow(new Object[]{lancamentos.get(i).getDependente().getNome_dependente(), lancamentos.get(i).getTipoServico().getDescricao(),
                     lancamentos.get(i).getCaixa(), data_lancamento, valor, lancamentos.get(i).getUsuario().getNome_usuario()});
+            
             }
+            jl_total.setText("Total: "+moeda.setPrecoFormat(valor_total.toString()));
 
         }
     }
@@ -264,11 +436,17 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         }
         this.setEnabled(status);
     }
-    public void retornaJanelaPai(){
-        setVisible(false);
-        if(janelapai != null){
-            janelapai.setStatusTela(true);            
+    
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {        
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            retornarJanelaPai();
         }
     }
-
+    
+    public void retornarJanelaPai(){
+        this.setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);
+        }
+    }
 }

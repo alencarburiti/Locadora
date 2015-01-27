@@ -1,13 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * EntradaGUI.java
- *
- * Created on 27/05/2011, 15:13:50
- */
 package br.com.locadora.view;
 
 import br.com.locadora.conexao.InterfacePool;
@@ -17,6 +8,7 @@ import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -64,6 +56,11 @@ public class FluxodeCaixaDiario extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
@@ -98,6 +95,11 @@ public class FluxodeCaixaDiario extends javax.swing.JFrame {
                 jtbl_lancamento_caixaMouseClicked(evt);
             }
         });
+        jtbl_lancamento_caixa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtbl_lancamento_caixaKeyPressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtbl_lancamento_caixa);
         if (jtbl_lancamento_caixa.getColumnModel().getColumnCount() > 0) {
             jtbl_lancamento_caixa.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -117,6 +119,11 @@ public class FluxodeCaixaDiario extends javax.swing.JFrame {
         jb_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_sairActionPerformed(evt);
+            }
+        });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -175,6 +182,21 @@ public class FluxodeCaixaDiario extends javax.swing.JFrame {
         
         lancamentoCaixa();        
     }//GEN-LAST:event_formWindowOpened
+
+    private void jtbl_lancamento_caixaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_lancamento_caixaKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbl_lancamento_caixaKeyPressed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -249,6 +271,19 @@ public class FluxodeCaixaDiario extends javax.swing.JFrame {
             this.setVisible(status);
         }
         this.setEnabled(status);
+    }
+    
+    public void acionarAtalho(java.awt.event.KeyEvent evt) {        
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            retornarJanelaPai();
+        }
+    }
+    
+    public void retornarJanelaPai(){
+        this.setVisible(false);
+        if(janelapai != null){
+            janelapai.setStatusTela(true);
+        }
     }
 
 }

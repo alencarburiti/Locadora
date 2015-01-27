@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rel_locacao_aberta" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c87c63f-d40f-4d38-bee9-b08247c77c07">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
-	<property name="ireport.x" value="290"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="24"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -47,8 +47,7 @@ GROUP BY 1,2;]]>
 				<text><![CDATA[Relatório de Locações e Relocações]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="0" width="218" height="79" uuid="88865f9d-492e-4cf2-af5b-f960c1d4b459"/>
-				<imageExpression><![CDATA["/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/jasper/logo.png"]]></imageExpression>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="218" height="79" uuid="88865f9d-492e-4cf2-af5b-f960c1d4b459"/>
 			</image>
 		</band>
 	</title>

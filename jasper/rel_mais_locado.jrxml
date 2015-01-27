@@ -41,7 +41,7 @@ ORDER BY QTD_LOCACAO DESC;]]>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="218" height="79" uuid="88865f9d-492e-4cf2-af5b-f960c1d4b459"/>
-				<imageExpression><![CDATA["/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/jasper/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["/br/com/locadora/jasper/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
