@@ -12,7 +12,10 @@ import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.DiariaDAO;
+import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
@@ -55,6 +58,8 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
     public DiariaDAO diariaDAO;
     public List<Diaria> promocoesDevolucao;
     public ConsultaCopiaDevolucao consultaCopiaDevolucao;
+    public List<Lancamento> lancamentos;
+    public FinanceiroReceber financeiroReceber;
 
     public AtendimentoDevolucao() {
         initComponents();
@@ -84,6 +89,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_remover_devolucao = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jtf_nome_objeto_devolucao = new javax.swing.JTextField();
+        jl_lancamento_aberto = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jtf_total_a_pagar = new javax.swing.JTextField();
         jl_debito_devolucao = new javax.swing.JLabel();
@@ -97,6 +103,7 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jb_limpar_devolucao = new javax.swing.JButton();
         jb_finalizar_devolucao = new javax.swing.JButton();
         jb_sair = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -305,6 +312,10 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
         jtf_nome_objeto_devolucao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_objeto_devolucao.setName("jtf_nome_objeto_devolucao"); // NOI18N
 
+        jl_lancamento_aberto.setForeground(new java.awt.Color(255, 0, 0));
+        jl_lancamento_aberto.setText("Pendente: 0");
+        jl_lancamento_aberto.setName("jl_lancamento_aberto"); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -315,18 +326,21 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jl_codigo_devolucao)
-                            .addComponent(jtf_codigo_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jtf_nome_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(5, 5, 5)
-                        .addComponent(jb_pesquisa_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(jb_adicionar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(jb_remover_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jl_codigo_devolucao)
+                                    .addComponent(jtf_codigo_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jtf_nome_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(5, 5, 5)
+                                .addComponent(jb_pesquisa_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(jb_adicionar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(jb_remover_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jl_lancamento_aberto, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -346,9 +360,10 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(0, 0, 0)
                         .addComponent(jtf_nome_objeto_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jl_lancamento_aberto))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_devolucao, jb_pesquisa_devolucao, jb_remover_devolucao, jtf_codigo_objeto_devolucao, jtf_nome_objeto_devolucao});
@@ -490,25 +505,40 @@ public class AtendimentoDevolucao extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finances_(add)_16x16.gif"))); // NOI18N
+        jButton4.setText("Recebimentos");
+        jButton4.setName("jButton4"); // NOI18N
+        jButton4.setPreferredSize(new java.awt.Dimension(140, 40));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(116, 116, 116)
+                .addGap(20, 20, 20)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_finalizar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jb_limpar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115))
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_finalizar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_finalizar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jb_limpar_devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -733,12 +763,14 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_jtbl_devolucaoKeyPressed
 
     private void jb_adicionar_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionar_devolucaoKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jb_adicionar_devolucao.doClick();
         }
     }//GEN-LAST:event_jb_adicionar_devolucaoKeyPressed
 
     private void jb_remover_devolucaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_remover_devolucaoKeyPressed
+        acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jb_remover_devolucao.doClick();
         }
@@ -774,6 +806,30 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         limparDados();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_limpar_devolucaoActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.FinanceiroReceber");
+
+        try {
+            if (acesso.getEscrever() == false) {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getEscrever() == true) {
+                financeiroReceber = new FinanceiroReceber(dependente);
+                financeiroReceber.janelapai3 = this;
+                financeiroReceber.setVisible(true);
+                setStatusTela(false);
+                financeiroReceber.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
     public static boolean validaData(String dataString) throws java.text.ParseException {
         if (!dataString.equals("")) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -866,6 +922,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
@@ -888,6 +945,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_codigo_devolucao;
     public static javax.swing.JLabel jl_debito_devolucao;
+    private javax.swing.JLabel jl_lancamento_aberto;
     public static javax.swing.JTable jtbl_devolucao;
     public static javax.swing.JTextField jtf_codigo_cliente;
     public static javax.swing.JTextField jtf_codigo_objeto_devolucao;
@@ -1211,33 +1269,42 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 
     public void carregarClienteDependente(Dependente dependente) {
         if (dependente != null) {
-            AtendimentoDevolucao.dependente = dependente;
+            this.dependente = dependente;
+            System.out.println("Tipo: "+ dependente.getTipo_dependente());
             jtf_saldo_debito_total.setText("R$ 0,00");
 
             jtf_nome_cliente.setText(dependente.getNome_dependente());
             setTitle("Atendimento Devolução - " + dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
-            Moeda moeda = new Moeda();
+            moeda = new Moeda();
 
             pool = new Pool();
-            DependenteDAO dependenteDAO = new DependenteDAO(pool);
-
-            lancamento = new Lancamento();
-            lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
-            if (lancamento.getSaldo() < 0) {
-                lancamento.setSaldo(lancamento.getSaldo() * (-1));
-                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_saldo_debito_total.setForeground(Color.black);
-                jl_debito_devolucao.setText("Saldo Total:");
-            } else if (lancamento.getSaldo() > 0) {
-                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_saldo_debito_total.setForeground(Color.red);
-                jl_debito_devolucao.setText("Débito Total:");
-            } else {
-                jtf_saldo_debito_total.setText("R$ 0,00");
-                jl_debito_devolucao.setText("Saldo:");
-                jtf_saldo_debito_total.setForeground(Color.black);
+            lancamentos = new ArrayList<Lancamento>();
+            LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
+            lancamentos = lancamentoDAO.getLancamentos(dependente.getCliente());
+            
+            Double saldo = 0.00;
+            Double devedor = 0.00;
+            int quantidade_lancamento_aberto = 0;
+            for(int i = 0; i < lancamentos.size(); i++){                
+                if(lancamentos.get(i).getTipoServico().getTipo().equals("C")){
+                    saldo = saldo + lancamentos.get(i).getSaldo();
+                }else {
+                    if(lancamentos.get(i).getDevedor() > 0){
+                        quantidade_lancamento_aberto = quantidade_lancamento_aberto + 1;                        
+                    }
+                    devedor = devedor + lancamentos.get(i).getDevedor();
+                }
             }
+            
+            Double saldo_total = saldo - devedor;
+           
+            if (saldo_total > 0) {
+                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(saldo_total.toString())));
+                jtf_saldo_debito_total.setForeground(Color.black);
+                jl_debito_devolucao.setText("Saldo:");                
+            } 
+            jl_lancamento_aberto.setText("Pendente: "+quantidade_lancamento_aberto);
 
             jtf_codigo_objeto_devolucao.requestFocus();
 

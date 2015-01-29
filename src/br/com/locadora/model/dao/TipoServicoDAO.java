@@ -109,6 +109,30 @@ public class TipoServicoDAO implements InterfaceTipoServicoDAO {
         return resultado;
     }
     
+    public List<TipoServico> getTipoServicos(String movimento) {
+        List<TipoServico> resultado = new ArrayList<TipoServico>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT * FROM TIPO_SERVICO WHERE MOVIMENTO = ?;";
+        ResultSet rs = null;
+        
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, movimento);
+            rs = ps.executeQuery();
+            
+            resultado = getListaTipoServico(rs);
+            
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
     private List<TipoServico> getListaTipoServico(ResultSet rs) throws SQLException {
         List<TipoServico> resultado = new ArrayList<TipoServico>();
         while (rs.next()) {

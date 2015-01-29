@@ -59,7 +59,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         jrb_locacao_devolucao = new javax.swing.JRadioButton();
         jrb_venda = new javax.swing.JRadioButton();
         jrb_todos = new javax.swing.JRadioButton();
-        jb_cliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Fluxo de Caixa Detalhado");
@@ -206,16 +205,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
             }
         });
 
-        jb_cliente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jb_cliente.setName("jb_cliente"); // NOI18N
-        jb_cliente.setPreferredSize(new java.awt.Dimension(28, 28));
-        jb_cliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_clienteActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -228,10 +217,8 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
                         .addComponent(jrb_venda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jrb_todos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -240,15 +227,12 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(5, 5, 5)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jrb_locacao_devolucao)
                         .addComponent(jrb_venda))
-                    .addComponent(jrb_todos)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jb_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)))
+                    .addComponent(jrb_todos))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jl_total))
@@ -310,12 +294,12 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void jrb_locacao_devolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_locacao_devolucaoActionPerformed
-        
+        lancamentoCaixa();        
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_locacao_devolucaoActionPerformed
 
     private void jrb_vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_vendaActionPerformed
-        
+        lancamentoCaixa();        
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_vendaActionPerformed
 
@@ -340,14 +324,9 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_sairKeyPressed
 
     private void jrb_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_todosActionPerformed
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_todosActionPerformed
-
-    private void jb_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_clienteActionPerformed
         lancamentoCaixa();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_clienteActionPerformed
+    }//GEN-LAST:event_jrb_todosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,7 +345,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton jb_cliente;
     private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_total;
     private javax.swing.JRadioButton jrb_locacao_devolucao;
@@ -404,7 +382,7 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
 
                 String valor = null;
 
-                valor = String.valueOf(lancamentos.get(i).getValor());
+                valor = String.valueOf(lancamentos.get(i).getValor_total());
 
 
                 valor = moeda.setPrecoFormat(valor);

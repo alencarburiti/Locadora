@@ -6,11 +6,11 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
-import br.com.locadora.util.Backup;
 import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import javax.swing.*;
+import sun.swing.BakedArrayList;
 
 public class TelaPrincipal extends javax.swing.JFrame {
     
@@ -124,6 +124,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jm_conf_impressora = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         menu_relatórios2 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -578,6 +579,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jm_caixa.add(jMenuItem5);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/servidor.png"))); // NOI18N
+        jMenuItem6.setText("Configurar Servidor");
+        jMenuItem6.setName("jMenuItem6"); // NOI18N
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jm_caixa.add(jMenuItem6);
+
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/change.png"))); // NOI18N
         jMenuItem1.setText("Trocar de usuário");
         jMenuItem1.setName("jMenuItem1"); // NOI18N
@@ -836,8 +847,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_backupActionPerformed
-    Backup backup = new Backup();
+    EfetuaBackup backup = new EfetuaBackup();
     backup.setVisible(true);
+    backup.janelapai = this;
 }//GEN-LAST:event_jmi_backupActionPerformed
 
     private void jmi_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_clienteActionPerformed
@@ -1166,7 +1178,15 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jmi_pacote_promocionalActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        
+        if(evt.getKeyCode() == KeyEvent.VK_F2){
+            jmi_atendimento_locacao.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F3){
+            jmi_atendimento_devolucao.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F4){
+            jmi_atendimento_venda.doClick();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
@@ -1177,6 +1197,14 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         setStatusTela(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        ConfiguraDB configuraDB = new ConfiguraDB();
+        configuraDB.janelapai = this;
+        configuraDB.setVisible(true);
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1229,6 +1257,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator4;

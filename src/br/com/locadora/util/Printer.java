@@ -5,24 +5,31 @@
  */
 package br.com.locadora.util;
 
+import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.ItemVenda;
+import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.view.EntradaCaixaLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
 import br.com.locadora.view.EntradaCaixaVenda;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -40,7 +47,7 @@ public class Printer {
 
     public File arquivo;
 
-    public void comprovanteLocacao(List<ItemLocacao> itens, Dependente dependente, Usuario usuario) {
+    public void comprovanteLocacao(List<ItemLocacao> itens, Dependente dependente, Usuario usuario, Lancamento lancamento) {
         //ESCREVER TXT    
         String nome_arquivo = "Imprimir/comprovanteLocacao_" + dependente.getNome_dependente() + ".txt";
         try {
@@ -66,7 +73,18 @@ public class Printer {
                 linhasTxt.println("===========================================");
                 linhasTxt.println("************ Recibo de Locação ************");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
+                linhasTxt.println("Controle Interno: "+ lancamento.getCodigo_lancamento());
+                
+                if(dependente.getTipo_dependente().equals("Dependente")){
+                    Pool pool = new Pool();
+                    ClienteDAO clienteDAO = new ClienteDAO(pool);
+                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
+                    linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                } else {
+                    linhasTxt.println("Titular: " + dependente.getNome_dependente());
+                }
+                
                 linhasTxt.println("===========================================");
                 linhasTxt.println(String.format("%-6s", "Cód    Descrição            Prev   Valor"));
                 //dados da tabela
@@ -115,7 +133,15 @@ public class Printer {
                 linhasTxt.println("De acordo:                                 ");
                 linhasTxt.println("                                           ");
                 linhasTxt.println("___________________________________________");
-                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
+                
+                if(dependente.getTipo_dependente().equals("Dependente")){                    
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
+                    linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                } else {
+                    linhasTxt.println("Titular: " + dependente.getNome_dependente());
+                }
+                
+//                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("        OBRIGADO PELA PREFERÊNCIA          ");
                 linhasTxt.println("   INFORMACOES PARA FECHAMENTO DE CONTA    ");
@@ -136,7 +162,7 @@ public class Printer {
         }
     }
 
-    public void comprovanteDevolucao(List<ItemLocacao> itens, Dependente dependente, Usuario usuario) {
+    public void comprovanteDevolucao(List<ItemLocacao> itens, Dependente dependente, Usuario usuario, Lancamento lancamento) {
         //ESCREVER TXT    
         String nome_arquivo = "Imprimir/comprovanteDevolucao_" + dependente.getNome_dependente() + ".txt";
         try {
@@ -161,7 +187,20 @@ public class Printer {
                 linhasTxt.println("===========================================");
                 linhasTxt.println("********* Comprovante de Devolução ********");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
+                linhasTxt.println("Controle Interno: "+ lancamento.getCodigo_lancamento());
+
+                
+                if(dependente.getTipo_dependente().equals("Dependente")){
+                    Pool pool = new Pool();
+                    ClienteDAO clienteDAO = new ClienteDAO(pool);
+                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
+                    linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                } else {
+                    linhasTxt.println("Titular: " + dependente.getNome_dependente());
+                }
+                
+//                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
                 linhasTxt.println(String.format("%-6s", "Cód    Descrição            Prev   Dev"));
                 //dados da tabela
@@ -216,7 +255,13 @@ public class Printer {
                 linhasTxt.println("De acordo:                                 ");
                 linhasTxt.println("                                           ");
                 linhasTxt.println("___________________________________________");
-                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
+                if(dependente.getTipo_dependente().equals("Dependente")){                    
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
+                    linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                } else {
+                    linhasTxt.println("Titular: " + dependente.getNome_dependente());
+                }
+//                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("        OBRIGADO PELA PREFERÊNCIA          ");
                 linhasTxt.println("   INFORMACOES PARA FECHAMENTO DE CONTA    ");
@@ -236,7 +281,7 @@ public class Printer {
         }
     }
     
-    public void comprovanteVenda(List<ItemVenda> itens, Dependente dependente, Usuario usuario) {
+    public void comprovanteVenda(List<ItemVenda> itens, Dependente dependente, Usuario usuario, Lancamento lancamento) {
         //ESCREVER TXT    
         String nome_arquivo = "Imprimir/comprovanteVenda_" + dependente.getNome_dependente() + ".txt";
         try {
@@ -261,7 +306,17 @@ public class Printer {
                 linhasTxt.println("===========================================");
                 linhasTxt.println("********* Comprovante de Devolução ********");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
+                linhasTxt.println("Controle Interno: "+ lancamento.getCodigo_lancamento());
+                if(dependente.getTipo_dependente().equals("Dependente")){
+                    Pool pool = new Pool();
+                    ClienteDAO clienteDAO = new ClienteDAO(pool);
+                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
+                    linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                } else {
+                    linhasTxt.println("Titular: " + dependente.getNome_dependente());
+                }
+//                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
                 linhasTxt.println(String.format("%-6s", "Cód    Descrição          P. Unt.  P. Total"));
                 //dados da tabela
@@ -320,7 +375,13 @@ public class Printer {
                 linhasTxt.println("De acordo:                                 ");
                 linhasTxt.println("                                           ");
                 linhasTxt.println("___________________________________________");
-                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
+                if(dependente.getTipo_dependente().equals("Dependente")){                    
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
+                    linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                } else {
+                    linhasTxt.println("Titular: " + dependente.getNome_dependente());
+                }
+//                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("        OBRIGADO PELA PREFERÊNCIA          ");
                 linhasTxt.println("   INFORMACOES PARA FECHAMENTO DE CONTA    ");
@@ -340,14 +401,17 @@ public class Printer {
         }
     }
 
-    public boolean imprimirArquivo(String nome_arquivo) throws PrintException {
+    public boolean imprimirArquivo(String nome_arquivo) {
         // imprime arquivo 
         boolean cond = false;
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
         try {
             if (!conf.readPropertie("impressora_principal").equals("")) {
                 detectaImpressoras(conf.readPropertie("impressora_principal"));
-                java.io.InputStream is = new FileInputStream(nome_arquivo);
+                
+                InputStream is = new FileInputStream(nome_arquivo);
+                
+                
                 Scanner sc = new Scanner(is);
                 if (impressora != null) {
                     while (sc.hasNextLine()) {
@@ -375,8 +439,39 @@ public class Printer {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro encontrado ao imprimir comanda.");
             return cond;
+        } catch (PrintException ex) {
+            Logger.getLogger(Printer.class.getName()).log(Level.SEVERE, null, ex);
+            return cond;
         }
     }
+    
+//    public boolean emiteComanda(String nome_arquivo){
+////        boolean cond = false;
+//        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+//       try {
+//           if (!conf.readPropertie("impressora_principal").equals("")) {
+//               InputStream is = new FileInputStream(nome_arquivo);
+//                
+//                Scanner sc = new Scanner(is);
+//                FileOutputStream fs = new FileOutputStream("Bematech_USB " + conf.readPropertie("impressora_principal"));
+//                PrintStream ps = new PrintStream(fs);
+//
+//                while(sc.hasNextLine()){
+//                    String linhas = sc.nextLine();
+//                    ps.println(linhas);
+//                }
+//                fs.close(); 
+//                return true;
+//           } else {
+//               JOptionPane.showMessageDialog(null, "Impressora não detectada");
+//               return false;
+//           }
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(null, "Erro encontrado ao imprimir comanda.");
+//            return false;
+//        }        
+//   }
+    
 
     public void printPDF(File f){
         boolean cond = false;
@@ -445,13 +540,13 @@ public class Printer {
             JOptionPane.showMessageDialog(null, "Impressora não detectada");
         }
     }
-
+    
     public boolean imprime(String texto) throws PrintException {
 
         try {
             DocPrintJob dpj = impressora.createPrintJob();
-//            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes("UTF-8"));
-            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes()); 
+            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes("UTF-8"));
+//            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes()); 
             System.out.println(texto);
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
             Doc doc = new SimpleDoc(stream, flavor, null);

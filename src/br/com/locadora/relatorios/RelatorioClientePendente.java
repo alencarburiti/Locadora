@@ -40,52 +40,59 @@ public class RelatorioClientePendente {
         Connection con = pool.getConnection();
 
         try {
-            String sqlSelect = "SELECT \n" +
+            String sqlSelect = "SELECT\n" +
             "    *\n" +
             "FROM\n" +
-            "    (SELECT \n" +
-            "        *,\n" +
-            "            (CASE\n" +
-            "                WHEN (DEBITO - CREDITO) < 0 THEN 0\n" +
-            "                ELSE (DEBITO - CREDITO)\n" +
-            "            END) AS DEVEDOR\n" +
+            "    (SELECT\n" +
+            "        DATA_VENCIMENTO,\n" +
+            "            CODIGO_LANCAMENTO AS CODIGO_LANCAMENTO_CONTA,\n" +
+            "            0 AS CODIGO_FORNECEDOR,\n" +
+            "            NOME_DEPENDENTE AS ORIGEM_DESTINO,\n" +
+            "            DESCRICAO,\n" +
+            "            CODIGO_TIPO_SERVICO,\n" +
+            "            DOCUMENTO,\n" +
+            "            VALOR_LANCAMENTO AS VALOR_A_PAGAR,\n" +
+            "            CREDITO AS VALOR_PAGO,\n" +
+            "            DATA_LANCAMENTO AS DATA_PAGAMENTO,\n" +
+            "            NOME_USUARIO,\n" +
+            "            CAIXA_CODIGO_CAIXA\n" +
             "    FROM\n" +
-            "        (SELECT \n" +
-            "        A.CLIENTE_CODIGO_CLIENTE,\n" +
-            "            C.NOME_DEPENDENTE,\n" +
-            "            (SELECT \n" +
-            "                    SUM(VALOR)\n" +
+            "        (SELECT\n" +
+            "        A.DATA_LANCAMENTO AS DATA_VENCIMENTO,\n" +
+            "            A.CODIGO_LANCAMENTO,\n" +
+            "            0 AS CODIGO_FORNECEDOR,\n" +
+            "            B.NOME_DEPENDENTE,\n" +
+            "            C.DESCRICAO,\n" +
+            "            C.CODIGO_TIPO_SERVICO,\n" +
+            "            A.CODIGO_LANCAMENTO AS DOCUMENTO,\n" +
+            "            C.TIPO,\n" +
+            "            D.LOGIN,\n" +
+            "            D.NOME_USUARIO,\n" +
+            "            A.VALOR_LANCAMENTO,\n" +
+            "            A.DATA_LANCAMENTO,\n" +
+            "            A.CAIXA_CODIGO_CAIXA,\n" +
+            "            (SELECT\n" +
+            "                    (CASE\n" +
+            "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
+            "                            ELSE SUM(VALOR_LANCAMENTO)\n" +
+            "                        END)\n" +
             "                FROM\n" +
-            "                    LANCAMENTO LC_A, TIPO_SERVICO B\n" +
+            "                    ITEM_LANCAMENTO IL, TIPO_SERVICO TS\n" +
             "                WHERE\n" +
-            "                    LC_A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
-            "                        AND B.TIPO = 'C'\n" +
-            "                        AND LC_A.CLIENTE_CODIGO_CLIENTE = A.CLIENTE_CODIGO_CLIENTE) AS CREDITO,\n" +
-            "            (SELECT \n" +
-            "                    SUM(VALOR)\n" +
-            "                FROM\n" +
-            "                    LANCAMENTO LD_A, TIPO_SERVICO B\n" +
-            "                WHERE\n" +
-            "                    LD_A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
-            "                        AND B.TIPO = 'D'\n" +
-            "                        AND LD_A.CLIENTE_CODIGO_CLIENTE = A.CLIENTE_CODIGO_CLIENTE) AS DEBITO,\n" +
-            "            (SELECT \n" +
-            "                    MAX(DATA_LANCAMENTO)\n" +
-            "                FROM\n" +
-            "                    LANCAMENTO L_DATA, TIPO_SERVICO B\n" +
-            "                WHERE\n" +
-            "                    L_DATA.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
-            "                        AND B.TIPO = 'C'\n" +
-            "                        AND L_DATA.CLIENTE_CODIGO_CLIENTE = A.CLIENTE_CODIGO_CLIENTE) AS DATA_LANCAMENTO\n" +
+            "                    IL.TIPO_SERVICO_CODIGO_SERVICO = TS.CODIGO_TIPO_SERVICO\n" +
+            "                        AND LANCAMENTO_CODIGO_LANCAMENTO = A.CODIGO_LANCAMENTO\n" +
+            "                        AND TS.TIPO = 'C') AS CREDITO\n" +
             "    FROM\n" +
-            "        LANCAMENTO A, TIPO_SERVICO B, DEPENDENTE C\n" +
+            "        LOCADORA.LANCAMENTO A, DEPENDENTE B, TIPO_SERVICO C, USUARIO D\n" +
             "    WHERE\n" +
-            "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
-            "            AND A.CLIENTE_CODIGO_CLIENTE = C.CLIENTE_CODIGO_CLIENTE\n" +
-            "            AND C.TIPO_DEPENDENTE = '0'\n" +
-            "    GROUP BY 1) AS LANC) AS L_DEVE \n" +
+            "        A.DEPENDENTE_CODIGO_DEPENDENTE = B.CODIGO_DEPENDENTE\n" +
+            "            AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
+            "            AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO\n" +
+            "            AND C.TIPO = 'D'\n" +
+            "            \n" +
+            "    ORDER BY A.CODIGO_LANCAMENTO DESC) AS LANC) AS FINAL\n" +
             "WHERE\n" +
-            "    DEVEDOR > 0 ORDER BY DATA_LANCAMENTO DESC;";
+            "    VALOR_A_PAGAR > VALOR_PAGO;";
 
             ps = con.prepareStatement(sqlSelect);
 

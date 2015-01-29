@@ -11,7 +11,7 @@ package br.com.locadora.model.bean;
  */
 public class Venda {
 
-    private Integer codigo_venda;
+    private Integer codigo_venda = 0;
     private Cliente cliente;
     private Dependente dependente;
     private Integer type_product;

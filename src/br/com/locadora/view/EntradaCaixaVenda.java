@@ -3,15 +3,16 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
-import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.Devolucao;
 import br.com.locadora.model.bean.Diaria;
+import br.com.locadora.model.bean.ItemLancamento;
 import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.bean.Venda;
-import br.com.locadora.model.dao.LocacaoDAO;
+import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.dao.VendaDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
@@ -25,8 +26,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import javax.print.PrintException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,6 +42,8 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     public String action;
     public Moeda moeda;
     public List<ItemVenda> itens;
+    public LancamentoDAO lancamentoDAO;
+    public Lancamento lancamento;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -1128,26 +1131,20 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     }
 
     public void imprimir() {
-        try {
-            //Pegar usuario logado na tela do caixa
-            Usuario usuario = acesso.getUsuario();
-            Printer imprimir = new Printer();
-            imprimir.comprovanteVenda(itens, janelapaiVenda.dependente, usuario);
-            String nome_arquivo = "Imprimir/comprovanteVenda_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
-            if (imprimir.imprimirArquivo(nome_arquivo)) {
-                //Desabilita para não haver mais alteração
-                jtf_valor_pago.setEditable(false);
-                jtf_desconto.setEditable(false);
-
-                retornaJanelaPai();
-
-                File arquivo = new File(nome_arquivo);
-                arquivo.deleteOnExit();
-                arquivo.delete();
-            }
-
-        } catch (PrintException e) {
-            JOptionPane.showMessageDialog(null, "Problema encontrado com impressora padrão.");
+        Usuario usuario = acesso.getUsuario();
+        Printer imprimir = new Printer();
+        imprimir.comprovanteVenda(itens, janelapaiVenda.dependente, usuario,lancamento);
+        String nome_arquivo = "Imprimir/comprovanteVenda_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
+        if (imprimir.imprimirArquivo(nome_arquivo)) {
+            //Desabilita para não haver mais alteração
+            jtf_valor_pago.setEditable(false);
+            jtf_desconto.setEditable(false);
+            
+            retornaJanelaPai();
+            
+            File arquivo = new File(nome_arquivo);
+            arquivo.deleteOnExit();
+            arquivo.delete();
         }
     }
     List<Diaria> promocoes;    
@@ -1155,109 +1152,72 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     public void fecharAtendimento() {
 
         try {
-
-            LocacaoDAO locacaoDAO;
-            Dependente dependente = janelapaiVenda.dependente;
-
-            //Pega o usuario questa fazendo a transacao para salvar no banco
-            Usuario usuario = acesso.getUsuario();
-
-            Locacao locacao = new Locacao();
-
-            //Passa o Cliente e o Dependente para a locacao
-            locacao.setDependente(dependente);
-            locacao.setUsuario(usuario);
-
-            //Envia a gravação da locação e envia o lancamento de caixa
-            pool = new Pool();
-            locacaoDAO = new LocacaoDAO(pool);
-            locacao = locacaoDAO.salvar(locacao);
-
-            moeda = new Moeda();
-
-            Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
-            Double troco = moeda.getPrecoFormato(jtf_troco.getText());
-            Double valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText());
-            //
-            valor_pago = valor_pago - troco;
-
-            List<Lancamento> lancamentos = new ArrayList<>();
-            ArquivoConfiguracao conf = new ArquivoConfiguracao();
-            //Lançamento de crédito e de débito
-            Lancamento lancamento;
-            TipoServico tipoServico;
-            if (valor_pago > 0) {
-                //Lançamento de débito primeiro
-                lancamento = new Lancamento();
-                lancamento.setDependente(dependente);
-                lancamento.setUsuario(usuario);
-                lancamento.setLocacao(locacao);
-                lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
-
-                tipoServico = new TipoServico();
-                tipoServico.setCodigo_tipo_servico(10);
-                lancamento.setTipoServico(tipoServico);
-                lancamento.setValor(moeda.getPrecoFormato(jtf_valor_total_venda.getText()));
-                lancamentos.add(lancamento);
-
-//                locacaoDAO.salvarLancamento(lancamento);
-                lancamento = new Lancamento();
-                lancamento.setDependente(dependente);
-                lancamento.setUsuario(usuario);
-                lancamento.setLocacao(locacao);
-                lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
-
-                //Lançamento de crédito
-                tipoServico = new TipoServico();
-                tipoServico.setCodigo_tipo_servico(11);
-                lancamento.setTipoServico(tipoServico);
-                lancamento.setValor(valor_pago);
-                lancamentos.add(lancamento);
-
-            } else {
-                lancamento = new Lancamento();
-                lancamento.setDependente(dependente);
-                lancamento.setUsuario(usuario);
-                lancamento.setLocacao(locacao);
-                lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
-
-                tipoServico = new TipoServico();
-                tipoServico.setCodigo_tipo_servico(10);
-                lancamento.setTipoServico(tipoServico);
-                lancamento.setValor(moeda.getPrecoFormato(jtf_valor_total_venda.getText()));
-                lancamentos.add(lancamento);
-//                locacaoDAO.salvarLancamento(lancamento);
-            }
-
-            if (valor_desconto > 0) {
-                lancamento = new Lancamento();
-                lancamento.setDependente(dependente);
-                lancamento.setUsuario(usuario);
-                lancamento.setLocacao(locacao);
-                lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
-
-                //Lançamento de crédito como desconto
-                tipoServico = new TipoServico();
-                tipoServico.setCodigo_tipo_servico(12);
-                lancamento.setTipoServico(tipoServico);
-                lancamento.setValor(valor_desconto);
-                lancamentos.add(lancamento);
-//                locacaoDAO.salvarLancamento(lancamento);
-            }
-            pool = new Pool();
-            locacaoDAO = new LocacaoDAO(pool);
-            locacaoDAO.salvarLancamento(lancamentos);
-                        
-            itens = janelapaiVenda.itensVendaAtendimento;
+            itens = janelapaiVenda.itensVendaAtendimento;            
             Venda venda = new Venda();
-            venda.setDependente(dependente);
-            venda.setUsuario(usuario);
-            
+            venda.setDependente(janelapaiVenda.dependente);
+            venda.setUsuario(acesso.getUsuario());            
             pool = new Pool();
             VendaDAO vendaDAO = new VendaDAO(pool);
-            venda = vendaDAO.salvar(venda);
-            System.out.println("Codigo da venda:");;
+            venda = vendaDAO.salvar(venda);                        
             vendaDAO.salvarItens(itens, venda);
+            
+            moeda = new Moeda();
+            Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
+            Double troco = moeda.getPrecoFormato(jtf_troco.getText());
+            Double valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText());            
+            valor_pago = valor_pago - troco;
+
+            ArquivoConfiguracao conf = new ArquivoConfiguracao();
+
+            TipoServico tipoServico;            
+            lancamento = new Lancamento();
+            lancamento.setValor_total(moeda.getPrecoFormato(jtf_valor_total_venda.getText()));
+            lancamento.setDependente(janelapaiVenda.dependente);
+            tipoServico = new TipoServico();
+            tipoServico.setCodigo_tipo_servico(10);
+            lancamento.setTipoServico(tipoServico);
+            lancamento.setUsuario(acesso.getUsuario());
+            lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+            lancamento.setLocacao(new Locacao());
+            lancamento.setDevolucao(new Devolucao());
+            lancamento.setVenda(venda);
+            
+            pool = new Pool();
+            lancamentoDAO = new LancamentoDAO(pool);
+            lancamento = lancamentoDAO.salvarLancamento(lancamento);
+            List<ItemLancamento> itensLancamento = new ArrayList<>();
+            ItemLancamento itemLancamento;
+            
+            Calendar data_atual = Calendar.getInstance();
+            
+            if (valor_pago > 0) {
+                itemLancamento = new ItemLancamento();
+                itemLancamento.setData_lancamento(data_atual.getTime());
+                itemLancamento.setLancamento(lancamento);
+                itemLancamento.setValor_lancamento(valor_pago);
+                tipoServico = new TipoServico();
+                tipoServico.setCodigo_tipo_servico(11);
+                itemLancamento.setTipoServico(tipoServico);
+                itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                itemLancamento.setUsuario(acesso.getUsuario());
+                itensLancamento.add(itemLancamento);
+            }
+            if (valor_desconto > 0) {
+                itemLancamento = new ItemLancamento();
+                itemLancamento.setData_lancamento(data_atual.getTime());
+                itemLancamento.setLancamento(lancamento);
+                itemLancamento.setValor_lancamento(valor_desconto);
+                tipoServico = new TipoServico();
+                tipoServico.setCodigo_tipo_servico(12);
+                itemLancamento.setTipoServico(tipoServico);
+                itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                itemLancamento.setUsuario(acesso.getUsuario());
+                itensLancamento.add(itemLancamento);
+            }
+
+            pool = new Pool();
+            lancamentoDAO = new LancamentoDAO(pool);
+            lancamentoDAO.salvarItemLancamento(itensLancamento);                                                           
             
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a gravação: ");

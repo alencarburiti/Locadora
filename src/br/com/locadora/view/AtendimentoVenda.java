@@ -11,7 +11,9 @@ import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.ProdutoDAO;
+import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.dao.VendaDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import java.awt.Color;
@@ -40,6 +42,8 @@ public class AtendimentoVenda extends javax.swing.JFrame {
     public List<ItemVenda> itensVenda;
     public EntradaCaixaVenda entradaCaixaVenda;
     public VendaDAO vendaDAO;
+    public List<Lancamento> lancamentos;
+    public FinanceiroReceber financeiroReceber;
 
     public AtendimentoVenda() {
         initComponents();
@@ -81,6 +85,7 @@ public class AtendimentoVenda extends javax.swing.JFrame {
         jb_pesquisa_venda = new javax.swing.JButton();
         jb_adicionar_venda = new javax.swing.JButton();
         jb_remover_venda = new javax.swing.JButton();
+        jl_lancamento_aberto = new javax.swing.JLabel();
         jl_debito_locacao = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jtf_saldo_debito_total = new javax.swing.JTextField();
@@ -89,6 +94,7 @@ public class AtendimentoVenda extends javax.swing.JFrame {
         jb_finalizar_venda = new javax.swing.JButton();
         jb_limpar_venda = new javax.swing.JButton();
         jb_sair_venda = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jtf_total_a_pagar = new javax.swing.JTextField();
@@ -355,12 +361,16 @@ public class AtendimentoVenda extends javax.swing.JFrame {
             }
         });
 
+        jl_lancamento_aberto.setForeground(new java.awt.Color(255, 0, 0));
+        jl_lancamento_aberto.setText("Pendente: 0");
+        jl_lancamento_aberto.setName("jl_lancamento_aberto"); // NOI18N
+
         javax.swing.GroupLayout jp_locacaoLayout = new javax.swing.GroupLayout(jp_locacao);
         jp_locacao.setLayout(jp_locacaoLayout);
         jp_locacaoLayout.setHorizontalGroup(
             jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_locacaoLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
+            .addComponent(jScrollPane2)
+            .addGroup(jp_locacaoLayout.createSequentialGroup()
                 .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jp_locacaoLayout.createSequentialGroup()
                         .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,9 +394,9 @@ public class AtendimentoVenda extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jb_adicionar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jb_remover_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-                    .addComponent(jScrollPane2)))
+                                .addComponent(jb_remover_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jl_lancamento_aberto, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jp_locacaoLayout.setVerticalGroup(
             jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,9 +423,10 @@ public class AtendimentoVenda extends javax.swing.JFrame {
                     .addGroup(jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jb_adicionar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jb_remover_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jl_lancamento_aberto))
         );
 
         jp_locacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jb_adicionar_venda, jb_remover_venda, jtf_quantidade});
@@ -511,25 +522,40 @@ public class AtendimentoVenda extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finances_(add)_16x16.gif"))); // NOI18N
+        jButton4.setText("Recebimentos");
+        jButton4.setName("jButton4"); // NOI18N
+        jButton4.setPreferredSize(new java.awt.Dimension(140, 40));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(116, 116, 116)
+                .addGap(30, 30, 30)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_finalizar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jb_limpar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jb_sair_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115))
+                .addGap(30, 30, 30))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_finalizar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_finalizar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jb_limpar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jb_sair_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -824,6 +850,30 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_finalizar_vendaActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.FinanceiroReceber");
+
+        try {
+            if (acesso.getEscrever() == false) {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            } else if (acesso.getEscrever() == true) {
+                financeiroReceber = new FinanceiroReceber(dependente);
+                financeiroReceber.janelapai4 = this;
+                financeiroReceber.setVisible(true);
+                setStatusTela(false);
+                financeiroReceber.acesso = acesso;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -836,6 +886,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
@@ -858,6 +909,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JButton jb_sair_venda;
     private javax.swing.JLabel jl_codigo_locacao;
     private javax.swing.JLabel jl_debito_locacao;
+    private javax.swing.JLabel jl_lancamento_aberto;
     public static javax.swing.JPanel jp_locacao;
     public static javax.swing.JTable jtbl_itens_venda;
     public static javax.swing.JTextField jtf_codigo_cliente;
@@ -1067,30 +1119,35 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             jtf_nome_cliente.setText(dependente.getNome_dependente());
             setTitle("Atendimento Venda - " + dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
-            Moeda moeda = new Moeda();
+            moeda = new Moeda();
 
             pool = new Pool();
-            DependenteDAO dependenteDAO = new DependenteDAO(pool);
-
-            lancamento = new Lancamento();
-            lancamento = dependenteDAO.getClienteDependente(dependente.getCliente().getCodigo_cliente());
-            if (lancamento.getSaldo() < 0) {
-                lancamento.setSaldo(lancamento.getSaldo() * (-1));
-                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_saldo_debito_total.setForeground(Color.black);
-                jl_debito_locacao.setText("Saldo:");
-                jtf_codigo_item_venda.setEnabled(true);
-            } else if (lancamento.getSaldo() > 0) {
-                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(lancamento.getSaldo())));
-                jtf_saldo_debito_total.setForeground(Color.red);
-                jl_debito_locacao.setText("Devedor:");
-                verificarDebito(dependente.getCliente());
-            } else {
-                jtf_saldo_debito_total.setText("R$ 0,00");
-                jtf_saldo_debito_total.setForeground(Color.black);
-                jl_debito_locacao.setText("Saldo:");
-                jtf_codigo_item_venda.setEnabled(true);
+            lancamentos = new ArrayList<Lancamento>();
+            LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
+            lancamentos = lancamentoDAO.getLancamentos(dependente.getCliente());
+            
+            Double saldo = 0.00;
+            Double devedor = 0.00;
+            int quantidade_lancamento_aberto = 0;
+            for(int i = 0; i < lancamentos.size(); i++){                
+                if(lancamentos.get(i).getTipoServico().getTipo().equals("C")){
+                    saldo = saldo + lancamentos.get(i).getSaldo();
+                }else {
+                    if(lancamentos.get(i).getDevedor() > 0){
+                        quantidade_lancamento_aberto = quantidade_lancamento_aberto + 1;                        
+                    }
+                    devedor = devedor + lancamentos.get(i).getDevedor();
+                }
             }
+            
+            Double saldo_total = saldo - devedor;
+           
+            if (saldo_total > 0) {
+                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(saldo_total.toString())));
+                jtf_saldo_debito_total.setForeground(Color.black);
+                jl_debito_locacao.setText("Saldo:");                
+            } 
+            jl_lancamento_aberto.setText("Pendente: "+quantidade_lancamento_aberto);
 
             jtf_codigo_item_venda.requestFocus();
 

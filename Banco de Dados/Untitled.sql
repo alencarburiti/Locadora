@@ -18,63 +18,6 @@ USE `locadora`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ITEM_PACOTE_PROMOCIONAL`
---
-
-DROP TABLE IF EXISTS `ITEM_PACOTE_PROMOCIONAL`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ITEM_PACOTE_PROMOCIONAL` (
-  `CODIGO_ITEM_PACOTE_PROMOCIONAL` int(11) NOT NULL AUTO_INCREMENT,
-  `PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL` int(11) DEFAULT NULL,
-  `DIARIA_CODIGO_DIARIA` int(11) DEFAULT NULL,
-  `DEL_FLAG` int(11) DEFAULT '0',
-  PRIMARY KEY (`CODIGO_ITEM_PACOTE_PROMOCIONAL`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ITEM_PACOTE_PROMOCIONAL`
---
-
-LOCK TABLES `ITEM_PACOTE_PROMOCIONAL` WRITE;
-/*!40000 ALTER TABLE `ITEM_PACOTE_PROMOCIONAL` DISABLE KEYS */;
-INSERT INTO `ITEM_PACOTE_PROMOCIONAL` VALUES (1,1,2,0),(2,1,7,0),(3,2,7,0),(6,3,9,0),(7,3,10,0),(12,2,8,0);
-/*!40000 ALTER TABLE `ITEM_PACOTE_PROMOCIONAL` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ITEM_VENDA`
---
-
-DROP TABLE IF EXISTS `ITEM_VENDA`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ITEM_VENDA` (
-  `CODIGO_ITEM_VENDA` int(11) NOT NULL AUTO_INCREMENT,
-  `VENDA_CODIGO_VENDA` int(11) DEFAULT NULL,
-  `TYPE_PRODUCT` int(11) DEFAULT NULL,
-  `QUANTIDADE` int(11) DEFAULT NULL,
-  `PRECO_TOTAL` double DEFAULT NULL,
-  `PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL` int(11) DEFAULT NULL,
-  `PRODUTO_CODIGO_PRODUTO` int(11) DEFAULT NULL,
-  `DATA_LANCAMENTO` date DEFAULT NULL,
-  PRIMARY KEY (`CODIGO_ITEM_VENDA`),
-  KEY `FK_PACOTE_PROMOCIONAL` (`PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL`),
-  CONSTRAINT `FK_CODIGO_PACOTE_PROMOCIONAL1` FOREIGN KEY (`PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL`) REFERENCES `pacote_promocional` (`CODIGO_PACOTE_PROMOCIONAL`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ITEM_VENDA`
---
-
-LOCK TABLES `ITEM_VENDA` WRITE;
-/*!40000 ALTER TABLE `ITEM_VENDA` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ITEM_VENDA` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `acesso`
 --
 
@@ -241,7 +184,7 @@ CREATE TABLE `dependente` (
 
 LOCK TABLES `dependente` WRITE;
 /*!40000 ALTER TABLE `dependente` DISABLE KEYS */;
-INSERT INTO `dependente` VALUES (1,'Alencar Santos Buriti Jr',0,NULL,NULL,'1990-03-19',0,1,NULL,1),(2,'Erica Pereira Buriti',1,'Irmã','','1992-06-23',0,1,'(11) 9999-9999',1),(3,'Eliesio Xavier',0,NULL,NULL,'1978-06-26',0,2,NULL,1),(4,'Sandra Maria Xavier',1,'Esposa','','1970-04-09',0,2,'(62) 9922-6866',1),(5,'Aliny Cristhyna da Silva Souza',1,'Namorada','','1997-07-04',0,1,'(62) 8200-7398',1),(6,'Luana Rego Lannes',0,NULL,NULL,'1995-01-01',0,3,NULL,1),(7,'Pedro Bandeira',0,NULL,NULL,'1990-01-01',0,4,NULL,1),(8,'Maria Bandeira',1,'Mãe','','1990-01-01',0,4,'(62) 8992-9301',1);
+INSERT INTO `dependente` VALUES (1,'Alencar Santos Buriti Jr',0,NULL,NULL,'1990-03-19',0,1,NULL,1),(2,'Erica Pereira Buriti de Barros',1,'Irmã','','1992-06-23',0,1,'(11) 9999-9999',1),(3,'Eliesio Xavier',0,NULL,NULL,'1978-06-26',0,2,NULL,1),(4,'Sandra Maria Xavier',1,'Esposa','','1970-04-09',0,2,'(62) 9922-6866',1),(5,'Aliny Cristhyna da Silva Souza',1,'Namorada','','1997-07-04',0,1,'(62) 8200-7398',1),(6,'Luana Rego Lannes',0,NULL,NULL,'1995-01-01',0,3,NULL,1),(7,'Pedro Bandeira',0,NULL,NULL,'1990-01-01',0,4,NULL,1),(8,'Maria Bandeira',1,'Mãe','','1990-01-01',0,4,'(62) 8992-9301',1);
 /*!40000 ALTER TABLE `dependente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -384,6 +327,34 @@ INSERT INTO `interface` VALUES (1,'Cliente','br.com.locadora.view.MenuCliente',0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `item_lancamento`
+--
+
+DROP TABLE IF EXISTS `item_lancamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_lancamento` (
+  `codigo_item_lancamento` int(11) NOT NULL AUTO_INCREMENT,
+  `valor_lancamento` double DEFAULT NULL,
+  `data_lancamento` date DEFAULT NULL,
+  `tipo_servico_codigo_servico` int(11) DEFAULT NULL,
+  `lancamento_codigo_lancamento` int(11) DEFAULT NULL,
+  `usuario_codigo_usuario` int(11) DEFAULT NULL,
+  `caixa_codigo_caixa` int(11) DEFAULT NULL,
+  PRIMARY KEY (`codigo_item_lancamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_lancamento`
+--
+
+LOCK TABLES `item_lancamento` WRITE;
+/*!40000 ALTER TABLE `item_lancamento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_lancamento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `item_locacao`
 --
 
@@ -409,7 +380,7 @@ CREATE TABLE `item_locacao` (
   KEY `FK_ITEM_LOCACAO_COPIA1_IDX` (`COPIA_CODIGO_COPIA`),
   CONSTRAINT `FK_ITEM_LOCACAO_COPIA1` FOREIGN KEY (`COPIA_CODIGO_COPIA`) REFERENCES `copia` (`CODIGO_COPIA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_ITEM_LOCACAO_LOCACAO1` FOREIGN KEY (`LOCACAO_CODIGO_LOCACAO`) REFERENCES `locacao` (`CODIGO_LOCACAO`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -422,6 +393,61 @@ LOCK TABLES `item_locacao` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `item_pacote_promocional`
+--
+
+DROP TABLE IF EXISTS `item_pacote_promocional`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_pacote_promocional` (
+  `CODIGO_ITEM_PACOTE_PROMOCIONAL` int(11) NOT NULL AUTO_INCREMENT,
+  `PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL` int(11) DEFAULT NULL,
+  `DIARIA_CODIGO_DIARIA` int(11) DEFAULT NULL,
+  `DEL_FLAG` int(11) DEFAULT '0',
+  PRIMARY KEY (`CODIGO_ITEM_PACOTE_PROMOCIONAL`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_pacote_promocional`
+--
+
+LOCK TABLES `item_pacote_promocional` WRITE;
+/*!40000 ALTER TABLE `item_pacote_promocional` DISABLE KEYS */;
+INSERT INTO `item_pacote_promocional` VALUES (1,1,2,0),(2,1,7,0),(3,2,7,0),(6,3,9,0),(7,3,10,0),(12,2,8,0);
+/*!40000 ALTER TABLE `item_pacote_promocional` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_venda`
+--
+
+DROP TABLE IF EXISTS `item_venda`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_venda` (
+  `CODIGO_ITEM_VENDA` int(11) NOT NULL AUTO_INCREMENT,
+  `VENDA_CODIGO_VENDA` int(11) DEFAULT NULL,
+  `TYPE_PRODUCT` int(11) DEFAULT NULL,
+  `QUANTIDADE` int(11) DEFAULT NULL,
+  `PRECO_TOTAL` double DEFAULT NULL,
+  `PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL` int(11) DEFAULT NULL,
+  `PRODUTO_CODIGO_PRODUTO` int(11) DEFAULT NULL,
+  `DATA_LANCAMENTO` date DEFAULT NULL,
+  PRIMARY KEY (`CODIGO_ITEM_VENDA`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_venda`
+--
+
+LOCK TABLES `item_venda` WRITE;
+/*!40000 ALTER TABLE `item_venda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_venda` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `lancamento`
 --
 
@@ -430,24 +456,24 @@ DROP TABLE IF EXISTS `lancamento`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `lancamento` (
   `CODIGO_LANCAMENTO` int(11) NOT NULL AUTO_INCREMENT,
-  `VALOR` double DEFAULT '0',
+  `VALOR_LANCAMENTO` double DEFAULT '0',
+  `DATA_LANCAMENTO` date DEFAULT NULL,
   `DEPENDENTE_CODIGO_DEPENDENTE` int(11) NOT NULL,
   `TIPO_SERVICO_CODIGO_TIPO_SERVICO` int(11) NOT NULL,
   `USUARIO_CODIGO_USUARIO` int(11) NOT NULL,
-  `LOCACAO_CODIGO_LOCACAO` int(11) DEFAULT NULL,
-  `DATA_LANCAMENTO` date DEFAULT NULL,
   `CAIXA_CODIGO_CAIXA` int(11) DEFAULT NULL,
   `CLIENTE_CODIGO_CLIENTE` int(11) DEFAULT NULL,
+  `LOCACAO_CODIGO_LOCACAO` int(11) DEFAULT NULL,
+  `DEVOLUCAO_CODIGO_DEVOLUCAO` int(11) DEFAULT NULL,
+  `VENDA_CODIGO_VENDA` int(11) DEFAULT NULL,
   PRIMARY KEY (`CODIGO_LANCAMENTO`),
   KEY `FK_LANCAMENTO_DEPENDENTE1_IDX` (`DEPENDENTE_CODIGO_DEPENDENTE`),
   KEY `FK_LANCAMENTO_TIPO_SERVICO1_IDX` (`TIPO_SERVICO_CODIGO_TIPO_SERVICO`),
   KEY `FK_LANCAMENTO_USUARIO1_IDX` (`USUARIO_CODIGO_USUARIO`),
-  KEY `FK_LANCAMENTO_LOCACAO1_IDX` (`LOCACAO_CODIGO_LOCACAO`),
   CONSTRAINT `FK_LANCAMENTO_DEPENDENTE1` FOREIGN KEY (`DEPENDENTE_CODIGO_DEPENDENTE`) REFERENCES `dependente` (`CODIGO_DEPENDENTE`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_LANCAMENTO_LOCACAO1` FOREIGN KEY (`LOCACAO_CODIGO_LOCACAO`) REFERENCES `locacao` (`CODIGO_LOCACAO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_LANCAMENTO_TIPO_SERVICO1` FOREIGN KEY (`TIPO_SERVICO_CODIGO_TIPO_SERVICO`) REFERENCES `tipo_servico` (`CODIGO_TIPO_SERVICO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_LANCAMENTO_USUARIO1` FOREIGN KEY (`USUARIO_CODIGO_USUARIO`) REFERENCES `usuario` (`CODIGO_USUARIO`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -479,7 +505,7 @@ CREATE TABLE `lancamento_conta` (
   `USUARIO_CODIGO_USUARIO` int(11) DEFAULT NULL,
   `CAIXA_CODIGO_CAIXA` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`CODIGO_LANCAMENTO_CONTA`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -488,6 +514,7 @@ CREATE TABLE `lancamento_conta` (
 
 LOCK TABLES `lancamento_conta` WRITE;
 /*!40000 ALTER TABLE `lancamento_conta` DISABLE KEYS */;
+INSERT INTO `lancamento_conta` VALUES (4,'fdas','fdas',10,0,'2015-01-27','2015-01-27',NULL,1,1,'1'),(5,'Material','231',1,1,'2015-01-29','2015-01-30','2015-01-29',1,1,'1'),(6,'Materiais Diversos Limpeza','41234132',300,300,'2015-01-29','2015-01-29','2015-01-29',4,1,'1');
 /*!40000 ALTER TABLE `lancamento_conta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -530,7 +557,7 @@ CREATE TABLE `locacao` (
   PRIMARY KEY (`CODIGO_LOCACAO`),
   KEY `FK_LOCACAO_DEPENDENTE1_IDX` (`DEPENDENTE_CODIGO_DEPENDENTE`),
   KEY `FK_LOCACAO_DEPENDENTE1_IDX1` (`DEPENDENTE_CODIGO_DEPENDENTE`,`USUARIO_CODIGO_USUARIO`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -802,7 +829,7 @@ CREATE TABLE `tipo_servico` (
 
 LOCK TABLES `tipo_servico` WRITE;
 /*!40000 ALTER TABLE `tipo_servico` DISABLE KEYS */;
-INSERT INTO `tipo_servico` VALUES (1,'D','Locação: Valor Locação','L'),(2,'D','Devolução: Atraso na Devolução','D'),(3,'C','Locação: Desconto','L'),(4,'C','Dinheiro','R'),(5,'D','Devolução: Débito de Devolução','D'),(6,'C','Locação: Pagamento Locação','L'),(7,'C','Devolução: Pagamento Devolução','D'),(8,'C','Devolução: Desconto','D'),(9,'C','Desconto Entrega Antecipada','D'),(10,'D','Venda: Valor Venda de Produto','V'),(11,'C','Venda: Pagamento Venda de Produto','V'),(12,'C','Desconto: Venda de Produto','V');
+INSERT INTO `tipo_servico` VALUES (1,'D','Valor Locação','S'),(2,'D','Débito de Devolução','S'),(3,'C','Desconto Locação','U'),(4,'C','Depóstio Antecipado Loc/Dev','R'),(6,'C','Pagamento Locação','U'),(7,'C','Pagamento Devolução','U'),(8,'C','Desconto Devolução','U'),(9,'C','Desconto Entrega Antecipada','U'),(10,'D','Valor Venda de Produto','S'),(11,'C','Pagamento Venda de Produto','U'),(12,'C','Desconto Venda de Produto ','U');
 /*!40000 ALTER TABLE `tipo_servico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -847,7 +874,7 @@ CREATE TABLE `venda` (
   `DEPENDENTE_CODIGO_DEPENDENTE` int(11) DEFAULT NULL,
   `USUARIO_CODIGO_USUARIO` int(11) DEFAULT NULL,
   PRIMARY KEY (`CODIGO_VENDA`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -948,4 +975,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-27 16:17:57
+-- Dump completed on 2015-01-29 13:46:57

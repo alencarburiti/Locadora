@@ -544,7 +544,7 @@ public class DevolucaoDAO implements InterfaceDevolucaoDAO {
     private void setPreparedStatementLancamento(Lancamento lancamento, PreparedStatement ps)
             throws SQLException {
 
-        ps.setDouble(1, lancamento.getValor());
+        ps.setDouble(1, lancamento.getValor_total());
         ps.setInt(2, lancamento.getDependente().getCodigo_dependente());
         ps.setInt(3, lancamento.getTipoServico().getCodigo_tipo_servico());
         ps.setInt(4, lancamento.getUsuario().getCodigo_usuario());

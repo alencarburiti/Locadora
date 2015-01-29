@@ -192,7 +192,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
     }
 
     @Override
-    public Cliente getCliente_codigo(Integer codigo_cliente) throws SQLException {
+    public Cliente getCliente_codigo(Integer codigo_cliente) {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -209,6 +209,8 @@ public class ClienteDAO implements InterfaceClienteDAO {
                 return resultado.get(0);
             }
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }

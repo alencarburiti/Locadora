@@ -437,30 +437,30 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
     public ItemLocacao tbItemLocacaoLinhaSelecionada(JTable tb) {
         ItemLocacao itemSelecionada = null;
         if (tb.getSelectedRow() != -1) {
-            itemSelecionada = new ItemLocacao();
+            itemSelecionada = itensDevolucao.get(tb.getSelectedRow());
 
-            itemSelecionada.setCodigo_item_locacao(itensDevolucao.get(tb.getSelectedRow()).getCodigo_item_locacao());
-            itemSelecionada.setValor_multa(itensDevolucao.get(tb.getSelectedRow()).getValor_multa());
-            itemSelecionada.setDias_multa(itensDevolucao.get(tb.getSelectedRow()).getDias_multa());
-            itemSelecionada.setData_locacao(itensDevolucao.get(tb.getSelectedRow()).getData_locacao());
-            itemSelecionada.setData_prevista(itensDevolucao.get(tb.getSelectedRow()).getData_prevista());
-            itemSelecionada.setValor_locado(itensDevolucao.get(tb.getSelectedRow()).getValor_locado());
-            itemSelecionada.setValor_pago(itensDevolucao.get(tb.getSelectedRow()).getValor_pago());
-
-            Diaria diaria = new Diaria();
-            diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getDias());
-            diaria.setCodigo_diaria(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getCodigo_diaria());
-
-            Objeto objeto = new Objeto();
-            objeto.setTitulo(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getTitulo());
-
-            Copia copia = new Copia();
-            copia.setDiaria(diaria);
-            copia.setObjeto(objeto);
-            copia.setCodigo_copia(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_copia());
-            copia.setCodigo_barras(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_barras());
-
-            itemSelecionada.setCopia(copia);
+//            itemSelecionada.setCodigo_item_locacao(itensDevolucao.get(tb.getSelectedRow()).getCodigo_item_locacao());
+//            itemSelecionada.setValor_multa(itensDevolucao.get(tb.getSelectedRow()).getValor_multa());
+//            itemSelecionada.setDias_multa(itensDevolucao.get(tb.getSelectedRow()).getDias_multa());
+//            itemSelecionada.setData_locacao(itensDevolucao.get(tb.getSelectedRow()).getData_locacao());
+//            itemSelecionada.setData_prevista(itensDevolucao.get(tb.getSelectedRow()).getData_prevista());
+//            itemSelecionada.setValor_locado(itensDevolucao.get(tb.getSelectedRow()).getValor_locado());
+//            itemSelecionada.setValor_pago(itensDevolucao.get(tb.getSelectedRow()).getValor_pago());
+//
+//            Diaria diaria = new Diaria();
+//            diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getDias());
+//            diaria.setCodigo_diaria(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getCodigo_diaria());
+//
+//            Objeto objeto = new Objeto();
+//            objeto.setTitulo(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getTitulo());
+//
+//            Copia copia = new Copia();
+//            copia.setDiaria(diaria);
+//            copia.setObjeto(objeto);
+//            copia.setCodigo_copia(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_copia());
+//            copia.setCodigo_barras(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_barras());
+//
+//            itemSelecionada.setCopia(copia);
 
         }
         return itemSelecionada;

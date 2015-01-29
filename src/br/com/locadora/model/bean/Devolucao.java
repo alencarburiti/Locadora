@@ -11,7 +11,7 @@ package br.com.locadora.model.bean;
  */
 public class Devolucao {
 
-    private Integer codigo_devolucao;
+    private Integer codigo_devolucao = 0;
     private Copia copia;
     private Dependente dependente;
     private Locacao locacao;

@@ -46,6 +46,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     public MenuCliente janelapai;
     public ConsultaClienteAtendimento janelapai2;
     public LocacaoEmAberto janelapai3;
+    public ConsultaClienteAtendimento janelapai4;
     private InterfacePool pool;
     public List<Telefone> telefones;
     public List<Dependente> dependentes;
@@ -69,6 +70,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         janelapai = null;
         janelapai2 = null;
         janelapai3 = null;
+        janelapai4 = null;
         action = "salvar";
     }
 
@@ -79,6 +81,8 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             this.setTitle("Alterando Cliente");
             janelapai = null;
             janelapai2 = null;
+            janelapai3 = null;
+            janelapai4 = null;
             this.cliente = cliente;
 
             jtf_codigo_cliente.setText(String.valueOf(cliente.getCodigo_cliente()));
@@ -443,11 +447,21 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                 jrb_ativoActionPerformed(evt);
             }
         });
+        jrb_ativo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_ativoKeyPressed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_inativo);
         jrb_inativo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_inativo.setText("Inativo");
         jrb_inativo.setName("jrb_inativo"); // NOI18N
+        jrb_inativo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_inativoKeyPressed(evt);
+            }
+        });
 
         jLabel20.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel20.setText("Estado*");
@@ -845,6 +859,11 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                 jrb_ativo_dependenteActionPerformed(evt);
             }
         });
+        jrb_ativo_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_ativo_dependenteKeyPressed(evt);
+            }
+        });
 
         buttonGroup2.add(jrb_inativo_dependente);
         jrb_inativo_dependente.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -853,6 +872,11 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jrb_inativo_dependente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrb_inativo_dependenteActionPerformed(evt);
+            }
+        });
+        jrb_inativo_dependente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_inativo_dependenteKeyPressed(evt);
             }
         });
 
@@ -1730,6 +1754,26 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_empresaActionPerformed
 
+    private void jrb_ativoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_ativoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_ativoKeyPressed
+
+    private void jrb_inativoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_inativoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_inativoKeyPressed
+
+    private void jrb_ativo_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_ativo_dependenteKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_ativo_dependenteKeyPressed
+
+    private void jrb_inativo_dependenteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_inativo_dependenteKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_inativo_dependenteKeyPressed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -2374,6 +2418,10 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         }else if (janelapai3 != null) {
             janelapai3.setStatusTela(true);
             janelapai3.cadastraAlteraCliente = null;
+//            janelapai.buscarDados();
+        }else if (janelapai4 != null) {
+            janelapai4.setStatusTela(true);
+            janelapai4.cadastraAlteraCliente = null;
 //            janelapai.buscarDados();
         }
     }

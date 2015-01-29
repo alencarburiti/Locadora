@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Locacao {
 
-    private Integer codigo_locacao;
+    private Integer codigo_locacao = 0;
     private Cliente cliente;
     private Dependente dependente;
     private List<ItemLocacao> itemLocacao;

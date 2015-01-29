@@ -1,10 +1,17 @@
 package br.com.locadora.conexao;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Pool implements InterfacePool {
@@ -14,14 +21,32 @@ public class Pool implements InterfacePool {
     private HashMap<String, Connection> conexoesUtilizadas;
     private Integer numeroMaximoConexoes;
     private ResourceBundle config;
+//    private ResourceBundle configUrlDB;
 
     public Pool() {
+        try {
+        File configFile = new File("config.properties");
+        FileReader reader;
+        reader = new FileReader(configFile);
+        Properties props = new Properties();
+        props.load(reader);
+        String ip_servidor = props.getProperty("url_db");
+                
         config = ResourceBundle.getBundle("br.com.locadora.conexao.bancodedados");
-        ds = new DataSource(config.getString("url"), config.getString("driver"),
+        
+        String url = config.getString("url") + ip_servidor + ":3306/"+config.getString("banco");
+        
+        System.out.println(props.getProperty("url_db"));
+        ds = new DataSource(url, config.getString("driver"),
                 config.getString("usuario"), config.getString("senha"));
         numeroMaximoConexoes = Integer.parseInt(config.getString("numeroMaximoConexoes"));
         conexoesLivres = new ArrayBlockingQueue<Connection>(numeroMaximoConexoes, true);
         conexoesUtilizadas = new HashMap<String, Connection>();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Pool.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Pool.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

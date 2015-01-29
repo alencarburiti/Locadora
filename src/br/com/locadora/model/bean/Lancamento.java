@@ -14,8 +14,10 @@ import java.util.Date;
 public class Lancamento {
 
     private Integer codigo_lancamento;
-    private Double valor;
+    private Double valor_total;
     private Locacao locacao;
+    private Devolucao devolucao;
+    private Venda venda;
     private TipoServico tipoServico;
     private Dependente dependente;
     private Usuario usuario;
@@ -23,6 +25,7 @@ public class Lancamento {
     private Double credito;
     private Double debito;
     private Double saldo;
+    private Double devedor;
     private Integer caixa;
 
     public Integer getCodigo_lancamento() {
@@ -33,12 +36,12 @@ public class Lancamento {
         this.codigo_lancamento = codigo_lancamento;
     }
 
-    public Double getValor() {
-        return valor;
+    public Double getValor_total() {
+        return valor_total;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public void setValor_total(Double valor_total) {
+        this.valor_total = valor_total;
     }
 
     public Locacao getLocacao() {
@@ -47,6 +50,22 @@ public class Lancamento {
 
     public void setLocacao(Locacao locacao) {
         this.locacao = locacao;
+    }
+
+    public Devolucao getDevolucao() {
+        return devolucao;
+    }
+
+    public void setDevolucao(Devolucao devolucao) {
+        this.devolucao = devolucao;
+    }
+
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
     }
 
     public TipoServico getTipoServico() {
@@ -111,6 +130,14 @@ public class Lancamento {
 
     public void setCaixa(Integer caixa) {
         this.caixa = caixa;
+    }
+
+    public Double getDevedor() {
+        return devedor;
+    }
+
+    public void setDevedor(Double devedor) {
+        this.devedor = devedor;
     }
 
 }

@@ -238,7 +238,7 @@ public class ImpressaoComprovante extends javax.swing.JFrame {
 
                 String valor = null;
 
-                valor = String.valueOf(lancamentos.get(i).getValor());
+                valor = String.valueOf(lancamentos.get(i).getValor_total());
 
                 Moeda moeda = new Moeda();
 

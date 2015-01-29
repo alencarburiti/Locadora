@@ -81,7 +81,6 @@ public class MenuRelatorio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jb_gerar_relatorio = new javax.swing.JButton();
-        jb_gerar_relatorio1 = new javax.swing.JButton();
         jb_sair = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         try  {
@@ -129,7 +128,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Objeto"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro Titulo do Objeto"));
         jPanel1.setName("jPanel1"); // NOI18N
 
         jtf_consulta.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -151,9 +150,12 @@ public class MenuRelatorio extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(0, 0, 0))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(207, 207, 207))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtf_consulta)
+                        .addGap(0, 0, 0))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,17 +186,6 @@ public class MenuRelatorio extends javax.swing.JFrame {
             }
         });
 
-        jb_gerar_relatorio1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_gerar_relatorio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/excel_icon.png"))); // NOI18N
-        jb_gerar_relatorio1.setText("Gerar");
-        jb_gerar_relatorio1.setName("jb_gerar_relatorio1"); // NOI18N
-        jb_gerar_relatorio1.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_gerar_relatorio1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_gerar_relatorio1ActionPerformed(evt);
-            }
-        });
-
         jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
         jb_sair.setText("Sair");
@@ -216,23 +207,19 @@ public class MenuRelatorio extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(50, 50, 50)
                 .addComponent(jb_gerar_relatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jb_gerar_relatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
                 .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(50, 50, 50))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jb_gerar_relatorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jb_gerar_relatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro com Data"));
@@ -576,7 +563,7 @@ public class MenuRelatorio extends javax.swing.JFrame {
             dataInicial = out.format(in.parse(jtf_data_inicial.getText()));
             dataFinal = out.format(in.parse(jtf_data_final.getText()));
         } catch (ParseException ex) {
-//            Logger.getLogger(MenuRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
         String titulo = jtf_consulta.getText().trim();
@@ -601,45 +588,6 @@ public class MenuRelatorio extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_gerar_relatorioActionPerformed
-
-    private void jb_gerar_relatorio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gerar_relatorio1ActionPerformed
-
-        JFileChooser jfile = new JFileChooser();
-
-        jfile.showSaveDialog(this);
-        System.out.println("Arquivo: " + jfile.getSelectedFile());
-        String arquivo = null;
-        File file = null;
-        if (jfile.getSelectedFile() != null) {
-            arquivo = jfile.getSelectedFile() + ".xls";
-            file = new File(arquivo);
-        }
-
-        SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd");
-
-        String dataInicial = null;
-        String dataFinal = null;
-        try {
-            dataInicial = out.format(in.parse(jtf_data_inicial.getText()));
-            dataFinal = out.format(in.parse(jtf_data_final.getText()));
-        } catch (ParseException ex) {
-            Logger.getLogger(MenuRelatorio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        String titulo = jtf_consulta.getText().trim();
-
-        pool = new Pool();
-
-        if (jrb_quantidade_locacao_relocacao.isSelected() == true) {
-            RelatorioLocacaoRelocacao rel = new RelatorioLocacaoRelocacao(pool);
-            rel.gerarRelatorioExcel(dataInicial, dataFinal, titulo, file);
-        } else if (jrb_locacao_em_aberto.isSelected() == true) {
-            RelatorioLocacaoAberta rel = new RelatorioLocacaoAberta(pool);
-            rel.gerarRelatorioExcel(dataInicial, dataFinal, titulo, file);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_gerar_relatorio1ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         acionarAtalho(evt);
@@ -716,7 +664,6 @@ public class MenuRelatorio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton jb_gerar_relatorio;
-    private javax.swing.JButton jb_gerar_relatorio1;
     private javax.swing.JButton jb_sair;
     private javax.swing.JRadioButton jrb_clientes_pendentes;
     private javax.swing.JRadioButton jrb_fluxo_caixa_detalhado;

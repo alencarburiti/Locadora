@@ -32,14 +32,6 @@ public class ArquivoConfiguracao {
     private String impressora;
     
     public String readPropertie(String propertie){
-//        URL urlFile = SuaClasse.class.getResource("arquivo.properties");  
-//        URL urlFile = this.getClass().getResource("config.properties");                                
-//        File file = null; 
-//        try {
-//            file = new File(Thread.currentThread().getClass().getResource("/config.properties").toURI());
-//        } catch (URISyntaxException ex) {
-//            Logger.getLogger(ArquivoConfiguracao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         
         File configFile = new File("config.properties");
         String valor_property = "";
@@ -66,13 +58,7 @@ public class ArquivoConfiguracao {
         String valor_property = ""; 
                 
         Properties prop = new Properties();  
-  
-        try {
-            prop.load( getClass().getResourceAsStream("config.properties") );
-        } catch (IOException ex) {
-            Logger.getLogger(ArquivoConfiguracao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                
+               
         try {
             FileReader reader = new FileReader(configFile);
             Properties props = new Properties();
@@ -86,35 +72,6 @@ public class ArquivoConfiguracao {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Favor entrar em contato com o administrador do Sistema. Error: " +key+ " "+ valor);
         }
-    }
-//    
-//    public void writePropertie(String key, String valor){
-//                
-//                
-//        try {
-//            InputStream caminho = getClass().getResourceAsStream("rel_cliente_pendente.jasper");                                
-//            
-//            
-//            Properties props = new Properties();  
-//            props.load(getClass().getResourceAsStream("config.properties"));            
-//            props.setProperty(key, valor);
-////            FileWriter writer = new FileWriter(file);
-////            props.store(writer, null);
-//            
-////            props.store(new FileOutputStream("./config.properties"), null);  
-//            URL path = getClass().getResource("config.properties");
-//            System.out.println("Caminho: "+path.toString());
-//            props.store(new FileOutputStream(path.toString()), null);  
-//            props.store(, key);
-//            
-////            writer.close();
-//        } catch (FileNotFoundException ex) {
-//            ex.printStackTrace();
-//            JOptionPane.showMessageDialog(null, "Arquivo de configuração não encontrado.\n Favor entrar em contato com o administrador do Sistema");
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//            JOptionPane.showMessageDialog(null, "Favor entrar em contato com o administrador do Sistema. Error: " +key+ " "+ valor);
-//        }
-//    }
+    }    
         
 }

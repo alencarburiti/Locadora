@@ -24,15 +24,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LocacaoDAO implements InterfaceLocacaoDAO {
+public class LocacaoDAO {
 
     private InterfacePool pool;
 
     public LocacaoDAO(InterfacePool pool) {
         this.pool = pool;
     }
-
-    @Override
+    
     public void atualizar(Locacao locacao) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -75,7 +74,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             pool.liberarConnection(con);
         }
     }
-    @Override
+    
     public void excluir(Integer codigo) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -90,8 +89,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             pool.liberarConnection(con);
         }
     }
-
-    @Override
+    
     public Locacao getLocacao_nome(String nome_locacao) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -116,7 +114,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return null;
     }
 
-    @Override
+    
     public Locacao getLocacao_cpf(String cpf) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -140,8 +138,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         }
         return null;
     }
-
-    @Override
+    
     public List<ItemLocacao> getLocacao_codigo(Integer codigo_dependente) throws SQLException {
 
         List<ItemLocacao> resultado = new ArrayList<ItemLocacao>();
@@ -235,6 +232,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    E.NOME_DEPENDENTE,\n"
                 + "    E.CODIGO_DEPENDENTE,\n"
                 + "    E.CLIENTE_CODIGO_CLIENTE,\n"
+                + "    E.TIPO_DEPENDENTE,\n"
                 + "    C.CODIGO_LOCACAO,\n"
                 + "    D.CODIGO_ITEM_LOCACAO,\n"
                 + "    D.VALOR_LOCADO,\n"
@@ -318,6 +316,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
                 + "    E.CODIGO_DEPENDENTE,\n"
                 + "    E.NOME_DEPENDENTE,\n"
                 + "    E.CLIENTE_CODIGO_CLIENTE,\n"
+                + "    TIPO_DEPENDENTE,\n"
                 + "    A.TITULO,\n"
                 + "    A.CODIGO_OBJETO,\n"
                 + "    A.CODIGO_OBJETO,\n" 
@@ -393,7 +392,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return null;
     }
 
-    @Override
+    
     public List<Locacao> getLocacaos() throws SQLException {
         List<Locacao> resultado = new ArrayList<Locacao>();
         Connection con = pool.getConnection();
@@ -451,6 +450,12 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             Dependente dependente = new Dependente();
             dependente.setCodigo_dependente(rs.getInt("CODIGO_DEPENDENTE"));
             dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
+            if (rs.getInt("TIPO_DEPENDENTE") == 0) {
+                dependente.setTipo_dependente("Cliente");
+
+            } else {
+                dependente.setTipo_dependente("Dependente");
+            }
             
             Cliente cliente = new Cliente();
             cliente.setCodigo_cliente(rs.getInt("CLIENTE_CODIGO_CLIENTE"));
@@ -474,8 +479,8 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
         return resultado;
     }
 
-    @Override
-    public Locacao salvar(Locacao locacao) throws SQLException {
+    
+    public Locacao salvar(Locacao locacao) {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
@@ -502,43 +507,17 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             locacao.setCodigo_locacao(codigo_max);
 
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
         return locacao;
     }
 
-    public void salvarLancamento(List<Lancamento> lancamentos) throws SQLException {
-        Connection con = pool.getConnection();
-        PreparedStatement ps;
-
-        String sqlLancamento = "INSERT INTO `lancamento`(`valor`,`dependente_CODIGO_DEPENDENTE`,\n"
-                + "`tipo_servico_codigo_tipo_servico`,`usuario_CODIGO_USUARIO`,`locacao_CODIGO_LOCACAO`,data_lancamento, "
-                + "caixa_codigo_caixa, cliente_codigo_cliente)\n"
-                + "VALUES(?,?,?,?,?,CURRENT_DATE(),?, ?);";
-
-        try {
-
-            ps = con.prepareStatement(sqlLancamento);
-
-            for(int i = 0; i < lancamentos.size(); i++){
-                ps.setDouble(1, lancamentos.get(i).getValor());
-                ps.setInt(2, lancamentos.get(i).getDependente().getCodigo_dependente());
-                ps.setInt(3, lancamentos.get(i).getTipoServico().getCodigo_tipo_servico());
-                ps.setInt(4, lancamentos.get(i).getUsuario().getCodigo_usuario());
-                ps.setInt(5, lancamentos.get(i).getLocacao().getCodigo_locacao());
-                ps.setInt(6, lancamentos.get(i).getCaixa());
-                ps.setInt(7, lancamentos.get(i).getDependente().getCliente().getCodigo_cliente());
-                ps.executeUpdate();
-            }
-
-
-            ps.close();
-        } finally {
-            pool.liberarConnection(con);
-        }
-
-    }
+    
+    
+    
 
     public void salvarItem(List<ItemLocacao> itemLocacao) throws SQLException {
         Connection con = pool.getConnection();
@@ -631,7 +610,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
     private void setPreparedStatementLancamento(Lancamento lancamento, PreparedStatement ps)
             throws SQLException {
 
-        ps.setDouble(1, lancamento.getValor());
+        ps.setDouble(1, lancamento.getValor_total());
         ps.setInt(2, lancamento.getDependente().getCodigo_dependente());
         ps.setInt(3, lancamento.getTipoServico().getCodigo_tipo_servico());
         ps.setInt(4, lancamento.getUsuario().getCodigo_usuario());
@@ -678,7 +657,13 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             Dependente dependente = new Dependente();
             dependente.setCodigo_dependente(rs.getInt("CODIGO_DEPENDENTE"));
             dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
+            if (rs.getInt("TIPO_DEPENDENTE") == 0) {
+                dependente.setTipo_dependente("Cliente");
 
+            } else {
+                dependente.setTipo_dependente("Dependente");
+            }
+            
             Cliente cliente = new Cliente();
             cliente.setCodigo_cliente(rs.getInt("CLIENTE_CODIGO_CLIENTE"));
 
@@ -781,6 +766,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "    D.VALOR_PAGO,\n" +
             "    E.CODIGO_DEPENDENTE,\n" +
             "    E.NOME_DEPENDENTE,\n" +
+                "    E.TIPO_DEPENDENTE,\n" +
             "    E.CLIENTE_CODIGO_CLIENTE,\n" +
             "    A.TITULO AS TITULO,\n" +
             "    A.CODIGO_OBJETO,\n" +
@@ -832,6 +818,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "    D.VALOR_PAGO,\n" +
             "    E.CODIGO_DEPENDENTE,\n" +
             "    E.NOME_DEPENDENTE,\n" +
+                "    E.TIPO_DEPENDENTE,\n" +
             "    E.CLIENTE_CODIGO_CLIENTE,\n" +
             "    A.TITULO AS TITULO,\n" +
             "    A.CODIGO_OBJETO,\n" +
@@ -916,6 +903,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "    D.PROMOCAO_LOCACAO_CODIGO_PROMOCAO_LOCACAO,\n" +
             "    E.CODIGO_DEPENDENTE,\n" +
             "    E.NOME_DEPENDENTE,\n" +
+            "    E.TIPO_DEPENDENTE,\n" +
             "    E.CLIENTE_CODIGO_CLIENTE,\n" +
             "    A.TITULO AS TITULO,\n" +
             "    A.CODIGO_OBJETO,\n" +
@@ -968,6 +956,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "    D.PROMOCAO_LOCACAO_CODIGO_PROMOCAO_LOCACAO,\n" +
             "    E.CODIGO_DEPENDENTE,\n" +
             "    E.NOME_DEPENDENTE,\n" +
+            "    E.TIPO_DEPENDENTE,\n" +
             "    E.CLIENTE_CODIGO_CLIENTE,\n" +
             "    A.TITULO AS TITULO,\n" +
             "    A.CODIGO_OBJETO,\n" +
@@ -1048,6 +1037,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "    E.CODIGO_DEPENDENTE,\n" +
             "    E.NOME_DEPENDENTE,\n" +
             "    E.CLIENTE_CODIGO_CLIENTE,\n" +
+                "    E.TIPO_DEPENDENTE,\n" +
             "    A.TITULO AS TITULO,\n" +
                 "    A.CODIGO_OBJETO,\n" +
             "    F.DIAS AS DIARIA,\n" +
@@ -1100,6 +1090,7 @@ public class LocacaoDAO implements InterfaceLocacaoDAO {
             "    E.CODIGO_DEPENDENTE,\n" +
             "    E.NOME_DEPENDENTE,\n" +
             "    E.CLIENTE_CODIGO_CLIENTE,\n" +
+                "    E.TIPO_DEPENDENTE,\n" +
             "    A.TITULO AS TITULO,\n" +
                 "    A.CODIGO_OBJETO,\n" +
             "    F.DIAS AS DIARIA,\n" +

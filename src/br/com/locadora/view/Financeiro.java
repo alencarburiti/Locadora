@@ -74,7 +74,7 @@ public class Financeiro extends javax.swing.JFrame {
         jrb_todos = new javax.swing.JRadioButton();
         jrb_vencidos = new javax.swing.JRadioButton();
         jrb_a_pagar = new javax.swing.JRadioButton();
-        jButton3 = new javax.swing.JButton();
+        jrb_a_receber = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbl_contas = new javax.swing.JTable();
         jl_rodape = new javax.swing.JLabel();
@@ -165,11 +165,31 @@ public class Financeiro extends javax.swing.JFrame {
         jrb_recebidos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_recebidos.setText("Recebidos");
         jrb_recebidos.setName("jrb_recebidos"); // NOI18N
+        jrb_recebidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_recebidosActionPerformed(evt);
+            }
+        });
+        jrb_recebidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_recebidosKeyPressed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_pagos);
         jrb_pagos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_pagos.setText("Pagos");
         jrb_pagos.setName("jrb_pagos"); // NOI18N
+        jrb_pagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_pagosActionPerformed(evt);
+            }
+        });
+        jrb_pagos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_pagosKeyPressed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_todos);
         jrb_todos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
@@ -181,24 +201,53 @@ public class Financeiro extends javax.swing.JFrame {
                 jrb_todosActionPerformed(evt);
             }
         });
+        jrb_todos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_todosKeyPressed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_vencidos);
         jrb_vencidos.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_vencidos.setText("Vencidos");
         jrb_vencidos.setName("jrb_vencidos"); // NOI18N
+        jrb_vencidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_vencidosActionPerformed(evt);
+            }
+        });
+        jrb_vencidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_vencidosKeyPressed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_a_pagar);
         jrb_a_pagar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_a_pagar.setText("À Pagar");
         jrb_a_pagar.setName("jrb_a_pagar"); // NOI18N
-
-        jButton3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/pesquisar.png"))); // NOI18N
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setPreferredSize(new java.awt.Dimension(28, 28));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jrb_a_pagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jrb_a_pagarActionPerformed(evt);
+            }
+        });
+        jrb_a_pagar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_a_pagarKeyPressed(evt);
+            }
+        });
+
+        buttonGroup1.add(jrb_a_receber);
+        jrb_a_receber.setText("À Receber");
+        jrb_a_receber.setName("jrb_a_receber"); // NOI18N
+        jrb_a_receber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_a_receberActionPerformed(evt);
+            }
+        });
+        jrb_a_receber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_a_receberKeyPressed(evt);
             }
         });
 
@@ -214,10 +263,12 @@ public class Financeiro extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jtf_data_final, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addComponent(jrb_recebidos)
-                .addGap(0, 0, 0)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jtf_data_final, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jrb_recebidos)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jrb_a_receber)))
                 .addComponent(jrb_pagos)
                 .addGap(0, 0, 0)
                 .addComponent(jrb_a_pagar)
@@ -225,9 +276,7 @@ public class Financeiro extends javax.swing.JFrame {
                 .addComponent(jrb_vencidos)
                 .addGap(0, 0, 0)
                 .addComponent(jrb_todos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,15 +289,14 @@ public class Financeiro extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, 0)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jtf_data_final, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jrb_recebidos)
-                                .addComponent(jrb_pagos)
-                                .addComponent(jrb_vencidos)
-                                .addComponent(jrb_todos)
-                                .addComponent(jrb_a_pagar)))))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtf_data_final, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jrb_recebidos)
+                            .addComponent(jrb_pagos)
+                            .addComponent(jrb_vencidos)
+                            .addComponent(jrb_todos)
+                            .addComponent(jrb_a_pagar)
+                            .addComponent(jrb_a_receber))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -321,6 +369,11 @@ public class Financeiro extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/delete 16.png"))); // NOI18N
@@ -330,6 +383,11 @@ public class Financeiro extends javax.swing.JFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton2KeyPressed(evt);
             }
         });
 
@@ -343,6 +401,11 @@ public class Financeiro extends javax.swing.JFrame {
                 jb_altera_lancamentoActionPerformed(evt);
             }
         });
+        jb_altera_lancamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_altera_lancamentoKeyPressed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finances_(add)_16x16.gif"))); // NOI18N
@@ -354,6 +417,11 @@ public class Financeiro extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
+        jButton4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton4KeyPressed(evt);
+            }
+        });
 
         jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
@@ -363,6 +431,11 @@ public class Financeiro extends javax.swing.JFrame {
         jb_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_sairActionPerformed(evt);
+            }
+        });
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_sairKeyPressed(evt);
             }
         });
 
@@ -443,7 +516,7 @@ public class Financeiro extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -479,9 +552,7 @@ public class Financeiro extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jl_rodape)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel1)))
+                    .addComponent(jLabel1))
                 .addGap(0, 0, 0))
         );
 
@@ -560,6 +631,7 @@ public class Financeiro extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_data_finalFocusLost
 
     private void jtf_data_finalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_data_finalKeyPressed
+        acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_data_finalKeyPressed
 
@@ -572,10 +644,6 @@ public class Financeiro extends javax.swing.JFrame {
         novoLancamento();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        consultarContas();
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jb_altera_lancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_altera_lancamentoActionPerformed
         alterarLancamento();
@@ -634,6 +702,7 @@ public class Financeiro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jrb_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_todosActionPerformed
+        consultarContas();
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_todosActionPerformed
 
@@ -666,6 +735,86 @@ public class Financeiro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairActionPerformed
 
+    private void jrb_recebidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_recebidosActionPerformed
+        consultarContas();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_recebidosActionPerformed
+
+    private void jrb_a_receberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_a_receberActionPerformed
+        consultarContas();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_a_receberActionPerformed
+
+    private void jrb_pagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_pagosActionPerformed
+        consultarContas();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_pagosActionPerformed
+
+    private void jrb_a_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_a_pagarActionPerformed
+        consultarContas();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_a_pagarActionPerformed
+
+    private void jrb_vencidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_vencidosActionPerformed
+        consultarContas();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_vencidosActionPerformed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyPressed
+
+    private void jb_altera_lancamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_altera_lancamentoKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_altera_lancamentoKeyPressed
+
+    private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2KeyPressed
+
+    private void jButton4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton4KeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4KeyPressed
+
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void jrb_recebidosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_recebidosKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_recebidosKeyPressed
+
+    private void jrb_a_receberKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_a_receberKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_a_receberKeyPressed
+
+    private void jrb_pagosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_pagosKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_pagosKeyPressed
+
+    private void jrb_a_pagarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_a_pagarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_a_pagarKeyPressed
+
+    private void jrb_vencidosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_vencidosKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_vencidosKeyPressed
+
+    private void jrb_todosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_todosKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_todosKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -681,7 +830,6 @@ public class Financeiro extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
@@ -702,6 +850,7 @@ public class Financeiro extends javax.swing.JFrame {
     private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_rodape;
     private javax.swing.JRadioButton jrb_a_pagar;
+    private javax.swing.JRadioButton jrb_a_receber;
     private javax.swing.JRadioButton jrb_pagos;
     private javax.swing.JRadioButton jrb_recebidos;
     private javax.swing.JRadioButton jrb_todos;
@@ -786,8 +935,9 @@ public class Financeiro extends javax.swing.JFrame {
             jtf_data_inicial.requestFocus();
         } else {
             moeda = new Moeda();
-            Double total = 0.00;
+            Double total_saida = 0.00;
             Double total_recebido = 0.00;
+            Double total_entrada = 0.00;
             Double total_pago = 0.00;
             for (int i = 0; i < contas.size(); i++) {
 
@@ -800,15 +950,17 @@ public class Financeiro extends javax.swing.JFrame {
                 } catch (Exception e) {
                 }
                 String tipo;
+                
                 if (contas.get(i).getFornecedor().getCodigo_fornecedor().equals(0)) {
                     total_recebido = total_recebido + contas.get(i).getValor_pago();
+                    total_entrada = total_entrada + contas.get(i).getValor(); 
                     tipo = "E";
                 } else {
                     tipo = "S";
                     total_pago = total_pago + contas.get(i).getValorPago();
+                    total_saida = total_saida + contas.get(i).getValor();
                 }
                 if (data_pagamento.equals("")) {
-                    total = total + contas.get(i).getValor();
                 }
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_contas.getModel();
@@ -821,7 +973,7 @@ public class Financeiro extends javax.swing.JFrame {
                     data_pagamento, contas.get(i).getCaixa(), contas.get(i).getUsuario().getNome_usuario()});
             }
 
-            TableCellRenderer tcr = new Colorir(this, null);            
+            TableCellRenderer tcr = new Colorir(this, null, null);            
             TableColumn column = jtbl_contas.getColumnModel().getColumn(0);
             column.setCellRenderer(tcr);
             column = jtbl_contas.getColumnModel().getColumn(1);
@@ -842,9 +994,12 @@ public class Financeiro extends javax.swing.JFrame {
             column.setCellRenderer(tcr);
             column = jtbl_contas.getColumnModel().getColumn(9);
             column.setCellRenderer(tcr);
-
+            
+            Double total_a_pagar = total_saida-total_pago;
+            Double total_a_receber = total_entrada - total_recebido;
             String rodape = "Total Pago: " + moeda.setPrecoFormat(total_pago.toString()) + " - Total à pagar:  "
-                    + moeda.setPrecoFormat(total.toString()) + " - Total Recebido: " + moeda.setPrecoFormat(total_recebido.toString());
+                    + moeda.setPrecoFormat(total_a_pagar.toString()) + " - Total Recebido: " + moeda.setPrecoFormat(total_recebido.toString())
+                    + " - Total à receber: "+ moeda.setPrecoFormat(total_a_receber.toString());
             jl_rodape.setText(rodape);
 
             jtbl_contas.requestFocus();
@@ -877,6 +1032,8 @@ public class Financeiro extends javax.swing.JFrame {
             contas = lancDAO.getLancamentoContasAPagar(dataInicial, dataFinal);
         } else if (jrb_vencidos.isSelected()) {
             contas = lancDAO.getLancamentoContasVencidas(dataInicial, dataFinal);
+        } else if(jrb_a_receber.isSelected()){
+            contas = lancDAO.getLancamentoContasAReceber(dataInicial, dataFinal);
         }
 
         try {

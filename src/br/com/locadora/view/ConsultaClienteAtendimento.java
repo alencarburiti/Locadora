@@ -15,13 +15,15 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Colorir;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
-import static br.com.locadora.view.Financeiro.jtbl_contas;
+import static br.com.locadora.view.LocacaoEmAberto.itensDevolucao;
+import static br.com.locadora.view.LocacaoEmAberto.jtbl_locacao_aberto;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -77,6 +79,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_cliente = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jb_cancelar = new javax.swing.JButton();
         jb_novo1 = new javax.swing.JButton();
@@ -181,6 +184,16 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 jLabel2.setText("Parâmetro");
                 jLabel2.setName("jLabel2"); // NOI18N
 
+                jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/cliente.png"))); // NOI18N
+                jButton1.setText("Verificar Cliente");
+                jButton1.setName("jButton1"); // NOI18N
+                jButton1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton1ActionPerformed(evt);
+                    }
+                });
+
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
                 jPanel1Layout.setHorizontalGroup(
@@ -188,24 +201,32 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, 0)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, 0))
                 );
                 jPanel1Layout.setVerticalGroup(
                     jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, 0)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, 0)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtf_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jb_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(jButton1)
+                                .addGap(0, 0, 0)))
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                 );
@@ -429,6 +450,11 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        verificarCliente();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -442,6 +468,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -458,21 +485,59 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         jb_novo1.setEnabled(false);
     }
 
+    public void verificarCliente() {
+        pool = new Pool();
+        UsuarioDAO usuarioControl = new UsuarioDAO(pool);
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        AcessoUsuario acesso;
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuCliente");
+        try {
+            System.out.println("Escrever: " + acesso.getEscrever());
+            if (acesso.getEscrever() == true) {
+                if(jtbl_cliente.getSelectedRow() != -1){
+                    pool = new Pool();
+                    ClienteDAO clienteDAO = new ClienteDAO(pool);
+                    Cliente cliente = clienteDAO.getCliente_codigo(dependentes.get(jtbl_cliente.getSelectedRow()).getCliente().getCodigo_cliente());
+
+                    if (cliente != null) {
+                        if(cadastraAlteraCliente == null ){
+                            cadastraAlteraCliente = new CadastraAlteraCliente(cliente);
+                            cadastraAlteraCliente.janelapai4 = this;
+                            cadastraAlteraCliente.setVisible(true);
+                            setEnabled(false);
+                        } else {
+                            cadastraAlteraCliente.setVisible(true);
+                        }
+                    }
+                }
+                 else {
+                    JOptionPane.showMessageDialog(null, "Selecione um cliente");
+                    jtf_consulta.requestFocus();                    
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
+        }
+    }
+    
     public Dependente tbClienteDependenteLinhaSelecionada(JTable tb) {
         Dependente dependente = null;
 
         if (tb.getSelectedRow() != -1) {
-            dependente = new Dependente();
+            dependente = dependentes.get(tb.getSelectedRow());
 
-            dependente.setCodigo_dependente(dependentes.get(tb.getSelectedRow()).getCodigo_dependente());
-            dependente.setNome_dependente(dependentes.get(tb.getSelectedRow()).getNome_dependente());
-            dependente.setDebito(dependentes.get(tb.getSelectedRow()).getDebito());
-            dependente.setData_nascimento(dependentes.get(tb.getSelectedRow()).getData_nascimento());
-
-            Cliente cliente = new Cliente();
-            cliente.setCodigo_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getCodigo_cliente());
-            cliente.setNome_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getNome_cliente());
-            dependente.setCliente(cliente);
+//            dependente.setCodigo_dependente(dependentes.get(tb.getSelectedRow()).getCodigo_dependente());
+//            dependente.setNome_dependente(dependentes.get(tb.getSelectedRow()).getNome_dependente());
+//            dependente.setDebito(dependentes.get(tb.getSelectedRow()).getDebito());
+//            dependente.setData_nascimento(dependentes.get(tb.getSelectedRow()).getData_nascimento());
+//
+//            Cliente cliente = new Cliente();
+//            cliente.setCodigo_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getCodigo_cliente());
+//            cliente.setNome_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getNome_cliente());
+//            dependente.setCliente(cliente);
         }
         return dependente;
     }
@@ -532,7 +597,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 row.addRow(new Object[]{dependente.getCliente().getCodigo_cliente(), hashDbGrid, data_nascimento, dependente.getTipo_dependente(), status, dependente.getCodigo_dependente()});
             }
             
-            TableCellRenderer tcr = new Colorir(null, this);            
+            TableCellRenderer tcr = new Colorir(null, this, null);            
             TableColumn column = jtbl_cliente.getColumnModel().getColumn(0);
             column.setCellRenderer(tcr);            
             column = jtbl_cliente.getColumnModel().getColumn(1);

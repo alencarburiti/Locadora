@@ -5,14 +5,17 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Copia;
-import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.Devolucao;
+import br.com.locadora.model.bean.ItemLancamento;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.model.bean.Venda;
 import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.model.dao.DevolucaoDAO;
+import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
@@ -21,16 +24,19 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
+import static br.com.locadora.view.EntradaCaixaLocacao.acesso;
+import static br.com.locadora.view.EntradaCaixaLocacao.jtf_saldo_debito_anterior;
+import static br.com.locadora.view.EntradaCaixaLocacao.jtf_valor_total_locacao;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.PrintException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -45,7 +51,9 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     public SiscomController controller;
     public String action;
     public static List<ItemLocacao> itens;
-
+    public Moeda moeda;
+    public LancamentoDAO lancamentoDAO;
+    public Lancamento lancamento;
     /**
      * Creates new form ProdutoCadastroGUI
      */
@@ -1089,27 +1097,22 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     }
 
     private void imprimir() {
-        try {
-            Usuario usuario = acesso.getUsuario();
-            Printer imprimir = new Printer();
-            imprimir.comprovanteDevolucao(itens, AtendimentoDevolucao.dependente, usuario);
-            String nome_arquivo = "Imprimir/comprovanteDevolucao_" + AtendimentoDevolucao.dependente.getNome_dependente() + ".txt";
-            if (imprimir.imprimirArquivo(nome_arquivo)) {
-                //Desabilita para não haver mais alteração
-
-                jtf_valor_pago.setEditable(false);
-                jtf_desconto.setEditable(false);
-                //Fechar janela após impressão
-
-                retornaJanelaPai();
-
-                File arquivo = new File(nome_arquivo);
-                arquivo.deleteOnExit();
-                arquivo.delete();
-            }
-
-        } catch (PrintException ex) {
-            JOptionPane.showMessageDialog(null, "Problema encontrado com impressora padrão.");
+        Usuario usuario = acesso.getUsuario();
+        Printer imprimir = new Printer();
+        imprimir.comprovanteDevolucao(itens, AtendimentoDevolucao.dependente, usuario,lancamento);
+        String nome_arquivo = "Imprimir/comprovanteDevolucao_" + janelapaiDevolucao.dependente.getNome_dependente() + ".txt";
+        if (imprimir.imprimirArquivo(nome_arquivo)) {
+            //Desabilita para não haver mais alteração
+            
+            jtf_valor_pago.setEditable(false);
+            jtf_desconto.setEditable(false);
+            //Fechar janela após impressão
+            
+            retornaJanelaPai();
+            
+            File arquivo = new File(nome_arquivo);
+            arquivo.deleteOnExit();
+            arquivo.delete();
         }
     }
 
@@ -1202,86 +1205,184 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
     
     public void cadastrarDevolucao() {
 
-        try {            
-            pool = new Pool();
-            DevolucaoDAO devolucaoDAO = new DevolucaoDAO(pool);
-            Dependente dependente = new Dependente();            
-            
-            dependente.setCodigo_dependente(janelapaiDevolucao.dependente.getCodigo_dependente());
-            
-            Locacao locacao = new Locacao();  
-            
-            locacao.setDependente(dependente);
-            
-            Usuario usuario = new Usuario();
-            usuario.setCodigo_usuario(acesso.getUsuario().getCodigo_usuario());
-            
-            locacao.setUsuario(usuario);
+        try {                        
+            DevolucaoDAO devolucaoDAO;
+            Locacao locacao = new Locacao();              
+            locacao.setDependente(janelapaiDevolucao.dependente);
+            locacao.setUsuario(acesso.getUsuario());
             
             Double valor_pago;
             Double valor_desconto;
-            Double multa;
+            Double relocacao;
             Double troco;
             Double desconto_entrega_antecipada;
-            Moeda moeda = new Moeda();
             
+            moeda = new Moeda();            
             valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
             valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText()); 
-            multa = moeda.getPrecoFormato(jtf_total_relocacao.getText());
-            desconto_entrega_antecipada = moeda.getPrecoFormato(jtf_desconto_entrega_antecipada.getText());
-                    
-            troco = moeda.getPrecoFormato(jtf_troco.getText());
-            
+            relocacao = moeda.getPrecoFormato(jtf_total_relocacao.getText());
+            desconto_entrega_antecipada = moeda.getPrecoFormato(jtf_desconto_entrega_antecipada.getText());                    
+            troco = moeda.getPrecoFormato(jtf_troco.getText());            
             valor_pago = valor_pago - troco;
+            Double valor_total_locacao = moeda.getPrecoFormato(jtf_total_relocacao.getText());
+            Double saldo = 0.00;
+            if (jtf_saldo_debito_anterior.getForeground().equals(Color.BLACK)) {
+                saldo = moeda.getPrecoFormato(jtf_saldo_debito_anterior.getText());
+            }
             
             ArquivoConfiguracao conf = new ArquivoConfiguracao();
-            Lancamento lancamento = new Lancamento();
+            
+            TipoServico tipoServico;            
+            lancamento = new Lancamento();
+            lancamento.setValor_total(relocacao);
+            lancamento.setDependente(janelapaiDevolucao.dependente);
+            tipoServico = new TipoServico();
+            tipoServico.setCodigo_tipo_servico(2);
+            lancamento.setTipoServico(tipoServico);
+            lancamento.setUsuario(acesso.getUsuario());
             lancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
-            lancamento.setUsuario(usuario);
-            lancamento.setDependente(dependente);
-            TipoServico tipoServico = new TipoServico();
+            lancamento.setLocacao(new Locacao());
+            lancamento.setDevolucao(new Devolucao());
+            lancamento.setVenda(new Venda());
             
-            lancamento.setLocacao(locacao);
+            pool = new Pool();
+            lancamentoDAO = new LancamentoDAO(pool);
+            lancamento = lancamentoDAO.salvarLancamento(lancamento);
             
-            if(valor_pago > 0 ){
+            List<ItemLancamento> itensLancamento = new ArrayList<>();
+            ItemLancamento itemLancamento;
+            
+            Calendar data_atual = Calendar.getInstance();
+            
+            pool = new Pool();
+            List<Lancamento> lancamentos = new ArrayList<Lancamento>();
+            LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
+            lancamentos = lancamentoDAO.getLancamentos(janelapaiDevolucao.dependente.getCliente());
+            
+            if (saldo >= relocacao) {
+                for (int i = 0; i < lancamentos.size(); i++) {
+                    if (lancamentos.get(i).getSaldo() >= relocacao) {
+                        //Diminui do Saldo
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamentos.get(i));
+                        itemLancamento.setValor_lancamento(relocacao);
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(6);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        //Lança pagamento
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamento);
+                        itemLancamento.setValor_lancamento(relocacao);
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(6);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        break;
+                    } else if (lancamentos.get(i).getSaldo() < relocacao && lancamentos.get(i).getSaldo() > 0) {
+                        //Diminui do Saldo
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamentos.get(i));
+                        itemLancamento.setValor_lancamento(lancamentos.get(i).getSaldo());
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(6);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        //Lança pagamento
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamento);
+                        itemLancamento.setValor_lancamento(lancamentos.get(i).getSaldo());
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(6);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        lancamentos.get(i).setSaldo(lancamentos.get(i).getSaldo()-valor_total_locacao);
+                        relocacao = relocacao - lancamentos.get(i).getSaldo();
+                    }
+                }
+            } else if (saldo < valor_total_locacao) {
+                for (int i = 0; i < lancamentos.size(); i++) {
+                    if (lancamentos.get(i).getSaldo() < valor_total_locacao && lancamentos.get(i).getSaldo() > 0) {
+                        //Diminui do Saldo
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamentos.get(i));
+                        itemLancamento.setValor_lancamento(valor_total_locacao);
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(6);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        //Lança pagamento
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamento);
+                        itemLancamento.setValor_lancamento(valor_total_locacao);
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(6);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        valor_total_locacao = valor_total_locacao - lancamentos.get(i).getSaldo();
+                    }
+                }
+            }
+
+
+            if (valor_pago > 0) {
+                itemLancamento = new ItemLancamento();
+                itemLancamento.setData_lancamento(data_atual.getTime());                
+                itemLancamento.setLancamento(lancamento);
+                itemLancamento.setValor_lancamento(valor_pago);
+                tipoServico = new TipoServico();
                 tipoServico.setCodigo_tipo_servico(7);
-                lancamento.setValor(valor_pago);
-            
-                lancamento.setTipoServico(tipoServico);
-                pool = new Pool();
-                devolucaoDAO = new DevolucaoDAO(pool);
-                devolucaoDAO.salvarLancamento(lancamento);            
-            }     
-            
-            if(desconto_entrega_antecipada > 0 ){
-                tipoServico.setCodigo_tipo_servico(9);
-                lancamento.setValor(desconto_entrega_antecipada);
-            
-                lancamento.setTipoServico(tipoServico);
-                pool = new Pool();
-                devolucaoDAO = new DevolucaoDAO(pool);
-                devolucaoDAO.salvarLancamento(lancamento);            
-            }   
-            
-            if(valor_desconto > 0 ){
+                itemLancamento.setTipoServico(tipoServico);
+                itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                itemLancamento.setUsuario(acesso.getUsuario());
+                itensLancamento.add(itemLancamento);
+            }
+            if (valor_desconto > 0) {
+                itemLancamento = new ItemLancamento();
+                itemLancamento.setData_lancamento(data_atual.getTime());                
+                itemLancamento.setLancamento(lancamento);
+                itemLancamento.setValor_lancamento(valor_desconto);
+                tipoServico = new TipoServico();
                 tipoServico.setCodigo_tipo_servico(8);
-                lancamento.setValor(valor_desconto);
-                
-                lancamento.setTipoServico(tipoServico);
-                pool = new Pool();
-                devolucaoDAO = new DevolucaoDAO(pool);
-                devolucaoDAO.salvarLancamento(lancamento);
+                itemLancamento.setTipoServico(tipoServico);
+                itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                itemLancamento.setUsuario(acesso.getUsuario());
+                itensLancamento.add(itemLancamento);
+            }
+            if (desconto_entrega_antecipada > 0) {
+                itemLancamento = new ItemLancamento();
+                itemLancamento.setData_lancamento(data_atual.getTime());                
+                itemLancamento.setLancamento(lancamento);
+                itemLancamento.setValor_lancamento(valor_desconto);
+                tipoServico = new TipoServico();
+                tipoServico.setCodigo_tipo_servico(9);
+                itemLancamento.setTipoServico(tipoServico);
+                itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                itemLancamento.setUsuario(acesso.getUsuario());
+                itensLancamento.add(itemLancamento);
             }
             
-            if(multa > 0 ){
-                tipoServico.setCodigo_tipo_servico(2);
-                lancamento.setValor(multa);
-                
-                lancamento.setTipoServico(tipoServico);
-                pool = new Pool();
-                devolucaoDAO = new DevolucaoDAO(pool);
-                devolucaoDAO.salvarLancamento(lancamento);
-            }
+            pool = new Pool();
+            lancamentoDAO = new LancamentoDAO(pool);
+            lancamentoDAO.salvarItemLancamento(itensLancamento);
             
             List<ItemLocacao> itens = new ArrayList();
             ItemLocacao itemDevolve;

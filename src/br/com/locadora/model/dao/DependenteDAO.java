@@ -147,8 +147,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         List<Lancamento> resultado = new ArrayList<Lancamento>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        String devedor = null;
+        ResultSet rs = null;        
         String sqlSelect = "SELECT \n"
                 + "    (CASE\n"
                 + "        WHEN (DEBITO.VALOR - CREDITO.VALOR) IS NULL THEN 0\n"
@@ -202,7 +201,6 @@ public class DependenteDAO implements InterfaceDependenteDAO {
                 return resultado.get(0);
             }
 
-//            devedor = rs.getString("DEVEDOR");
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(DependenteDAO.class.getName()).log(Level.SEVERE, null, ex);
