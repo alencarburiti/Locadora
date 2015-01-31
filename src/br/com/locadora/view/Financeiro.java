@@ -596,7 +596,7 @@ public class Financeiro extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jtbl_contasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_contasKeyPressed
-
+        acionarAtalho(evt);
 // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_contasKeyPressed
 

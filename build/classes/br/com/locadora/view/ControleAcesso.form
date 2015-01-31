@@ -160,7 +160,7 @@
                 <Column editable="false" title="Tela" type="java.lang.Object"/>
                 <Column editable="true" title="Consultar" type="java.lang.Boolean"/>
                 <Column editable="true" title="Salvar/Alterar" type="java.lang.Boolean"/>
-                <Column editable="false" title="Deletar" type="java.lang.Boolean"/>
+                <Column editable="true" title="Deletar" type="java.lang.Boolean"/>
                 <Column editable="true" title="Super" type="java.lang.Boolean"/>
               </Table>
             </Property>

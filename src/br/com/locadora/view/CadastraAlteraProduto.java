@@ -82,8 +82,8 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jtf_nome_produto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jtf_codigo_barras = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_nome_produto = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jtf_codigo_barras = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel5 = new javax.swing.JLabel();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -190,7 +190,6 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
         jLabel4.setText("Código de Barras*");
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jtf_nome_produto.setDocument(new UnaccentedDocument());
         jtf_nome_produto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_produto.setName("jtf_nome_produto"); // NOI18N
         jtf_nome_produto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -199,7 +198,6 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
             }
         });
 
-        jtf_nome_produto.setDocument(new UnaccentedDocument());
         jtf_codigo_barras.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_codigo_barras.setName("jtf_codigo_barras"); // NOI18N
         jtf_codigo_barras.addKeyListener(new java.awt.event.KeyAdapter() {

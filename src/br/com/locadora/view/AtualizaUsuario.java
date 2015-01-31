@@ -16,10 +16,7 @@ import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.TemaInterface;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -232,6 +229,11 @@ public class AtualizaUsuario extends javax.swing.JFrame {
                 jb_salvarActionPerformed(evt);
             }
         });
+        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_salvarKeyPressed(evt);
+            }
+        });
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
@@ -241,6 +243,11 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_cancelarActionPerformed(evt);
+            }
+        });
+        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelarKeyPressed(evt);
             }
         });
 
@@ -350,6 +357,16 @@ public class AtualizaUsuario extends javax.swing.JFrame {
         jtf_nome.requestFocus();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
+
+    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
 
     /**
      * @param args the command line arguments

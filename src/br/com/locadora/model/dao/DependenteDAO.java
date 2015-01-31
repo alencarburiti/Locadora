@@ -97,7 +97,7 @@ public class DependenteDAO implements InterfaceDependenteDAO {
         String sqlSelect = "SELECT \n"
                 + "    CLIENTE_CODIGO_CLIENTE,\n"
                 + "    NOME_DEPENDENTE,\n"
-                + "    DATA_NASCIMENTO,\n"
+                + "    DATA_NASCIMENTO,\n"                
                 + "    TIPO_DEPENDENTE,\n"
                 + "    (CASE\n"
                 + "        WHEN (TIPO_DEPENDENTE = 0) THEN 'Cliente'\n"

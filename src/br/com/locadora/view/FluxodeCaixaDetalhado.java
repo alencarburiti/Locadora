@@ -59,6 +59,7 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         jrb_locacao_devolucao = new javax.swing.JRadioButton();
         jrb_venda = new javax.swing.JRadioButton();
         jrb_todos = new javax.swing.JRadioButton();
+        jrb_descontos = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Fluxo de Caixa Detalhado");
@@ -204,6 +205,25 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
                 jrb_todosActionPerformed(evt);
             }
         });
+        jrb_todos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_todosKeyPressed(evt);
+            }
+        });
+
+        buttonGroup1.add(jrb_descontos);
+        jrb_descontos.setText("Descontos Concedidos");
+        jrb_descontos.setName("jrb_descontos"); // NOI18N
+        jrb_descontos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_descontosActionPerformed(evt);
+            }
+        });
+        jrb_descontos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrb_descontosKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -213,9 +233,11 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jrb_locacao_devolucao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
                         .addComponent(jrb_venda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
+                        .addComponent(jrb_descontos)
+                        .addGap(0, 0, 0)
                         .addComponent(jrb_todos)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
@@ -227,12 +249,14 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jrb_locacao_devolucao)
                         .addComponent(jrb_venda))
-                    .addComponent(jrb_todos))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jrb_todos)
+                        .addComponent(jrb_descontos)))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jl_total))
@@ -328,6 +352,21 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_todosActionPerformed
 
+    private void jrb_todosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_todosKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_todosKeyPressed
+
+    private void jrb_descontosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_descontosActionPerformed
+        lancamentoCaixa();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_descontosActionPerformed
+
+    private void jrb_descontosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_descontosKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_descontosKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -347,6 +386,7 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_total;
+    private javax.swing.JRadioButton jrb_descontos;
     private javax.swing.JRadioButton jrb_locacao_devolucao;
     private javax.swing.JRadioButton jrb_todos;
     private javax.swing.JRadioButton jrb_venda;
@@ -362,6 +402,9 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         } else if(jrb_venda.isSelected()){
             lancamentos = lancDAO.getLancamentoDetalhadoVenda();
             mostrarLancamentoCaixa(lancamentos);            
+        } else if(jrb_descontos.isSelected()){
+            lancamentos = lancDAO.getLancamentoDetalhadoDesconto();
+            mostrarLancamentoCaixa(lancamentos);                        
         } else {
             lancamentos = lancDAO.getLancamentoDetalhadoTodos();
             mostrarLancamentoCaixa(lancamentos);            

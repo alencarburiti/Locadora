@@ -10,8 +10,12 @@
  */
 package br.com.locadora.view;
 
+import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,7 +30,7 @@ public class EfetuaBackup extends javax.swing.JFrame {
 
     public TelaPrincipal janelapai;
     public String textArea;
-    private ResourceBundle config;
+    private ResourceBundle config = ResourceBundle.getBundle("br.com.locadora.conexao.bancodedados");
     private static String VERSION = "1.0.0";
     private static String SEPARATOR = File.separator;
 //Caminho de Backup no Mac    
@@ -36,22 +40,17 @@ public class EfetuaBackup extends javax.swing.JFrame {
 //            + "local" + SEPARATOR
 //            + "mysql-5.6.21-osx10.8-x86_64" + SEPARATOR
 //            + "bin" + SEPARATOR;
+    ArquivoConfiguracao aqruivoConf = new ArquivoConfiguracao();
+    private String MYSQL_PATH = aqruivoConf.readPropertie("db_path");
 
-    private static String MYSQL_PATH
-            = "C:" + SEPARATOR
-            + "Arquivos de programas" + SEPARATOR
-            + "MySQL" + SEPARATOR
-            + "MySQL Server 5.6" + SEPARATOR
-            + "bin" + SEPARATOR;
-    
     private static String PRESENTATION
-            = "=====================================\n"
-            + "  Backup do banco de dados MySQL - Versao " + VERSION + "\n"
-            + "  Autor: Alencar Santos Buriti Junior\n"
-            + "  Desenvolvido em 27/01/2015\n"
-            + "=====================================\n";
+            = "===========================================================\n"
+            + "Backup do banco de dados MySQL - Versao " + VERSION + "\n"
+            + "Autor: Alencar Santos Buriti Junior\n"
+            + "Desenvolvido em 27/01/2015\n"
+            + "============================================================\n";
 
-  // Lista dos bancos de dados a serem "backupeados"; se desejar adicionar mais,
+    // Lista dos bancos de dados a serem "backupeados"; se desejar adicionar mais,
     // basta colocar o nome separado por espaços dos outros nomes
     private static String DATABASES
             = "locadora";
@@ -63,9 +62,11 @@ public class EfetuaBackup extends javax.swing.JFrame {
      */
     public EfetuaBackup() {
         initComponents();
+        TemaInterface.getInterface(this);
         janelapai = null;
         try {
-            JFC_Salvar_Backup.setVisible(false);            
+            JFC_Salvar_Backup.setVisible(false);
+            JB_Backup1.setVisible(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Erro!", 2);
         }
@@ -82,11 +83,12 @@ public class EfetuaBackup extends javax.swing.JFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         JFC_Salvar_Backup = new javax.swing.JFileChooser();
-        JB_Backup = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jta_backup = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
         jb_cancelar = new javax.swing.JButton();
         JB_Backup1 = new javax.swing.JButton();
+        JB_Backup = new javax.swing.JButton();
 
         JFC_Salvar_Backup.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
 
@@ -95,15 +97,6 @@ public class EfetuaBackup extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
-            }
-        });
-
-        JB_Backup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/backup.png"))); // NOI18N
-        JB_Backup.setText("Backup");
-        JB_Backup.setPreferredSize(new java.awt.Dimension(100, 40));
-        JB_Backup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JB_BackupActionPerformed(evt);
             }
         });
 
@@ -139,36 +132,55 @@ public class EfetuaBackup extends javax.swing.JFrame {
             }
         });
 
+        JB_Backup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/backup.png"))); // NOI18N
+        JB_Backup.setText("Backup");
+        JB_Backup.setPreferredSize(new java.awt.Dimension(100, 40));
+        JB_Backup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_BackupActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(138, Short.MAX_VALUE)
+                .addComponent(JB_Backup1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JB_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JB_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JB_Backup1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(JB_Backup1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JB_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+            .addComponent(jScrollPane1)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JB_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JB_Backup1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
 
-        setSize(new java.awt.Dimension(400, 302));
+        setSize(new java.awt.Dimension(578, 421));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -226,7 +238,7 @@ private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event
     private void JB_Backup1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Backup1ActionPerformed
         try {
             String arquivo = null;
-            
+
             JFC_Salvar_Backup.setVisible(true);
 
             int result = JFC_Salvar_Backup.showOpenDialog(null);
@@ -237,7 +249,7 @@ private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event
                 File file = new File(arquivo);
 
                 if (file.exists()) {
-                    restaurarBackup(arquivo);                    
+                    restaurarBackup(arquivo);
                 } else {
                     textArea = textArea + "Arquivo não encontrado.\n";
                 }
@@ -249,7 +261,6 @@ private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event
             jta_backup.setText(textArea);
         }
 
-        
 // TODO add your handling code here:
     }//GEN-LAST:event_JB_Backup1ActionPerformed
 
@@ -270,6 +281,7 @@ private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event
     private javax.swing.JButton JB_Backup1;
     private javax.swing.JFileChooser JFC_Salvar_Backup;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_cancelar;
     private javax.swing.JTextArea jta_backup;
@@ -277,190 +289,130 @@ private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event
 
     public void efetuarBackup(String arquivo) {
 
-//        String command = MYSQL_PATH + "mysqldump.exe";
-        String command = MYSQL_PATH + "mysqldump";
-
-        String[] databases = DATABASES.split(" ");
-
-        for (int i = 0; i < databases.length; i++) {
-            dbList.add(databases[i]);
-        }
-
-        textArea = PRESENTATION;
-        jta_backup.setText(textArea);
-        textArea = textArea + "Iniciando backups...\n";
-        jta_backup.setText(textArea);
-
-        // Contador
-        int i = 1;
-
-        // Tempo
-        long time1, time2, time;
-
-        // Início
-        time1 = System.currentTimeMillis();
-
-        config = ResourceBundle.getBundle("br.com.locadora.conexao.bancodedados");
-
-        for (String dbName : dbList) {
-
-            ProcessBuilder pb = new ProcessBuilder(
-                    command,
-                    "--user=" + config.getString("usuario"),
-                    "--password=" + config.getString("senha"),
-                    dbName,
-                    "--result-file=" + arquivo);
-
-            try {
-                textArea = textArea + "Backup do banco de dados (" + i + "): " + dbName + " ...\n";
-                jta_backup.setText(textArea);
-                System.out.println(
-                        "Backup do banco de dados (" + i + "): " + dbName + " ...");
-
-                pb.start();
-
-            } catch (Exception e) {
-                textArea = textArea + e.getMessage() + "\n";
-                jta_backup.setText(textArea);
-            }
-
-            i++;
-
-        }
-
-        // Fim
-        time2 = System.currentTimeMillis();
-
-        // Tempo total da operação
-        time = time2 - time1;
-
-        // Avisa do sucesso
-        textArea = textArea + "Backups realizados com sucesso.\n";
-        jta_backup.setText(textArea);
-        textArea = textArea + "Tempo total de processamento: " + time + " ms\n";
-        jta_backup.setText(textArea);
-        textArea = textArea + "Finalizando...\n";
-        jta_backup.setText(textArea);
-
         try {
 
-            // Paralisa por 2 segundos
-            Thread.sleep(2000);
-            textArea = textArea + "Fim...\n";
+            String command = "mysqldump.exe";
 
-        } catch (Exception e) {
+            textArea = PRESENTATION;
+            jta_backup.setText(textArea);
+
+            textArea = textArea + "Iniciando backups...\n";
+            jta_backup.setText(textArea);
+
+            // Tempo
+            long time1, time2, time;
+            // Início
+            time1 = System.currentTimeMillis();
+
+            Runtime bck = Runtime.getRuntime();
+
+            bck.exec(MYSQL_PATH + command + " -v -v -v --host=localhost --user=root --password= --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + arquivo + " --databases locadora");
+//            bck.exec("/usr/local/mysql-5.6.21-osx10.8-x86_64/bin/mysqldump -v -v -v --host=localhost --user=root --password= --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + arquivo + " --databases locadora");
+            System.out.println(MYSQL_PATH + command + " -v -v -v --host=localhost --user=root --password= --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + arquivo + " --databases locadora");
+            textArea = textArea + "Backup do banco de dados: " + config.getString("banco") + " ...\n";
+            jta_backup.setText(textArea);
+
+            // Fim
+            time2 = System.currentTimeMillis();
+
+            // Tempo total da operação
+            time = time2 - time1;
+
+            // Avisa do sucesso
+            textArea = textArea + "Backups realizados com sucesso.\n";
+            jta_backup.setText(textArea);
+            textArea = textArea + "Tempo total de processamento: " + time + " ms\n";
+            jta_backup.setText(textArea);
+            textArea = textArea + "Backup Salvo em:" + arquivo + "\n";
+            jta_backup.setText(textArea);
+            textArea = textArea + "Finalizado...\n";
+            jta_backup.setText(textArea);
+
+            // Paralisa por 2 segundos
+            Thread.sleep(20);
+        } catch (IOException ex) {
+            textArea = textArea + ex.getMessage();
+            jta_backup.setText(textArea);
+        } catch (InterruptedException ex) {
+            textArea = textArea + ex.getMessage();
+            jta_backup.setText(textArea);
         }
 
     }
-    
+
     public void restaurarBackup(String arquivo) {
 
-//        String command = MYSQL_PATH + "mysqldump.exe";
-        String command = MYSQL_PATH + "mysql";
+        try {
+            String command = "mysql.exe";
 
-        String[] databases = DATABASES.split(" ");
+            textArea = PRESENTATION;
+            jta_backup.setText(textArea);
+            textArea = textArea + "Iniciando restore...\n";
+            jta_backup.setText(textArea);
 
-        for (int i = 0; i < databases.length; i++) {
-            dbList.add(databases[i]);
-        }
+            // Contador
+            int i = 1;
 
-        textArea = PRESENTATION;
-        jta_backup.setText(textArea);
-        textArea = textArea + "Iniciando restore...\n";
-        jta_backup.setText(textArea);
+            // Tempo
+            long time1, time2, time;
 
-        // Contador
-        int i = 1;
+            // Início
+            time1 = System.currentTimeMillis();
 
-        // Tempo
-        long time1, time2, time;
+            config = ResourceBundle.getBundle("br.com.locadora.conexao.bancodedados");
 
-        // Início
-        time1 = System.currentTimeMillis();
+            textArea = textArea + MYSQL_PATH + command + " --user=" + config.getString("usuario") + " --password=" + config.getString("senha") +" --database="+ config.getString("banco") + " < '" + arquivo+"'";
+            jta_backup.setText(textArea);
 
-        config = ResourceBundle.getBundle("br.com.locadora.conexao.bancodedados");
-
-        for (String dbName : dbList) {
-            
-//            Runtime runtime = Runtime.getRuntime();
-//            try {
-//                
-//                runtime.exec(command+
-//                        " --host=localhost "+
-//                        " --user=" + config.getString("usuario")+
-//                        " --password=" + config.getString("senha")+
-//                        " --port=3306 --default-character-set=utf8 --comments"+
-//                        " --database="+dbName+  
-//                        " < '" + arquivo+"'");
-//            } catch (IOException ex) {
-//                Logger.getLogger(EfetuaBackup.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-
-            ProcessBuilder pb = new ProcessBuilder(
-                    command,
-                    " --host=localhost ",
-                    " --user=" + config.getString("usuario"),
-                    " --password=" + config.getString("senha"),
-                    " --port=3306 --default-character-set=utf8 --comments",
-                    " --database="+dbName,
-                    " < '" + arquivo+"'");
-            
-            System.out.println(command+
-                    " --host=localhost "+
-                    " --user=" + config.getString("usuario")+
-                    " --password=" + config.getString("senha")+
-                    " --port=3306 --default-character-set=utf8 --comments"+
-                    " --database="+dbName+
-                    " < '" + arquivo+"'");
-
-            try {
-                textArea = textArea + "Restauração de Backup do banco de dados (" + i + "): " + dbName + " ...\n";
+            Process runtime = Runtime.getRuntime().exec(MYSQL_PATH + command + " --user=" + config.getString("usuario") + " --password=" + config.getString("senha") +" --database="+ config.getString("banco") + " < '" + arquivo+"'");
+            int rExec = runtime.waitFor();            
+            if(rExec == 0){
+                textArea = textArea + "Restauração de Backup do banco de dados: " + config.getString("banco") + " ...\n";
                 jta_backup.setText(textArea);
 
-                pb.start();  
-                textArea = textArea + pb.start()+"\n";
-                jta_backup.setText(textArea);
-                textArea = textArea + pb.redirectError()+"\n";
-                jta_backup.setText(textArea);
-                pb.redirectError();
+                // Fim
+                time2 = System.currentTimeMillis();
 
-            } catch (Exception e) {
-                textArea = textArea + e.getMessage() + "\n";
+                // Tempo total da operação
+                time = time2 - time1;
+
+                // Avisa do sucesso
+                textArea = textArea + "Restauração de Backup realizada com sucesso.\n";
+                jta_backup.setText(textArea);
+                textArea = textArea + "Backup Restaurado:" + arquivo + "\n";
+                jta_backup.setText(textArea);
+                textArea = textArea + "Tempo total de processamento: " + time + " ms\n";
+                jta_backup.setText(textArea);
+                textArea = textArea + "Finalizado...\n";
+                jta_backup.setText(textArea);
+
+                // Paralisa por 2 segundos
+                Thread.sleep(5000);
+                jta_backup.setText(textArea);                
+            } else {
+                textArea = textArea + "Fatal Error...\n";
                 jta_backup.setText(textArea);
             }
-
-            i++;
-
-        }
-
-        // Fim
-        time2 = System.currentTimeMillis();
-
-        // Tempo total da operação
-        time = time2 - time1;
-
-        // Avisa do sucesso
-        textArea = textArea + "Restauração de Backup realizada com sucesso.\n";
-        jta_backup.setText(textArea);
-        textArea = textArea + "Tempo total de processamento: " + time + " ms\n";
-        jta_backup.setText(textArea);
-        textArea = textArea + "Finalizando...\n";
-        jta_backup.setText(textArea);
-
-        try {
-
-            // Paralisa por 2 segundos
-            Thread.sleep(5000);
-            textArea = textArea + "Fim...\n";
+            
+        } catch (IOException ex) {
+            textArea = textArea + ex.getStackTrace() + "\n";
             jta_backup.setText(textArea);
-        } catch (Exception e) {
+            ex.printStackTrace();
+        } catch (RuntimeException e) {
+            textArea = textArea + e.getStackTrace() + "\n";
+            jta_backup.setText(textArea);
+            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            textArea = textArea + ex.getStackTrace() + "\n";
+            jta_backup.setText(textArea);
+            ex.printStackTrace();
         }
 
     }
 
     private void retornaJanelaPai() {
         this.setVisible(false);
-        if(janelapai != null){
+        if (janelapai != null) {
             janelapai.setStatusTela(true);
         }
     }

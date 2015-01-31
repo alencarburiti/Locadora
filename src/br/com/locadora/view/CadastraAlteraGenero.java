@@ -66,7 +66,7 @@ public class CadastraAlteraGenero extends javax.swing.JFrame {
         jtf_codigo_genero = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jtf_nome_genero = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jtf_nome_genero = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alterando Gênero");

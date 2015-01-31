@@ -14,14 +14,13 @@ import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.LancamentoDAO;
-import br.com.locadora.model.dao.PacotePromocionalDAO;
+import br.com.locadora.model.dao.ComboDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -57,7 +56,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     public DiariaDAO diariaDAO;
     public CopiaDAO copiaDAO;
     public List<Combo> itensPacotePromocional;
-    public PacotePromocionalDAO pacotePromocionalDAO;
+    public ComboDAO pacotePromocionalDAO;
     public List<Lancamento> lancamentos;
     public FinanceiroReceber financeiroReceber;
 
@@ -110,7 +109,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jl_lancamento_aberto = new javax.swing.JLabel();
         jl_debito_locacao = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jtf_saldo_debito_total = new javax.swing.JTextField();
+        jtf_saldo = new javax.swing.JTextField();
         jtf_total_locacao = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jb_finalizar_locacao = new javax.swing.JButton();
@@ -520,16 +519,16 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jLabel27.setText("Total Locação:");
         jLabel27.setName("jLabel27"); // NOI18N
 
-        jtf_saldo_debito_total.setEditable(false);
-        jtf_saldo_debito_total.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jtf_saldo_debito_total.setText("R$ 0,00");
-        jtf_saldo_debito_total.setName("jtf_saldo_debito_total"); // NOI18N
-        jtf_saldo_debito_total.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_saldo.setEditable(false);
+        jtf_saldo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jtf_saldo.setText("R$ 0,00");
+        jtf_saldo.setName("jtf_saldo"); // NOI18N
+        jtf_saldo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_saldo_debito_totalFocusGained(evt);
+                jtf_saldoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jtf_saldo_debito_totalFocusLost(evt);
+                jtf_saldoFocusLost(evt);
             }
         });
 
@@ -674,7 +673,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jl_debito_locacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(5, 5, 5)
-                                .addComponent(jtf_saldo_debito_total, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jtf_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(5, 5, 5)
@@ -710,7 +709,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jl_debito_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_saldo_debito_total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtf_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, 0)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -763,13 +762,13 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     }
 }//GEN-LAST:event_jtf_nome_clienteKeyPressed
 
-    private void jtf_saldo_debito_totalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_totalFocusLost
+    private void jtf_saldoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldoFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_saldo_debito_totalFocusLost
+    }//GEN-LAST:event_jtf_saldoFocusLost
 
-    private void jtf_saldo_debito_totalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_totalFocusGained
+    private void jtf_saldoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_saldo_debito_totalFocusGained
+    }//GEN-LAST:event_jtf_saldoFocusGained
 
     private void jtf_total_locacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_total_locacaoFocusLost
         // TODO add your handling code here:
@@ -976,7 +975,11 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             if (acesso.getEscrever() == false) {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             } else if (acesso.getEscrever() == true) {
-                financeiroReceber = new FinanceiroReceber(dependente);
+                if (jtf_codigo_cliente.getText().equals("")) {
+                    financeiroReceber = new FinanceiroReceber();
+                } else {
+                    financeiroReceber = new FinanceiroReceber(dependente);
+                }
                 financeiroReceber.janelapai2 = this;
                 financeiroReceber.setVisible(true);
                 setStatusTela(false);
@@ -1029,7 +1032,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private javax.swing.JComboBox jcb_promocao;
     private javax.swing.JLabel jl_codigo_locacao;
     private javax.swing.JLabel jl_debito_locacao;
-    private javax.swing.JLabel jl_lancamento_aberto;
+    public static javax.swing.JLabel jl_lancamento_aberto;
     public static javax.swing.JLabel jl_total_filmes;
     public static javax.swing.JPanel jp_locacao;
     public static javax.swing.JTable jtbl_locacao;
@@ -1038,7 +1041,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private javax.swing.JFormattedTextField jtf_diaria;
     public static javax.swing.JTextField jtf_nome_cliente;
     public static javax.swing.JTextField jtf_nome_objeto_locacao;
-    public static javax.swing.JTextField jtf_saldo_debito_total;
+    public static javax.swing.JTextField jtf_saldo;
     private javax.swing.JTextField jtf_tipo_midia;
     public static javax.swing.JTextField jtf_total_a_pagar;
     public static javax.swing.JTextField jtf_total_locacao;
@@ -1158,7 +1161,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     public void adicionarItemLocado(Copia copiaAtendimento, Diaria diaria) {
         copiaAtendimento.setDiaria(diaria);
         if (verificarItemLocacao() == true) {
-            if(copiaAtendimento.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl() == 0){
+            if (copiaAtendimento.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl() == 0) {
                 if (verificaTabela(copiaAtendimento) == false) {
                     pool = new Pool();
                     copiaDAO = new CopiaDAO(pool);
@@ -1166,7 +1169,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 
                     if (!"".equals(assistido_anteriormente)) {
                         int selectedOption = JOptionPane.showConfirmDialog(this, assistido_anteriormente, "Atenção", JOptionPane.YES_NO_OPTION);
-                        if (selectedOption == JOptionPane.YES_NO_OPTION) {                        
+                        if (selectedOption == JOptionPane.YES_NO_OPTION) {
                             adicionarItemTabela(copiaAtendimento);
                         } else {
                             limparItemLocado();
@@ -1174,11 +1177,11 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                         }
                     } else {
                         adicionarItemTabela(copiaAtendimento);
-                    }                
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Última cópia disponível já foi adicionada: " + copiaAtendimento.getCodigo_barras());
                     jtf_codigo_objeto_locacao.requestFocus();
-                }                
+                }
             } else {
                 if (verificaTabela(copiaAtendimento) == false) {
                     pool = new Pool();
@@ -1187,7 +1190,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 
                     if (!"".equals(assistido_anteriormente)) {
                         int selectedOption = JOptionPane.showConfirmDialog(this, assistido_anteriormente, "Atenção", JOptionPane.YES_NO_OPTION);
-                        if (selectedOption == JOptionPane.YES_NO_OPTION) {                        
+                        if (selectedOption == JOptionPane.YES_NO_OPTION) {
                             adicionarItemTabela(copiaAtendimento);
                         } else {
                             limparItemLocado();
@@ -1195,9 +1198,9 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                         }
                     } else {
                         adicionarItemTabela(copiaAtendimento);
-                    }                
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Combo " + copiaAtendimento.getDiaria().getPacotePromocional().getDescricao() 
+                    JOptionPane.showMessageDialog(null, "Combo " + copiaAtendimento.getDiaria().getPacotePromocional().getDescricao()
                             + " já utilizado! Favor escolher outra promoção.");
                     jtf_codigo_objeto_locacao.requestFocus();
                 }
@@ -1211,7 +1214,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     public void alimentarTabelaCopia(Copia copiaAtendimento) {
         if (copiaAtendimento != null) {
             copiaAtendimento.getDiaria().getPromocaoLocacao().setValor_promocao_locacao(copiaAtendimento.getDiaria().getValor());
-            
+
             DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
             row.addRow(new Object[]{copiaAtendimento.getCodigo_barras(),
                 copiaAtendimento.getObjeto().getTitulo(),
@@ -1243,8 +1246,8 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                 alimentarTabelaCopia(copiaAtendimento);
             } else if (copiaAtendimento.getDiaria().getPromocaoLocacao().getSabado() == true && dia == 7) {
                 alimentarTabelaCopia(copiaAtendimento);
-            } else if (copiaAtendimento.getDiaria().getPacotePromocional().getDias_restantes() > 0) {                
-                
+            } else if (copiaAtendimento.getDiaria().getPacotePromocional().getDias_restantes() > 0) {
+
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
                 row.addRow(new Object[]{copiaAtendimento.getCodigo_barras(),
                     copiaAtendimento.getObjeto().getTitulo(),
@@ -1253,6 +1256,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     copiaAtendimento.getObjeto().getCensura(),
                     copiaAtendimento.getDiaria().getPacotePromocional().getDescricao()});
             } else {
+                copiaAtendimento.getDiaria().setPromocaoLocacao(new PromocaoLocacao());
                 DefaultTableModel row = (DefaultTableModel) jtbl_locacao.getModel();
                 row.addRow(new Object[]{copiaAtendimento.getCodigo_barras(),
                     copiaAtendimento.getObjeto().getTitulo(),
@@ -1276,27 +1280,20 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         moeda = new Moeda();
         Double total_locacao = 0.00;
         Double total_a_pagar = 0.00;
-        Double saldo_debito_total = moeda.getPrecoFormato(jtf_saldo_debito_total.getText());
+        Double saldo = moeda.getPrecoFormato(jtf_saldo.getText());
 
         for (int i = 0; i < jtbl_locacao.getRowCount(); i++) {
             Double valor_adicionar = moeda.getPrecoFormato(jtbl_locacao.getValueAt(i, 2).toString());
             total_locacao = total_locacao + valor_adicionar;
         }
-        if (jtf_saldo_debito_total.getForeground() == Color.BLACK) {
-            if (saldo_debito_total > total_locacao) {
-                total_a_pagar = 0.00;
-            } else {
-                total_a_pagar = saldo_debito_total - total_locacao;
-                if (total_a_pagar < 0) {
-                    total_a_pagar = total_a_pagar * (-1);
-                }
-            }
-        } else {
-            total_a_pagar = total_locacao + saldo_debito_total;
+
+        if (saldo >= total_locacao) {
+            total_a_pagar = 0.00;
+        } else if (saldo < total_locacao) {
+            total_a_pagar = total_locacao - saldo;
         }
         jtf_total_locacao.setText(moeda.setPrecoFormat(String.valueOf(total_locacao)));
         jtf_total_a_pagar.setText(moeda.setPrecoFormat(String.valueOf(total_a_pagar)));
-
         jl_total_filmes.setText("Total de Objetos: " + jtbl_locacao.getRowCount());
 
     }
@@ -1339,7 +1336,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             promocoes = diariaDAO.getDiariaPromocao(copia.getDiaria());
 
             pool = new Pool();
-            pacotePromocionalDAO = new PacotePromocionalDAO(pool);
+            pacotePromocionalDAO = new ComboDAO(pool);
             itensPacotePromocional = pacotePromocionalDAO.getPacotePromocionalClienteDiaria(dependente.getCliente().getCodigo_cliente(), copia.getDiaria().getCodigo_diaria());
 
             if (promocoes.size() > 0) {
@@ -1347,9 +1344,9 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     Combo semPacotePromocional = new Combo();
                     promocoes.get(i).setPacotePromocional(semPacotePromocional);
                     ItemDbGrid hashDbGrid = new ItemDbGrid(promocoes.get(i), promocoes.get(i).getPromocaoLocacao().getDescricao());
-                    jcb_promocao.addItem(hashDbGrid);
+                    jcb_promocao.addItem(hashDbGrid);                    
                 }
-            } 
+            }
             Date d = new Date();
             Calendar c = new GregorianCalendar();
             c.setTime(d);
@@ -1398,13 +1395,12 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     }
                 }
             }
-            PromocaoLocacao semPromocao = new PromocaoLocacao();
-            Combo semPacotePromocional = new Combo();
-            Diaria diaria = new Diaria();
-            diaria.setPromocaoLocacao(semPromocao);
-            diaria.setPacotePromocional(semPacotePromocional);
 
-            ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, "Sem promoção");
+            Diaria diaria = copia.getDiaria();
+            diaria.setPromocaoLocacao(new PromocaoLocacao());
+            diaria.setPacotePromocional(new Combo());
+
+            ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, "Sem Promoção");
             jcb_promocao.addItem(hashDbGrid);
 
             jb_adicionar_locacao.requestFocus();
@@ -1415,12 +1411,12 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         if (dependente != null) {
             copiasLocacao = new ArrayList<>();
             this.dependente = dependente;
-            jtf_saldo_debito_total.setText("R$ 0,00");
+            jtf_saldo.setText("R$ 0,00");
 
             jtf_nome_cliente.setText(dependente.getNome_dependente());
             setTitle("Atendimento Locação - " + dependente.getNome_dependente());
             jtf_codigo_cliente.setText(String.valueOf(dependente.getCliente().getCodigo_cliente()));
-            Moeda moeda = new Moeda();
+            moeda = new Moeda();
 
             pool = new Pool();
             DependenteDAO dependenteDAO = new DependenteDAO(pool);
@@ -1429,31 +1425,20 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             lancamentos = new ArrayList<Lancamento>();
             LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
             lancamentos = lancamentoDAO.getLancamentos(dependente.getCliente());
-            
+
             Double saldo = 0.00;
             Double devedor = 0.00;
             int quantidade_lancamento_aberto = 0;
-            for(int i = 0; i < lancamentos.size(); i++){                
-                if(lancamentos.get(i).getTipoServico().getTipo().equals("C")){
+            for (int i = 0; i < lancamentos.size(); i++) {
+                if (lancamentos.get(i).getTipoServico().getTipo().equals("C")) {
                     saldo = saldo + lancamentos.get(i).getSaldo();
-                }else {
-                    if(lancamentos.get(i).getDevedor() > 0){
-                        quantidade_lancamento_aberto = quantidade_lancamento_aberto + 1;                        
+                } else {
+                    if (lancamentos.get(i).getDevedor() > 0) {
+                        quantidade_lancamento_aberto = quantidade_lancamento_aberto + 1;
                     }
                     devedor = devedor + lancamentos.get(i).getDevedor();
                 }
             }
-            
-            Double saldo_total = saldo - devedor;
-           
-            if (saldo_total > 0) {
-                jtf_saldo_debito_total.setText(moeda.setPrecoFormat(String.valueOf(saldo_total.toString())));
-                jtf_saldo_debito_total.setForeground(Color.black);
-                jl_debito_locacao.setText("Saldo:");
-                jtf_codigo_objeto_locacao.setEnabled(true);
-            } 
-            jl_lancamento_aberto.setText("Pendente: "+quantidade_lancamento_aberto);
-            jtf_codigo_objeto_locacao.requestFocus();
 
             //Limpa tabela depois de selecionar novo cliente
             DefaultTableModel tb_locacao = (DefaultTableModel) jtbl_locacao.getModel();
@@ -1462,7 +1447,11 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                 tb_locacao.removeRow(i);
             }
 
+            jl_lancamento_aberto.setText("Pendente: " + quantidade_lancamento_aberto);
             jtf_total_locacao.setText("R$ 0,00");
+            jtf_saldo.setText(moeda.setPrecoFormat(String.valueOf(saldo.toString())));
+            jtf_codigo_objeto_locacao.requestFocus();
+            verificarDebito(dependente.getCliente());
 
         }
     }
@@ -1503,9 +1492,18 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             int duracaoDebito = (int) (intervalo / (1000 * 60 * 60 * 24 * 30)); // resultado em meses 
             System.out.println("Calculo de dias em Debito:" + duracaoDebito);
 
-            if (duracaoDebito > 3) {
-                JOptionPane.showMessageDialog(null, "Cliente com débito desde: " + df.format(lancamento.getData_lancamento()));
-                jtf_codigo_objeto_locacao.setEnabled(false);
+            ConfiguraSistema configuraSistema = new ConfiguraSistema();
+            int tempo_inadiplente = Integer.parseInt(configuraSistema.jtf_a_prazo_inadiplente.getText());
+
+            if (duracaoDebito > tempo_inadiplente) {
+
+                int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente com débito desde: " + df.format(lancamento.getData_lancamento()) + "\n Deseja Autorizar?", "Atenção", JOptionPane.YES_NO_OPTION);
+                if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                    jtf_codigo_objeto_locacao.setEnabled(true);
+                } else {
+                    jtf_codigo_objeto_locacao.setEnabled(false);
+                }
+
             } else {
                 jtf_codigo_objeto_locacao.setEnabled(true);
             }
@@ -1645,20 +1643,20 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                 copiaVerificarTabela.setCodigo_barras((String) jtbl_locacao.getValueAt(i, 0));
 
                 tabela = copiaVerificarTabela.getCodigo_barras().equals(copia.getCodigo_barras());
-                
+
                 if (tabela == true) {
                     break;
                 } else {
-                    if(copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl() != 0){
-                        System.out.println("Codigo Pacote Promocional:"+copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl());
-                        if(copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl().equals(
-                        copiasLocacao.get(i).getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl())){
+                    if (copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl() != 0) {
+                        System.out.println("Codigo Pacote Promocional:" + copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl());
+                        if (copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl().equals(
+                                copiasLocacao.get(i).getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl())) {
                             tabela = true;
                             break;
                         }
                     } else {
                         tabela = false;
-                    }                    
+                    }
                 }
             }
         }
@@ -1719,77 +1717,76 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             janelapai.atendimentoLocacao = null;
             janelapai = null;
         }
-    }    
-    
+    }
+
     public void calcularPromocaoLocacao() {
         try {
-            
-        
-        pool = new Pool();
-        diariaDAO = new DiariaDAO(pool);
-        moeda = new Moeda();
-        List<Diaria> dias = diariaDAO.getDiariaPromocao();
 
-        System.out.println("Tamanho do Array Copias Locação: " + copiasLocacao.size());
-        System.out.println("Tamanho da Tabela Locação: " + jtbl_locacao.getRowCount());
-        System.out.println("Tamanho do Array Diária: " + dias.size());
+            pool = new Pool();
+            diariaDAO = new DiariaDAO(pool);
+            moeda = new Moeda();
+            List<Diaria> dias = diariaDAO.getDiariaPromocao();
 
-        for (int i = 0; i < copiasLocacao.size(); i++) {
-            System.out.println("=============Inicio de Verificacao no Array " + i + "=============");
-            System.out.println("Iniciar Verificação na Linha: " + i);
-            System.out.println("Código da Promoção: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
-            System.out.println("================Fim de Verificacao no Array " + i + "=============");
-        }
-        for (int i = 0; i < copiasLocacao.size(); i++) {
-            System.out.println("=============Inicio de Teste Debug 1 =============");
-            for (int x = 0; x < dias.size(); x++) {
-                System.out.println("Código Promoção - Diária: " + dias.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()
-                        + " Código Promoção - Cópia: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
-                System.out.println("Posição: " + i + " Locar: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getLocar_quantidade());
-                System.out.println("Posição: " + i + " Ganhar: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getGanhar_quantidade());
-                System.out.println("Posição: " + i + " Preço Promoção: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
-                System.out.println("Posição: " + i + " Preço da Tabela: " + jtbl_locacao.getValueAt(i, 2));
-                if (dias.get(x).getPromocaoLocacao().getCodigo_promocao_locacao().equals(
-                        copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao())) {
-                    dias.get(x).setQuantidade_filme(dias.get(x).getQuantidade_filme() + 1);
-                    System.out.println("Quantidade de filme: " + dias.get(x).getQuantidade_filme());
-                    Double valor_tabela_locacao = moeda.getPrecoFormato(jtbl_locacao.getValueAt(i, 2).toString());
-                    if(dias.get(x).getPromocaoLocacao().getValor_promocao_locacao().equals(valor_tabela_locacao)){
-                        dias.get(x).setGanhados(dias.get(x).getGanhados() + 1);
-                        System.out.println("Quantidade de filme ganhados: " + dias.get(x).getGanhados());                        
-                    }                     
-                }
+            System.out.println("Tamanho do Array Copias Locação: " + copiasLocacao.size());
+            System.out.println("Tamanho da Tabela Locação: " + jtbl_locacao.getRowCount());
+            System.out.println("Tamanho do Array Diária: " + dias.size());
+
+            for (int i = 0; i < copiasLocacao.size(); i++) {
+                System.out.println("=============Inicio de Verificacao no Array " + i + "=============");
+                System.out.println("Iniciar Verificação na Linha: " + i);
+                System.out.println("Código da Promoção: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
+                System.out.println("================Fim de Verificacao no Array " + i + "=============");
             }
-            System.out.println("=============Fim de Teste Debug 1 =============");
-        }
-        for (int i = 0; i < dias.size(); i++) {
-            System.out.println("=============Inicio de Verificacao no Array Dias Após Verificações =============");
-            System.out.println("Iniciar Verificação na Linha: " + i);
-            System.out.println("Código da Promoção: " + dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao());
-            System.out.println("Nome da Promoção: " + dias.get(i).getPromocaoLocacao().getDescricao());
-            System.out.println("Quantidade de filme: " + dias.get(i).getQuantidade_filme());
-            System.out.println("Posição: " + i + " Locar: " + dias.get(i).getPromocaoLocacao().getLocar_quantidade());
-            System.out.println("Posição: " + i + " Ganhar: " + dias.get(i).getPromocaoLocacao().getGanhar_quantidade());
-            System.out.println("================Fim de Verificacao no Array Dias Após Verificações=============");
+            for (int i = 0; i < copiasLocacao.size(); i++) {
+                System.out.println("=============Inicio de Teste Debug 1 =============");
+                for (int x = 0; x < dias.size(); x++) {
+                    System.out.println("Código Promoção - Diária: " + dias.get(x).getPromocaoLocacao().getCodigo_promocao_locacao()
+                            + " Código Promoção - Cópia: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao());
+                    System.out.println("Posição: " + i + " Locar: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getLocar_quantidade());
+                    System.out.println("Posição: " + i + " Ganhar: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getGanhar_quantidade());
+                    System.out.println("Posição: " + i + " Preço Promoção: " + copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getValor_promocao_locacao());
+                    System.out.println("Posição: " + i + " Preço da Tabela: " + jtbl_locacao.getValueAt(i, 2));
+                    if (dias.get(x).getPromocaoLocacao().getCodigo_promocao_locacao().equals(
+                            copiasLocacao.get(i).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao())) {
+                        dias.get(x).setQuantidade_filme(dias.get(x).getQuantidade_filme() + 1);
+                        System.out.println("Quantidade de filme: " + dias.get(x).getQuantidade_filme());
+                        Double valor_tabela_locacao = moeda.getPrecoFormato(jtbl_locacao.getValueAt(i, 2).toString());
+                        if (dias.get(x).getPromocaoLocacao().getValor_promocao_locacao().equals(valor_tabela_locacao)) {
+                            dias.get(x).setGanhados(dias.get(x).getGanhados() + 1);
+                            System.out.println("Quantidade de filme ganhados: " + dias.get(x).getGanhados());
+                        }
+                    }
+                }
+                System.out.println("=============Fim de Teste Debug 1 =============");
+            }
+            for (int i = 0; i < dias.size(); i++) {
+                System.out.println("=============Inicio de Verificacao no Array Dias Após Verificações =============");
+                System.out.println("Iniciar Verificação na Linha: " + i);
+                System.out.println("Código da Promoção: " + dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao());
+                System.out.println("Nome da Promoção: " + dias.get(i).getPromocaoLocacao().getDescricao());
+                System.out.println("Quantidade de filme: " + dias.get(i).getQuantidade_filme());
+                System.out.println("Posição: " + i + " Locar: " + dias.get(i).getPromocaoLocacao().getLocar_quantidade());
+                System.out.println("Posição: " + i + " Ganhar: " + dias.get(i).getPromocaoLocacao().getGanhar_quantidade());
+                System.out.println("================Fim de Verificacao no Array Dias Após Verificações=============");
 
                 int ganhar;
                 int locar_quantidade = (dias.get(i).getPromocaoLocacao().getLocar_quantidade() + 1);
                 ganhar = (dias.get(i).getQuantidade_filme() / locar_quantidade);
-                
+
                 for (int z = 0; z < copiasLocacao.size(); z++) {
                     if (ganhar > 0) {
                         if (dias.get(i).getPromocaoLocacao().getCodigo_promocao_locacao().equals(
                                 copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getCodigo_promocao_locacao())) {
-                            
+
                             jtbl_locacao.setValueAt(moeda.setPrecoFormat(dias.get(i).getPromocaoLocacao().getValor_promocao_locacao().toString()), z, 2);
                             copiasLocacao.get(z).getDiaria().getPromocaoLocacao().setValor_promocao_locacao(dias.get(i).getPromocaoLocacao().getValor_promocao_locacao());
                             System.out.println("Colocar promocação na Linha: " + z);
                             System.out.println("Promoção adicionada: " + moeda.setPrecoFormat(copiasLocacao.get(z).getDiaria().getPromocaoLocacao().getValor_promocao_locacao().toString()));
                             ganhar = ganhar - 1;
                         }
-                    } 
+                    }
                 }
-        }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

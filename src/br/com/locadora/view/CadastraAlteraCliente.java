@@ -9,7 +9,7 @@ import br.com.locadora.model.bean.Combo;
 import br.com.locadora.model.bean.Telefone;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DependenteDAO;
-import br.com.locadora.model.dao.PacotePromocionalDAO;
+import br.com.locadora.model.dao.ComboDAO;
 import br.com.locadora.model.dao.TelefoneDAO;
 import br.com.locadora.util.Data;
 import br.com.locadora.util.ItemDbGrid;
@@ -56,8 +56,8 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     public String action;
     public TelefoneDAO telefoneDAO;
     public AcessoUsuario acesso;
-    public PacotePromocionalDAO pacotePromocionalDAO;
-    public List<Combo> pacotesPromocionais;
+    public ComboDAO comboDAO;
+    public List<Combo> combos;
     public Moeda moeda;
 
     /**
@@ -118,7 +118,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
 
             carregaTelefone(cliente.getCodigo_cliente());
             carregaDependente(cliente.getCodigo_cliente());
-            consultarPacotesAdquiridos(cliente.getCodigo_cliente());
+            consultarCombosAdquiridos(cliente.getCodigo_cliente());
             
             action = "salvar";
 
@@ -144,28 +144,28 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jtf_codigo_cliente = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jtf_empresa = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
-        jtf_nome_cliente = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_empresa = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
+        jtf_nome_cliente = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jtf_profissao = new javax.swing.JTextField();
+        jtf_profissao = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jtf_endereco = new javax.swing.JTextField();
+        jtf_endereco = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel14 = new javax.swing.JLabel();
-        jtf_bairro = new javax.swing.JTextField();
+        jtf_bairro = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel15 = new javax.swing.JLabel();
-        jtf_complemento = new javax.swing.JTextField();
+        jtf_complemento = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel16 = new javax.swing.JLabel();
-        jtf_email = new javax.swing.JTextField();
+        jtf_email = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jrb_ativo = new javax.swing.JRadioButton();
         jrb_inativo = new javax.swing.JRadioButton();
         jLabel20 = new javax.swing.JLabel();
-        jtf_estado = new javax.swing.JTextField();
+        jtf_estado = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel23 = new javax.swing.JLabel();
-        jtf_cidade = new javax.swing.JTextField();
+        jtf_cidade = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         try  {
             formatoData = new MaskFormatter("##/##/####");
         }
@@ -222,7 +222,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Não foi possivel setar");
         }
         jtf_telefone_dependente = new JFormattedTextField(formatoTelefone);
-        jtf_nome_dependente = new javax.swing.JTextField();
+        jtf_nome_dependente = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         try  {
             formatoData = new MaskFormatter("##/##/####");
         }
@@ -1130,7 +1130,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Descrição", "Qtd. Troca/Mês", "Preço", "Data Aquisição", "Dias Corridos", "Dias Pacote", "Dias Restante", "Trocas Efetuadas", "Status"
+                "Descrição", "Qtd. Troca/Mês", "Preço", "Data Aquisição", "Dias Corridos", "Dias Combo", "Dias Restante", "Trocas Efetuadas", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -1166,15 +1166,10 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             jtbl_pacotes_adquiridos.getColumnModel().getColumn(2).setPreferredWidth(20);
             jtbl_pacotes_adquiridos.getColumnModel().getColumn(3).setPreferredWidth(10);
             jtbl_pacotes_adquiridos.getColumnModel().getColumn(4).setPreferredWidth(20);
-            jtbl_pacotes_adquiridos.getColumnModel().getColumn(4).setHeaderValue("Dias Corridos");
             jtbl_pacotes_adquiridos.getColumnModel().getColumn(5).setPreferredWidth(20);
-            jtbl_pacotes_adquiridos.getColumnModel().getColumn(5).setHeaderValue("Dias Pacote");
             jtbl_pacotes_adquiridos.getColumnModel().getColumn(6).setPreferredWidth(20);
-            jtbl_pacotes_adquiridos.getColumnModel().getColumn(6).setHeaderValue("Dias Restante");
             jtbl_pacotes_adquiridos.getColumnModel().getColumn(7).setPreferredWidth(20);
-            jtbl_pacotes_adquiridos.getColumnModel().getColumn(7).setHeaderValue("Trocas Efetuadas");
             jtbl_pacotes_adquiridos.getColumnModel().getColumn(8).setPreferredWidth(20);
-            jtbl_pacotes_adquiridos.getColumnModel().getColumn(8).setHeaderValue("Status");
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -2463,16 +2458,16 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
 
     }
     
-    public void consultarPacotesAdquiridos(Integer codigo_cliente){
+    public void consultarCombosAdquiridos(Integer codigo_cliente){
         if(!jtf_codigo_cliente.getText().equals("")){
             pool = new Pool();
-            pacotePromocionalDAO = new PacotePromocionalDAO(pool);
-            pacotesPromocionais = pacotePromocionalDAO.getPacotePromocionalCliente(codigo_cliente);
-            mostrarPacotesAdquiridos(pacotesPromocionais);
+            comboDAO = new ComboDAO(pool);
+            combos = comboDAO.getPacotePromocionalCliente(codigo_cliente);
+            mostrarCombosAdquiridos(combos);
         }
     }
     
-    public void mostrarPacotesAdquiridos(List<Combo> pacotesPromocionais) {
+    public void mostrarCombosAdquiridos(List<Combo> pacotesPromocionais) {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_pacotes_adquiridos.getModel();
         tableModel.setNumRows(0);
 
@@ -2488,7 +2483,8 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                 } catch (ParseException ex) {
 
                 }
-                
+                Boolean status;
+                status = pacotesPromocionais.get(i).getDias_restantes()>0;
                 DefaultTableModel row = (DefaultTableModel) jtbl_pacotes_adquiridos.getModel();
                 
                 row.addRow(new Object[]{pacotesPromocionais.get(i).getDescricao(),
@@ -2496,9 +2492,11 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                 moeda.setPrecoFormat(pacotesPromocionais.get(i).getValor().toString()),
                 data_aquisicao,
                 pacotesPromocionais.get(i).getDias_corridos(),
-                pacotesPromocionais.get(i).getDias_pacote(),
+                pacotesPromocionais.get(i).getDias_combo(),
                 pacotesPromocionais.get(i).getDias_restantes(),
-                pacotesPromocionais.get(i).getQuantidade_troca_efetuada()});
+                pacotesPromocionais.get(i).getQuantidade_troca_efetuada(),
+                status
+                });
             }
         }
     }

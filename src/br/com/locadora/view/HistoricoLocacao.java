@@ -119,14 +119,14 @@ public class HistoricoLocacao extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Descrição Objeto", "Nome Dependente", "Data Locação", "Data Devolução", "Usuário"
+                "Código Objeto", "Descrição Objeto", "Nome Dependente", "Data Locação", "Data Devolução", "Promoção", "Usuário"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -150,6 +150,11 @@ public class HistoricoLocacao extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jtbl_historico_locacao);
+        if (jtbl_historico_locacao.getColumnModel().getColumnCount() > 0) {
+            jtbl_historico_locacao.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jtbl_historico_locacao.getColumnModel().getColumn(5).setPreferredWidth(30);
+            jtbl_historico_locacao.getColumnModel().getColumn(6).setPreferredWidth(40);
+        }
 
         jtf_nome_objeto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_nome_objeto.setName("jtf_nome_objeto"); // NOI18N
@@ -189,15 +194,10 @@ public class HistoricoLocacao extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jtf_nome_cliente)
-                            .addComponent(jb_pesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, 0))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jtf_nome_objeto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jtf_nome_cliente)
+                        .addComponent(jb_pesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jtf_nome_objeto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -373,10 +373,12 @@ public class HistoricoLocacao extends javax.swing.JFrame {
                 
                 DefaultTableModel row = (DefaultTableModel) jtbl_historico_locacao.getModel();
                 
-                row.addRow(new Object[]{itemLocacoes.get(i).getCopia().getObjeto().getTitulo(),
+                row.addRow(new Object[]{itemLocacoes.get(i).getCopia().getObjeto().getCodigo_objeto(),
+                        itemLocacoes.get(i).getCopia().getObjeto().getTitulo(),
                     itemLocacoes.get(i).getLocacao().getDependente().getNome_dependente(),
                     df_data_hora_locada.format(itemLocacoes.get(i).getData_locacao()),
                     data_devolucao,
+                    itemLocacoes.get(i).getCopia().getDiaria().getPromocaoLocacao().getDescricao(),
                     itemLocacoes.get(i).getLocacao().getUsuario().getNome_usuario()});
                 
             }            

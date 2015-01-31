@@ -216,7 +216,6 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
         jtf_codigo_objeto.setName("jtf_codigo_objeto"); // NOI18N
         jtf_codigo_objeto.setPreferredSize(new java.awt.Dimension(100, 29));
 
-        jtf_titulo_original.setDocument(new UnaccentedDocument());
         jtf_titulo_original.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_titulo_original.setName("jtf_titulo_original"); // NOI18N
         jtf_titulo_original.setPreferredSize(new java.awt.Dimension(400, 29));
@@ -374,14 +373,6 @@ public final class CadastraAlteraObjeto extends javax.swing.JFrame {
             }
         });
 
-        jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
-
-            public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
-
-                jtf_censura.setText(jtf_censura.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
-
-            }
-        });
         jtf_censura.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jtf_censura.setName("jtf_censura"); // NOI18N
         jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {

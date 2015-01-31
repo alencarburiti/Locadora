@@ -18,11 +18,9 @@ import br.com.locadora.view.EntradaCaixaVenda;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -114,7 +112,7 @@ public class Printer {
                 Double subTotal = total_locacao - desconto;
 
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaLocacao.jtf_saldo_debito_anterior.getText());
+                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaLocacao.jtf_saldo.getText());
                 linhasTxt.println("Valor Locação (-):          " + EntradaCaixaLocacao.jtf_valor_total_locacao.getText());
                 linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaLocacao.jtf_desconto.getText());
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
@@ -236,7 +234,7 @@ public class Printer {
                 Double subTotal = total_devolucao - (desconto );
 
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_saldo_debito_anterior.getText());
+                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_saldo.getText());
                 linhasTxt.println("Débito Devolução (-):       " + EntradaCaixaDevolucao.jtf_total_relocacao.getText());
                 linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaDevolucao.jtf_desconto.getText());
                 linhasTxt.println("Valor Desc. Dev. Antec. (+):" + EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
@@ -357,7 +355,7 @@ public class Printer {
                 Double subTotal = total_venda - (desconto );
 
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaVenda.jtf_saldo_debito_anterior.getText());
+                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaVenda.jtf_saldo.getText());
                 linhasTxt.println("Total Venda (-):            " + EntradaCaixaVenda.jtf_valor_total_venda.getText());
                 linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaVenda.jtf_desconto.getText());                
                 linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));

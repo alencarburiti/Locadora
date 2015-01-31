@@ -1160,20 +1160,83 @@ public class LocacaoDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlSelect = "SELECT DATA_LOCACAO, DATA_PREVISTA, DATA_DEVOLUCAO, VALOR_LOCADO, TITULO, NOME_DEPENDENTE, NOME_USUARIO FROM LOCACAO E, ITEM_LOCACAO A, COPIA B, OBJETO C, DEPENDENTE D,\n" +
-            "USUARIO F\n" +
-            "WHERE A.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
-            "AND B.OBJETO_CODIGO_OBJETO = C.CODIGO_OBJETO\n" +
-            "AND A.LOCACAO_CODIGO_LOCACAO = E.CODIGO_LOCACAO\n" +
-            "AND E.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
-            "AND E.USUARIO_CODIGO_USUARIO = F.CODIGO_USUARIO\n" +
-            "AND NOME_DEPENDENTE LIKE ?\n" +
-            "AND TITULO LIKE ? ORDER BY DATA_LOCACAO, TITULO DESC LIMIT 0, 200;";
+        String sqlSelect = "SELECT \n" +
+            "    *\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        DATA_LOCACAO,\n" +
+            "            DATA_PREVISTA,\n" +
+            "            DATA_DEVOLUCAO,\n" +
+            "            VALOR_LOCADO,\n" +
+            "            C.CODIGO_OBJETO,\n" +
+            "            TITULO,\n" +
+            "            NOME_DEPENDENTE,\n" +
+            "            NOME_USUARIO,\n" +
+            "            G.DESCRICAO_PROMOCAO\n" +
+            "    FROM\n" +
+            "        LOCACAO E, ITEM_LOCACAO A, COPIA B, OBJETO C, DEPENDENTE D, USUARIO F, PROMOCAO_LOCACAO G\n" +
+            "    WHERE\n" +
+            "        A.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "            AND B.OBJETO_CODIGO_OBJETO = C.CODIGO_OBJETO\n" +
+            "            AND A.LOCACAO_CODIGO_LOCACAO = E.CODIGO_LOCACAO\n" +
+            "            AND E.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
+            "            AND E.USUARIO_CODIGO_USUARIO = F.CODIGO_USUARIO\n" +
+            "            AND A.PROMOCAO_LOCACAO_CODIGO_PROMOCAO_LOCACAO = G.CODIGO_PROMOCAO\n" +
+            "            AND NOME_DEPENDENTE LIKE ?\n" +
+            "            AND TITULO LIKE ? UNION ALL SELECT \n" +
+            "        DATA_LOCACAO,\n" +
+            "            DATA_PREVISTA,\n" +
+            "            DATA_DEVOLUCAO,\n" +
+            "            VALOR_LOCADO,\n" +
+            "            C.CODIGO_OBJETO,\n" +
+            "            TITULO,\n" +
+            "            NOME_DEPENDENTE,\n" +
+            "            NOME_USUARIO,\n" +
+            "            '' AS DESCRICAO_PROMOCAO\n" +
+            "    FROM\n" +
+            "        LOCACAO E, ITEM_LOCACAO A, COPIA B, OBJETO C, DEPENDENTE D, USUARIO F\n" +
+            "    WHERE\n" +
+            "        A.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "            AND B.OBJETO_CODIGO_OBJETO = C.CODIGO_OBJETO\n" +
+            "            AND A.LOCACAO_CODIGO_LOCACAO = E.CODIGO_LOCACAO\n" +
+            "            AND E.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
+            "            AND E.USUARIO_CODIGO_USUARIO = F.CODIGO_USUARIO\n" +
+            "            AND A.PROMOCAO_LOCACAO_CODIGO_PROMOCAO_LOCACAO = 0\n" +
+            "            AND A.ITEM_VENDA_CODIGO_ITEM_VENDA = 0\n" +
+            "            AND NOME_DEPENDENTE LIKE ? \n" +
+            "            AND TITULO LIKE ? UNION ALL SELECT \n" +
+            "        DATA_LOCACAO,\n" +
+            "            DATA_PREVISTA,\n" +
+            "            DATA_DEVOLUCAO,\n" +
+            "            VALOR_LOCADO,\n" +
+            "            C.CODIGO_OBJETO,\n" +
+            "            TITULO,\n" +
+            "            NOME_DEPENDENTE,\n" +
+            "            NOME_USUARIO,\n" +
+            "            H.DESCRICAO AS DESCRICAO_PROMOCAO\n" +
+            "    FROM\n" +
+            "        LOCACAO E, ITEM_LOCACAO A, COPIA B, OBJETO C, DEPENDENTE D, USUARIO F, ITEM_VENDA G, PACOTE_PROMOCIONAL H\n" +
+            "    WHERE\n" +
+            "        A.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "            AND B.OBJETO_CODIGO_OBJETO = C.CODIGO_OBJETO\n" +
+            "            AND A.LOCACAO_CODIGO_LOCACAO = E.CODIGO_LOCACAO\n" +
+            "            AND E.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
+            "            AND E.USUARIO_CODIGO_USUARIO = F.CODIGO_USUARIO\n" +
+            "            AND A.ITEM_VENDA_CODIGO_ITEM_VENDA = G.CODIGO_ITEM_VENDA\n" +
+            "            AND G.PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL = H.CODIGO_PACOTE_PROMOCIONAL\n" +
+            "            AND NOME_DEPENDENTE LIKE ?\n" +
+            "            AND TITULO LIKE ?) AS HISTORICO\n" +
+            "ORDER BY DATA_LOCACAO , TITULO DESC\n" +
+            "LIMIT 0 , 200;";
         
         try {
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, "%"+nome_cliente+"%");
             ps.setString(2, "%"+nome_objeto+"%");
+            ps.setString(3, "%"+nome_cliente+"%");
+            ps.setString(4, "%"+nome_objeto+"%");
+            ps.setString(5, "%"+nome_cliente+"%");
+            ps.setString(6, "%"+nome_objeto+"%");
             
             rs = ps.executeQuery();
             
@@ -1197,7 +1260,13 @@ public class LocacaoDAO {
             Copia copia = new Copia();
             Objeto objeto = new Objeto();
             objeto.setTitulo(rs.getString("TITULO"));
+            objeto.setCodigo_objeto(rs.getInt("CODIGO_OBJETO"));
             copia.setObjeto(objeto);
+            PromocaoLocacao promo = new PromocaoLocacao();
+            promo.setDescricao(rs.getString("DESCRICAO_PROMOCAO"));
+            copia.setDiaria(new Diaria());
+            copia.getDiaria().setPromocaoLocacao(new PromocaoLocacao());
+            copia.getDiaria().setPromocaoLocacao(promo);
             Usuario usuario = new Usuario();
             usuario.setNome_usuario(rs.getString("NOME_USUARIO"));
             
@@ -1211,6 +1280,7 @@ public class LocacaoDAO {
             itemLocacao.setData_prevista(rs.getDate("DATA_PREVISTA"));
             itemLocacao.setData_devolucao(rs.getDate("DATA_DEVOLUCAO"));
             itemLocacao.setValor_locado(rs.getDouble("VALOR_LOCADO"));
+            
             
             Locacao locacao = new Locacao();
             Dependente dependente = new Dependente();

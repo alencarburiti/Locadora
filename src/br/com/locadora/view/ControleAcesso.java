@@ -140,7 +140,7 @@ public final class ControleAcesso extends javax.swing.JFrame {
                 java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, false, true
+                false, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {

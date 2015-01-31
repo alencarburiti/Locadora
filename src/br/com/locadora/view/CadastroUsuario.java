@@ -54,7 +54,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jtf_login = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jLabel5 = new javax.swing.JLabel();
-        jtf_nome = new javax.swing.JTextField();
+        jtf_nome = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jpf_senha = new javax.swing.JPasswordField(new LimitadorTexto(45), "",10);
@@ -208,6 +208,16 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 jb_salvarMouseClicked(evt);
             }
         });
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
+            }
+        });
+        jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_salvarKeyPressed(evt);
+            }
+        });
 
         jb_cancelar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
@@ -217,6 +227,11 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_cancelarActionPerformed(evt);
+            }
+        });
+        jb_cancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jb_cancelarKeyPressed(evt);
             }
         });
 
@@ -328,6 +343,20 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarMouseClicked
+
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
+
+    private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarKeyPressed
+
+    private void jb_cancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelarKeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_cancelarKeyPressed
 
     /**
      * @param args the command line arguments

@@ -113,7 +113,7 @@ public class TipoServicoDAO implements InterfaceTipoServicoDAO {
         List<TipoServico> resultado = new ArrayList<TipoServico>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlSelect = "SELECT * FROM TIPO_SERVICO WHERE MOVIMENTO = ?;";
+        String sqlSelect = "SELECT * FROM TIPO_SERVICO WHERE MOVIMENTO = ? ORDER BY ORDEM ASC;";
         ResultSet rs = null;
         
         try {

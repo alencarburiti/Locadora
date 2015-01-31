@@ -318,7 +318,6 @@
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(45), &quot;&quot;,10)"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_titulo_original.setDocument(new UnaccentedDocument());"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
             </Component>
@@ -584,9 +583,6 @@
               <Events>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_censuraKeyPressed"/>
               </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_censura.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digita&#xe7;&#xe3;o do fieldNumero  &#xa;      &#xa;                public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada  &#xa;                     &#xa;    jtf_censura.setText(jtf_censura.getText().replaceAll(&quot;[^0-9]&quot;, &quot;&quot;)); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que n&#xe3;o(^) seja numero  por &quot;&quot;  &#xa;      &#xa;             }  &#xa;    });"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>

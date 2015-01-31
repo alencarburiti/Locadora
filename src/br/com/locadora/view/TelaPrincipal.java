@@ -1154,11 +1154,11 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuPacotePromocional");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCombo");
         
         try {
             if (acesso.getEscrever() == false) {
-                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador 1");
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             } else if (acesso.getEscrever() == true) {
                 if (menuPacotePromocional == null) {
                     menuPacotePromocional = new MenuCombo();
@@ -1169,7 +1169,7 @@ private void jmi_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                     menuPacotePromocional.setVisible(true);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador 2");
+                JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage() + " Entre em contato com o administrador do sistema.");

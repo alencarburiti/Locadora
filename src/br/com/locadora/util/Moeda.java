@@ -59,6 +59,10 @@ public class Moeda {
             preco = preco.replace(",", ".");
             preco = preco.replace(" ", "");
             precoFormatado = Double.parseDouble(preco.trim());
+            if(precoFormatado < 0.00){
+                precoFormatado = precoFormatado * (-1);
+            }
+            
            
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Valor Informado Incorreto!\nInforme um valor com o seguinte formato:\nEx: 100,00");

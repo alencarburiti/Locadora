@@ -168,8 +168,8 @@ public class VendaDAO {
             Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
-            pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_VEZ"));
-            pacotePromocional.setQuantidade_mes(rs.getInt("QUANTIDADE_MES"));
+            pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_TROCA"));
+            pacotePromocional.setDias_combo(rs.getInt("DIAS_COMBO"));
             pacotePromocional.setValor(rs.getDouble("VALOR"));
 
             if(rs.getInt("DEL_FLAG") == 0){
@@ -340,7 +340,7 @@ public class VendaDAO {
 //            throws SQLException {
 //        ps.setString(1, pacotePromocional.getDescricao());
 //        ps.setInt(2, pacotePromocional.getQuantidade_troca());
-//        ps.setInt(3, pacotePromocional.getQuantidade_mes());
+//        ps.setInt(3, pacotePromocional.getDuracao_dias());
 //        ps.setDouble(4, pacotePromocional.getValor());
 //        if(pacotePromocional.getStatus() == true){
 //            ps.setInt(5, 0);

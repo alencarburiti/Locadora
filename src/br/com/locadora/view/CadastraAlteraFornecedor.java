@@ -93,8 +93,8 @@ public class CadastraAlteraFornecedor extends javax.swing.JFrame {
         jftf_telefone = new JFormattedTextField(formatoTelefone);
         jLabel7 = new javax.swing.JLabel();
         jtf_nome_fantasia = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
-        jtf_cidade = new javax.swing.JTextField(new LimitadorTexto(30), "",10);
-        jtf_estado = new javax.swing.JTextField(new LimitadorTexto(15), "",10);
+        jtf_cidade = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
+        jtf_estado = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         try
         {
             formatoTelefone = new MaskFormatter("(##)####-####");
@@ -105,8 +105,8 @@ public class CadastraAlteraFornecedor extends javax.swing.JFrame {
         }
         jftf_tel_vendedor = new JFormattedTextField(formatoTelefone);
         jLabel15 = new javax.swing.JLabel();
-        jtf_endereco = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
-        jtf_nome_vendedor = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jtf_endereco = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
+        jtf_nome_vendedor = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -134,9 +134,9 @@ public class CadastraAlteraFornecedor extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jtf_codigo_fornecedor = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jtf_bairro = new javax.swing.JTextField();
+        jtf_bairro = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel18 = new javax.swing.JLabel();
-        jtf_complemento = new javax.swing.JTextField();
+        jtf_complemento = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel16 = new javax.swing.JLabel();
         jtf_razao_social = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
 

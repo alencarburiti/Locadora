@@ -13,20 +13,21 @@ import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Combo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
-public class PacotePromocionalDAO {
+public class ComboDAO {
 
     private InterfacePool pool;
 
-    public PacotePromocionalDAO(InterfacePool pool) {
+    public ComboDAO(InterfacePool pool) {
         this.pool = pool;
     }
     
     public void atualizar(Combo pacotePromocional) throws SQLException {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
-        String sqlAtualizar = "UPDATE `locadora`.`pacote_promocional` SET `DESCRICAO` = ?, `QUANTIDADE_VEZ` = ?,\n" +
-            "`QUANTIDADE_MES` = ?, `VALOR` = ?, `DEL_FLAG` = ? WHERE `CODIGO_PACOTE_PROMOCIONAL` = ?;";
+        String sqlAtualizar = "UPDATE `locadora`.`pacote_promocional` SET `DESCRICAO` = ?, `QUANTIDADE_TROCA` = ?,\n" +
+            "`DIAS_COMBO` = ?, `VALOR` = ?, `DEL_FLAG` = ? WHERE `CODIGO_PACOTE_PROMOCIONAL` = ?;";
                 
         try {            
         
@@ -100,7 +101,7 @@ public class PacotePromocionalDAO {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(PacotePromocionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComboDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -125,7 +126,7 @@ public class PacotePromocionalDAO {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(PacotePromocionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComboDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -165,14 +166,14 @@ public class PacotePromocionalDAO {
         String sqlSelect = "SELECT \n" +
             "    B.CODIGO_PACOTE_PROMOCIONAL,\n" +
             "    DESCRICAO,\n" +
-            "    QUANTIDADE_VEZ,\n" +
-            "    QUANTIDADE_MES,\n" +
+            "    QUANTIDADE_TROCA,\n" +
+            "    DIAS_COMBO,\n" +
             "    QUANTIDADE,\n" +
             "    PRECO_TOTAL,\n" +
             "    DATA_LANCAMENTO,\n" +
             "    (CURRENT_DATE - DATA_LANCAMENTO) AS DIAS_CORRIDOS,\n" +
-            "    (QUANTIDADE_MES * 30) AS DIAS_PACOTE,\n" +
-            "    (QUANTIDADE_MES * 30) - (CURRENT_DATE - DATA_LANCAMENTO) AS DIAS_RESTANTE,\n" +
+            "    (DIAS_COMBO) AS DIAS_PACOTE,\n" +
+            "    (DIAS_COMBO) - (CURRENT_DATE - DATA_LANCAMENTO) AS DIAS_RESTANTE,\n" +
             "    DEL_FLAG,\n" +
             "    (SELECT \n" +
             "            COUNT(ITEM_VENDA_CODIGO_ITEM_VENDA)\n" +
@@ -220,7 +221,7 @@ public class PacotePromocionalDAO {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(PacotePromocionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComboDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }
@@ -236,10 +237,10 @@ public class PacotePromocionalDAO {
             "    D.NOME_DIARIA,\n" +
             "    DESCRICAO,\n" +
             "    CODIGO_ITEM_VENDA,\n" +
-            "    QUANTIDADE_VEZ,\n" +
+            "    QUANTIDADE_TROCA,\n" +
             "    (CURRENT_DATE - DATA_LANCAMENTO) AS DIAS_CORRIDOS,\n" +
-            "    (QUANTIDADE_MES * 30) AS DIAS_PACOTE,\n" +
-            "    (QUANTIDADE_MES * 30) - (CURRENT_DATE - DATA_LANCAMENTO) AS DIAS_RESTANTE,\n" +
+            "    (DIAS_COMBO) AS DIAS_PACOTE,\n" +
+            "    (DIAS_COMBO) - (CURRENT_DATE - DATA_LANCAMENTO) AS DIAS_RESTANTE,\n" +
             "    DIARIA_CODIGO_DIARIA,\n" +
             "    (SELECT \n" +
             "            COUNT(ITEM_VENDA_CODIGO_ITEM_VENDA)\n" +
@@ -295,7 +296,7 @@ public class PacotePromocionalDAO {
             ps.close();
             return resultado;
         } catch (SQLException ex) {
-            Logger.getLogger(PacotePromocionalDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComboDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         } finally {
             pool.liberarConnection(con);
@@ -308,8 +309,8 @@ public class PacotePromocionalDAO {
             Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
-            pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_VEZ"));
-            pacotePromocional.setQuantidade_mes(rs.getInt("QUANTIDADE_MES"));
+            pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_TROCA"));
+            pacotePromocional.setDias_combo(rs.getInt("DIAS_COMBO"));
             pacotePromocional.setValor(rs.getDouble("VALOR"));
 
             if(rs.getInt("DEL_FLAG") == 0){
@@ -329,11 +330,11 @@ public class PacotePromocionalDAO {
             Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
-            pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_VEZ"));
-            pacotePromocional.setQuantidade_mes(rs.getInt("QUANTIDADE_MES"));
+            pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_TROCA"));
+            pacotePromocional.setDias_combo(rs.getInt("DIAS_COMBO"));
             pacotePromocional.setData_lancamento(rs.getDate("DATA_LANCAMENTO"));
             pacotePromocional.setDias_corridos(rs.getInt("DIAS_CORRIDOS"));
-            pacotePromocional.setDias_pacote(rs.getInt("DIAS_PACOTE"));
+            pacotePromocional.setDias_combo(rs.getInt("DIAS_PACOTE"));
             pacotePromocional.setDias_restantes(rs.getInt("DIAS_RESTANTE"));
             pacotePromocional.setValor(rs.getDouble("PRECO_TOTAL"));
             pacotePromocional.setQuantidade_troca_efetuada(rs.getInt("TROCA_EFETUADA"));
@@ -355,9 +356,9 @@ public class PacotePromocionalDAO {
             Combo pacotePromocional = new Combo();
             pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
-            pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_VEZ"));
+            pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_TROCA"));
             pacotePromocional.setDias_corridos(rs.getInt("DIAS_CORRIDOS"));
-            pacotePromocional.setDias_pacote(rs.getInt("DIAS_PACOTE"));
+            pacotePromocional.setDias_combo(rs.getInt("DIAS_PACOTE"));
             pacotePromocional.setDias_restantes(rs.getInt("DIAS_RESTANTE"));
             pacotePromocional.setQuantidade_troca_efetuada(rs.getInt("TROCA_EFETUADA"));
             
@@ -403,8 +404,8 @@ public class PacotePromocionalDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
-        String sqlInsert = "INSERT INTO `locadora`.`pacote_promocional` ( `DESCRICAO`, `QUANTIDADE_VEZ`,\n" +
-            "`QUANTIDADE_MES`, `VALOR`, `DEL_FLAG`) VALUES (?,?,?,?,?);";
+        String sqlInsert = "INSERT INTO `locadora`.`pacote_promocional` ( `DESCRICAO`, `QUANTIDADE_TROCA`,\n" +
+            "`DIAS_COMBO`, `VALOR`, `DEL_FLAG`) VALUES (?,?,?,?,?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -456,7 +457,7 @@ public class PacotePromocionalDAO {
 
         ps.setString(1, pacotePromocional.getDescricao());
         ps.setInt(2, pacotePromocional.getQuantidade_troca());
-        ps.setInt(3, pacotePromocional.getQuantidade_mes());
+        ps.setInt(3, pacotePromocional.getDias_combo());
         ps.setDouble(4, pacotePromocional.getValor());
         if(pacotePromocional.getStatus() == true){
             ps.setInt(5, 0);
@@ -470,7 +471,7 @@ public class PacotePromocionalDAO {
             throws SQLException {
         ps.setString(1, pacotePromocional.getDescricao());
         ps.setInt(2, pacotePromocional.getQuantidade_troca());
-        ps.setInt(3, pacotePromocional.getQuantidade_mes());
+        ps.setInt(3, pacotePromocional.getDias_combo());
         ps.setDouble(4, pacotePromocional.getValor());
         if(pacotePromocional.getStatus() == true){
             ps.setInt(5, 0);

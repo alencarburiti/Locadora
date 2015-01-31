@@ -81,10 +81,9 @@ public class LancamentoDAO {
             pool.liberarConnection(con);
         }
     }
-    
+    //Utilizado na tela de AtendimentoVenda para checagem de Débito maior que período
     public Lancamento getDebito(Cliente cliente){
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");        
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT \n" +
@@ -145,8 +144,8 @@ public class LancamentoDAO {
         String sqlSelect = "SELECT \n" +
             "    *,\n" +
             "    (CASE\n" +
-            "        WHEN (LANC.TIPO = 'D') OR DEBITO IS NULL THEN 0\n" +
-            "        ELSE (LANC.VALOR_LANCAMENTO - DEBITO)\n" +
+            "        WHEN (LANC.TIPO = 'D') OR CREDITO IS NULL THEN 0\n" +
+            "        ELSE (LANC.VALOR_LANCAMENTO - CREDITO)\n" +
             "    END) AS SALDO,\n" +
             "    (CASE\n" +
             "        WHEN (LANC.TIPO = 'C') OR CREDITO IS NULL THEN 0\n" +
@@ -198,6 +197,176 @@ public class LancamentoDAO {
             "            WHERE\n" +
             "                CLIENTE_CODIGO_CLIENTE = ?)\n" +
             "    ORDER BY A.CODIGO_LANCAMENTO DESC) AS LANC;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setInt(1, cliente.getCodigo_cliente());
+            rs = ps.executeQuery();
+
+            resultado = getListaLancamento(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    //SQL utilizado para tela de Recebimentos na consulta dos debitos do cliente em aberto
+    public List<Lancamento> getLancamentosPendentes(Cliente cliente) {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT \n" +
+            "    *\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        *,\n" +
+            "            (CASE\n" +
+            "                WHEN (LANC.TIPO = 'D') OR DEBITO IS NULL THEN 0\n" +
+            "                ELSE (LANC.VALOR_LANCAMENTO - DEBITO)\n" +
+            "            END) AS SALDO,\n" +
+            "            (CASE\n" +
+            "                WHEN (LANC.TIPO = 'C') OR CREDITO IS NULL THEN 0\n" +
+            "                ELSE (LANC.VALOR_LANCAMENTO - CREDITO)\n" +
+            "            END) AS DEVEDOR\n" +
+            "    FROM\n" +
+            "        (SELECT \n" +
+            "        A.CODIGO_LANCAMENTO,\n" +
+            "            A.DATA_LANCAMENTO,\n" +
+            "            B.NOME_DEPENDENTE,\n" +
+            "            C.CODIGO_TIPO_SERVICO,\n" +
+            "            C.DESCRICAO,\n" +
+            "            C.TIPO,\n" +
+            "            D.LOGIN,\n" +
+            "            D.NOME_USUARIO,\n" +
+            "            A.VALOR_LANCAMENTO,\n" +
+            "            (SELECT \n" +
+            "                    (CASE\n" +
+            "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
+            "                            ELSE SUM(VALOR_LANCAMENTO)\n" +
+            "                        END)\n" +
+            "                FROM\n" +
+            "                    ITEM_LANCAMENTO IL, TIPO_SERVICO TS\n" +
+            "                WHERE\n" +
+            "                    IL.TIPO_SERVICO_CODIGO_SERVICO = TS.CODIGO_TIPO_SERVICO\n" +
+            "                        AND LANCAMENTO_CODIGO_LANCAMENTO = A.CODIGO_LANCAMENTO\n" +
+            "                        AND TS.TIPO = 'C') AS CREDITO,\n" +
+            "            (SELECT \n" +
+            "                    (CASE\n" +
+            "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
+            "                            ELSE SUM(VALOR_LANCAMENTO)\n" +
+            "                        END)\n" +
+            "                FROM\n" +
+            "                    ITEM_LANCAMENTO IL, TIPO_SERVICO TS\n" +
+            "                WHERE\n" +
+            "                    IL.TIPO_SERVICO_CODIGO_SERVICO = TS.CODIGO_TIPO_SERVICO\n" +
+            "                        AND LANCAMENTO_CODIGO_LANCAMENTO = A.CODIGO_LANCAMENTO\n" +
+            "                        AND TS.TIPO = 'D') AS DEBITO\n" +
+            "    FROM\n" +
+            "        LOCADORA.LANCAMENTO A, DEPENDENTE B, TIPO_SERVICO C, USUARIO D\n" +
+            "    WHERE\n" +
+            "        A.DEPENDENTE_CODIGO_DEPENDENTE = B.CODIGO_DEPENDENTE\n" +
+            "            AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
+            "            AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO\n" +
+            "            AND C.TIPO = 'D'\n" +
+            "            AND B.CODIGO_DEPENDENTE IN (SELECT \n" +
+            "                CODIGO_DEPENDENTE\n" +
+            "            FROM\n" +
+            "                DEPENDENTE\n" +
+            "            WHERE\n" +
+            "                CLIENTE_CODIGO_CLIENTE = ?)\n" +
+            "    ORDER BY A.CODIGO_LANCAMENTO DESC) AS LANC) AS FINAL\n" +
+            "WHERE\n" +
+            "    DEVEDOR > 0;";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setInt(1, cliente.getCodigo_cliente());
+            rs = ps.executeQuery();
+
+            resultado = getListaLancamento(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    //SQL Utilizado na consulta para mostrar os depósitos com saldo
+    public List<Lancamento> getLancamentosDepositos(Cliente cliente) {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT \n" +
+            "    *\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        *,\n" +
+            "            (CASE\n" +
+            "                WHEN (LANC.TIPO = 'D') OR DEBITO IS NULL THEN 0\n" +
+            "                ELSE (LANC.VALOR_LANCAMENTO - DEBITO)\n" +
+            "            END) AS SALDO,\n" +
+            "            (CASE\n" +
+            "                WHEN (LANC.TIPO = 'C') OR CREDITO IS NULL THEN 0\n" +
+            "                ELSE (LANC.VALOR_LANCAMENTO - CREDITO)\n" +
+            "            END) AS DEVEDOR\n" +
+            "    FROM\n" +
+            "        (SELECT \n" +
+            "        A.CODIGO_LANCAMENTO,\n" +
+            "            A.DATA_LANCAMENTO,\n" +
+            "            B.NOME_DEPENDENTE,\n" +
+            "            C.CODIGO_TIPO_SERVICO,\n" +
+            "            C.DESCRICAO,\n" +
+            "            C.TIPO,\n" +
+            "            D.LOGIN,\n" +
+            "            D.NOME_USUARIO,\n" +
+            "            A.VALOR_LANCAMENTO,\n" +
+            "            (SELECT \n" +
+            "                    (CASE\n" +
+            "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
+            "                            ELSE SUM(VALOR_LANCAMENTO)\n" +
+            "                        END)\n" +
+            "                FROM\n" +
+            "                    ITEM_LANCAMENTO IL, TIPO_SERVICO TS\n" +
+            "                WHERE\n" +
+            "                    IL.TIPO_SERVICO_CODIGO_SERVICO = TS.CODIGO_TIPO_SERVICO\n" +
+            "                        AND LANCAMENTO_CODIGO_LANCAMENTO = A.CODIGO_LANCAMENTO\n" +
+            "                        AND TS.TIPO = 'C') AS CREDITO,\n" +
+            "            (SELECT \n" +
+            "                    (CASE\n" +
+            "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
+            "                            ELSE SUM(VALOR_LANCAMENTO)\n" +
+            "                        END)\n" +
+            "                FROM\n" +
+            "                    ITEM_LANCAMENTO IL, TIPO_SERVICO TS\n" +
+            "                WHERE\n" +
+            "                    IL.TIPO_SERVICO_CODIGO_SERVICO = TS.CODIGO_TIPO_SERVICO\n" +
+            "                        AND LANCAMENTO_CODIGO_LANCAMENTO = A.CODIGO_LANCAMENTO\n" +
+            "                        AND TS.TIPO = 'D') AS DEBITO\n" +
+            "    FROM\n" +
+            "        LOCADORA.LANCAMENTO A, DEPENDENTE B, TIPO_SERVICO C, USUARIO D\n" +
+            "    WHERE\n" +
+            "        A.DEPENDENTE_CODIGO_DEPENDENTE = B.CODIGO_DEPENDENTE\n" +
+            "            AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
+            "            AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO\n" +
+            "            AND C.TIPO = 'C'\n" +
+            "            AND B.CODIGO_DEPENDENTE IN (SELECT \n" +
+            "                CODIGO_DEPENDENTE\n" +
+            "            FROM\n" +
+            "                DEPENDENTE\n" +
+            "            WHERE\n" +
+            "                CLIENTE_CODIGO_CLIENTE = ?)\n" +
+            "    ORDER BY A.CODIGO_LANCAMENTO DESC) AS LANC) AS FINAL\n" +
+            "WHERE\n" +
+            "    SALDO > 0;";
         ResultSet rs = null;
 
         try {
@@ -319,6 +488,64 @@ public class LancamentoDAO {
         return resultado;
     }
     
+    public List<Lancamento> getLancamentoDetalhadoDesconto() {
+        List<Lancamento> resultado = new ArrayList<Lancamento>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        String sqlSelect = "SELECT \n" +
+            "    *\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        A.data_lancamento,\n" +
+            "            C.NOME_DEPENDENTE,\n" +
+            "            B.DESCRICAO,\n" +
+            "            B.TIPO,\n" +
+            "            A.VALOR_LANCAMENTO AS VALOR,\n" +
+            "            caixa_codigo_caixa,\n" +
+            "            D.NOME_USUARIO\n" +
+            "    FROM\n" +
+            "        LANCAMENTO A, TIPO_SERVICO B, DEPENDENTE C, USUARIO D\n" +
+            "    WHERE\n" +
+            "        A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n" +
+            "            AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO\n" +
+            "            AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
+            "            AND B.TIPO = 'C'\n" +
+            "            AND CODIGO_TIPO_SERVICO = 9 UNION ALL SELECT \n" +
+            "        B.data_lancamento,\n" +
+            "            D.NOME_DEPENDENTE,\n" +
+            "            C.DESCRICAO,\n" +
+            "            C.TIPO,\n" +
+            "            B.VALOR_LANCAMENTO AS VALOR,\n" +
+            "            B.caixa_codigo_caixa,\n" +
+            "            E.NOME_USUARIO\n" +
+            "    FROM\n" +
+            "        LANCAMENTO A, ITEM_LANCAMENTO B, TIPO_SERVICO C, DEPENDENTE D, USUARIO E\n" +
+            "    WHERE\n" +
+            "        A.CODIGO_LANCAMENTO = B.LANCAMENTO_CODIGO_LANCAMENTO\n" +
+            "            AND B.TIPO_SERVICO_CODIGO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
+            "            AND A.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
+            "            AND B.USUARIO_CODIGO_USUARIO = E.CODIGO_USUARIO\n" +
+            "            AND C.TIPO = 'C'\n" +
+            "            AND C.CODIGO_TIPO_SERVICO IN (3 , 8, 12, 9)) AS FLUXO\n" +
+            "ORDER BY DATA_LANCAMENTO DESC";
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            rs = ps.executeQuery();
+
+            resultado = getListaLancamentoDetalhado(rs);
+
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LancamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
     public List<Lancamento> getLancamentoDetalhadoVenda() {
         List<Lancamento> resultado = new ArrayList<Lancamento>();
         Connection con = pool.getConnection();
@@ -400,7 +627,7 @@ public class LancamentoDAO {
             "            AND A.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
             "            AND B.USUARIO_CODIGO_USUARIO = E.CODIGO_USUARIO\n" +
             "            AND C.TIPO = 'C'\n" +
-            "            AND C.CODIGO_TIPO_SERVICO IN (6 , 7, 11)) AS FLUXO\n" +
+            "            AND C.CODIGO_TIPO_SERVICO IN (6 , 7, 11, 3 , 8, 12, 9)) AS FLUXO\n" +
             "ORDER BY DATA_LANCAMENTO DESC;";
         ResultSet rs = null;
 
@@ -428,8 +655,6 @@ public class LancamentoDAO {
             lancamento.setCodigo_lancamento(rs.getInt("CODIGO_LANCAMENTO"));
             lancamento.setData_lancamento(rs.getDate("DATA_LANCAMENTO"));
             lancamento.setValor_total(rs.getDouble("VALOR_LANCAMENTO"));
-            lancamento.setCredito(rs.getDouble("CREDITO"));
-            lancamento.setDebito(rs.getDouble("DEBITO"));
             lancamento.setSaldo(rs.getDouble("SALDO"));
             lancamento.setDevedor(rs.getDouble("DEVEDOR"));
 
@@ -438,7 +663,6 @@ public class LancamentoDAO {
             tipo_servico.setDescricao(rs.getString("DESCRICAO"));
             tipo_servico.setTipo(rs.getString("TIPO"));
             lancamento.setTipoServico(tipo_servico);
-
             
             Dependente dependente = new Dependente();
             dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));

@@ -61,6 +61,12 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
         jtf_valor_total.setText(moeda.setPrecoFormat(lancamento.getValor_total().toString()));
         
         carregarItensLancamentos(lancamento);
+        carregarTipoLancamento();
+        
+        Calendar data_atual = Calendar.getInstance();               
+        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+        String data_inicial = out.format(data_atual.getTime());       
+        jtf_data_lancamento.setText(data_inicial);        
         
         if(lancamento.getTipoServico().getTipo().equals("C")){
             jcb_tipo_servico.setEnabled(false);
@@ -68,7 +74,12 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
             jtf_valor_lancamento.setEnabled(false);
             jb_adicionar_locacao.setEnabled(false);
             jb_remover_locacao.setEnabled(false);
+            jb_sair.requestFocus();
+        }else {
+            jcb_tipo_servico.requestFocus();            
         }
+        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -114,7 +125,7 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jl_rodape = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jb_cancelar5 = new javax.swing.JButton();
+        jb_sair = new javax.swing.JButton();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -365,9 +376,8 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
                                 .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jb_remover_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jp_locacaoLayout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 48, Short.MAX_VALUE))))))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 48, Short.MAX_VALUE))))
         );
         jp_locacaoLayout.setVerticalGroup(
             jp_locacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,20 +411,20 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
 
         jPanel6.setName("jPanel6"); // NOI18N
 
-        jb_cancelar5.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jb_cancelar5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
-        jb_cancelar5.setText("Sair");
-        jb_cancelar5.setMaximumSize(new java.awt.Dimension(101, 33));
-        jb_cancelar5.setName("jb_cancelar5"); // NOI18N
-        jb_cancelar5.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_cancelar5.addActionListener(new java.awt.event.ActionListener() {
+        jb_sair.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/sair.png"))); // NOI18N
+        jb_sair.setText("Sair");
+        jb_sair.setMaximumSize(new java.awt.Dimension(101, 33));
+        jb_sair.setName("jb_sair"); // NOI18N
+        jb_sair.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelar5ActionPerformed(evt);
+                jb_sairActionPerformed(evt);
             }
         });
-        jb_cancelar5.addKeyListener(new java.awt.event.KeyAdapter() {
+        jb_sair.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_cancelar5KeyPressed(evt);
+                jb_sairKeyPressed(evt);
             }
         });
 
@@ -424,14 +434,14 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(260, 260, 260)
-                .addComponent(jb_cancelar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(260, 260, 260))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jb_cancelar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -470,9 +480,9 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jl_rodape))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jl_rodape)
+                    .addComponent(jLabel4))
                 .addGap(0, 0, 0))
         );
 
@@ -481,13 +491,7 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Calendar data_atual = Calendar.getInstance();               
-        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-        String data_inicial = out.format(data_atual.getTime());       
-        jtf_data_lancamento.setText(data_inicial);        
-
-        carregarTipoLancamento();
-        jcb_tipo_servico.requestFocus();
+        
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -591,18 +595,18 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_adicionar_locacaoActionPerformed
 
-    private void jb_cancelar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelar5ActionPerformed
+    private void jb_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_sairActionPerformed
         retornarJanelaPai();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_cancelar5ActionPerformed
+    }//GEN-LAST:event_jb_sairActionPerformed
 
-    private void jb_cancelar5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_cancelar5KeyPressed
+    private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_cancelar1.doClick();
+            jb_sair.doClick();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jb_cancelar5KeyPressed
+    }//GEN-LAST:event_jb_sairKeyPressed
 
     private void jtbl_recebimentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_recebimentoKeyPressed
         acionarAtalho(evt);
@@ -635,23 +639,11 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jb_adicionar_locacao;
-    private javax.swing.JButton jb_cancelar1;
-    private javax.swing.JButton jb_cancelar2;
-    private javax.swing.JButton jb_cancelar3;
-    private javax.swing.JButton jb_cancelar4;
-    private javax.swing.JButton jb_cancelar5;
-    private javax.swing.JButton jb_receber;
-    private javax.swing.JButton jb_receber1;
-    private javax.swing.JButton jb_receber2;
-    private javax.swing.JButton jb_receber3;
     private javax.swing.JButton jb_remover_locacao;
+    private javax.swing.JButton jb_sair;
     private javax.swing.JComboBox jcb_tipo_servico;
     private javax.swing.JLabel jl_codigo_locacao;
     private javax.swing.JLabel jl_rodape;
@@ -855,8 +847,7 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {            
             retornarJanelaPai();
         }
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
@@ -913,7 +904,8 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
         setVisible(false);
         if (janelapai != null) {
             janelapai.setStatusTela(true);
-            janelapai.lancamentoRecebimento = null;
+            janelapai.lancamentoRecebimento = null;            
+            int index = janelapai.jtbl_recebimento.getSelectedRow();
             janelapai.carregarClienteDependente(janelapai.dependente);            
         }
     }

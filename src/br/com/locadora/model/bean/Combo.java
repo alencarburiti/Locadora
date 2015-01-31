@@ -18,10 +18,9 @@ public class Combo {
     private String codigo_barras;
     private String descricao = "";
     private Integer quantidade_troca;
-    private Integer quantidade_troca_efetuada;
-    private Integer quantidade_mes;
+    private Integer quantidade_troca_efetuada;    
     private Integer dias_corridos;
-    private Integer dias_pacote;
+    private Integer dias_combo;
     private Integer dias_restantes = 0;
     private Date data_lancamento;
     private Double valor;
@@ -52,15 +51,7 @@ public class Combo {
     public void setQuantidade_troca(Integer quantidade_vez) {
         this.quantidade_troca = quantidade_vez;
     }
-
-    public Integer getQuantidade_mes() {
-        return quantidade_mes;
-    }
-
-    public void setQuantidade_mes(Integer quantidade_mes) {
-        this.quantidade_mes = quantidade_mes;
-    }
-
+    
     public Double getValor() {
         return valor;
     }
@@ -109,12 +100,12 @@ public class Combo {
         this.dias_corridos = dias_corridos;
     }
 
-    public Integer getDias_pacote() {
-        return dias_pacote;
+    public Integer getDias_combo() {
+        return dias_combo;
     }
 
-    public void setDias_pacote(Integer dias_pacote) {
-        this.dias_pacote = dias_pacote;
+    public void setDias_combo(Integer dias_pacote) {
+        this.dias_combo = dias_pacote;
     }
 
     public Integer getDias_restantes() {

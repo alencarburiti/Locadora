@@ -147,16 +147,16 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel41" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jtf_quantidade_vez" alignment="0" min="-2" pref="68" max="-2" attributes="0"/>
-                                      <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabel12" max="32767" attributes="0"/>
+                                      <Component id="jtf_quantidade_troca_mes" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jcb_quantidade_mes" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabel18" max="32767" attributes="0"/>
+                                      <Component id="jtf_dias_combo" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jLabel4" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
                                       <Component id="jtf_valor" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
@@ -212,8 +212,8 @@
                                           </Group>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="jtf_quantidade_vez" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jcb_quantidade_mes" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jtf_quantidade_troca_mes" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jtf_dias_combo" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" attributes="0">
@@ -266,7 +266,7 @@
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_descricao_pacoteKeyPressed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(80), &quot;&quot;,10)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new LimitadorTexto(50), &quot;&quot;,10)"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
@@ -293,7 +293,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Qtd/M&#xea;s*"/>
+            <Property name="text" type="java.lang.String" value="Qtd Troca"/>
             <Property name="name" type="java.lang.String" value="jLabel12" noResource="true"/>
           </Properties>
         </Component>
@@ -336,7 +336,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Tempo*"/>
+            <Property name="text" type="java.lang.String" value="Dias Combo*"/>
             <Property name="name" type="java.lang.String" value="jLabel18" noResource="true"/>
           </Properties>
         </Component>
@@ -482,35 +482,35 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcb_quantidade_mes">
+        <Component class="javax.swing.JFormattedTextField" name="jtf_quantidade_troca_mes">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="1 M&#xea;s"/>
-                <StringItem index="1" value="2 Meses"/>
-                <StringItem index="2" value="3 Meses"/>
-                <StringItem index="3" value="6 Meses"/>
-                <StringItem index="4" value="1 Ano"/>
-              </StringArray>
-            </Property>
-            <Property name="name" type="java.lang.String" value="jcb_quantidade_mes" noResource="true"/>
-          </Properties>
-          <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jcb_quantidade_mesKeyPressed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jtf_quantidade_vez">
-          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="jtf_quantidade_vez" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jtf_quantidade_troca_mes" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_quantidade_vezKeyPressed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jtf_quantidade_troca_mesFocusGained"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_quantidade_troca_mesKeyPressed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_quantidade_vez.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digita&#xe7;&#xe3;o do fieldNumero  &#xa;      &#xa;                public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada  &#xa;                     &#xa;    jtf_quantidade_vez.setText(jtf_quantidade_vez.getText().replaceAll(&quot;[^0-9]&quot;, &quot;&quot;)); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que n&#xe3;o(^) seja numero  por &quot;&quot;  &#xa;      &#xa;             }  &#xa;    });"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_quantidade_troca_mes.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digita&#xe7;&#xe3;o do fieldNumero  &#xa;      &#xa;                public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada  &#xa;                     &#xa;    jtf_quantidade_troca_mes.setText(jtf_quantidade_troca_mes.getText().replaceAll(&quot;[^0-9]&quot;, &quot;&quot;)); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que n&#xe3;o(^) seja numero  por &quot;&quot;  &#xa;      &#xa;             }  &#xa;    });"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jtf_dias_combo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Helvetica Neue" size="13" style="0"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="jtf_dias_combo" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_dias_comboKeyPressed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jtf_dias_combo.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digita&#xe7;&#xe3;o do fieldNumero  &#xa;      &#xa;                public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada  &#xa;                     &#xa;    jtf_dias_combo.setText(jtf_dias_combo.getText().replaceAll(&quot;[^0-9]&quot;, &quot;&quot;)); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que n&#xe3;o(^) seja numero  por &quot;&quot;  &#xa;      &#xa;             }  &#xa;    });"/>
           </AuxValues>
         </Component>
       </SubComponents>

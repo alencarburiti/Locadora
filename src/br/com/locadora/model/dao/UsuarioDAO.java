@@ -72,91 +72,15 @@ public class UsuarioDAO implements InterfaceUsuarioDAO {
             rs.next();
             int codigo_usuario = rs.getInt("MAX(CODIGO_USUARIO)");
 
-            String acesso1 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,1);\n";
-            String acesso2 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,2);\n";
-            String acesso3 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,3);\n";
-            String acesso4 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,4);\n";
-            String acesso5 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,5);\n";
-            String acesso6 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,6);\n";
-            String acesso7 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,7);\n";
-            String acesso8 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,8);\n";
-            String acesso9 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,9);\n";
-            String acesso10 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,10);\n";
-            String acesso11 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,11);\n";
-            String acesso12 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,12);\n";
-            String acesso13 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,13);\n";
-            String acesso14 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,14);\n";
-            String acesso15 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,15);\n";
-            String acesso16 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,16);\n";
-            String acesso17 = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,17);";
+            String acesso = "INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,?,?);\n";
 
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso1);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso2);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso3);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso4);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso5);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso6);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso7);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso8);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso9);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso10);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso11);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso12);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso13);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso14);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso15);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso16);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
-
-            pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso17);
-            pstm.setInt(1, codigo_usuario);
-            pstm.executeUpdate();
+            for(int i = 1; i <= 21; i++){
+                pstm = (PreparedStatement) conexao.conecta().prepareStatement(acesso);
+                pstm.setInt(1, codigo_usuario);
+                pstm.setInt(2, i);
+                System.out.println("INSERT INTO `acesso`(`LER`,`ESCREVER`,`DELETAR`,`SUPER_USUARIO`, `USUARIO_CODIGO_USUARIO`,`INTERFACE_CODIGO_INTERFACE`)VALUES(1,1,1,1,"+codigo_usuario+", "+ i + " );");
+                pstm.executeUpdate();                
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);

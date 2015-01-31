@@ -40,50 +40,50 @@ public class RelatorioFluxoCaixaDetalhado {
         Connection con = pool.getConnection();
 
         try {
-            String sqlSelect = "SELECT\n" +
-            "    *\n" +
-            "FROM\n" +
-            "    (SELECT\n" +
-            "        A.DATA_LANCAMENTO,\n" +
-            "            C.NOME_DEPENDENTE,\n" +
-            "            B.DESCRICAO,\n" +
-            "            B.TIPO,\n" +
-            "            A.VALOR_LANCAMENTO AS VALOR,\n" +
-            "            CAIXA_CODIGO_CAIXA,\n" +
-            "            D.NOME_USUARIO\n" +
-            "    FROM\n" +
-            "        LANCAMENTO A, TIPO_SERVICO B, DEPENDENTE C, USUARIO D\n" +
-            "    WHERE\n" +
-            "        A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n" +
-            "            AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO\n" +
-            "AND A.DATA_LANCAMENTO BETWEEN ? AND ? \n" +
-            "            AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
-            "            AND B.TIPO = 'C' UNION ALL SELECT\n" +
-            "        B.DATA_LANCAMENTO,\n" +
-            "            D.NOME_DEPENDENTE,\n" +
-            "            C.DESCRICAO,\n" +
-            "            C.TIPO,\n" +
-            "            B.VALOR_LANCAMENTO AS VALOR,\n" +
-            "            B.CAIXA_CODIGO_CAIXA,\n" +
-            "            E.NOME_USUARIO\n" +
-            "    FROM\n" +
-            "        LANCAMENTO A, ITEM_LANCAMENTO B, TIPO_SERVICO C, DEPENDENTE D, USUARIO E\n" +
-            "    WHERE\n" +
-            "        A.CODIGO_LANCAMENTO = B.LANCAMENTO_CODIGO_LANCAMENTO\n" +
-            "            AND B.TIPO_SERVICO_CODIGO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
-            "            AND A.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
-            "            AND B.USUARIO_CODIGO_USUARIO = E.CODIGO_USUARIO\n" +
-            "            AND C.TIPO = 'C'\n" +
-            "AND B.DATA_LANCAMENTO BETWEEN ? AND ? \n" +
-            "            AND C.CODIGO_TIPO_SERVICO IN (6 , 7, 11)) AS FLUXO\n" +
-            "ORDER BY DATA_LANCAMENTO DESC";
+            String sqlSelect = "SELECT \n" +
+                "    *\n" +
+                "FROM\n" +
+                "    (SELECT \n" +
+                "        A.data_lancamento,\n" +
+                "            C.NOME_DEPENDENTE,\n" +
+                "            B.DESCRICAO,\n" +
+                "            B.TIPO,\n" +
+                "            A.VALOR_LANCAMENTO AS VALOR,\n" +
+                "            caixa_codigo_caixa,\n" +
+                "            D.NOME_USUARIO\n" +
+                "    FROM\n" +
+                "        LANCAMENTO A, TIPO_SERVICO B, DEPENDENTE C, USUARIO D\n" +
+                "    WHERE\n" +
+                "        A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n" +
+                "            AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO\n" +
+                "            AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
+                "            AND B.TIPO = 'C'\n" +
+                "            AND A.DATA_LANCAMENTO BETWEEN ? AND ?\n" +
+                "            AND B.CODIGO_TIPO_SERVICO = 4 UNION ALL SELECT \n" +
+                "        B.data_lancamento,\n" +
+                "            D.NOME_DEPENDENTE,\n" +
+                "            C.DESCRICAO,\n" +
+                "            C.TIPO,\n" +
+                "            B.VALOR_LANCAMENTO AS VALOR,\n" +
+                "            B.caixa_codigo_caixa,\n" +
+                "            E.NOME_USUARIO\n" +
+                "    FROM\n" +
+                "        LANCAMENTO A, ITEM_LANCAMENTO B, TIPO_SERVICO C, DEPENDENTE D, USUARIO E\n" +
+                "    WHERE\n" +
+                "        A.CODIGO_LANCAMENTO = B.LANCAMENTO_CODIGO_LANCAMENTO\n" +
+                "            AND B.TIPO_SERVICO_CODIGO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
+                "            AND A.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n" +
+                "            AND B.USUARIO_CODIGO_USUARIO = E.CODIGO_USUARIO\n" +
+                "            AND C.TIPO = 'C'\n" +
+                "            AND B.DATA_LANCAMENTO BETWEEN ? AND ?\n" +
+                "            AND C.CODIGO_TIPO_SERVICO IN (6 , 7, 11)) AS FLUXO\n" +
+                "ORDER BY DATA_LANCAMENTO ASC";
 
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, dataInicial);
             ps.setString(2, dataFinal);
             ps.setString(3, dataInicial);
             ps.setString(4, dataFinal);
-//            ps.setString(3, "%" + titulo + "%");
 
             rs = ps.executeQuery();
             rs.afterLast();//mover apos a ultima linha  

@@ -223,8 +223,8 @@
               <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="C&#xf3;digo" type="java.lang.String"/>
                 <Column editable="false" title="Descri&#xe7;&#xe3;o" type="java.lang.String"/>
-                <Column editable="false" title="Qtd./M&#xea;s" type="java.lang.String"/>
-                <Column editable="false" title="Tempo" type="java.lang.String"/>
+                <Column editable="false" title="Qtd. Troca" type="java.lang.String"/>
+                <Column editable="false" title="Dias Combo" type="java.lang.String"/>
                 <Column editable="false" title="Valor" type="java.lang.String"/>
                 <Column editable="false" title="Status" type="java.lang.Boolean"/>
               </Table>

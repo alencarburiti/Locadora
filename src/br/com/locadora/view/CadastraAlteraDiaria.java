@@ -114,7 +114,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jtf_dias_maximo = new javax.swing.JFormattedTextField();
         jcb_acumulativo = new javax.swing.JCheckBox();
-        jtf_nome_diaria = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jtf_nome_diaria = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -123,7 +123,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jb_eliminar_promocao_locacao = new javax.swing.JButton();
         jb_adicionar_promocao_locacao = new javax.swing.JButton();
-        jtf_descricao_locacao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jtf_descricao_locacao = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel12 = new javax.swing.JLabel();
         jcb_a_vista_locacao = new javax.swing.JCheckBox();
         jLabel16 = new javax.swing.JLabel();
@@ -149,7 +149,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jb_eliminar_promocao_devolucao = new javax.swing.JButton();
         jb_adicionar_promocao_devolucao = new javax.swing.JButton();
-        jtf_descricao_devolucao = new javax.swing.JTextField(new LimitadorTexto(45), "",10);
+        jtf_descricao_devolucao = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel14 = new javax.swing.JLabel();
         jcb_a_vista_devolucao = new javax.swing.JCheckBox();
         jLabel18 = new javax.swing.JLabel();

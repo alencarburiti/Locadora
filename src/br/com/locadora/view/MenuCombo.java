@@ -16,7 +16,7 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Combo;
-import br.com.locadora.model.dao.PacotePromocionalDAO;
+import br.com.locadora.model.dao.ComboDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Moeda;
@@ -37,8 +37,8 @@ public class MenuCombo extends javax.swing.JFrame {
     public Cliente cliente;
     public CadastraAlteraCombo cadastraAlteraPacotePromocional;
     public Combo pacotePromocional;
-    public PacotePromocionalDAO pacotePromocionalDAO;
-    public List<Combo> itensPacotePromocional;
+    public ComboDAO pacotePromocionalDAO;
+    public List<Combo> itensCombo;
     public Moeda moeda;
 
     public MenuCombo() {
@@ -189,7 +189,7 @@ public class MenuCombo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Descrição", "Qtd./Mês", "Tempo", "Valor", "Status"
+                "Código", "Descrição", "Qtd. Troca", "Dias Combo", "Valor", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -556,7 +556,7 @@ public class MenuCombo extends javax.swing.JFrame {
         pacotePromocional = null;
         if (tb != null) {
             if (tb.getSelectedRow() != -1) {
-                pacotePromocional = itensPacotePromocional.get(tb.getSelectedRow());                
+                pacotePromocional = itensCombo.get(tb.getSelectedRow());                
             }
         }
         return pacotePromocional;
@@ -582,8 +582,8 @@ public class MenuCombo extends javax.swing.JFrame {
                     int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
                     if (selectedOption == JOptionPane.YES_NO_OPTION) {
                         pool = new Pool();
-                        pacotePromocionalDAO = new PacotePromocionalDAO(pool);
-                        pacotePromocionalDAO.excluir(itensPacotePromocional.get(jtbl_combo.getSelectedRow()).getCodigo_pacote_promocioanl());
+                        pacotePromocionalDAO = new ComboDAO(pool);
+                        pacotePromocionalDAO.excluir(itensCombo.get(jtbl_combo.getSelectedRow()).getCodigo_pacote_promocioanl());
                         row.removeRow(jtbl_combo.getSelectedRow());
 
                     }
@@ -622,13 +622,13 @@ public class MenuCombo extends javax.swing.JFrame {
     
     public void consultarPacotePromocional(){
         pool = new Pool();
-        pacotePromocionalDAO = new PacotePromocionalDAO(pool);
+        pacotePromocionalDAO = new ComboDAO(pool);
         if(jrb_descricao.isSelected()){
-            itensPacotePromocional = pacotePromocionalDAO.getPacotePromocionalDescricao(jtf_pesquisa.getText());
-            mostrarPacotesPromocionais(itensPacotePromocional);
+            itensCombo = pacotePromocionalDAO.getPacotePromocionalDescricao(jtf_pesquisa.getText());
+            mostrarPacotesPromocionais(itensCombo);
         }else {
-            itensPacotePromocional = pacotePromocionalDAO.getPacotePromocionalCodigo(Integer.parseInt(jtf_pesquisa.getText()));
-            mostrarPacotesPromocionais(itensPacotePromocional);
+            itensCombo = pacotePromocionalDAO.getPacotePromocionalCodigo(Integer.parseInt(jtf_pesquisa.getText()));
+            mostrarPacotesPromocionais(itensCombo);
         }
     }
     
@@ -636,30 +636,17 @@ public class MenuCombo extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_combo.getModel();
         tableModel.setNumRows(0);
 
-        if (itensPacotePromocional.size() == 0) {
+        if (itensCombo.size() == 0) {
             JOptionPane.showMessageDialog(null, "Nenhum Combo encontrado");
 
         } else {
             moeda = new Moeda();
-            for (int i = 0; i < itensPacotePromocional.size(); i++) {
-
-                String tempo = "";
-                if(itensPacotePromocional.get(i).getQuantidade_mes()==1){
-                    tempo = "1 Mês";
-                } else if(itensPacotePromocional.get(i).getQuantidade_mes()==2){
-                    tempo = "2 Meses";
-                } else if(itensPacotePromocional.get(i).getQuantidade_mes()==3){
-                    tempo = "3 Meses";
-                } else if(itensPacotePromocional.get(i).getQuantidade_mes()==6){
-                    tempo = "6 Meses";
-                } else if(itensPacotePromocional.get(i).getQuantidade_mes()==12){
-                    tempo = "1 Ano";
-                }
+            for (int i = 0; i < itensCombo.size(); i++) {
                 
                 DefaultTableModel row = (DefaultTableModel) jtbl_combo.getModel();
-                row.addRow(new Object[]{itensPacotePromocional.get(i).getCodigo_pacote_promocioanl(),
-                    itensPacotePromocional.get(i).getDescricao(), itensPacotePromocional.get(i).getQuantidade_troca(),
-                    tempo, moeda.setPrecoFormat(itensPacotePromocional.get(i).getValor().toString()), itensPacotePromocional.get(i).getStatus()});
+                row.addRow(new Object[]{itensCombo.get(i).getCodigo_pacote_promocioanl(),
+                    itensCombo.get(i).getDescricao(), itensCombo.get(i).getQuantidade_troca(),
+                    itensCombo.get(i).getDias_combo(), moeda.setPrecoFormat(itensCombo.get(i).getValor().toString()), itensCombo.get(i).getStatus()});
             }
             jtbl_combo.requestFocus();
             jtbl_combo.setSelectionMode(1);

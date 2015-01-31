@@ -6,7 +6,7 @@ import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemCombo;
 import br.com.locadora.model.bean.Combo;
-import br.com.locadora.model.dao.PacotePromocionalDAO;
+import br.com.locadora.model.dao.ComboDAO;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
@@ -26,17 +26,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class CadastraAlteraCombo extends javax.swing.JFrame {
 
-    private Combo pacotePromocional;
-    private List<ItemCombo> itensPacotePromocional;
-    private ItemCombo itemPacotePromocional;
+    private Combo combo;
+    private List<ItemCombo> itensCombo;
+    private ItemCombo itemCombo;
     public MenuCombo janelapai;
-    public ConsultaDiaria janelapai2;    
-    private InterfacePool pool;     
+    public ConsultaDiaria janelapai2;
+    private InterfacePool pool;
     public String action;
     public AcessoUsuario acesso;
     public Moeda moeda;
     public Diaria diaria;
-    public PacotePromocionalDAO pacotePromocionalDAO;
+    public ComboDAO comboDAO;
     public ConsultaDiaria consultaDiaria;
 
     /**
@@ -47,44 +47,34 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         TemaInterface.getInterface(this);
         this.setTitle("Cadastrando Combo");
         janelapai = null;
-        janelapai2 = null;        
-        consultaDiaria = null;    
+        janelapai2 = null;
+        consultaDiaria = null;
     }
 
-    public CadastraAlteraCombo(Combo pacotePromocional) {
+    public CadastraAlteraCombo(Combo combo) {
         initComponents();
-        if (pacotePromocional != null) {
+        if (combo != null) {
             TemaInterface.getInterface(this);
             this.setTitle("Alterando Combo");
             janelapai = null;
             janelapai2 = null;
             consultaDiaria = null;
-            this.pacotePromocional = pacotePromocional;
+            this.combo = combo;
             moeda = new Moeda();
-            jtf_codigo_pacote_promocional.setText(pacotePromocional.getCodigo_pacote_promocioanl().toString());
-            jtf_descricao_pacote.setText(pacotePromocional.getDescricao());
-            jtf_quantidade_vez.setText(pacotePromocional.getQuantidade_troca().toString());
-            
-            if(pacotePromocional.getQuantidade_mes().equals(1)){
-                jcb_quantidade_mes.setSelectedIndex(0);                
-            } else if(pacotePromocional.getQuantidade_mes().equals(2)){
-                jcb_quantidade_mes.setSelectedIndex(1);                
-            } else if(pacotePromocional.getQuantidade_mes().equals(3)){
-                jcb_quantidade_mes.setSelectedIndex(2);                
-            } else if(pacotePromocional.getQuantidade_mes().equals(6)){
-                jcb_quantidade_mes.setSelectedIndex(3);                
-            } else if(pacotePromocional.getQuantidade_mes().equals(12)){
-                jcb_quantidade_mes.setSelectedIndex(4);                
-            }
-            jtf_valor.setText(moeda.setPrecoFormat(pacotePromocional.getValor().toString()));
-            
-            System.out.println("Status: " + pacotePromocional.getStatus());
-            if (pacotePromocional.getStatus() == true) {
+            jtf_codigo_pacote_promocional.setText(combo.getCodigo_pacote_promocioanl().toString());
+            jtf_descricao_pacote.setText(combo.getDescricao());
+            jtf_quantidade_troca_mes.setText(combo.getQuantidade_troca().toString());
+            jtf_dias_combo.setText(combo.getDias_combo().toString());
+
+            jtf_valor.setText(moeda.setPrecoFormat(combo.getValor().toString()));
+
+            System.out.println("Status: " + combo.getStatus());
+            if (combo.getStatus() == true) {
                 jrb_ativo.setSelected(true);
             } else {
                 jrb_inativo.setSelected(true);
             }
-            carregarItensPacotePromocional(pacotePromocional.getCodigo_pacote_promocioanl());            
+            carregarItensPacotePromocional(combo.getCodigo_pacote_promocioanl());
         }
     }
 
@@ -105,7 +95,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         jb_salvar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jtf_codigo_pacote_promocional = new javax.swing.JTextField();
-        jtf_descricao_pacote = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jtf_descricao_pacote = new javax.swing.JTextField(new LimitadorTexto(50), "",10);
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -121,8 +111,8 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         jb_pesquisa_diaria = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jtf_valor = new javax.swing.JTextField(new LimitadorTexto(10), "",10);
-        jcb_quantidade_mes = new javax.swing.JComboBox();
-        jtf_quantidade_vez = new javax.swing.JFormattedTextField();
+        jtf_quantidade_troca_mes = new javax.swing.JFormattedTextField();
+        jtf_dias_combo = new javax.swing.JFormattedTextField();
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -210,7 +200,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         jLabel3.setName("jLabel3"); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jLabel12.setText("Qtd/Mês*");
+        jLabel12.setText("Qtd Troca");
         jLabel12.setName("jLabel12"); // NOI18N
 
         buttonGroup1.add(jrb_ativo);
@@ -230,7 +220,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         jrb_inativo.setName("jrb_inativo"); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jLabel18.setText("Tempo*");
+        jLabel18.setText("Dias Combo*");
         jLabel18.setName("jLabel18"); // NOI18N
 
         jb_adicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/adicionar_item.png"))); // NOI18N
@@ -354,27 +344,42 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
             }
         });
 
-        jcb_quantidade_mes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 Mês", "2 Meses", "3 Meses", "6 Meses", "1 Ano" }));
-        jcb_quantidade_mes.setName("jcb_quantidade_mes"); // NOI18N
-        jcb_quantidade_mes.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jcb_quantidade_mesKeyPressed(evt);
-            }
-        });
-
-        jtf_quantidade_vez.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
+        jtf_quantidade_troca_mes.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
 
             public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
 
-                jtf_quantidade_vez.setText(jtf_quantidade_vez.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
+                jtf_quantidade_troca_mes.setText(jtf_quantidade_troca_mes.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
 
             }
         });
-        jtf_quantidade_vez.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jtf_quantidade_vez.setName("jtf_quantidade_vez"); // NOI18N
-        jtf_quantidade_vez.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_quantidade_troca_mes.setText("1");
+        jtf_quantidade_troca_mes.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_quantidade_troca_mes.setName("jtf_quantidade_troca_mes"); // NOI18N
+        jtf_quantidade_troca_mes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtf_quantidade_troca_mesFocusGained(evt);
+            }
+        });
+        jtf_quantidade_troca_mes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_quantidade_vezKeyPressed(evt);
+                jtf_quantidade_troca_mesKeyPressed(evt);
+            }
+        });
+
+        jtf_dias_combo.addKeyListener(new java.awt.event.KeyAdapter() {     // cria um listener ouvinte de digitação do fieldNumero
+
+            public void keyReleased(java.awt.event.KeyEvent evt) {  // cria um ouvinte para cada tecla pressionada
+
+                jtf_dias_combo.setText(jtf_dias_combo.getText().replaceAll("[^0-9]", "")); // faz com que pegue o texto a cada tecla digitada, e substituir tudo que não(^) seja numero  por ""
+
+            }
+        });
+        jtf_dias_combo.setText("1");
+        jtf_dias_combo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jtf_dias_combo.setName("jtf_dias_combo"); // NOI18N
+        jtf_dias_combo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtf_dias_comboKeyPressed(evt);
             }
         });
 
@@ -390,14 +395,14 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel41)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtf_quantidade_vez, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jtf_quantidade_troca_mes))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel18)
-                                    .addComponent(jcb_quantidade_mes, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jtf_dias_combo))
+                                .addGap(5, 5, 5)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jtf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -443,8 +448,8 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                                             .addComponent(jLabel18))
                                         .addGap(0, 0, 0)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jtf_quantidade_vez, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jcb_quantidade_mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jtf_quantidade_troca_mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jtf_dias_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addGap(0, 0, 0)
@@ -514,7 +519,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     private void jtf_descricao_pacoteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_descricao_pacoteKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_quantidade_vez.requestFocus();
+            jtf_quantidade_troca_mes.requestFocus();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_descricao_pacoteKeyPressed
@@ -535,13 +540,13 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
-    private void jtf_quantidade_vezKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_quantidade_vezKeyPressed
+    private void jtf_quantidade_troca_mesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_quantidade_troca_mesKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jcb_quantidade_mes.requestFocus();
+            jtf_dias_combo.requestFocus();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_quantidade_vezKeyPressed
+    }//GEN-LAST:event_jtf_quantidade_troca_mesKeyPressed
 
     private void jb_adicionarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_adicionarKeyPressed
         acionarAtalho(evt);
@@ -552,7 +557,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_adicionarKeyPressed
 
     private void jb_removerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_removerActionPerformed
-        removeItemPacotePromocional(jtbl_diarias_pacote);
+        removeItemCombo(jtbl_diarias_pacote);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_removerActionPerformed
 
@@ -561,7 +566,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     }//GEN-LAST:event_jtbl_diarias_pacoteMouseClicked
 
     private void jtbl_diarias_pacoteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_diarias_pacoteKeyPressed
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jtbl_diarias_pacoteKeyPressed
 
@@ -581,7 +586,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     private void jb_pesquisa_diariaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_pesquisa_diariaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_pesquisa_diaria.doClick();            
+            jb_pesquisa_diaria.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_pesquisa_diariaKeyPressed
@@ -607,14 +612,6 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         }
         acionarAtalho(evt);        // TODO add your handling code here:
     }//GEN-LAST:event_jtf_valorKeyPressed
-
-    private void jcb_quantidade_mesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_quantidade_mesKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jtf_valor.requestFocus();
-        }
-        acionarAtalho(evt);           
-// TODO add your handling code here:
-    }//GEN-LAST:event_jcb_quantidade_mesKeyPressed
 
     private void jb_adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionarActionPerformed
         adicionarItemDiariaCombo();
@@ -646,6 +643,19 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_removerKeyPressed
 
+    private void jtf_dias_comboKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_dias_comboKeyPressed
+                acionarAtalho(evt);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jtf_valor.requestFocus();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_dias_comboKeyPressed
+
+    private void jtf_quantidade_troca_mesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_quantidade_troca_mesFocusGained
+        jtf_quantidade_troca_mes.selectAll();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_quantidade_troca_mesFocusGained
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -671,31 +681,36 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     private javax.swing.JButton jb_remover;
     private javax.swing.JButton jb_sair;
     private javax.swing.JButton jb_salvar;
-    private javax.swing.JComboBox jcb_quantidade_mes;
     public static javax.swing.JRadioButton jrb_ativo;
     public static javax.swing.JRadioButton jrb_inativo;
     public static javax.swing.JTable jtbl_diarias_pacote;
     public static javax.swing.JTextField jtf_codigo_pacote_promocional;
     private javax.swing.JTextField jtf_descricao_diaria;
     public static javax.swing.JTextField jtf_descricao_pacote;
-    private javax.swing.JFormattedTextField jtf_quantidade_vez;
+    private javax.swing.JFormattedTextField jtf_dias_combo;
+    private javax.swing.JFormattedTextField jtf_quantidade_troca_mes;
     public static javax.swing.JTextField jtf_valor;
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
-    
+
     public boolean verificarCampos() {
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
         if (jtf_descricao_pacote.getText().trim().equals("")) {
             msgERRO = msgERRO + " *Descrição\n";
         }
-        if (jtf_quantidade_vez.getText().length() == 0) {
-            msgERRO = msgERRO + " *Quantidade por Mês\n";
-        } 
+
+        if (jtf_quantidade_troca_mes.getText().length() == 0) {
+            msgERRO = msgERRO + " *Quantidade Troca/ Mês\n";
+        }
+
+        if (jtf_dias_combo.getText().length() == 0) {
+            msgERRO = msgERRO + " *Duração (Dias)\n";
+        }
 
         if (jtf_valor.getText().length() < 1) {
-            msgERRO = msgERRO + " *Valor do Pacote Promocional\n";
-        }         
+            msgERRO = msgERRO + " *Valor do Combo\n";
+        }
 
         if (!msgERRO.equals("Preencha os campos obrigatórios:\n")) {
             JOptionPane.showMessageDialog(this, msgERRO);
@@ -729,7 +744,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
             return true;
         }
     }
-    
+
     public void carregaDiaria(Diaria diaria) {
         if (diaria != null) {
             this.diaria = diaria;
@@ -745,18 +760,18 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         try {
             if (codigo_pacote_promocional != null) {
                 pool = new Pool();
-                itensPacotePromocional = null;
-                pacotePromocionalDAO = new PacotePromocionalDAO(pool);
-                itensPacotePromocional = pacotePromocionalDAO.getItensPacotePromocional(codigo_pacote_promocional);
+                itensCombo = null;
+                comboDAO = new ComboDAO(pool);
+                itensCombo = comboDAO.getItensPacotePromocional(codigo_pacote_promocional);
 
-                mostrarItensPacotePromocional(itensPacotePromocional);
+                mostrarItensPacotePromocional(itensCombo);
             }
         } catch (ParseException ex) {
             Logger.getLogger(CadastraAlteraCombo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(CadastraAlteraCombo.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+    }
 
     public void mostrarItensPacotePromocional(List<ItemCombo> itensPacotePromocional) throws ParseException {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_diarias_pacote.getModel();
@@ -765,7 +780,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         if (itensPacotePromocional != null) {
             moeda = new Moeda();
             for (int i = 0; i < itensPacotePromocional.size(); i++) {
-                DefaultTableModel row = (DefaultTableModel) jtbl_diarias_pacote.getModel();                
+                DefaultTableModel row = (DefaultTableModel) jtbl_diarias_pacote.getModel();
                 row.addRow(new Object[]{itensPacotePromocional.get(i).getDiaria().getNome_diaria()});
             }
 
@@ -782,34 +797,34 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
     }
 
     private void adicionarItemDiariaCombo() {
-        try {            
+        try {
             if (!jtf_codigo_pacote_promocional.getText().equals("")) {
                 if (verificarCampoDiaria() == true) {
-                    pacotePromocional = new Combo();
-                    pacotePromocional.setCodigo_pacote_promocioanl(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
-                    
-                    itemPacotePromocional = new ItemCombo();
-                    itemPacotePromocional.setPacotePromocional(pacotePromocional);
-                    itemPacotePromocional.setDiaria(diaria);
-                    
-                    pool = new Pool();
-                    pacotePromocionalDAO = new PacotePromocionalDAO(pool);
-                    pacotePromocionalDAO.salvarItem(itemPacotePromocional);                    
+                    combo = new Combo();
+                    combo.setCodigo_pacote_promocioanl(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
 
-                    carregarItensPacotePromocional(pacotePromocional.getCodigo_pacote_promocioanl());
-                    
-                    jtf_descricao_diaria.setText("");                    
+                    itemCombo = new ItemCombo();
+                    itemCombo.setPacotePromocional(combo);
+                    itemCombo.setDiaria(diaria);
+
+                    pool = new Pool();
+                    comboDAO = new ComboDAO(pool);
+                    comboDAO.salvarItem(itemCombo);
+
+                    carregarItensPacotePromocional(combo.getCodigo_pacote_promocioanl());
+
+                    jtf_descricao_diaria.setText("");
                     jb_pesquisa_diaria.requestFocus();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Salvar primeiro o Pacote Promocional");
+                JOptionPane.showMessageDialog(null, "Salvar primeiro o Combo");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex);
         }
-    }   
-    
-    public void removeItemPacotePromocional(JTable tb) {
+    }
+
+    public void removeItemCombo(JTable tb) {
         if (tb != null) {
             DefaultTableModel row = (DefaultTableModel) tb.getModel();
 
@@ -817,9 +832,9 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                 int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (selectedOption == JOptionPane.YES_NO_OPTION) {
                     pool = new Pool();
-                    pacotePromocionalDAO = new PacotePromocionalDAO(pool);
-                    
-                    if (pacotePromocionalDAO.excluirItem(itensPacotePromocional.get(tb.getSelectedRow()).getCodigo_item_pacote_promocional())) {
+                    comboDAO = new ComboDAO(pool);
+
+                    if (comboDAO.excluirItem(itensCombo.get(tb.getSelectedRow()).getCodigo_item_pacote_promocional())) {
                         row.removeRow(tb.getSelectedRow());
                         carregarItensPacotePromocional(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
                     }
@@ -828,44 +843,34 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Selecione um Combo");
             }
         }
-    }    
-    
+    }
+
     public void cadastrarAlterarCombo() {
         if (verificarCampos()) {
             try {
-                pacotePromocional = new Combo();
-                pacotePromocional.setDescricao(jtf_descricao_pacote.getText());
-                pacotePromocional.setQuantidade_troca(Integer.parseInt(jtf_quantidade_vez.getText()));
-                if(jcb_quantidade_mes.getSelectedIndex() == 0){
-                    pacotePromocional.setQuantidade_mes(1);
-                } else if(jcb_quantidade_mes.getSelectedIndex() == 1){
-                    pacotePromocional.setQuantidade_mes(2);
-                } else if(jcb_quantidade_mes.getSelectedIndex() == 2){
-                    pacotePromocional.setQuantidade_mes(3);
-                } else if(jcb_quantidade_mes.getSelectedIndex() == 3){
-                    pacotePromocional.setQuantidade_mes(6);
-                } else if(jcb_quantidade_mes.getSelectedIndex() == 4){
-                    pacotePromocional.setQuantidade_mes(12);
-                }
+                combo = new Combo();
+                combo.setDescricao(jtf_descricao_pacote.getText());
+                combo.setQuantidade_troca(Integer.parseInt(jtf_quantidade_troca_mes.getText()));
+                combo.setDias_combo(Integer.parseInt(jtf_dias_combo.getText()));
                 moeda = new Moeda();
-                pacotePromocional.setValor(moeda.getPrecoFormato(jtf_valor.getText()));
+                combo.setValor(moeda.getPrecoFormato(jtf_valor.getText()));
                 if (jrb_ativo.isSelected() == true) {
-                    pacotePromocional.setStatus(true);
+                    combo.setStatus(true);
                 } else {
-                    pacotePromocional.setStatus(false);
-                }                
+                    combo.setStatus(false);
+                }
                 pool = new Pool();
-                pacotePromocionalDAO = new PacotePromocionalDAO(pool);
+                comboDAO = new ComboDAO(pool);
                 if (jtf_codigo_pacote_promocional.getText().equals("")) {
-                    pacotePromocional = pacotePromocionalDAO.salvar(pacotePromocional);
-                    jtf_codigo_pacote_promocional.setText(pacotePromocional.getCodigo_pacote_promocioanl().toString());
-                    JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");                    
-                } else {                    
-                    pacotePromocional.setCodigo_pacote_promocioanl(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
-                    pacotePromocionalDAO.atualizar(pacotePromocional);
-                    JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");                    
-                }                
-                    jb_pesquisa_diaria.requestFocus();
+                    combo = comboDAO.salvar(combo);
+                    jtf_codigo_pacote_promocional.setText(combo.getCodigo_pacote_promocioanl().toString());
+                    JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+                } else {
+                    combo.setCodigo_pacote_promocioanl(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
+                    comboDAO.atualizar(combo);
+                    JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");
+                }
+                jb_pesquisa_diaria.requestFocus();
 
             } catch (SQLException e) {
                 System.out.println(e.getMessage() + "Problemas com a gravação: ");
@@ -887,8 +892,8 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
             janelapai.cadastraAlteraPacotePromocional = null;
             janelapai.consultarPacotePromocional();
         } else if (janelapai2 != null) {
-            janelapai2.setStatusTela(true);            
+            janelapai2.setStatusTela(true);
         }
-    }    
-    
+    }
+
 }

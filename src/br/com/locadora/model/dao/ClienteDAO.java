@@ -294,6 +294,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
             cliente.setProfissao(rs.getString("PROFISSAO"));
             cliente.setCpf(rs.getString("CPF"));
             cliente.setData_nascimento(rs.getDate("DATA_NASCIMENTO"));
+            cliente.setData_cadastro(rs.getDate("DATA_CADASTRO"));
             cliente.setEndereco(rs.getString("ENDERECO"));
             cliente.setBairro(rs.getString("BAIRRO"));
             cliente.setComplemento(rs.getString("COMPLEMENTO"));
@@ -318,8 +319,8 @@ public class ClienteDAO implements InterfaceClienteDAO {
 
         String sqlInsert = "INSERT INTO `locadora`.`CLIENTE`(`NOME_CLIENTE`,`NOME_EMPRESA_TRABALHO`,"
                 + "`PROFISSAO`,`CPF`,`DATA_NASCIMENTO`,`ENDERECO`,`BAIRRO`,`COMPLEMENTO`,"
-                + "`CIDADE`,`ESTADO`,`EMAIL`,`LOGIN`,`SENHA`,`OBSERVACAO`,`DEL_FLAG`) VALUES"
-                + "( ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? );";
+                + "`CIDADE`,`ESTADO`,`EMAIL`,`LOGIN`,`SENHA`,`OBSERVACAO`,`DEL_FLAG`, DATA_CADASTRO) VALUES"
+                + "( ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, CURRENT_DATE());";
 
         try {
             ps = con.prepareStatement(sqlInsert);

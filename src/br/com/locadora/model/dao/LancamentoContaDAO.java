@@ -267,7 +267,7 @@ public class LancamentoContaDAO {
                 + "            AND D.CODIGO_USUARIO = A.USUARIO_CODIGO_USUARIO\n"
                 + "            AND A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE\n"
                 + "            AND A.DATA_LANCAMENTO BETWEEN ? AND ?\n"
-                + "            AND B.TIPO = 'C') AS PRIMEIRO \n"
+                + "            AND B.TIPO = 'C' AND B.CODIGO_TIPO_SERVICO = 4) AS PRIMEIRO \n"
                 + "UNION ALL (SELECT \n"
                 + "    B.DATA_LANCAMENTO AS DATA_VENCIMENTO,\n"
                 + "    A.CODIGO_LANCAMENTO AS CODIGO_LANCAMENTO_CONTA,\n"
@@ -292,7 +292,7 @@ public class LancamentoContaDAO {
                 + "        AND E.CODIGO_USUARIO = B.USUARIO_CODIGO_USUARIO\n"
                 + "        AND A.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE\n"
                 + "        AND A.DATA_LANCAMENTO BETWEEN ? AND ?\n"
-                + "        AND C.TIPO = 'C')";
+                + "        AND C.TIPO = 'C' AND C.CODIGO_TIPO_SERVICO IN (6,7,11))";
 
         try {
             ps = con.prepareStatement(sqlSelect);
@@ -321,58 +321,58 @@ public class LancamentoContaDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlSelect = "SELECT\n" +
-"    *\n" +
-"FROM\n" +
-"    (SELECT\n" +
-"        DATA_VENCIMENTO,\n" +
-"            CODIGO_LANCAMENTO AS CODIGO_LANCAMENTO_CONTA,\n" +
-"            0 AS CODIGO_FORNECEDOR,\n" +
-"            NOME_DEPENDENTE AS ORIGEM_DESTINO,\n" +
-"            DESCRICAO,\n" +
-"            CODIGO_TIPO_SERVICO,\n" +
-"            DOCUMENTO,\n" +
-"            VALOR_LANCAMENTO AS VALOR_A_PAGAR,\n" +
-"            CREDITO AS VALOR_PAGO,\n" +
-"            DATA_LANCAMENTO AS DATA_PAGAMENTO,\n" +
-"            NOME_USUARIO,\n" +
-"            CAIXA_CODIGO_CAIXA\n" +
-"    FROM\n" +
-"        (SELECT\n" +
-"        A.DATA_LANCAMENTO AS DATA_VENCIMENTO,\n" +
-"            A.CODIGO_LANCAMENTO,\n" +
-"            0 AS CODIGO_FORNECEDOR,\n" +
-"            B.NOME_DEPENDENTE,\n" +
-"            C.DESCRICAO,\n" +
-"            C.CODIGO_TIPO_SERVICO,\n" +
-"            A.CODIGO_LANCAMENTO AS DOCUMENTO,\n" +
-"            C.TIPO,\n" +
-"            D.LOGIN,\n" +
-"            D.NOME_USUARIO,\n" +
-"            A.VALOR_LANCAMENTO,\n" +
-"            A.DATA_LANCAMENTO,\n" +
-"            A.CAIXA_CODIGO_CAIXA,\n" +
-"            (SELECT\n" +
-"                    (CASE\n" +
-"                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
-"                            ELSE SUM(VALOR_LANCAMENTO)\n" +
-"                        END)\n" +
-"                FROM\n" +
-"                    ITEM_LANCAMENTO IL, TIPO_SERVICO TS\n" +
-"                WHERE\n" +
-"                    IL.TIPO_SERVICO_CODIGO_SERVICO = TS.CODIGO_TIPO_SERVICO\n" +
-"                        AND LANCAMENTO_CODIGO_LANCAMENTO = A.CODIGO_LANCAMENTO\n" +
-"                        AND TS.TIPO = 'C') AS CREDITO\n" +
-"    FROM\n" +
-"        LOCADORA.LANCAMENTO A, DEPENDENTE B, TIPO_SERVICO C, USUARIO D\n" +
-"    WHERE\n" +
-"        A.DEPENDENTE_CODIGO_DEPENDENTE = B.CODIGO_DEPENDENTE\n" +
-"            AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
-"            AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO\n" +
-"            AND C.TIPO = 'D'\n" +
-"            AND A.DATA_LANCAMENTO BETWEEN ? AND ?\n" +
-"    ORDER BY A.CODIGO_LANCAMENTO DESC) AS LANC) AS FINAL\n" +
-"WHERE\n" +
-"    VALOR_A_PAGAR > VALOR_PAGO;";
+            "    *\n" +
+            "FROM\n" +
+            "    (SELECT\n" +
+            "        DATA_VENCIMENTO,\n" +
+            "            CODIGO_LANCAMENTO AS CODIGO_LANCAMENTO_CONTA,\n" +
+            "            0 AS CODIGO_FORNECEDOR,\n" +
+            "            NOME_DEPENDENTE AS ORIGEM_DESTINO,\n" +
+            "            DESCRICAO,\n" +
+            "            CODIGO_TIPO_SERVICO,\n" +
+            "            DOCUMENTO,\n" +
+            "            VALOR_LANCAMENTO AS VALOR_A_PAGAR,\n" +
+            "            CREDITO AS VALOR_PAGO,\n" +
+            "            DATA_LANCAMENTO AS DATA_PAGAMENTO,\n" +
+            "            NOME_USUARIO,\n" +
+            "            CAIXA_CODIGO_CAIXA\n" +
+            "    FROM\n" +
+            "        (SELECT\n" +
+            "        A.DATA_LANCAMENTO AS DATA_VENCIMENTO,\n" +
+            "            A.CODIGO_LANCAMENTO,\n" +
+            "            0 AS CODIGO_FORNECEDOR,\n" +
+            "            B.NOME_DEPENDENTE,\n" +
+            "            C.DESCRICAO,\n" +
+            "            C.CODIGO_TIPO_SERVICO,\n" +
+            "            A.CODIGO_LANCAMENTO AS DOCUMENTO,\n" +
+            "            C.TIPO,\n" +
+            "            D.LOGIN,\n" +
+            "            D.NOME_USUARIO,\n" +
+            "            A.VALOR_LANCAMENTO,\n" +
+            "            A.DATA_LANCAMENTO,\n" +
+            "            A.CAIXA_CODIGO_CAIXA,\n" +
+            "            (SELECT\n" +
+            "                    (CASE\n" +
+            "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
+            "                            ELSE SUM(VALOR_LANCAMENTO)\n" +
+            "                        END)\n" +
+            "                FROM\n" +
+            "                    ITEM_LANCAMENTO IL, TIPO_SERVICO TS\n" +
+            "                WHERE\n" +
+            "                    IL.TIPO_SERVICO_CODIGO_SERVICO = TS.CODIGO_TIPO_SERVICO\n" +
+            "                        AND LANCAMENTO_CODIGO_LANCAMENTO = A.CODIGO_LANCAMENTO\n" +
+            "                        AND TS.TIPO = 'C') AS CREDITO\n" +
+            "    FROM\n" +
+            "        LOCADORA.LANCAMENTO A, DEPENDENTE B, TIPO_SERVICO C, USUARIO D\n" +
+            "    WHERE\n" +
+            "        A.DEPENDENTE_CODIGO_DEPENDENTE = B.CODIGO_DEPENDENTE\n" +
+            "            AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
+            "            AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO\n" +
+            "            AND C.TIPO = 'D'\n" +
+            "            AND A.DATA_LANCAMENTO BETWEEN ? AND ?\n" +
+            "    ORDER BY A.CODIGO_LANCAMENTO DESC) AS LANC) AS FINAL\n" +
+            "WHERE\n" +
+            "    VALOR_A_PAGAR > VALOR_PAGO;";
 
         try {
             ps = con.prepareStatement(sqlSelect);

@@ -3,6 +3,7 @@ package br.com.locadora.view;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.conexao.Pool;
 import br.com.locadora.model.bean.AcessoUsuario;
+import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Devolucao;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemLancamento;
@@ -12,6 +13,7 @@ import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.bean.Venda;
+import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.model.dao.VendaDAO;
@@ -21,10 +23,15 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
+import static br.com.locadora.view.EntradaCaixaLocacao.jtf_desconto;
+import static br.com.locadora.view.EntradaCaixaLocacao.jtf_valor_pago;
+import static br.com.locadora.view.EntradaCaixaLocacao.jtf_valor_total_a_pagar;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -44,6 +51,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     public List<ItemVenda> itens;
     public LancamentoDAO lancamentoDAO;
     public Lancamento lancamento;
+    public Cliente cliente;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -75,8 +83,8 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jtf_desconto = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
-        jl_saldo_debito_anterior = new javax.swing.JLabel();
-        jtf_saldo_debito_anterior = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
+        jl_saldo = new javax.swing.JLabel();
+        jtf_saldo = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel12 = new javax.swing.JLabel();
         jtf_valor_total_a_pagar = new javax.swing.JTextField(new LimitadorTexto(80), "",10);
         jLabel6 = new javax.swing.JLabel();
@@ -246,34 +254,33 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
             }
         });
 
-        jl_saldo_debito_anterior.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jl_saldo_debito_anterior.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jl_saldo_debito_anterior.setText("Débito Anterior (-)");
-        jl_saldo_debito_anterior.setName("jl_saldo_debito_anterior"); // NOI18N
+        jl_saldo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jl_saldo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jl_saldo.setText("Saldo (+)");
+        jl_saldo.setName("jl_saldo"); // NOI18N
 
         jtf_valor_total_venda.setDocument(new UnaccentedDocument());
-        jtf_saldo_debito_anterior.setEditable(false);
-        jtf_saldo_debito_anterior.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jtf_saldo_debito_anterior.setForeground(new java.awt.Color(204, 0, 0));
-        jtf_saldo_debito_anterior.setText("R$ 0,00");
-        jtf_saldo_debito_anterior.setName("jtf_saldo_debito_anterior"); // NOI18N
-        jtf_saldo_debito_anterior.setPreferredSize(new java.awt.Dimension(120, 29));
-        jtf_saldo_debito_anterior.addActionListener(new java.awt.event.ActionListener() {
+        jtf_saldo.setEditable(false);
+        jtf_saldo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jtf_saldo.setText("R$ 0,00");
+        jtf_saldo.setName("jtf_saldo"); // NOI18N
+        jtf_saldo.setPreferredSize(new java.awt.Dimension(120, 29));
+        jtf_saldo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_saldo_debito_anteriorActionPerformed(evt);
+                jtf_saldoActionPerformed(evt);
             }
         });
-        jtf_saldo_debito_anterior.addFocusListener(new java.awt.event.FocusAdapter() {
+        jtf_saldo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jtf_saldo_debito_anteriorFocusGained(evt);
+                jtf_saldoFocusGained(evt);
             }
         });
-        jtf_saldo_debito_anterior.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtf_saldo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtf_saldo_debito_anteriorKeyPressed(evt);
+                jtf_saldoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf_saldo_debito_anteriorKeyReleased(evt);
+                jtf_saldoKeyReleased(evt);
             }
         });
 
@@ -461,13 +468,13 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jl_saldo_debito_anterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jl_saldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(12, 12, 12)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(jtf_valor_total_a_pagar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jtf_valor_pago, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jtf_saldo_debito_anterior, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jtf_saldo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jtf_desconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
@@ -477,8 +484,8 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jl_saldo_debito_anterior)
-                    .addComponent(jtf_saldo_debito_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jl_saldo)
+                    .addComponent(jtf_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtf_valor_total_venda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -717,21 +724,21 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_trocoKeyReleased
 
-    private void jtf_saldo_debito_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorActionPerformed
+    private void jtf_saldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_saldoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_saldo_debito_anteriorActionPerformed
+    }//GEN-LAST:event_jtf_saldoActionPerformed
 
-    private void jtf_saldo_debito_anteriorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorFocusGained
+    private void jtf_saldoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_saldoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_saldo_debito_anteriorFocusGained
+    }//GEN-LAST:event_jtf_saldoFocusGained
 
-    private void jtf_saldo_debito_anteriorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorKeyPressed
+    private void jtf_saldoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_saldoKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_saldo_debito_anteriorKeyPressed
+    }//GEN-LAST:event_jtf_saldoKeyPressed
 
-    private void jtf_saldo_debito_anteriorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_saldo_debito_anteriorKeyReleased
+    private void jtf_saldoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtf_saldoKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_saldo_debito_anteriorKeyReleased
+    }//GEN-LAST:event_jtf_saldoKeyReleased
 
     private void jtf_valor_pagoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtf_valor_pagoFocusLost
         recalcularValores();
@@ -861,10 +868,33 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jtf_descontoFocusLost
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+
         if (jb_salvar.isEnabled()) {
-                recalcularValores();                
+
+            if (verificarTempoCadastro()) {
+                recalcularValores();
                 finalizarCaixa();
+            } else {
+                moeda = new Moeda();
+                Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
+                Double desconto = moeda.getPrecoFormato(jtf_desconto.getText());
+                Double valor_a_pagar = moeda.getPrecoFormato(jtf_valor_total_a_pagar.getText());
+
+                Double resultado = (valor_a_pagar - (desconto + valor_pago));
+
+                if (resultado <= 0) {
+                    recalcularValores();
+                    finalizarCaixa();
+                } else {
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente com Tempo Cadastro menor que 6 Meses: " + df.format(cliente.getData_cadastro()) + "\n Deseja Autorizar?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
+                        recalcularValores();
+                        finalizarCaixa();
+                    }
+                }
             }
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarActionPerformed
 
@@ -893,12 +923,12 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     private javax.swing.JButton jb_logar;
     private javax.swing.JButton jb_sair;
     private javax.swing.JButton jb_salvar;
-    private javax.swing.JLabel jl_saldo_debito_anterior;
+    private javax.swing.JLabel jl_saldo;
     private javax.swing.JPasswordField jpf_senha;
     public static javax.swing.JTextField jtf_debito_atual;
     public static javax.swing.JTextField jtf_desconto;
     private javax.swing.JTextField jtf_login;
-    public static javax.swing.JTextField jtf_saldo_debito_anterior;
+    public static javax.swing.JTextField jtf_saldo;
     public static javax.swing.JTextField jtf_troco;
     public static javax.swing.JTextField jtf_valor_pago;
     public static javax.swing.JTextField jtf_valor_total_a_pagar;
@@ -906,75 +936,95 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     private javax.swing.JTextArea tfa_similar;
     // End of variables declaration//GEN-END:variables
 
-    public void recalcularValores() {
-        moeda = new Moeda();
-        
-        Double saldo_debito_total_anterior = moeda.getPrecoFormato(janelapaiVenda.jtf_saldo_debito_total.getText());        
-        Double valot_total_venda = moeda.getPrecoFormato(janelapaiVenda.jtf_total_venda.getText());
-        Double descontos = moeda.getPrecoFormato(jtf_desconto.getText());
-        Double valor_total_a_pagar = moeda.getPrecoFormato(janelapaiVenda.jtf_total_a_pagar.getText());
-        
-        jtf_valor_total_venda.setText(moeda.setPrecoFormat(valot_total_venda.toString()));
-        jtf_saldo_debito_anterior.setText(moeda.setPrecoFormat(saldo_debito_total_anterior.toString()));
-        jtf_desconto.setText(moeda.setPrecoFormat(descontos.toString()));
-        
-        if (janelapaiVenda.jtf_saldo_debito_total.getForeground().equals(Color.BLACK)) {
-            jl_saldo_debito_anterior.setText("Saldo Anterior (+)");
-            jtf_saldo_debito_anterior.setForeground(Color.BLACK);
-        } else {
-            jl_saldo_debito_anterior.setText("Débito Anterior (-)");
-            jtf_saldo_debito_anterior.setForeground(Color.RED);
-        }
-        
-        
-        if(jtf_saldo_debito_anterior.getForeground().equals(Color.RED)){
-            System.out.println("valor_total_a_pagar: "+ valor_total_a_pagar);
-            
-            valor_total_a_pagar = valor_total_a_pagar - descontos;
-            
-            System.out.println("valor_total_a_pagar: "+ valor_total_a_pagar);
-            if(valor_total_a_pagar > 0){
-                jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(valor_total_a_pagar.toString()));
-            } else {
-                jtf_valor_total_a_pagar.setText("R$ 0,00");
-                valor_total_a_pagar = 0.00;
-            }
-        } else {
-//            saldo_debito_anterior = moeda.getPrecoFormato(jtf_saldo_debito_anterior.getText());
-            valor_total_a_pagar = (valor_total_a_pagar - descontos);
-            if(valor_total_a_pagar > 0){                
-                jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(valor_total_a_pagar.toString()));            
-            } else {
-                jtf_valor_total_a_pagar.setText("R$ 0,00");
-                valor_total_a_pagar = 0.00;
-//                valor_total_a_pagar = valor_total_a_pagar * (-1);
-            }
-        }
-        
-        Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
-        Double troco = valor_pago - valor_total_a_pagar;
-        
-        System.out.println("Total a pagar: "+ valor_total_a_pagar);
-        System.out.println("Valor pago: "+ valor_pago);
-        System.out.println("Troco: "+ troco);
+    public boolean verificarTempoCadastro() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-        jtf_valor_pago.setText(moeda.setPrecoFormat(valor_pago.toString()));
-        if (troco > 0) {
-            jtf_troco.setText(moeda.setPrecoFormat(troco.toString()));
-            jtf_debito_atual.setText("R$ 0,00");
-            jtf_debito_atual.setForeground(Color.black);
-        } else if (troco < 0) {
-            jtf_troco.setText("R$ 0,00");
-            troco = troco * (-1);
-            jtf_debito_atual.setText(moeda.setPrecoFormat(troco.toString()));
-            jtf_debito_atual.setForeground(Color.RED);
+        pool = new Pool();
+        ClienteDAO clienteDAO = new ClienteDAO(pool);
+        cliente = clienteDAO.getCliente_codigo(janelapaiVenda.dependente.getCliente().getCodigo_cliente());
+
+        if (cliente != null) {
+
+            Calendar data_inicial = Calendar.getInstance();
+            data_inicial.setTime(cliente.getData_cadastro());
+            data_inicial.set(Calendar.HOUR_OF_DAY, 0);
+            data_inicial.set(Calendar.MINUTE, 0);
+            data_inicial.set(Calendar.SECOND, 0);
+            data_inicial.set(Calendar.MILLISECOND, 0);
+            data_inicial.getTime();
+
+            Calendar data_final = Calendar.getInstance();
+            data_final.set(Calendar.HOUR_OF_DAY, 0);
+            data_final.set(Calendar.MINUTE, 0);
+            data_final.set(Calendar.SECOND, 0);
+            data_final.set(Calendar.MILLISECOND, 0);
+            data_final.getTime();
+
+            long intervalo = data_final.getTimeInMillis() - data_inicial.getTimeInMillis();
+            int duracaoCadastro = (int) (intervalo / (1000 * 60 * 60 * 24 * 30)); // resultado em meses 
+            System.out.println("Calculo de dias em Cadastro:" + duracaoCadastro);
+
+            ConfiguraSistema configuraSistema = new ConfiguraSistema();
+            int tempo_inadiplente = Integer.parseInt(configuraSistema.jtf_a_prazo_cadastro_mes.getText());
+
+            if (duracaoCadastro < tempo_inadiplente) {
+                return false;
+            } else {
+                return true;
+            }
         } else {
-            jtf_troco.setText("R$ 0,00");
-            jtf_debito_atual.setText("R$ 0,00");
-            jtf_debito_atual.setForeground(Color.black);
+            return false;
+        }
+    }
+
+    public void recalcularValores() {
+
+        jtf_saldo.setText(janelapaiVenda.jtf_saldo.getText());
+        jtf_valor_total_venda.setText(janelapaiVenda.jtf_total_venda.getText());
+        jtf_valor_total_a_pagar.setText(janelapaiVenda.jtf_total_a_pagar.getText());
+
+        if (!jtf_valor_pago.getText().equals("")) {
+
+            Moeda moeda = new Moeda();
+
+            Double troco;
+            Double desconto = moeda.getPrecoFormato(jtf_desconto.getText());
+            jtf_desconto.setText(moeda.setPrecoFormat(jtf_desconto.getText().toString()));
+            Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
+            Double total_a_pagar = moeda.getPrecoFormato(jtf_valor_total_a_pagar.getText());
+
+            if (total_a_pagar > 0 && total_a_pagar > desconto) {
+                jtf_desconto.setText(moeda.setPrecoFormat(desconto.toString()));
+            } else if (total_a_pagar <= desconto) {
+                jtf_desconto.setText(moeda.setPrecoFormat(total_a_pagar.toString()));
+                desconto = moeda.getPrecoFormato(jtf_desconto.getText());
+            }
+
+            troco = valor_pago - (total_a_pagar - desconto);
+
+            if (troco > 0) {
+                jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
+                jtf_debito_atual.setCaretColor(Color.black);
+                jtf_debito_atual.setText("R$ 0,00");
+            } else if (troco < 0) {
+                jtf_troco.setText("R$ 0,00");
+                troco = troco * (-1);
+                jtf_debito_atual.setText(moeda.setPrecoFormat(String.valueOf(troco)));
+                jtf_debito_atual.setCaretColor(Color.red);
+            } else {
+                jtf_troco.setText("R$ 0,00");
+                jtf_debito_atual.setText("R$ 0,00");
+                jtf_debito_atual.setCaretColor(Color.black);
+            }
+
+            jtf_valor_pago.setText(moeda.setPrecoFormat(String.valueOf(valor_pago)));
+
+        } else if (jtf_valor_pago.getText().equals("")) {
+            jtf_valor_pago.setText("R$ 0,00");
         }
 
     }
+
     public void setStatusTela(boolean status) {
         if (status) {
             this.setVisible(status);
@@ -1101,8 +1151,10 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
                             janelapaiVenda.jtf_nome_cliente.setText("");
                             janelapaiVenda.jtf_total_venda.setText("R$ 0,00");
                             janelapaiVenda.jtf_total_a_pagar.setText("R$ 0,00");
-                            janelapaiVenda.jtf_saldo_debito_total.setText("R$ 0,00");
+                            janelapaiVenda.jtf_saldo.setText("R$ 0,00");
                             janelapaiVenda.setTitle("Atendimento Venda");
+                            janelapaiVenda.jl_itens.setText("Total de Itens: 0");
+                            janelapaiVenda.jl_lancamento_aberto.setText("Pendente: 0");
                         }
                     }
                 }
@@ -1133,43 +1185,48 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     public void imprimir() {
         Usuario usuario = acesso.getUsuario();
         Printer imprimir = new Printer();
-        imprimir.comprovanteVenda(itens, janelapaiVenda.dependente, usuario,lancamento);
+        imprimir.comprovanteVenda(itens, janelapaiVenda.dependente, usuario, lancamento);
         String nome_arquivo = "Imprimir/comprovanteVenda_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
         if (imprimir.imprimirArquivo(nome_arquivo)) {
             //Desabilita para não haver mais alteração
             jtf_valor_pago.setEditable(false);
             jtf_desconto.setEditable(false);
-            
+
             retornaJanelaPai();
-            
+
             File arquivo = new File(nome_arquivo);
             arquivo.deleteOnExit();
             arquivo.delete();
         }
     }
-    List<Diaria> promocoes;    
+    List<Diaria> promocoes;
 
     public void fecharAtendimento() {
 
         try {
-            itens = janelapaiVenda.itensVendaAtendimento;            
+            itens = janelapaiVenda.itensVendaAtendimento;
             Venda venda = new Venda();
             venda.setDependente(janelapaiVenda.dependente);
-            venda.setUsuario(acesso.getUsuario());            
+            venda.setUsuario(acesso.getUsuario());
             pool = new Pool();
             VendaDAO vendaDAO = new VendaDAO(pool);
-            venda = vendaDAO.salvar(venda);                        
+            venda = vendaDAO.salvar(venda);
             vendaDAO.salvarItens(itens, venda);
-            
+
             moeda = new Moeda();
             Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
             Double troco = moeda.getPrecoFormato(jtf_troco.getText());
-            Double valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText());            
+            Double valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText());
             valor_pago = valor_pago - troco;
+            Double valor_total_venda = moeda.getPrecoFormato(jtf_valor_total_venda.getText());
+            Double saldo = 0.00;
+            if (jtf_saldo.getForeground().equals(Color.BLACK)) {
+                saldo = moeda.getPrecoFormato(jtf_saldo.getText());
+            }
 
             ArquivoConfiguracao conf = new ArquivoConfiguracao();
 
-            TipoServico tipoServico;            
+            TipoServico tipoServico;
             lancamento = new Lancamento();
             lancamento.setValor_total(moeda.getPrecoFormato(jtf_valor_total_venda.getText()));
             lancamento.setDependente(janelapaiVenda.dependente);
@@ -1181,15 +1238,102 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
             lancamento.setLocacao(new Locacao());
             lancamento.setDevolucao(new Devolucao());
             lancamento.setVenda(venda);
-            
+
             pool = new Pool();
             lancamentoDAO = new LancamentoDAO(pool);
             lancamento = lancamentoDAO.salvarLancamento(lancamento);
             List<ItemLancamento> itensLancamento = new ArrayList<>();
             ItemLancamento itemLancamento;
-            
+
             Calendar data_atual = Calendar.getInstance();
-            
+            pool = new Pool();
+            List<Lancamento> lancamentos = new ArrayList<Lancamento>();
+            LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
+            lancamentos = lancamentoDAO.getLancamentos(janelapaiVenda.dependente.getCliente());
+
+            if (saldo >= valor_total_venda) {
+                for (int i = 0; i < lancamentos.size(); i++) {
+                    if (lancamentos.get(i).getSaldo() >= valor_total_venda) {
+                        //Diminui do Saldo
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamentos.get(i));
+                        itemLancamento.setValor_lancamento(valor_total_venda);
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(13);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        //Lança pagamento
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamento);
+                        itemLancamento.setValor_lancamento(valor_total_venda);
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(13);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        break;
+                    } else if (lancamentos.get(i).getSaldo() < valor_total_venda && lancamentos.get(i).getSaldo() > 0) {
+                        //Diminui do Saldo
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamentos.get(i));
+                        itemLancamento.setValor_lancamento(lancamentos.get(i).getSaldo());
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(13);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        //Lança pagamento
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamento);
+                        itemLancamento.setValor_lancamento(lancamentos.get(i).getSaldo());
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(13);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        lancamentos.get(i).setSaldo(lancamentos.get(i).getSaldo() - valor_total_venda);
+                        valor_total_venda = valor_total_venda - lancamentos.get(i).getSaldo();
+                    }
+                }
+            } else if (saldo < valor_total_venda) {
+                for (int i = 0; i < lancamentos.size(); i++) {
+                    if (lancamentos.get(i).getSaldo() < valor_total_venda && lancamentos.get(i).getSaldo() > 0) {
+                        //Diminui do Saldo
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamentos.get(i));
+                        itemLancamento.setValor_lancamento(lancamentos.get(i).getSaldo());
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(13);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        //Lança pagamento
+                        itemLancamento = new ItemLancamento();
+                        itemLancamento.setData_lancamento(data_atual.getTime());
+                        itemLancamento.setLancamento(lancamento);
+                        itemLancamento.setValor_lancamento(lancamentos.get(i).getSaldo());
+                        tipoServico = new TipoServico();
+                        tipoServico.setCodigo_tipo_servico(13);
+                        itemLancamento.setTipoServico(tipoServico);
+                        itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                        itemLancamento.setUsuario(acesso.getUsuario());
+                        itensLancamento.add(itemLancamento);
+                        lancamentos.get(i).setSaldo(lancamentos.get(i).getSaldo() - valor_total_venda);
+                        valor_total_venda = valor_total_venda - lancamentos.get(i).getSaldo();
+                    }
+                }
+            }
             if (valor_pago > 0) {
                 itemLancamento = new ItemLancamento();
                 itemLancamento.setData_lancamento(data_atual.getTime());
@@ -1217,8 +1361,8 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
 
             pool = new Pool();
             lancamentoDAO = new LancamentoDAO(pool);
-            lancamentoDAO.salvarItemLancamento(itensLancamento);                                                           
-            
+            lancamentoDAO.salvarItemLancamento(itensLancamento);
+
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "Problemas com a gravação: ");
 
@@ -1235,7 +1379,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();
-        
+
         this.setVisible(false);
         if (janelapaiVenda != null) {
             janelapaiVenda.setStatusTela(true);

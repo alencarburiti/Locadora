@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rel_fluxo_caixa_detalhado" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8a738de3-f9d6-484e-8bd8-96afcc5454d3">
-	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
@@ -20,15 +20,16 @@ FROM
     WHERE
         A.DEPENDENTE_CODIGO_DEPENDENTE = C.CODIGO_DEPENDENTE
             AND A.USUARIO_CODIGO_USUARIO = D.CODIGO_USUARIO
-AND A.DATA_LANCAMENTO BETWEEN  '2015-01-01' AND '2015-01-31'
             AND A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO
-            AND B.TIPO = 'C' UNION ALL SELECT
-        B.DATA_LANCAMENTO,
+            AND B.TIPO = 'C'
+            AND A.DATA_LANCAMENTO BETWEEN '2015-01-01' AND '2015-01-31'
+            AND B.CODIGO_TIPO_SERVICO = 4 UNION ALL SELECT
+        B.data_lancamento,
             D.NOME_DEPENDENTE,
             C.DESCRICAO,
             C.TIPO,
             B.VALOR_LANCAMENTO AS VALOR,
-            B.CAIXA_CODIGO_CAIXA,
+            B.caixa_codigo_caixa,
             E.NOME_USUARIO
     FROM
         LANCAMENTO A, ITEM_LANCAMENTO B, TIPO_SERVICO C, DEPENDENTE D, USUARIO E
@@ -38,7 +39,7 @@ AND A.DATA_LANCAMENTO BETWEEN  '2015-01-01' AND '2015-01-31'
             AND A.DEPENDENTE_CODIGO_DEPENDENTE = D.CODIGO_DEPENDENTE
             AND B.USUARIO_CODIGO_USUARIO = E.CODIGO_USUARIO
             AND C.TIPO = 'C'
-AND B.DATA_LANCAMENTO BETWEEN '2015-01-01' AND '2015-01-31'
+            AND B.DATA_LANCAMENTO BETWEEN '2015-01-01' AND '2015-01-31'
             AND C.CODIGO_TIPO_SERVICO IN (6 , 7, 11)) AS FLUXO
 ORDER BY DATA_LANCAMENTO DESC]]>
 	</queryString>
@@ -63,6 +64,10 @@ ORDER BY DATA_LANCAMENTO DESC]]>
 	<field name="NOME_USUARIO" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<variable name="somar_valor" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -219,10 +224,26 @@ ORDER BY DATA_LANCAMENTO DESC]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="727" y="25" width="75" height="20" uuid="18c4669c-cf9f-4b09-bcb2-f09101f32297"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="727" y="0" width="75" height="20" uuid="719193be-74e5-47d6-a1b5-4cf428505dab"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{somar_valor}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
