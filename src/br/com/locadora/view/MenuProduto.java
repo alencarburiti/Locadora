@@ -128,12 +128,22 @@ public class MenuProduto extends javax.swing.JFrame {
         jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
+        jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_codigoActionPerformed(evt);
+            }
+        });
 
         buttonGroup2.add(jrb_nome_produto);
         jrb_nome_produto.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_nome_produto.setSelected(true);
         jrb_nome_produto.setText("Descrição");
         jrb_nome_produto.setName("jrb_nome_produto"); // NOI18N
+        jrb_nome_produto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_nome_produtoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -438,6 +448,16 @@ public class MenuProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_pesquisaKeyPressed
 
+    private void jrb_nome_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_nome_produtoActionPerformed
+        jtf_pesquisa.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_nome_produtoActionPerformed
+
+    private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
+jtf_pesquisa.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_codigoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -487,7 +507,7 @@ public class MenuProduto extends javax.swing.JFrame {
     }
 
     public void retornarJanelaPai() {
-        this.setStatusTela(false);
+        this.setVisible(false);
         if (janelapai != null) {
             janelapai.setStatusTela(true);
         }

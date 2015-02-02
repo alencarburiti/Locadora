@@ -220,7 +220,7 @@ public final class ControleAcesso extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jb_salvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jb_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -415,7 +415,9 @@ public final class ControleAcesso extends javax.swing.JFrame {
         
         AcessoUsuarioDAO acessoDAO = new AcessoUsuarioDAO(pool);
         acessoDAO.atualizar(acessosSalvar);
+        
         permissaoSelecionado();
+        JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
 
     }    
     

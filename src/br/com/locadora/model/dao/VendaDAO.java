@@ -12,10 +12,19 @@ import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.ItemCombo;
 import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Combo;
+import br.com.locadora.model.bean.Copia;
+import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Lancamento;
+import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.Produto;
 import br.com.locadora.model.bean.Venda;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class VendaDAO {
 
@@ -166,7 +175,7 @@ public class VendaDAO {
         List<Combo> resultado = new ArrayList<Combo>();
         while (rs.next()) {
             Combo pacotePromocional = new Combo();
-            pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
+            pacotePromocional.setCodigo_combo(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
             pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_TROCA"));
             pacotePromocional.setDias_combo(rs.getInt("DIAS_COMBO"));
@@ -191,7 +200,7 @@ public class VendaDAO {
             System.out.println("Type Product: "+ rs.getString("TYPE_PRODUCT"));
             if(rs.getInt("TYPE_PRODUCT") == 0){      
                 Combo pacotePromocional = new Combo();
-                pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO"));
+                pacotePromocional.setCodigo_combo(rs.getInt("CODIGO"));
                 pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
                 pacotePromocional.setCodigo_barras(rs.getString("CODIGO_BARRAS"));                
                 pacotePromocional.setValor(rs.getDouble("VALOR"));
@@ -200,7 +209,7 @@ public class VendaDAO {
                 } else {
                     pacotePromocional.setStatus(false);
                 }                
-                itemVenda.setPacotePromocional(pacotePromocional);                
+                itemVenda.setCombo(pacotePromocional);                
             } else if(rs.getInt("TYPE_PRODUCT") == 1){
                 Produto produto = new Produto();
                 produto.setCodigo_produto(rs.getInt("CODIGO"));
@@ -225,7 +234,7 @@ public class VendaDAO {
             ItemCombo itemPacotePromocional = new ItemCombo();
             itemPacotePromocional.setCodigo_item_pacote_promocional(rs.getInt("CODIGO_ITEM_PACOTE_PROMOCIONAL"));
             Combo pacotePromocional = new Combo();
-            pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
+            pacotePromocional.setCodigo_combo(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             
             Diaria diaria = new Diaria();
             diaria.setCodigo_diaria(rs.getInt("CODIGO_DIARIA"));
@@ -279,7 +288,7 @@ public class VendaDAO {
         String sqlInsert = "INSERT INTO `locadora`.`ITEM_VENDA` (`VENDA_CODIGO_VENDA`,\n" +
             "`TYPE_PRODUCT`,`QUANTIDADE`,`PRECO_TOTAL`,\n" +
             "`PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL`,\n" +
-            "`PRODUTO_CODIGO_PRODUTO`, data_lancamento)VALUES(?,?,?,?,?,?, CURRENT_DATE());";
+            "`PRODUTO_CODIGO_PRODUTO`, data_lancamento, PRECO_UNITARIO)VALUES(?,?,?,?,?,?, CURRENT_DATE(),?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -290,11 +299,13 @@ public class VendaDAO {
                 ps.setInt(3, itens.get(i).getQuantidade());
                 ps.setDouble(4, itens.get(i).getPreco_total());
                 if(itens.get(i).getType_product() == 0){
-                    ps.setInt(5, itens.get(i).getPacotePromocional().getCodigo_pacote_promocioanl());
+                    ps.setInt(5, itens.get(i).getCombo().getCodigo_combo());
                     ps.setInt(6, 0);
+                    ps.setDouble(7, itens.get(i).getCombo().getValor());
                 } else if(itens.get(i).getType_product() == 1){
                     ps.setInt(5, 0);
                     ps.setInt(6, itens.get(i).getProduto().getCodigo_produto());
+                    ps.setDouble(7, itens.get(i).getProduto().getPreco_venda());
                 }
                 ps.executeUpdate();
             }
@@ -306,27 +317,64 @@ public class VendaDAO {
         return venda;
     }
     
-//    public void salvarItem(ItemCombo itemPacotePromocional) throws SQLException {
-//        Connection con = pool.getConnection();
-//        PreparedStatement ps;
-//
-//        String sqlInsert = "INSERT INTO `locadora`.`ITEM_PACOTE_PROMOCIONAL`\n" +
-//            "( `PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL`, `DIARIA_CODIGO_DIARIA`) VALUES (? , ? );";
-//
-//        try {
-//            ps = con.prepareStatement(sqlInsert);
-//            
-//            ps.setInt(1, itemPacotePromocional.getPacotePromocional().getCodigo_pacote_promocioanl());
-//            ps.setInt(2, itemPacotePromocional.getDiaria().getCodigo_diaria());                        
-//
-//            ps.executeUpdate();            
-//
-//            ps.close();
-//        } finally {
-//            pool.liberarConnection(con);
-//        }
-//        
-//    }
+    //SQL para busca de itens para a reimpressao
+    public List<ItemVenda> getItemVenda(Lancamento lancamento) {
+
+        List<ItemVenda> resultado = new ArrayList<ItemVenda>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT \n" +
+            "    *\n" +
+            "FROM\n" +
+            "    (SELECT \n" +
+            "        A.CODIGO_LANCAMENTO,\n" +
+            "            D.CODIGO_PRODUTO AS CODIGO_PRODUTO,\n" +
+            "            D.NOME_PRODUTO AS DESCRICAO,\n" +
+            "            C.QUANTIDADE,\n" +
+            "            C.PRECO_TOTAL,\n" +
+            "            C.PRECO_UNITARIO,\n" +
+            "            C.TYPE_PRODUCT\n" +
+            "    FROM\n" +
+            "        LANCAMENTO A, VENDA B, ITEM_VENDA C, PRODUTO D\n" +
+            "    WHERE\n" +
+            "        A.VENDA_CODIGO_VENDA = B.CODIGO_VENDA\n" +
+            "            AND B.CODIGO_VENDA = C.VENDA_CODIGO_VENDA\n" +
+            "            AND C.PRODUTO_CODIGO_PRODUTO = D.CODIGO_PRODUTO UNION ALL SELECT \n" +
+            "        A.CODIGO_LANCAMENTO,\n" +
+            "            D.CODIGO_PACOTE_PROMOCIONAL AS CODIGO_PRODUTO,\n" +
+            "            D.DESCRICAO,\n" +
+            "            C.QUANTIDADE,\n" +
+            "            C.PRECO_TOTAL,\n" +
+            "            C.PRECO_UNITARIO,\n" +
+            "            C.TYPE_PRODUCT\n" +
+            "    FROM\n" +
+            "        LANCAMENTO A, VENDA B, ITEM_VENDA C, PACOTE_PROMOCIONAL D\n" +
+            "    WHERE\n" +
+            "        A.VENDA_CODIGO_VENDA = B.CODIGO_VENDA\n" +
+            "            AND B.CODIGO_VENDA = C.VENDA_CODIGO_VENDA\n" +
+            "            AND C.PACOTE_PROMOCIONAL_CODIGO_PACOTE_PROMOCIONAL = D.CODIGO_PACOTE_PROMOCIONAL) AS CONSULTA\n" +
+            "            WHERE CODIGO_LANCAMENTO = ?";
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setInt(1, lancamento.getCodigo_lancamento());
+
+            rs = ps.executeQuery();
+
+            resultado = getListaItensVenda(rs);
+
+            ps.close();
+        } catch (ParseException ex) {
+            return null;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(LocacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
 
     private void setPreparedStatement(Venda venda, PreparedStatement ps)
             throws SQLException {
@@ -335,19 +383,32 @@ public class VendaDAO {
         ps.setInt(2, venda.getUsuario().getCodigo_usuario());        
 
     }
+    
+    private List<ItemVenda> getListaItensVenda(ResultSet rs) throws SQLException, ParseException {
+        List<ItemVenda> resultado = new ArrayList<ItemVenda>();
+        
+        while (rs.next()) {
+            ItemVenda itemVenda = new ItemVenda();
+            itemVenda.setType_product(rs.getInt("TYPE_PRODUCT"));
+            if(rs.getInt("TYPE_PRODUCT") == 0){
+                Combo combo = new Combo();
+                combo.setCodigo_combo(rs.getInt("CODIGO_PRODUTO"));
+                combo.setDescricao(rs.getString("DESCRICAO"));
+                combo.setValor(rs.getDouble("PRECO_TOTAL"));
+                itemVenda.setCombo(combo);
+            } else if(rs.getInt("TYPE_PRODUCT") == 1){
+                Produto produto = new Produto();
+                produto.setCodigo_produto(rs.getInt("CODIGO_PRODUTO"));
+                produto.setNome_produto(rs.getString("DESCRICAO"));
+                produto.setPreco_venda(rs.getDouble("PRECO_UNITARIO"));                
+                itemVenda.setProduto(produto);
+            } 
+            itemVenda.setQuantidade(rs.getInt("QUANTIDADE"));
+            itemVenda.setPreco_total(rs.getDouble("PRECO_TOTAL"));
 
-//    private void setPreparedStatement1(Combo pacotePromocional, PreparedStatement ps)
-//            throws SQLException {
-//        ps.setString(1, pacotePromocional.getDescricao());
-//        ps.setInt(2, pacotePromocional.getQuantidade_troca());
-//        ps.setInt(3, pacotePromocional.getDuracao_dias());
-//        ps.setDouble(4, pacotePromocional.getValor());
-//        if(pacotePromocional.getStatus() == true){
-//            ps.setInt(5, 0);
-//        } else {
-//            ps.setInt(5, 1);
-//        }
-//        ps.setInt(6, pacotePromocional.getCodigo_pacote_promocioanl());
-//    }
+            resultado.add(itemVenda);
+        }
+        return resultado;
+    }
 
 }

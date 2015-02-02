@@ -255,7 +255,7 @@ public class CadastraAlteraDiaria extends javax.swing.JFrame {
         jtf_codigo_diaria.setName("jtf_codigo_diaria"); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jLabel4.setText("Valor*");
+        jLabel4.setText("Locação*");
         jLabel4.setName("jLabel4"); // NOI18N
 
         jtf_valor.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N

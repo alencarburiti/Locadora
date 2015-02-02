@@ -61,7 +61,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
             consultaDiaria = null;
             this.combo = combo;
             moeda = new Moeda();
-            jtf_codigo_pacote_promocional.setText(combo.getCodigo_pacote_promocioanl().toString());
+            jtf_codigo_pacote_promocional.setText(combo.getCodigo_combo().toString());
             jtf_descricao_pacote.setText(combo.getDescricao());
             jtf_quantidade_troca_mes.setText(combo.getQuantidade_troca().toString());
             jtf_dias_combo.setText(combo.getDias_combo().toString());
@@ -74,7 +74,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
             } else {
                 jrb_inativo.setSelected(true);
             }
-            carregarItensPacotePromocional(combo.getCodigo_pacote_promocioanl());
+            carregarItensPacotePromocional(combo.getCodigo_combo());
         }
     }
 
@@ -407,14 +407,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jtf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(188, 188, 188)
-                                .addComponent(jrb_ativo)
-                                .addGap(0, 0, 0)
-                                .addComponent(jrb_inativo))
                             .addComponent(jtf_descricao_pacote, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtf_codigo_pacote_promocional, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jtf_descricao_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -423,7 +416,15 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                                 .addComponent(jb_adicionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jb_remover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(5, 5, 5))))
+                        .addContainerGap())
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jtf_codigo_pacote_promocional, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jrb_ativo)
+                        .addGap(0, 0, 0)
+                        .addComponent(jrb_inativo))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,7 +479,7 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jb_sair, jb_salvar});
@@ -773,6 +774,22 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         }
     }
 
+    public boolean verificarTabela(Diaria diaria){
+        boolean tabela = false;
+        try {
+
+            for(int i = 0; i < itensCombo.size(); i++){
+                if(itensCombo.get(i).getDiaria().getCodigo_diaria().equals(diaria.getCodigo_diaria())){
+                    tabela = true;
+                    break;                
+                }                
+            }
+            return tabela;            
+        } catch (Exception e) {
+            return tabela;            
+        }
+    }
+    
     public void mostrarItensPacotePromocional(List<ItemCombo> itensPacotePromocional) throws ParseException {
         DefaultTableModel tableModel = (DefaultTableModel) jtbl_diarias_pacote.getModel();
         tableModel.setNumRows(0);
@@ -794,27 +811,34 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();
         }
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            jb_remover.doClick();
+        }
     }
 
     private void adicionarItemDiariaCombo() {
         try {
             if (!jtf_codigo_pacote_promocional.getText().equals("")) {
                 if (verificarCampoDiaria() == true) {
-                    combo = new Combo();
-                    combo.setCodigo_pacote_promocioanl(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
+                    if(verificarTabela(diaria) == false){
+                        combo = new Combo();
+                        combo.setCodigo_combo(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
 
-                    itemCombo = new ItemCombo();
-                    itemCombo.setPacotePromocional(combo);
-                    itemCombo.setDiaria(diaria);
+                        itemCombo = new ItemCombo();
+                        itemCombo.setPacotePromocional(combo);
+                        itemCombo.setDiaria(diaria);
 
-                    pool = new Pool();
-                    comboDAO = new ComboDAO(pool);
-                    comboDAO.salvarItem(itemCombo);
+                        pool = new Pool();
+                        comboDAO = new ComboDAO(pool);
+                        comboDAO.salvarItem(itemCombo);
 
-                    carregarItensPacotePromocional(combo.getCodigo_pacote_promocioanl());
+                        carregarItensPacotePromocional(combo.getCodigo_combo());
 
-                    jtf_descricao_diaria.setText("");
-                    jb_pesquisa_diaria.requestFocus();
+                        jtf_descricao_diaria.setText("");
+                        jb_pesquisa_diaria.requestFocus();                        
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Diária já Inserida!");
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Salvar primeiro o Combo");
@@ -863,10 +887,10 @@ public final class CadastraAlteraCombo extends javax.swing.JFrame {
                 comboDAO = new ComboDAO(pool);
                 if (jtf_codigo_pacote_promocional.getText().equals("")) {
                     combo = comboDAO.salvar(combo);
-                    jtf_codigo_pacote_promocional.setText(combo.getCodigo_pacote_promocioanl().toString());
+                    jtf_codigo_pacote_promocional.setText(combo.getCodigo_combo().toString());
                     JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
                 } else {
-                    combo.setCodigo_pacote_promocioanl(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
+                    combo.setCodigo_combo(Integer.parseInt(jtf_codigo_pacote_promocional.getText()));
                     comboDAO.atualizar(combo);
                     JOptionPane.showMessageDialog(null, "Atualizado com sucesso.");
                 }

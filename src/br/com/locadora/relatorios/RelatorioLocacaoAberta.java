@@ -8,7 +8,6 @@ import br.com.locadora.conexao.InterfacePool;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +16,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
@@ -42,55 +39,53 @@ public class RelatorioLocacaoAberta {
         ResultSet rs = null;
         Connection con = pool.getConnection();
         try {
-            String sqlSelect = "SELECT\n"
-                    + "    C.CODIGO_LOCACAO,\n"
-                    + "    D.CODIGO_ITEM_LOCACAO,\n"
-                    + "    D.VALOR_LOCADO,\n"
-                    + "    D.DATA_PREVISTA,\n"
-                    + "    D.VALOR_PAGO,\n"
-                    + "    E.CODIGO_DEPENDENTE,\n"
-                    + "    E.NOME_DEPENDENTE,\n"
-                    + "    A.TITULO AS TITULO,\n"
-                    + "    F.DIAS AS DIARIA,\n"
-                    + "    B.CODIGO_BARRAS,\n"
-                    + "    B.CODIGO_COPIA,\n"
-                    + "    F.MULTAS AS VALOR_MULTA_DIA,\n"
-                    + "    F.CODIGO_DIARIA,\n"
-                    + "    D.DATA_LOCACAO AS DATA_LOCACAO,\n"
-                    + "    ADDDATE(D.DATA_LOCACAO, F.DIAS) AS DATA_DEVOLUCAO,\n"
-                    + "    CURRENT_DATE AS DATA_ATUAL,\n"
-                    + "    (case\n"
-                    + "        when\n"
-                    + "            ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) IS NULL\n"
-                    + "                OR ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS) < 0\n"
-                    + "        then\n"
-                    + "            0\n"
-                    + "        else ((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)\n"
-                    + "    end) AS DIAS_MULTA,\n"
-                    + "    CASE\n"
-                    + "        WHEN\n"
-                    + "            ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS) IS NULL\n"
-                    + "                OR (((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) < 0\n"
-                    + "        THEN\n"
-                    + "            0\n"
-                    + "        ELSE ((((CURRENT_DATE - D.DATA_LOCACAO) - F.DIAS)) * F.MULTAS)\n"
-                    + "    END AS VALOR_RELOCACAO\n"
-                    + "FROM\n"
-                    + "    OBJETO A,\n"
-                    + "    COPIA B,\n"
-                    + "    LOCACAO C,\n"
-                    + "    ITEM_LOCACAO D,\n"
-                    + "    DEPENDENTE E,\n"
-                    + "    DIARIA F\n"
-                    + "WHERE\n"
-                    + "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n"
-                    + "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n"
-                    + "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n"
-                    + "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n"
-                    + "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n"
-                    + "        AND D.DEL_FLAG = 1\n"
-                    + "        AND A.TIPO_MOVIMENTO = 'LOCACAO' \n"
-                    + "        AND D.DATA_LOCACAO BETWEEN ? AND ? AND A.TITULO LIKE ? ORDER BY DATA_PREVISTA \n";
+            String sqlSelect = "SELECT \n" +
+            "    C.CODIGO_LOCACAO,\n" +
+            "    D.CODIGO_ITEM_LOCACAO,\n" +
+            "    D.VALOR_LOCADO,\n" +
+            "    D.DATA_PREVISTA,\n" +
+            "    D.VALOR_PAGO,\n" +
+            "    E.CODIGO_DEPENDENTE,\n" +
+            "    E.NOME_DEPENDENTE,\n" +
+            "    A.TITULO AS TITULO,\n" +
+            "    F.DIAS AS DIARIA,\n" +
+            "    B.CODIGO_BARRAS,\n" +
+            "    B.CODIGO_COPIA,\n" +
+            "    F.MULTAS AS VALOR_MULTA_DIA,\n" +
+            "    F.CODIGO_DIARIA,\n" +
+            "    D.DATA_LOCACAO AS DATA_LOCACAO,\n" +
+            "    ADDDATE(D.DATA_LOCACAO, F.DIAS) AS DATA_DEVOLUCAO,\n" +
+            "    CURRENT_DATE AS DATA_ATUAL,\n" +
+            "    (CASE\n" +
+            "        WHEN ((DATEDIFF(CURDATE(), DATA_LOCACAO)) <= (DATEDIFF(DATA_PREVISTA, DATA_LOCACAO))) THEN 0\n" +
+            "        ELSE ((DATEDIFF(CURDATE(), DATA_LOCACAO)) - (DATEDIFF(DATA_PREVISTA, DATA_LOCACAO)))\n" +
+            "    END) AS DIAS_MULTA,\n" +
+            "    CASE\n" +
+            "        WHEN\n" +
+            "            (((DATEDIFF(CURDATE(), DATA_LOCACAO)) <= (DATEDIFF(DATA_PREVISTA, DATA_LOCACAO))) * F.MULTAS) IS NULL\n" +
+            "                OR (((DATEDIFF(CURDATE(), DATA_LOCACAO)) - (DATEDIFF(DATA_PREVISTA, DATA_LOCACAO))) * F.MULTAS < 0)\n" +
+            "        THEN\n" +
+            "            0\n" +
+            "        ELSE (((DATEDIFF(CURDATE(), DATA_LOCACAO)) - (DATEDIFF(DATA_PREVISTA, DATA_LOCACAO))) * F.MULTAS)\n" +
+            "    END AS VALOR_RELOCACAO\n" +
+            "FROM\n" +
+            "    OBJETO A,\n" +
+            "    COPIA B,\n" +
+            "    LOCACAO C,\n" +
+            "    ITEM_LOCACAO D,\n" +
+            "    DEPENDENTE E,\n" +
+            "    DIARIA F\n" +
+            "WHERE\n" +
+            "    A.CODIGO_OBJETO = B.OBJETO_CODIGO_OBJETO\n" +
+            "        AND C.DEPENDENTE_CODIGO_DEPENDENTE = E.CODIGO_DEPENDENTE\n" +
+            "        AND C.CODIGO_LOCACAO = D.LOCACAO_CODIGO_LOCACAO\n" +
+            "        AND D.COPIA_CODIGO_COPIA = B.CODIGO_COPIA\n" +
+            "        AND B.DIARIA_CODIGO_DIARIA = F.CODIGO_DIARIA\n" +
+            "        AND D.DEL_FLAG = 1\n" +
+            "        AND A.TIPO_MOVIMENTO = 'LOCACAO'\n" +
+            "        AND D.DATA_LOCACAO BETWEEN ? AND ?\n" +
+            "        AND A.TITULO LIKE ?\n" +
+            "ORDER BY DATA_PREVISTA\n";
 
             ps = con.prepareStatement(sqlSelect);
             ps.setString(1, dataInicial);

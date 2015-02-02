@@ -53,32 +53,31 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
     public LancamentoRecebimento(Lancamento lancamento) {
         initComponents();
         TemaInterface.getInterface(this);
-        this.setTitle("Recebendo - Controle Interno: "+ lancamento.getCodigo_lancamento());
+        this.setTitle("Recebendo - Controle Interno: " + lancamento.getCodigo_lancamento());
         this.lancamento = lancamento;
         moeda = new Moeda();
         jtf_codigo_lancamento.setText(lancamento.getCodigo_lancamento().toString());
         jtf_descricao_lancamento.setText(lancamento.getTipoServico().getDescricao());
         jtf_valor_total.setText(moeda.setPrecoFormat(lancamento.getValor_total().toString()));
-        
+
         carregarItensLancamentos(lancamento);
         carregarTipoLancamento();
-        
-        Calendar data_atual = Calendar.getInstance();               
+
+        Calendar data_atual = Calendar.getInstance();
         SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-        String data_inicial = out.format(data_atual.getTime());       
-        jtf_data_lancamento.setText(data_inicial);        
-        
-        if(lancamento.getTipoServico().getTipo().equals("C")){
+        String data_inicial = out.format(data_atual.getTime());
+        jtf_data_lancamento.setText(data_inicial);
+
+        if (lancamento.getTipoServico().getTipo().equals("C")) {
             jcb_tipo_servico.setEnabled(false);
             jtf_data_lancamento.setEnabled(false);
             jtf_valor_lancamento.setEnabled(false);
             jb_adicionar_locacao.setEnabled(false);
             jb_remover_locacao.setEnabled(false);
             jb_sair.requestFocus();
-        }else {
-            jcb_tipo_servico.requestFocus();            
+        } else {
+            jcb_tipo_servico.requestFocus();
         }
-        
 
     }
 
@@ -491,7 +490,7 @@ public class LancamentoRecebimento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -661,21 +660,21 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
             DefaultTableModel row = (DefaultTableModel) jtbl_recebimento.getModel();
             if (tb.getSelectedRow() != -1) {
                 itemLancamento = tbItemLancamentoLinhaSelecionada(tb);
-                if(itemLancamento != null){
+                if (itemLancamento != null) {
                     int selectedOption = JOptionPane.showConfirmDialog(this, "Deseja excluir ?", "Atenção", JOptionPane.YES_NO_OPTION);
-                    if (selectedOption == JOptionPane.YES_NO_OPTION) {                    
+                    if (selectedOption == JOptionPane.YES_NO_OPTION) {
                         pool = new Pool();
                         LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
-                        lancamentoDAO.excluirItemLancamento(itensLancamento.get(tb.getSelectedRow()).getCodigo_item_lancamento());                        
+                        lancamentoDAO.excluirItemLancamento(itensLancamento.get(tb.getSelectedRow()).getCodigo_item_lancamento());
                         carregarItensLancamentos(lancamento);
-                    }                    
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um Objeto");
             }
         }
     }
-    
+
     public ItemLancamento tbItemLancamentoLinhaSelecionada(JTable tb) {
         ItemLancamento itemLancamento = new ItemLancamento();
         if (tb != null && tb.getSelectedRow() != -1) {
@@ -685,17 +684,17 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
         }
         return itemLancamento;
     }
-    
+
     public boolean verificarItemLancamento() {
         Double valor_tabela = 0.00;
         Double valor_lancamento = moeda.getPrecoFormato(jtf_valor_lancamento.getText());
         Double valor_total = moeda.getPrecoFormato(jtf_valor_total.getText());
         moeda = new Moeda();
-        for(int i = 0; i < jtbl_recebimento.getRowCount(); i++){
+        for (int i = 0; i < jtbl_recebimento.getRowCount(); i++) {
             valor_tabela = valor_tabela + moeda.getPrecoFormato(jtbl_recebimento.getValueAt(i, 3).toString());
         }
-        Double restante = (valor_total - valor_tabela);        
-        
+        Double restante = (valor_total - valor_tabela);
+
         String msgERRO = "Preencha os campos obrigatórios:\n";
 
         if (jtf_data_lancamento.getText().trim().length() != 10) {
@@ -704,7 +703,7 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
 
         if (jtf_valor_lancamento.getText().trim().equals("R$ 0,00") || jtf_valor_lancamento.getText().trim().length() == 0) {
             msgERRO = msgERRO + " *Valor Inválido\n";
-        } else if(restante < valor_lancamento){
+        } else if (restante < valor_lancamento) {
             msgERRO = msgERRO + " *Valor Maior que Débito\n";
         }
 
@@ -719,46 +718,45 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
 
     public void adicionarLancamento() {
 
-            try {
-        if (verificarItemLancamento() == true) {
-            ItemDbGrid hashDbGrid = (ItemDbGrid) jcb_tipo_servico.getSelectedItem();
-            tipoServico = new TipoServico();
-            tipoServico = (TipoServico) hashDbGrid.getObjeto();
-            
-            ArquivoConfiguracao conf = new ArquivoConfiguracao();
-            Usuario usuario = new Usuario();
-            usuario.setCodigo_usuario(Integer.parseInt(conf.readPropertie("codigo_usuario")));
-            
-            moeda = new Moeda();
-            itemLancamento = new ItemLancamento();            
-            itemLancamento.setData_lancamento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_lancamento.getText()));
-            itemLancamento.setLancamento(lancamento);
-            itemLancamento.setValor_lancamento(moeda.getPrecoFormato(jtf_valor_lancamento.getText()));
+        try {
+            if (verificarItemLancamento() == true) {
+                ItemDbGrid hashDbGrid = (ItemDbGrid) jcb_tipo_servico.getSelectedItem();
+                tipoServico = new TipoServico();
+                tipoServico = (TipoServico) hashDbGrid.getObjeto();
 
-            itemLancamento.setTipoServico(tipoServico);            
-            itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
-            itemLancamento.setUsuario(usuario);
-            List<ItemLancamento> itemLancamentoSalvar = new ArrayList<>();
-            itemLancamentoSalvar.add(itemLancamento);
-            pool = new Pool();
-            LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
-            lancamentoDAO.salvarItemLancamento(itemLancamentoSalvar);
-            limparItemLancado();
-            carregarItensLancamentos(lancamento);
+                ArquivoConfiguracao conf = new ArquivoConfiguracao();
+                Usuario usuario = new Usuario();
+                usuario.setCodigo_usuario(Integer.parseInt(conf.readPropertie("codigo_usuario")));
 
-        } 
-            } catch (ParseException ex) {
-                Logger.getLogger(LancamentoRecebimento.class.getName()).log(Level.SEVERE, null, ex);
+                moeda = new Moeda();
+                itemLancamento = new ItemLancamento();
+                itemLancamento.setData_lancamento(new SimpleDateFormat("dd/MM/yyyy").parse((String) jtf_data_lancamento.getText()));
+                itemLancamento.setLancamento(lancamento);
+                itemLancamento.setValor_lancamento(moeda.getPrecoFormato(jtf_valor_lancamento.getText()));
+
+                itemLancamento.setTipoServico(tipoServico);
+                itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                itemLancamento.setUsuario(usuario);
+                List<ItemLancamento> itemLancamentoSalvar = new ArrayList<>();
+                itemLancamentoSalvar.add(itemLancamento);
+                pool = new Pool();
+                LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
+                lancamentoDAO.salvarItemLancamento(itemLancamentoSalvar);
+                limparItemLancado();
+                carregarItensLancamentos(lancamento);
             }
+        } catch (ParseException ex) {
+            Logger.getLogger(LancamentoRecebimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void limparItemLancado() {
-        Calendar data_atual = Calendar.getInstance();               
+        Calendar data_atual = Calendar.getInstance();
         SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-        String data_inicial = out.format(data_atual.getTime());       
-        
+        String data_inicial = out.format(data_atual.getTime());
+
         jtf_data_lancamento.setText(data_inicial);
-        jcb_tipo_servico.setSelectedIndex(0);        
+        jcb_tipo_servico.setSelectedIndex(0);
 
     }
 
@@ -815,20 +813,20 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
                         moeda.setPrecoFormat(itensLancamento.get(i).getValor_lancamento().toString()),
                         itensLancamento.get(i).getUsuario().getNome_usuario()});
                 }
-                
+
                 Double valor_tabela = 0.00;
                 Double valor_lancamento = moeda.getPrecoFormato(jtf_valor_lancamento.getText());
                 Double valor_total = moeda.getPrecoFormato(jtf_valor_total.getText());
                 moeda = new Moeda();
-                for(int i = 0; i < jtbl_recebimento.getRowCount(); i++){
+                for (int i = 0; i < jtbl_recebimento.getRowCount(); i++) {
                     valor_tabela = valor_tabela + moeda.getPrecoFormato(jtbl_recebimento.getValueAt(i, 3).toString());
                 }
-                Double restante = (valor_total - valor_tabela);        
-                if(lancamento.getTipoServico().getTipo().equals("D")){
-                    jl_rodape.setText("Devedor: "+ moeda.setPrecoFormat(restante.toString()));                    
+                Double restante = (valor_total - valor_tabela);
+                if (lancamento.getTipoServico().getTipo().equals("D")) {
+                    jl_rodape.setText("Devedor: " + moeda.setPrecoFormat(restante.toString()));
                     jtf_valor_lancamento.setText(moeda.setPrecoFormat(restante.toString()));
                 } else {
-                    jl_rodape.setText("Saldo: "+ moeda.setPrecoFormat(restante.toString()));                    
+                    jl_rodape.setText("Saldo: " + moeda.setPrecoFormat(restante.toString()));
                 }
                 jcb_tipo_servico.requestFocus();
 
@@ -847,7 +845,7 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
     }
 
     public void acionarAtalho(java.awt.event.KeyEvent evt) {
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {            
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornarJanelaPai();
         }
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
@@ -904,9 +902,9 @@ private void jtf_descricao_lancamentoFocusLost(java.awt.event.FocusEvent evt) {/
         setVisible(false);
         if (janelapai != null) {
             janelapai.setStatusTela(true);
-            janelapai.lancamentoRecebimento = null;            
+            janelapai.lancamentoRecebimento = null;
             int index = janelapai.jtbl_recebimento.getSelectedRow();
-            janelapai.carregarClienteDependente(janelapai.dependente);            
+            janelapai.carregarClienteDependente(janelapai.dependente);
         }
     }
 }

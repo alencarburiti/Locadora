@@ -26,6 +26,7 @@ import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
 import br.com.locadora.util.UnaccentedDocument;
+import static br.com.locadora.view.EntradaCaixaLocacao.jtf_valor_pago;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -1097,6 +1098,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
                             janelapaiDevolucao.jtf_saldo.setText("R$ 0,00");
                             janelapaiDevolucao.jtf_total_desconto_entrega_antecipada.setText("R$ 0,00");
                             janelapaiDevolucao.jl_lancamento_aberto.setText("Pendente: 0");
+                            janelapaiDevolucao.setTitle("Atendimento Devolução");
 
                         }
                     }
@@ -1240,7 +1242,7 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             desconto_entrega_antecipada = moeda.getPrecoFormato(jtf_desconto_entrega_antecipada.getText());
             troco = moeda.getPrecoFormato(jtf_troco.getText());
             valor_pago = valor_pago - troco;
-
+            Double valor_total_a_pagar = moeda.getPrecoFormato(jtf_total_a_pagar.getText());
             Double saldo = 0.00;
             if (jtf_saldo.getForeground().equals(Color.BLACK)) {
                 saldo = moeda.getPrecoFormato(jtf_saldo.getText());
@@ -1251,6 +1253,15 @@ public final class EntradaCaixaDevolucao extends javax.swing.JFrame {
             TipoServico tipoServico;
             lancamento = new Lancamento();
             lancamento.setValor_total(relocacao);
+            
+            lancamento.setSaldo_dia(saldo);
+            lancamento.setDesconto(desconto);
+            lancamento.setDesconto_entrega_antecipada(desconto_entrega_antecipada);
+            lancamento.setValor_pago(moeda.getPrecoFormato(jtf_valor_pago.getText()));
+            lancamento.setTroco(troco);
+            lancamento.setValor_total_a_pagar(valor_total_a_pagar);
+            
+            
             lancamento.setDependente(janelapaiDevolucao.dependente);
             tipoServico = new TipoServico();
             tipoServico.setCodigo_tipo_servico(2);

@@ -529,15 +529,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
         if (tb.getSelectedRow() != -1) {
             dependente = dependentes.get(tb.getSelectedRow());
 
-//            dependente.setCodigo_dependente(dependentes.get(tb.getSelectedRow()).getCodigo_dependente());
-//            dependente.setNome_dependente(dependentes.get(tb.getSelectedRow()).getNome_dependente());
-//            dependente.setDebito(dependentes.get(tb.getSelectedRow()).getDebito());
-//            dependente.setData_nascimento(dependentes.get(tb.getSelectedRow()).getData_nascimento());
-//
-//            Cliente cliente = new Cliente();
-//            cliente.setCodigo_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getCodigo_cliente());
-//            cliente.setNome_cliente(dependentes.get(tb.getSelectedRow()).getCliente().getNome_cliente());
-//            dependente.setCliente(cliente);
         }
         return dependente;
     }
@@ -614,8 +605,6 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
             
             jtbl_cliente.requestFocus();
             jtbl_cliente.setSelectionMode(0);
-//            jtbl_cliente.requestFocus();
-//            jtbl_cliente.setRowSelectionInterval(0, 0);
         }
     }
 

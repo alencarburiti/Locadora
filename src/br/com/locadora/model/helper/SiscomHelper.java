@@ -4,12 +4,10 @@ import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.command.ConsultarCliente;
 import br.com.locadora.model.command.ConsultarDiaria;
 import br.com.locadora.model.command.ConsultarGenero;
-import br.com.locadora.model.command.ConsultarObjeto;
 import br.com.locadora.model.command.InterfaceCommand;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.GeneroDAO;
-import br.com.locadora.model.dao.ObjetoDAO;
 import java.util.HashMap;
 
 public class SiscomHelper {
@@ -23,8 +21,7 @@ public class SiscomHelper {
         
         mapaComandos.put("consultarCliente", new ConsultarCliente(new ClienteDAO(pool)));
         mapaComandos.put("consultarGenero", new ConsultarGenero(new GeneroDAO(pool)));
-        mapaComandos.put("consultarDiaria", new ConsultarDiaria(new DiariaDAO(pool)));
-        mapaComandos.put("consultarObjeto", new ConsultarObjeto(new ObjetoDAO(pool), new GeneroDAO(pool), new DiariaDAO(pool)));
+        mapaComandos.put("consultarDiaria", new ConsultarDiaria(new DiariaDAO(pool)));        
     }
 
     public InterfaceCommand getCommand() {

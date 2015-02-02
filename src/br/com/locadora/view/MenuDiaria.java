@@ -128,7 +128,7 @@ public class MenuDiaria extends javax.swing.JFrame {
             }
         });
 
-        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jl_pesquisar_destino.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jl_pesquisar_destino.setText("Parâmetro");
         jl_pesquisar_destino.setName("jl_pesquisar_destino"); // NOI18N
 
@@ -200,11 +200,11 @@ public class MenuDiaria extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Descrição", "Valor", "Dias", "Multa"
+                "Código", "Descrição", "Valor Locação", "Valor Relocação", "Dias"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -244,8 +244,8 @@ public class MenuDiaria extends javax.swing.JFrame {
                     jtbl_diaria.getColumnModel().getColumn(0).setPreferredWidth(10);
                     jtbl_diaria.getColumnModel().getColumn(1).setPreferredWidth(200);
                     jtbl_diaria.getColumnModel().getColumn(2).setPreferredWidth(30);
-                    jtbl_diaria.getColumnModel().getColumn(3).setPreferredWidth(20);
-                    jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(30);
+                    jtbl_diaria.getColumnModel().getColumn(3).setPreferredWidth(30);
+                    jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(20);
                 }
 
                 jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));

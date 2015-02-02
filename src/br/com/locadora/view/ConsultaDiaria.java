@@ -106,7 +106,7 @@ public class ConsultaDiaria extends javax.swing.JFrame {
 
                     },
                     new String [] {
-                        "Código", "Descrição", "Dias", "Valor", "Relocação"
+                        "Código", "Descrição", "Dias", "Valor Locação", "Valor Relocação"
                     }
                 ) {
                     Class[] types = new Class [] {
@@ -133,7 +133,7 @@ public class ConsultaDiaria extends javax.swing.JFrame {
                 jScrollPane1.setViewportView(jtbl_diaria);
                 if (jtbl_diaria.getColumnModel().getColumnCount() > 0) {
                     jtbl_diaria.getColumnModel().getColumn(0).setPreferredWidth(15);
-                    jtbl_diaria.getColumnModel().getColumn(1).setPreferredWidth(200);
+                    jtbl_diaria.getColumnModel().getColumn(1).setPreferredWidth(170);
                     jtbl_diaria.getColumnModel().getColumn(2).setPreferredWidth(10);
                     jtbl_diaria.getColumnModel().getColumn(3).setPreferredWidth(20);
                     jtbl_diaria.getColumnModel().getColumn(4).setPreferredWidth(20);
@@ -207,7 +207,7 @@ public class ConsultaDiaria extends javax.swing.JFrame {
 
                 jb_ok.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jb_ok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/finalizar.png"))); // NOI18N
-                jb_ok.setText("Finalizar");
+                jb_ok.setText("OK");
                 jb_ok.setName("jb_ok"); // NOI18N
                 jb_ok.setPreferredSize(new java.awt.Dimension(100, 40));
                 jb_ok.addActionListener(new java.awt.event.ActionListener() {

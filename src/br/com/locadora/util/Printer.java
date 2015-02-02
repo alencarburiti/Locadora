@@ -12,9 +12,7 @@ import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.ClienteDAO;
-import br.com.locadora.view.EntradaCaixaLocacao;
 import br.com.locadora.view.EntradaCaixaDevolucao;
-import br.com.locadora.view.EntradaCaixaVenda;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,9 +43,9 @@ public class Printer {
 
     public File arquivo;
 
-    public void comprovanteLocacao(List<ItemLocacao> itens, Dependente dependente, Usuario usuario, Lancamento lancamento) {
-        //ESCREVER TXT    
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + dependente.getNome_dependente() + ".txt";
+    public void comprovanteLocacao(List<ItemLocacao> itens, Dependente dependente, Usuario usuario, Lancamento lancamento, 
+            String nome_arquivo) {
+        //ESCREVER TXT            
         try {
             arquivo = new File(nome_arquivo);
             arquivo.delete();
@@ -76,9 +74,9 @@ public class Printer {
                 if(dependente.getTipo_dependente().equals("Dependente")){
                     Pool pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);
-                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));
-                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
+                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));                    
                     linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
                 } else {
                     linhasTxt.println("Titular: " + dependente.getNome_dependente());
                 }
@@ -107,17 +105,14 @@ public class Printer {
                     linhasTxt.print(moeda.setPrecoFormat(String.valueOf(itens.get(x).getValor_locado())));
                     linhasTxt.println();
                 }
-                Double total_locacao = moeda.getPrecoFormato(EntradaCaixaLocacao.jtf_valor_total_a_pagar.getText());
-                Double desconto = moeda.getPrecoFormato(EntradaCaixaLocacao.jtf_desconto.getText());
-                Double subTotal = total_locacao - desconto;
-
-                linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaLocacao.jtf_saldo.getText());
-                linhasTxt.println("Valor Locação (-):          " + EntradaCaixaLocacao.jtf_valor_total_locacao.getText());
-                linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaLocacao.jtf_desconto.getText());
-                linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
-                linhasTxt.println("Valor Pago (+):             " + EntradaCaixaLocacao.jtf_valor_pago.getText());
-                linhasTxt.println("Troco (-):                  " + EntradaCaixaLocacao.jtf_troco.getText());
+                
+                linhasTxt.println("===========================================");                
+                linhasTxt.println("Valor Locação  (-):     " + moeda.setPrecoFormat(lancamento.getValor_total().toString()));
+                linhasTxt.println("Saldo Anterior (+):     " + moeda.setPrecoFormat(lancamento.getSaldo_dia().toString()));
+                linhasTxt.println("Valor Desconto (+):     " + moeda.setPrecoFormat(lancamento.getDesconto().toString()));
+                linhasTxt.println("SubTotal       (=):     " + moeda.setPrecoFormat(lancamento.getValor_total_a_pagar().toString()));
+                linhasTxt.println("Valor Pago     (+):     " + moeda.setPrecoFormat(lancamento.getValor_pago().toString()));                
+                linhasTxt.println("Troco          (-):     " + moeda.setPrecoFormat(lancamento.getTroco().toString()));
                 linhasTxt.println("===========================================");
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Usuário: " + usuario.getNome_usuario());
@@ -128,6 +123,7 @@ public class Printer {
                 linhasTxt.println("mesmo estado de conservação, e que qualquer ");
                 linhasTxt.println("dano ou perda, eu me comprometo a pagar o ");
                 linhasTxt.println("valor da Nota Fiscal do Filme. ");
+                linhasTxt.println("BOLSA: (   )SIM    (   )NÃO");
                 linhasTxt.println("De acordo:                                 ");
                 linhasTxt.println("                                           ");
                 linhasTxt.println("___________________________________________");
@@ -192,8 +188,8 @@ public class Printer {
                     Pool pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);
                     dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));
-                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
                     linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());                    
                 } else {
                     linhasTxt.println("Titular: " + dependente.getNome_dependente());
                 }
@@ -231,16 +227,16 @@ public class Printer {
                 Double total_devolucao = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_total_a_pagar.getText());
                 Double desconto = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_desconto.getText());
                 Double desconto_entrega_antecipada = moeda.getPrecoFormato(EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
-                Double subTotal = total_devolucao - (desconto );
+                Double subTotal = total_devolucao;
 
-                linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaDevolucao.jtf_saldo.getText());
-                linhasTxt.println("Débito Devolução (-):       " + EntradaCaixaDevolucao.jtf_total_relocacao.getText());
-                linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaDevolucao.jtf_desconto.getText());
-                linhasTxt.println("Valor Desc. Dev. Antec. (+):" + EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
-                linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
-                linhasTxt.println("Valor Pago (+):             " + EntradaCaixaDevolucao.jtf_valor_pago.getText());
-                linhasTxt.println("Troco (-):                  " + EntradaCaixaDevolucao.jtf_troco.getText());
+                linhasTxt.println("===========================================");                
+                linhasTxt.println("Débito Devolução        (-):     " + EntradaCaixaDevolucao.jtf_total_relocacao.getText());
+                linhasTxt.println("Saldo Anterior          (+):     " + EntradaCaixaDevolucao.jtf_saldo.getText());
+                linhasTxt.println("Valor Desconto          (+):     " + EntradaCaixaDevolucao.jtf_desconto.getText());
+                linhasTxt.println("Valor Desc. Dev. Antec. (+):     " + EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
+                linhasTxt.println("SubTotal                (=):     " + moeda.setPrecoFormat(String.valueOf(subTotal)));
+                linhasTxt.println("Valor Pago              (+):     " + EntradaCaixaDevolucao.jtf_valor_pago.getText());
+                linhasTxt.println("Troco                   (-):     " + EntradaCaixaDevolucao.jtf_troco.getText());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Usuário: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
@@ -279,9 +275,9 @@ public class Printer {
         }
     }
     
-    public void comprovanteVenda(List<ItemVenda> itens, Dependente dependente, Usuario usuario, Lancamento lancamento) {
+    public void comprovanteVenda(List<ItemVenda> itens, Dependente dependente, Usuario usuario, Lancamento lancamento, String nome_arquivo) {
         //ESCREVER TXT    
-        String nome_arquivo = "Imprimir/comprovanteVenda_" + dependente.getNome_dependente() + ".txt";
+        
         try {
             arquivo = new File(nome_arquivo);
             arquivo.delete();
@@ -302,19 +298,18 @@ public class Printer {
                 linhasTxt.println("===========================================");
                 linhasTxt.println("********** NAO É DOCUMENTO FISCAL *********");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("********* Comprovante de Devolução ********");
+                linhasTxt.println("*********** Comprovante de Venda **********");
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Controle Interno: "+ lancamento.getCodigo_lancamento());
                 if(dependente.getTipo_dependente().equals("Dependente")){
                     Pool pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);
                     dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));
-                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());
                     linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
+                    linhasTxt.println("Dependente: " + dependente.getNome_dependente());                    
                 } else {
                     linhasTxt.println("Titular: " + dependente.getNome_dependente());
                 }
-//                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
                 linhasTxt.println(String.format("%-6s", "Cód    Descrição          P. Unt.  P. Total"));
                 //dados da tabela
@@ -323,16 +318,16 @@ public class Printer {
 
                 for (int x = 0; x < itens.size(); x++) {
                     if(itens.get(x).getType_product() == 0){
-                        linhasTxt.print(String.format("%05d  ", itens.get(x).getPacotePromocional().getCodigo_pacote_promocioanl()));
+                        linhasTxt.print(String.format("%05d  ", itens.get(x).getCombo().getCodigo_combo()));
 
-                        String nome_produto = itens.get(x).getQuantidade()+ "x"+itens.get(x).getPacotePromocional().getDescricao();
+                        String nome_produto = itens.get(x).getQuantidade()+ "x"+itens.get(x).getCombo().getDescricao();
                         try {
                             linhasTxt.print(String.format("%-19s", nome_produto.substring(0, 17)));
                         } catch (Exception e) {
                             linhasTxt.print(String.format("%-19s", nome_produto));
                         }
 
-                        linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getPacotePromocional().getValor().toString())));
+                        linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getCombo().getValor().toString())));
                         
                     } else if(itens.get(x).getType_product() == 1){
                         linhasTxt.print(String.format("%05d  ", itens.get(x).getProduto().getCodigo_produto()));
@@ -347,20 +342,17 @@ public class Printer {
                         linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getProduto().getPreco_venda().toString())));
                     }
                     linhasTxt.print(String.format("%-8s", moeda.setPrecoFormat(itens.get(x).getPreco_total().toString())));
-//                    linhasTxt.print(data_devolucao);
+
                     linhasTxt.println();
                 }
-                Double total_venda = moeda.getPrecoFormato(EntradaCaixaVenda.jtf_valor_total_a_pagar.getText());
-                Double desconto = moeda.getPrecoFormato(EntradaCaixaVenda.jtf_desconto.getText());                
-                Double subTotal = total_venda - (desconto );
-
+                
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Débito Anterior (-):        " + EntradaCaixaVenda.jtf_saldo.getText());
-                linhasTxt.println("Total Venda (-):            " + EntradaCaixaVenda.jtf_valor_total_venda.getText());
-                linhasTxt.println("Valor Desconto (+):         " + EntradaCaixaVenda.jtf_desconto.getText());                
-                linhasTxt.println("SubTotal (=):               " + moeda.setPrecoFormat(String.valueOf(subTotal)));
-                linhasTxt.println("Valor Pago (+):             " + EntradaCaixaVenda.jtf_valor_pago.getText());
-                linhasTxt.println("Troco (-):                  " + EntradaCaixaVenda.jtf_troco.getText());
+                linhasTxt.println("Valor Venda    (-):     " + moeda.setPrecoFormat(lancamento.getValor_total().toString()));
+                linhasTxt.println("Saldo Anterior (+):     " + moeda.setPrecoFormat(lancamento.getSaldo_dia().toString()));
+                linhasTxt.println("Valor Desconto (+):     " + moeda.setPrecoFormat(lancamento.getDesconto().toString()));
+                linhasTxt.println("SubTotal       (=):     " + moeda.setPrecoFormat(lancamento.getValor_total_a_pagar().toString()));
+                linhasTxt.println("Valor Pago     (+):     " + moeda.setPrecoFormat(lancamento.getValor_pago().toString()));                
+                linhasTxt.println("Troco          (-):     " + moeda.setPrecoFormat(lancamento.getTroco().toString()));
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Usuário: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
@@ -379,7 +371,6 @@ public class Printer {
                 } else {
                     linhasTxt.println("Titular: " + dependente.getNome_dependente());
                 }
-//                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("        OBRIGADO PELA PREFERÊNCIA          ");
                 linhasTxt.println("   INFORMACOES PARA FECHAMENTO DE CONTA    ");
@@ -442,34 +433,7 @@ public class Printer {
             return cond;
         }
     }
-    
-//    public boolean emiteComanda(String nome_arquivo){
-////        boolean cond = false;
-//        ArquivoConfiguracao conf = new ArquivoConfiguracao();
-//       try {
-//           if (!conf.readPropertie("impressora_principal").equals("")) {
-//               InputStream is = new FileInputStream(nome_arquivo);
-//                
-//                Scanner sc = new Scanner(is);
-//                FileOutputStream fs = new FileOutputStream("Bematech_USB " + conf.readPropertie("impressora_principal"));
-//                PrintStream ps = new PrintStream(fs);
-//
-//                while(sc.hasNextLine()){
-//                    String linhas = sc.nextLine();
-//                    ps.println(linhas);
-//                }
-//                fs.close(); 
-//                return true;
-//           } else {
-//               JOptionPane.showMessageDialog(null, "Impressora não detectada");
-//               return false;
-//           }
-//        } catch (IOException ex) {
-//            JOptionPane.showMessageDialog(null, "Erro encontrado ao imprimir comanda.");
-//            return false;
-//        }        
-//   }
-    
+   
 
     public void printPDF(File f){
         boolean cond = false;
@@ -552,7 +516,7 @@ public class Printer {
             return true;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+//            JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
             return false;
 

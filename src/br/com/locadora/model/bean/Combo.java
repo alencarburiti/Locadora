@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Combo {
 
-    private Integer codigo_pacote_promocioanl = 0;
+    private Integer codigo_combo = 0;
     private String codigo_barras;
     private String descricao = "";
     private Integer quantidade_troca;
@@ -28,12 +28,12 @@ public class Combo {
     private Boolean status;
     private ItemVenda itemVenda;
 
-    public Integer getCodigo_pacote_promocioanl() {
-        return codigo_pacote_promocioanl;
+    public Integer getCodigo_combo() {
+        return codigo_combo;
     }
 
-    public void setCodigo_pacote_promocioanl(Integer codigo_pacote_promocioanl) {
-        this.codigo_pacote_promocioanl = codigo_pacote_promocioanl;
+    public void setCodigo_combo(Integer codigo_pacote_promocioanl) {
+        this.codigo_combo = codigo_pacote_promocioanl;
     }
 
     public String getDescricao() {

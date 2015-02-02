@@ -1130,7 +1130,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Descrição", "Qtd. Troca/Mês", "Preço", "Data Aquisição", "Dias Corridos", "Dias Combo", "Dias Restante", "Trocas Efetuadas", "Status"
+                "Descrição", "Qtd. Troca", "Preço", "Data Aquisição", "Dias Corridos", "Dias Combo", "Dias Restante", "Trocas Efetuadas", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -1208,7 +1208,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jtp_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jb_salvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jb_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1508,12 +1507,13 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     private void jb_eliminar_telefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            removeTelefone(jtbl_telefone);
+            jb_eliminar_telefone.doClick();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_eliminar_telefoneKeyPressed
 
     private void jb_eliminar_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_eliminar_telefoneActionPerformed
+        removeTelefone(jtbl_telefone);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_eliminar_telefoneActionPerformed
 
@@ -1968,9 +1968,7 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
 
             jtf_telefone.setText("");
             jtf_telefone.requestFocus();
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel adicionar ");
-        }
+        } 
     }
 
     public boolean verificar_campo_telefone(String telefone) {
@@ -2178,7 +2176,9 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Selecione um Telefone");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(CadastraAlteraCliente.class.getName()).log(Level.SEVERE, null, ex);
+            } catch(Exception ex){
+                row.removeRow(tb.getSelectedRow());                
+                
             }
         }
     }
@@ -2318,7 +2318,6 @@ public final class CadastraAlteraCliente extends javax.swing.JFrame {
     
     public void cadastrarAlterarCliente() {
         if (verificarCampos()) {
-
             try {
                 cliente = new Cliente();
                 cliente.setNome_cliente(jtf_nome_cliente.getText());

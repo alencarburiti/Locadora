@@ -368,7 +368,7 @@ public class MenuCombo extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuPacotePromocional");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCombo");
         try {
             if (acesso.getEscrever() == true) {
                 if(cadastraAlteraPacotePromocional == null ){
@@ -521,7 +521,7 @@ public class MenuCombo extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuPacotePromocional");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.Locadora.view.MenuCombo");
         try {
             System.out.println("Escrever: " + acesso.getEscrever());
             if (acesso.getEscrever() == true) {
@@ -573,7 +573,7 @@ public class MenuCombo extends javax.swing.JFrame {
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
         ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCliente");
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuCombo");
 
         try {
             if (acesso.getDeletar() == true) {
@@ -583,7 +583,7 @@ public class MenuCombo extends javax.swing.JFrame {
                     if (selectedOption == JOptionPane.YES_NO_OPTION) {
                         pool = new Pool();
                         pacotePromocionalDAO = new ComboDAO(pool);
-                        pacotePromocionalDAO.excluir(itensCombo.get(jtbl_combo.getSelectedRow()).getCodigo_pacote_promocioanl());
+                        pacotePromocionalDAO.excluir(itensCombo.get(jtbl_combo.getSelectedRow()).getCodigo_combo());
                         row.removeRow(jtbl_combo.getSelectedRow());
 
                     }
@@ -644,7 +644,7 @@ public class MenuCombo extends javax.swing.JFrame {
             for (int i = 0; i < itensCombo.size(); i++) {
                 
                 DefaultTableModel row = (DefaultTableModel) jtbl_combo.getModel();
-                row.addRow(new Object[]{itensCombo.get(i).getCodigo_pacote_promocioanl(),
+                row.addRow(new Object[]{itensCombo.get(i).getCodigo_combo(),
                     itensCombo.get(i).getDescricao(), itensCombo.get(i).getQuantidade_troca(),
                     itensCombo.get(i).getDias_combo(), moeda.setPrecoFormat(itensCombo.get(i).getValor().toString()), itensCombo.get(i).getStatus()});
             }

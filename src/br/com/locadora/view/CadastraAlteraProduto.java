@@ -17,7 +17,6 @@ import br.com.locadora.model.bean.Produto;
 import br.com.locadora.util.LimitadorTexto;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.TemaInterface;
-import br.com.locadora.util.UnaccentedDocument;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import java.util.List;
@@ -125,6 +124,11 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
         jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_salvarMouseClicked(evt);
+            }
+        });
+        jb_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_salvarActionPerformed(evt);
             }
         });
         jb_salvar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -286,7 +290,7 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(332, 286));
+        setSize(new java.awt.Dimension(343, 286));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -378,6 +382,10 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtf_preco_vendaFocusLost
 
+    private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_salvarActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -418,7 +426,7 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
             produtoDAO = new ProdutoDAO(pool);
             if (jtf_codigo_produto.getText().equals("")) {
                 try {
-                    produto = produtoDAO.salvar(produto);
+                    produto = produtoDAO.salvar(produto);                    
                     jtf_codigo_produto.setText(produto.getCodigo_produto().toString());
                     JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
                     this.setTitle("Alterando Produto");
@@ -426,9 +434,15 @@ public final class CadastraAlteraProduto extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
             } else {
-                produto.setCodigo_produto(Integer.parseInt(jtf_codigo_produto.getText()));
-                produtoDAO.atualizar(produto);
-                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
+                try {
+                    produto.setCodigo_produto(Integer.parseInt(jtf_codigo_produto.getText()));
+                    boolean retorno = produtoDAO.atualizar(produto);
+                    if(retorno == true){
+                        JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");                                            
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

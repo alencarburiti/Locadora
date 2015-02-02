@@ -3,10 +3,13 @@ package br.com.locadora.model.dao;
 import br.com.locadora.conexao.InterfacePool;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.Devolucao;
 import br.com.locadora.model.bean.ItemLancamento;
 import br.com.locadora.model.bean.Lancamento;
+import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.TipoServico;
 import br.com.locadora.model.bean.Usuario;
+import br.com.locadora.model.bean.Venda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -155,13 +158,24 @@ public class LancamentoDAO {
             "    (SELECT \n" +
             "        A.CODIGO_LANCAMENTO,\n" +
             "            A.DATA_LANCAMENTO,\n" +
+            "            A.SALDO_DIA,\n" +
+            "            A.DESCONTO,\n" +
+            "            A.DESCONTO_ENTREGA_ANTECIPADA,\n" +
+            "            A.VALOR_PAGO,\n" +
+            "            A.TROCO,\n" +
+            "            A.VALOR_TOTAL_A_PAGAR,\n" +
             "            B.NOME_DEPENDENTE,\n" +
+            "            B.TIPO_DEPENDENTE,\n" +
+            "            B.CLIENTE_CODIGO_CLIENTE,\n" +
             "            C.CODIGO_TIPO_SERVICO,\n" +
             "            C.DESCRICAO,\n" +
             "            C.TIPO,\n" +
             "            D.LOGIN,\n" +
             "            D.NOME_USUARIO,\n" +
             "            A.VALOR_LANCAMENTO,\n" +
+            "            A.LOCACAO_CODIGO_LOCACAO,\n" +    
+            "            A.DEVOLUCAO_CODIGO_DEVOLUCAO,\n" +    
+            "            A.VENDA_CODIGO_VENDA,\n" +    
             "            (SELECT \n" +
             "                    (CASE\n" +
             "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
@@ -237,13 +251,24 @@ public class LancamentoDAO {
             "        (SELECT \n" +
             "        A.CODIGO_LANCAMENTO,\n" +
             "            A.DATA_LANCAMENTO,\n" +
+            "            A.SALDO_DIA,\n" +
+            "            A.DESCONTO,\n" +
+            "            A.DESCONTO_ENTREGA_ANTECIPADA,\n" +
+            "            A.VALOR_PAGO,\n" +
+            "            A.TROCO,\n" +
+            "            A.VALOR_TOTAL_A_PAGAR,\n" +
             "            B.NOME_DEPENDENTE,\n" +
+            "            B.TIPO_DEPENDENTE,\n" +
+            "            B.CLIENTE_CODIGO_CLIENTE,\n" +
             "            C.CODIGO_TIPO_SERVICO,\n" +
             "            C.DESCRICAO,\n" +
             "            C.TIPO,\n" +
             "            D.LOGIN,\n" +
             "            D.NOME_USUARIO,\n" +
             "            A.VALOR_LANCAMENTO,\n" +
+                "            A.LOCACAO_CODIGO_LOCACAO,\n" +    
+            "            A.DEVOLUCAO_CODIGO_DEVOLUCAO,\n" +    
+            "            A.VENDA_CODIGO_VENDA,\n" +    
             "            (SELECT \n" +
             "                    (CASE\n" +
             "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
@@ -322,13 +347,24 @@ public class LancamentoDAO {
             "        (SELECT \n" +
             "        A.CODIGO_LANCAMENTO,\n" +
             "            A.DATA_LANCAMENTO,\n" +
+            "            A.SALDO_DIA,\n" +
+            "            A.DESCONTO,\n" +
+            "            A.DESCONTO_ENTREGA_ANTECIPADA,\n" +
+            "            A.VALOR_PAGO,\n" +
+            "            A.TROCO,\n" +
+            "            A.VALOR_TOTAL_A_PAGAR,\n" +
             "            B.NOME_DEPENDENTE,\n" +
+            "            B.TIPO_DEPENDENTE,\n" +
+            "            B.CLIENTE_CODIGO_CLIENTE,\n" +
             "            C.CODIGO_TIPO_SERVICO,\n" +
             "            C.DESCRICAO,\n" +
             "            C.TIPO,\n" +
             "            D.LOGIN,\n" +
             "            D.NOME_USUARIO,\n" +
             "            A.VALOR_LANCAMENTO,\n" +
+                "            A.LOCACAO_CODIGO_LOCACAO,\n" +    
+            "            A.DEVOLUCAO_CODIGO_DEVOLUCAO,\n" +    
+            "            A.VENDA_CODIGO_VENDA,\n" +    
             "            (SELECT \n" +
             "                    (CASE\n" +
             "                            WHEN SUM(VALOR_LANCAMENTO) IS NULL THEN 0\n" +
@@ -657,7 +693,22 @@ public class LancamentoDAO {
             lancamento.setValor_total(rs.getDouble("VALOR_LANCAMENTO"));
             lancamento.setSaldo(rs.getDouble("SALDO"));
             lancamento.setDevedor(rs.getDouble("DEVEDOR"));
-
+            lancamento.setSaldo_dia(rs.getDouble("SALDO_DIA"));
+            lancamento.setDesconto(rs.getDouble("DESCONTO"));
+            lancamento.setDesconto_entrega_antecipada(rs.getDouble("DESCONTO_ENTREGA_ANTECIPADA"));
+            lancamento.setValor_pago(rs.getDouble("VALOR_PAGO"));
+            lancamento.setTroco(rs.getDouble("TROCO"));
+            lancamento.setValor_total_a_pagar(rs.getDouble("VALOR_TOTAL_A_PAGAR"));
+            Locacao locacao = new Locacao();
+            locacao.setCodigo_locacao(rs.getInt("LOCACAO_CODIGO_LOCACAO"));
+            Devolucao devolucao = new Devolucao();
+            devolucao.setCodigo_devolucao(rs.getInt("DEVOLUCAO_CODIGO_DEVOLUCAO"));
+            Venda venda = new Venda();
+            venda.setCodigo_venda(rs.getInt("VENDA_CODIGO_VENDA"));
+            lancamento.setLocacao(locacao);
+            lancamento.setDevolucao(devolucao);
+            lancamento.setVenda(venda);
+            
             TipoServico tipo_servico = new TipoServico();
             tipo_servico.setCodigo_tipo_servico(rs.getInt("CODIGO_TIPO_SERVICO"));
             tipo_servico.setDescricao(rs.getString("DESCRICAO"));
@@ -666,6 +717,16 @@ public class LancamentoDAO {
             
             Dependente dependente = new Dependente();
             dependente.setNome_dependente(rs.getString("NOME_DEPENDENTE"));
+            
+            if (rs.getInt("TIPO_DEPENDENTE") == 0) {
+                dependente.setTipo_dependente("Cliente");
+
+            } else {
+                dependente.setTipo_dependente("Dependente");
+            }
+            Cliente cliente = new Cliente();
+            cliente.setCodigo_cliente(rs.getInt("CLIENTE_CODIGO_CLIENTE"));
+            dependente.setCliente(cliente);
             
             lancamento.setDependente(dependente);
             
@@ -724,8 +785,9 @@ public class LancamentoDAO {
         String sqlLancamento = "INSERT INTO `locadora`.`lancamento`(`DATA_LANCAMENTO`,`VALOR_LANCAMENTO`,\n" +
             "`DEPENDENTE_CODIGO_DEPENDENTE`,`TIPO_SERVICO_CODIGO_TIPO_SERVICO`,\n" +
             "`USUARIO_CODIGO_USUARIO`,`CAIXA_CODIGO_CAIXA`,`CLIENTE_CODIGO_CLIENTE`,\n" +
-            "`LOCACAO_CODIGO_LOCACAO`,`VENDA_CODIGO_VENDA`,`DEVOLUCAO_CODIGO_DEVOLUCAO`)\n" +
-            "VALUES(current_date(),?,?,?,?,?,?,?,?,?);";
+            "`LOCACAO_CODIGO_LOCACAO`,`VENDA_CODIGO_VENDA`,`DEVOLUCAO_CODIGO_DEVOLUCAO`, SALDO_DIA, DESCONTO, DESCONTO_ENTREGA_ANTECIPADA, "
+                + "VALOR_PAGO, TROCO, VALOR_TOTAL_A_PAGAR)\n" +
+            "VALUES(current_date(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try {
 
@@ -740,6 +802,12 @@ public class LancamentoDAO {
             ps.setInt(7, lancamento.getLocacao().getCodigo_locacao());
             ps.setInt(8, lancamento.getVenda().getCodigo_venda());
             ps.setInt(9, lancamento.getDevolucao().getCodigo_devolucao());
+            ps.setDouble(10, lancamento.getSaldo_dia());
+            ps.setDouble(11, lancamento.getDesconto());
+            ps.setDouble(12, lancamento.getDesconto_entrega_antecipada());
+            ps.setDouble(13, lancamento.getValor_pago());
+            ps.setDouble(14, lancamento.getTroco());
+            ps.setDouble(15, lancamento.getValor_total_a_pagar());
             ps.executeUpdate();           
 
             ResultSet res;
@@ -825,8 +893,7 @@ public class LancamentoDAO {
 
     }
     
-    public List<ItemLancamento> getItemLancamento(Lancamento lancamento){
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    public List<ItemLancamento> getItemLancamento(Lancamento lancamento){        
         List<ItemLancamento> resultado = new ArrayList<ItemLancamento>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -879,5 +946,7 @@ public class LancamentoDAO {
         }
         return resultado;
     }
+    
+    
 
 }

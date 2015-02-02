@@ -218,6 +218,9 @@
             <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
             <Property name="name" type="java.lang.String" value="jrb_codigo" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_codigoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrb_nome_produto">
           <Properties>
@@ -231,6 +234,9 @@
             <Property name="text" type="java.lang.String" value="Descri&#xe7;&#xe3;o"/>
             <Property name="name" type="java.lang.String" value="jrb_nome_produto" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_nome_produtoActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

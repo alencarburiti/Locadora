@@ -27,6 +27,12 @@ public class Lancamento {
     private Double saldo;
     private Double devedor;
     private Integer caixa;
+    private Double saldo_dia;
+    private Double desconto;
+    private Double desconto_entrega_antecipada;
+    private Double valor_pago;
+    private Double troco;
+    private Double valor_total_a_pagar;
 
     public Integer getCodigo_lancamento() {
         return codigo_lancamento;
@@ -138,6 +144,54 @@ public class Lancamento {
 
     public void setDevedor(Double devedor) {
         this.devedor = devedor;
+    }
+
+    public Double getSaldo_dia() {
+        return saldo_dia;
+    }
+
+    public void setSaldo_dia(Double saldo_dia) {
+        this.saldo_dia = saldo_dia;
+    }
+
+    public Double getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(Double desconto) {
+        this.desconto = desconto;
+    }
+
+    public Double getDesconto_entrega_antecipada() {
+        return desconto_entrega_antecipada;
+    }
+
+    public void setDesconto_entrega_antecipada(Double desconto_entrega_antecipada) {
+        this.desconto_entrega_antecipada = desconto_entrega_antecipada;
+    }
+
+    public Double getValor_pago() {
+        return valor_pago;
+    }
+
+    public void setValor_pago(Double valor_pago) {
+        this.valor_pago = valor_pago;
+    }
+
+    public Double getTroco() {
+        return troco;
+    }
+
+    public void setTroco(Double troco) {
+        this.troco = troco;
+    }
+
+    public Double getValor_total_a_pagar() {
+        return valor_total_a_pagar;
+    }
+
+    public void setValor_total_a_pagar(Double valor_total_a_pagar) {
+        this.valor_total_a_pagar = valor_total_a_pagar;
     }
 
 }

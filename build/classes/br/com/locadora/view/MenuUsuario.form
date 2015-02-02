@@ -217,6 +217,9 @@
             <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
             <Property name="name" type="java.lang.String" value="jrb_codigo" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_codigoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrb_nome">
           <Properties>
@@ -230,6 +233,9 @@
             <Property name="text" type="java.lang.String" value="Nome"/>
             <Property name="name" type="java.lang.String" value="jrb_nome" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_nomeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrb_login">
           <Properties>
@@ -242,6 +248,9 @@
             <Property name="text" type="java.lang.String" value="Login"/>
             <Property name="name" type="java.lang.String" value="jrb_login" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrb_loginActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>

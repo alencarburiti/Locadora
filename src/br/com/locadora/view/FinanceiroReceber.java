@@ -6,13 +6,25 @@ import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Dependente;
+import br.com.locadora.model.bean.ItemLancamento;
+import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.TipoServico;
+import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.LancamentoDAO;
+import br.com.locadora.model.dao.LocacaoDAO;
+import br.com.locadora.model.dao.VendaDAO;
+import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.Colorir;
 import br.com.locadora.util.Moeda;
+import br.com.locadora.util.Printer;
 import br.com.locadora.util.TemaInterface;
+import static br.com.locadora.view.EntradaCaixaLocacao.acesso;
+import static br.com.locadora.view.EntradaCaixaLocacao.jtf_desconto;
+import static br.com.locadora.view.EntradaCaixaLocacao.jtf_valor_pago;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -98,6 +110,8 @@ public class FinanceiroReceber extends javax.swing.JFrame {
         jb_receber = new javax.swing.JButton();
         jb_cancelar1 = new javax.swing.JButton();
         jb_adicionar_locacao = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jb_receber1 = new javax.swing.JButton();
 
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
         jDesktopPane1.setLayout(null);
@@ -329,7 +343,7 @@ public class FinanceiroReceber extends javax.swing.JFrame {
 
         jPanel2.setName("jPanel2"); // NOI18N
 
-        jb_receber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/money_bag-2.png"))); // NOI18N
+        jb_receber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/money-16.png"))); // NOI18N
         jb_receber.setText("Receber");
         jb_receber.setName("jb_receber"); // NOI18N
         jb_receber.setPreferredSize(new java.awt.Dimension(100, 40));
@@ -359,7 +373,7 @@ public class FinanceiroReceber extends javax.swing.JFrame {
         jb_adicionar_locacao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jb_adicionar_locacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/money_box-16.png"))); // NOI18N
         jb_adicionar_locacao.setText("Depositar");
-        jb_adicionar_locacao.setToolTipText("Incluir");
+        jb_adicionar_locacao.setToolTipText("");
         jb_adicionar_locacao.setName("jb_adicionar_locacao"); // NOI18N
         jb_adicionar_locacao.setPreferredSize(new java.awt.Dimension(100, 40));
         jb_adicionar_locacao.addActionListener(new java.awt.event.ActionListener() {
@@ -373,28 +387,62 @@ public class FinanceiroReceber extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/printer.png"))); // NOI18N
+        jButton1.setText("Imprimir");
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.setPreferredSize(new java.awt.Dimension(100, 40));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
+            }
+        });
+
+        jb_receber1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/money_bag-2.png"))); // NOI18N
+        jb_receber1.setText("Receber Todos");
+        jb_receber1.setName("jb_receber1"); // NOI18N
+        jb_receber1.setPreferredSize(new java.awt.Dimension(100, 40));
+        jb_receber1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_receber1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(280, 280, 280)
-                .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(200, 200, 200)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_receber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jb_receber1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(280, 280, 280))
+                .addGap(200, 200, 200))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_receber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                        .addGap(0, 0, 0))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jb_receber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_adicionar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_receber1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -437,7 +485,7 @@ public class FinanceiroReceber extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+
     }//GEN-LAST:event_formWindowOpened
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -535,6 +583,25 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_historicoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        imprimir();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        acionarAtalho(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyPressed
+
+    private void jb_receber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_receber1ActionPerformed
+        if (lancamentos.size() > 0) {
+            receberTodos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Sem Lançamentos para receber.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_receber1ActionPerformed
+
     public void consultarClienteAtendimento() {
         ConsultaClienteAtendimento consultaCliente = new ConsultaClienteAtendimento();
         consultaCliente.janelapaiRecebimento = this;
@@ -556,6 +623,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
@@ -569,6 +637,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
     private javax.swing.JButton jb_cancelar1;
     private javax.swing.JButton jb_cliente;
     private javax.swing.JButton jb_receber;
+    private javax.swing.JButton jb_receber1;
     private javax.swing.JLabel jl_rodape2;
     public static javax.swing.JPanel jp_locacao;
     private javax.swing.JRadioButton jrb_deposito;
@@ -621,73 +690,72 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         this.setEnabled(status);
     }
 
-    public void consultarLancamentos(){
+    public void consultarLancamentos() {
         pool = new Pool();
         lancamentos = new ArrayList<Lancamento>();
         LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
 
         if (jrb_pendente.isSelected()) {
-            lancamentos = lancamentoDAO.getLancamentosPendentes(dependente.getCliente());            
+            lancamentos = lancamentoDAO.getLancamentosPendentes(dependente.getCliente());
         } else if (jrb_deposito.isSelected()) {
-            lancamentos = lancamentoDAO.getLancamentosDepositos(dependente.getCliente());            
+            lancamentos = lancamentoDAO.getLancamentosDepositos(dependente.getCliente());
         } else if (jrb_historico.isSelected()) {
-            lancamentos = lancamentoDAO.getLancamentos(dependente.getCliente());            
+            lancamentos = lancamentoDAO.getLancamentos(dependente.getCliente());
         }
         mostrarLancamentos(lancamentos);
     }
-    
-    
+
     public void mostrarLancamentos(List<Lancamento> lancamentos) {
-            DefaultTableModel tb_recebimentos = (DefaultTableModel) jtbl_recebimento.getModel();
-            int rows = tb_recebimentos.getRowCount();
-            for (int i = rows - 1; i >= 0; i--) {
-                tb_recebimentos.removeRow(i);
+        DefaultTableModel tb_recebimentos = (DefaultTableModel) jtbl_recebimento.getModel();
+        int rows = tb_recebimentos.getRowCount();
+        for (int i = rows - 1; i >= 0; i--) {
+            tb_recebimentos.removeRow(i);
+        }
+        try {
+
+            for (int i = 0; i < lancamentos.size(); i++) {
+                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+
+                String data_lancamento;
+                data_lancamento = out.format(in.parse(lancamentos.get(i).getData_lancamento().toString()));
+
+                moeda = new Moeda();
+
+                DefaultTableModel row = (DefaultTableModel) jtbl_recebimento.getModel();
+                row.addRow(new Object[]{lancamentos.get(i).getCodigo_lancamento(), data_lancamento,
+                    lancamentos.get(i).getTipoServico().getDescricao(),
+                    lancamentos.get(i).getTipoServico().getTipo(),
+                    moeda.setPrecoFormat(lancamentos.get(i).getValor_total().toString()),
+                    moeda.setPrecoFormat(lancamentos.get(i).getDevedor().toString()),
+                    lancamentos.get(i).getDependente().getNome_dependente(),
+                    lancamentos.get(i).getUsuario().getNome_usuario()});
+
             }
-            try {
 
-                for (int i = 0; i < lancamentos.size(); i++) {
-                    SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-                    SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+            TableCellRenderer tcr = new Colorir(null, null, this);
+            TableColumn column = jtbl_recebimento.getColumnModel().getColumn(0);
+            column.setCellRenderer(tcr);
+            column = jtbl_recebimento.getColumnModel().getColumn(1);
+            column.setCellRenderer(tcr);
+            column = jtbl_recebimento.getColumnModel().getColumn(2);
+            column.setCellRenderer(tcr);
+            column = jtbl_recebimento.getColumnModel().getColumn(3);
+            column.setCellRenderer(tcr);
+            column = jtbl_recebimento.getColumnModel().getColumn(4);
+            column.setCellRenderer(tcr);
+            column = jtbl_recebimento.getColumnModel().getColumn(5);
+            column.setCellRenderer(tcr);
+            column = jtbl_recebimento.getColumnModel().getColumn(6);
+            column.setCellRenderer(tcr);
+            column = jtbl_recebimento.getColumnModel().getColumn(7);
+            column.setCellRenderer(tcr);
 
-                    String data_lancamento;
-                    data_lancamento = out.format(in.parse(lancamentos.get(i).getData_lancamento().toString()));
-
-                    moeda = new Moeda();
-
-                    DefaultTableModel row = (DefaultTableModel) jtbl_recebimento.getModel();
-                    row.addRow(new Object[]{lancamentos.get(i).getCodigo_lancamento(), data_lancamento,
-                        lancamentos.get(i).getTipoServico().getDescricao(),
-                        lancamentos.get(i).getTipoServico().getTipo(),
-                        moeda.setPrecoFormat(lancamentos.get(i).getValor_total().toString()),
-                        moeda.setPrecoFormat(lancamentos.get(i).getDevedor().toString()),
-                        lancamentos.get(i).getDependente().getNome_dependente(),
-                        lancamentos.get(i).getUsuario().getNome_usuario()});
-                    
-                }
-
-                TableCellRenderer tcr = new Colorir(null, null, this);
-                TableColumn column = jtbl_recebimento.getColumnModel().getColumn(0);
-                column.setCellRenderer(tcr);
-                column = jtbl_recebimento.getColumnModel().getColumn(1);
-                column.setCellRenderer(tcr);
-                column = jtbl_recebimento.getColumnModel().getColumn(2);
-                column.setCellRenderer(tcr);
-                column = jtbl_recebimento.getColumnModel().getColumn(3);
-                column.setCellRenderer(tcr);
-                column = jtbl_recebimento.getColumnModel().getColumn(4);
-                column.setCellRenderer(tcr);
-                column = jtbl_recebimento.getColumnModel().getColumn(5);
-                column.setCellRenderer(tcr);
-                column = jtbl_recebimento.getColumnModel().getColumn(6);
-                column.setCellRenderer(tcr);
-                column = jtbl_recebimento.getColumnModel().getColumn(7);
-                column.setCellRenderer(tcr);
-
-                jtbl_recebimento.requestFocus();
-                jtbl_recebimento.setSelectionMode(1);
-            } catch (ParseException ex) {
-                Logger.getLogger(FinanceiroReceber.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            jtbl_recebimento.requestFocus();
+            jtbl_recebimento.setSelectionMode(1);
+        } catch (ParseException ex) {
+            Logger.getLogger(FinanceiroReceber.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void carregarClienteDependente(Dependente dependente) {
@@ -699,20 +767,20 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             moeda = new Moeda();
 
             pool = new Pool();
-            lancamentos = new ArrayList<Lancamento>();
+            List<Lancamento> lancamentosGetSaldo = new ArrayList<Lancamento>();
             LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
-            lancamentos = lancamentoDAO.getLancamentos(dependente.getCliente());
+            lancamentosGetSaldo = lancamentoDAO.getLancamentos(dependente.getCliente());
             Double saldo = 0.00;
             Double devedor = 0.00;
             int quantidade_lancamento_aberto = 0;
-            for (int i = 0; i < lancamentos.size(); i++) {
-                if (lancamentos.get(i).getTipoServico().getTipo().equals("C")) {
-                    saldo = saldo + lancamentos.get(i).getSaldo();
+            for (int i = 0; i < lancamentosGetSaldo.size(); i++) {
+                if (lancamentosGetSaldo.get(i).getTipoServico().getTipo().equals("C")) {
+                    saldo = saldo + lancamentosGetSaldo.get(i).getSaldo();
                 } else {
-                    if (lancamentos.get(i).getDevedor() > 0) {
+                    if (lancamentosGetSaldo.get(i).getDevedor() > 0) {
                         quantidade_lancamento_aberto = quantidade_lancamento_aberto + 1;
                     }
-                    devedor = devedor + lancamentos.get(i).getDevedor();
+                    devedor = devedor + lancamentosGetSaldo.get(i).getDevedor();
                 }
             }
 
@@ -723,9 +791,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             int rows = tb_locacao.getRowCount();
             for (int i = rows - 1; i >= 0; i--) {
                 tb_locacao.removeRow(i);
-            }            
+            }
             consultarLancamentos();
-            
+
             jtbl_recebimento.requestFocus();
             jtbl_recebimento.setSelectionMode(0);
         }
@@ -847,4 +915,122 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
     }
 
+    public void imprimir() {
+        if (jtbl_recebimento != null && jtbl_recebimento.getSelectedRow() != -1) {
+
+            if (lancamentos.get(jtbl_recebimento.getSelectedRow()).getLocacao().getCodigo_locacao() != 0) {
+                pool = new Pool();
+                LocacaoDAO locacaoDAO = new LocacaoDAO(pool);
+                List<ItemLocacao> itensLocacao = new ArrayList<ItemLocacao>();
+                itensLocacao = locacaoDAO.getItemLocacao(lancamentos.get(jtbl_recebimento.getSelectedRow()));
+
+                String nome_arquivo = "Imprimir/reimpressaocomprovanteLocacao_" + lancamentos.get(jtbl_recebimento.getSelectedRow()).getDependente().getNome_dependente() + ".txt";
+                Printer imprimir = new Printer();
+                imprimir.comprovanteLocacao(itensLocacao, lancamentos.get(jtbl_recebimento.getSelectedRow()).getDependente(),
+                        lancamentos.get(jtbl_recebimento.getSelectedRow()).getUsuario(), lancamentos.get(jtbl_recebimento.getSelectedRow()),
+                        nome_arquivo);
+                if (imprimir.imprimirArquivo(nome_arquivo)) {
+                    File arquivo = new File(nome_arquivo);
+                    arquivo.deleteOnExit();
+                    arquivo.delete();
+                } else {
+                    File arquivo = new File(nome_arquivo);
+                    arquivo.deleteOnExit();
+                    arquivo.delete();
+                }
+            } else if (lancamentos.get(jtbl_recebimento.getSelectedRow()).getVenda().getCodigo_venda() != 0) {
+                pool = new Pool();
+                VendaDAO vendaDAOVenda = new VendaDAO(pool);
+                List<ItemVenda> itensVenda = new ArrayList<ItemVenda>();
+                itensVenda = vendaDAOVenda.getItemVenda(lancamentos.get(jtbl_recebimento.getSelectedRow()));
+
+                String nome_arquivo = "Imprimir/reimpressaocomprovanteVenda_" + lancamentos.get(jtbl_recebimento.getSelectedRow()).getDependente().getNome_dependente() + ".txt";
+                Printer imprimir = new Printer();
+                imprimir.comprovanteVenda(itensVenda, lancamentos.get(jtbl_recebimento.getSelectedRow()).getDependente(),
+                        lancamentos.get(jtbl_recebimento.getSelectedRow()).getUsuario(), lancamentos.get(jtbl_recebimento.getSelectedRow()),
+                        nome_arquivo);
+                if (imprimir.imprimirArquivo(nome_arquivo)) {
+                    File arquivo = new File(nome_arquivo);
+                    arquivo.deleteOnExit();
+                    arquivo.delete();
+                } else {
+                    File arquivo = new File(nome_arquivo);
+                    arquivo.deleteOnExit();
+                    arquivo.delete();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Lançamento sem Reimpressão configurada.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Lançamento.");
+        }
+
+    }
+
+    public void receberTodos() {
+        Calendar data_atual = Calendar.getInstance();
+        List<ItemLancamento> itensLancamento = new ArrayList<>();
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();
+        Double devedor = 0.00;
+        for (int i = 0; i < lancamentos.size(); i++) {
+            devedor = devedor + lancamentos.get(i).getDevedor();
+        }
+
+        if (devedor > 0) {
+            int selectedOption = JOptionPane.showConfirmDialog(this, "Débito Total de " + moeda.setPrecoFormat(devedor.toString()) + ".\n Deseja Receber Todos?", "Atenção", JOptionPane.YES_NO_OPTION);
+            if (selectedOption == JOptionPane.YES_NO_OPTION) {
+
+                for (int i = 0; i < lancamentos.size(); i++) {
+                    //Se Locação
+                    if (lancamentos.get(i).getLocacao().getCodigo_locacao() != 0) {
+                        if (lancamentos.get(i).getDevedor() > 0) {
+                            ItemLancamento itemLancamento = new ItemLancamento();
+                            itemLancamento.setData_lancamento(data_atual.getTime());
+                            itemLancamento.setLancamento(lancamentos.get(i));
+                            itemLancamento.setValor_lancamento(lancamentos.get(i).getDevedor());
+                            tipoServico = new TipoServico();
+                            tipoServico.setCodigo_tipo_servico(6);
+                            itemLancamento.setTipoServico(tipoServico);
+                            itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                            itemLancamento.setUsuario(acesso.getUsuario());
+                            itensLancamento.add(itemLancamento);
+                        }
+                    } else if (lancamentos.get(i).getDevolucao().getCodigo_devolucao() != 0) {
+                        if (lancamentos.get(i).getDevedor() > 0) {
+                            ItemLancamento itemLancamento = new ItemLancamento();
+                            itemLancamento.setData_lancamento(data_atual.getTime());
+                            itemLancamento.setLancamento(lancamentos.get(i));
+                            itemLancamento.setValor_lancamento(lancamentos.get(i).getDevedor());
+                            tipoServico = new TipoServico();
+                            tipoServico.setCodigo_tipo_servico(7);
+                            itemLancamento.setTipoServico(tipoServico);
+                            itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                            itemLancamento.setUsuario(acesso.getUsuario());
+                            itensLancamento.add(itemLancamento);
+                        }
+                    } else if (lancamentos.get(i).getVenda().getCodigo_venda() != 0) {
+                        if (lancamentos.get(i).getDevedor() > 0) {
+                            ItemLancamento itemLancamento = new ItemLancamento();
+                            itemLancamento.setData_lancamento(data_atual.getTime());
+                            itemLancamento.setLancamento(lancamentos.get(i));
+                            itemLancamento.setValor_lancamento(lancamentos.get(i).getDevedor());
+                            tipoServico = new TipoServico();
+                            tipoServico.setCodigo_tipo_servico(11);
+                            itemLancamento.setTipoServico(tipoServico);
+                            itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
+                            itemLancamento.setUsuario(acesso.getUsuario());
+                            itensLancamento.add(itemLancamento);
+                        }
+                    }
+
+                }
+                pool = new Pool();
+                LancamentoDAO lancamentoDAO = new LancamentoDAO(pool);
+                lancamentoDAO.salvarItemLancamento(itensLancamento);
+                consultarLancamentos();
+            }
+
+        }
+
+    }
 }

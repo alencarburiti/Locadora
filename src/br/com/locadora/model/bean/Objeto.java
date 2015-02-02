@@ -17,16 +17,15 @@ public class Objeto {
     private String titulo_original;
     private String producao;
     private String duracao;
-//    private String midia;
     private Integer censura;
     private String tipo_midia;
-//    private Diaria diaria;
     private Genero genero;
     private Integer saldo;
     private Integer disponivel;
     private String elenco;
     private String sinopse;
     private String status;
+    private String diretor;
 
     public Integer getCodigo_objeto() {
         return codigo_objeto;
@@ -154,6 +153,14 @@ public class Objeto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDiretor() {
+        return diretor;
+    }
+
+    public void setDiretor(String diretor) {
+        this.diretor = diretor;
     }
 
 }

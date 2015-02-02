@@ -972,13 +972,17 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             Double total_a_pagar = moeda.getPrecoFormato(jtf_valor_total_a_pagar.getText());
 
             if(total_a_pagar > 0 && total_a_pagar > desconto){
-            jtf_desconto.setText(moeda.setPrecoFormat(desconto.toString()));
+                jtf_desconto.setText(moeda.setPrecoFormat(desconto.toString()));
+                total_a_pagar = total_a_pagar - desconto;
+                jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(total_a_pagar.toString()));
             } else if(total_a_pagar <= desconto) {
                 jtf_desconto.setText(moeda.setPrecoFormat(total_a_pagar.toString()));
                 desconto = moeda.getPrecoFormato(jtf_desconto.getText());
+                total_a_pagar = 0.00;
+                jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(total_a_pagar.toString()));
             }
             
-            troco = valor_pago - (total_a_pagar - desconto);
+            troco = valor_pago - (total_a_pagar);
 
             if (troco > 0) {
                 jtf_troco.setText(moeda.setPrecoFormat(String.valueOf(troco)));
@@ -1158,8 +1162,9 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     public void imprimir() {
         Usuario usuario = acesso.getUsuario();
         Printer imprimir = new Printer();
-        imprimir.comprovanteLocacao(itensLocacaoSalvar, janelapaiLocacao.dependente, usuario, lancamento);
         String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiLocacao.dependente.getNome_dependente() + ".txt";
+        imprimir.comprovanteLocacao(itensLocacaoSalvar, janelapaiLocacao.dependente, usuario, lancamento, nome_arquivo);
+//        String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiLocacao.dependente.getNome_dependente() + ".txt";
         if (imprimir.imprimirArquivo(nome_arquivo)) {
             //Desabilita para não haver mais alteração
             jtf_valor_pago.setEditable(false);
@@ -1280,6 +1285,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             Double valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText());
             valor_pago = valor_pago - troco;
             Double valor_total_locacao = moeda.getPrecoFormato(jtf_valor_total_locacao.getText());
+            Double valor_total_a_pagar = moeda.getPrecoFormato(jtf_valor_total_a_pagar.getText());
             Double saldo = 0.00;
             if (jtf_saldo.getForeground().equals(Color.BLACK)) {
                 saldo = moeda.getPrecoFormato(jtf_saldo.getText());
@@ -1290,6 +1296,12 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             TipoServico tipoServico;
             lancamento = new Lancamento();
             lancamento.setValor_total(valor_total_locacao);
+            lancamento.setSaldo_dia(saldo);
+            lancamento.setDesconto(valor_desconto);
+            lancamento.setDesconto_entrega_antecipada(0.00);
+            lancamento.setValor_pago(moeda.getPrecoFormato(jtf_valor_pago.getText()));
+            lancamento.setTroco(troco);
+            lancamento.setValor_total_a_pagar(valor_total_a_pagar);
             lancamento.setDependente(janelapaiLocacao.dependente);
             tipoServico = new TipoServico();
             tipoServico.setCodigo_tipo_servico(1);

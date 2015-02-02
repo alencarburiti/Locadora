@@ -15,9 +15,11 @@ import br.com.locadora.conexao.Pool;
 import br.com.locadora.controller.SiscomController;
 import br.com.locadora.model.bean.AcessoUsuario;
 import br.com.locadora.model.bean.Objeto;
+import br.com.locadora.model.command.ConsultarCopia;
 import br.com.locadora.model.dao.ObjetoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
 import static br.com.locadora.view.MenuObjeto.jtf_pesquisa;
 import java.awt.event.KeyEvent;
@@ -26,6 +28,8 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -40,6 +44,7 @@ public class MenuObjeto extends javax.swing.JFrame {
     public static Objeto objeto;
     public AcessoUsuario acesso;
     public CadastraAlteraObjeto cadastraAlteraObjeto;
+    public ObjetoDAO objetoDAO;
 
     public MenuObjeto() {
         initComponents();
@@ -59,11 +64,13 @@ public class MenuObjeto extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jrb_codigo = new javax.swing.JRadioButton();
-        jrb_ator = new javax.swing.JRadioButton();
+        jrb_elenco = new javax.swing.JRadioButton();
         jrb_titulo = new javax.swing.JRadioButton();
         jl_pesquisar_destino = new javax.swing.JLabel();
         jb_pesquisa = new javax.swing.JButton();
         jtf_pesquisa = new javax.swing.JTextField();
+        jrb_diretor = new javax.swing.JRadioButton();
+        jrb_sinopse = new javax.swing.JRadioButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbl_objeto = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -103,13 +110,13 @@ public class MenuObjeto extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(jrb_ator);
-        jrb_ator.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jrb_ator.setText("Elenco");
-        jrb_ator.setName("jrb_ator"); // NOI18N
-        jrb_ator.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jrb_elenco);
+        jrb_elenco.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jrb_elenco.setText("Elenco");
+        jrb_elenco.setName("jrb_elenco"); // NOI18N
+        jrb_elenco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrb_atorActionPerformed(evt);
+                jrb_elencoActionPerformed(evt);
             }
         });
 
@@ -151,6 +158,20 @@ public class MenuObjeto extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(jrb_diretor);
+        jrb_diretor.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+        jrb_diretor.setText("Diretor");
+        jrb_diretor.setName("jrb_diretor"); // NOI18N
+        jrb_diretor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_diretorActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jrb_sinopse);
+        jrb_sinopse.setText("Sinopse");
+        jrb_sinopse.setName("jrb_sinopse"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -159,18 +180,22 @@ public class MenuObjeto extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jrb_titulo)
                             .addComponent(jl_pesquisar_destino))
                         .addGap(0, 0, 0)
-                        .addComponent(jrb_ator)
+                        .addComponent(jrb_elenco)
                         .addGap(0, 0, 0)
-                        .addComponent(jrb_codigo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 6, Short.MAX_VALUE))
+                        .addComponent(jrb_diretor)
+                        .addGap(0, 0, 0)
+                        .addComponent(jrb_sinopse)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jrb_codigo))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,8 +207,11 @@ public class MenuObjeto extends javax.swing.JFrame {
                                 .addComponent(jrb_titulo)
                                 .addGap(0, 0, 0)
                                 .addComponent(jl_pesquisar_destino))
-                            .addComponent(jrb_ator)
-                            .addComponent(jrb_codigo))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jrb_elenco)
+                                .addComponent(jrb_diretor)
+                                .addComponent(jrb_codigo)
+                                .addComponent(jrb_sinopse)))
                         .addGap(0, 0, 0)
                         .addComponent(jtf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jb_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -431,10 +459,10 @@ public class MenuObjeto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
-    private void jrb_atorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_atorActionPerformed
+    private void jrb_elencoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_elencoActionPerformed
         jtf_pesquisa.requestFocus();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_atorActionPerformed
+    }//GEN-LAST:event_jrb_elencoActionPerformed
 
     private void jtbl_objetoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbl_objetoKeyPressed
         acionarAtalho(evt);
@@ -473,6 +501,11 @@ public class MenuObjeto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_pesquisaKeyPressed
 
+    private void jrb_diretorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_diretorActionPerformed
+        jtf_pesquisa.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_diretorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -496,8 +529,10 @@ public class MenuObjeto extends javax.swing.JFrame {
     private javax.swing.JButton jb_pesquisa;
     private javax.swing.JButton jb_sair;
     private javax.swing.JLabel jl_pesquisar_destino;
-    public static javax.swing.JRadioButton jrb_ator;
     public static javax.swing.JRadioButton jrb_codigo;
+    public static javax.swing.JRadioButton jrb_diretor;
+    public static javax.swing.JRadioButton jrb_elenco;
+    private javax.swing.JRadioButton jrb_sinopse;
     public static javax.swing.JRadioButton jrb_titulo;
     public static javax.swing.JTable jtbl_objeto;
     public static javax.swing.JTextField jtf_pesquisa;
@@ -512,9 +547,66 @@ public class MenuObjeto extends javax.swing.JFrame {
         return objeto;
     }
 
+    
     public void buscarDados() {
-        controller = new SiscomController();
-        controller.processarRequisicao("consultarObjeto");
+        try {
+            pool = new Pool();
+            objetoDAO = new ObjetoDAO(pool);
+            if (jrb_codigo.isSelected() == true) {
+                if (!jtf_pesquisa.getText().equals("")) {
+                    objetos = null;
+                    objetos = objetoDAO.getObjeto_codigo(Integer.parseInt(jtf_pesquisa.getText().trim()));
+                    
+                    mostrar_Objeto(objetos);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Informe um Código");
+                }
+            } else if (jrb_titulo.isSelected() == true) {
+                objetos = null;
+                objetos = objetoDAO.getObjeto_objeto(jtf_pesquisa.getText().trim());
+                mostrar_Objeto(objetos);
+            } else if (jrb_elenco.isSelected() == true) {
+                objetos = null;
+                objetos = objetoDAO.getObjeto_elenco(jtf_pesquisa.getText().trim());
+                mostrar_Objeto(objetos);
+            } else if (jrb_diretor.isSelected() == true) {
+                objetos = null;
+                objetos = objetoDAO.getObjeto_diretor(jtf_pesquisa.getText().trim());
+                mostrar_Objeto(objetos);
+            } else if (jrb_sinopse.isSelected() == true) {
+                objetos = null;
+                objetos = objetoDAO.getObjeto_sinopse(jtf_pesquisa.getText().trim());
+                mostrar_Objeto(objetos);
+            } 
+            
+            else {
+                objetos = null;
+                objetos = objetoDAO.getObjeto_elenco(MenuObjeto.jtf_pesquisa.getText().trim());
+                mostrar_Objeto(objetos);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultarCopia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    public void mostrar_Objeto(List<Objeto> objetos) {
+        DefaultTableModel tableModel = (DefaultTableModel) MenuObjeto.jtbl_objeto.getModel();
+        tableModel.setNumRows(0);
+        
+        if (objetos.size() > 0) {
+            for (Objeto objeto1 : objetos) {
+                DefaultTableModel row = (DefaultTableModel) MenuObjeto.jtbl_objeto.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(objeto1, objeto1.getTitulo());
+                row.addRow(new Object[]{objeto1.getCodigo_objeto(), hashDbGrid, objeto1.getTitulo_original(), objeto1.getElenco()});                                
+            }
+            this.objetos = objetos;
+            
+            jtbl_objeto.requestFocus();
+            jtbl_objeto.setSelectionMode(1);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum Objeto encontrado");
+        }
     }
 
     public void setStatusTela(boolean status) {

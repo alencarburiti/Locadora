@@ -203,11 +203,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jb_salvar.setText("Salvar");
         jb_salvar.setName("jb_salvar"); // NOI18N
         jb_salvar.setPreferredSize(new java.awt.Dimension(100, 40));
-        jb_salvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_salvarMouseClicked(evt);
-            }
-        });
         jb_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_salvarActionPerformed(evt);
@@ -280,7 +275,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cadastraUsuario();
+            jb_salvar.requestFocus();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jpf_senhaKeyPressed
@@ -337,19 +332,16 @@ private void jtf_loginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
 
-    private void jb_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_salvarMouseClicked
-        if(evt.getClickCount() == 1){
-            cadastraUsuario();
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jb_salvarMouseClicked
-
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
+        cadastraUsuario();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarActionPerformed
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         acionarAtalho(evt);
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jb_salvar.doClick();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarKeyPressed
 

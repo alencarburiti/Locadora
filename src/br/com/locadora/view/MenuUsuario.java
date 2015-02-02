@@ -174,17 +174,32 @@ public class MenuUsuario extends javax.swing.JFrame {
                 jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_codigo.setText("Código");
                 jrb_codigo.setName("jrb_codigo"); // NOI18N
+                jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_codigoActionPerformed(evt);
+                    }
+                });
 
                 buttonGroup1.add(jrb_nome);
                 jrb_nome.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_nome.setSelected(true);
                 jrb_nome.setText("Nome");
                 jrb_nome.setName("jrb_nome"); // NOI18N
+                jrb_nome.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_nomeActionPerformed(evt);
+                    }
+                });
 
                 buttonGroup1.add(jrb_login);
                 jrb_login.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jrb_login.setText("Login");
                 jrb_login.setName("jrb_login"); // NOI18N
+                jrb_login.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jrb_loginActionPerformed(evt);
+                    }
+                });
 
                 jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
                 jLabel1.setText("Parâmetro");
@@ -462,6 +477,21 @@ public class MenuUsuario extends javax.swing.JFrame {
     private void jb_sairKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_sairKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairKeyPressed
+
+    private void jrb_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_nomeActionPerformed
+        jtf_pesquisa.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_nomeActionPerformed
+
+    private void jrb_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_loginActionPerformed
+        jtf_pesquisa.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_loginActionPerformed
+
+    private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
+        jtf_pesquisa.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_codigoActionPerformed
 
     /**
      * @param args the command line arguments

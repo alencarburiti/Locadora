@@ -124,8 +124,8 @@
                     <Column editable="false" title="C&#xf3;digo" type="java.lang.Integer"/>
                     <Column editable="false" title="Descri&#xe7;&#xe3;o" type="java.lang.Object"/>
                     <Column editable="false" title="Dias" type="java.lang.String"/>
-                    <Column editable="false" title="Valor" type="java.lang.String"/>
-                    <Column editable="false" title="Reloca&#xe7;&#xe3;o" type="java.lang.String"/>
+                    <Column editable="false" title="Valor Loca&#xe7;&#xe3;o" type="java.lang.String"/>
+                    <Column editable="false" title="Valor Reloca&#xe7;&#xe3;o" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -135,7 +135,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="170" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -279,7 +279,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/br/com/locadora/image/finalizar.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Finalizar"/>
+            <Property name="text" type="java.lang.String" value="OK"/>
             <Property name="name" type="java.lang.String" value="jb_ok" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 40]"/>

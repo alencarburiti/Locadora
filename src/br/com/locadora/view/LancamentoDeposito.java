@@ -444,6 +444,12 @@ public class LancamentoDeposito extends javax.swing.JFrame {
             tipoServico = (TipoServico) hashDbGrid.getObjeto();
 
             lancamento.setValor_total(moeda.getPrecoFormato(jtf_valor_lancamento.getText()));
+            lancamento.setSaldo_dia(0.00);
+            lancamento.setDesconto(0.00);
+            lancamento.setDesconto_entrega_antecipada(0.00);
+            lancamento.setValor_pago(0.00);
+            lancamento.setTroco(0.00);
+            lancamento.setValor_total_a_pagar(0.00);
             lancamento.setTipoServico(tipoServico);
             lancamento.setDependente(janelapai.dependente);
             Usuario usuario = new Usuario();

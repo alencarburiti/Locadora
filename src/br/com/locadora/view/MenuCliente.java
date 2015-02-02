@@ -589,8 +589,7 @@ public class MenuCliente extends javax.swing.JFrame {
         Cliente cliente = null;
         if (tb != null) {
             if (tb.getSelectedRow() != -1) {
-                cliente = new Cliente();
-                cliente.setCodigo_cliente(clientes.get(tb.getSelectedRow()).getCodigo_cliente());
+                cliente = clientes.get(tb.getSelectedRow());                
             }
         }
         return cliente;

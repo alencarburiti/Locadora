@@ -14,5 +14,6 @@ public interface InterfaceClienteDAO {
     public abstract List<Cliente> getClientes_codigo(Integer codigo_cliente) throws SQLException;
     public abstract List<Cliente> getCliente_nome(String nome_cliente) throws SQLException;
     public abstract Cliente getCliente_cpf(String cpf) throws SQLException;
+    public abstract Cliente getClienteCpf(String cpf) throws SQLException;
     public abstract List<Cliente> getClientes() throws SQLException;
 }

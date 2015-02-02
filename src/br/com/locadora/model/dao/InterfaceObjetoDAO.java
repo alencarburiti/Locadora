@@ -12,6 +12,7 @@ public interface InterfaceObjetoDAO {
     public abstract void atualizar(Objeto cliente) throws SQLException;
     public abstract List<Objeto> getObjeto_codigo(Integer codigo_cliente) throws SQLException;
     public abstract List<Objeto> getObjeto_objeto(String objeto) throws SQLException;    
-    public abstract List<Objeto> getObjeto_ator(String ator) throws SQLException;    
+    public abstract List<Objeto> getObjeto_diretor(String diretor) throws SQLException;        
+    public abstract List<Objeto> getObjeto_elenco(String ator) throws SQLException;    
     public abstract List<Objeto> getObjetos() throws SQLException;
 }

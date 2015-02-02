@@ -145,7 +145,7 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta Fornecedor"));
         jPanel3.setName("jPanel3"); // NOI18N
 
-        jl_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jl_pesquisar.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jl_pesquisar.setText("Parâmetro");
         jl_pesquisar.setName("jl_pesquisar"); // NOI18N
 
@@ -168,12 +168,22 @@ public class MenuFornecedor extends javax.swing.JFrame {
         jrb_codigo.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_codigo.setText("Código");
         jrb_codigo.setName("jrb_codigo"); // NOI18N
+        jrb_codigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_codigoActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jrb_descricao);
         jrb_descricao.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jrb_descricao.setSelected(true);
         jrb_descricao.setText("Nome Fantasia");
         jrb_descricao.setName("jrb_descricao"); // NOI18N
+        jrb_descricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb_descricaoActionPerformed(evt);
+            }
+        });
 
         jtf_pesquisa.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jtf_pesquisa.setName("jtf_pesquisa"); // NOI18N
@@ -450,6 +460,16 @@ public class MenuFornecedor extends javax.swing.JFrame {
         acionarAtalho(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_pesquisaKeyPressed
+
+    private void jrb_descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_descricaoActionPerformed
+        jtf_pesquisa.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_descricaoActionPerformed
+
+    private void jrb_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_codigoActionPerformed
+        jtf_pesquisa.requestFocus();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb_codigoActionPerformed
 
     /**
      * @param args the command line arguments

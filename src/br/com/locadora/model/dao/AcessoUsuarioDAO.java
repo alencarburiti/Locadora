@@ -136,7 +136,7 @@ public class AcessoUsuarioDAO {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         String sqlSelect = "SELECT * FROM ACESSO A, INTERFACE B WHERE A.INTERFACE_CODIGO_INTERFACE = B.CODIGO_INTERFACE "
-                + "AND  USUARIO_CODIGO_USUARIO = ?;";
+                + "AND  USUARIO_CODIGO_USUARIO = ? ORDER BY B.ORDEM ASC;";
         ResultSet rs = null;
 
         try {

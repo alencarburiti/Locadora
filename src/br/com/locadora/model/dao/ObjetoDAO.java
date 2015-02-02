@@ -1,13 +1,8 @@
 package br.com.locadora.model.dao;
 
 import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.model.bean.Copia;
-import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Genero;
-import br.com.locadora.model.bean.ItemLocacao;
-import br.com.locadora.model.bean.Locacao;
 import br.com.locadora.model.bean.Objeto;
-import br.com.locadora.model.bean.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +34,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
             "`SINOPSE` = ?,\n" +
             "`CENSURA` = ?,\n" +
             "`GENERO_CODIGO_GENERO` = ?,\n" +            
-            "`DEL_FLAG` = ?\n" +
+            "`DEL_FLAG` = ?, DIRETOR = ?\n" +
             "WHERE `CODIGO_OBJETO` = ?;";
         try {
             ps = con.prepareStatement(sqlAtualizar);
@@ -100,10 +95,8 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         return resultado;
     }
     
-    
-    
     @Override
-    public List<Objeto> getObjeto_ator(String ator) throws SQLException {
+    public List<Objeto> getObjeto_diretor(String diretor) throws SQLException {
         List<Objeto> resultado = new ArrayList<Objeto>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -115,11 +108,74 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
                 + "    GENERO C\n"
                 + "WHERE\n"                
                 + "        A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
-                + "        AND A.ELENCO LIKE ? LIMIT 0, 50;";
+                + "        AND A.DIRETOR LIKE ?\n"                
+                + "GROUP BY A.CODIGO_OBJETO , A.DIRETOR LIMIT 0, 50;";
         
         try {
             ps = con.prepareStatement(sqlSelect);
-            ps.setString(1, "%" + ator + "%");
+            ps.setString(1, "%" + diretor + "%");
+            
+            rs = ps.executeQuery();
+            
+            resultado = getListaObjeto(rs);
+            
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
+    public List<Objeto> getObjeto_sinopse(String sinopse) throws SQLException {
+        List<Objeto> resultado = new ArrayList<Objeto>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT \n"
+                + "    *\n"
+                + "FROM\n"
+                + "    OBJETO A,\n"                
+                + "    GENERO C\n"
+                + "WHERE\n"                
+                + "        A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
+                + "        AND A.SINOPSE LIKE ?\n"                
+                + "GROUP BY A.CODIGO_OBJETO , A.SINOPSE LIMIT 0, 50;";
+        
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, "%" + sinopse + "%");
+            
+            rs = ps.executeQuery();
+            
+            resultado = getListaObjeto(rs);
+            
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
+    
+    
+    @Override
+    public List<Objeto> getObjeto_elenco(String elenco) throws SQLException {
+        List<Objeto> resultado = new ArrayList<Objeto>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT \n"
+                + "    *\n"
+                + "FROM\n"
+                + "    OBJETO A,\n"                
+                + "    GENERO C\n"
+                + "WHERE\n"                
+                + "        A.GENERO_CODIGO_GENERO = C.CODIGO_GENERO\n"
+                + "        AND A.ELENCO LIKE ? ORDER BY A.ELENCO ASC LIMIT 0, 50;";
+        
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, "%" + elenco + "%");
             
             rs = ps.executeQuery();
             
@@ -198,8 +254,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
             objeto.setElenco(rs.getString("ELENCO"));
             objeto.setSinopse(rs.getString("SINOPSE"));
             objeto.setCensura(rs.getInt("CENSURA"));
-            
-            
+            objeto.setDiretor(rs.getString("DIRETOR"));            
             
             Genero genero = new Genero();
             genero.setCodigo_genero(rs.getInt("CODIGO_GENERO"));
@@ -220,7 +275,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         
         String sqlInsert = "INSERT INTO `locadora`.`OBJETO`(`TITULO`,`TITULO_ORIGINAL`,"
                 + "`TIPO_MOVIMENTO`,`PRODUCAO`,`DURACAO`,`TIPO_MIDIA`,`GENERO_CODIGO_GENERO`,`ELENCO`,"
-                + "`SINOPSE`, CENSURA)VALUES(?,?,?,?,?,?,?,?,?,?);";
+                + "`SINOPSE`, CENSURA, DIRETOR)VALUES(?,?,?,?,?,?,?,?,?,?,?);";
         
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -254,15 +309,14 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         ps.setString(3, objeto.getTipo_movimento());
         ps.setString(4, objeto.getProducao());
         ps.setString(5, objeto.getDuracao());
-//        ps.setString(6, objeto.getMidia());
         ps.setString(6, objeto.getTipo_midia());
         ps.setString(7, objeto.getElenco());
         ps.setString(8, objeto.getSinopse());
         ps.setInt(9, objeto.getCensura());
         ps.setInt(10, objeto.getGenero().getCodigo_genero());
-//        ps.setInt(12, objeto.getDiaria().getCodigo_diaria());
         ps.setInt(11, Integer.parseInt(objeto.getStatus()));
-        ps.setInt(12, objeto.getCodigo_objeto());        
+        ps.setString(12, objeto.getDiretor());
+        ps.setInt(13, objeto.getCodigo_objeto());        
     }
     
     private void setPreparedStatement1(Objeto objeto, PreparedStatement ps)
@@ -273,13 +327,12 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
         ps.setString(3, objeto.getTipo_movimento());
         ps.setString(4, objeto.getProducao());
         ps.setString(5, objeto.getDuracao());
-//        ps.setString(6, objeto.getMidia());
         ps.setString(6, objeto.getTipo_midia());
-//        ps.setInt(8, objeto.getDiaria().getCodigo_diaria());
         ps.setInt(7, objeto.getGenero().getCodigo_genero());
         ps.setString(8, objeto.getElenco());
         ps.setString(9, objeto.getSinopse());
         ps.setInt(10, objeto.getCensura());
+        ps.setString(11, objeto.getDiretor());
     }
     
 }

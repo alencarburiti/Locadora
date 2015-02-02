@@ -34,11 +34,11 @@ public class ItemVenda {
         this.produto = produto;
     }
 
-    public Combo getPacotePromocional() {
+    public Combo getCombo() {
         return pacotePromocional;
     }
 
-    public void setPacotePromocional(Combo pacotePromocional) {
+    public void setCombo(Combo pacotePromocional) {
         this.pacotePromocional = pacotePromocional;
     }
 

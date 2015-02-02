@@ -614,15 +614,15 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_finalizar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jb_limpar_locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jb_sair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGap(30, 30, 30))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1161,7 +1161,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     public void adicionarItemLocado(Copia copiaAtendimento, Diaria diaria) {
         copiaAtendimento.setDiaria(diaria);
         if (verificarItemLocacao() == true) {
-            if (copiaAtendimento.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl() == 0) {
+            if (copiaAtendimento.getDiaria().getPacotePromocional().getCodigo_combo() == 0) {
                 if (verificaTabela(copiaAtendimento) == false) {
                     pool = new Pool();
                     copiaDAO = new CopiaDAO(pool);
@@ -1451,7 +1451,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             jtf_total_locacao.setText("R$ 0,00");
             jtf_saldo.setText(moeda.setPrecoFormat(String.valueOf(saldo.toString())));
             jtf_codigo_objeto_locacao.requestFocus();
-            verificarDebito(dependente.getCliente());
+            verificarDebito(dependente.getCliente());                       
 
         }
     }
@@ -1647,10 +1647,10 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                 if (tabela == true) {
                     break;
                 } else {
-                    if (copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl() != 0) {
-                        System.out.println("Codigo Pacote Promocional:" + copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl());
-                        if (copia.getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl().equals(
-                                copiasLocacao.get(i).getDiaria().getPacotePromocional().getCodigo_pacote_promocioanl())) {
+                    if (copia.getDiaria().getPacotePromocional().getCodigo_combo() != 0) {
+                        System.out.println("Codigo Pacote Promocional:" + copia.getDiaria().getPacotePromocional().getCodigo_combo());
+                        if (copia.getDiaria().getPacotePromocional().getCodigo_combo().equals(
+                                copiasLocacao.get(i).getDiaria().getPacotePromocional().getCodigo_combo())) {
                             tabela = true;
                             break;
                         }
@@ -1704,6 +1704,9 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 
         if (evt.getKeyCode() == KeyEvent.VK_F10) {
             jb_finalizar_locacao.doClick();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F6) {
+            jb_pesquisa_locacao.doClick();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             retornaJanelaPai();

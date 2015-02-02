@@ -545,15 +545,15 @@ public class AtendimentoVenda extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_finalizar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jb_limpar_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jb_sair_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,7 +709,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             JOptionPane.showMessageDialog(null, "Informe primeiro um Cliente");
             jtf_nome_cliente.requestFocus();
         } else {
-            ConsultaProdutoPacotePromocionalVenda consultaProdutoVenda = new ConsultaProdutoPacotePromocionalVenda();
+            ConsultaProdutoComboVenda consultaProdutoVenda = new ConsultaProdutoComboVenda();
             consultaProdutoVenda.janelapai = this;
             consultaProdutoVenda.setVisible(true);
             setStatusTela(false);
@@ -934,7 +934,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
 
 
     public void consultarProdutoCombo() {
-        ConsultaProdutoPacotePromocionalVenda consultaProdutoVenda = new ConsultaProdutoPacotePromocionalVenda();
+        ConsultaProdutoComboVenda consultaProdutoVenda = new ConsultaProdutoComboVenda();
         consultaProdutoVenda.janelapai = this;
         consultaProdutoVenda.setVisible(true);
         setStatusTela(false);
@@ -1028,14 +1028,14 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             Integer quantidade = Integer.parseInt(jtf_quantidade.getText());
             System.out.println("Type Product"+ itemAtendimento.getType_product());
             if(itemAtendimento.getType_product() == 0){
-                Double preco_total = quantidade * itemAtendimento.getPacotePromocional().getValor();
+                Double preco_total = quantidade * itemAtendimento.getCombo().getValor();
                 itemAtendimento.setPreco_total(preco_total);
                 itemAtendimento.setQuantidade(quantidade);
             
-                row.addRow(new Object[]{itemAtendimento.getPacotePromocional().getCodigo_barras(), 
-                    itemAtendimento.getPacotePromocional().getDescricao(),
+                row.addRow(new Object[]{itemAtendimento.getCombo().getCodigo_barras(), 
+                    itemAtendimento.getCombo().getDescricao(),
                     itemAtendimento.getQuantidade(),
-                    moeda.setPrecoFormat(itemAtendimento.getPacotePromocional().getValor().toString()),
+                    moeda.setPrecoFormat(itemAtendimento.getCombo().getValor().toString()),
                     moeda.setPrecoFormat(itemAtendimento.getPreco_total().toString())});
             } else if(itemAtendimento.getType_product() == 1){
                 Double preco_total = quantidade * itemAtendimento.getProduto().getPreco_venda();
@@ -1098,9 +1098,9 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
             this.itemAtendimento = itemVenda;
             moeda = new Moeda();
             if(itemAtendimento.getType_product() == 0){
-                jtf_codigo_item_venda.setText(itemAtendimento.getPacotePromocional().getCodigo_barras());
-                jtf_descricao_venda.setText(itemAtendimento.getPacotePromocional().getDescricao());
-                jtf_preco_venda.setText(moeda.setPrecoFormat(itemAtendimento.getPacotePromocional().getValor().toString()));
+                jtf_codigo_item_venda.setText(itemAtendimento.getCombo().getCodigo_barras());
+                jtf_descricao_venda.setText(itemAtendimento.getCombo().getDescricao());
+                jtf_preco_venda.setText(moeda.setPrecoFormat(itemAtendimento.getCombo().getValor().toString()));
                 jtf_quantidade.setEditable(false);
                 jtf_quantidade.setText("1");
                 jb_adicionar_venda.requestFocus();                

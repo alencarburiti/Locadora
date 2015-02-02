@@ -1173,7 +1173,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
 
-            String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
+            String nome_arquivo = "Imprimir/comprovanteVenda_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
             File arquivo = new File(nome_arquivo);
             arquivo.deleteOnExit();
             arquivo.delete();
@@ -1185,8 +1185,8 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     public void imprimir() {
         Usuario usuario = acesso.getUsuario();
         Printer imprimir = new Printer();
-        imprimir.comprovanteVenda(itens, janelapaiVenda.dependente, usuario, lancamento);
         String nome_arquivo = "Imprimir/comprovanteVenda_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
+        imprimir.comprovanteVenda(itens, janelapaiVenda.dependente, usuario, lancamento, nome_arquivo);
         if (imprimir.imprimirArquivo(nome_arquivo)) {
             //Desabilita para não haver mais alteração
             jtf_valor_pago.setEditable(false);
@@ -1219,6 +1219,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
             Double valor_desconto = moeda.getPrecoFormato(jtf_desconto.getText());
             valor_pago = valor_pago - troco;
             Double valor_total_venda = moeda.getPrecoFormato(jtf_valor_total_venda.getText());
+            Double valor_total_a_pagar = moeda.getPrecoFormato(jtf_valor_total_a_pagar.getText());
             Double saldo = 0.00;
             if (jtf_saldo.getForeground().equals(Color.BLACK)) {
                 saldo = moeda.getPrecoFormato(jtf_saldo.getText());
@@ -1229,6 +1230,14 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
             TipoServico tipoServico;
             lancamento = new Lancamento();
             lancamento.setValor_total(moeda.getPrecoFormato(jtf_valor_total_venda.getText()));
+            
+            lancamento.setSaldo_dia(saldo);
+            lancamento.setDesconto(valor_desconto);
+            lancamento.setDesconto_entrega_antecipada(0.00);
+            lancamento.setValor_pago(moeda.getPrecoFormato(jtf_valor_pago.getText()));
+            lancamento.setTroco(troco);
+            lancamento.setValor_total_a_pagar(valor_total_a_pagar);
+            
             lancamento.setDependente(janelapaiVenda.dependente);
             tipoServico = new TipoServico();
             tipoServico.setCodigo_tipo_servico(10);
@@ -1375,7 +1384,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
     }
 
     public void retornaJanelaPai() {
-        String nome_arquivo = "Imprimir/comprovanteLocacao_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
+        String nome_arquivo = "Imprimir/comprovanteVenda_" + janelapaiVenda.dependente.getNome_dependente() + ".txt";
         File arquivo = new File(nome_arquivo);
         arquivo.deleteOnExit();
         arquivo.delete();

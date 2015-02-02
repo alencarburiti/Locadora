@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -54,14 +55,14 @@ public class ProdutoDAO {
             ps.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Código de Barras "+ produto.getCodigo_barras()+" já Cadastrado!");
         } finally {
             pool.liberarConnection(con);
         }
         return produto;
     }
 
-    public void atualizar(Produto produto) {
+    public boolean atualizar(Produto produto) {
         Connection con = pool.getConnection();
         PreparedStatement ps;
 
@@ -74,9 +75,10 @@ public class ProdutoDAO {
 
             ps.executeUpdate();
             ps.close();
-
+            return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Código de Barras "+ produto.getCodigo_barras()+" já Cadastrado!");
+            return false;
         } finally {
             pool.liberarConnection(con);
         }

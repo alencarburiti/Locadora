@@ -307,7 +307,7 @@ public class ComboDAO {
         List<Combo> resultado = new ArrayList<Combo>();
         while (rs.next()) {
             Combo pacotePromocional = new Combo();
-            pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
+            pacotePromocional.setCodigo_combo(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
             pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_TROCA"));
             pacotePromocional.setDias_combo(rs.getInt("DIAS_COMBO"));
@@ -328,7 +328,7 @@ public class ComboDAO {
         List<Combo> resultado = new ArrayList<Combo>();
         while (rs.next()) {
             Combo pacotePromocional = new Combo();
-            pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
+            pacotePromocional.setCodigo_combo(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
             pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_TROCA"));
             pacotePromocional.setDias_combo(rs.getInt("DIAS_COMBO"));
@@ -354,7 +354,7 @@ public class ComboDAO {
         List<Combo> resultado = new ArrayList<Combo>();
         while (rs.next()) {
             Combo pacotePromocional = new Combo();
-            pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
+            pacotePromocional.setCodigo_combo(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             pacotePromocional.setDescricao(rs.getString("DESCRICAO"));
             pacotePromocional.setQuantidade_troca(rs.getInt("QUANTIDADE_TROCA"));
             pacotePromocional.setDias_corridos(rs.getInt("DIAS_CORRIDOS"));
@@ -382,7 +382,7 @@ public class ComboDAO {
             ItemCombo itemPacotePromocional = new ItemCombo();
             itemPacotePromocional.setCodigo_item_pacote_promocional(rs.getInt("CODIGO_ITEM_PACOTE_PROMOCIONAL"));
             Combo pacotePromocional = new Combo();
-            pacotePromocional.setCodigo_pacote_promocioanl(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
+            pacotePromocional.setCodigo_combo(rs.getInt("CODIGO_PACOTE_PROMOCIONAL"));
             
             Diaria diaria = new Diaria();
             diaria.setCodigo_diaria(rs.getInt("CODIGO_DIARIA"));
@@ -421,7 +421,7 @@ public class ComboDAO {
             res = ps.executeQuery();
             res.next();
             codigo_max = res.getInt("MAX(CODIGO_PACOTE_PROMOCIONAL)");
-            pacotePromocional.setCodigo_pacote_promocioanl(codigo_max);
+            pacotePromocional.setCodigo_combo(codigo_max);
 
             ps.close();
         } finally {
@@ -440,7 +440,7 @@ public class ComboDAO {
         try {
             ps = con.prepareStatement(sqlInsert);
             
-            ps.setInt(1, itemPacotePromocional.getPacotePromocional().getCodigo_pacote_promocioanl());
+            ps.setInt(1, itemPacotePromocional.getPacotePromocional().getCodigo_combo());
             ps.setInt(2, itemPacotePromocional.getDiaria().getCodigo_diaria());                        
 
             ps.executeUpdate();            
@@ -478,7 +478,7 @@ public class ComboDAO {
         } else {
             ps.setInt(5, 1);
         }
-        ps.setInt(6, pacotePromocional.getCodigo_pacote_promocioanl());
+        ps.setInt(6, pacotePromocional.getCodigo_combo());
     }
 
 }

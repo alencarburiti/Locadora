@@ -38,7 +38,7 @@ public class ConsultarCliente implements InterfaceCommand {
             } else if (MenuCliente.jrb_cpf.isSelected() == true) {
                 if (!MenuCliente.jtf_pesquisa.getText().equals("")) {
                     cliente = null;
-                    cliente = clienteDAO.getCliente_cpf(jtf_pesquisa.getText().trim());
+                    cliente = clienteDAO.getClienteCpf(jtf_pesquisa.getText().trim());
                     mostrar_clientes(cliente);
                 } else {
                     JOptionPane.showMessageDialog(null, "Informe o CPF");

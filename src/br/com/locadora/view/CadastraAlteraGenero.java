@@ -282,7 +282,7 @@ public class CadastraAlteraGenero extends javax.swing.JFrame {
 
     private void cadastrarAlterarGenero() {
         if (verificarCampos()) {
-                retornaJanelaPai();
+                
             try {
                 genero = new Genero();
                 pool = new Pool();

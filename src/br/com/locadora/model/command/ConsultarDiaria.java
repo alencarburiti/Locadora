@@ -62,21 +62,21 @@ public class ConsultarDiaria implements InterfaceCommand {
 
                 String valor = null;
                 
-                String multa = null;
+                String relocacao = null;
 
                 valor = String.valueOf(diarias.get(i).getValor());
                 
-                multa = String.valueOf(diarias.get(i).getMultas());
+                relocacao = String.valueOf(diarias.get(i).getMultas());
 
                 Moeda moeda = new Moeda();
 
                 valor = moeda.setPrecoFormat(valor);
                 
-                multa = moeda.setPrecoFormat(multa);
+                
 
                 DefaultTableModel row = (DefaultTableModel) MenuDiaria.jtbl_diaria.getModel();
                 ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
-                row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, valor, diaria.getDias(), multa});
+                row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, valor, moeda.setPrecoFormat(relocacao), diaria.getDias(),});
             }
             MenuDiaria.diarias = diarias;
 
@@ -94,20 +94,20 @@ public class ConsultarDiaria implements InterfaceCommand {
         } else {
             String valor = null;
             String valor_promocao = null;
-            String multa = null;
+            String relocacao = null;
 
             valor = String.valueOf(diaria.getValor());            
-            multa = String.valueOf(diaria.getMultas());
+            relocacao = String.valueOf(diaria.getMultas());
 
             Moeda moeda = new Moeda();
 
             valor = moeda.setPrecoFormat(valor);
             valor_promocao = moeda.setPrecoFormat(valor_promocao);
-            multa = moeda.setPrecoFormat(multa);
+            
 
             DefaultTableModel row = (DefaultTableModel) MenuDiaria.jtbl_diaria.getModel();
             ItemDbGrid hashDbGrid = new ItemDbGrid(diaria, diaria.getNome_diaria());
-            row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, diaria.getDias(), valor, valor_promocao, multa});
+            row.addRow(new Object[]{diaria.getCodigo_diaria(), hashDbGrid, valor, moeda.setPrecoFormat(relocacao), diaria.getDias(),});
             diarias.add(diaria);
         }
         MenuDiaria.diarias = diarias;

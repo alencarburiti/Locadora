@@ -190,6 +190,32 @@ public class ClienteDAO implements InterfaceClienteDAO {
         }
         return null;
     }
+    
+    public Cliente getClienteCpf(String cpf) {
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT * FROM CLIENTE WHERE CPF = ? ORDER BY NOME_CLIENTE LIMIT 0, 50;";
+
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, cpf);            
+
+            rs = ps.executeQuery();
+
+            List<Cliente> resultado = getListaCliente(rs);
+
+            if (resultado.size() > 0) {
+                return resultado.get(0);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return null;
+    }
 
     @Override
     public Cliente getCliente_codigo(Integer codigo_cliente) {
@@ -319,8 +345,8 @@ public class ClienteDAO implements InterfaceClienteDAO {
 
         String sqlInsert = "INSERT INTO `locadora`.`CLIENTE`(`NOME_CLIENTE`,`NOME_EMPRESA_TRABALHO`,"
                 + "`PROFISSAO`,`CPF`,`DATA_NASCIMENTO`,`ENDERECO`,`BAIRRO`,`COMPLEMENTO`,"
-                + "`CIDADE`,`ESTADO`,`EMAIL`,`LOGIN`,`SENHA`,`OBSERVACAO`,`DEL_FLAG`, DATA_CADASTRO) VALUES"
-                + "( ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, CURRENT_DATE());";
+                + "`CIDADE`,`ESTADO`,`EMAIL`,`OBSERVACAO`,`DEL_FLAG`, DATA_CADASTRO) VALUES"
+                + "( ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? , CURRENT_DATE());";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -390,14 +416,12 @@ public class ClienteDAO implements InterfaceClienteDAO {
         ps.setString(8, cliente.getComplemento());
         ps.setString(9, cliente.getCidade());
         ps.setString(10, cliente.getEstado());
-        ps.setString(11, cliente.getEmail());
-        ps.setString(12, cliente.getLogin());
-        ps.setString(13, cliente.getSenha());
-        ps.setString(14, cliente.getObservacao());        
+        ps.setString(11, cliente.getEmail());        
+        ps.setString(12, cliente.getObservacao());        
         if(cliente.getStatus() == true){
-            ps.setInt(15, 0);            
+            ps.setInt(13, 0);            
         } else {
-            ps.setInt(15, 1);            
+            ps.setInt(13, 1);            
         }
         
     }

@@ -335,7 +335,7 @@ public class AtualizaUsuario extends javax.swing.JFrame {
     private void jpf_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpf_senhaKeyPressed
         acionarAtalho(evt);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jb_salvar.doClick();
+            jb_salvar.requestFocus();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jpf_senhaKeyPressed
@@ -360,6 +360,9 @@ public class AtualizaUsuario extends javax.swing.JFrame {
 
     private void jb_salvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_salvarKeyPressed
         acionarAtalho(evt);
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jb_salvar.doClick();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_salvarKeyPressed
 

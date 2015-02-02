@@ -481,8 +481,138 @@ public class CopiaDAO implements InterfaceCopiaDAO {
         }
         return resultado;
     }
+    
+    public List<Copia> getCopia_diretor(String diretor) throws SQLException {
+        List<Copia> resultado = new ArrayList<Copia>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-    public List<Copia> getCopia_ator(String ator) throws SQLException {
+        String sqlSelect = "SELECT \n"
+                + "    *,\n"
+                + "    (CASE\n"
+                + "        WHEN OB.DEL_FLAG = 0 THEN ''\n"
+                + "        ELSE (SELECT \n"
+                + "                MAX(DATA_PREVISTA)\n"
+                + "            FROM\n"
+                + "                ITEM_LOCACAO\n"
+                + "            WHERE\n"
+                + "                COPIA_CODIGO_COPIA = OB.CODIGO_COPIA AND DEL_FLAG = 1)\n"
+                + "    END) AS DATA_PREVISTA\n"
+                + "FROM\n"
+                + "    (SELECT \n"
+                + "        A.CODIGO_COPIA AS CODIGO_COPIA,\n"
+                + "            A.OBJETO_CODIGO_OBJETO AS OBJETO_CODIGO_OBJETO,\n"
+                + "            A.CODIGO_BARRAS AS CODIGO_BARRAS,\n"
+                + "            A.DEL_FLAG AS DEL_FLAG,\n"
+                + "            A.PRECO_CUSTO AS PRECO_CUSTO,\n"
+                + "            A.DATA_AQUISICAO AS DATA_AQUISICAO,\n"
+                + "            A.NUMERO_COPIA AS NUMERO_COPIA,\n"
+                + "            A.DEFECT_FLAG AS DEFECT_FLAG,\n"
+                + "            B.TITULO AS TITULO,\n"
+                + "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n"
+                + "            B.TIPO_MIDIA AS TIPO_MIDIA,\n"
+                + "            A.MIDIA AS MIDIA,\n"
+                + "            B.CENSURA AS CENSURA,\n"
+                + "            A.IDIOMA AS IDIOMA,\n"
+                + "            A.LEGENDA AS LEGENDA,\n"
+                + "            C.CODIGO_DIARIA AS CODIGO_DIARIA,\n"
+                + "            C.NOME_DIARIA,\n"
+                + "            C.DIAS AS DIAS,\n"
+                + "            C.VALOR AS VALOR,\n"
+                + "            C.MAXIMO_DIAS AS MAXIMO_DIAS,\n"
+                + "            C.ACUMULATIVO AS ACUMULATIVO\n"
+                + "    FROM\n"
+                + "        locadora.COPIA A, locadora.OBJETO B, locadora.DIARIA C\n"
+                + "    WHERE\n"
+                + "        A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
+                + "            AND C.CODIGO_DIARIA = A.DIARIA_CODIGO_DIARIA\n"
+                + "            AND TIPO_MOVIMENTO = 'Locação'\n"
+                + "            AND B.DIRETOR LIKE ? \n"
+                + "    ORDER BY B.TITULO , CODIGO_COPIA\n"
+                + "    LIMIT 0 , 50) AS OB;\n"
+                + "           \n"
+                + "           ";
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, "%" + diretor + "%");
+
+            rs = ps.executeQuery();
+
+            resultado = getListaCopia(rs);
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+    
+    public List<Copia> getCopia_sinopse(String diretor) throws SQLException {
+        List<Copia> resultado = new ArrayList<Copia>();
+        Connection con = pool.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sqlSelect = "SELECT \n"
+                + "    *,\n"
+                + "    (CASE\n"
+                + "        WHEN OB.DEL_FLAG = 0 THEN ''\n"
+                + "        ELSE (SELECT \n"
+                + "                MAX(DATA_PREVISTA)\n"
+                + "            FROM\n"
+                + "                ITEM_LOCACAO\n"
+                + "            WHERE\n"
+                + "                COPIA_CODIGO_COPIA = OB.CODIGO_COPIA AND DEL_FLAG = 1)\n"
+                + "    END) AS DATA_PREVISTA\n"
+                + "FROM\n"
+                + "    (SELECT \n"
+                + "        A.CODIGO_COPIA AS CODIGO_COPIA,\n"
+                + "            A.OBJETO_CODIGO_OBJETO AS OBJETO_CODIGO_OBJETO,\n"
+                + "            A.CODIGO_BARRAS AS CODIGO_BARRAS,\n"
+                + "            A.DEL_FLAG AS DEL_FLAG,\n"
+                + "            A.PRECO_CUSTO AS PRECO_CUSTO,\n"
+                + "            A.DATA_AQUISICAO AS DATA_AQUISICAO,\n"
+                + "            A.NUMERO_COPIA AS NUMERO_COPIA,\n"
+                + "            A.DEFECT_FLAG AS DEFECT_FLAG,\n"
+                + "            B.TITULO AS TITULO,\n"
+                + "            B.TIPO_MOVIMENTO AS TIPO_MOVIMENTO,\n"
+                + "            B.TIPO_MIDIA AS TIPO_MIDIA,\n"
+                + "            A.MIDIA AS MIDIA,\n"
+                + "            B.CENSURA AS CENSURA,\n"
+                + "            A.IDIOMA AS IDIOMA,\n"
+                + "            A.LEGENDA AS LEGENDA,\n"
+                + "            C.CODIGO_DIARIA AS CODIGO_DIARIA,\n"
+                + "            C.NOME_DIARIA,\n"
+                + "            C.DIAS AS DIAS,\n"
+                + "            C.VALOR AS VALOR,\n"
+                + "            C.MAXIMO_DIAS AS MAXIMO_DIAS,\n"
+                + "            C.ACUMULATIVO AS ACUMULATIVO\n"
+                + "    FROM\n"
+                + "        locadora.COPIA A, locadora.OBJETO B, locadora.DIARIA C\n"
+                + "    WHERE\n"
+                + "        A.OBJETO_CODIGO_OBJETO = B.CODIGO_OBJETO\n"
+                + "            AND C.CODIGO_DIARIA = A.DIARIA_CODIGO_DIARIA\n"
+                + "            AND TIPO_MOVIMENTO = 'Locação'\n"
+                + "            AND B.DIRETOR LIKE ? \n"
+                + "    ORDER BY B.TITULO , CODIGO_COPIA\n"
+                + "    LIMIT 0 , 50) AS OB;\n"
+                + "           \n"
+                + "           ";
+        try {
+            ps = con.prepareStatement(sqlSelect);
+            ps.setString(1, "%" + diretor + "%");
+
+            rs = ps.executeQuery();
+
+            resultado = getListaCopia(rs);
+            ps.close();
+        } finally {
+            pool.liberarConnection(con);
+        }
+        return resultado;
+    }
+
+    public List<Copia> getCopia_elenco(String ator) throws SQLException {
         List<Copia> resultado = new ArrayList<Copia>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
