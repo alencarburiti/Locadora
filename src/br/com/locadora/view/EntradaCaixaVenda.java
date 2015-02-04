@@ -941,7 +941,7 @@ public final class EntradaCaixaVenda extends javax.swing.JFrame {
 
         pool = new Pool();
         ClienteDAO clienteDAO = new ClienteDAO(pool);
-        cliente = clienteDAO.getCliente_codigo(janelapaiVenda.dependente.getCliente().getCodigo_cliente());
+        cliente = clienteDAO.getCliente_codigo(janelapaiVenda.dependente.getCliente().getCodigo_cliente()).get(0);
 
         if (cliente != null) {
 

@@ -18,10 +18,15 @@ import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
+import br.com.locadora.util.ItemDbGrid;
 import br.com.locadora.util.TemaInterface;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +41,7 @@ public class MenuCliente extends javax.swing.JFrame {
     public AcessoUsuario acesso;
     public Cliente cliente;
     public CadastraAlteraCliente cadastraAlteraCliente;
+    public ClienteDAO clienteDAO;
 
     public MenuCliente() {
         initComponents();
@@ -372,7 +378,7 @@ public class MenuCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarActionPerformed
-        buscarDados();
+        consultarCliente();
 }//GEN-LAST:event_jb_buscarActionPerformed
 
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
@@ -406,7 +412,7 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jb_pesquisaActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_pesquisaActionPerformed1
-        buscarDados();
+        consultarCliente();
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_pesquisaActionPerformed1
 
@@ -533,10 +539,87 @@ public class MenuCliente extends javax.swing.JFrame {
     public static javax.swing.JTable jtbl_cliente;
     public static javax.swing.JTextField jtf_pesquisa;
     // End of variables declaration//GEN-END:variables
+  
+    public void consultarCliente() {
 
-    public void buscarDados() {
-        controller = new SiscomController();
-        controller.processarRequisicao("consultarCliente");
+        try {
+            pool = new Pool();
+            clienteDAO = new ClienteDAO(pool);
+            if (jrb_codigo_cliente.isSelected() == true) {                
+                    clientes = null;
+                    clientes = clienteDAO.getCliente_codigo(Integer.parseInt(jtf_pesquisa.getText().trim()));                    
+                    mostrar_clientes(clientes);                
+            } else if (jrb_cpf.isSelected() == true) {
+                if (!MenuCliente.jtf_pesquisa.getText().equals("")) {
+                    clientes = null;
+                    clientes = clienteDAO.getClienteCpf(jtf_pesquisa.getText().trim());
+                    mostrar_clientes(clientes);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Informe o CPF");
+                }
+            } else {
+                clientes = null;
+                clientes = clienteDAO.getCliente_nome(jtf_pesquisa.getText().trim());
+                mostrar_clientes(clientes);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage() + "Problemas com a consulta: ");            
+        } catch (NumberFormatException e) {            
+            JOptionPane.showMessageDialog(null, "Informe um Código");
+        } catch (ParseException ex) {
+
+        }        
+    }
+
+    public void mostrar_clientes(List<Cliente> clientes) throws ParseException {
+        DefaultTableModel tableModel = (DefaultTableModel) jtbl_cliente.getModel();
+        tableModel.setNumRows(0);
+
+        if (clientes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum Cliente encontrado");
+        } else {
+
+            for (Cliente cliente1 : clientes) {
+                String cpf_formatado = "";
+                
+                cliente = new Cliente();
+                cliente.setCodigo_cliente(cliente1.getCodigo_cliente());
+                cliente.setNome_cliente(cliente1.getNome_cliente());
+                cliente.setNome_empresa_trabalho(cliente1.getNome_empresa_trabalho());
+                cliente.setProfissao(cliente1.getProfissao());
+                cliente.setCpf(cliente1.getCpf());
+                cliente.setData_nascimento(cliente1.getData_nascimento());
+                cliente.setEndereco(cliente1.getEndereco());
+                cliente.setBairro(cliente1.getBairro());
+                cliente.setComplemento(cliente1.getComplemento());
+                cliente.setCidade(cliente1.getCidade());
+                cliente.setEstado(cliente1.getEstado());
+                cliente.setEmail(cliente1.getEmail());
+                cliente.setStatus(cliente1.getStatus());
+                String status = "";
+            if (cliente.getStatus() == true) {
+                status = "Ativo";
+            } else {
+                status = "Inativo";
+            }
+                cliente.setObservacao(cliente1.getObservacao());
+                System.out.println("CPF: "+cliente.getCpf());
+                if(cliente.getCpf().length() > 0){
+                    cpf_formatado = cliente.getCpf().substring(0,3) + "." + cliente.getCpf().substring(3,6) + "." + cliente.getCpf().substring(6,9) + "-" + cliente.getCpf().substring(9,11);                    
+                }
+                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                String data_nascimento = out.format(in.parse(cliente1.getData_nascimento().toString()));
+                DefaultTableModel row = (DefaultTableModel) jtbl_cliente.getModel();
+                ItemDbGrid hashDbGrid = new ItemDbGrid(cliente, cliente.getNome_cliente());
+                row.addRow(new Object[]{cliente.getCodigo_cliente(), hashDbGrid, data_nascimento, cpf_formatado, cliente.getEmail(), status});
+            }
+            
+            jtbl_cliente.requestFocus();
+            jtbl_cliente.setSelectionMode(1);
+        }
+
     }
 
     public Cliente tbClienteLinhaSelecionada(JTable tb) {

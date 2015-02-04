@@ -7,6 +7,7 @@ import br.com.locadora.model.bean.Cliente;
 import br.com.locadora.model.bean.Copia;
 import br.com.locadora.model.bean.Devolucao;
 import br.com.locadora.model.bean.Diaria;
+import br.com.locadora.model.bean.Feriado;
 import br.com.locadora.model.bean.ItemLancamento;
 import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.Lancamento;
@@ -19,6 +20,7 @@ import br.com.locadora.model.bean.Venda;
 import br.com.locadora.model.dao.ClienteDAO;
 import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.model.dao.DiariaDAO;
+import br.com.locadora.model.dao.FeriadoDAO;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
@@ -33,6 +35,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,6 +59,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
     public LocacaoDAO locacaoDAO;
     public Lancamento lancamento;
     public Cliente cliente;
+    public List<Feriado> feriados;
 
     /**
      * Creates new form ProdutoCadastroGUI
@@ -845,31 +849,31 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
     private void jb_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_salvarActionPerformed
         if (jb_salvar.isEnabled()) {
-            if(verificarTempoCadastro()){                
+            if (verificarTempoCadastro()) {
                 recalcularValores();
                 checarPagamento();
-                finalizarCaixa();                
+                finalizarCaixa();
             } else {
-                moeda = new Moeda();                
+                moeda = new Moeda();
                 Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
                 Double desconto = moeda.getPrecoFormato(jtf_desconto.getText());
                 Double valor_a_pagar = moeda.getPrecoFormato(jtf_valor_total_a_pagar.getText());
-                
-                Double resultado = (valor_a_pagar - (desconto+valor_pago));
-                
-                if(resultado <= 0){
+
+                Double resultado = (valor_a_pagar - (desconto + valor_pago));
+
+                if (resultado <= 0) {
                     recalcularValores();
                     checarPagamento();
                     finalizarCaixa();
                 } else {
-                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");                    
-                    int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente com Tempo Cadastro menor que 6 Meses: " + df.format(cliente.getData_cadastro()) +"\n Deseja Autorizar?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    int selectedOption = JOptionPane.showConfirmDialog(this, "Cliente com Tempo Cadastro menor que 6 Meses: " + df.format(cliente.getData_cadastro()) + "\n Deseja Autorizar?", "Atenção", JOptionPane.YES_NO_OPTION);
                     if (selectedOption == JOptionPane.YES_NO_OPTION) {
                         recalcularValores();
                         checarPagamento();
                         finalizarCaixa();
-                    }                    
-                }           
+                    }
+                }
             }
         }
         // TODO add your handling code here:
@@ -918,7 +922,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
         pool = new Pool();
         ClienteDAO clienteDAO = new ClienteDAO(pool);
-        cliente = clienteDAO.getCliente_codigo(janelapaiLocacao.dependente.getCliente().getCodigo_cliente());        
+        cliente = clienteDAO.getCliente_codigo(janelapaiLocacao.dependente.getCliente().getCodigo_cliente()).get(0);
 
         if (cliente != null) {
 
@@ -943,8 +947,8 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
 
             ConfiguraSistema configuraSistema = new ConfiguraSistema();
             int tempo_inadiplente = Integer.parseInt(configuraSistema.jtf_a_prazo_cadastro_mes.getText());
-            
-            if (duracaoCadastro < tempo_inadiplente) {                
+
+            if (duracaoCadastro < tempo_inadiplente) {
                 return false;
             } else {
                 return true;
@@ -954,9 +958,8 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
         }
     }
 
-    
     public void recalcularValores() {
-        
+
         jtf_saldo.setText(janelapaiLocacao.jtf_saldo.getText());
         jtf_valor_total_locacao.setText(janelapaiLocacao.jtf_total_locacao.getText());
         jtf_valor_total_a_pagar.setText(janelapaiLocacao.jtf_total_a_pagar.getText());
@@ -971,17 +974,17 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             Double valor_pago = moeda.getPrecoFormato(jtf_valor_pago.getText());
             Double total_a_pagar = moeda.getPrecoFormato(jtf_valor_total_a_pagar.getText());
 
-            if(total_a_pagar > 0 && total_a_pagar > desconto){
+            if (total_a_pagar > 0 && total_a_pagar > desconto) {
                 jtf_desconto.setText(moeda.setPrecoFormat(desconto.toString()));
                 total_a_pagar = total_a_pagar - desconto;
                 jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(total_a_pagar.toString()));
-            } else if(total_a_pagar <= desconto) {
+            } else if (total_a_pagar <= desconto) {
                 jtf_desconto.setText(moeda.setPrecoFormat(total_a_pagar.toString()));
                 desconto = moeda.getPrecoFormato(jtf_desconto.getText());
                 total_a_pagar = 0.00;
                 jtf_valor_total_a_pagar.setText(moeda.setPrecoFormat(total_a_pagar.toString()));
             }
-            
+
             troco = valor_pago - (total_a_pagar);
 
             if (troco > 0) {
@@ -1136,7 +1139,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                             janelapaiLocacao.jtf_total_a_pagar.setText("R$ 0,00");
                             janelapaiLocacao.jtf_saldo.setText("R$ 0,00");
                             janelapaiLocacao.setTitle("Atendimento Locação");
-                            janelapaiLocacao.jl_total_filmes.setText("Total de Objetos: 0");                            
+                            janelapaiLocacao.jl_total_filmes.setText("Total de Objetos: 0");
                             janelapaiLocacao.jl_lancamento_aberto.setText("Pendente: 0");
                         }
                     }
@@ -1373,7 +1376,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                         itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
                         itemLancamento.setUsuario(acesso.getUsuario());
                         itensLancamento.add(itemLancamento);
-                        lancamentos.get(i).setSaldo(lancamentos.get(i).getSaldo()-valor_total_locacao);
+                        lancamentos.get(i).setSaldo(lancamentos.get(i).getSaldo() - valor_total_locacao);
                         valor_total_locacao = valor_total_locacao - lancamentos.get(i).getSaldo();
                     }
                 }
@@ -1402,7 +1405,7 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                         itemLancamento.setCaixa(Integer.parseInt(conf.readPropertie("caixa")));
                         itemLancamento.setUsuario(acesso.getUsuario());
                         itensLancamento.add(itemLancamento);
-                        lancamentos.get(i).setSaldo(lancamentos.get(i).getSaldo()-valor_total_locacao);
+                        lancamentos.get(i).setSaldo(lancamentos.get(i).getSaldo() - valor_total_locacao);
                         valor_total_locacao = valor_total_locacao - lancamentos.get(i).getSaldo();
                     }
                 }
@@ -1525,14 +1528,80 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
                     if (janelapaiLocacao.copiasLocacao.get(i).getDiaria().getPacotePromocional().getDias_restantes() > 0) {
                         cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + janelapaiLocacao.copiasLocacao.get(i).getDiaria().getPacotePromocional().getDias_restantes());
                         itemLocacao.setData_prevista(cal.getTime());
+                        System.out.println("Data Prevista 1:" + cal.getTime());
                     } else {
                         itemLocacao.setData_prevista(cal.getTime());
+                        System.out.println("Data Prevista 2:" + cal.getTime());
                     }
                 } catch (Exception e) {
                     itemLocacao.setData_prevista(cal.getTime());
                 }
 
-                itemLocacao.setData_prevista(cal.getTime());
+                int dia = cal.get(cal.DAY_OF_WEEK);
+                System.out.println("Dia da semana:" + dia);
+                if (dia == 1) {
+                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                    if (checarFeriado(cal) == false) {
+                        itemLocacao.setData_prevista(cal.getTime());
+                    } else {
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                        if (checarFeriado(cal) == false) {
+                            itemLocacao.setData_prevista(cal.getTime());
+                        } else {
+                            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                            if (checarFeriado(cal) == false) {
+                                itemLocacao.setData_prevista(cal.getTime());
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                if (checarFeriado(cal) == false) {
+                                    itemLocacao.setData_prevista(cal.getTime());
+                                } else {
+                                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                    if (checarFeriado(cal) == false) {
+                                        itemLocacao.setData_prevista(cal.getTime());
+                                    } else {
+                                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                        itemLocacao.setData_prevista(cal.getTime());
+                                    }
+
+                                }
+
+                            }
+
+                        }
+                    }
+                } else {
+                    if (checarFeriado(cal) == false) {
+                        itemLocacao.setData_prevista(cal.getTime());
+                    } else {
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                        if (checarFeriado(cal) == false) {
+                            itemLocacao.setData_prevista(cal.getTime());
+                        } else {
+                            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                            if (checarFeriado(cal) == false) {
+                                itemLocacao.setData_prevista(cal.getTime());
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                if (checarFeriado(cal) == false) {
+                                    itemLocacao.setData_prevista(cal.getTime());
+                                } else {
+                                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                    if (checarFeriado(cal) == false) {
+                                        itemLocacao.setData_prevista(cal.getTime());
+                                    } else {
+                                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                        itemLocacao.setData_prevista(cal.getTime());
+                                    }
+
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+
                 itensLocacaoSalvar.add(itemLocacao);
                 pool = new Pool();
                 CopiaDAO copiaDAO = new CopiaDAO(pool);
@@ -1552,6 +1621,24 @@ public final class EntradaCaixaLocacao extends javax.swing.JFrame {
             System.out.println("Valor inválido: " + e.getMessage());
 
             e.printStackTrace();
+        }
+    }
+
+    public boolean checarFeriado(Calendar cal) {
+        pool = new Pool();
+        feriados = new ArrayList<>();
+        FeriadoDAO feriadoDAO = new FeriadoDAO(pool);
+
+        SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd");
+
+        String data_prev = out.format(cal.getTime());
+
+        feriados = feriadoDAO.getFeriadoData(data_prev);
+        if (feriados.size() > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 

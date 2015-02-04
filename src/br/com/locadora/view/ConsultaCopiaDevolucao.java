@@ -78,6 +78,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jb_ok = new javax.swing.JButton();
         jb_cancelar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Locações em Aberto");
@@ -270,24 +271,37 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
                     }
                 });
 
+                jButton1.setText("Devolver Todos");
+                jButton1.setName("jButton1"); // NOI18N
+                jButton1.setPreferredSize(new java.awt.Dimension(100, 40));
+                jButton1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton1ActionPerformed(evt);
+                    }
+                });
+
                 javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
                 jPanel2.setLayout(jPanel2Layout);
                 jPanel2Layout.setHorizontalGroup(
                     jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(300, 300, 300)
+                        .addGap(250, 250, 250)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(330, 330, 330))
+                        .addGap(250, 250, 250))
                 );
                 jPanel2Layout.setVerticalGroup(
                     jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jb_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jb_ok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jb_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jb_ok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, 0))
                 );
 
@@ -393,6 +407,11 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_atorActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        devolverTodos();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -407,6 +426,7 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -434,33 +454,22 @@ public class ConsultaCopiaDevolucao extends javax.swing.JFrame {
         }
     }
     
+    public void devolverTodos() {
+                
+        for(int i = 0; i < itensDevolucao.size(); i++){
+            ItemLocacao itemLinha = itensDevolucao.get(i);
+            if ((janelapaiDevolucao != null) && (itemLinha != null)) {
+                janelapaiDevolucao.consultarCopiaLocada(itemLinha.getCopia().getCodigo_barras());
+                janelapaiDevolucao.jb_adicionar_devolucao.doClick();
+            }            
+        }
+                retornaJanelaPai();        
+    }
+    
     public ItemLocacao tbItemLocacaoLinhaSelecionada(JTable tb) {
         ItemLocacao itemSelecionada = null;
         if (tb.getSelectedRow() != -1) {
             itemSelecionada = itensDevolucao.get(tb.getSelectedRow());
-
-//            itemSelecionada.setCodigo_item_locacao(itensDevolucao.get(tb.getSelectedRow()).getCodigo_item_locacao());
-//            itemSelecionada.setValor_multa(itensDevolucao.get(tb.getSelectedRow()).getValor_multa());
-//            itemSelecionada.setDias_multa(itensDevolucao.get(tb.getSelectedRow()).getDias_multa());
-//            itemSelecionada.setData_locacao(itensDevolucao.get(tb.getSelectedRow()).getData_locacao());
-//            itemSelecionada.setData_prevista(itensDevolucao.get(tb.getSelectedRow()).getData_prevista());
-//            itemSelecionada.setValor_locado(itensDevolucao.get(tb.getSelectedRow()).getValor_locado());
-//            itemSelecionada.setValor_pago(itensDevolucao.get(tb.getSelectedRow()).getValor_pago());
-//
-//            Diaria diaria = new Diaria();
-//            diaria.setDias(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getDias());
-//            diaria.setCodigo_diaria(itensDevolucao.get(tb.getSelectedRow()).getCopia().getDiaria().getCodigo_diaria());
-//
-//            Objeto objeto = new Objeto();
-//            objeto.setTitulo(itensDevolucao.get(tb.getSelectedRow()).getCopia().getObjeto().getTitulo());
-//
-//            Copia copia = new Copia();
-//            copia.setDiaria(diaria);
-//            copia.setObjeto(objeto);
-//            copia.setCodigo_copia(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_copia());
-//            copia.setCodigo_barras(itensDevolucao.get(tb.getSelectedRow()).getCopia().getCodigo_barras());
-//
-//            itemSelecionada.setCopia(copia);
 
         }
         return itemSelecionada;

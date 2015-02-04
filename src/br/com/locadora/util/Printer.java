@@ -62,19 +62,19 @@ public class Printer {
                 linhasTxt.println("===========================================");
                 linhasTxt.println("********** CNPJ 73.411.457/0001-62 ********");
                 linhasTxt.println("               R. 18 Qd, 164               ");
-                linhasTxt.println("  Setor Central, Goianésia - GO, 76380-000 ");
+                linhasTxt.println("  Setor Central, Goianesia - GO, 76380-000 ");
                 linhasTxt.println("               (62) 3353-4030              ");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("********** NAO É DOCUMENTO FISCAL *********");
+                linhasTxt.println("********** NAO E DOCUMENTO FISCAL *********");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("************ Recibo de Locação ************");
+                linhasTxt.println("************ Recibo de Locacao ************");
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Controle Interno: "+ lancamento.getCodigo_lancamento());
                 
                 if(dependente.getTipo_dependente().equals("Dependente")){
                     Pool pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);
-                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));                    
+                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()).get(0));                    
                     linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
                     linhasTxt.println("Dependente: " + dependente.getNome_dependente());
                 } else {
@@ -82,7 +82,7 @@ public class Printer {
                 }
                 
                 linhasTxt.println("===========================================");
-                linhasTxt.println(String.format("%-6s", "Cód    Descrição            Prev   Valor"));
+                linhasTxt.println(String.format("%-6s", "Cod    Descricao            Prev   Valor"));
                 //dados da tabela
 
                 Moeda moeda = new Moeda();
@@ -107,7 +107,7 @@ public class Printer {
                 }
                 
                 linhasTxt.println("===========================================");                
-                linhasTxt.println("Valor Locação  (-):     " + moeda.setPrecoFormat(lancamento.getValor_total().toString()));
+                linhasTxt.println("Valor Locacao  (-):     " + moeda.setPrecoFormat(lancamento.getValor_total().toString()));
                 linhasTxt.println("Saldo Anterior (+):     " + moeda.setPrecoFormat(lancamento.getSaldo_dia().toString()));
                 linhasTxt.println("Valor Desconto (+):     " + moeda.setPrecoFormat(lancamento.getDesconto().toString()));
                 linhasTxt.println("SubTotal       (=):     " + moeda.setPrecoFormat(lancamento.getValor_total_a_pagar().toString()));
@@ -115,15 +115,15 @@ public class Printer {
                 linhasTxt.println("Troco          (-):     " + moeda.setPrecoFormat(lancamento.getTroco().toString()));
                 linhasTxt.println("===========================================");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Usuário: " + usuario.getNome_usuario());
+                linhasTxt.println("Usuario: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Termo de Responsabilidade: Estou ciente que");
                 linhasTxt.println("os DVDs que foram por mim alugados, ou com");
-                linhasTxt.println("minha autorizacao, deverão ser devolvidos no");
-                linhasTxt.println("mesmo estado de conservação, e que qualquer ");
+                linhasTxt.println("minha autorizacao, deverao ser devolvidos no");
+                linhasTxt.println("mesmo estado de conservacao, e que qualquer ");
                 linhasTxt.println("dano ou perda, eu me comprometo a pagar o ");
                 linhasTxt.println("valor da Nota Fiscal do Filme. ");
-                linhasTxt.println("BOLSA: (   )SIM    (   )NÃO");
+                linhasTxt.println("BOLSA: (   )SIM    (   )NAO");
                 linhasTxt.println("De acordo:                                 ");
                 linhasTxt.println("                                           ");
                 linhasTxt.println("___________________________________________");
@@ -137,8 +137,13 @@ public class Printer {
                 
 //                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
-                linhasTxt.println("        OBRIGADO PELA PREFERÊNCIA          ");
+                linhasTxt.println("        OBRIGADO PELA PREFERENCIA          ");
                 linhasTxt.println("   INFORMACOES PARA FECHAMENTO DE CONTA    ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
 
                 int i = 0;
                 while (i < 10) {
@@ -174,12 +179,12 @@ public class Printer {
                 linhasTxt.println("===========================================");
                 linhasTxt.println("********** CNPJ 73.411.457/0001-62 ********");
                 linhasTxt.println("               R. 18 Qd, 164               ");
-                linhasTxt.println("  Setor Central, Goianésia - GO, 76380-000 ");
+                linhasTxt.println("  Setor Central, Goianesia - GO, 76380-000 ");
                 linhasTxt.println("               (62) 3353-4030              ");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("********** NAO É DOCUMENTO FISCAL *********");
+                linhasTxt.println("********** NAO E DOCUMENTO FISCAL *********");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("********* Comprovante de Devolução ********");
+                linhasTxt.println("********* Comprovante de Devolucao ********");
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Controle Interno: "+ lancamento.getCodigo_lancamento());
 
@@ -187,7 +192,7 @@ public class Printer {
                 if(dependente.getTipo_dependente().equals("Dependente")){
                     Pool pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);
-                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));
+                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()).get(0));
                     linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
                     linhasTxt.println("Dependente: " + dependente.getNome_dependente());                    
                 } else {
@@ -196,7 +201,7 @@ public class Printer {
                 
 //                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
-                linhasTxt.println(String.format("%-6s", "Cód    Descrição            Prev   Dev"));
+                linhasTxt.println(String.format("%-6s", "Cod    Descricao            Prev   Dev"));
                 //dados da tabela
 
                 Moeda moeda = new Moeda();
@@ -230,7 +235,7 @@ public class Printer {
                 Double subTotal = total_devolucao;
 
                 linhasTxt.println("===========================================");                
-                linhasTxt.println("Débito Devolução        (-):     " + EntradaCaixaDevolucao.jtf_total_relocacao.getText());
+                linhasTxt.println("Debito Devolução        (-):     " + EntradaCaixaDevolucao.jtf_total_relocacao.getText());
                 linhasTxt.println("Saldo Anterior          (+):     " + EntradaCaixaDevolucao.jtf_saldo.getText());
                 linhasTxt.println("Valor Desconto          (+):     " + EntradaCaixaDevolucao.jtf_desconto.getText());
                 linhasTxt.println("Valor Desc. Dev. Antec. (+):     " + EntradaCaixaDevolucao.jtf_desconto_entrega_antecipada.getText());
@@ -238,12 +243,12 @@ public class Printer {
                 linhasTxt.println("Valor Pago              (+):     " + EntradaCaixaDevolucao.jtf_valor_pago.getText());
                 linhasTxt.println("Troco                   (-):     " + EntradaCaixaDevolucao.jtf_troco.getText());
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Usuário: " + usuario.getNome_usuario());
+                linhasTxt.println("Usuario: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Termo de Responsabilidade: Estou ciente que");
-                linhasTxt.println("os DVD’s que foram por mim alugados, ou com");
-                linhasTxt.println("minha autorização, deverão ser devolvidos no");
-                linhasTxt.println("mesmo estado de conservação, e que qualquer ");
+                linhasTxt.println("os DVDs que foram por mim alugados, ou com");
+                linhasTxt.println("minha autorizacao, deverao ser devolvidos no");
+                linhasTxt.println("mesmo estado de conservacao, e que qualquer ");
                 linhasTxt.println("dano ou perda, eu me comprometo a pagar o ");
                 linhasTxt.println("valor da Nota Fiscal do Filme. ");
                 linhasTxt.println("De acordo:                                 ");
@@ -257,8 +262,13 @@ public class Printer {
                 }
 //                linhasTxt.println("Cliente: " + dependente.getNome_dependente());
                 linhasTxt.println("===========================================");
-                linhasTxt.println("        OBRIGADO PELA PREFERÊNCIA          ");
+                linhasTxt.println("        OBRIGADO PELA PREFERENCIA          ");
                 linhasTxt.println("   INFORMACOES PARA FECHAMENTO DE CONTA    ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
 
                 int i = 0;
                 while (i < 10) {
@@ -293,10 +303,10 @@ public class Printer {
                 linhasTxt.println("===========================================");
                 linhasTxt.println("********** CNPJ 73.411.457/0001-62 ********");
                 linhasTxt.println("               R. 18 Qd, 164               ");
-                linhasTxt.println("  Setor Central, Goianésia - GO, 76380-000 ");
+                linhasTxt.println("  Setor Central, Goianesia - GO, 76380-000 ");
                 linhasTxt.println("               (62) 3353-4030              ");
                 linhasTxt.println("===========================================");
-                linhasTxt.println("********** NAO É DOCUMENTO FISCAL *********");
+                linhasTxt.println("********** NAO E DOCUMENTO FISCAL *********");
                 linhasTxt.println("===========================================");
                 linhasTxt.println("*********** Comprovante de Venda **********");
                 linhasTxt.println("===========================================");
@@ -304,14 +314,14 @@ public class Printer {
                 if(dependente.getTipo_dependente().equals("Dependente")){
                     Pool pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);
-                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()));
+                    dependente.setCliente(clienteDAO.getCliente_codigo(dependente.getCliente().getCodigo_cliente()).get(0));
                     linhasTxt.println("Titular: " + dependente.getCliente().getNome_cliente());
                     linhasTxt.println("Dependente: " + dependente.getNome_dependente());                    
                 } else {
                     linhasTxt.println("Titular: " + dependente.getNome_dependente());
                 }
                 linhasTxt.println("===========================================");
-                linhasTxt.println(String.format("%-6s", "Cód    Descrição          P. Unt.  P. Total"));
+                linhasTxt.println(String.format("%-6s", "Cod    Descriçao          P. Unt.  P. Total"));
                 //dados da tabela
 
                 Moeda moeda = new Moeda();
@@ -354,12 +364,12 @@ public class Printer {
                 linhasTxt.println("Valor Pago     (+):     " + moeda.setPrecoFormat(lancamento.getValor_pago().toString()));                
                 linhasTxt.println("Troco          (-):     " + moeda.setPrecoFormat(lancamento.getTroco().toString()));
                 linhasTxt.println("===========================================");
-                linhasTxt.println("Usuário: " + usuario.getNome_usuario());
+                linhasTxt.println("Usuario: " + usuario.getNome_usuario());
                 linhasTxt.println("===========================================");
                 linhasTxt.println("Termo de Responsabilidade: Estou ciente que");
-                linhasTxt.println("os DVD’s que foram por mim alugados, ou com");
-                linhasTxt.println("minha autorização, deverão ser devolvidos no");
-                linhasTxt.println("mesmo estado de conservação, e que qualquer ");
+                linhasTxt.println("os DVDs que foram por mim alugados, ou com");
+                linhasTxt.println("minha autorizacao, deverao ser devolvidos no");
+                linhasTxt.println("mesmo estado de conservacao, e que qualquer ");
                 linhasTxt.println("dano ou perda, eu me comprometo a pagar o ");
                 linhasTxt.println("valor da Nota Fiscal do Filme. ");
                 linhasTxt.println("De acordo:                                 ");
@@ -372,8 +382,13 @@ public class Printer {
                     linhasTxt.println("Titular: " + dependente.getNome_dependente());
                 }
                 linhasTxt.println("===========================================");
-                linhasTxt.println("        OBRIGADO PELA PREFERÊNCIA          ");
+                linhasTxt.println("        OBRIGADO PELA PREFERENCIA          ");
                 linhasTxt.println("   INFORMACOES PARA FECHAMENTO DE CONTA    ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
+                linhasTxt.println("                                           ");
 
                 int i = 0;
                 while (i < 10) {
@@ -507,7 +522,7 @@ public class Printer {
 
         try {
             DocPrintJob dpj = impressora.createPrintJob();
-            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes("UTF-8"));
+            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes("UTF8"));
 //            InputStream stream = new ByteArrayInputStream((texto + "\n").getBytes()); 
             System.out.println(texto);
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;

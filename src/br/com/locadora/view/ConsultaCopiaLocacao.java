@@ -37,6 +37,9 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
     public AtendimentoLocacao janelapai;
+    public AtendimentoDevolucao janelapai2;
+    public AtendimentoVenda janelapai3;
+    public TelaPrincipal janelapaiPrincipal;
     public List<Copia> copias;
     public Copia copia;
 
@@ -44,6 +47,9 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         initComponents();
         TemaInterface.getInterface(this);
         janelapai = null;
+        janelapai2 = null;
+        janelapai3 = null;
+        janelapaiPrincipal = null;
     }
 
     /**
@@ -71,6 +77,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jb_cancelar = new javax.swing.JButton();
         jb_ok = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Objeto/Cópias");
@@ -298,12 +305,25 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                     }
                 });
 
+                jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
+                jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/locadora/image/movies.png"))); // NOI18N
+                jButton1.setText("Objeto");
+                jButton1.setName("jButton1"); // NOI18N
+                jButton1.setPreferredSize(new java.awt.Dimension(100, 40));
+                jButton1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton1ActionPerformed(evt);
+                    }
+                });
+
                 javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
                 jPanel2.setLayout(jPanel2Layout);
                 jPanel2Layout.setHorizontalGroup(
                     jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(320, 320, 320)
+                        .addGap(217, 217, 217)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jb_ok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jb_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -315,8 +335,8 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jb_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jb_ok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, 0))
+                            .addComponent(jb_ok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 );
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -345,45 +365,19 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
             }// </editor-fold>//GEN-END:initComponents
 
     private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        setVisible(false);
-        if ((janelapai != null)) {
-            janelapai.setEnabled(true);
-            janelapai.setVisible(true);
-            //telaCadastroObjeto.setStatusTela(false);
-        }
-
+        retornaJanelaPai();
 }//GEN-LAST:event_jb_cancelarActionPerformed
 
     private void jb_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_okActionPerformed
+
         if (jtbl_copia.getSelectedRow() == 1) {
             botaoOK(jtbl_copia);
         }
+
 }//GEN-LAST:event_jb_okActionPerformed
-    public void botaoOK(JTable tb) {
-        if (tb.getSelectedRow() != -1) {
-//            this.setVisible(false);
-            Copia copiaLinha = tbCopiaLinhaSelecionada(jtbl_copia);
-            if ((janelapai != null) && (copiaLinha != null)) {
-                if (copiaLinha.getStatus().equals("X")) {
-                    JOptionPane.showMessageDialog(null, "Copia Indisponível!");
-                } else {
-//                    janelapai.setStatusTela(true);
-                    retornaJanelaPai();
-                    janelapai.carregarCopiaLocacao(copiaLinha);
-                }
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um Copia");
-        }
-    }
-
+    
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        setVisible(false);
-        if ((janelapai != null)) {
-            janelapai.setStatusTela(true);
-        }
-
+        retornaJanelaPai();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
@@ -431,12 +425,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-            if ((janelapai != null)) {
-                janelapai.setEnabled(true);
-                janelapai.setVisible(true);
-                //telaCadastroObjeto.setStatusTela(false);
-            }
+            retornaJanelaPai();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_formKeyPressed
@@ -461,6 +450,11 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jrb_sinopseActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        verificarObjeto(jtbl_copia);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -475,6 +469,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -488,9 +483,47 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
     private javax.swing.JRadioButton jrb_sinopse;
     private javax.swing.JRadioButton jrb_titulo;
     public static javax.swing.JTable jtbl_copia;
-    private javax.swing.JTextField jtf_pesquisa;
+    public static javax.swing.JTextField jtf_pesquisa;
     // End of variables declaration//GEN-END:variables
 
+    public void botaoOK(JTable tb) {
+        if (janelapai != null) {
+            if (tb.getSelectedRow() != -1) {
+                Copia copiaLinha = tbCopiaLinhaSelecionada(jtbl_copia);
+                if ((janelapai != null) && (copiaLinha != null)) {
+                    if (copiaLinha.getStatus().equals("X")) {
+                        JOptionPane.showMessageDialog(null, "Copia Indisponível!");
+                    } else {
+                        retornaJanelaPai();
+                        janelapai.carregarCopiaLocacao(copiaLinha);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um Copia");
+            }
+        }
+    }
+    
+    public void verificarObjeto(JTable tb) {
+        
+        if (tb.getSelectedRow() != -1) {
+            CadastraAlteraObjeto cadastraAlteraObjeto = new CadastraAlteraObjeto(copias.get(jtbl_copia.getSelectedRow()).getObjeto().getCodigo_objeto());
+            cadastraAlteraObjeto.setVisible(true);
+            cadastraAlteraObjeto.consultaCopiaLocacao = this;
+            this.setStatusTela(false);            
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Copia");
+        }
+        
+    }
+    
+    public void setStatusTela(boolean status) {
+        if (status) {
+            this.setVisible(status);
+        }
+        this.setEnabled(status);
+    }
+    
     public Copia tbCopiaLinhaSelecionada(JTable tb) {
         Copia copiaSelecionada = null;
         if (tb.getSelectedRow() != -1) {
@@ -556,7 +589,7 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
                         data_prevista = out.format(in.parse(copias.get(i).getData_prevista().toString()));
                     }
                 } catch (ParseException ex) {
-//                    data_prevista = "";
+
                 }
 
                 DefaultTableModel row = (DefaultTableModel) jtbl_copia.getModel();
@@ -607,6 +640,12 @@ public class ConsultaCopiaLocacao extends javax.swing.JFrame {
         this.setVisible(false);
         if (janelapai != null) {
             janelapai.setStatusTela(true);
+        } else if (janelapai2 != null) {
+            janelapai2.setStatusTela(true);
+        } else if (janelapai3 != null) {
+            janelapai3.setStatusTela(true);
+        } else if (janelapaiPrincipal != null) {
+            janelapaiPrincipal.setStatusTela(true);
         }
     }
 

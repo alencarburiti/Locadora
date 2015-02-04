@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ObjetoDAO implements InterfaceObjetoDAO {
     
@@ -189,7 +191,7 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
     }
     
     @Override
-    public List<Objeto> getObjeto_codigo(Integer codigo_objeto) throws SQLException {
+    public List<Objeto> getObjeto_codigo(Integer codigo_objeto) {
         List<Objeto> resultado = new ArrayList<Objeto>();
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
@@ -212,6 +214,8 @@ public class ObjetoDAO implements InterfaceObjetoDAO {
             resultado = getListaObjeto(rs);
             
             ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ObjetoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pool.liberarConnection(con);
         }

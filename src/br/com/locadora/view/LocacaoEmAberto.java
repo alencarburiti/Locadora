@@ -626,7 +626,7 @@ public class LocacaoEmAberto extends javax.swing.JFrame {
                 if(jtbl_locacao_aberto.getSelectedRow() != -1){
                     pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);
-                    Cliente cliente = clienteDAO.getCliente_codigo(itensDevolucao.get(jtbl_locacao_aberto.getSelectedRow()).getDependente().getCliente().getCodigo_cliente());
+                    Cliente cliente = clienteDAO.getCliente_codigo(itensDevolucao.get(jtbl_locacao_aberto.getSelectedRow()).getDependente().getCliente().getCodigo_cliente()).get(0);
 
                     if (cliente != null) {
                         if(cadastraAlteraCliente == null ){

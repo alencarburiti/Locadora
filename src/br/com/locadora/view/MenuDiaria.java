@@ -364,8 +364,8 @@ public class MenuDiaria extends javax.swing.JFrame {
     private void jb_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_novoActionPerformed
         pool = new Pool();
         UsuarioDAO usuarioControl = new UsuarioDAO(pool);
-        ArquivoConfiguracao conf = new ArquivoConfiguracao();
-        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");
+        ArquivoConfiguracao conf = new ArquivoConfiguracao();        
+        acesso = usuarioControl.permissaoInterface(conf.readPropertie("login"), "br.com.locadora.view.MenuDiaria");        
         try {
             if (acesso.getEscrever() == true) {
                 if (cadastraAlteraDiaria == null) {
@@ -382,6 +382,7 @@ public class MenuDiaria extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Usuário sem permissão. Consultar o administrador");
         }
     }//GEN-LAST:event_jb_novoActionPerformed
@@ -564,7 +565,7 @@ public class MenuDiaria extends javax.swing.JFrame {
             if (acesso.getEscrever() == true) {
 
                 diaria = tbDiariaLinhaSelecionada(jtbl_diaria);
-                System.out.println("Objeto: " + (diaria == null));
+                
                 if (diaria != null) {
                     if (cadastraAlteraDiaria == null) {
                         cadastraAlteraDiaria = new CadastraAlteraDiaria(diaria);

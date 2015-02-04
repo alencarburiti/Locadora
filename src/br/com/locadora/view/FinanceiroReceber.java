@@ -11,7 +11,6 @@ import br.com.locadora.model.bean.ItemLocacao;
 import br.com.locadora.model.bean.ItemVenda;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.TipoServico;
-import br.com.locadora.model.bean.Usuario;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.LocacaoDAO;
 import br.com.locadora.model.dao.VendaDAO;
@@ -20,9 +19,6 @@ import br.com.locadora.util.Colorir;
 import br.com.locadora.util.Moeda;
 import br.com.locadora.util.Printer;
 import br.com.locadora.util.TemaInterface;
-import static br.com.locadora.view.EntradaCaixaLocacao.acesso;
-import static br.com.locadora.view.EntradaCaixaLocacao.jtf_desconto;
-import static br.com.locadora.view.EntradaCaixaLocacao.jtf_valor_pago;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.text.DateFormat;
@@ -995,7 +991,7 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
                             itemLancamento.setUsuario(acesso.getUsuario());
                             itensLancamento.add(itemLancamento);
                         }
-                    } else if (lancamentos.get(i).getDevolucao().getCodigo_devolucao() != 0) {
+                    } else if (lancamentos.get(i).getTipoServico().getCodigo_tipo_servico() == 2) {
                         if (lancamentos.get(i).getDevedor() > 0) {
                             ItemLancamento itemLancamento = new ItemLancamento();
                             itemLancamento.setData_lancamento(data_atual.getTime());

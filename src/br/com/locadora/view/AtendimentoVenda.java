@@ -1226,6 +1226,12 @@ private void jtf_nome_clienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIR
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             jb_remover_venda.doClick();
         }
+        if (evt.getKeyCode() == KeyEvent.VK_F6) {
+            ConsultaCopiaLocacao copiaCliente = new ConsultaCopiaLocacao();
+            copiaCliente.janelapai3 = this;
+            copiaCliente.setVisible(true);
+            setStatusTela(false);
+        }
     }
     
     private void retornaJanelaPai() {

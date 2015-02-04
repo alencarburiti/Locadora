@@ -497,7 +497,7 @@ public class ConsultaClienteAtendimento extends javax.swing.JFrame {
                 if(jtbl_cliente.getSelectedRow() != -1){
                     pool = new Pool();
                     ClienteDAO clienteDAO = new ClienteDAO(pool);
-                    Cliente cliente = clienteDAO.getCliente_codigo(dependentes.get(jtbl_cliente.getSelectedRow()).getCliente().getCodigo_cliente());
+                    Cliente cliente = clienteDAO.getCliente_codigo(dependentes.get(jtbl_cliente.getSelectedRow()).getCliente().getCodigo_cliente()).get(0);
 
                     if (cliente != null) {
                         if(cadastraAlteraCliente == null ){

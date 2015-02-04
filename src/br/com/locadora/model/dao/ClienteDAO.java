@@ -39,7 +39,8 @@ public class ClienteDAO implements InterfaceClienteDAO {
             "    ESTADO = ?,\n" +
             "    EMAIL = ?,\n" +
             "    OBSERVACAO = ?,\n" +
-            "    DEL_FLAG = ?\n" +
+            "    DEL_FLAG = ?,\n" +
+            "    DATA_CADASTRO = ?\n" +
             "WHERE\n" +
             "    CODIGO_CLIENTE = ?;";
         
@@ -191,7 +192,8 @@ public class ClienteDAO implements InterfaceClienteDAO {
         return null;
     }
     
-    public Cliente getClienteCpf(String cpf) {
+    @Override
+    public List<Cliente> getClienteCpf(String cpf) {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -204,11 +206,9 @@ public class ClienteDAO implements InterfaceClienteDAO {
             rs = ps.executeQuery();
 
             List<Cliente> resultado = getListaCliente(rs);
-
-            if (resultado.size() > 0) {
-                return resultado.get(0);
-            }
+            
             ps.close();
+            return resultado;
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -218,7 +218,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
     }
 
     @Override
-    public Cliente getCliente_codigo(Integer codigo_cliente) {
+    public List<Cliente> getCliente_codigo(Integer codigo_cliente) {
         Connection con = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -231,10 +231,9 @@ public class ClienteDAO implements InterfaceClienteDAO {
             rs = ps.executeQuery();
 
             List<Cliente> resultado = getListaCliente(rs);
-            if (resultado.size() > 0) {
-                return resultado.get(0);
-            }
+            
             ps.close();
+            return resultado;
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -346,7 +345,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         String sqlInsert = "INSERT INTO `locadora`.`CLIENTE`(`NOME_CLIENTE`,`NOME_EMPRESA_TRABALHO`,"
                 + "`PROFISSAO`,`CPF`,`DATA_NASCIMENTO`,`ENDERECO`,`BAIRRO`,`COMPLEMENTO`,"
                 + "`CIDADE`,`ESTADO`,`EMAIL`,`OBSERVACAO`,`DEL_FLAG`, DATA_CADASTRO) VALUES"
-                + "( ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? , CURRENT_DATE());";
+                + "( ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? , ?);";
 
         try {
             ps = con.prepareStatement(sqlInsert);
@@ -378,6 +377,12 @@ public class ClienteDAO implements InterfaceClienteDAO {
         if (cliente.getData_nascimento() != null) {
             data_nascimento = new Date(cliente.getData_nascimento().getTime());
         }        
+        
+        Date data_cadastro = null;
+        if (cliente.getData_cadastro()!= null) {
+            data_cadastro = new Date(cliente.getData_cadastro().getTime());
+        }
+        
         ps.setString(1, cliente.getNome_cliente());
         ps.setString(2, cliente.getNome_empresa_trabalho());
         ps.setString(3, cliente.getProfissao());
@@ -395,7 +400,8 @@ public class ClienteDAO implements InterfaceClienteDAO {
         } else {
             ps.setInt(13, 1);            
         }
-        ps.setInt(14, cliente.getCodigo_cliente());
+        ps.setDate(14, data_cadastro);
+        ps.setInt(15, cliente.getCodigo_cliente());
 
     }
 
@@ -405,6 +411,12 @@ public class ClienteDAO implements InterfaceClienteDAO {
         if (cliente.getData_nascimento() != null) {
             data_nascimento = new Date(cliente.getData_nascimento().getTime());
         }
+        
+        Date data_cadastro = null;
+        if (cliente.getData_cadastro()!= null) {
+            data_cadastro = new Date(cliente.getData_cadastro().getTime());
+        }
+
 
         ps.setString(1, cliente.getNome_cliente());
         ps.setString(2, cliente.getNome_empresa_trabalho());
@@ -423,6 +435,7 @@ public class ClienteDAO implements InterfaceClienteDAO {
         } else {
             ps.setInt(13, 1);            
         }
+        ps.setDate(14, data_cadastro);
         
     }
 

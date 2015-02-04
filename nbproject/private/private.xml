@@ -4,11 +4,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/util/Printer.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/AtendimentoLocacao.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/LancamentoRecebimento.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/ClienteDAO.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/AtendimentoDevolucao.java</file>
             <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/model/dao/LancamentoDAO.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/FinanceiroReceber.java</file>
-            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/EntradaCaixaLocacao.java</file>
+            <file>file:/Users/alencarburiti/Documents/IT/Vc2Development/Siscom_locadora/src/br/com/locadora/view/CadastraAlteraCliente.java</file>
         </group>
     </open-files>
 </project-private>

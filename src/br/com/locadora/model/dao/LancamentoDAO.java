@@ -437,7 +437,7 @@ public class LancamentoDAO {
             "        LANCAMENTO A, TIPO_SERVICO B\n" +
             "    WHERE\n" +
             "        A.TIPO_SERVICO_CODIGO_TIPO_SERVICO = B.CODIGO_TIPO_SERVICO\n" +
-            "            AND B.TIPO = 'C' UNION ALL SELECT \n" +
+            "            AND B.TIPO = 'C' AND B.CODIGO_TIPO_SERVICO = 4 UNION ALL SELECT \n" +
             "        A.data_lancamento,\n" +
             "            B.caixa_codigo_caixa,\n" +
             "            SUM(B.VALOR_LANCAMENTO) AS VALOR\n" +
@@ -446,7 +446,7 @@ public class LancamentoDAO {
             "    WHERE\n" +
             "        A.CODIGO_LANCAMENTO = B.LANCAMENTO_CODIGO_LANCAMENTO\n" +
             "            AND B.TIPO_SERVICO_CODIGO_SERVICO = C.CODIGO_TIPO_SERVICO\n" +
-            "            AND C.TIPO = 'C') AS SEGUNDO\n" +
+            "            AND C.TIPO = 'C' AND C.CODIGO_TIPO_SERVICO IN (6,7,11) AS SEGUNDO\n" +
             "GROUP BY DATA_LANCAMENTO , CAIXA_CODIGO_CAIXA\n" +
             "ORDER BY DATA_LANCAMENTO DESC;";
         ResultSet rs = null;

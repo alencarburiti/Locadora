@@ -58,7 +58,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         jtbl_lancamento_caixa = new javax.swing.JTable();
         jrb_locacao_devolucao = new javax.swing.JRadioButton();
         jrb_venda = new javax.swing.JRadioButton();
-        jrb_todos = new javax.swing.JRadioButton();
         jrb_descontos = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -197,20 +196,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(jrb_todos);
-        jrb_todos.setText("Todos");
-        jrb_todos.setName("jrb_todos"); // NOI18N
-        jrb_todos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrb_todosActionPerformed(evt);
-            }
-        });
-        jrb_todos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jrb_todosKeyPressed(evt);
-            }
-        });
-
         buttonGroup1.add(jrb_descontos);
         jrb_descontos.setText("Descontos Concedidos");
         jrb_descontos.setName("jrb_descontos"); // NOI18N
@@ -237,8 +222,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
                         .addComponent(jrb_venda)
                         .addGap(0, 0, 0)
                         .addComponent(jrb_descontos)
-                        .addGap(0, 0, 0)
-                        .addComponent(jrb_todos)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -254,9 +237,7 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jrb_locacao_devolucao)
                         .addComponent(jrb_venda))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jrb_todos)
-                        .addComponent(jrb_descontos)))
+                    .addComponent(jrb_descontos))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jl_total))
@@ -347,16 +328,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_sairKeyPressed
 
-    private void jrb_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_todosActionPerformed
-        lancamentoCaixa();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_todosActionPerformed
-
-    private void jrb_todosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrb_todosKeyPressed
-        acionarAtalho(evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrb_todosKeyPressed
-
     private void jrb_descontosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb_descontosActionPerformed
         lancamentoCaixa();
         // TODO add your handling code here:
@@ -388,7 +359,6 @@ public class FluxodeCaixaDetalhado extends javax.swing.JFrame {
     private javax.swing.JLabel jl_total;
     private javax.swing.JRadioButton jrb_descontos;
     private javax.swing.JRadioButton jrb_locacao_devolucao;
-    private javax.swing.JRadioButton jrb_todos;
     private javax.swing.JRadioButton jrb_venda;
     public static javax.swing.JTable jtbl_lancamento_caixa;
     // End of variables declaration//GEN-END:variables

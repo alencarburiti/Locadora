@@ -1,7 +1,6 @@
 package br.com.locadora.model.helper;
 
 import br.com.locadora.conexao.InterfacePool;
-import br.com.locadora.model.command.ConsultarCliente;
 import br.com.locadora.model.command.ConsultarDiaria;
 import br.com.locadora.model.command.ConsultarGenero;
 import br.com.locadora.model.command.InterfaceCommand;
@@ -17,9 +16,7 @@ public class SiscomHelper {
     public SiscomHelper(InterfacePool pool) {
 
         mapaComandos = new HashMap<String, InterfaceCommand>();
-
-        
-        mapaComandos.put("consultarCliente", new ConsultarCliente(new ClienteDAO(pool)));
+                
         mapaComandos.put("consultarGenero", new ConsultarGenero(new GeneroDAO(pool)));
         mapaComandos.put("consultarDiaria", new ConsultarDiaria(new DiariaDAO(pool)));        
     }

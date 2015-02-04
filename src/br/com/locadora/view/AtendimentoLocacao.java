@@ -9,12 +9,16 @@ import br.com.locadora.model.bean.Dependente;
 import br.com.locadora.model.bean.Diaria;
 import br.com.locadora.model.bean.Lancamento;
 import br.com.locadora.model.bean.Combo;
+import br.com.locadora.model.bean.Feriado;
+import br.com.locadora.model.bean.ItemLocacao;
+import br.com.locadora.model.bean.Objeto;
 import br.com.locadora.model.bean.PromocaoLocacao;
 import br.com.locadora.model.dao.CopiaDAO;
 import br.com.locadora.model.dao.DependenteDAO;
 import br.com.locadora.model.dao.DiariaDAO;
 import br.com.locadora.model.dao.LancamentoDAO;
 import br.com.locadora.model.dao.ComboDAO;
+import br.com.locadora.model.dao.FeriadoDAO;
 import br.com.locadora.model.dao.UsuarioDAO;
 import br.com.locadora.util.ArquivoConfiguracao;
 import br.com.locadora.util.ItemDbGrid;
@@ -38,6 +42,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.data.excel.ExcelFormatFieldHandler;
 
 public class AtendimentoLocacao extends javax.swing.JFrame {
 
@@ -59,6 +64,7 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
     public ComboDAO pacotePromocionalDAO;
     public List<Lancamento> lancamentos;
     public FinanceiroReceber financeiroReceber;
+    public List<Feriado> feriados;
 
     public AtendimentoLocacao() {
         initComponents();
@@ -286,14 +292,14 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código de Barras", "Nome Objeto", "Valor", "Diária", "Censura", "Promoção"
+                "Cód. de Barras", "Nome Objeto", "Valor", "Diária", "Censura", "Promoção", "Data Prevista"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -312,11 +318,12 @@ public class AtendimentoLocacao extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jtbl_locacao);
         if (jtbl_locacao.getColumnModel().getColumnCount() > 0) {
-            jtbl_locacao.getColumnModel().getColumn(0).setPreferredWidth(30);
+            jtbl_locacao.getColumnModel().getColumn(0).setPreferredWidth(40);
             jtbl_locacao.getColumnModel().getColumn(1).setPreferredWidth(150);
             jtbl_locacao.getColumnModel().getColumn(2).setPreferredWidth(30);
             jtbl_locacao.getColumnModel().getColumn(3).setPreferredWidth(30);
-            jtbl_locacao.getColumnModel().getColumn(4).setPreferredWidth(20);
+            jtbl_locacao.getColumnModel().getColumn(4).setPreferredWidth(10);
+            jtbl_locacao.getColumnModel().getColumn(6).setPreferredWidth(40);
         }
 
         jtf_nome_objeto_locacao.setEditable(false);
@@ -954,12 +961,16 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_jcb_promocaoActionPerformed
 
     private void jb_adicionar_locacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_adicionar_locacaoActionPerformed
-        ItemDbGrid hashDbGrid = (ItemDbGrid) jcb_promocao.getSelectedItem();
-        diariaCombo = (Diaria) hashDbGrid.getObjeto();
         try {
+            ItemDbGrid hashDbGrid = (ItemDbGrid) jcb_promocao.getSelectedItem();
+            diariaCombo = (Diaria) hashDbGrid.getObjeto();
             adicionarItemLocado(copiaAtendimento, diariaCombo);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
+            jtf_codigo_objeto_locacao.requestFocus();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Código do Objeto deve ser número");
+            jtf_codigo_objeto_locacao.requestFocus();
         }
 
         // TODO add your handling code here:
@@ -1268,6 +1279,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             copiasLocacao.add(copiaAtendimento);
             calcularPromocaoLocacao();
             limparItemLocado();
+            calcularDiaPrevisto();
             jtf_codigo_objeto_locacao.requestFocus();
             recalcularValorTotal();
         } catch (Exception e) {
@@ -1344,7 +1356,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     Combo semPacotePromocional = new Combo();
                     promocoes.get(i).setPacotePromocional(semPacotePromocional);
                     ItemDbGrid hashDbGrid = new ItemDbGrid(promocoes.get(i), promocoes.get(i).getPromocaoLocacao().getDescricao());
-                    jcb_promocao.addItem(hashDbGrid);                    
+                    jcb_promocao.addItem(hashDbGrid);
                 }
             }
             Date d = new Date();
@@ -1451,7 +1463,7 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             jtf_total_locacao.setText("R$ 0,00");
             jtf_saldo.setText(moeda.setPrecoFormat(String.valueOf(saldo.toString())));
             jtf_codigo_objeto_locacao.requestFocus();
-            verificarDebito(dependente.getCliente());                       
+            verificarDebito(dependente.getCliente());
 
         }
     }
@@ -1792,6 +1804,182 @@ private void jtf_nome_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void calcularDiaPrevisto() {
+        try {
+
+            List<Diaria> diariasAcumulativas = new ArrayList<Diaria>();
+            pool = new Pool();
+            DiariaDAO diaDAO = new DiariaDAO(pool);
+            diariasAcumulativas = diaDAO.getTodasDiarias();
+            for (int i = 0; i < jtbl_locacao.getRowCount(); i++) {
+                System.out.println("==================================================");
+                System.out.println("Inciar Verificação: " + copiasLocacao.get(i).getObjeto().getTitulo());
+                System.out.println("Acumulativo: " + copiasLocacao.get(i).getDiaria().getAcumulativo());
+                if (copiasLocacao.get(i).getDiaria().getAcumulativo() == true) {
+                    for (int j = 0; j < diariasAcumulativas.size(); j++) {
+                        if (diariasAcumulativas.size() > 0) {
+                            System.out.println("CODIGO DIARIA - DIARIA: " + diariasAcumulativas.get(j).getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + copiasLocacao.get(i).getDiaria().getCodigo_diaria());
+                            if (diariasAcumulativas.get(j).getCodigo_diaria().equals(copiasLocacao.get(i).getDiaria().getCodigo_diaria())) {
+                                System.out.println("Debug 1 - Quantidade de Dias: " + copiasLocacao.get(i).getDiaria().getDias());
+                                System.out.println("Debug 2 - Quantidade de Dias Máximo: " + copiasLocacao.get(i).getDiaria().getMaximo_dias());
+                                if ((diariasAcumulativas.get(j).getQuantidade_filme() * copiasLocacao.get(i).getDiaria().getDias()) < copiasLocacao.get(i).getDiaria().getMaximo_dias()) {
+                                    diariasAcumulativas.get(j).setQuantidade_filme(diariasAcumulativas.get(j).getQuantidade_filme() + 1);
+                                    diariasAcumulativas.get(j).setDias_previsto(diariasAcumulativas.get(j).getDias_previsto() + 1);
+                                    System.out.println("Quantidade de filme: " + diariasAcumulativas.get(j).getQuantidade_filme() + " Dias Previsto: " + diariasAcumulativas.get(j).getDias_previsto());
+                                } else {
+                                    diariasAcumulativas.get(j).setQuantidade_filme(diariasAcumulativas.get(j).getQuantidade_filme() + 1);
+                                    System.out.println("Quantidade de filme: " + diariasAcumulativas.get(j).getQuantidade_filme() + " Dias Previsto: " + diariasAcumulativas.get(j).getDias_previsto());
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (int j = 0; j < diariasAcumulativas.size(); j++) {
+                        if (diariasAcumulativas.size() > 0) {
+                            System.out.println("CODIGO DIARIA - DIARIA: " + diariasAcumulativas.get(j).getCodigo_diaria() + " CODIGO DIARIA - COPIA: " + copiasLocacao.get(i).getDiaria().getCodigo_diaria());
+                            if (diariasAcumulativas.get(j).getCodigo_diaria().equals(copiasLocacao.get(i).getDiaria().getCodigo_diaria())) {
+                                diariasAcumulativas.get(j).setDias_previsto(diariasAcumulativas.get(j).getDias());
+                            }
+                        }
+                    }
+                }
+                System.out.println("==================================================");
+            }
+
+            for (int i = 0; i < jtbl_locacao.getRowCount(); i++) {
+                ItemLocacao itemLocacao = new ItemLocacao();
+
+                PromocaoLocacao promocaoLocacao = copiasLocacao.get(i).getDiaria().getPromocaoLocacao();
+                Diaria diaria = copiasLocacao.get(i).getDiaria();
+                diaria.setPromocaoLocacao(promocaoLocacao);
+                Objeto objeto = copiasLocacao.get(i).getObjeto();
+
+                Copia copia = copiasLocacao.get(i);
+                copia.setDiaria(diaria);
+                copia.setObjeto(objeto);
+                copia.setStatus("1");
+                System.out.println("");
+
+            //Inserir a lógica da promoção de objetos e para cada um sera gravada  a data prevista de devolucao no banco e somar
+                //conforme quantidade e regra de negócio
+                Calendar cal = Calendar.getInstance();
+
+                for (int d = 0; d < diariasAcumulativas.size(); d++) {
+                    if (diariasAcumulativas.get(d).getCodigo_diaria() == copiasLocacao.get(i).getDiaria().getCodigo_diaria()) {
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + diariasAcumulativas.get(d).getDias_previsto());
+                        System.out.println("Dias: " + diariasAcumulativas.get(d).getDias_previsto());
+                        System.out.println("Day Month: " + cal.get(Calendar.DAY_OF_MONTH));
+                        System.out.println("Data prevista: " + cal.getTime());
+                    }
+                }
+
+                try {
+                    if (copiasLocacao.get(i).getDiaria().getPacotePromocional().getDias_restantes() > 0) {
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + copiasLocacao.get(i).getDiaria().getPacotePromocional().getDias_restantes());
+                        itemLocacao.setData_prevista(cal.getTime());
+                        System.out.println("Data Prevista 1:" + cal.getTime());
+                    } else {
+                        itemLocacao.setData_prevista(cal.getTime());
+                        System.out.println("Data Prevista 2:" + cal.getTime());
+                    }
+                } catch (Exception e) {
+                    itemLocacao.setData_prevista(cal.getTime());
+                }
+
+                int dia = cal.get(cal.DAY_OF_WEEK);
+                System.out.println("Dia da semana:" + dia);
+                if (dia == 1) {
+                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                    if (checarFeriado(cal) == false) {
+                        itemLocacao.setData_prevista(cal.getTime());
+                    } else {
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                        if (checarFeriado(cal) == false) {
+                            itemLocacao.setData_prevista(cal.getTime());
+                        } else {
+                            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                            if (checarFeriado(cal) == false) {
+                                itemLocacao.setData_prevista(cal.getTime());
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                if (checarFeriado(cal) == false) {
+                                    itemLocacao.setData_prevista(cal.getTime());
+                                } else {
+                                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                    if (checarFeriado(cal) == false) {
+                                        itemLocacao.setData_prevista(cal.getTime());
+                                    } else {
+                                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                        itemLocacao.setData_prevista(cal.getTime());
+                                    }
+
+                                }
+
+                            }
+
+                        }
+                    }
+                } else {
+                    if (checarFeriado(cal) == false) {
+                        itemLocacao.setData_prevista(cal.getTime());
+                    } else {
+                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                        if (checarFeriado(cal) == false) {
+                            itemLocacao.setData_prevista(cal.getTime());
+                        } else {
+                            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                            if (checarFeriado(cal) == false) {
+                                itemLocacao.setData_prevista(cal.getTime());
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                if (checarFeriado(cal) == false) {
+                                    itemLocacao.setData_prevista(cal.getTime());
+                                } else {
+                                    cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                    if (checarFeriado(cal) == false) {
+                                        itemLocacao.setData_prevista(cal.getTime());
+                                    } else {
+                                        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+                                        itemLocacao.setData_prevista(cal.getTime());
+                                    }
+
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+                SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+                
+                String data_prev = out.format(itemLocacao.getData_prevista().getTime());
+
+                jtbl_locacao.setValueAt(data_prev, i, 6);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean checarFeriado(Calendar cal) {
+        pool = new Pool();
+        feriados = new ArrayList<>();
+        FeriadoDAO feriadoDAO = new FeriadoDAO(pool);
+
+        SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd");
+
+        String data_prev = out.format(cal.getTime());
+
+        feriados = feriadoDAO.getFeriadoData(data_prev);
+        if (feriados.size() > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

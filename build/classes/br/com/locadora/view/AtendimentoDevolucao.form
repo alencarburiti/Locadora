@@ -96,12 +96,10 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" pref="85" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jPanel1" max="32767" attributes="0"/>
+                          <Component id="jLabel2" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <Component id="jPanel3" max="32767" attributes="0"/>
@@ -156,18 +154,18 @@
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" pref="56" max="-2" attributes="0"/>
-                      <Component id="jtf_codigo_cliente" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Component id="jtf_codigo_cliente" min="-2" pref="99" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
                           <Component id="jtf_nome_cliente" min="-2" pref="302" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jb_pesquisa_cliente" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -181,9 +179,11 @@
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jtf_codigo_cliente" linkSize="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jtf_nome_cliente" linkSize="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jb_pesquisa_cliente" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jb_pesquisa_cliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jtf_codigo_cliente" alignment="0" pref="29" max="32767" attributes="0"/>
+                          <Component id="jtf_nome_cliente" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
@@ -207,6 +207,9 @@
               <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jtf_codigo_cliente" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 24]"/>
+            </Property>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -227,6 +230,9 @@
               <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jtf_nome_cliente" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[300, 24]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_nome_clienteKeyPressed"/>
@@ -280,16 +286,16 @@
                                       <Component id="jtf_codigo_objeto_devolucao" min="-2" pref="120" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jtf_nome_objeto_devolucao" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel3" min="-2" pref="104" max="-2" attributes="0"/>
+                                      <Component id="jtf_nome_objeto_devolucao" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                  <Component id="jb_pesquisa_devolucao" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jb_pesquisa_devolucao" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                  <Component id="jb_adicionar_devolucao" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jb_adicionar_devolucao" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                  <Component id="jb_remover_devolucao" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jb_remover_devolucao" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jl_lancamento_aberto" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
                           </Group>
@@ -303,27 +309,33 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jl_codigo_devolucao" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jtf_codigo_objeto_devolucao" linkSize="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jl_codigo_devolucao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jtf_codigo_objeto_devolucao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jtf_nome_objeto_devolucao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jb_adicionar_devolucao" linkSize="3" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jb_remover_devolucao" linkSize="3" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jb_pesquisa_devolucao" linkSize="3" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jb_pesquisa_devolucao" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jb_adicionar_devolucao" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="jtf_nome_objeto_devolucao" linkSize="3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jb_remover_devolucao" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane3" min="-2" pref="219" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jl_lancamento_aberto" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -419,6 +431,9 @@
               <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jtf_codigo_objeto_devolucao" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[120, 24]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtf_codigo_objeto_devolucaoKeyPressed"/>
@@ -463,6 +478,9 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_adicionar_devolucaoActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_adicionar_devolucaoKeyPressed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jb_remover_devolucao">
           <Properties>
@@ -482,6 +500,9 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jb_remover_devolucaoActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jb_remover_devolucaoKeyPressed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -499,6 +520,9 @@
               <Font name="Helvetica Neue" size="13" style="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jtf_nome_objeto_devolucao" noResource="true"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[300, 24]"/>
+            </Property>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

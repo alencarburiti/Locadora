@@ -401,12 +401,21 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu17">
+        <Menu class="javax.swing.JMenu" name="jm_consulta">
           <Properties>
             <Property name="text" type="java.lang.String" value="Consulta"/>
-            <Property name="name" type="java.lang.String" value="jMenu17" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jm_consulta" noResource="true"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_objeto_copia">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Objeto/C&#xf3;pia"/>
+                <Property name="name" type="java.lang.String" value="jmi_objeto_copia" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_objeto_copiaActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem16">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fluxo de Caixa Di&#xe1;rio"/>
@@ -557,6 +566,18 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem17ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/br/com/locadora/image/Travel.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Configurar Feriado"/>
+                <Property name="name" type="java.lang.String" value="jMenuItem7" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem7ActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
